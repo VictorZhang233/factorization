@@ -1,0 +1,30 @@
+% =====================================================================
+%  ch07_dis.tex —— 第 7 章  严格核心 II：深度非弹散射与算符乘积展开（writer W07）
+%  公式核对脚本：writing/work/W07/s1_kinematics.py … s6_np_examples.py（日志 writing/work/W07/logs/）
+% =====================================================================
+\chapter{严格核心 II：深度非弹散射与算符乘积展开}\label{ch:dis}
+
+深度非弹性散射（deep inelastic scattering，DIS）$\ell+A\to\ell'+X$ 是第一个、也是至今最干净的“强子在初态”的硬过程。在电磁耦合的最低阶，轻子与强子之间只交换一个类空虚光子；对强子末态 $X$ 全部求和以后，截面只依赖于强子态中两个电磁流对易子的矩阵元，即强子张量 $W^{\mu\nu}$（\cref{def:dis-kinematics}）。$W^{\mu\nu}$ 是前向虚 Compton 振幅 $T^{\mu\nu}$ 在物理割线上的吸收部分（\cref{def:dis-compton}），而 $T^{\mu\nu}$ 在非物理区 $|\omega|<1$（$\omega=1/x$）中的 Taylor 系数由两个流在短距离上的乘积决定——算符乘积展开（operator product expansion，OPE）正是这样进入因子化的。本章的主结论是结构函数矩的因子化（\cref{thm:dis-moments}，\tagR，$R_{\mathrm{OPE}}$）：对每个固定的偶数 $n$，
+\[
+\int_0^1\dd x\,x^{n-2}F_2(x,Q^2)=\sum_iC^{(n)}_{2,i}\Big(\frac{Q^2}{\mu^2},\as(\mu)\Big)A^{(n)}_i(\mu)+\order{\frac{1}{Q^2}},
+\]
+其中 Wilson 系数 $C^{(n)}_{2,i}$ 与靶无关，$A^{(n)}_i$ 是扭度 2 定域算符的约化矩阵元。这是“严格核心”中第一个含强子初态的结论；它的“严格”须读作“在给定 OPE 的前提下证明完整”（$R_{\mathrm{OPE}}$），而含夸克 QCD 的微扰 OPE 本身只有全阶论证（\cref{thm:dis-ope}，\tagA）。
+
+证明沿两条彼此独立的路线进行。\emph{部分子路线}（\cref{sec:dis-compton}与\cref{sec:dis-ope}）在重整化微扰论中对红外正规化的部分子靶进行：前向振幅在割开的 $\omega$ 平面中解析（\cref{prop:dis-compton-analytic}），色散关系把它的 Taylor 系数等同于结构函数的矩（\cref{prop:dis-dispersion}；最低的几个矩还需要振幅在 $|\omega|\to\infty$ 时的一个增长条件，见\cref{rem:dis-pt-growth}），而 Taylor 系数由欧氏 OPE 给出。含夸克 QCD 的微扰 OPE 被拆成三个子陈述——非例外欧氏动量下 Green 函数的逐图渐近展开、物理矩阵元只需规范不变算符、前向在壳部分子矩阵元——它们各自带标签（\cref{prop:dis-ope-euclid,prop:dis-ope-gi,prop:dis-ope-forward}）。\emph{强子路线}（\cref{sec:dis-np}）是非微扰的条件定理：对强子靶，欧氏 OPE 只在 $\omega$ 平面虚轴上一段长度为 $\order{M/Q}$ 的线段上提供信息（\cref{lem:dis-euclid-segment}），要把它变成固定 $n$ 的矩，还需要结构函数的正性与一个由 Wightman 公理证明、增长指数与 $Q$ 无关的有限减除色散关系（\cref{prop:dis-dispersion-np,thm:dis-fixed-n}）；只有最低的几个矩（含动量求和规则）需要真正的增长假设（\cref{prop:dis-low-moments}）。流行的说法“把欧氏 OPE 代入、收缩、比较系数就得到强子结构函数的矩”因此是错的（误解 M34）。此后各节讨论重整化群与标度破坏、单圈 Wilson 系数、从矩到 $x$ 空间（只能得到弱收敛）、高扭度与靶质量修正，以及极化 DIS 的 Bjorken 求和规则；用算符定义的部分子分布写出的 $x$ 空间定理在第~8~章完成（\cref{thm:pdf-dis-xspace}）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:dis-W-structure,lem:dis-euclid-segment,lem:dis-twist-classification,lem:dis-twist-chirality,prop:dis-low-moments}（\tagR，$R_{\mathrm{def}}$）；\cref{prop:dis-compton-analytic,prop:dis-dispersion,lem:dis-tree-ope,prop:dis-chiral-suppression,prop:dis-c-oneloop}（\tagR，$R_{\mathrm{PT}}$；\cref{prop:dis-dispersion}对低阶矩带部分子增长条件）；\cref{thm:dis-moments,prop:dis-wilson-partons,prop:dis-ope-rg,cor:dis-scaling,prop:dis-twist4,prop:dis-tmc,thm:dis-bjorken}（\tagR，$R_{\mathrm{OPE}}$）；\cref{prop:dis-dispersion-np}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:intro-wightman}）、\cref{lem:dis-ope-segment}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:intro-np-ope}）、\cref{thm:dis-fixed-n,thm:dis-moments-np,cor:dis-weak-xspace}（\tagR，$R_{\mathrm{cond}}$，前提为\cref{asm:intro-wightman}等全局假设）。\par
+\textbf{给出全阶论证：}\cref{thm:dis-ope}及其三个子陈述\cref{prop:dis-ope-euclid,prop:dis-ope-gi,prop:dis-ope-forward}（\tagA；瓶颈：所引欧氏展开定理的适用范围，\cref{asm:appM-brst-ope}，\cref{asm:appM-forward}）；\cref{prop:dis-light-cone}（\tagA）。\par
+\textbf{没有证明：}含夸克 QCD 的 OPE 的严格证明；非微扰 OPE（\cref{asm:intro-np-ope}）；低阶矩（含动量求和规则）所需的增长条件（强子：\cref{asm:intro-growth}；部分子靶在高阶：\cref{rem:dis-pt-growth}）；$x$ 空间逐点的 $\order{1/Q^2}$（\cref{rem:dis-nonuniform}）。
+\end{tcolorbox}
+
+\paragraph{证明的结构。}两条路线的依赖链如下（箭头表示“被用于”）：
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item 部分子路线：\cref{prop:dis-compton-analytic}$\to$\cref{prop:dis-dispersion}；\cref{lem:dis-tree-ope}与\cref{prop:dis-ope-euclid}$\to$\cref{prop:dis-ope-gi}$\to$\cref{prop:dis-ope-forward}（三者合称\cref{thm:dis-ope}）$\to$\cref{thm:dis-moments}(a)$\to$\cref{prop:dis-ope-rg}$\to$\cref{cor:dis-scaling}。
+\item 强子路线：\cref{prop:dis-dispersion-np}、\cref{lem:dis-euclid-segment}$\to$\cref{lem:dis-ope-segment}$\to$\cref{thm:dis-fixed-n}$\to$\cref{thm:dis-moments-np}$\to$\cref{thm:dis-moments}(b)与\cref{cor:dis-weak-xspace}。
+\end{enumerate}
+两条路线的精确形式与完整证明大多在附录~M，对应关系见本章末的\cref{tab:dis-correspondence}。
+
+\paragraph{约定。}记号见\cref{tab:front-notation}。本章的展开参数是 $\as/(2\pi)$（极化一节中的 Bjorken 求和规则按文献习惯用 $a=\as/\pi$，届时注明）；电荷 $e_q$ 以质子电荷为单位；维数正规化取 $D=4-2\varepsilon$。靶沿 $+z$ 方向运动，光锥分量 $v^\pm=(v^0\pm v^3)/\sqrt2$，$n_B\cdot v=v^+$。部分子靶 $j$ 的结构函数记作 $\hat F^{(j)}_a(z)$，$z=Q^2/(2p\cdot q)$。

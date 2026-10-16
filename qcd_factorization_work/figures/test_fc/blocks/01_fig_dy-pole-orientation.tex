@@ -1,0 +1,147 @@
+%%% BEGIN fig:dy-pole-orientation
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc state/.style={draw=gray!70!black,line width=0.6pt,dash pattern=on 0.6pt off 1.6pt},
+  fc stateB/.style={draw=gray!62,line width=0.6pt,dash pattern=on 0.6pt off 1.6pt},
+  fc ax/.style={lcaxis,gray!60!black},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc tiny/.style={font=\scriptsize},
+  fc pole/.pic={\draw[line width=0.9pt,line cap=round] (-0.075,-0.075)--(0.075,0.075) (-0.075,0.075)--(0.075,-0.075);},
+  fc contour/.style={draw=blue!65!black,line width=1.05pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5pt,width=4.2pt]}}}}},
+  fc contour/.default=0.5,
+  fc band/.style={fill=red!9,draw=none},
+  fc bandA/.style={fill=blue!5,draw=none},
+  fc bandB/.style={fill=orange!8,draw=none}]
+  % =====================================================================
+  % (a) the soft gluon is attached before V_H (tau<0) on both spectators
+  % =====================================================================
+  \begin{scope}
+    % jet subgraphs J_A (top, ordered in x^+) and J_B (bottom, ordered in x^-)
+    \fill[fc bandA] (-2.75,0.27) rectangle (2.22,1.95);
+    \fill[fc bandB] (-2.75,-1.95) rectangle (2.22,-0.27);
+    \node[fc note,text=blue!45!black,anchor=north east] at (2.17,1.5) {$J_A$};
+    \node[fc note,text=orange!45!black,anchor=south east] at (2.17,-1.5) {$J_B$};
+    % light-cone time axes: x^+ for J_A (top), x^- for J_B (bottom)
+    \draw[fc ax] (-3.55,2.75) -- (2.75,2.75) node[right,fc note,text=black] {$x^+$};
+    \draw[fc ax] (-3.55,-2.75) -- (2.75,-2.75) node[right,fc note,text=black] {$x^-$};
+    \draw[gray!60!black,line width=0.5pt] (0,2.68) -- (0,2.82) (0,-2.68) -- (0,-2.82);
+    \node[fc tiny,above] at (0,2.78) {$0$};  \node[fc tiny,below] at (0,-2.78) {$0$};
+    \node[fc tiny,above,text=gray!40!black] at (-1.75,2.78) {初态};
+    \node[fc tiny,above,text=gray!40!black] at (1.2,2.78) {末态};
+    \node[fc tiny,below,text=gray!40!black] at (-1.75,-2.78) {初态};
+    \node[fc tiny,below,text=gray!40!black] at (1.2,-2.78) {末态};
+    % intermediate states (vertical dotted lines)
+    \draw[fc state] (-2.0,1.05) -- (-2.0,1.85);
+    \draw[fc state] (-0.7,0.22) -- (-0.7,1.85);
+    \draw[fc stateB] (-2.0,-1.05) -- (-2.0,-1.85);
+    \draw[fc stateB] (-0.7,-0.22) -- (-0.7,-1.85);
+    \node[fc tiny,text=gray!40!black] at (-2.0,2.08) {$D_1$};
+    \node[fc tiny] at (-0.15,2.27) {$\dfrac{1}{D_2}=\dfrac{1}{k^-+A+\ii0}$};
+    % soft gluon k from s_B to s_A (drawn first: it passes behind a and b)
+    \draw[fc soft] (-1.5,-1.6) -- (-1.5,1.6);
+    \path[mom'={$k$},mom pos=0.5,mom sep=0.27cm] (-1.5,-1.6) -- (-1.5,1.6);
+    % hadrons, splitting vertices, spectators, active partons
+    \draw[fc hadron] (-3.6,1.6) -- (-2.5,1.6);
+    \draw[fc hadron] (-3.6,-1.6) -- (-2.5,-1.6);
+    \draw[plain] (-2.5,1.6) -- (2.75,1.6);
+    \draw[plain] (-2.5,-1.6) -- (2.75,-1.6);
+    % a and b pass in front of the soft gluon (gap in the background colour of the band)
+    \draw[blue!5,line width=3.8pt] (-1.71,1.095) -- (-1.29,0.825);
+    \draw[orange!8,line width=3.8pt] (-1.71,-1.095) -- (-1.29,-0.825);
+    \draw[quark=0.62] (-2.5,1.6) -- (-0.17,0.11);
+    \draw[quark=0.38] (-0.17,-0.11) -- (-2.5,-1.6);
+    \draw[photon] (0.2,0) -- (0.9,0);
+    \node[hard blob,circle,minimum size=0.4cm,inner sep=0pt] (H) at (0,0) {};
+    \foreach \p in {(-2.5,1.6),(-2.5,-1.6),(-1.5,1.6),(-1.5,-1.6)} \node[vertex] at \p {};
+    \draw[cut] (2.3,-2.05) -- (2.3,2.05);
+    % labels
+    \node[fc lab,above] at (-3.25,1.62) {$P_A$};
+    \node[fc lab,below] at (-3.25,-1.62) {$P_B$};
+    \node[fc lab,right] at (2.75,1.6) {$s_A$};
+    \node[fc lab,right] at (2.75,-1.6) {$s_B$};
+    \node[fc lab] at (-2.25,0.98) {$a$};
+    \node[fc lab] at (-2.25,-0.98) {$b$};
+    \node[fc note,anchor=north west] at (0.12,-0.12) {$V_H$};
+    \node[fc note,above] at (0.62,0.07) {$\gamma^*$};
+    \node[fc lab] at (-0.4,-3.6) {(a)\ $k$在$V_H$之前附着：只进入初态};
+  \end{scope}
+  % =====================================================================
+  % (b) the same Feynman graph, soft gluon attached after V_H (tau>0)
+  % =====================================================================
+  \begin{scope}[xshift=7.45cm]
+    \fill[fc bandA] (-2.75,0.27) rectangle (2.22,1.95);
+    \fill[fc bandB] (-2.75,-1.95) rectangle (2.22,-0.27);
+    \node[fc note,text=blue!45!black,anchor=north east] at (2.17,1.5) {$J_A$};
+    \node[fc note,text=orange!45!black,anchor=south east] at (2.17,-1.5) {$J_B$};
+    \draw[fc ax] (-3.55,2.75) -- (2.75,2.75) node[right,fc note,text=black] {$x^+$};
+    \draw[fc ax] (-3.55,-2.75) -- (2.75,-2.75) node[right,fc note,text=black] {$x^-$};
+    \draw[gray!60!black,line width=0.5pt] (0,2.68) -- (0,2.82) (0,-2.68) -- (0,-2.82);
+    \node[fc tiny,above] at (0,2.78) {$0$};  \node[fc tiny,below] at (0,-2.78) {$0$};
+    \node[fc tiny,above,text=gray!40!black] at (-1.75,2.78) {初态};
+    \node[fc tiny,above,text=gray!40!black] at (1.2,2.78) {末态};
+    \node[fc tiny,below,text=gray!40!black] at (-1.75,-2.78) {初态};
+    \node[fc tiny,below,text=gray!40!black] at (1.2,-2.78) {末态};
+    \draw[fc state] (-1.25,0.58) -- (-1.25,1.85);
+    \draw[fc state] (0.62,1.35) -- (0.62,1.85);
+    \draw[fc stateB] (-1.25,-0.58) -- (-1.25,-1.85);
+    \draw[fc stateB] (0.62,-1.35) -- (0.62,-1.85);
+    \node[fc tiny,text=gray!40!black] at (-1.25,2.08) {$D_1$};
+    \node[fc tiny] at (0.85,2.27) {$\dfrac{1}{D_2}=\dfrac{-1}{k^--A'-\ii0}$};
+    \draw[fc soft] (1.25,-1.6) -- (1.25,1.6);
+    \path[mom'={$k$},mom pos=0.5,mom sep=0.27cm] (1.25,-1.6) -- (1.25,1.6);
+    \draw[fc hadron] (-3.6,1.6) -- (-2.5,1.6);
+    \draw[fc hadron] (-3.6,-1.6) -- (-2.5,-1.6);
+    \draw[plain] (-2.5,1.6) -- (2.75,1.6);
+    \draw[plain] (-2.5,-1.6) -- (2.75,-1.6);
+    \draw[quark=0.7] (-2.5,1.6) -- (-0.17,0.11);
+    \draw[quark=0.3] (-0.17,-0.11) -- (-2.5,-1.6);
+    \draw[photon] (0.2,0) -- (0.9,0);
+    \node[hard blob,circle,minimum size=0.4cm,inner sep=0pt] (H) at (0,0) {};
+    \foreach \p in {(-2.5,1.6),(-2.5,-1.6),(1.25,1.6),(1.25,-1.6)} \node[vertex] at \p {};
+    \draw[cut] (2.3,-2.05) -- (2.3,2.05);
+    \node[fc lab,above] at (-3.25,1.62) {$P_A$};
+    \node[fc lab,below] at (-3.25,-1.62) {$P_B$};
+    \node[fc lab,right] at (2.75,1.6) {$s_A$};
+    \node[fc lab,right] at (2.75,-1.6) {$s_B$};
+    \node[fc lab] at (-2.25,0.98) {$a$};
+    \node[fc lab] at (-2.25,-0.98) {$b$};
+    \node[fc note,anchor=north west] at (0.12,-0.12) {$V_H$};
+    \node[fc note,above] at (0.55,0.07) {$\gamma^*$};
+    \node[fc lab] at (-0.4,-3.6) {(b)\ $k$在$V_H$之后附着：只进入末态};
+  \end{scope}
+  % =====================================================================
+  % (c), (d): complex k^- plane
+  % =====================================================================
+  \begin{scope}[shift={(1.2,-5.45)}]
+    \fill[fc band] (-0.42,-0.85) rectangle (0.42,0.85);
+    \draw[fc ax] (-1.75,0) -- (1.8,0) node[below,fc tiny,text=black,xshift=-3pt] {$\Real k^-$};
+    \draw[fc ax] (0,-0.9) -- (0,1.0) node[left,fc tiny,text=black] {$\Imag k^-$};
+    \draw[fc contour=0.85] (-1.65,0) -- (1.65,0);
+    \pic at (-0.16,-0.26) {fc pole};  \pic at (0.16,0.26) {fc pole};
+    \node[fc tiny,anchor=east] at (-0.24,-0.34) {(a)};
+    \node[fc tiny,anchor=west] at (0.24,0.34) {(b)};
+    \node[fc note,align=center] at (0,-1.52) {(c)\ (a)+(b)：极点分居两侧，\\$k^-$围道被钳住};
+  \end{scope}
+  \begin{scope}[shift={(5.7,-5.45)}]
+    \fill[fc band] (-0.42,-0.85) rectangle (0.42,0.85);
+    \draw[fc ax] (-1.75,0) -- (1.8,0) node[below,fc tiny,text=black,xshift=-3pt] {$\Real k^-$};
+    \draw[fc ax] (0,-0.9) -- (0,1.0) node[left,fc tiny,text=black] {$\Imag k^-$};
+    \draw[fc contour=0.5] (-1.65,0) -- (-1.2,0) .. controls (-0.95,0) and (-0.85,0.62) .. (0,0.62)
+        .. controls (0.85,0.62) and (0.95,0) .. (1.2,0) -- (1.65,0);
+    \pic at (-0.2,-0.22) {fc pole};  \pic at (0.12,-0.3) {fc pole};
+    \node[fc note,align=center] at (0,-1.52) {(d)\ 只经过初态：极点同侧，\\$k^-$围道可移入上半平面};
+  \end{scope}
+\end{tikzpicture}
+\caption{光锥序中间态的取向与$k^-$极点（\cref{lem:dy-poles-orientation}）。Drell--Yan 割图的振幅一侧（割线右侧的共轭振幅为镜像，未画出）按混合光锥序排列：$J_A$（上，浅蓝）按$x^+$、$J_B$（下，浅橙）按$x^-$排序，硬顶点$V_H$在两者中都位于$\tau=0$；
+竖直点线标出中间态，$a$、$b$为活动部分子，$s_A$、$s_B$为旁观者，软胶子（绿色）动量$k$由$J_B$流入$J_A$（标准流）。
+(a)、(b) 是同一费曼图的两个光锥序项：$k$在$V_H$之前附着于$s_A$时，$k^-$只出现在初态分母$D_2=k^-+A+\ii0$中，零点在下半平面；在$V_H$之后附着时，$k^-$只出现在末态分母$D_2=-(k^--A'-\ii0)$中，零点在上半平面
+（$A$、$A'$为与$k^-$无关的实数；$J_B$中对$k^+$有同样的结论，$+\leftrightarrow-$）。取向因而是中间态而不是线的性质：(c)~$k$流经两种取向的中间态时，极点分居实轴两侧，$k^-$围道被钳在 Glauber 区（阴影）内，旁观者之间的交换在$J_A$、$J_B$中同时被钳住，即 Glauber 钳夹；
+(d)~$k$只流经初态（例如只附着于$a$）时极点同侧，$k^-$围道可移入上半平面（离开 Glauber 区还须同时形变$k^+$，见\cref{fig:method-glauber-direction}）。}
+\label{fig:dy-pole-orientation}
+\end{figure}
+%%% END fig:dy-pole-orientation

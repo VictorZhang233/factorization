@@ -1,0 +1,85 @@
+% -------------------------------------------------------------------------------------
+\section{维数正规化的技术约定与 $\gamma_5$}\label{sec:prelim-dimreg}
+
+维数正规化（\cref{def:qcd-dimreg}）保持规范与 BRST 对称性，并同时正规化紫外与红外发散。后一点带来一个陷阱：同一个 $1/\varepsilon$ 可以来自圈动量趋于无穷的区域，也可以来自软、共线区域，“无标度”的积分则因二者相消而为零。因子化把红外极点吸收进部分子分布、把紫外极点交给重整化，所以每个极点的来源都必须记清楚。
+
+\begin{definition}[维数正规化的技术约定]\label{def:prelim-dr-conventions}
+本书的维数正规化以\cref{def:qcd-dimreg}（$D=4-2\varepsilon$）与\cref{def:prelim-msbar}（$\MSbar$，$S_\varepsilon=(4\pi)^\varepsilon\ee^{-\varepsilon\gamma_E}$）为基础，另作以下约定。
+\par
+(a) 极点来源的标注：$1/\varepsilon_{\mathrm{UV}}$ 来自圈动量趋于无穷的区域，由重整化抵消项消去；$1/\varepsilon_{\mathrm{IR}}$ 来自软或共线区域（零动量或无质量线彼此共线的位形），在红外安全量中相消或被吸收进强子矩阵元。二者是同一个参数 $\varepsilon$，下标只是记账：紫外部分在 $\varepsilon>0$ 处收敛，红外部分在 $\varepsilon<0$ 处收敛，各自从收敛区解析延拓。
+\par
+(b) 初态平均：夸克自旋取 $\frac12$、颜色取 $\frac1{N_c}$；胶子极化取 $\frac1{D-2}=\frac1{2(1-\varepsilon)}$、颜色取 $\frac1{N_c^2-1}$。胶子极化的 $D$ 维平均是部分子系数函数 $\MSbar$ 约定的一部分：若改为对 $2$ 个极化平均，胶子道的系数函数平移 $C_2^g\to C_2^g+P_{qg}$，$\Delta_{qg}\to\Delta_{qg}+P_{qg}$（第~10~章与第~12~章的记号）。% VF-CONV-6
+\par
+(c) Dirac 代数用常规维数正规化（CDR）：$\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}$，$g^\mu{}_\mu=D$，$\Tr\mathbb 1=4$，所有动量与极化矢量都在 $D$ 维中；$D$ 维相空间见\cref{sec:appC-phase-space}，$S_\varepsilon$ 约定的影响见\cref{sec:appC-msbar}，$\gamma_5$ 的约定见本节末。
+\uses{def:qcd-dimreg,def:prelim-msbar}
+\end{definition}
+
+(b) 的理由：$D$ 维中横向极化有 $D-2$ 个；若改为对 $2$ 个极化平均，胶子道部分子截面整体乘以 $1-\varepsilon$，每个共线极点 $-\frac1\varepsilon P_{qg}$（单位 $\frac{\as}{2\pi}$）因而多出有限项 $+P_{qg}$。DIS 的 $\gamma^*g$ 道中夸克与反夸克各给出一个这样的极点，部分子结构函数为 $\hat F_2^g/(ze_q^2)=\frac{\as}{2\pi}\big[-\frac2\varepsilon P_{qg}+2C_2^g+O(\varepsilon)\big]$（$\mu=Q$），故 $C_2^g\to C_2^g+P_{qg}$；Drell--Yan 的 $qg$ 道只有一个这样的极点，故 $\Delta_{qg}\to\Delta_{qg}+P_{qg}$。(c) 中与 Collins~\cite{Collins2011}的 $S_\varepsilon^{\mathrm C}=(4\pi)^\varepsilon/\Gamma(1-\varepsilon)$ 相比，$S_\varepsilon/S^{\mathrm C}_\varepsilon=1+\frac{\pi^2}{12}\varepsilon^2+O(\varepsilon^3)$，只在扣除 $1/\varepsilon^2$ 极点处改变有限常数。% VF-CONV-4
+
+\begin{lemma}[无标度积分为零]\label{lem:prelim-scaleless}
+(a) 对任意复数 $a$，在维数正规化中
+\begin{equation}\label{eq:prelim-scaleless}
+\int\dd^Dk\,(-k^2-\ii0)^{-a}=0 .
+\end{equation}
+确切地说：作 Wick 转动后，把径向积分在欧氏模 $|k_E|=\Lambda$ 处分开，红外部分在 $\Real D>2\Real a$ 处收敛，紫外部分在 $\Real D<2\Real a$ 处收敛；二者各自解析延拓为 $D$ 的亚纯函数，其和恒为零且与 $\Lambda$ 无关。对 $a=2$、$D=4-2\varepsilon$，
+\begin{equation}\label{eq:prelim-scaleless-a2}
+\int\dd^Dk\,(-k^2-\ii0)^{-2}=\frac{\ii\pi^{D/2}}{\Gamma(D/2)}\,\Lambda^{-2\varepsilon}\Big(\frac1{\varepsilon_{\mathrm{UV}}}-\frac1{\varepsilon_{\mathrm{IR}}}\Big)=0 .
+\end{equation}
+\par
+(b) 更一般地，被积函数不含任何质量或外部不变量、因而在全部圈动量的整体伸缩下齐次的维数正规化积分为零。
+\uses{def:qcd-dimreg}
+\end{lemma}
+
+\begin{proof}
+(a) 被积函数的奇点在 $k^0=\pm(|\mathbf k|-\ii0)$（第四与第二象限），把 $k^0$ 的路径逆时针转到虚轴（$k^0=\ii k_4$）不越过奇点，故积分等于 $\ii\int\dd^Dk_E\,(k_E^2)^{-a}$。用 $\dd^Dk_E=\Omega_DK^{D-1}\dd K$，$\Omega_D=2\pi^{D/2}/\Gamma(D/2)$：
+\begin{gather*}
+\int_0^\Lambda\dd K\,K^{D-1-2a}=\frac{\Lambda^{D-2a}}{D-2a}\quad(\Real D>2\Real a),\\
+\int_\Lambda^\infty\dd K\,K^{D-1-2a}=-\frac{\Lambda^{D-2a}}{D-2a}\quad(\Real D<2\Real a).
+\end{gather*}
+右端都是 $D$ 的亚纯函数，给出两部分的解析延拓，其和恒为零且与 $\Lambda$ 无关。这个积分没有共同的收敛区，维数正规化把它定义为两部分延拓之和，与维数正规化的公理（线性、平移不变、伸缩性质；Collins~\cite[第~4.1~节]{Collins1984}）给出的唯一值一致。$a=2$ 时红外部分为 $-\Lambda^{-2\varepsilon}/(2\varepsilon_{\mathrm{IR}})$，紫外部分为 $+\Lambda^{-2\varepsilon}/(2\varepsilon_{\mathrm{UV}})$，乘以 $\ii\Omega_D$ 即得\cref{eq:prelim-scaleless-a2}。
+
+(b) 维数正规化积分满足伸缩性质 $\int\dd^Dk\,f(\rho k)=\rho^{-D}\int\dd^Dk\,f(k)$（对收敛积分即变量替换，一般情形是定义性公理之一）。若 $f(\rho k)=\rho^{-2a}f(k)$，则 $(\rho^{-2a}-\rho^{-D})\int f=0$ 对一切 $\rho>0$ 成立，故 $\int f\equiv0$；多圈积分对全部圈动量同时伸缩，论证相同。
+\end{proof}
+
+无标度的形式有时要经过一步变换才显出来：$p^2=0$ 时 $\int\dd^Dl\,[l^2(l+p)^2]^{-1}$ 经 Feynman 参数化 $x\,l^2+(1-x)(l+p)^2=(l+(1-x)p)^2+x(1-x)p^2$ 并平移圈动量后只依赖于 $l'^2$，由 (a) 为零。
+
+\begin{example}[无标度积分的紫外/红外记账]\label{ex:prelim-scaleless}
+(i) \emph{在壳无质量夸克的自能。}Feynman 规范中单圈自能 $-\ii\Sigma(p)$ 的计算用到 $\gamma^\mu\sla a\gamma_\mu=-(D-2)\sla a$、对称性 $\int\dd^Dl\,l^\mu/[l^2(p-l)^2]=\frac12p^\mu\int\dd^Dl\,[l^2(p-l)^2]^{-1}$ 与附录~C 的两点积分，结果为
+\begin{equation}\label{eq:prelim-sigma}
+\begin{aligned}
+\Sigma(p)&=\sla p\,\Sigma_V(p^2),\qquad \Sigma_V(p^2)=-\frac{\as C_F}{4\pi}\,(1-\varepsilon)\,\ee^{\varepsilon\gamma_E}\frac{\Gamma(\varepsilon)\Gamma(1-\varepsilon)^2}{\Gamma(2-2\varepsilon)}\Big(\frac{\mu^2}{-p^2-\ii0}\Big)^{\varepsilon}\\
+&\phantom{=\sla p\,\Sigma_V(p^2),\qquad \Sigma_V(p^2)}=-\frac{\as C_F}{4\pi}\Big[\frac1\varepsilon+1+\ln\frac{\mu^2}{-p^2-\ii0}+O(\varepsilon)\Big]
+\end{aligned}
+\end{equation}
+（已用 $\MSbar$ 的 $g_0^2=4\pi\as\mu^{2\varepsilon}S_\varepsilon^{-1}$）。它的紫外极点 $-\frac{\as C_F}{4\pi\varepsilon}$ 正是 Feynman 规范的 $\MSbar$ 常数 $\delta Z_2=-\frac{\as C_F}{4\pi\varepsilon}$。在壳（$p^2\to0$）时 $\Sigma_V(0)$ 是无标度积分，由\cref{lem:prelim-scaleless}为零；按来源记账，$\Sigma_V(0)=-\frac{\as C_F}{4\pi}\big(\frac1{\varepsilon_{\mathrm{UV}}}-\frac1{\varepsilon_{\mathrm{IR}}}\big)$。因此裸传播子 $\ii/[\sla p(1-\Sigma_V)]$ 在 $p^2=0$ 处的留数为 $1$：在维数正规化中 $Z_2^{\mathrm{OS}}=1$（每一阶的在壳修正都是无标度的），用裸场写出的振幅外腿不带任何修正。若改用 $\MSbar$ 重整化的场，外腿留数为 $Z_2^{\mathrm{OS}}/Z_2=1+\frac{\as C_F}{4\pi\varepsilon}$：原来的紫外抵消项现在代表一个红外极点。Sudakov 形状因子（\cref{prop:sudakov-oneloop}，第~5~章）的全部极点因此都是红外的。
+\par
+(ii) \emph{夸克中的夸克分布。}无质量在壳夸克的单圈实辐射图正比于
+\begin{equation}\label{eq:prelim-lT-scaleless}
+\int\frac{\dd^{2-2\varepsilon}\mathbf l_{\mathrm T}}{\mathbf l_{\mathrm T}^2}
+=\underbrace{\int\frac{\dd^{2-2\varepsilon}\mathbf l_{\mathrm T}}{\mathbf l_{\mathrm T}^2+M^2}}_{\pi^{1-\varepsilon}\Gamma(1+\varepsilon)M^{-2\varepsilon}/\varepsilon_{\mathrm{UV}}}
++\underbrace{\int\dd^{2-2\varepsilon}\mathbf l_{\mathrm T}\,\frac{M^2}{\mathbf l_{\mathrm T}^2(\mathbf l_{\mathrm T}^2+M^2)}}_{-\pi^{1-\varepsilon}\Gamma(1+\varepsilon)M^{-2\varepsilon}/\varepsilon_{\mathrm{IR}}}
+=\pi^{1-\varepsilon}\Gamma(1+\varepsilon)M^{-2\varepsilon}\Big(\frac1{\varepsilon_{\mathrm{UV}}}-\frac1{\varepsilon_{\mathrm{IR}}}\Big)=0, % VF-PDF-5
+\end{equation}
+其中辅助标度 $M$ 任意（第一个积分在 $\varepsilon>0$ 处收敛，第二个在 $\varepsilon<0$ 处收敛），虚修正图同样无标度。所以裸分布 $f^{\mathrm{bare}}_{q/q}(\xi)=\delta(1-\xi)$ 对一切阶成立；$\MSbar$ 重整化只减去紫外极点，留下
+\[
+f_{q/q}(\xi;\mu)=\delta(1-\xi)-\frac{\as}{2\pi}\frac1\varepsilon P_{qq}(\xi)+O(\as^2),
+\]
+其中剩下的 $1/\varepsilon$ 是红外极点（\cref{prop:pdf-partonic-dr}，第~8~章）。
+\uses{lem:prelim-scaleless,def:prelim-dr-conventions}
+\end{example}
+
+在计算部分子系数函数时，正是 (ii) 中的红外极点与部分子截面的共线极点相消；弄错它们的来源是共线减除中符号错误的经典来源（见\cref{sec:prelim-cuts}末的“常见误解”）。维数正规化并不“消除”红外发散，只是把它也表示成 $1/\varepsilon$ 极点。
+
+\begin{definition}[$\gamma_5$ 与 $\epsilon$ 张量]\label{def:prelim-gamma5}
+$\gamma_5=\ii\gamma^0\gamma^1\gamma^2\gamma^3$，Levi-Civita 张量取 $\epsilon^{0123}=+1$（于是 $\epsilon_{0123}=-1$），从而
+\begin{equation}\label{eq:prelim-trace-g5}
+\Tr(\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma\gamma_5)=-4\ii\,\epsilon^{\mu\nu\rho\sigma}. % VF-CONV-10
+\end{equation}
+横向张量为 $g_\perp^{\mu\nu}=g^{\mu\nu}-n_A^\mu n_B^\nu-n_B^\mu n_A^\nu$ 与 $\epsilon_\perp^{\mu\nu}=\epsilon^{\mu\nu\rho\sigma}n_{A\rho}n_{B\sigma}$，$\epsilon_\perp^{12}=+1$。在维数正规化中采用 HVBM 方案（'t Hooft--Veltman~\cite{tHooftVeltman1972}、Breitenlohner--Maison~\cite{BreitenlohnerMaison1977a}）并配合 Larin~\cite{Larin:1993tq}对轴矢流的有限重整化（附录~I）；在本书约定下，Larin 方案中轴矢流的写法为
+\begin{equation}\label{eq:prelim-larin}
+\gamma^\mu\gamma_5=-\frac{\ii}{6}\,\epsilon^{\mu\nu\rho\sigma}\gamma_\nu\gamma_\rho\gamma_\sigma . % VF-CONV-24
+\end{equation}
+\uses{def:qcd-dimreg}
+\end{definition}
+
+\cref{eq:prelim-trace-g5,eq:prelim-larin}在 $4$ 维中已对全部指标组合用显式 $4\times4$ 矩阵核对。文献中常见的 $\gamma_\mu\gamma_5=\frac{\ii}{6}\epsilon_{\mu\nu\rho\sigma}\gamma^\nu\gamma^\rho\gamma^\sigma$ 以 $\epsilon_{0123}=+1$ 为前提，与本书相反，照抄会得到错误的整体符号；引用 $\epsilon$ 张量公式时都要先核对约定（例如 Vanderhaeghen、Guichon 与 Guidal~\cite{Vanderhaeghen:1999xj}采用 $\epsilon_{0123}=+1$）。

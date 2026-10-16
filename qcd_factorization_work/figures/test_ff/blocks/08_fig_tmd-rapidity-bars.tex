@@ -1,0 +1,77 @@
+%%% BEGIN fig:tmd-rapidity-bars
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff A/.style={draw=blue!55!black,fill=blue!18,line width=0.6pt},
+  ff B/.style={draw=orange!70!black,fill=orange!22,line width=0.6pt},
+  ff S/.style={draw=green!45!black,fill=green!18,line width=0.6pt},
+  ff Sneg/.style={draw=green!45!black,line width=0.6pt,pattern=north east lines,pattern color=green!45!black},
+  ff tot/.style={draw=black!55,fill=black!10,line width=0.6pt},
+  ff row/.style={font=\footnotesize,anchor=east,inner sep=1pt},
+  ff w/.style={font=\scriptsize,anchor=west,inner sep=1pt,text=black!70},
+  ff ttl/.style={font=\small,anchor=west,inner sep=0pt},
+  ff guide/.style={draw=gray!55,line width=0.4pt,dash pattern=on 1pt off 1.8pt}]
+  % rapidity positions (schematic):  y_B < y_PB < y_n < y_PA < y_A
+  \def\yB{0.6}\def\yPB{2.9}\def\yn{5.5}\def\yPA{8.1}\def\yA{10.4}
+  \def\hf{0.30}\def\hh{0.15}
+  % ---- guides
+  \foreach \x in {\yB,\yPB,\yn,\yPA,\yA} \draw[ff guide] (\x,0.55) -- (\x,-5.95);
+  % ================================================================ (a)
+  \node[ff ttl] at (-3.55,0.82) {(a)\ 未减除关联函数之积除以软因子};
+  \fill[ff A] (\yB,-\hf/2) rectangle (\yPA,\hf/2);            \draw[ff A,fill=none] (\yB,-\hf/2) rectangle (\yPA,\hf/2);
+  \node[ff row] at (-0.15,0) {$\tilde f_A^{\,\rm unsub}(y_B)$};      \node[ff w] at (10.55,0) {$+1$};
+  \begin{scope}[yshift=-0.55cm]
+    \draw[ff B] (\yPB,-\hf/2) rectangle (\yA,\hf/2);
+    \node[ff row] at (-0.15,0) {$\tilde f_B^{\,\rm unsub}(y_A)$};    \node[ff w] at (10.55,0) {$+1$};
+  \end{scope}
+  \begin{scope}[yshift=-1.1cm]
+    \draw[ff Sneg] (\yB,-\hf/2) rectangle (\yA,\hf/2);
+    \node[ff row] at (-0.15,0) {$1/\tilde S(y_A,y_B)$};             \node[ff w] at (10.55,0) {$-1$};
+  \end{scope}
+  \draw[black!60,line width=0.5pt] (-3.4,-1.45) -- (11.2,-1.45);
+  \begin{scope}[yshift=-1.8cm]
+    \draw[ff tot] (\yPB,-\hf/2) rectangle (\yPA,\hf/2);
+    \node[font=\scriptsize,text=black!75] at ({(\yPB+\yPA)/2},0) {每个快度恰好计入一次};
+    \node[ff row] at (-0.15,0) {$\tilde f_A^{\,\rm unsub}\tilde f_B^{\,\rm unsub}/\tilde S$};
+  \end{scope}
+  % ================================================================ (b)
+  \node[ff ttl] at (-3.55,-2.55) {(b)\ 平方根构造：在 $y_n$ 处分割（$B$ 同理）};
+  \begin{scope}[yshift=-3.05cm]
+    \draw[ff A] (\yB,-\hf/2) rectangle (\yPA,\hf/2);
+    \node[ff row] at (-0.15,0) {$\tilde f_A^{\,\rm unsub}(y_B)$};    \node[ff w] at (10.55,0) {$+1$};
+  \end{scope}
+  \begin{scope}[yshift=-3.6cm]
+    \draw[ff S] (\yn,-\hh/2) rectangle (\yA,\hh/2);
+    \node[ff row] at (-0.15,0) {$\sqrt{\tilde S(y_A,y_n)}$};        \node[ff w] at (10.55,0) {$+\tfrac12$};
+  \end{scope}
+  \begin{scope}[yshift=-4.1cm]
+    \draw[ff Sneg] (\yB,-\hh/2) rectangle (\yA,\hh/2);
+    \node[ff row] at (-0.15,0) {$1/\sqrt{\tilde S(y_A,y_B)}$};      \node[ff w] at (10.55,0) {$-\tfrac12$};
+  \end{scope}
+  \begin{scope}[yshift=-4.6cm]
+    \draw[ff Sneg] (\yB,-\hh/2) rectangle (\yn,\hh/2);
+    \node[ff row] at (-0.15,0) {$1/\sqrt{\tilde S(y_n,y_B)}$};      \node[ff w] at (10.55,0) {$-\tfrac12$};
+  \end{scope}
+  \draw[black!60,line width=0.5pt] (-3.4,-4.93) -- (11.2,-4.93);
+  \begin{scope}[yshift=-5.3cm]
+    \draw[ff B] (\yPB,-\hf/2) rectangle (\yn,\hf/2);
+    \draw[ff A] (\yn,-\hf/2) rectangle (\yPA,\hf/2);
+    \node[font=\footnotesize] at ({(\yPB+\yn)/2},0) {$\tilde f_B$};
+    \node[font=\footnotesize] at ({(\yn+\yPA)/2},0) {$\tilde f_A$};
+    \node[ff row] at (-0.15,0) {Collins 定义的 $\tilde f_B$、$\tilde f_A$};
+    \draw[draw=red!60!black,line width=0.7pt,-{Stealth[length=4pt,width=3.4pt]}] (\yn,0.27) -- (\yn+0.75,0.27);
+    \node[font=\scriptsize,anchor=west,text=red!50!black,inner sep=1pt] at (\yPA+0.12,0) {$\partial\ln\tilde f_A/\partial y_n=-\tilde K$};
+  \end{scope}
+  % ================================================================ rapidity axis
+  \draw[lcaxis] (-0.2,-5.95) -- (11.25,-5.95) node[right=1pt] {$y$};
+  \foreach \x/\t in {\yB/{y_B},\yPB/{y_{P_B}},\yn/{y_n},\yPA/{y_{P_A}},\yA/{y_A}} {
+    \draw[line width=0.5pt] (\x,-5.95) -- ++(0,0.07); \node[font=\footnotesize,below] at (\x,-5.98) {$\t$};}
+\end{tikzpicture}
+\caption{快度覆盖与平方根构造（\cref{lem:tmd-sqrt-identity}；示意）。横轴为快度 $y$，$y_B<y_{P_B}<y_n<y_{P_A}<y_A$：$y_{P_A}$、$y_{P_B}$ 为两个强子的快度，$y_A$、$y_B$ 为 Wilson 线的快度正规子（最终 $y_A\to+\infty$、$y_B\to-\infty$）。
+横条表示各因子所含软辐射的快度范围，条高为它在对数中的权重（实心为正，斜线为负，半高为 $\pm\frac12$）。
+(a)~$\tilde f_A^{\,\rm unsub}(y_B)$ 覆盖 $[y_B,y_{P_A}]$，$\tilde f_B^{\,\rm unsub}(y_A)$ 覆盖 $[y_{P_B},y_A]$，除以覆盖 $[y_B,y_A]$ 的软因子后每个快度恰好计入一次。
+(b)~Collins 定义 $\tilde f_A=\tilde f_A^{\,\rm unsub}(y_B)\sqrt{\tilde S(y_A,y_n)/[\tilde S(y_A,y_B)\tilde S(y_n,y_B)]}$ 只保留 $[y_n,y_{P_A}]$，$\tilde f_B$ 保留 $[y_{P_B},y_n]$；乘积 $\tilde f_A\tilde f_B=\tilde f_A^{\,\rm unsub}\tilde f_B^{\,\rm unsub}/\tilde S(y_A,y_B)$ 与 $y_n$ 无关，这是精确的代数恒等式（VF-REF-13）。
+在渐近线性 $\ln\tilde S(y_1,y_2)\simeq a_S+(y_1-y_2)\tilde K$（\cref{asm:appN-tmd} 的 (T2)）之下每单位快度贡献 $\tilde K$，故 $\partial\ln\tilde f_A/\partial y_n=-\tilde K$，即 Collins--Soper 方程。}
+\label{fig:tmd-rapidity-bars}
+\end{figure}
+%%% END fig:tmd-rapidity-bars

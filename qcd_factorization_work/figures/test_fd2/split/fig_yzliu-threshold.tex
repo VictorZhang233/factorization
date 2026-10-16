@@ -1,0 +1,70 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 hadron/.style={bound state,line cap=butt},
+  fd2 hv/.style={hard blob,circle,minimum size=0.42cm,inner sep=0pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ======================= (a) DIS at x -> 1 =======================
+  \begin{scope}
+    % remnant and soft radiation between jet and remnant
+    \draw[draw=gray!60!black,line width=0.8pt] (1.45,-0.28) -- (4.85,-0.98);
+    \draw[fd2 soft] (3.98,1.12) -- (3.82,-0.76);
+    \draw[fd2 soft] (4.55,1.46) -- (4.5,-0.9);
+    % struck quark, photon, outgoing jet
+    \draw[quark=0.5] (1.5,0.1) -- (2.95,0.38);
+    \draw[photon] (2.45,1.75) -- (2.95,0.38);
+    \draw[quark=0.6] (2.95,0.38) -- (3.6,1.06);
+    \node[jetB blob,ellipse,minimum width=1.75cm,minimum height=0.5cm,inner sep=0pt,rotate=40] at (4.12,1.55) {};
+    \node[fd2 hv] at (2.95,0.38) {};
+    % target
+    \draw[fd2 hadron] (-0.75,0) -- (0.3,0);
+    \node[hadron blob,ellipse,minimum width=1.3cm,minimum height=0.85cm,inner sep=0pt] at (0.9,0) {$f$};
+    % labels
+    \node[fd2 note,anchor=south] at (-0.25,0.05) {$P$};
+    \node[fd2 note,anchor=north] at (2.15,0.12) {$xP$};
+    \node[fd2 note,anchor=east] at (2.45,1.6) {$q$};
+    \node[fd2 note,anchor=north west] at (3.02,0.3) {$H$};
+    \node[fd2 note,anchor=south west] at (4.6,2.02) {窄喷注 $J$};
+    \node[fd2 note,anchor=north,text=green!30!black] at (4.15,-1.08) {软辐射 $S$};
+    \node[fd2 note,anchor=north east,text=gray!35!black] at (2.6,-0.55) {残余 $(1-x)P$};
+    \node[fd2 note,align=center] at (2.05,-1.95) {$H$：$Q^2$；\ $J$：$p_J^2\sim(1-x)Q^2$；\ $S$：能量 $\sim(1-x)Q$};
+    \node[fd2 lab] at (2.05,-2.6) {(a)\ $x\to1$ 的 DIS};
+  \end{scope}
+  % ======================= (b) quasi-PDF kernel at xi -> 1 =======================
+  \begin{scope}[xshift=9.25cm]
+    \draw[fd2 ax] (-2.3,1.0) -- (-1.7,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (-2.3,1.0) -- (-2.3,1.6) node[above=-1pt,fd2 note] {$t$};
+    % space-like jet function: link + semi-hard gluons (dashed box)
+    \draw[region] (-0.95,-1.05) rectangle (3.95,1.05);
+    \draw[fd2 soft] (-0.62,-0.62) .. controls (-0.05,-0.82) and (0.85,-0.62) .. (1.15,0);
+    \draw[fd2 soft] (1.85,0) .. controls (2.15,0.62) and (3.0,0.82) .. (3.62,0.62);
+    \draw[wilson=0.42] (0,0) -- (3.0,0);
+    % collinear quark: in along n at 0, out along n at z
+    \draw[quark=0.55] (-1.35,-1.35) -- (0,0);
+    \draw[quark=0.5] (3.0,0) -- (4.35,1.35);
+    \node[fd2 hv] at (0,0) {};
+    \node[fd2 hv] at (3.0,0) {};
+    % labels
+    \node[fd2 note,anchor=south east] at (-1.02,-1.0) {$p$};
+    \node[fd2 note,anchor=east] at (-0.25,0.02) {$H$};
+    \node[fd2 note,anchor=north west] at (3.1,-0.1) {$H$};
+    \node[fd2 note,anchor=south] at (0.0,0.22) {$0$};
+    \node[fd2 note,anchor=south] at (3.0,0.2) {$z$};
+    \node[fd2 note,anchor=north] at (2.35,-0.14) {$W[z\hat e_z,0]$};
+    \node[fd2 note,anchor=south west,text=gray!35!black] at (-0.95,1.07) {虚线框：类空喷注函数 $\tilde J$};
+    \node[fd2 note,align=center] at (1.5,-1.95) {$H$：硬，$\zeta_z=4p_z^2$；\ 绿色：半硬胶子，$|1-\xi|\,p^z$};
+    \node[fd2 lab] at (1.5,-2.6) {(b)\ $\xi\to1$ 的准 PDF 匹配核};
+  \end{scope}
+  % ======================= threshold factorization =======================
+  \node[fd2 lab] at (6.85,-3.55) {$C\Big(\xi,\dfrac{p^z}{\mu}\Big)\Big|_{\xi\to1}=H\Big(\dfrac{4p_z^2}{\mu^2}\Big)\,p^z\,J_f\Big(\dfrac{(1-\xi)p^z}{\mu},\dfrac{4p_z^2}{\mu^2}\Big)\big[1+\order{1-\xi}\big]$，\quad $J_f=\tilde J\,\ee^{\ii\,\mathrm{sgn}(z)A}$};
+\end{tikzpicture}
+\caption{阈值因子化的时空图像（示意）。
+(a)~$x\to1$ 的 DIS：被击出的夸克在硬顶点 $H$ 吸收虚光子后形成窄喷注 $J$，喷注与靶残余之间只有软辐射 $S$。
+(b)~$\xi\to1$ 的准 PDF 匹配核（$\Gamma=\gamma^0$，$\MSbar$，非单态）：共线夸克（动量 $p$，沿类光方向；细线箭头为费米子数流向）在类空 Wilson 线 $W[z\hat e_z,0]$（双线，箭头为路径方向）的两个连接点处发生硬相互作用（灰色顶点 $H$，标度 $\zeta_z=4p_z^2$），并与静态规范线交换半硬胶子（绿色，标度 $|1-\xi|p^z$）；虚线框内的部分组成类空喷注函数 $\tilde J$，乘上相位因子后为 $J_f$。
+$H$ 与准 TMD 因子化中的硬核相同（\cref{thm:yzliu-threshold}，全阶论证 [A]；VF-LAM-14，VF-YZL-9）。
+这一因子化形式在单圈精确成立；精确的两圈核在阈值极限下与它的全部 41 个奇异项相容（其中两个常数由比较定出）。}
+\label{fig:yzliu-threshold}
+\end{figure}

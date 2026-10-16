@@ -1,0 +1,1130 @@
+% =====================================================================
+%  figures2.tex  --  TikZ figure set 2 of the QCD factorization monograph
+%  (IR structure, momentum regions, e+e-, Ward identities, Drell--Yan,
+%   Glauber region, SCET).
+%  Requirements: preamble_fact.tex (ctexbook, XeLaTeX) -- it already loads
+%  tikz + the libraries decorations.pathmorphing, decorations.markings,
+%  arrows.meta, calc, positioning, shapes.geometric, patterns, backgrounds,
+%  fit, pgfplots, and contains the style blocks of common/fd_styles.tex and
+%  common/fd_styles_ext.tex.  All extra styles below are local to their
+%  tikzpicture and carry the prefix "t2".
+%  Each figure is delimited by  %%% BEGIN <label>  /  %%% END <label>.
+% =====================================================================
+
+%%% BEGIN fig:landau-pinch
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  t2 contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  t2 contour/.default=0.5,
+  t2 move/.style={draw=gray!65!black,line width=0.6pt,dash pattern=on 2pt off 1.5pt,-{Stealth[length=4pt,width=3.4pt]}},
+  t2 ax/.style={lcaxis,gray!60!black},
+  t2 lab/.style={font=\footnotesize,text=black!80}]
+  % ---------------- (a) poles on the same side: deformable ----------------
+  \begin{scope}
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.52] (-1.85,0) -- (-1.35,0) .. controls (-0.95,0) and (-0.85,0.82) .. (0,0.82)
+         .. controls (0.85,0.82) and (0.95,0) .. (1.35,0) -- (1.85,0);
+    \pic at (-0.55,-0.40) {t2 pole};  \pic at (0.62,-0.30) {t2 pole};
+    \draw[t2 move] (-0.75,-1.05) -- (-0.59,-0.52);
+    \draw[t2 move] (0.95,-1.0) -- (0.67,-0.42);
+    \node[t2 lab,anchor=west] at (0.62,0.78) {形变后的围道};
+    \node at (0,-1.75) {(a)\ 同侧：围道可形变避开};
+  \end{scope}
+  % ---------------- (b) poles on opposite sides: pinch ----------------
+  \begin{scope}[xshift=5.25cm]
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.8] (-1.85,0) -- (1.85,0);
+    \pic at (0.16,0.2) {t2 pole};  \pic at (-0.16,-0.2) {t2 pole};
+    \draw[t2 move] (0.95,0.95) -- (0.27,0.3);
+    \draw[t2 move] (-0.95,-0.95) -- (-0.27,-0.3);
+    \node[t2 lab,anchor=north] at (0.75,-0.18) {钳夹点};
+    \node at (0,-1.75) {(b)\ 异侧相向趋近：围道被钳住};
+  \end{scope}
+  % ---------------- (c) endpoint ----------------
+  \begin{scope}[xshift=10.5cm]
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.6] (-1.1,0) .. controls (-0.95,0.55) and (-0.45,0.72) .. (0.25,0.72)
+         .. controls (0.95,0.72) and (1.2,0) .. (1.85,0);
+    \fill (-1.1,0) circle[radius=1.9pt];
+    \node[below left=-1pt] at (-1.1,0) {$a$};
+    \node[t2 lab,anchor=south east] at (-1.12,0.08) {固定端点};
+    \pic at (-0.9,-0.24) {t2 pole};
+    \draw[t2 move] (-0.25,-0.95) -- (-0.8,-0.33);
+    \node[t2 lab,anchor=west] at (-0.2,-0.95) {趋近端点};
+    \node at (0,-1.75) {(c)\ 端点：无法避开};
+  \end{scope}
+\end{tikzpicture}
+\caption{复 $k^-$ 平面中积分围道（蓝色）的形变与 Landau 奇异性。灰色虚箭头表示外部参数趋近奇异点（或 $\ii0\to0$）时极点的移动方向。
+(a)~两个极点位于实轴同侧（此处都在下半平面）：即使它们趋近实轴，围道也可以向另一侧（上半平面）形变而远离极点，积分保持解析；
+(b)~两个极点从实轴两侧相向趋近同一点：围道被夹在两者之间，无论向哪一侧形变都要越过一个极点，这就是 Landau 方程所刻画的钳夹（pinch）奇异性；
+(c)~极点趋近积分区间的端点 $a$：端点不能移动，围道在端点附近无法避开极点，产生端点奇异性。
+只有 (b)、(c) 两种情形可能使积分作为外部参数的函数出现奇异性。多维积分中，奇异性要求积分围道（超曲面）在所有方向上都无法形变避开奇点，由此导出 Landau 方程。}
+\label{fig:landau-pinch}
+\end{figure}
+%%% END fig:landau-pinch
+
+%%% BEGIN fig:vertex-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 soft/.style={draw=green!45!black},
+  t2 jetA/.style={draw=blue!55!black,fill=blue!10,line width=0.5pt},
+  t2 jetB/.style={draw=orange!75!black,fill=orange!14,line width=0.5pt},
+  t2 hard/.style={draw=black!70,fill=gray!35,line width=0.6pt},
+  t2 lab/.style={font=\footnotesize}]
+  % common geometry:  V = photon vertex,  E1/E2 = ends of the q / qbar legs,  G1/G2 = gluon vertices
+  % ======================= (a) soft gluon =======================
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.62!(E1)$); \coordinate (G2) at ($(V)!0.62!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetA,rotate around={28:($(V)!0.52!(E1)$)}] ($(V)!0.52!(E1)$) ellipse[x radius=1.55cm,y radius=0.27cm];
+      \draw[t2 jetB,rotate around={-28:($(V)!0.52!(E2)$)}] ($(V)!0.52!(E2)$) ellipse[x radius=1.55cm,y radius=0.27cm];
+    \end{scope}
+    \draw[photon] (-1.15,0) -- (V);
+    \draw[quark] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon,t2 soft] (G2) -- (G1);
+    \filldraw[t2 hard] (V) circle[radius=0.15];
+    \foreach \p in {G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.15,0);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) -- (G1);
+    \node[t2 lab,text=green!40!black,anchor=east] at ($(G1)!0.5!(G2)+(-0.16,0)$) {$S$};
+    \node at (0.75,-2.05) {(a)\ 软区：$k\to0$};
+  \end{scope}
+  % ======================= (b) gluon collinear to q =======================
+  \begin{scope}[xshift=5.2cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.8!(E1)$); \coordinate (G2) at ($(V)!0.12!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetA,rotate around={31:($(V)!0.5!(E1)+(0.05,-0.12)$)}] ($(V)!0.5!(E1)+(0.05,-0.12)$) ellipse[x radius=1.6cm,y radius=0.5cm];
+      \draw[t2 jetB,rotate around={-28:($(V)!0.62!(E2)$)}] ($(V)!0.62!(E2)$) ellipse[x radius=1.15cm,y radius=0.24cm];
+    \end{scope}
+    \draw[quark=0.35] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[plain] (G2) -- (V);
+    \draw[gluon] (G2) .. controls ($(V)!0.42!(E1)+(0.22,-0.5)$) and ($(V)!0.62!(E1)+(0.12,-0.38)$) .. (G1);
+    \filldraw[t2 hard] ($(V)!0.5!(G2)$) circle[radius=0.33];
+    \draw[photon] (-1.15,0) -- ($(V)!0.5!(G2)+(-0.33,0.03)$);
+    \foreach \p in {G1} \node[vertex] at (\p) {};
+    \node[t2 lab] at ($(V)!0.5!(G2)$) {$H$};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.3,0);
+    \path[mom={$p_1$},mom pos=0.55] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) .. controls ($(V)!0.42!(E1)+(0.22,-0.5)$) and ($(V)!0.62!(E1)+(0.12,-0.38)$) .. (G1);
+    \node[t2 lab,text=blue!50!black] at (0.95,1.25) {$J_1$};
+    \node at (0.75,-2.05) {(b)\ $k\parallel p_1$};
+  \end{scope}
+  % ======================= (c) gluon collinear to qbar =======================
+  \begin{scope}[xshift=10.4cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.12!(E1)$); \coordinate (G2) at ($(V)!0.8!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetB,rotate around={-31:($(V)!0.5!(E2)+(0.05,0.12)$)}] ($(V)!0.5!(E2)+(0.05,0.12)$) ellipse[x radius=1.6cm,y radius=0.5cm];
+      \draw[t2 jetA,rotate around={28:($(V)!0.62!(E1)$)}] ($(V)!0.62!(E1)$) ellipse[x radius=1.15cm,y radius=0.24cm];
+    \end{scope}
+    \draw[plain] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark=0.65] (G2) -- (V);
+    \draw[gluon] (G1) .. controls ($(V)!0.42!(E2)+(0.22,0.5)$) and ($(V)!0.62!(E2)+(0.12,0.38)$) .. (G2);
+    \filldraw[t2 hard] ($(V)!0.5!(G1)$) circle[radius=0.33];
+    \draw[photon] (-1.15,0) -- ($(V)!0.5!(G1)+(-0.33,-0.03)$);
+    \foreach \p in {G2} \node[vertex] at (\p) {};
+    \node[t2 lab] at ($(V)!0.5!(G1)$) {$H$};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.3,0);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G2) -- (E2);
+    \path[mom={$-k$},mom sep=0.3cm] (G1) .. controls ($(V)!0.42!(E2)+(0.22,0.5)$) and ($(V)!0.62!(E2)+(0.12,0.38)$) .. (G2);
+    \node[t2 lab,text=orange!60!black] at (0.95,-1.25) {$J_2$};
+    \node at (0.75,-2.05) {(c)\ $k\parallel p_2$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈无质量顶点 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$ 的三个钳夹面（领头区域）。胶子动量 $k$ 由反夸克线流向夸克线，
+内夸克线携带 $p_1-k$，内反夸克线携带 $p_2+k$。
+(a)~软区 $k\to0$：两条内费米子线在壳并分别平行于 $p_1$、$p_2$（蓝、橙色区域为两个喷注），零动量胶子（绿色）构成软子图 $S$，硬部分只剩光子顶点；
+(b)~$k=\alpha p_1$（$0<\alpha<1$）：胶子与内夸克线都在壳且平行于 $p_1$，同属喷注 $J_1$，而内反夸克线的虚度 $(p_2+\alpha p_1)^2=\alpha q^2$ 不小，收缩进硬部分 $H$；
+(c)~$k=-\beta p_2$（$0<\beta<1$）：与 (b) 镜像对称，胶子携带物理动量 $-k=\beta p_2$ 沿 $p_2$ 方向运动并属于 $J_2$，内夸克线的虚度 $(p_1+\beta p_2)^2=\beta q^2$ 不小。
+费米子线上的箭头表示费米子数流向，动量箭头单独画出。}
+\label{fig:vertex-regions}
+\end{figure}
+%%% END fig:vertex-regions
+
+%%% BEGIN fig:coleman-norton
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 cone/.style={draw=gray!60,line width=0.5pt,dash pattern=on 3pt off 2pt},
+  t2 soft/.style={draw=green!45!black,line width=0.85pt,decorate,
+      decoration={fd photon,amplitude=0.9mm,segment length=17mm}},
+  t2 lab/.style={font=\footnotesize}]
+  % axes and light cone  (x^\pm=(t\pm z)/\sqrt2)
+  \draw[lcaxis] (-3.9,0) -- (4.0,0) node[below] {$z$};
+  \draw[lcaxis] (0,-1.45) -- (0,3.85) node[left] {$t$};
+  \draw[t2 cone] (0,0) -- (3.6,3.6) node[above right=-2pt,text=gray!50!black,font=\footnotesize] {$x^-=0$};
+  \draw[t2 cone] (0,0) -- (-3.6,3.6) node[above left=-2pt,text=gray!50!black,font=\footnotesize] {$x^+=0$};
+  % incoming virtual photon at rest (world line along t)
+  \draw[photon] (0,-1.3) -- (0,-0.17);
+  \node[t2 lab,anchor=west] at (0.1,-0.95) {$\gamma^*$（静止）};
+  % jet 1: quark along x^-=0, with a collinear gluon emitted at P1
+  \draw[quark=0.22] (0.11,0.11) -- (3.15,3.15);
+  \coordinate (P1) at (1.95,1.95);
+  \draw[gluon] (P1) -- (2.78,3.22);
+  \node[vertex] at (P1) {};
+  % jet 2: antiquark along x^+=0 (fermion-number arrow towards the vertex), collinear gluon at P2
+  \draw[quark=0.8] (-3.15,3.15) -- (-0.11,0.11);
+  \coordinate (P2) at (-1.95,1.95);
+  \draw[gluon] (P2) -- (-2.78,3.22);
+  \node[vertex] at (P2) {};
+  % soft (zero-momentum, long-wavelength) gluon exchanged between the jets
+  \coordinate (S1) at (1.3,1.3); \coordinate (S2) at (-1.25,1.25);
+  \draw[t2 soft] (S2) -- (S1);
+  \node[vertex] at (S1) {}; \node[vertex] at (S2) {};
+  \node[t2 lab,text=green!35!black,anchor=south] at (-0.66,1.38) {软胶子};
+  % hard vertex
+  \filldraw[hard blob] (0,0) circle[radius=0.16];
+  \node[t2 lab,anchor=north west] at (0.15,-0.05) {$H$};
+  % jet labels
+  \node[t2 lab,anchor=west,align=left] at (2.2,1.1) {$q$ 喷注：$\Delta x^\mu=\alpha\,p_1^\mu$\\（沿光锥 $x^-=0$）};
+  \node[t2 lab,anchor=east,align=right] at (-2.2,1.1) {$\bar q$ 喷注：$\Delta x^\mu=\alpha\,p_2^\mu$\\（沿光锥 $x^+=0$）};
+\end{tikzpicture}
+\caption{Coleman--Norton 定理的时空图像（$e^+e^-$ 湮灭，$\gamma^*$ 静止系，$z$ 轴取为喷注轴，$x^\pm=(t\pm z)/\sqrt2$）。钳夹面上每条在壳内线 $i$
+对应一段经典自由传播 $\Delta x_i^\mu=\alpha_i l_i^\mu$（$\alpha_i\ge0$，与该线的 Feynman 参数成正比）；由 Landau 方程，各顶点的时空位置彼此相容。离壳（硬）线的 $\alpha_i=0$，全部收缩为原点处的硬顶点 $H$；
+有限动量的无质量共线粒子沿光锥 $x^-=0$（$q$ 喷注）或 $x^+=0$（$\bar q$ 喷注）以光速运动，并可在同一光线上任意处分裂或重新结合（图中共线胶子与夸克线的夹角是为了看清而夸大的）。
+动量为零的软线（绿色长波长线）不受此约束：它在 Landau 方程中的贡献 $\alpha_i l_i^\mu$ 恒为零，与 $\alpha_i$ 无关；物理上它是波长无限长、不能局域化的量子，可以在两个喷注的任意位置被发射或吸收。
+绿线只是示意：它连接的两点一般是类空间隔的。}
+\label{fig:coleman-norton}
+\end{figure}
+%%% END fig:coleman-norton
+
+%%% BEGIN fig:reduced-ee
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small}]
+  \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[jet blob,ellipse,minimum width=3.3cm,minimum height=0.86cm] (J1) at (0, 1.6) {};
+  \node[jetB blob,ellipse,minimum width=3.3cm,minimum height=0.86cm] (J2) at (0,-1.6) {};
+  \node[soft blob,circle,minimum size=0.8cm,inner sep=0pt] (S) at (0,0) {};
+  % photons
+  \draw[photon] (-4.25,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (4.25,0);
+  \path[mom={$q$},mom sep=0.28cm] (-4.25,0) -- (H.west);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.east) -- (4.25,0);
+  % fermion lines: H -> J1 -> H^dagger -> J2 -> H
+  \draw[quark] (H.65) -- (J1.188);
+  \draw[quark] (J1.352) -- (Hd.115);
+  \draw[quark] (Hd.245) -- (J2.8);
+  \draw[quark] (J2.172) -- (H.295);
+  % soft gluons (to both jets, on both sides of the cut)
+  \draw[gluon] (S.152) -- (-0.92,1.2);
+  \draw[gluon] (S.28) -- (0.92,1.2);
+  \draw[gluon] (S.208) -- (-0.92,-1.2);
+  \draw[gluon] (S.332) -- (0.92,-1.2);
+  % cut
+  \draw[cut] (0,2.45) -- (0,-2.45);
+  % labels
+  \node[t2 lab] at (-0.85,1.6) {$J_1$};
+  \node[t2 lab] at (-0.85,-1.6) {$J_2$};
+  \node[t2 lab,anchor=east] at ($(S.west)+(-0.04,0)$) {$S$};
+  \node[t2 lab,anchor=north east] at (H.south west) {$H$};
+  \node[t2 lab,anchor=north west] at (Hd.south east) {$H^\dagger$};
+  \node[font=\footnotesize,anchor=west] at (1.75,1.95) {沿 $p_1$};
+  \node[font=\footnotesize,anchor=west] at (1.75,-1.95) {沿 $p_2$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south] at (0,2.45) {末态切割};
+\end{tikzpicture}
+\caption{$e^+e^-\to$ 两喷注的约化割图（领头钳夹面）。$H$（振幅）与 $H^\dagger$（共轭振幅）是全部离壳线收缩成的硬点；$J_1$、$J_2$
+是分别沿类光方向 $p_1$、$p_2$ 运动的共线子图（喷注），各以一条物理极化的夸克线与 $H$、$H^\dagger$ 相连，并穿过末态切割（红色虚线）；
+软子图 $S$ 只通过胶子与两个喷注相连，不与硬部分相连，其末态粒子同样穿过切割。在 Feynman 规范下喷注与硬部分之间还可以有任意多条标量（纵向）极化的共线胶子，
+图中未画出（参见\cref{fig:reduced-dis}）。}
+\label{fig:reduced-ee}
+\end{figure}
+%%% END fig:reduced-ee
+
+%%% BEGIN fig:reduced-dis
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  t2 lab/.style={font=\small}]
+  \node[hard blob,ellipse,minimum width=1.15cm,minimum height=0.78cm,inner sep=0pt] (H)  at (-2.6,0.8) {};
+  \node[hard blob,ellipse,minimum width=1.15cm,minimum height=0.78cm,inner sep=0pt] (Hd) at ( 2.6,0.8) {};
+  \node[jetB blob,ellipse,minimum width=3.0cm,minimum height=0.8cm] (J) at (0,2.3) {};
+  \node[jet blob,ellipse,minimum width=5.0cm,minimum height=1.2cm] (A) at (0,-1.55) {};
+  \node[soft blob,circle,minimum size=0.76cm,inner sep=0pt] (S) at (0,0.42) {};
+  % photons
+  \draw[photon] (-4.0,2.05) -- (H.135);
+  \draw[photon] (Hd.45) -- (4.0,2.05);
+  \path[mom={$q$},mom sep=0.28cm] (-4.0,2.05) -- (H.135);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.45) -- (4.0,2.05);
+  % hadron lines
+  \draw[t2 hadron] (-4.6,-1.55) -- (A.west);
+  \draw[t2 hadron] (A.east) -- (4.6,-1.55);
+  % fermion line: A -> H -> J -> H^dagger -> A
+  \draw[quark] (A.165) -- (H.205);
+  \draw[quark] (H.62) -- (J.195);
+  \draw[quark] (J.345) -- (Hd.118);
+  \draw[quark] (Hd.335) -- (A.15);
+  % longitudinally polarized collinear gluons (blue): A -> H, A -> H^dagger
+  \draw[longit] (A.154) -- (H.262);  \longitmark{(A.154)}{(H.262)}
+  \draw[longit] (A.143) -- (H.312);  \longitmark{(A.143)}{(H.312)}
+  \draw[longit] (A.30) -- (Hd.270);  \longitmark{(A.30)}{(Hd.270)}
+  % soft gluons: S -> J and S -> A, on both sides of the cut
+  \draw[gluon] (S.140) -- (-0.72,1.95);
+  \draw[gluon] (S.40)  -- ( 0.72,1.95);
+  \draw[gluon] (S.235) -- (-0.5,-0.97);
+  \draw[gluon] (S.305) -- ( 0.5,-0.97);
+  % cut
+  \draw[cut] (0,3.0) -- (0,-2.45);
+  % labels
+  \node[t2 lab] at (-0.8,2.3) {$J$};
+  \node[t2 lab] at (-1.15,-1.62) {$A$};
+  \node[t2 lab] at (-0.62,0.42) {$S$};
+  \node[t2 lab] at (H) {$H$};
+  \node[t2 lab] at (Hd) {$H^\dagger$};
+  \node[t2 lab,anchor=south] at (-4.35,-1.5) {$P$};
+  \node[t2 lab,anchor=south] at ( 4.35,-1.5) {$P$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south] at (0,3.0) {末态切割};
+  \node[font=\footnotesize,text=blue!55!black,align=center] at (1.2,0.4) {纵向极化\\共线胶子};
+\end{tikzpicture}
+\caption{深度非弹散射（DIS）的约化割图。靶强子 $P$ 的共线子图 $A$（蓝色）跨越末态切割，其中的旁观者（靶残余）穿过切割；
+$H$、$H^\dagger$ 分别是振幅与共轭振幅中的硬子图，与虚光子 $q$ 相连；被击出的夸克形成末态喷注 $J$（沿 $n_B$ 方向）并穿过切割；
+软子图 $S$ 以胶子与 $A$、$J$ 相连。$A$ 与 $H$（以及 $H^\dagger$）之间除一条物理极化的夸克线外，还可以有任意多条标量（纵向）极化、
+即 $\epsilon^\mu\propto k^\mu$ 的共线胶子（蓝色，以圆点标记），它们在幂次计数中不受压低，经 Ward 恒等式后成为 PDF 定义中的 Wilson 线（\cref{fig:ward-identity}）。}
+\label{fig:reduced-dis}
+\end{figure}
+%%% END fig:reduced-dis
+
+%%% BEGIN fig:reduced-dy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  t2 lab/.style={font=\small}]
+  % collinear subgraph A: amplitude part, conjugate part, spectators crossing the cut
+  \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Aa) at (-2.75,-1.05) {};
+  \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Ac) at (-2.75, 1.05) {};
+  \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Ba) at ( 2.75,-1.05) {};
+  \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Bc) at ( 2.75, 1.05) {};
+  \node[hard blob,circle,minimum size=0.66cm,inner sep=0pt] (H)  at (0,-1.3) {};
+  \node[hard blob,circle,minimum size=0.66cm,inner sep=0pt] (Hd) at (0, 1.3) {};
+  \node[soft blob,circle,minimum size=0.84cm,inner sep=0pt] (S) at (0,0) {};
+  % spectators of A and B crossing the cut (fermion number flows from amplitude to conjugate)
+  \draw[quark=0.78] ($(Aa.north)+(-0.3,-0.04)$) -- ($(Ac.south)+(-0.3,0.04)$);
+  \draw[gluon] ($(Aa.north)+(0,0.02)$) -- ($(Ac.south)+(0,-0.02)$);
+  \draw[quark=0.78] ($(Aa.north)+(0.3,-0.04)$) -- ($(Ac.south)+(0.3,0.04)$);
+  \draw[quark=0.78] ($(Ba.north)+(-0.3,-0.04)$) -- ($(Bc.south)+(-0.3,0.04)$);
+  \draw[gluon] ($(Ba.north)+(0,0.02)$) -- ($(Bc.south)+(0,-0.02)$);
+  \draw[quark=0.78] ($(Ba.north)+(0.3,-0.04)$) -- ($(Bc.south)+(0.3,0.04)$);
+  % hadron lines
+  \draw[t2 hadron] (-4.55,-1.65) -- (Aa.200);
+  \draw[t2 hadron] (Ac.160) -- (-4.55,1.65);
+  \draw[t2 hadron] (4.55,-1.65) -- (Ba.340);
+  \draw[t2 hadron] (Bc.20) -- (4.55,1.65);
+  % active partons:  A -> H (quark),  H -> B (antiquark: fermion arrow away from H),  conjugate side mirrored
+  \draw[quark] (Aa.345) -- (H.185);
+  \draw[quark] (H.355) -- (Ba.195);
+  \draw[quark] (Bc.165) -- (Hd.5);
+  \draw[quark] (Hd.175) -- (Ac.15);
+  % virtual photon (current insertions)
+  \draw[photon] (H.south) -- (0,-2.55);
+  \draw[photon] (Hd.north) -- (0,2.55);
+  \node[t2 lab,anchor=west] at (0.12,-2.35) {$\gamma^*(q)$};
+  \node[t2 lab,anchor=west] at (0.12, 2.35) {$\gamma^*(q)$};
+  % soft gluons S -> A, S -> B on both sides of the cut
+  \draw[gluon] (S.200) -- (Aa.40);
+  \draw[gluon] (S.160) -- (Ac.320);
+  \draw[gluon] (S.340) -- (Ba.140);
+  \draw[gluon] (S.20)  -- (Bc.220);
+  % cut (horizontal: amplitude below, complex-conjugate amplitude above)
+  \draw[cut] (-4.75,0) -- (4.75,0);
+  % labels
+  \node[t2 lab] at (Aa) {$A$}; \node[t2 lab] at (Ac) {$A$};
+  \node[t2 lab] at (Ba) {$B$}; \node[t2 lab] at (Bc) {$B$};
+  \node[t2 lab] at (H) {$H$};  \node[t2 lab] at (Hd) {$H^\dagger$};
+  \node[t2 lab,anchor=south] at (0,0.44) {$S$};
+  \node[t2 lab,anchor=north] at (-4.4,-1.75) {$P_A$};
+  \node[t2 lab,anchor=south] at (-4.4, 1.75) {$P_A$};
+  \node[t2 lab,anchor=north] at ( 4.4,-1.75) {$P_B$};
+  \node[t2 lab,anchor=south] at ( 4.4, 1.75) {$P_B$};
+  \node[font=\footnotesize,text=red!65!black,anchor=west] at (4.8,0) {末态切割};
+  \node[font=\footnotesize,anchor=west] at (4.8,-0.75) {振幅};
+  \node[font=\footnotesize,anchor=west] at (4.8, 0.75) {共轭振幅};
+\end{tikzpicture}
+\caption{Drell--Yan 过程 $A+B\to\gamma^*+X$ 的约化割图（强子张量）。为使两个强子分列左右，切割（红色虚线）画成水平的：下半部为振幅，上半部为共轭振幅。
+强子 $A$、$B$ 的共线子图（蓝、橙色）各分为振幅与共轭振幅两部分，二者之间的旁观者（强子残余）线穿过切割；硬子图 $H$、$H^\dagger$ 各由一条来自 $A$ 的夸克线与一条来自 $B$ 的反夸克线相连，
+并通过电流插入与 $\gamma^*$ 相连；软子图 $S$ 以胶子与 $A$、$B$ 相连，在切割两侧均可附着。共线子图与 $H$ 之间的纵向极化胶子未画出（参见\cref{fig:reduced-dis}）；
+旁观者之间的 Glauber 交换见\cref{fig:glauber-exchange}。}
+\label{fig:reduced-dy}
+\end{figure}
+%%% END fig:reduced-dy
+
+%%% BEGIN fig:momentum-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=2.05cm,y=2.05cm,
+  t2 mode/.style={circle,draw=black,line width=0.6pt,inner sep=0pt,minimum size=6.6pt},
+  t2 hyp/.style={draw=black!65,line width=0.7pt},
+  t2 lab/.style={font=\footnotesize,inner sep=1.5pt},
+  t2 tick/.style={font=\footnotesize},
+  t2 grid/.style={draw=gray!45,line width=0.4pt,dash pattern=on 1pt off 2pt}]
+  % coordinates: x = ln(k^+/Q)/ln(1/lambda), y = ln(k^-/Q)/ln(1/lambda)
+  % Glauber shading for k_T ~ lambda Q:  k^+ k^- << k_T^2 ~ lambda^2 Q^2  <=>  x + y < -2
+  \fill[red!7] (-3.4,-3.4) -- (0.8,-3.4) -- (0.8,-2.8) -- (-2.8,0.8) -- (-3.4,0.8) -- cycle;
+  % axes, ticks, grid
+  \draw[lcaxis] (-3.45,-3.45) -- (1.1,-3.45) node[below left=1pt and -4pt] {$\ln k^+$};
+  \draw[lcaxis] (-3.45,-3.45) -- (-3.45,1.1) node[left] {$\ln k^-$};
+  \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+    \draw[line width=0.5pt] (\v,-3.45) -- ++(0,0.07);
+    \node[t2 tick,below] at (\v,-3.45) {$\t$};
+    \draw[line width=0.5pt] (-3.45,\v) -- ++(0.07,0);
+    \node[t2 tick,left] at (-3.45,\v) {$\t$};
+    \draw[t2 grid] (\v,-3.38) -- (\v,0.8);
+    \draw[t2 grid] (-3.38,\v) -- (0.8,\v);
+  }
+  % constant-virtuality hyperbolas  k^+ k^- = const : straight lines of slope -1
+  \draw[t2 hyp] (0.8,-0.8) -- node[pos=0.86,sloped,above=1.5pt,t2 lab] {$k^+k^-\sim Q^2$} (-0.8,0.8);
+  \draw[t2 hyp] (0.8,-2.8) -- node[pos=0.36,sloped,below=2.5pt,t2 lab] {$k^+k^-\sim\lambda^2Q^2$} (-2.8,0.8);
+  \draw[t2 hyp] (-0.8,-3.2) -- node[pos=0.25,sloped,above=1.5pt,t2 lab] {$k^+k^-\sim\lambda^4Q^2$} (-3.2,-0.8);
+  % modes
+  \node[t2 mode,fill=gray!55] (h)  at (0,0) {};
+  \node[t2 mode,fill=blue!55!black] (n) at (0,-2) {};
+  \node[t2 mode,fill=orange!85!black] (nb) at (-2,0) {};
+  \node[t2 mode,fill=green!55!black] (s) at (-1,-1) {};
+  \node[t2 mode,fill=green!25] (us) at (-2,-2) {};
+  \node[t2 lab,anchor=south west] at (h.north east) {硬 $(1,1,1)$};
+  \node[t2 lab,anchor=south west] at (n.north east) {$n$ 共线 $(1,\lambda^2,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=white] at (nb.north east) {$\bar n$ 共线 $(\lambda^2,1,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=white] at (s.north east) {软 $(\lambda,\lambda,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=red!7] at ($(us.north east)+(0.06,0.03)$) {超软 $(\lambda^2,\lambda^2,\lambda^2)$};
+  \draw[red!60!black,line width=0.8pt] (-2.1,-2.1) rectangle (-1.9,-1.9);
+  \node[t2 lab,anchor=north east,align=right,text=red!55!black] at ($(us.south west)+(-0.04,-0.04)$) {Glauber\\$(\lambda^2,\lambda^2,\lambda)$};
+  \node[t2 lab,align=center,text=red!55!black,fill=red!7] at (0.17,-3.05) {Glauber 区\\$|k^+k^-|\ll k_T^2$};
+\end{tikzpicture}
+\caption{$(\ln k^+,\ln k^-)$ 平面上的动量区域（括号内为 $(k^+,k^-,k_T)/Q$ 的标度，$\lambda\ll1$；坐标轴以 $\ln(1/\lambda)$ 为单位）。$A$（$n$）共线区的大分量为 $k^+$，$B$（$\bar n$）共线区的大分量为 $k^-$。
+等虚度双曲线 $k^+k^-=$ 常数在对数坐标中是斜率为 $-1$ 的直线：共线区与软区位于同一条双曲线 $k^+k^-\sim\lambda^2Q^2$ 上，彼此只差快度 $y=\frac12\ln(k^+/k^-)$；
+超软区位于 $k^+k^-\sim\lambda^4Q^2$。Glauber 区由 $|k^+k^-|\ll k_T^2$ 定义：阴影为 $k_T\sim\lambda Q$ 时满足此条件的区域（通常所说的 Glauber 区是其中 $k^\pm\ll Q$ 的软部分），
+其典型标度 $(\lambda^2,\lambda^2,\lambda)$ 在本图中的投影与超软区重合（红框），二者只在 $k_T$ 上不同：Glauber 动量以横动量为主，$k^2\approx-k_T^2$。}
+\label{fig:momentum-regions}
+\end{figure}
+%%% END fig:momentum-regions
+
+%%% BEGIN fig:ward-identity
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large},
+  t2 hb/.style={hard blob,ellipse,minimum width=1.3cm,minimum height=0.95cm,inner sep=0pt}]
+  % ======================= row (a): one K gluon =======================
+  \node[t2 eq] at (-2.35,-0.1) {$\displaystyle\sum_{\text{所有附着}}$};
+  \node[t2 hb] (H) at (0,0) {$H$};
+  \draw[photon] (-1.25,1.05) -- (H.140);
+  \draw[quark] (H.25) -- (1.55,0.85);
+  \draw[quark] (-1.5,-1.05) -- (H.214);
+  \path[mom={$p$},mom pos=0.4] (-1.5,-1.05) -- (H.214);
+  \draw[longit] (-0.55,-1.6) -- (H.264);
+  \longitmark{(-0.55,-1.6)}{(H.264)}
+  \path[mom'={$k$},mom sep=0.3cm] (-0.55,-1.6) -- (H.264);
+  \node[t2 lab,anchor=north] at (-0.55,-1.6) {$a$};
+  \node[t2 eq] at (2.35,0) {$=$};
+  \begin{scope}[xshift=4.6cm]
+    \node[t2 hb] (H0) at (0,0) {$H_0$};
+    \draw[photon] (-1.25,1.05) -- (H0.140);
+    \draw[quark] (H0.25) -- (1.55,0.85);
+    \draw[quark] (-1.5,-1.05) -- (H0.214);
+    \path[mom={$p+k$},mom pos=0.4] (-1.5,-1.05) -- (H0.214);
+    \draw[wilson] (H0.214) -- ++(-33:2.25) coordinate (W) node[right,t2 lab] {沿 $n_B$};
+    \coordinate (Y) at ($(H0.214)!0.52!(W)$);
+    \draw[longit] (-0.55,-1.6) -- (Y);
+    \longitmark{(-0.55,-1.6)}{(Y)}
+    \path[mom'={$k$},mom sep=0.3cm] (-0.55,-1.6) -- (Y);
+    \node[t2 lab,anchor=north] at (-0.55,-1.6) {$a$};
+  \end{scope}
+  \node[font=\small,anchor=west] at (-2.95,-2.4) {(a)\ 阿贝尔情形（任意多个 K 光子），或单个 K 胶子};
+  % ======================= row (b): two K gluons, non-abelian =======================
+  \begin{scope}[yshift=-4.2cm]
+    \node[t2 eq] at (-2.35,-0.1) {$\displaystyle\sum_{\text{所有附着}}$};
+    \node[t2 hb] (H) at (0,0) {$H$};
+    \draw[photon] (-1.25,1.05) -- (H.140);
+    \draw[quark] (H.25) -- (1.55,0.85);
+    \draw[quark] (-1.5,-1.05) -- (H.214);
+    \draw[longit] (-0.75,-1.62) -- (H.250);  \longitmark{(-0.75,-1.62)}{(H.250)}
+    \draw[longit] (0.05,-1.68) -- (H.290);   \longitmark{(0.05,-1.68)}{(H.290)}
+    \node[t2 lab,anchor=north] at (-0.75,-1.62) {$k_1$};
+    \node[t2 lab,anchor=north] at (0.05,-1.68) {$k_2$};
+    \node[t2 eq] at (2.35,0) {$=$};
+    \begin{scope}[xshift=4.6cm]
+      \node[t2 hb] (H0) at (0,0) {$H_0$};
+      \draw[photon] (-1.25,1.05) -- (H0.140);
+      \draw[quark] (H0.25) -- (1.55,0.85);
+      \draw[quark] (-1.5,-1.05) -- (H0.214);
+      \draw[wilson=0.84] (H0.214) -- ++(-33:2.25) coordinate (W) node[right,t2 lab] {沿 $n_B$};
+      \draw[longit] (-0.75,-1.62) -- ($(H0.214)!0.36!(W)$);  \longitmark{(-0.75,-1.62)}{($(H0.214)!0.36!(W)$)}
+      \draw[longit] (0.05,-1.68) -- ($(H0.214)!0.66!(W)$);   \longitmark{(0.05,-1.68)}{($(H0.214)!0.66!(W)$)}
+      \node[t2 lab,anchor=north] at (-0.75,-1.62) {$k_1$};
+      \node[t2 lab,anchor=north] at (0.05,-1.68) {$k_2$};
+      \node[font=\small,anchor=west] at (1.7,-0.08) {$+\;(k_1\leftrightarrow k_2)$};
+    \end{scope}
+    \node[t2 eq] at (8.75,0) {$+$};
+    \begin{scope}[xshift=10.55cm]
+      \node[t2 hb] (Hg) at (0,0) {$H'$};
+      \draw[photon] (-1.25,1.05) -- (Hg.140);
+      \draw[quark] (Hg.25) -- (1.55,0.85);
+      \draw[quark] (-1.5,-1.05) -- (Hg.214);
+      \draw[ghost] (-0.85,-1.65) -- (Hg.252);
+      \draw[ghost] (Hg.292) -- (0.15,-1.7);
+      \node[font=\footnotesize,anchor=north,align=center] at (-0.35,-1.75) {鬼场线\\（鬼场项，示意）};
+    \end{scope}
+  \end{scope}
+  \node[font=\small,anchor=west] at (-2.95,-6.85) {(b)\ 非阿贝尔情形，两个及以上 K 胶子};
+\end{tikzpicture}
+\caption{图示 Ward 恒等式。蓝色螺旋线是标量（纵向）极化的共线胶子（K 胶子，极化 $\propto k^\mu$，以圆点标记），来自 $A$ 共线子图（未画出）；
+$H$ 的其余外线（入射夸克、出射夸克、光子）都取为在壳的物理粒子（共线近似之后）。
+(a)~对 K 胶子在 $H$ 内一切可能附着位置（包括非阿贝尔情形中 $H$ 内的胶子线与鬼场线）求和，等于把它附着到一条沿 $n_B$ 方向的 Wilson 线（双线）上、
+再乘以不含该胶子的硬部分 $H_0$（其入射动量为 $p+k$）；Wilson 线是未来指向还是过去指向，取决于 K 胶子附着在 $H$ 的末态线还是初态线上。
+阿贝尔理论中这一等式对任意多个 K 光子成立；非阿贝尔理论中对单个 K 胶子成立（BRST 对称性）。
+(b)~非阿贝尔理论中有两个及以上 K 胶子时，求和给出按路径次序附着在 Wilson 线上的各项（色矩阵 $t^{a_1}$、$t^{a_2}$ 的次序由附着次序决定，两种次序都出现），
+一般还伴随含鬼场线（带箭头的点线）的附加项；此处只示意其存在，其精确形式与处理见附录 F。}
+\label{fig:ward-identity}
+\end{figure}
+%%% END fig:ward-identity
+
+%%% BEGIN fig:soft-eikonal
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 soft/.style={draw=green!45!black},
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large},
+  t2 hc/.style={hard blob,circle,minimum size=0.84cm,inner sep=0pt}]
+  % ======================= (a) outgoing quark =======================
+  \node[t2 hc] (H) at (0,0) {$H$};
+  \coordinate (X) at (1.95,0);
+  \draw[quark] (H.east) -- (X);
+  \draw[quark] (X) -- (3.35,0);
+  \draw[gluon,t2 soft] (2.6,1.3) -- (X);
+  \node[vertex] at (X) {};
+  \path[mom'={$p-k$}] (H.east) -- (X);
+  \path[mom'={$p$}] (X) -- (3.35,0);
+  \path[mom'={$k$},mom sep=0.3cm] (2.6,1.3) -- (X);
+  \node[t2 eq] at (4.15,0) {$\approx$};
+  \begin{scope}[xshift=5.4cm]
+    \node[t2 hc] (H) at (0,0) {$H$};
+    \draw[quark] (H.340) -- ($(H.340)+(3.0,0)$) coordinate (Eq);
+    \draw[wilson=0.82] (H.20) -- ($(H.20)+(3.0,0)$) coordinate (Ew);
+    \coordinate (Y) at ($(H.20)!0.55!(Ew)$);
+    \draw[gluon,t2 soft] ($(Y)+(0.65,1.16)$) -- (Y);
+    \path[mom'={$p$},mom pos=0.75] (H.340) -- (Eq);
+    \node[t2 lab,anchor=south] at ($(H.20)!0.25!(Ew)+(0,0.1)$) {$W_n[\infty,0]$};
+  \end{scope}
+  \node[font=\small] at (1.45,-1.15) {$\bar u(p)\,(\ii g\,t^a\gamma^\mu)\,\dfrac{\ii(\sla p-\sla k)}{(p-k)^2+\ii0}$};
+  \node[font=\small] at (7.0,-1.15) {$\bar u(p)\,\dfrac{g\,t^a\,n^\mu}{n\cdot k-\ii0}$};
+  \node[font=\small,anchor=west] at (-0.6,-2.0) {(a)\ 出射夸克：未来指向的 Wilson 线（$n\propto p$）};
+  % ======================= (b) incoming quark =======================
+  \begin{scope}[yshift=-4.1cm]
+    \node[t2 hc] (H) at (3.35,0) {$H$};
+    \coordinate (X) at (1.4,0);
+    \draw[quark] (0,0) -- (X);
+    \draw[quark] (X) -- (H.west);
+    \draw[gluon,t2 soft] (0.75,1.3) -- (X);
+    \node[vertex] at (X) {};
+    \path[mom'={$p$}] (0,0) -- (X);
+    \path[mom'={$p+k$}] (X) -- (H.west);
+    \path[mom={$k$},mom sep=0.3cm] (0.75,1.3) -- (X);
+    \node[t2 eq] at (4.15,0) {$\approx$};
+    \begin{scope}[xshift=5.4cm]
+      \node[t2 hc] (H) at (3.35,0) {$H$};
+      \draw[quark] ($(H.200)-(3.0,0)$) coordinate (Sq) -- (H.200);
+      \draw[wilson=0.25] ($(H.160)-(3.0,0)$) coordinate (Sw) -- (H.160);
+      \coordinate (Y) at ($(Sw)!0.45!(H.160)$);
+      \draw[gluon,t2 soft] ($(Y)+(-0.65,1.16)$) -- (Y);
+      \path[mom'={$p$},mom pos=0.3] (Sq) -- (H.200);
+      \node[t2 lab,anchor=south] at ($(Y)!0.55!(H.160)+(0,0.1)$) {$W_n[0,-\infty]$};
+    \end{scope}
+    \node[font=\small] at (1.7,-1.15) {$\dfrac{\ii(\sla p+\sla k)}{(p+k)^2+\ii0}\,(\ii g\,t^a\gamma^\mu)\,u(p)$};
+    \node[font=\small] at (7.0,-1.15) {$-\dfrac{g\,t^a\,n^\mu}{n\cdot k+\ii0}\,u(p)$};
+    \node[font=\small,anchor=west] at (-0.6,-2.0) {(b)\ 入射夸克：过去指向的 Wilson 线（$n\propto p$）};
+  \end{scope}
+\end{tikzpicture}
+\caption{软胶子的程函（eikonal）近似。软胶子（绿色，动量 $k$ 流入夸克线，色指标 $a$、Lorentz 指标 $\mu$）附着在高能无质量夸克线（动量 $p$）上。
+当 $k$ 的各分量都远小于 $p$ 的大分量、且不在 Glauber 区时，分子 $\bar u(p)\gamma^\mu(\sla p-\sla k)\to2p^\mu\bar u(p)$、分母 $(p-k)^2+\ii0\to-2p\cdot k+\ii0$，
+结果只依赖于 $p$ 的方向 $n$（对 $n$ 的标度不变），正是沿 $n$ 方向的 Wilson 线的单胶子 Feynman 规则：
+(a)~出射夸克对应未来指向的 $W_n[\infty,0]$，传播子为 $-\ii/(n\cdot k-\ii0)$；(b)~入射夸克对应过去指向的 $W_n[0,-\infty]$，传播子为 $\ii/(n\cdot k+\ii0)$
+（顶点因子均为 $\ii g\,t^a n^\mu$）。Wilson 线上的箭头与被替代的夸克线的费米子数流向一致。}
+\label{fig:soft-eikonal}
+\end{figure}
+%%% END fig:soft-eikonal
+
+%%% BEGIN fig:ee-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 cutlab/.style={font=\scriptsize,text=red!65!black},
+  t2 cut0/.style={cut,draw=red!30},
+  t2 cutlab0/.style={font=\scriptsize,text=red!35}]
+  % ======================= row 1: amplitudes =======================
+  % (a) virtual vertex correction
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G1) at ($(V)!0.56!(E1)$); \coordinate (G2) at ($(V)!0.56!(E2)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon] (G1) -- (G2);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \node at (0.3,-1.75) {(a)\ $\mathcal M_V$};
+  \end{scope}
+  % (b) real emission off the quark
+  \begin{scope}[xshift=5.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E1)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (G); \draw[quark] (G) -- (E1);
+    \draw[quark] (E2) -- (V);
+    \draw[gluon] (G) -- (2.1,0.05);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.55] (G) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.7] (V) -- (E2);
+    \path[mom'={$k$},mom pos=0.6] (G) -- (2.1,0.05);
+    \node at (0.3,-1.75) {(b)\ $\mathcal M_q$};
+  \end{scope}
+  % (c) real emission off the antiquark
+  \begin{scope}[xshift=10.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E2)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (E1);
+    \draw[quark] (E2) -- (G); \draw[quark] (G) -- (V);
+    \draw[gluon] (G) -- (2.1,-0.05);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.7] (V) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G) -- (E2);
+    \path[mom={$k$},mom pos=0.6] (G) -- (2.1,-0.05);
+    \node at (0.3,-1.75) {(c)\ $\mathcal M_{\bar q}$};
+  \end{scope}
+  % ======================= row 2: two-loop vacuum polarization with cuts =======================
+  % loop: centre C=(0.3,0), radii 1.15 x 0.85; L=(-0.85,0), R=(1.45,0); fermion number flows L -> top -> R -> bottom -> L
+  \begin{scope}[yshift=-4.3cm]
+    % (d) vertex type
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (T) at ($(0.3,0)+(125:1.15 and 0.85)$); \coordinate (B) at ($(0.3,0)+(-55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.7] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.7] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (T) -- (B);
+    \foreach \p in {L,R,T,B} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[cut] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[cut] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab] {2};
+    \node at (0.3,-2.15) {(d)};
+  \end{scope}
+  \begin{scope}[xshift=5.0cm,yshift=-4.3cm]
+    % (e) self-energy on the quark line
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (T1) at ($(0.3,0)+(125:1.15 and 0.85)$); \coordinate (T2) at ($(0.3,0)+(55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.61] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.67] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (T1) .. controls ($(T1)+(0.05,0.75)$) and ($(T2)+(-0.05,0.75)$) .. (T2);
+    \foreach \p in {L,R,T1,T2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[t2 cut0] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab0] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[t2 cut0] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab0] {2};
+    \node at (0.3,-2.15) {(e)};
+  \end{scope}
+  \begin{scope}[xshift=10.0cm,yshift=-4.3cm]
+    % (f) self-energy on the antiquark line
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (B1) at ($(0.3,0)+(-125:1.15 and 0.85)$); \coordinate (B2) at ($(0.3,0)+(-55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.33] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.39] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (B2) .. controls ($(B2)+(-0.05,-0.75)$) and ($(B1)+(0.05,-0.75)$) .. (B1);
+    \foreach \p in {L,R,B1,B2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[t2 cut0] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab0] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[t2 cut0] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab0] {2};
+    \node at (0.3,-2.15) {(f)};
+  \end{scope}
+\end{tikzpicture}
+\caption{$e^+e^-\to$ 强子总截面的 $\order{\as}$ 修正。上排：振幅层次的图——(a)~单圈顶点修正 $\mathcal M_V$，(b)、(c)~夸克或反夸克辐射一个实胶子 $\mathcal M_q$、$\mathcal M_{\bar q}$
+（无质量外线的自能修正在维数正规化中是无标度积分，为零，故未画出）。下排：电磁流关联函数 $\Pi$ 的三个两圈图及其全部切割（虚线上方的数字为被切粒子数）。
+(d)~两粒子切割给出 $2\Real(\mathcal M_0^*\mathcal M_V)$（$\mathcal M_0$ 为 Born 振幅），三粒子切割给出干涉项 $2\Real(\mathcal M_q\mathcal M_{\bar q}^*)$；
+(e)、(f)~三粒子切割给出 $|\mathcal M_q|^2$、$|\mathcal M_{\bar q}|^2$，两粒子切割（浅色）对应在壳无质量外线上的自能，在维数正规化中为零。
+由切割规则，所有切割之和等于 $2\Imag\Pi$ 在 $\order{\as}$ 的贡献：虚、实两部分各含 $1/\varepsilon^2$ 极点，其和有限，给出 $R=R_0\big(1+\tfrac34C_F\,\as/\pi\big)$。}
+\label{fig:ee-oneloop}
+\end{figure}
+%%% END fig:ee-oneloop
+
+%%% BEGIN fig:dy-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\footnotesize}]
+  % ======================= row 1:  q qbar channel =======================
+  % (a) q qbar -> gamma* g, gluon off the quark
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (-2.0,1.15); \coordinate (E2) at (-2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E1)$);
+    \draw[quark] (E1) -- (G); \draw[quark] (G) -- (V);
+    \draw[quark] (V) -- (E2);
+    \draw[photon] (V) -- (1.45,0);
+    \draw[gluon] (G) -- (0.55,1.2);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.45] (E1) -- (G);
+    \path[mom'={$p_2$},mom pos=0.6] (E2) -- (V);
+    \path[mom'={$q$},mom sep=0.28cm] (V) -- (1.45,0);
+    \path[mom={$k$},mom pos=0.55] (G) -- (0.55,1.2);
+    \node[t2 lab,anchor=east] at (E1) {$q$};  \node[t2 lab,anchor=east] at (E2) {$\bar q$};
+    \node[t2 lab,anchor=west] at (1.45,0) {$\gamma^*$}; \node[t2 lab,anchor=west] at (0.55,1.2) {$g$};
+    \node at (-0.3,-1.8) {(a)};
+  \end{scope}
+  % (b) q qbar -> gamma* g, gluon off the antiquark
+  \begin{scope}[xshift=5.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (-2.0,1.15); \coordinate (E2) at (-2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E2)$);
+    \draw[quark] (E1) -- (V);
+    \draw[quark] (V) -- (G); \draw[quark] (G) -- (E2);
+    \draw[photon] (V) -- (1.45,0);
+    \draw[gluon] (G) -- (0.55,-1.2);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.6] (E1) -- (V);
+    \path[mom'={$p_2$},mom pos=0.45] (E2) -- (G);
+    \path[mom'={$q$},mom sep=0.28cm] (V) -- (1.45,0);
+    \path[mom'={$k$},mom pos=0.55] (G) -- (0.55,-1.2);
+    \node[t2 lab,anchor=east] at (E1) {$q$};  \node[t2 lab,anchor=east] at (E2) {$\bar q$};
+    \node[t2 lab,anchor=west] at (1.45,0) {$\gamma^*$}; \node[t2 lab,anchor=west] at (0.55,-1.2) {$g$};
+    \node at (-0.3,-1.8) {(b)};
+  \end{scope}
+  % (c) virtual vertex correction
+  \begin{scope}[xshift=10.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (-2.0,1.15); \coordinate (E2) at (-2.0,-1.15);
+    \coordinate (G1) at ($(V)!0.56!(E1)$); \coordinate (G2) at ($(V)!0.56!(E2)$);
+    \draw[quark] (E1) -- (G1); \draw[quark] (G1) -- (V);
+    \draw[quark] (V) -- (G2); \draw[quark] (G2) -- (E2);
+    \draw[photon] (V) -- (1.45,0);
+    \draw[gluon] (G1) -- (G2);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.45] (E1) -- (G1);
+    \path[mom'={$p_2$},mom pos=0.45] (E2) -- (G2);
+    \path[mom'={$q$},mom sep=0.28cm] (V) -- (1.45,0);
+    \node[t2 lab,anchor=east] at (E1) {$q$};  \node[t2 lab,anchor=east] at (E2) {$\bar q$};
+    \node[t2 lab,anchor=west] at (1.45,0) {$\gamma^*$};
+    \node at (-0.3,-1.8) {(c)};
+  \end{scope}
+  % ======================= row 2:  q g channel =======================
+  % (d) s-channel
+  \begin{scope}[xshift=2.3cm,yshift=-4.1cm]
+    \coordinate (V1) at (-0.55,0); \coordinate (V2) at (0.65,0);
+    \draw[quark] (-2.0,1.05) -- (V1);
+    \draw[gluon] (-2.0,-1.05) -- (V1);
+    \draw[quark] (V1) -- (V2);
+    \draw[photon] (V2) -- (1.95,1.05);
+    \draw[quark] (V2) -- (1.95,-1.05);
+    \foreach \p in {V1,V2} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.45] (-2.0,1.05) -- (V1);
+    \path[mom'={$p_2$},mom pos=0.45] (-2.0,-1.05) -- (V1);
+    \path[mom={$q$},mom pos=0.6] (V2) -- (1.95,1.05);
+    \path[mom'={$k$},mom pos=0.6] (V2) -- (1.95,-1.05);
+    \node[t2 lab,anchor=east] at (-2.0,1.05) {$q$};  \node[t2 lab,anchor=east] at (-2.0,-1.05) {$g$};
+    \node[t2 lab,anchor=west] at (1.95,1.05) {$\gamma^*$}; \node[t2 lab,anchor=west] at (1.95,-1.05) {$q$};
+    \node at (0,-1.8) {(d)};
+  \end{scope}
+  % (e) t-channel
+  \begin{scope}[xshift=8.0cm,yshift=-4.1cm]
+    \coordinate (V1) at (0,0.72); \coordinate (V2) at (0,-0.72);
+    \draw[quark] (-1.85,0.72) -- (V1);
+    \draw[photon] (V1) -- (1.85,0.72);
+    \draw[quark] (V1) -- (V2);
+    \draw[gluon] (-1.85,-0.72) -- (V2);
+    \draw[quark] (V2) -- (1.85,-0.72);
+    \foreach \p in {V1,V2} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.5] (-1.85,0.72) -- (V1);
+    \path[mom'={$p_2$},mom pos=0.5] (-1.85,-0.72) -- (V2);
+    \path[mom={$q$},mom pos=0.5] (V1) -- (1.85,0.72);
+    \path[mom'={$k$},mom pos=0.5] (V2) -- (1.85,-0.72);
+    \node[t2 lab,anchor=east] at (-1.85,0.72) {$q$};  \node[t2 lab,anchor=east] at (-1.85,-0.72) {$g$};
+    \node[t2 lab,anchor=west] at (1.85,0.72) {$\gamma^*$}; \node[t2 lab,anchor=west] at (1.85,-0.72) {$q$};
+    \node at (0,-1.8) {(e)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Drell--Yan 过程 $\order{\as}$ 修正的部分子图（振幅层次，时间自左向右）。上排为 $q\bar q$ 道：(a)、(b)~$q(p_1)\,\bar q(p_2)\to\gamma^*(q)\,g(k)$ 的两个实辐射图，
+(c)~单圈顶点修正（与 Born 振幅干涉；无质量外线自能在维数正规化中为零）。下排为 $qg$ 道 $q(p_1)\,g(p_2)\to\gamma^*(q)\,q(k)$ 的两个图：(d)~$s$ 道（内夸克线动量 $p_1+p_2$），(e)~$t$ 道（内夸克线动量 $p_1-q$）
+（$\bar q g$ 道的图由电荷共轭得到）。入射反夸克线上的费米子数箭头背离顶点，动量箭头另行标出。}
+\label{fig:dy-oneloop}
+\end{figure}
+%%% END fig:dy-oneloop
+
+%%% BEGIN fig:glauber-exchange
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.6 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  t2 lab/.style={font=\footnotesize},
+  t2 time/.style={lcaxis,gray!60!black}]
+  % ======================= (a) Drell-Yan: initial-state exchange between spectators =======================
+  \begin{scope}
+    \node[jet blob,circle,minimum size=0.66cm,inner sep=0pt] (A) at (-2.45,1.0) {$A$};
+    \node[jetB blob,circle,minimum size=0.66cm,inner sep=0pt] (B) at (-2.45,-1.25) {$B$};
+    \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (H) at (1.65,1.5) {$H$};
+    \draw[t2 hadron] (-3.6,1.0) -- (A.west);
+    \draw[t2 hadron] (-3.6,-1.25) -- (B.west);
+    % active partons: quark from A, antiquark from B (fermion-number arrow points back into B)
+    \draw[quark] (A.12) -- (H.185);
+    \draw[quark=0.45] (H.235) -- (B.42);
+    \draw[photon] (H.east) -- (2.85,1.5);
+    % spectators (remnants) of A and B, continuing into the final state
+    \coordinate (SA) at (A.-28); \coordinate (XA) at (2.8,0.25);
+    \coordinate (SB) at (B.-8);  \coordinate (XB) at (2.8,-1.2);
+    \draw[quark=0.25] (SA) -- (XA);
+    \draw[quark=0.25] (SB) -- (XB);
+    % Glauber exchange before the hard collision (left of H)
+    \coordinate (Gt) at (0.78,2.0); \coordinate (Gb) at (0.78,-2.0);
+    \coordinate (GA) at (intersection of SA--XA and Gt--Gb);
+    \coordinate (GB) at (intersection of SB--XB and Gt--Gb);
+    \draw[glauber] (GA) -- (GB);
+    \node[vertex] at (GA) {}; \node[vertex] at (GB) {};
+    \node[t2 lab,text=red!55!black,anchor=west] at ($(GA)!0.5!(GB)+(0.16,0)$) {Glauber};
+    \node[t2 lab,anchor=west] at (2.85,1.5) {$\gamma^*$};
+    \node[t2 lab,anchor=west] at (XA) {$X_A$};
+    \node[t2 lab,anchor=west] at (XB) {$X_B$};
+    \node[t2 lab,anchor=south] at (-3.25,1.1) {$P_A$};
+    \node[t2 lab,anchor=north] at (-3.25,-1.35) {$P_B$};
+    \draw[t2 time] (-3.5,-1.95) -- (3.15,-1.95) node[above left,t2 lab,text=gray!50!black] {时间};
+    \node at (-0.2,-2.5) {(a)\ DY：旁观者之间的初态相互作用};
+  \end{scope}
+  % ======================= (b) DIS: final-state exchange between struck quark and remnant =======================
+  \begin{scope}[xshift=7.6cm]
+    \node[jet blob,circle,minimum size=0.66cm,inner sep=0pt] (A) at (-2.0,-0.95) {$A$};
+    \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (H) at (0.15,0.45) {$H$};
+    \draw[t2 hadron] (-3.5,-0.95) -- (A.west);
+    \draw[photon] (-1.35,1.75) -- (H.135);
+    \draw[quark] (A.35) -- (H.215);
+    \draw[quark] (H.20) -- (2.45,1.45);
+    \draw[quark=0.42] (A.-15) -- (2.45,-1.25);
+    \coordinate (Gq) at ($(H.20)!0.52!(2.45,1.45)$);
+    \coordinate (Gr) at ($(A.-15)!0.735!(2.45,-1.25)$);
+    \draw[glauber] (Gq) -- (Gr);
+    \node[vertex] at (Gq) {}; \node[vertex] at (Gr) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.35,1.75) -- (H.135);
+    \node[t2 lab,anchor=west] at (2.45,1.45) {被击出的夸克};
+    \node[t2 lab,anchor=west] at (2.45,-1.25) {靶残余};
+    \node[t2 lab,text=red!55!black,anchor=west] at ($(Gq)!0.5!(Gr)+(0.17,0)$) {Glauber};
+    \node[t2 lab,anchor=south] at (-3.15,-0.85) {$P$};
+    \draw[t2 time] (-3.5,-1.95) -- (2.7,-1.95) node[above left,t2 lab,text=gray!50!black] {时间};
+    \node at (-0.45,-2.5) {(b)\ DIS：被击出夸克与靶残余之间的末态相互作用};
+  \end{scope}
+\end{tikzpicture}
+\caption{Glauber 胶子交换（暗红色）。时间自左向右，硬碰撞 $H$ 之前的交换为初态相互作用，之后为末态相互作用。
+(a)~Drell--Yan：强子 $A$、$B$ 的旁观者（强子残余，进入末态 $X_A$、$X_B$）在硬碰撞之前交换 Glauber 胶子（$|k^+k^-|\ll k_T^2$）；来自 $B$ 的入射反夸克线与 $A$ 的旁观者线的交叉不是顶点。
+在单个割图中，$A$ 一侧（旁观者线与活动部分子线）的 $k^-$ 极点与 $B$ 一侧的 $k^+$ 极点都分居实轴两侧，围道被钳在 Glauber 区（\cref{fig:glauber-contour}），只有对旁观者的末态切割求和（幺正性）之后才能把围道变形出 Glauber 区；
+(b)~DIS：被击出的夸克与靶残余在硬碰撞之后交换 Glauber 胶子；对单举 DIS 它们由幺正性相消，而在 SIDIS 的 TMD 中它们组合成未来指向的 Wilson 线，
+与 Drell--Yan 中由初态相互作用产生的过去指向 Wilson 线相对照（Sivers 函数因而在两过程间变号）。}
+\label{fig:glauber-exchange}
+\end{figure}
+%%% END fig:glauber-exchange
+
+%%% BEGIN fig:glauber-contour
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  t2 contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  t2 contour/.default=0.5,
+  t2 ax/.style={lcaxis,gray!60!black},
+  t2 band/.style={fill=red!9,draw=none},
+  t2 lab/.style={font=\footnotesize}]
+  % ======================= (a) all A-collinear poles on one side =======================
+  \begin{scope}
+    \fill[t2 band] (-0.55,-1.3) rectangle (0.55,1.45);
+    \draw[red!45,line width=0.4pt,dash pattern=on 2pt off 1.5pt] (-0.55,-1.3) -- (-0.55,1.45) (0.55,-1.3) -- (0.55,1.45);
+    \draw[t2 ax] (-2.4,0) -- (2.5,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.3) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.5] (-2.3,0) -- (-1.75,0) .. controls (-1.4,0) and (-1.25,1.05) .. (0,1.05)
+        .. controls (1.25,1.05) and (1.4,0) .. (1.75,0) -- (2.3,0);
+    \pic at (-0.32,-0.17) {t2 pole}; \pic at (0.1,-0.27) {t2 pole}; \pic at (0.38,-0.12) {t2 pole};
+    \node[t2 lab,anchor=east,align=right] at (-0.66,-0.62) {同侧的 $A$\\共线极点};
+    \node[t2 lab,anchor=south west] at (0.9,0.95) {$|k^-|\sim|k_T|$};
+    \node[t2 lab,text=red!55!black,anchor=south] at (0,1.62) {Glauber 区};
+    \node at (0,-1.9) {(a)\ 极点同侧：围道可移出 Glauber 区};
+  \end{scope}
+  % ======================= (b) poles on both sides: Glauber pinch =======================
+  \begin{scope}[xshift=6.4cm]
+    \fill[t2 band] (-0.55,-1.3) rectangle (0.55,1.45);
+    \draw[red!45,line width=0.4pt,dash pattern=on 2pt off 1.5pt] (-0.55,-1.3) -- (-0.55,1.45) (0.55,-1.3) -- (0.55,1.45);
+    \draw[t2 ax] (-2.4,0) -- (2.5,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.3) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.82] (-2.3,0) -- (2.3,0);
+    \pic at (0.15,0.19) {t2 pole}; \pic at (-0.15,-0.19) {t2 pole};
+    \draw[gray!60!black,line width=0.45pt] (0.24,0.27) -- (0.75,0.72) node[right,t2 lab,text=black,align=left] {活动部分子线\\（进入 $H$）};
+    \draw[gray!60!black,line width=0.45pt] (-0.24,-0.27) -- (-0.75,-0.72) node[left,t2 lab,text=black] {旁观者线};
+    \node[t2 lab,text=red!55!black,anchor=south] at (0,1.62) {Glauber 区};
+    \node at (0,-1.9) {(b)\ 极点异侧：围道被钳在 Glauber 区};
+  \end{scope}
+\end{tikzpicture}
+\caption{软胶子动量 $k$（固定 $k^+$、$k_T$，$k_T\sim\lambda Q$）在复 $k^-$ 平面上的 Glauber 区分析。阴影带为 Glauber 区 $|k^-|\lesssim k_T^2/Q$；
+图中极点来自 $k$ 流经的 $A$ 共线传播子，位于 $|k^-|\sim k_T^2/Q$。约定 $k$ 在附着顶点从 $A$ 子图流出，并取末态旁观者动量 $p_X$ 固定：
+Glauber 顶点之前的旁观者线 $l_s=p_X+k$ 中 $k$ 与大分量 $l_s^+$ 同向，极点在下半平面；进入 $H$ 的活动部分子线 $l_a=P_A-p_X-k$ 中 $k$ 与 $l_a^+$ 反向，极点在上半平面（$k$ 流入时上下互换）。
+$B$ 共线线与胶子传播子本身给出的 $k^-$ 极点位于 $|k^-|\sim Q$，在图外。
+(a)~所有 $A$ 共线极点在同一侧：围道可向另一侧变形到 $|k^-|\sim|k_T|$，在那里软近似成立；
+(b)~旁观者线与活动部分子线的极点分居两侧：围道被钳在 Glauber 区内（Glauber 钳夹）。
+仅有 $k^-$ 钳夹并不致命：若胶子另一端的线（如 DIS 中出射的被击出夸克）给出的 $k^+$ 极点都在同一侧，仍可把 $k^+$ 围道变形到 $|k^+|\sim|k_T|$，使该端的程函近似成立；
+Drell--Yan 中 $B$ 一侧的 $k^+$ 围道同样被钳住，这一钳夹只有在对末态切割求和之后才被消除（\cref{fig:glauber-exchange}）。}
+\label{fig:glauber-contour}
+\end{figure}
+%%% END fig:glauber-contour
+
+%%% BEGIN fig:sudakov-ff
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hc/.style={draw=black,line width=1.15pt},
+  t2 c1/.style={draw=blue!60!black},
+  t2 c2/.style={draw=orange!80!black},
+  t2 us/.style={draw=green!45!black},
+  t2 v/.style={font=\scriptsize,inner sep=1pt},
+  t2 lab/.style={font=\small}]
+  % ======================= master graph with momentum routing =======================
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.25,0) -- (V);
+    \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon] (G2) -- (G1);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.25,0) -- (V);
+    \path[mom={$p_1-k$},mom pos=0.5] (V) -- (G1);
+    \path[mom'={$p_2+k$},mom pos=0.5] (V) -- (G2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) -- (G1);
+    \path[mom={$p_1$},mom pos=0.55] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G2) -- (E2);
+    \node[font=\footnotesize,align=center] at (0.75,-2.05) {$p_1^2\sim p_2^2\sim\lambda^2Q^2\ll Q^2=q^2$};
+  \end{scope}
+  % region panels: smaller copies (scale 0.74) of the same graph, internal lines coloured by their virtuality class
+  % #1 = shift, line styles for (V-G1), (V-G2), gluon; labels
+  % ---------------- hard ----------------
+  \begin{scope}[xshift=4.85cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \fill[gray!28] (V) -- (G1) -- (G2) -- cycle;
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,line width=1.0pt] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west] at ($(G1)!0.5!(G2)+(0.2,0)$) {$Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {硬区：$k\sim Q(1,1,1)$};
+  \end{scope}
+  % ---------------- collinear to p1 ----------------
+  \begin{scope}[xshift=9.35cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,t2 c1] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west,text=blue!50!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$1$ 共线：$k\sim Q(1,\lambda^2,\lambda)$};
+  \end{scope}
+  % ---------------- collinear to p2 ----------------
+  \begin{scope}[xshift=4.85cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 c2] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=orange!60!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$2$ 共线：$k\sim Q(\lambda^2,1,\lambda)$};
+  \end{scope}
+  % ---------------- ultrasoft ----------------
+  \begin{scope}[xshift=9.35cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 us] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=green!35!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^4Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {超软：$k\sim Q(\lambda^2,\lambda^2,\lambda^2)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈离壳 Sudakov 形状因子的按区域展开（此处画成类时情形 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$；$p_1$ 沿 $n$（$+$ 方向），$p_2$ 沿 $\bar n$）。
+左：动量走向，外线离壳 $p_1\sim Q(1,\lambda^2,\lambda)$、$p_2\sim Q(\lambda^2,1,\lambda)$，标度均按 $(k^+,k^-,k_T)$ 书写。
+右：圈动量 $k$ 的四个贡献区域，内线旁标出其虚度的量级：硬区（三条内线均离壳 $\sim Q^2$，整个圈收缩为一点，灰色）、
+$1$ 共线区（$k$ 与 $p_1-k$ 构成沿 $p_1$ 的喷注，蓝色；$p_2+k$ 为硬线）、$2$ 共线区（橙色，镜像）、超软区（胶子虚度 $\sim\lambda^4Q^2$，绿色；两条夸克线虚度 $\sim\lambda^2Q^2$）。
+软区 $k\sim Q(\lambda,\lambda,\lambda)$ 给出无标度积分，在维数正规化中为零。各区域单独含有 $1/\varepsilon^2$、$1/\varepsilon$ 极点：对标量三角形积分，这些极点在求和中完全相消，给出有限的原积分；
+对完整的 QCD 顶点，求和后只剩原积分本身的紫外发散，由重整化消去。}
+\label{fig:sudakov-ff}
+\end{figure}
+%%% END fig:sudakov-ff
+
+%%% BEGIN fig:scet-wilson
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 n/.style={draw=blue!60!black},
+  t2 nb/.style={draw=orange!80!black},
+  t2 us/.style={draw=green!45!black},
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large}]
+  % ======================= (a) origin of the collinear Wilson line W_n =======================
+  \begin{scope}
+    \node[opvertex] (O) at (0,0) {};
+    \coordinate (Q) at (2.2,0.95); \coordinate (Qb) at (2.2,-0.95);
+    \coordinate (G) at ($(O)!0.42!(Qb)$);
+    \draw[quark,t2 n] (O) -- (Q);
+    \draw[quark,t2 nb] (Qb) -- (G); \draw[quark=0.62,t2 nb] (G) -- (O);
+    \draw[gluon,t2 n] (G) -- (2.25,0.22);
+    \node[vertex] at (G) {};
+    \node[t2 lab,anchor=west] at (Q) {$n$ 共线夸克};
+    \node[t2 lab,anchor=west] at (Qb) {$\bar n$ 共线反夸克};
+    \node[t2 lab,anchor=west] at (2.25,0.22) {$n$ 共线胶子};
+    \node[font=\footnotesize,anchor=north east] at ($(O)!0.5!(G)+(0.04,-0.06)$) {$p^2\sim Q^2$};
+    \node[t2 eq] at (5.4,0) {$\Longrightarrow$};
+    \node[font=\footnotesize,align=center] at (5.4,-0.55) {积掉\\离壳模式};
+    \begin{scope}[xshift=6.7cm]
+      \node[opvertex] (O) at (0,0) {};
+      \draw[quark,t2 n] (O) -- (2.2,0.95) coordinate (Q);
+      % the nbar-collinear antiquark and, parallel to it, the eikonal line W_n (along nbar)
+      \draw[quark,t2 nb] ($(O.-67)+(-23.36:2.35)$) -- (O.-67);
+      \draw[wilson=0.72] ($(O.20)+(-23.36:2.0)$) coordinate (W) -- (O.20);
+      \coordinate (Y) at ($(O.20)!0.6!(W)$);
+      \draw[gluon,t2 n] (Y) -- ($(Y)+(1.05,0.52)$) coordinate (Ge);
+      \node[t2 lab,anchor=west] at (Q) {$n$ 共线夸克};
+      \node[t2 lab,anchor=west] at (Ge) {$\bar n\cdot A_n$};
+      \node[t2 lab,anchor=west] at (W) {$W_n$};
+    \end{scope}
+    \node[font=\small] at (4.6,-1.75) {$\bar\xi_n\,\Gamma\,\xi_{\bar n}\;\longrightarrow\;\bar\xi_n W_n\,\Gamma\,W_{\bar n}^\dagger\xi_{\bar n}=\bar\chi_n\,\Gamma\,\chi_{\bar n},\qquad \chi_n\equiv W_n^\dagger\xi_n$};
+    \node[font=\small,anchor=west] at (-0.5,-2.45) {(a)\ 共线 Wilson 线 $W_n$（沿 $\bar n$ 方向，由 $\bar n\cdot A_n$ 构成）的来源};
+  \end{scope}
+  % ======================= (b) ultrasoft decoupling =======================
+  \begin{scope}[yshift=-5.2cm]
+    \node[opvertex] (O) at (0,0) {};
+    \coordinate (Q) at (2.9,1.0);
+    \coordinate (U1) at ($(O)!0.36!(Q)$); \coordinate (U2) at ($(O)!0.7!(Q)$);
+    \draw[quark=0.2,t2 n] (O) -- (U1); \draw[quark,t2 n] (U1) -- (U2); \draw[quark,t2 n] (U2) -- (Q);
+    \draw[gluon,t2 us] (U1) -- ($(U1)+(-0.3,1.1)$);
+    \draw[gluon,t2 us] (U2) -- ($(U2)+(0.05,1.1)$);
+    \foreach \p in {U1,U2} \node[vertex] at (\p) {};
+    \node[t2 lab,anchor=west] at (Q) {$\xi_n$};
+    \node[font=\footnotesize,anchor=west,text=green!35!black] at ($(U2)+(0.12,0.75)$) {$n\cdot A_{us}$};
+    \node[t2 eq] at (4.75,0.45) {$=$};
+    \begin{scope}[xshift=6.1cm]
+      \node[opvertex] (O) at (0,0) {};
+      % the n-collinear quark and, parallel to it, the eikonal line Y_n (along n)
+      \draw[quark,t2 n] (O.-26) -- ++(19.03:3.0) coordinate (Q0);
+      \draw[wilson=0.86] (O.64) -- ++(19.03:2.95) coordinate (W);
+      \coordinate (Y1) at ($(O.64)!0.36!(W)$); \coordinate (Y2) at ($(O.64)!0.68!(W)$);
+      \draw[gluon,t2 us] (Y1) -- ($(Y1)+(-0.3,1.0)$);
+      \draw[gluon,t2 us] (Y2) -- ($(Y2)+(0.05,1.0)$);
+      \node[t2 lab,anchor=north west] at (Q0) {$\xi_n^{(0)}$};
+      \node[t2 lab,anchor=south west] at (W) {$Y_n$};
+    \end{scope}
+    \node[font=\small] at (4.4,-1.0) {$\xi_n=Y_n\,\xi_n^{(0)},\quad A_n=Y_n\,A_n^{(0)}\,Y_n^\dagger$};
+    \node[font=\small,anchor=west] at (-0.5,-1.75) {(b)\ 超软退耦：超软胶子只与沿 $n$ 方向、由 $n\cdot A_{us}$ 构成的 Wilson 线 $Y_n$ 耦合};
+  \end{scope}
+\end{tikzpicture}
+\caption{SCET 中的两类 Wilson 线。(a)~$n$ 共线胶子（蓝色，领头分量 $\bar n\cdot A_n\sim\lambda^0$）附着在 $\bar n$ 共线（或硬）线上时，使该线离壳 $p^2\sim Q^2$；
+把这些离壳模式积掉后，它们附着到从流顶点 $\otimes$ 出发、沿 $\bar n$ 方向（与 $\bar n$ 共线反夸克平行）的共线 Wilson 线 $W_n$（由 $\bar n\cdot A_n$ 构成）上，
+流算符因而只通过规范不变组合 $\chi_n=W_n^\dagger\xi_n$ 出现（树图层次的匹配）。
+(b)~领头阶共线拉氏量中超软胶子（绿色）只通过 $n\cdot A_{us}$ 与 $n$ 共线夸克耦合；场重定义 $\xi_n=Y_n\xi_n^{(0)}$、$A_n=Y_nA_n^{(0)}Y_n^\dagger$
+（$n\cdot D_{us}Y_n=0$）使新场 $\xi_n^{(0)}$、$A_n^{(0)}$ 与超软胶子退耦，超软胶子全部附着在沿 $n$ 方向（与 $n$ 共线夸克平行）的 Wilson 线 $Y_n$ 上。
+$Y_n$ 的端点（$-\infty$ 或 $+\infty$）与 $\ii0$ 规定应依粒子是入射还是出射选取（此处为出射夸克）。Wilson 线上的箭头与被替代的费米子线的费米子数流向一致。}
+\label{fig:scet-wilson}
+\end{figure}
+%%% END fig:scet-wilson
+
+%%% BEGIN fig:dijet-factorization
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 op/.style={font=\large},
+  t2 hc/.style={hard blob,circle,minimum size=0.6cm,inner sep=0pt}]
+  % ---------------- hard function H = |C|^2 ----------------
+  \node[t2 hc] (C) at (-0.78,0) {$C$};
+  \node[t2 hc] (Cd) at (0.78,0) {$C^*$};
+  \draw[photon] (-1.75,0) -- (C.west);
+  \draw[photon] (Cd.east) -- (1.75,0);
+  \draw[quark=0.3] (C.65) .. controls (-0.35,0.78) and (0.35,0.78) .. (Cd.115);
+  \draw[quark=0.7] (Cd.245) .. controls (0.35,-0.78) and (-0.35,-0.78) .. (C.295);
+  \draw[cut] (0,-0.95) -- (0,0.95);
+  \node[t2 lab] at (0,-1.35) {$H(Q^2,\mu)=|C|^2$};
+  \node[t2 op] at (2.1,0) {$\times$};
+  % ---------------- jet function J_n ----------------
+  \begin{scope}[xshift=3.75cm]
+    \node[jet blob,ellipse,minimum width=1.5cm,minimum height=0.58cm,inner sep=0pt] (J) at (0,0) {};
+    \draw[quark] (-1.25,0) -- (J.west);
+    \draw[quark] (J.east) -- (1.25,0);
+    \draw[cut] (0,-0.62) -- (0,0.62);
+    \node[t2 lab] at (0,-1.35) {$J_n(s_n,\mu)$};
+  \end{scope}
+  \node[t2 op] at (5.4,0) {$\otimes$};
+  % ---------------- jet function J_nbar ----------------
+  \begin{scope}[xshift=7.05cm]
+    \node[jetB blob,ellipse,minimum width=1.5cm,minimum height=0.58cm,inner sep=0pt] (J) at (0,0) {};
+    \draw[quark] (1.25,0) -- (J.east);
+    \draw[quark] (J.west) -- (-1.25,0);
+    \draw[cut] (0,-0.62) -- (0,0.62);
+    \node[t2 lab] at (0,-1.35) {$J_{\bar n}(s_{\bar n},\mu)$};
+  \end{scope}
+  \node[t2 op] at (8.7,0) {$\otimes$};
+  % ---------------- soft function: Wilson lines along n and nbar ----------------
+  \begin{scope}[xshift=10.75cm]
+    \coordinate (L) at (-1.45,0); \coordinate (R) at (1.45,0);
+    \draw[wilson=0.22] (L) .. controls (-1.15,1.4) and (1.15,1.4) .. (R);
+    \draw[wilson=0.78] (R) .. controls (1.15,-1.4) and (-1.15,-1.4) .. (L);
+    \fill (L) circle[radius=1.6pt]; \fill (R) circle[radius=1.6pt];
+    \node[soft blob,circle,minimum size=0.56cm,inner sep=0pt] (S) at (0,0) {};
+    \draw[gluon] (S.140) -- (-0.82,0.85);
+    \draw[gluon] (S.40)  -- ( 0.82,0.85);
+    \draw[gluon] (S.220) -- (-0.82,-0.85);
+    \draw[gluon] (S.320) -- ( 0.82,-0.85);
+    \draw[cut] (0,-1.2) -- (0,1.2);
+    \node[font=\footnotesize,anchor=south east] at (-1.0,0.68) {$Y_n$};
+    \node[font=\footnotesize,anchor=north east] at (-1.0,-0.68) {$Y_{\bar n}$};
+    \node[font=\footnotesize,anchor=south west] at (1.0,0.68) {$Y_n^\dagger$};
+    \node[font=\footnotesize,anchor=north west] at (1.0,-0.68) {$Y_{\bar n}^\dagger$};
+    \node[t2 lab] at (0,-1.55) {$S(k,\mu)$};
+  \end{scope}
+  % ---------------- factorization formula ----------------
+  \node[font=\small] at (5.5,-2.4) {$\displaystyle\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=H(Q^2,\mu)\int\dd s_n\,\dd s_{\bar n}\,\dd k\;
+     J_n(s_n,\mu)\,J_{\bar n}(s_{\bar n},\mu)\,S(k,\mu)\;\delta\Big(\tau-\frac{s_n+s_{\bar n}}{Q^2}-\frac{k}{Q}\Big)$};
+\end{tikzpicture}
+\caption{推力（双喷注）分布在 $\tau=1-T\ll1$ 时的因子化 $H\times J_n\otimes J_{\bar n}\otimes S$ 的图示（每个因子都画成割图，红色虚线为末态切割）。
+硬函数 $H=|C|^2$ 来自把 QCD 流匹配到 SCET 流的 Wilson 系数 $C(Q^2,\mu)$；喷注函数 $J_n$、$J_{\bar n}$（对夸克与反夸克是同一个函数）描述虚度 $s_{n,\bar n}\sim\tau Q^2$ 的共线辐射；
+软函数 $S(k,\mu)$ 是沿 $n$、$\bar n$ 方向的出射（未来指向）Wilson 线 $Y_n$、$Y_{\bar n}$（后者取反基础表示）的真空矩阵元，
+左、右两个顶点分别属于振幅与共轭振幅，软辐射对 $\tau$ 的贡献按半球测量：$k=n\cdot p_{s}^{(n)}+\bar n\cdot p_{s}^{(\bar n)}$（上标表示软粒子所在的半球）。
+式中省略了相对 $\order{\tau}$ 的幂次修正。}
+\label{fig:dijet-factorization}
+\end{figure}
+%%% END fig:dijet-factorization

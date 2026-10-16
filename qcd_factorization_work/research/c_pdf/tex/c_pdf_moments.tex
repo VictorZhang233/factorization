@@ -1,0 +1,50 @@
+% ===================================================================================
+% c_pdf_moments.tex  —  PDF 的 Mellin 矩 = 局域扭度二算符的约化矩阵元
+% （research/c_pdf，对应 DERIVATION.md §5；验证脚本 scripts/s4_moments_local.py）
+% ===================================================================================
+\section{部分子分布的矩与局域扭度二算符}\label{sec:cpdf-moments}
+
+\begin{theorem}[矩与局域算符]\tagR\label{thm:cpdf-moments}
+令 $O_q^{\mu_1\cdots\mu_n}=\mathcal S\,\bar\psi\gamma^{\mu_1}\ii D^{\mu_2}\cdots\ii D^{\mu_n}\psi-\text{迹}$（$\mathcal S$ 为对称化），
+$\langle P|O_q^{\mu_1\cdots\mu_n}|P\rangle=2a_n\,(P^{\mu_1}\cdots P^{\mu_n}-\text{迹})$。则对 $n\ge1$，
+\begin{equation}\label{eq:cpdf-moment}
+a_n=\int_{-1}^{1}\dd\xi\,\xi^{n-1}f_q(\xi)=\frac{\langle P|\bar\psi\gamma^+(\ii D^+)^{n-1}\psi|P\rangle}{2(P^+)^n}
+=\int_0^1\dd x\,x^{n-1}\big[q(x)+(-1)^n\bar q(x)\big].
+\end{equation}
+对偶数 $n\ge2$，记 $O_g^{(n)}=G^{+\nu}(\ii D^+)^{n-2}G_\nu{}^{+}=\sum_jG^{+j}(\ii D^+)^{n-2}G^{+j}$，有
+\begin{equation}\label{eq:cpdf-moment-g}
+\int_0^1\dd x\,x^{n-1}g(x)=\frac{\langle P|O_g^{(n)}|P\rangle}{2(P^+)^n}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+记 $M(w^-)=\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle_{\mathrm c}$。把 $\xi^{n-1}\ee^{-\ii\xi P^+w^-}$ 写成 $\big(\frac{\ii}{P^+}\partial_{w^-}\big)^{n-1}\ee^{-\ii\xi P^+w^-}$，分部积分，
+再用 $\int\dd\xi\,\ee^{-\ii\xi P^+w^-}=\frac{2\pi}{P^+}\delta(w^-)$，得
+\[
+\int\dd\xi\,\xi^{n-1}f_q(\xi)=\frac{1}{2P^+}\Big(\frac{-\ii}{P^+}\Big)^{n-1}\frac{\dd^{n-1}M}{\dd(w^-)^{n-1}}\Big|_{w^-=0}.
+\]
+由 $\partial_{w^-}W[w,0]=\ii gA^+(w)W[w,0]$（\cref{rem:cpdf-wilson}）得
+$\partial_{w^-}[\bar\psi(w)W[w,0]]=[\bar\psi\overleftarrow{D}{}^+](w)\,W[w,0]$，其中 $\bar\psi\overleftarrow{D}_\mu\equiv\partial_\mu\bar\psi+\ii g\bar\psi A_\mu$。
+迭代后，积分等于 $\langle P|\bar\psi(-\ii\overleftarrow{D}{}^+)^{n-1}\gamma^+\psi|P\rangle/(2(P^+)^n)$。
+对规范协变的 $X$ 有 $\partial^+(\bar\psi X\psi)=\bar\psi\overleftarrow{D}{}^+X\psi+\bar\psi X\overrightarrow{D}{}^+\psi$，
+而前向矩阵元中 $\langle P|\partial^+\mathcal O|P\rangle=0$，因此可以把导数全部移到右边。
+支集性质 $f_q(\xi)=0$（$|\xi|>1$）使积分限可取为 $[-1,1]$；再由 $f_{\bar q}(\xi)=-f_q(-\xi)$ 得最后一个等号。
+用 $n_{\mu_1}\cdots n_{\mu_n}$ 缩并协变形式时，由于 $n^2=0$，所有迹项为零，且对称化的每一项都相同，所以 $O^{+\cdots+}=\bar\psi\gamma^+(\ii D^+)^{n-1}\psi$。
+胶子情形相同：定义中的 $\frac1\xi$ 去掉一个 $\xi$ 幂，因此出现 $(\ii D^+)^{n-2}$，再利用 $f_g$ 的奇性（\cref{rem:cpdf-conj}）。
+\end{proof}
+
+\begin{remark}
+(1) 左作用形式与右作用形式只在\textbf{前向}矩阵元中相等；推广到 GPD 时必须区分。
+(2) 对奇数 $n$，$\langle P|G_a[(\ii D^+)^{n-2}]_{ab}G_b|P\rangle\equiv0$：把奇数个伴随表示协变导数移到另一侧会产生一个负号。
+(3) C 宇称：$\mathcal S\bar\psi\gamma^{\mu_1}D^{\mu_2}\cdots D^{\mu_n}\psi\to(-1)^n(\cdots)$。偶数 $n$ 的夸克算符为 C 偶，测量 $q+\bar q$，可与（只有偶数 $n$ 的）胶子算符混合；
+奇数 $n$ 的为 C 奇，测量 $q-\bar q$，只有非单态演化。
+\end{remark}
+
+\begin{remark}[顶角层次与单圈检验]
+双局域算符的单胶子顶角在动量空间为 $\frac{g\,t^an^\mu\gamma^+}{2q^+}\big[\delta(\xi P^+-k_2^+)-\delta(\xi P^+-k_1^+)\big]$（$k_2=k_1+q$），其 $n$ 阶矩是
+差商 $\frac{(k_2^+)^{n-1}-(k_1^+)^{n-1}}{q^+}=\sum_{j=0}^{n-2}(k_2^+)^j(k_1^+)^{n-2-j}$，恰为局域算符的单胶子顶角（除以 $2(P^+)^n$）；二阶情形给出二阶差商。
+在 \cref{sec:cpdf-oneloop} 的胶子质量正规化下，裸 PDF 的 $n$ 阶矩逐图等于局域算符的裸单圈矩阵元，且对 $\varepsilon$ 精确成立：
+梯形图对应顶角图，$A_\varepsilon\frac{(1-\varepsilon)^2}{(n-\varepsilon)(n+1-\varepsilon)}$；Wilson 线图对应 $D^+$ 中胶子的图，$-2A_\varepsilon\sum_{i=1}^{n-1}\frac{1}{i+1-\varepsilon}$；
+自能对应自能，$-A_\varepsilon\frac{1-\varepsilon}{2-\varepsilon}$。例如 $n=2$ 时总和为 $-\frac{4A_\varepsilon}{3-\varepsilon}$。
+重整化后的关系成立，是因为两种 $\MSbar$ 极小减除使同一组量有限，故 $Z_f(N)=Z_O(N)$（单圈已显式验证；全阶依赖规范不变复合算符的重整化理论）。
+\end{remark}

@@ -1,0 +1,975 @@
+% =====================================================================
+%  ch04_ir.tex —— 第 4 章 费曼积分的红外结构：钳夹、幂次计数与红外安全
+%  writer W04；规格：FINAL_OUTLINE_v2 第 4 章、WRITER_SPEC_v2、LEAD_DECISIONS。
+%  核对脚本与日志：writing/work/W04/（w04_landau.py、w04_power.py 及 logs/）。
+% =====================================================================
+\chapter{费曼积分的红外结构：钳夹、幂次计数与红外安全}\label{ch:ir}
+
+本章研究因子化的一切图形证明共同的几何与分析基础：在圈动量空间的哪些地方，一个费曼积分会对长程物理（小虚度（virtuality）、软动量）敏感，这种敏感性有多强，它又如何在可观测量中相消或被吸收。在维数正规化的重整化微扰论中，Landau 条件的两种形式、Coleman--Norton 定理的代数形式、约化图的超表观红外发散度（一个标度陈述）、单圈 Glauber 区的钳夹判据、QED 的 Bloch--Nordsieck 定理与欧氏极限下的区域方法有完整证明（\tagR，$R_{\mathrm{PT}}$；前四者的证明在\cref{app:appD}与\cref{app:appE}）。钳夹面与约化图的对应、超领头构型的相消、领头区域定理、KLN 定理与红外安全量的有限性只有全阶论证（\tagA），共同的瓶颈是从标度陈述到嵌套区域上积分界的过渡。Landau 条件的充分性与闵氏运动学中的区域方法没有证明，有色初态的非阿贝尔 Bloch--Nordsieck 抵消则不成立。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{thm:ir-landau-alpha}、\cref{thm:ir-landau-momentum}（\tagR，$R_{\mathrm{PT}}$，必要性；证明在\cref{app:appD}）；\cref{prop:ir-coleman-norton}（\tagR，$R_{\mathrm{PT}}$，代数形式）；\cref{prop:ir-power-counting}（\tagR，$R_{\mathrm{PT}}$，超表观度，E-S；证明在\cref{app:appE}）；\cref{prop:ir-glauber-trapping}（\tagR，$R_{\mathrm{PT}}$，单圈）；\cref{thm:ir-bn-qed}（\tagR，$R_{\mathrm{PT}}$）；\cref{thm:ir-regions-euclid}（\tagR，$R_{\mathrm{PT}}$）。\par
+\textbf{给出全阶论证：}\cref{prop:ir-pinch-classification}、\cref{prop:ir-super-leading}、\cref{thm:ir-leading-regions}、\cref{thm:ir-kln}、\cref{thm:ir-safe-finite}（\tagA；瓶颈：嵌套区域与积分形式的幂次计数，其精确形式为\cref{asm:appN-envelope}、\cref{asm:appN-separation}）。\par
+\textbf{没有证明：}Landau 条件的充分性与整体围道形变（\cref{rem:ir-landau-status}，\tagA；完整证明只见于第~24~章讨论的预印本结果\cref{thm:front-collins-pinch}）；闵氏极限下的区域方法（\cref{prop:ir-regions-minkowski}，\tagP；“区域 $=$ Newton 多面体的下表面”在三圈有反例）；有色初态的非阿贝尔 Bloch--Nordsieck 抵消——它不成立（\cref{prop:ir-bn-failure}，\tagV）。
+\end{tcolorbox}
+
+为什么需要这样一章？全部内线有质量、外动量取欧氏值时，被积函数处处光滑，积分是外动量的解析函数，对长程物理毫不敏感。强相互作用中最重要的情形恰恰相反：夸克与胶子（近似）无质量，过程发生在闵氏运动学中，传播子 $\ii/(q_j^2-m_j^2+\ii0)$ 在质壳上的奇点并不总能被积分围道绕开。被围道“夹住”的奇点——钳夹（pinch）——正是红外发散、共线发散与大对数的来源；钳夹出现在何处，决定了因子化公式中出现哪些因子：硬部分、喷注（共线）因子与软因子。本章依次回答四个问题：围道在哪里被夹住（Landau 方程的参数形式与动量形式，二者回答的问题不同，\cref{sec:ir-landau}）；这些位置有什么物理意义（Coleman--Norton 图像与无质量 QCD 的约化图，\cref{sec:ir-coleman-norton}与\cref{sec:ir-pinch}）；钳夹面附近的贡献有多大（幂次计数，以及程函（eikonal）近似失效的 Glauber 区，\cref{sec:ir-power}与\cref{sec:ir-glauber}）；单个割图的发散在可观测量中如何相消（\cref{sec:ir-cancellation}）。最后讨论区域方法（\cref{sec:ir-regions}）：它是有力的计算工具，但在闵氏运动学中没有一般证明。
+
+本章沿用\cref{def:prelim-feynman-rules}的 Feynman 规则、\cref{def:qcd-dimreg}的维数正规化（$D=4-2\varepsilon$）与\cref{def:prelim-lightfront}的光锥坐标：$v^\pm=(v^0\pm v^3)/\sqrt2$，$v\cdot w=v^+w^-+v^-w^+-\mathbf v_T\cdot\mathbf w_T$，强子（喷注）$A$ 沿 $+z$、$B$ 沿 $-z$ 方向运动，$n_A=(1^+,0^-,\mathbf 0_T)$，$n_B=(0^+,1^-,\mathbf 0_T)$。动量写作 $k=(k^+,k^-,\mathbf k_T)$，$k_T\equiv|\mathbf k_T|$，故 $k^2=2k^+k^--k_T^2$。
+%% =====================================================================
+\section{Landau 方程：参数形式与动量形式}\label{sec:ir-landau}
+
+费曼积分的被积函数在传播子的质壳 $D_j\equiv q_j^2-m_j^2=0$ 上奇异，但积分本身是否奇异，取决于积分围道能否在复空间中绕开这些奇点。
+
+%%% BEGIN fig:landau-pinch
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  t2 contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  t2 contour/.default=0.5,
+  t2 move/.style={draw=gray!65!black,line width=0.6pt,dash pattern=on 2pt off 1.5pt,-{Stealth[length=4pt,width=3.4pt]}},
+  t2 ax/.style={lcaxis,gray!60!black},
+  t2 lab/.style={font=\footnotesize,text=black!80}]
+  % ---------------- (a) poles on the same side: deformable ----------------
+  \begin{scope}
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.52] (-1.85,0) -- (-1.35,0) .. controls (-0.95,0) and (-0.85,0.82) .. (0,0.82)
+         .. controls (0.85,0.82) and (0.95,0) .. (1.35,0) -- (1.85,0);
+    \pic at (-0.55,-0.40) {t2 pole};  \pic at (0.62,-0.30) {t2 pole};
+    \draw[t2 move] (-0.75,-1.05) -- (-0.59,-0.52);
+    \draw[t2 move] (0.95,-1.0) -- (0.67,-0.42);
+    \node[t2 lab,anchor=west] at (0.62,0.78) {形变后的围道};
+    \node at (0,-1.75) {(a)\ 同侧：围道可形变避开};
+  \end{scope}
+  % ---------------- (b) poles on opposite sides: pinch ----------------
+  \begin{scope}[xshift=5.25cm]
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.8] (-1.85,0) -- (1.85,0);
+    \pic at (0.16,0.2) {t2 pole};  \pic at (-0.16,-0.2) {t2 pole};
+    \draw[t2 move] (0.95,0.95) -- (0.27,0.3);
+    \draw[t2 move] (-0.95,-0.95) -- (-0.27,-0.3);
+    \node[t2 lab,anchor=north] at (0.75,-0.18) {钳夹点};
+    \node at (0,-1.75) {(b)\ 异侧相向趋近：围道被钳住};
+  \end{scope}
+  % ---------------- (c) endpoint ----------------
+  \begin{scope}[xshift=10.5cm]
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.6] (-1.1,0) .. controls (-0.95,0.55) and (-0.45,0.72) .. (0.25,0.72)
+         .. controls (0.95,0.72) and (1.2,0) .. (1.85,0);
+    \fill (-1.1,0) circle[radius=1.9pt];
+    \node[below left=-1pt] at (-1.1,0) {$a$};
+    \node[t2 lab,anchor=south east] at (-1.12,0.08) {固定端点};
+    \pic at (-0.9,-0.24) {t2 pole};
+    \draw[t2 move] (-0.25,-0.95) -- (-0.8,-0.33);
+    \node[t2 lab,anchor=west] at (-0.2,-0.95) {趋近端点};
+    \node at (0,-1.75) {(c)\ 端点：无法避开};
+  \end{scope}
+\end{tikzpicture}
+\caption{复 $k^-$ 平面中积分围道（蓝色）的形变与 Landau 奇异性。灰色虚箭头表示外部参数趋近奇异点（或 $\ii0\to0$）时极点的移动方向。
+(a)~两个极点位于实轴同侧（此处都在下半平面）：即使它们趋近实轴，围道也可以向另一侧（上半平面）形变而远离极点，积分保持解析；
+(b)~两个极点从实轴两侧相向趋近同一点：围道被夹在两者之间，无论向哪一侧形变都要越过一个极点，这就是 Landau 方程所刻画的钳夹（pinch）奇异性；
+(c)~极点趋近积分区间的端点 $a$：端点不能移动，围道在端点附近无法避开极点，产生端点奇异性。
+只有 (b)、(c) 两种情形可能使积分作为外部参数的函数出现奇异性。多维积分中，奇异性要求积分围道（超曲面）在所有方向上都无法形变避开奇点，由此导出 Landau 方程。}
+\label{fig:landau-pinch}
+\end{figure}
+%%% END fig:landau-pinch
+
+一维的例子（$a,b$ 实，$\epsilon>0$）：两个极点 $x=a-\ii\epsilon$、$x=-b+\ii\epsilon$ 分居实轴两侧时，在上半平面闭合得
+\begin{equation}\label{eq:ir-toy-pinch}
+\int_{-\infty}^{\infty}\frac{\dd x}{(x-a+\ii\epsilon)(x+b-\ii\epsilon)}=-\frac{2\pi\ii}{a+b-2\ii\epsilon} ,
+\end{equation}
+$a+b\to0$、$\epsilon\to0$ 时两极点从两侧相向趋近，围道被夹住，积分作为外部参数 $a+b$ 的函数出现极点（\cref{fig:landau-pinch}(b)）；两个极点同侧时在另一侧闭合得零，围道总能推离实轴（图 (a)）；端点情形 $\int_0^1\dd x/(x-a+\ii0)=\ln\frac{1-a}{a}-\ii\pi$ 在 $a\to0^+$ 时对数发散（图 (c)）。三式均已数值核对。
+
+由此得到原则：这类积分作为外部参数的函数，只有在围道被奇点从两侧夹住（钳夹，pinch）或被奇点逼到不能移动的端点时才可能奇异。圈动量积分遍及 $\mathbb R^{4L}$，没有有限端点；端点只在部分积分之后出现（Feynman 参数单形的面，光锥动量分数的 $0$ 与 $1$），“无穷远处”对应紫外行为与第二类奇异性（$\mathcal U=0$）。于是有两个不同的问题：%
+% (critic O12)
+积分作为外部不变量的函数在何处非解析——Landau 原本的问题\cite{Landau1959}（另见\cite{Nakanishi:1959jzx}），由参数形式的\cref{thm:ir-landau-alpha}回答；在固定外动量下圈动量空间中哪些点被钳住——因子化需要的问题，它决定长程敏感性来自哪些区域\cite{Sterman1978a}，由动量形式的\cref{thm:ir-landau-momentum}回答。两者由\cref{lem:ir-envelope}在方程层次上联系，但并不等价。
+
+\paragraph{Feynman 参数表示。}
+考虑 $L$ 圈、$N$ 条内线的图，第 $j$ 条线携带动量 $q_j=\sum_{l=1}^L\eta_{jl}k_l+r_j$（$\eta_{jl}\in\{0,\pm1\}$，$r_j$ 为外动量的线性组合）、质量 $m_j\ge0$ 与分母 $D_j+\ii0$。分子经 Gauss 积分后化为多项式乘以 $\mathcal U$、$\mathcal F$ 的移位幂次，不改变下面的结论，故只写标量积分。
+
+\begin{definition}[Feynman 参数表示与 Symanzik 多项式]\label{def:ir-landau-setup}
+对正幂次 $\nu_j$，记 $\nu=\sum_j\nu_j$。标量积分
+\begin{multline}\label{eq:ir-param}
+I(p)=\int\prod_{l=1}^{L}\frac{\dd^Dk_l}{\ii\pi^{D/2}}\prod_{j=1}^{N}\frac{1}{(-D_j-\ii0)^{\nu_j}}\\
+=\frac{\Gamma(\nu-LD/2)}{\prod_j\Gamma(\nu_j)}\int_{\mathbb R_+^N}\prod_j\dd\alpha_j\,\alpha_j^{\nu_j-1}\,\delta\Big(1-\sum_{j\in\sigma}\alpha_j\Big)\frac{\mathcal U^{\nu-(L+1)D/2}}{(\mathcal F-\ii0)^{\nu-LD/2}}
+\end{multline}
+% VF-REG-1
+称为它的 Feynman 参数表示，$\sigma\subset\{1,\dots,N\}$ 为任意非空子集（Cheng--Wu）。这里二次型
+\begin{equation}\label{eq:ir-quadform}
+\mathcal D(\alpha,k)\equiv\sum_j\alpha_j\big(m_j^2-q_j^2\big)=-\sum_{l,l'}A_{ll'}\,k_l\cdot k_{l'}-2\sum_lB_l\cdot k_l+C ,
+\end{equation}
+$A_{ll'}=\sum_j\alpha_j\eta_{jl}\eta_{jl'}$，$B_l=\sum_j\alpha_j\eta_{jl}r_j$，$C=\sum_j\alpha_j(m_j^2-r_j^2)$；$k_c(\alpha)$ 是 $\mathcal D$ 对 $k$ 的驻点（$Ak_c=-B$）；第一、第二 Symanzik 多项式为
+\begin{equation}\label{eq:ir-UF}
+\mathcal U(\alpha)=\det A=\sum_{T\in\mathcal T_1}\prod_{j\notin T}\alpha_j ,\qquad
+\mathcal F(\alpha,p)=\mathcal U\,\mathcal D(\alpha,k_c)=-\sum_{T\in\mathcal T_2}\Big(\prod_{j\notin T}\alpha_j\Big)s_T+\mathcal U\sum_j\alpha_jm_j^2 ,
+\end{equation}
+其中 $\mathcal T_1$、$\mathcal T_2$ 为生成树与 2-森林的集合，$s_T$ 是流入 2-森林一个连通分支的外动量之和的平方。$\mathcal U$、$\mathcal F$ 分别是 $\alpha$ 的 $L$ 次与 $L+1$ 次齐次多项式。
+\uses{def:prelim-feynman-rules,def:qcd-dimreg}
+\end{definition}
+
+其推导（Feynman 参数公式、平移到驻点 $k_c$、$L$ 圈 Gauss 积分）见\cref{sec:appD-alpha}；连同测度，被积式在 $\alpha\to t\alpha$ 下不变，这正是 $\sigma$ 可以任选的原因。
+
+\paragraph{两组 Landau 方程。}
+称实点 $k$ 与 $\alpha\in\mathbb R^N_{\ge0}\setminus\{0\}$ 满足\emph{动量空间 Landau 方程}，若
+\begin{equation}\label{eq:ir-landau-k}
+\alpha_j\,D_j(k)=0\quad(j=1,\dots,N),\qquad
+\sum_j\alpha_j\,\eta_{jl}\,q_j^\mu(k)=0\quad(l=1,\dots,L);
+\end{equation}
+第二组称为圈方程。称闭单形 $\bar\Delta=\{\alpha_j\ge0,\ \sum_j\alpha_j=1\}$ 上的点 $\alpha$ 满足\emph{参数形式的 Landau 方程}，若
+\begin{equation}\label{eq:ir-landau-alpha}
+\mathcal F(\alpha,p)=0,\qquad \alpha_j\,\frac{\partial\mathcal F}{\partial\alpha_j}(\alpha,p)=0\quad(j=1,\dots,N).
+\end{equation}
+由 Euler 关系 $\sum_j\alpha_j\partial_j\mathcal F=(L+1)\mathcal F$，\cref{eq:ir-landau-alpha}的第一式是其余各式的推论。$\alpha_j>0$ 的线必在壳；$\alpha_j=0$ 的线可以离壳，它们在约化图中收缩为点。
+
+\begin{lemma}[包络恒等式]\label{lem:ir-envelope}
+设 $\mathcal U(\alpha)\ne0$。则
+\begin{equation}\label{eq:ir-envelope}
+\frac{\partial}{\partial\alpha_j}\Big(\frac{\mathcal F}{\mathcal U}\Big)=-D_j\big(k_c(\alpha)\big),\qquad
+\frac{\mathcal F}{\mathcal U}=-\sum_j\alpha_jD_j\big(k_c(\alpha)\big),
+\end{equation}
+% VF-REG-3
+并且 $\alpha$ 满足\cref{eq:ir-landau-alpha}当且仅当存在实动量 $k$ 使 $(k,\alpha)$ 满足\cref{eq:ir-landau-k}；此时必有 $k=k_c(\alpha)$。
+\uses{def:ir-landau-setup}
+\end{lemma}
+\begin{proof}
+完整证明见\cref{sec:appD-alpha}。要点：圈方程就是 $\partial\mathcal D/\partial k_l=0$，在 $\det A=\mathcal U\ne0$ 时其唯一解是 $k_c$；$\mathcal F/\mathcal U=\mathcal D(\alpha,k_c(\alpha))$ 是驻值，对 $\alpha_j$ 求导时 $k_c$ 的变化不贡献（包络定理），得\cref{eq:ir-envelope}；在 $\mathcal F=0$ 处 $\alpha_j\partial_j\mathcal F=\mathcal U\alpha_j\partial_j(\mathcal F/\mathcal U)=-\mathcal U\alpha_jD_j(k_c)$。
+\end{proof}
+
+\cref{lem:ir-envelope}只是两组\emph{方程}的代数等价，并不意味着动量空间的围道被钳住当且仅当参数积分的围道被钳住。Collins 指出（预印本）\cite[第~IV~节、附录~D]{Collins:2020euz}，Landau 与 Coleman--Norton 默认的这一蕴涵对无质量图不成立：单圈无质量自能（两条无质量线，动量 $k$ 与 $p-k$）的 $\mathcal F=-p^2\alpha_1\alpha_2$ 是 $p^2$ 乘以一个与 $p$ 无关的函数，参数积分的被积函数没有钳夹，$p^2=0$ 处的共线奇异性全部来自前置因子 $(-p^2)^{D/2-2}$；而在动量空间中，$p^2=0$ 时整条线段 $k=xp$（$0\le x\le1$）都是钳夹点，Landau 点为 $\alpha=(1-x,x)$。含线性（非相对论或程函）分母时，参数积分甚至会在动量积分并无钳夹之处出现局域化的奇异\cite[附录~D.2]{Collins:2020euz}。因此参数形式的定理只用作外部不变量的解析性与红外有限性判据，“圈动量空间中哪些点被钳住”交给动量形式的\cref{thm:ir-landau-momentum}。
+
+\begin{theorem}[Landau 条件（参数形式）：解析性与红外有限性判据 \tagR]\label{thm:ir-landau-alpha}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设 $p_0$ 为实外部运动学，积分\cref{eq:ir-param}在 $p_0$ 附近紫外收敛或由维数正规化延拓，即闭单形上的被积函数除 $\mathcal F-\ii0$ 的零点之外没有其他不可积性。若闭单形 $\bar\Delta$ 上不存在满足\cref{eq:ir-landau-alpha}（取 $p=p_0$）的点，则 $I(p)$ 在 $p_0$ 处有限（没有红外发散），并且作为外部不变量的函数可全纯延拓到 $p_0$ 的一个复邻域。等价地，$p_0$ 处的红外发散或奇异性必伴随\cref{eq:ir-landau-alpha}的解。（本定理只涉及 Feynman 积分。）
+\uses{def:ir-landau-setup,lem:ir-envelope}
+\end{theorem}
+\begin{proof}
+完整证明见\cref{sec:appD-alpha}。思路：作保持约束 $\sum_j\alpha_j=1$ 与单形各面的形变 $z_j=\alpha_j[1-\ii\tau\eta(\partial_j\mathcal F-\sum_k\alpha_k\partial_k\mathcal F)]$（$0\le\tau\le1$，$\eta>0$ 充分小），则 $\Imag\mathcal F(z)=-\tau\eta V+O(\tau^3\eta^3)$，$V=\sum_j\alpha_j(\partial_j\mathcal F)^2-(\sum_k\alpha_k\partial_k\mathcal F)^2\ge0$；$V=\mathcal F=0$ 恰在\cref{eq:ir-landau-alpha}的解上成立，按假设不发生，由紧性与控制收敛定理即得结论。
+\end{proof}
+
+参数形式回答外部不变量的问题（数值示例见\cref{sec:appD-alpha}）；下面的动量形式回答因子化所需的问题。
+
+\begin{theorem}[动量空间的钳夹必要条件 \tagR]\label{thm:ir-landau-momentum}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）固定实外动量。对实点 $k_0\in\mathbb R^{4L}$，令 $S=\{j:D_j(k_0)=0\}\ne\varnothing$，$u_j=\partial D_j/\partial k\,(k_0)$（分量 $\partial D_j/\partial k_l^\mu=2\eta_{jl}\,q_{j\mu}(k_0)$）。若不存在 $\alpha\in\mathbb R^S_{\ge0}\setminus\{0\}$ 使 $\sum_{j\in S}\alpha_ju_j=0$，则存在实方向 $v\in\mathbb R^{4L}$、$k_0$ 的邻域 $\mathcal V$ 与 $\eta_0>0$，使得对任一光滑截断函数 $0\le\chi\le1$（在 $k_0$ 附近 $\chi=1$，支集在 $\mathcal V$ 内）及 $0<\eta\le\eta_0$，形变 $k\to k+\ii\eta\chi(k)v$ 在 $\chi>0$ 处对 $j\in S$ 给出 $\Imag D_j>0$，并且对 $j\notin S$ 在形变后的围道上 $D_j\ne0$：形变后的被积函数在 $k_0$ 附近没有奇点，$k_0$ 未被钳住。等价地，被钳住的实点必满足 $\alpha_j\ge0$ 的动量空间 Landau 方程\cref{eq:ir-landau-k}。（本定理只涉及 Feynman 积分。）
+\uses{def:ir-landau-setup,lem:appD-gordan}
+\end{theorem}
+\begin{proof}
+完整证明见\cref{sec:appD-momentum}。由 Gordan 择一定理，假设等价于存在 $v$ 使 $u_j\cdot v>0$（$j\in S$）；而 $D_j$ 是二次式，
+$D_j(k+\ii\eta\chi v)=D_j(k)-\eta^2\chi^2(v'_j)^2+2\ii\eta\chi\,q_j(k)\cdot v'_j$（$v'_j=\sum_l\eta_{jl}v_l$）严格成立，
+其虚部 $\eta\chi\,u_j(k)\cdot v$ 由连续性在 $k_0$ 附近为正；$j\notin S$ 的 $|D_j|$ 在小邻域内有正下界，形变只改变 $O(\eta)$。
+\end{proof}
+
+条件 $\alpha_j\ge0$ 来自 $+\ii0$ 规定（容许的形变须使 $\Imag D_j>0$），它把物理区的钳夹与复运动学中的一般 Landau 曲面区分开。Collins 的完整判据\cite{Collins:2020euz}中纯几何的一半恰是 Gordan 择一定理\cite{Gordan1873}，其最小范数点给出带显式余量的形变方向；这一联系见第~24~章的\cref{rem:front-gordan-collins}。
+
+\begin{remark}[Landau 条件的充分性与整体形变 \tagA]\label{rem:ir-landau-status}
+完整的钳夹理论还需要三点：(a)~充分性——若 $k_0$ 处存在 $\alpha_j\ge0$ 的 Landau 解，则任何容许形变（包括一阶位移为零的“反常”形变）都不能避开 $k_0$ 处的奇点，即围道被钳住；(b)~整体形变——在不含钳夹点的区域上，各点的局部形变可以借助单位分解拼接为一个整体的容许形变，从而把积分围道推离一切未被钳住的奇异面；(c)~以上只涉及有限圈动量处的奇异性，第二类奇异性（$\mathcal U=0$，圈动量趋于无穷）不在讨论之列。注意“被钳住”不等于“积分奇异”：Landau 条件对围道的钳夹是充要的（在下述地位之下），对积分作为外部参数的奇异性只是必要的——无质量自能对一切 $p$ 都在 $k=0$ 与 $k=p$（零动量线）处被钳住，却只在 $p^2=0$ 处奇异。
+\uses{thm:ir-landau-momentum,thm:ir-landau-alpha}
+\end{remark}
+
+\paragraph{地位与缺口}
+(a)、(b) 的完整证明只见于 Collins 的预印本\cite{Collins:2020euz}（预印本；截至 2026 年 10 月只有 arXiv 第一版，未见期刊发表），且限于至多二次的分母并附加一个符号条件——Collins 自己认为这些限制只是方法上的需要；其内容与地位在第~24~章（\cref{thm:front-collins-pinch}，\tagA）讨论。因此本书把这一注记记为 \tagA，而不是 \tagR。教科书中的推导并不完整：Collins 写道，他找不到明确而完整地证明 Landau 方程对钳夹奇异面既必要又充分的已发表文献，教科书的处理细究之下都不完整\cite[第~5.4.3~节，第~110~页]{Collins2011}；ELOP 在推导前声明只满足于似然性论证，并称严格处理需用同调论\cite[第~2.1~节，第~48、50~页]{EdenEtAl1966}；Coleman 与 Norton\cite{ColemanNorton1965}的证明默认动量空间钳夹与参数空间钳夹等价，而这对无质量图与线性分母不成立——按 Collins 的诊断，失效的是证明而不是结论\cite[第~IV~节、附录~D]{Collins:2020euz}。奇异性的拓扑（Picard--Lefschetz）理论见\cite{Pham:2011SingInt}，动量空间的同痕方法见预印本\cite{Muhlbauer:2020kut}。最弱的一步是 (a) 中对反常形变的排除；这是关于围道的定性陈述，不涉及误差类型。升级途径：Collins 证明的同行评审与独立核验，或一个去掉符号条件的证明。
+
+\begin{remark}[欧氏区的 Landau 解与红外有限性]\label{rem:ir-euclid-corners}
+“欧氏区没有 Landau 解，所以欧氏 Green 函数红外有限”的前半句是错的。%
+% (misconception M29)
+在欧氏非例外运动学中（全部外动量为欧氏矢量，其任何非空真子集之和都不为零），任意一组携带零动量的无质量线总满足\cref{eq:ir-landau-k}（$D_j=0$ 且 $\alpha_jq_j=0$）；反之，由 $\mathcal F/\mathcal U=\min_{k_E}\sum_j\alpha_j(m_j^2+q_{jE}^2)\ge0$（\cref{sec:appD-alpha}），$\mathcal U\ne0$ 的 Landau 点上每条 $\alpha_j>0$ 的线都有 $m_j=0$、$q_j=0$。所以欧氏 Landau 解恰为若干无质量线同时携带零动量的构型；全部内线有质量时，在 $\mathcal U\ne0$ 处 $\mathcal F>0$，没有解。例如两条外线离壳的三角图 $\mathcal F=m^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2$ 只在单形的三个角上有解（\cref{ex:ir-euclid-triangle}）。欧氏红外有限性来自红外幂次计数：附着于其余部分 $A$ 次（其中 $A_q$ 次为夸克端）的软子集的红外发散度 $d=A+\frac12A_q\ge2$，每个零动量构型都可积（第~6~章的\cref{thm:ee-euclid-ir}）。
+\uses{def:ir-landau-setup,thm:ir-landau-alpha}
+\end{remark}
+
+
+\begin{example}[离壳三角图的 Symanzik 多项式]\label{ex:ir-euclid-triangle}
+三条无质量内线 $q_0=k$、$q_1=k-p_1$、$q_2=k+p_2$，外线 $p_1^2=p_2^2=-m^2$，$(p_1+p_2)^2=-Q^2$（$m^2,Q^2>0$）。单圈时 $\mathcal U=\alpha_0+\alpha_1+\alpha_2$；切开 $\{1,2\}$、$\{0,1\}$、$\{0,2\}$ 的 2-森林分别隔开 $p_1+p_2$、$p_1$、$p_2$，由\cref{eq:ir-UF}
+\[
+\mathcal F=-\big[\alpha_1\alpha_2(p_1+p_2)^2+\alpha_0\alpha_1p_1^2+\alpha_0\alpha_2p_2^2\big]=m^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2\ \ge0 .
+\]
+% VF-REF-17
+Landau 条件的三项 $\alpha_1(m^2\alpha_0+Q^2\alpha_2)$、$\alpha_2(m^2\alpha_0+Q^2\alpha_1)$、$m^2\alpha_0(\alpha_1+\alpha_2)$ 都是非负项之和；第三项为零要求 $\alpha_0=0$ 或 $\alpha_1=\alpha_2=0$，前者再由第一项给出 $\alpha_1\alpha_2=0$。故解恰为三个角：由 $k_c=(\alpha_1p_1-\alpha_2p_2)/\mathcal U$，它们是 $k=0$（零动量胶子）与 $k=p_1$、$k=-p_2$（零动量夸克线）。这些角都可积：$\nu=3$、$D=4$ 时 $I=\int_{\bar\Delta}\dd\alpha\,\mathcal F^{-1}$，而在每个角附近 $\mathcal F$ 都随到该角的距离线性趋于零（例如角 $\alpha_0=1$ 附近 $\mathcal F=m^2(\alpha_1+\alpha_2)+\dots$），二维测度使积分收敛；动量空间中这就是 $k\sim\lambda$ 时 $\lambda^4\cdot\lambda^{-2}=\lambda^2$，与 $d=A=2$ 一致。对比：外线在壳且有质量、胶子无质量时 $\mathcal F=Q^2\alpha_1\alpha_2+m^2(\alpha_1+\alpha_2)^2$，Landau 解同样只在角 $\alpha_0=1$，但那里 $\mathcal F$ 二次趋于零，积分对数发散——QED 型的软发散。两种情形的 Landau 解相同，由幂次计数作出区分（细节与核对见\cref{sec:appD-alpha}）。
+\uses{rem:ir-euclid-corners}
+\end{example}
+%% =====================================================================
+\section{Coleman--Norton 图像}\label{sec:ir-coleman-norton}
+
+Landau 方程有一个非常直观的物理解释：钳夹点对应在壳粒子在时空中的经典传播过程。这一解释使我们无需逐图求解 Landau 方程，就能对无质量 QCD 中一切图的钳夹面作出分类（\cref{sec:ir-pinch}）。
+
+\begin{definition}[钳夹面、内禀坐标与法坐标]\label{def:ir-pinch-surface}
+固定实外动量。(i)~实点 $k$ 称为 \emph{Landau 点}，若存在不全为零的 $\alpha_j\ge0$，只在在壳线集合 $S(k)=\{j:D_j(k)=0\}$ 上非零，使\cref{eq:ir-landau-k}成立；由\cref{thm:ir-landau-momentum}，每个被钳住的点都是 Landau 点。(ii)~在壳线集合与 $\alpha$ 的支集保持不变的 Landau 点构成的光滑连通集合称为一个\emph{钳夹面}（pinch surface）$\mathcal S$；把支集之外的线（$\alpha_j=0$，可以离壳）收缩为点所得的图称为 $\mathcal S$ 的\emph{约化图}（reduced diagram）。(iii)~在 $\mathcal S$ 的一点附近，沿 $\mathcal S$ 的坐标称为\emph{内禀坐标}（intrinsic coordinates），横越 $\mathcal S$ 的坐标称为\emph{法坐标}（normal coordinates）；被积函数只在法坐标趋于零时奇异。
+\uses{thm:ir-landau-momentum}
+\end{definition}
+
+\begin{proposition}[Coleman--Norton 定理（代数形式） \tagR]\label{prop:ir-coleman-norton}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设实点 $k_0$ 与 $\alpha$ 满足 $\alpha_j\ge0$ 的动量空间 Landau 方程\cref{eq:ir-landau-k}，各线的取向选为使其能量 $q_j^0\ge0$，并给每条 $\alpha_j>0$ 的线指定时空位移 $\Delta x_j=\alpha_j\,q_j(k_0)$（由线的起点指向终点）。则：
+(i)~圈方程成立当且仅当约化图的各顶点可以赋予时空位置 $x_v$，使每条 $\alpha_j>0$ 的线满足 $x_{\text{终}(j)}-x_{\text{始}(j)}=\Delta x_j$；
+(ii)~$q_j\ne0$ 的线描述以动量 $q_j$ 向未来自由传播的经典在壳粒子（速度 $\vec q_j/q_j^0$，无质量线沿光线运动），$\alpha_j=0$ 的线长度为零，收缩进顶点；
+(iii)~零动量的无质量线对任意 $\alpha_j$ 都有 $\Delta x_j=0$，不施加约束；若把它看作动量为 $\lambda q$、参数为 $\alpha_j=c/\lambda$ 的线在 $\lambda\to0$ 时的极限，则 $\Delta x_j=cq$ 保持有限而 $\alpha_jD_j=c\lambda q^2\to0$，所以软线可以连接任意两个顶点。
+反之，满足 (i)(ii) 的经典过程给出\cref{eq:ir-landau-k}的一个 $\alpha_j\ge0$ 的解。（本命题只涉及 Feynman 积分。）
+\uses{thm:ir-landau-momentum,def:ir-pinch-surface}
+\end{proposition}
+\begin{proof}
+完整证明见\cref{sec:appD-cn}。要点：圈方程 $\sum_j\eta_{jl}\alpha_jq_j=0$ 说的正是，沿每个圈的位移之和为零，即 $\sum_j\eta_{jl}\Delta x_j=0$；沿一棵生成树从某个顶点出发累加位移即可定义各 $x_v$，圈方程保证结果与路径无关。
+\end{proof}
+
+\cref{prop:ir-coleman-norton}把钳夹面翻译成经典的时空图像\cite{ColemanNorton1965}（\cref{fig:coleman-norton}）。以无质量顶点的共线钳夹为例（\cref{fig:vertex-regions}(b)）：在 $k=xp_1$ 处胶子线 $k$ 与夸克线 $p_1-k$ 在壳且平行于 $p_1$，离壳的反夸克线收缩进光子顶点 $X$；圈方程给出 $\alpha_0x=\alpha_1(1-x)$，于是两条线的位移 $\alpha_0xp_1$ 与 $\alpha_1(1-x)p_1$ 相等\cite[式~(58)]{Sterman:1995fz}：夸克与胶子在 $X$ 处产生，沿 $p_1$ 的光线同行，在 $Y_1=X+\alpha_0xp_1$ 处同时到达并结合；$\alpha\ge0$ 要求物理区 $0\le x\le1$。
+
+%%% BEGIN fig:coleman-norton
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 cone/.style={draw=gray!60,line width=0.5pt,dash pattern=on 3pt off 2pt},
+  t2 soft/.style={draw=green!45!black,line width=0.85pt,decorate,
+      decoration={fd photon,amplitude=0.9mm,segment length=17mm}},
+  t2 lab/.style={font=\footnotesize}]
+  % axes and light cone  (x^\pm=(t\pm z)/\sqrt2)
+  \draw[lcaxis] (-3.9,0) -- (4.0,0) node[below] {$z$};
+  \draw[lcaxis] (0,-1.45) -- (0,3.85) node[left] {$t$};
+  \draw[t2 cone] (0,0) -- (3.6,3.6) node[above right=-2pt,text=gray!50!black,font=\footnotesize] {$x^-=0$};
+  \draw[t2 cone] (0,0) -- (-3.6,3.6) node[above left=-2pt,text=gray!50!black,font=\footnotesize] {$x^+=0$};
+  % incoming virtual photon at rest (world line along t)
+  \draw[photon] (0,-1.3) -- (0,-0.17);
+  \node[t2 lab,anchor=west] at (0.1,-0.95) {$\gamma^*$（静止）};
+  % jet 1: quark along x^-=0, with a collinear gluon emitted at P1
+  \draw[quark=0.22] (0.11,0.11) -- (3.15,3.15);
+  \coordinate (P1) at (1.95,1.95);
+  \draw[gluon] (P1) -- (2.78,3.22);
+  \node[vertex] at (P1) {};
+  % jet 2: antiquark along x^+=0 (fermion-number arrow towards the vertex), collinear gluon at P2
+  \draw[quark=0.8] (-3.15,3.15) -- (-0.11,0.11);
+  \coordinate (P2) at (-1.95,1.95);
+  \draw[gluon] (P2) -- (-2.78,3.22);
+  \node[vertex] at (P2) {};
+  % soft (zero-momentum, long-wavelength) gluon exchanged between the jets
+  \coordinate (S1) at (1.3,1.3); \coordinate (S2) at (-1.25,1.25);
+  \draw[t2 soft] (S2) -- (S1);
+  \node[vertex] at (S1) {}; \node[vertex] at (S2) {};
+  \node[t2 lab,text=green!35!black,anchor=south] at (-0.66,1.38) {软胶子};
+  % hard vertex
+  \filldraw[hard blob] (0,0) circle[radius=0.16];
+  \node[t2 lab,anchor=north west] at (0.15,-0.05) {$H$};
+  % jet labels
+  \node[t2 lab,anchor=west,align=left] at (2.2,1.1) {$q$ 喷注：$\Delta x^\mu=\alpha\,p_1^\mu$\\（沿光锥 $x^-=0$）};
+  \node[t2 lab,anchor=east,align=right] at (-2.2,1.1) {$\bar q$ 喷注：$\Delta x^\mu=\alpha\,p_2^\mu$\\（沿光锥 $x^+=0$）};
+\end{tikzpicture}
+\caption{Coleman--Norton 定理的时空图像（$e^+e^-$ 湮灭，$\gamma^*$ 静止系，$z$ 轴取为喷注轴，$x^\pm=(t\pm z)/\sqrt2$）。钳夹面上每条在壳内线 $i$
+对应一段经典自由传播 $\Delta x_i^\mu=\alpha_i l_i^\mu$（$\alpha_i\ge0$，与该线的 Feynman 参数成正比）；由 Landau 方程，各顶点的时空位置彼此相容。离壳（硬）线的 $\alpha_i=0$，全部收缩为原点处的硬顶点 $H$；
+有限动量的无质量共线粒子沿光锥 $x^-=0$（$q$ 喷注）或 $x^+=0$（$\bar q$ 喷注）以光速运动，并可在同一光线上任意处分裂或重新结合（图中共线胶子与夸克线的夹角是为了看清而夸大的）。
+动量为零的软线（绿色长波长线）不受此约束：它在 Landau 方程中的贡献 $\alpha_i l_i^\mu$ 恒为零，与 $\alpha_i$ 无关；物理上它是波长无限长、不能局域化的量子，可以在两个喷注的任意位置被发射或吸收。
+绿线只是示意：它连接的两点一般是类空间隔的。}
+\label{fig:coleman-norton}
+\end{figure}
+%%% END fig:coleman-norton
+
+%%% BEGIN fig:vertex-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 soft/.style={draw=green!45!black},
+  t2 jetA/.style={draw=blue!55!black,fill=blue!10,line width=0.5pt},
+  t2 jetB/.style={draw=orange!75!black,fill=orange!14,line width=0.5pt},
+  t2 hard/.style={draw=black!70,fill=gray!35,line width=0.6pt},
+  t2 lab/.style={font=\footnotesize}]
+  % common geometry:  V = photon vertex,  E1/E2 = ends of the q / qbar legs,  G1/G2 = gluon vertices
+  % ======================= (a) soft gluon =======================
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.62!(E1)$); \coordinate (G2) at ($(V)!0.62!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetA,rotate around={28:($(V)!0.52!(E1)$)}] ($(V)!0.52!(E1)$) ellipse[x radius=1.55cm,y radius=0.27cm];
+      \draw[t2 jetB,rotate around={-28:($(V)!0.52!(E2)$)}] ($(V)!0.52!(E2)$) ellipse[x radius=1.55cm,y radius=0.27cm];
+    \end{scope}
+    \draw[photon] (-1.15,0) -- (V);
+    \draw[quark] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon,t2 soft] (G2) -- (G1);
+    \filldraw[t2 hard] (V) circle[radius=0.15];
+    \foreach \p in {G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.15,0);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) -- (G1);
+    \node[t2 lab,text=green!40!black,anchor=east] at ($(G1)!0.5!(G2)+(-0.16,0)$) {$S$};
+    \node at (0.75,-2.05) {(a)\ 软区：$k\to0$};
+  \end{scope}
+  % ======================= (b) gluon collinear to q =======================
+  \begin{scope}[xshift=5.2cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.8!(E1)$); \coordinate (G2) at ($(V)!0.12!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetA,rotate around={31:($(V)!0.5!(E1)+(0.05,-0.12)$)}] ($(V)!0.5!(E1)+(0.05,-0.12)$) ellipse[x radius=1.6cm,y radius=0.5cm];
+      \draw[t2 jetB,rotate around={-28:($(V)!0.62!(E2)$)}] ($(V)!0.62!(E2)$) ellipse[x radius=1.15cm,y radius=0.24cm];
+    \end{scope}
+    \draw[quark=0.35] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[plain] (G2) -- (V);
+    \draw[gluon] (G2) .. controls ($(V)!0.42!(E1)+(0.22,-0.5)$) and ($(V)!0.62!(E1)+(0.12,-0.38)$) .. (G1);
+    \filldraw[t2 hard] ($(V)!0.5!(G2)$) circle[radius=0.33];
+    \draw[photon] (-1.15,0) -- ($(V)!0.5!(G2)+(-0.33,0.03)$);
+    \foreach \p in {G1} \node[vertex] at (\p) {};
+    \node[t2 lab] at ($(V)!0.5!(G2)$) {$H$};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.3,0);
+    \path[mom={$p_1$},mom pos=0.55] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) .. controls ($(V)!0.42!(E1)+(0.22,-0.5)$) and ($(V)!0.62!(E1)+(0.12,-0.38)$) .. (G1);
+    \node[t2 lab,text=blue!50!black] at (0.95,1.25) {$J_1$};
+    \node at (0.75,-2.05) {(b)\ $k\parallel p_1$};
+  \end{scope}
+  % ======================= (c) gluon collinear to qbar =======================
+  \begin{scope}[xshift=10.4cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.12!(E1)$); \coordinate (G2) at ($(V)!0.8!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetB,rotate around={-31:($(V)!0.5!(E2)+(0.05,0.12)$)}] ($(V)!0.5!(E2)+(0.05,0.12)$) ellipse[x radius=1.6cm,y radius=0.5cm];
+      \draw[t2 jetA,rotate around={28:($(V)!0.62!(E1)$)}] ($(V)!0.62!(E1)$) ellipse[x radius=1.15cm,y radius=0.24cm];
+    \end{scope}
+    \draw[plain] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark=0.65] (G2) -- (V);
+    \draw[gluon] (G1) .. controls ($(V)!0.42!(E2)+(0.22,0.5)$) and ($(V)!0.62!(E2)+(0.12,0.38)$) .. (G2);
+    \filldraw[t2 hard] ($(V)!0.5!(G1)$) circle[radius=0.33];
+    \draw[photon] (-1.15,0) -- ($(V)!0.5!(G1)+(-0.33,-0.03)$);
+    \foreach \p in {G2} \node[vertex] at (\p) {};
+    \node[t2 lab] at ($(V)!0.5!(G1)$) {$H$};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.3,0);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G2) -- (E2);
+    \path[mom={$-k$},mom sep=0.3cm] (G1) .. controls ($(V)!0.42!(E2)+(0.22,0.5)$) and ($(V)!0.62!(E2)+(0.12,0.38)$) .. (G2);
+    \node[t2 lab,text=orange!60!black] at (0.95,-1.25) {$J_2$};
+    \node at (0.75,-2.05) {(c)\ $k\parallel p_2$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈无质量顶点 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$ 的三个钳夹面（领头区域）。胶子动量 $k$ 由反夸克线流向夸克线，
+内夸克线携带 $p_1-k$，内反夸克线携带 $p_2+k$。
+(a)~软区 $k\to0$：两条内费米子线在壳并分别平行于 $p_1$、$p_2$（蓝、橙色区域为两个喷注），零动量胶子（绿色）构成软子图 $S$，硬部分只剩光子顶点；
+(b)~$k=\alpha p_1$（$0<\alpha<1$）：胶子与内夸克线都在壳且平行于 $p_1$，同属喷注 $J_1$，而内反夸克线的虚度 $(p_2+\alpha p_1)^2=\alpha q^2$ 不小，收缩进硬部分 $H$；
+(c)~$k=-\beta p_2$（$0<\beta<1$）：与 (b) 镜像对称，胶子携带物理动量 $-k=\beta p_2$ 沿 $p_2$ 方向运动并属于 $J_2$，内夸克线的虚度 $(p_1+\beta p_2)^2=\beta q^2$ 不小。
+费米子线上的箭头表示费米子数流向，动量箭头单独画出。}
+\label{fig:vertex-regions}
+\end{figure}
+%%% END fig:vertex-regions
+
+(iii) 中的标度极限说明了软线的地位：动量为 $\lambda q$ 的线在 $\lambda\to0$ 时变成波长无限长的量子，可以连接分处两个以光速彼此远离的喷注上的顶点——有限动量的交换线做不到这一点；这正是软胶子能在不同喷注之间、乃至初态与末态之间传递相互作用的原因（Drell--Yan 中的相应图像见第~12~章的\cref{fig:glauber-exchange}）。这一图像只刻画实动量、$\alpha_j\ge0$ 的物理区钳夹，因而只能用来\emph{定位}长程敏感性，不能用来论证别处\emph{没有}奇异性——例如 DIS 色散关系所用的 $\omega$ 的非物理区，那里的论据是谱支撑与因果性（第~7~章）。%
+% (critic C15)
+更强的陈述“被钳住当且仅当可经典实现”还需要\cref{thm:ir-landau-momentum}的逆命题（\cref{rem:ir-landau-status}），只有全阶论证的地位。包含 Wilson 线的动量空间版本是 Collins 判据加上 Coleman--Norton 闭合条件的直接推论，并非新结果，第~24~章以前者为前提把它写成\cref{cor:front-coleman-norton}。
+%% =====================================================================
+\section{无质量 QCD 中的钳夹面与约化图}\label{sec:ir-pinch}
+
+现在把 Coleman--Norton 图像用于硬过程。单圈无质量顶点 $\gamma^*(q)\to q(p_1)\bar q(p_2)$（$p_i^2=0$，$Q^2=2p_1\cdot p_2>0$）恰有三个钳夹面（\cref{fig:vertex-regions}）：胶子动量 $k\to0$ 的软钳夹面 $S$，$k=xp_1$（$0<x<1$）时胶子与内夸克线都平行于 $p_1$ 的共线钳夹面 $C_1$，以及镜像的 $C_2$（$k=-yp_2$）。全部内线离壳的构型（参数单形的内部）不是 Landau 解——“硬区”不是钳夹面，而是钳夹的缺席；详细分析见\cref{ex:ir-vertex}。单圈无质量箱图（$q_j=k+r_j$，$r_0=0$，$r_1=p_1$，$r_2=p_1+p_2$，$r_3=-p_4$）有 $\mathcal F=-s\alpha_0\alpha_2-t\alpha_1\alpha_3$，其 Landau 集是 3-单形的四条棱 $(01),(12),(23),(30)$（相邻两线共线于其间流入的外动量）与四个顶点（相邻外线之间的软交换）；棱 $(02)$、$(13)$ 只在 $s=0$ 或 $t=0$ 时是解。%
+% VF-REG-5
+每个顶点与每条棱都是对数型的，这就是熟知的 $1/\varepsilon^2$ 红外极点的来源。
+
+%%% BEGIN fig:reduced-ee
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small}]
+  \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[jet blob,ellipse,minimum width=3.3cm,minimum height=0.86cm] (J1) at (0, 1.6) {};
+  \node[jetB blob,ellipse,minimum width=3.3cm,minimum height=0.86cm] (J2) at (0,-1.6) {};
+  \node[soft blob,circle,minimum size=0.8cm,inner sep=0pt] (S) at (0,0) {};
+  % photons
+  \draw[photon] (-4.25,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (4.25,0);
+  \path[mom={$q$},mom sep=0.28cm] (-4.25,0) -- (H.west);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.east) -- (4.25,0);
+  % fermion lines: H -> J1 -> H^dagger -> J2 -> H
+  \draw[quark] (H.65) -- (J1.188);
+  \draw[quark] (J1.352) -- (Hd.115);
+  \draw[quark] (Hd.245) -- (J2.8);
+  \draw[quark] (J2.172) -- (H.295);
+  % soft gluons (to both jets, on both sides of the cut)
+  \draw[gluon] (S.152) -- (-0.92,1.2);
+  \draw[gluon] (S.28) -- (0.92,1.2);
+  \draw[gluon] (S.208) -- (-0.92,-1.2);
+  \draw[gluon] (S.332) -- (0.92,-1.2);
+  % cut
+  \draw[cut] (0,2.45) -- (0,-2.45);
+  % labels
+  \node[t2 lab] at (-0.85,1.6) {$J_1$};
+  \node[t2 lab] at (-0.85,-1.6) {$J_2$};
+  \node[t2 lab,anchor=east] at ($(S.west)+(-0.04,0)$) {$S$};
+  \node[t2 lab,anchor=north east] at (H.south west) {$H$};
+  \node[t2 lab,anchor=north west] at (Hd.south east) {$H^\dagger$};
+  \node[font=\footnotesize,anchor=west] at (1.75,1.95) {沿 $p_1$};
+  \node[font=\footnotesize,anchor=west] at (1.75,-1.95) {沿 $p_2$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south] at (0,2.45) {末态切割};
+\end{tikzpicture}
+\caption{$e^+e^-\to$ 两喷注的约化割图（领头钳夹面）。$H$（振幅）与 $H^\dagger$（共轭振幅）是全部离壳线收缩成的硬点；$J_1$、$J_2$
+是分别沿类光方向 $p_1$、$p_2$ 运动的共线子图（喷注），各以一条物理极化的夸克线与 $H$、$H^\dagger$ 相连，并穿过末态切割（红色虚线）；
+软子图 $S$ 只通过胶子与两个喷注相连，不与硬部分相连，其末态粒子同样穿过切割。在 Feynman 规范下喷注与硬部分之间还可以有任意多条标量（纵向）极化的共线胶子，
+图中未画出（参见\cref{fig:reduced-dis}）。}
+\label{fig:reduced-ee}
+\end{figure}
+%%% END fig:reduced-ee
+
+%%% BEGIN fig:reduced-dis
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  t2 lab/.style={font=\small}]
+  \node[hard blob,ellipse,minimum width=1.15cm,minimum height=0.78cm,inner sep=0pt] (H)  at (-2.6,0.8) {};
+  \node[hard blob,ellipse,minimum width=1.15cm,minimum height=0.78cm,inner sep=0pt] (Hd) at ( 2.6,0.8) {};
+  \node[jetB blob,ellipse,minimum width=3.0cm,minimum height=0.8cm] (J) at (0,2.3) {};
+  \node[jet blob,ellipse,minimum width=5.0cm,minimum height=1.2cm] (A) at (0,-1.55) {};
+  \node[soft blob,circle,minimum size=0.76cm,inner sep=0pt] (S) at (0,0.42) {};
+  % photons
+  \draw[photon] (-4.0,2.05) -- (H.135);
+  \draw[photon] (Hd.45) -- (4.0,2.05);
+  \path[mom={$q$},mom sep=0.28cm] (-4.0,2.05) -- (H.135);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.45) -- (4.0,2.05);
+  % hadron lines
+  \draw[t2 hadron] (-4.6,-1.55) -- (A.west);
+  \draw[t2 hadron] (A.east) -- (4.6,-1.55);
+  % fermion line: A -> H -> J -> H^dagger -> A
+  \draw[quark] (A.165) -- (H.205);
+  \draw[quark] (H.62) -- (J.195);
+  \draw[quark] (J.345) -- (Hd.118);
+  \draw[quark] (Hd.335) -- (A.15);
+  % longitudinally polarized collinear gluons (blue): A -> H, A -> H^dagger
+  \draw[longit] (A.154) -- (H.262);  \longitmark{(A.154)}{(H.262)}
+  \draw[longit] (A.143) -- (H.312);  \longitmark{(A.143)}{(H.312)}
+  \draw[longit] (A.30) -- (Hd.270);  \longitmark{(A.30)}{(Hd.270)}
+  % soft gluons: S -> J and S -> A, on both sides of the cut
+  \draw[gluon] (S.140) -- (-0.72,1.95);
+  \draw[gluon] (S.40)  -- ( 0.72,1.95);
+  \draw[gluon] (S.235) -- (-0.5,-0.97);
+  \draw[gluon] (S.305) -- ( 0.5,-0.97);
+  % cut
+  \draw[cut] (0,3.0) -- (0,-2.45);
+  % labels
+  \node[t2 lab] at (-0.8,2.3) {$J$};
+  \node[t2 lab] at (-1.15,-1.62) {$A$};
+  \node[t2 lab] at (-0.62,0.42) {$S$};
+  \node[t2 lab] at (H) {$H$};
+  \node[t2 lab] at (Hd) {$H^\dagger$};
+  \node[t2 lab,anchor=south] at (-4.35,-1.5) {$P$};
+  \node[t2 lab,anchor=south] at ( 4.35,-1.5) {$P$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south] at (0,3.0) {末态切割};
+  \node[font=\footnotesize,text=blue!55!black,align=center] at (1.2,0.4) {纵向极化\\共线胶子};
+\end{tikzpicture}
+\caption{深度非弹散射（DIS）的约化割图。靶强子 $P$ 的共线子图 $A$（蓝色）跨越末态切割，其中的旁观者（靶残余）穿过切割；
+$H$、$H^\dagger$ 分别是振幅与共轭振幅中的硬子图，与虚光子 $q$ 相连；被击出的夸克形成末态喷注 $J$（沿 $n_B$ 方向）并穿过切割；
+软子图 $S$ 以胶子与 $A$、$J$ 相连。$A$ 与 $H$（以及 $H^\dagger$）之间除一条物理极化的夸克线外，还可以有任意多条标量（纵向）极化、
+即 $\epsilon^\mu\propto k^\mu$ 的共线胶子（蓝色，以圆点标记），它们在幂次计数中不受压低，经 Ward 恒等式后成为 PDF 定义中的 Wilson 线（\cref{fig:ward-identity}）。}
+\label{fig:reduced-dis}
+\end{figure}
+%%% END fig:reduced-dis
+
+%%% BEGIN fig:reduced-dy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  t2 lab/.style={font=\small}]
+  % collinear subgraph A: amplitude part, conjugate part, spectators crossing the cut
+  \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Aa) at (-2.75,-1.05) {};
+  \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Ac) at (-2.75, 1.05) {};
+  \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Ba) at ( 2.75,-1.05) {};
+  \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Bc) at ( 2.75, 1.05) {};
+  \node[hard blob,circle,minimum size=0.66cm,inner sep=0pt] (H)  at (0,-1.3) {};
+  \node[hard blob,circle,minimum size=0.66cm,inner sep=0pt] (Hd) at (0, 1.3) {};
+  \node[soft blob,circle,minimum size=0.84cm,inner sep=0pt] (S) at (0,0) {};
+  % spectators of A and B crossing the cut (fermion number flows from amplitude to conjugate)
+  \draw[quark=0.78] ($(Aa.north)+(-0.3,-0.04)$) -- ($(Ac.south)+(-0.3,0.04)$);
+  \draw[gluon] ($(Aa.north)+(0,0.02)$) -- ($(Ac.south)+(0,-0.02)$);
+  \draw[quark=0.78] ($(Aa.north)+(0.3,-0.04)$) -- ($(Ac.south)+(0.3,0.04)$);
+  \draw[quark=0.78] ($(Ba.north)+(-0.3,-0.04)$) -- ($(Bc.south)+(-0.3,0.04)$);
+  \draw[gluon] ($(Ba.north)+(0,0.02)$) -- ($(Bc.south)+(0,-0.02)$);
+  \draw[quark=0.78] ($(Ba.north)+(0.3,-0.04)$) -- ($(Bc.south)+(0.3,0.04)$);
+  % hadron lines
+  \draw[t2 hadron] (-4.55,-1.65) -- (Aa.200);
+  \draw[t2 hadron] (Ac.160) -- (-4.55,1.65);
+  \draw[t2 hadron] (4.55,-1.65) -- (Ba.340);
+  \draw[t2 hadron] (Bc.20) -- (4.55,1.65);
+  % active partons:  A -> H (quark),  H -> B (antiquark: fermion arrow away from H),  conjugate side mirrored
+  \draw[quark] (Aa.345) -- (H.185);
+  \draw[quark] (H.355) -- (Ba.195);
+  \draw[quark] (Bc.165) -- (Hd.5);
+  \draw[quark] (Hd.175) -- (Ac.15);
+  % virtual photon (current insertions)
+  \draw[photon] (H.south) -- (0,-2.55);
+  \draw[photon] (Hd.north) -- (0,2.55);
+  \node[t2 lab,anchor=west] at (0.12,-2.35) {$\gamma^*(q)$};
+  \node[t2 lab,anchor=west] at (0.12, 2.35) {$\gamma^*(q)$};
+  % soft gluons S -> A, S -> B on both sides of the cut
+  \draw[gluon] (S.200) -- (Aa.40);
+  \draw[gluon] (S.160) -- (Ac.320);
+  \draw[gluon] (S.340) -- (Ba.140);
+  \draw[gluon] (S.20)  -- (Bc.220);
+  % cut (horizontal: amplitude below, complex-conjugate amplitude above)
+  \draw[cut] (-4.75,0) -- (4.75,0);
+  % labels
+  \node[t2 lab] at (Aa) {$A$}; \node[t2 lab] at (Ac) {$A$};
+  \node[t2 lab] at (Ba) {$B$}; \node[t2 lab] at (Bc) {$B$};
+  \node[t2 lab] at (H) {$H$};  \node[t2 lab] at (Hd) {$H^\dagger$};
+  \node[t2 lab,anchor=south] at (0,0.44) {$S$};
+  \node[t2 lab,anchor=north] at (-4.4,-1.75) {$P_A$};
+  \node[t2 lab,anchor=south] at (-4.4, 1.75) {$P_A$};
+  \node[t2 lab,anchor=north] at ( 4.4,-1.75) {$P_B$};
+  \node[t2 lab,anchor=south] at ( 4.4, 1.75) {$P_B$};
+  \node[font=\footnotesize,text=red!65!black,anchor=west] at (4.8,0) {末态切割};
+  \node[font=\footnotesize,anchor=west] at (4.8,-0.75) {振幅};
+  \node[font=\footnotesize,anchor=west] at (4.8, 0.75) {共轭振幅};
+\end{tikzpicture}
+\caption{Drell--Yan 过程 $A+B\to\gamma^*+X$ 的约化割图（强子张量）。为使两个强子分列左右，切割（红色虚线）画成水平的：下半部为振幅，上半部为共轭振幅。
+强子 $A$、$B$ 的共线子图（蓝、橙色）各分为振幅与共轭振幅两部分，二者之间的旁观者（强子残余）线穿过切割；硬子图 $H$、$H^\dagger$ 各由一条来自 $A$ 的夸克线与一条来自 $B$ 的反夸克线相连，
+并通过电流插入与 $\gamma^*$ 相连；软子图 $S$ 以胶子与 $A$、$B$ 相连，在切割两侧均可附着。共线子图与 $H$ 之间的纵向极化胶子未画出（参见\cref{fig:reduced-dis}）；
+旁观者之间的 Glauber 交换见\cref{fig:glauber-exchange}。}
+\label{fig:reduced-dy}
+\end{figure}
+%%% END fig:reduced-dy
+
+对一般的图，Coleman--Norton 图像给出同样简单的结构。
+
+\begin{proposition}[钳夹面与约化图 \tagA]\label{prop:ir-pinch-classification}
+在无质量 QCD 中，$e^+e^-\to$ 强子的割图（割开的真空极化图）的每个钳夹面都对应如下形式的约化图：割线两侧各一个硬顶点 $H$、$H^\dagger$（全部离壳线收缩成的点）；若干喷注，每个喷注由沿同一类光方向运动的在壳共线线组成，并与 $H$、$H^\dagger$ 相连；一个由零动量线组成的软子图 $S$，与喷注（及硬顶点）相连。对 DIS 另有一个由入射靶部分子构成的入射喷注，对 Drell--Yan 有分别沿 $\pm z$ 方向入射的两个喷注 $A$、$B$，它们都进入硬顶点；单举湮灭（SIA）的约化图与 $e^+e^-$ 相同，只是被观测强子所在的喷注不对其末态完全求和。（本命题只涉及部分子态的 Feynman 图。）
+% errtype: E-S
+\uses{prop:ir-coleman-norton,def:ir-pinch-surface}
+\end{proposition}
+\begin{proofsketch}
+(1)~由\cref{prop:ir-coleman-norton}，钳夹面对应在壳粒子的经典过程。在 $e^+e^-$ 割图中全部外动量 $q$ 由光子顶点注入，一切有限能量的粒子都从这一点（取为原点）出发；与光子顶点相连的离壳线收缩之后，这一点就是硬顶点 $H$（割线另一侧同理为 $H^\dagger$）。
+(2)~从原点出发、沿不同类光方向 $n_1\ne n_2$ 运动的两个无质量粒子的世界线 $tn_1$、$t'n_2$ 在 $t,t'>0$ 时不相交；因此原点之外的顶点只能连接沿同一光线运动的粒子，在那里产生的有限动量粒子的动量是平行动量之和，仍沿该光线——它们构成一个喷注。
+(3)~不同喷注之间只能交换零动量线：有限动量的交换线必须在壳并沿某条光线运动，而它要连接分处两条不同光线上的两个顶点，这不可能；零动量线则由\cref{prop:ir-coleman-norton}(iii) 可以连接任意两点。
+(4)~入射粒子（DIS 的靶、DY 的两个强子中的部分子）来自 $t=-\infty$，沿各自的光线到达硬顶点，同理构成入射喷注。
+完整的论证还需列举一般图的全部钳夹面并说明没有遗漏，见\cite{Sterman1978a,Sterman1978b,LibbySterman1978a}、\cite[第~13~章]{Sterman1993}与\cite[第~5~章]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+上述分类用到两件只有论证而无完整证明的事：一是 Landau 判据的逆命题（充分性，\cref{rem:ir-landau-status}，\tagA），它保证每个这样的约化图确实对应被钳住的区域，从而必须计入；二是对一般图（喷注内部结构任意、多个硬顶点、软线与共线线的嵌套交叠）的钳夹面列举的完备性。两者都只达到标度陈述（E-S，\cref{def:intro-error-types}）层次的论证\cite{Sterman1978a,LibbySterman1978a}，\cite[第~5~章]{Collins2011}。升级途径：Collins 判据的完整核验加上钳夹面层级结构（嵌套与交叠）的系统处理；对无质量宽角振幅，这一方向的系统化见第~24~章所述的红外森林公式。
+
+\cref{fig:reduced-ee,fig:reduced-dis,fig:reduced-dy}画出三类过程的典型约化图。它们只是钳夹面的骨架；哪些连接方式给出领头贡献，由下一节的幂次计数决定——特别地，在 Feynman 规范中喷注与硬部分之间可以有任意多条标量（纵向）极化（scalar polarization）的共线胶子（\cref{fig:reduced-dis}中的蓝色卷线），它们不受压低，经 Ward 恒等式成为算符定义中的 Wilson 线。第~10、12~章分别回到 DIS 与 DY 的约化图。
+%% =====================================================================
+\section{幂次计数}\label{sec:ir-power}
+
+钳夹面只是长程敏感性的必要条件。一个钳夹面究竟给出幂次发散、对数还是可以忽略的贡献，由其邻域中的幂次计数决定\cite[第~2.3~节]{Sterman:1995fz}。在钳夹面 $\mathcal S$ 的一点附近取法坐标 $\kappa_i$，令 $\kappa_i=\lambda^{a_i}\kappa'_i$（$\lambda\to0$，$\kappa'$ 固定），每个分母只保留其最低次项 $\lambda^{A_j}f_j(\kappa')$，分子也只保留最低次项 $\lambda^{s}$；所得关于 $\kappa'$ 的积分称为\emph{齐次积分}（homogeneous integral），它正比于 $\lambda^{p}$，
+\begin{equation}\label{eq:ir-pgeneric}
+p=\sum_ia_i-\sum_jA_j+s :\qquad p>0\ \text{压低},\qquad p=0\ \text{对数},\qquad p<0\ \text{幂次发散}
+\end{equation}
+\cite[式~(60)--(62)]{Sterman:1995fz}。只有当齐次积分本身不再有新的钳夹面（即某些法坐标比其余更快趋于零的子面）时，这一估计才是完整的；否则须对这些子面重复同样的分析。嵌套区域正由此而来。
+
+%%% BEGIN fig:momentum-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=2.05cm,y=2.05cm,
+  t2 mode/.style={circle,draw=black,line width=0.6pt,inner sep=0pt,minimum size=6.6pt},
+  t2 hyp/.style={draw=black!65,line width=0.7pt},
+  t2 lab/.style={font=\footnotesize,inner sep=1.5pt},
+  t2 tick/.style={font=\footnotesize},
+  t2 grid/.style={draw=gray!45,line width=0.4pt,dash pattern=on 1pt off 2pt}]
+  % coordinates: x = ln(k^+/Q)/ln(1/lambda), y = ln(k^-/Q)/ln(1/lambda)
+  % Glauber shading for k_T ~ lambda Q:  k^+ k^- << k_T^2 ~ lambda^2 Q^2  <=>  x + y < -2
+  \fill[red!7] (-3.4,-3.4) -- (0.8,-3.4) -- (0.8,-2.8) -- (-2.8,0.8) -- (-3.4,0.8) -- cycle;
+  % axes, ticks, grid
+  \draw[lcaxis] (-3.45,-3.45) -- (1.1,-3.45) node[below left=1pt and -4pt] {$\ln k^+$};
+  \draw[lcaxis] (-3.45,-3.45) -- (-3.45,1.1) node[left] {$\ln k^-$};
+  \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+    \draw[line width=0.5pt] (\v,-3.45) -- ++(0,0.07);
+    \node[t2 tick,below] at (\v,-3.45) {$\t$};
+    \draw[line width=0.5pt] (-3.45,\v) -- ++(0.07,0);
+    \node[t2 tick,left] at (-3.45,\v) {$\t$};
+    \draw[t2 grid] (\v,-3.38) -- (\v,0.8);
+    \draw[t2 grid] (-3.38,\v) -- (0.8,\v);
+  }
+  % constant-virtuality hyperbolas  k^+ k^- = const : straight lines of slope -1
+  \draw[t2 hyp] (0.8,-0.8) -- node[pos=0.86,sloped,above=1.5pt,t2 lab] {$k^+k^-\sim Q^2$} (-0.8,0.8);
+  \draw[t2 hyp] (0.8,-2.8) -- node[pos=0.36,sloped,below=2.5pt,t2 lab] {$k^+k^-\sim\lambda^2Q^2$} (-2.8,0.8);
+  \draw[t2 hyp] (-0.8,-3.2) -- node[pos=0.25,sloped,above=1.5pt,t2 lab] {$k^+k^-\sim\lambda^4Q^2$} (-3.2,-0.8);
+  % modes
+  \node[t2 mode,fill=gray!55] (h)  at (0,0) {};
+  \node[t2 mode,fill=blue!55!black] (n) at (0,-2) {};
+  \node[t2 mode,fill=orange!85!black] (nb) at (-2,0) {};
+  \node[t2 mode,fill=green!55!black] (s) at (-1,-1) {};
+  \node[t2 mode,fill=green!25] (us) at (-2,-2) {};
+  \node[t2 lab,anchor=south west] at (h.north east) {硬 $(1,1,1)$};
+  \node[t2 lab,anchor=south west] at (n.north east) {$n$ 共线 $(1,\lambda^2,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=white] at (nb.north east) {$\bar n$ 共线 $(\lambda^2,1,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=white] at (s.north east) {软 $(\lambda,\lambda,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=red!7] at ($(us.north east)+(0.06,0.03)$) {超软 $(\lambda^2,\lambda^2,\lambda^2)$};
+  \draw[red!60!black,line width=0.8pt] (-2.1,-2.1) rectangle (-1.9,-1.9);
+  \node[t2 lab,anchor=north east,align=right,text=red!55!black] at ($(us.south west)+(-0.04,-0.04)$) {Glauber\\$(\lambda^2,\lambda^2,\lambda)$};
+  \node[t2 lab,align=center,text=red!55!black,fill=red!7] at (0.17,-3.05) {Glauber 区\\$|k^+k^-|\ll k_T^2$};
+\end{tikzpicture}
+\caption{$(\ln k^+,\ln k^-)$ 平面上的动量区域（括号内为 $(k^+,k^-,k_T)/Q$ 的标度，$\lambda\ll1$；坐标轴以 $\ln(1/\lambda)$ 为单位）。$A$（$n$）共线区的大分量为 $k^+$，$B$（$\bar n$）共线区的大分量为 $k^-$。
+等虚度双曲线 $k^+k^-=$ 常数在对数坐标中是斜率为 $-1$ 的直线：共线区与软区位于同一条双曲线 $k^+k^-\sim\lambda^2Q^2$ 上，彼此只差快度 $y=\frac12\ln(k^+/k^-)$；
+超软区位于 $k^+k^-\sim\lambda^4Q^2$。Glauber 区由 $|k^+k^-|\ll k_T^2$ 定义：阴影为 $k_T\sim\lambda Q$ 时满足此条件的区域（通常所说的 Glauber 区是其中 $k^\pm\ll Q$ 的软部分），
+其典型标度 $(\lambda^2,\lambda^2,\lambda)$ 在本图中的投影与超软区重合（红框），二者只在 $k_T$ 上不同：Glauber 动量以横动量为主，$k^2\approx-k_T^2$。}
+\label{fig:momentum-regions}
+\end{figure}
+%%% END fig:momentum-regions
+
+\begin{definition}[区域标度]\label{def:ir-scalings}
+设 $Q$ 为硬标度，$\lambda\ll1$ 为幂次计数参数（例如 $\lambda=m/Q$ 或 $q_T/Q$）。以光锥分量 $(k^+,k^-,k_T)$ 表示，动量 $k$ 的区域标度为：硬 $Q(1,1,1)$；$A$ 共线 $Q(1,\lambda^2,\lambda)$；$B$ 共线 $Q(\lambda^2,1,\lambda)$；软 $Q(\lambda,\lambda,\lambda)$；超软（ultrasoft）$Q(\lambda^2,\lambda^2,\lambda^2)$；Glauber 区由 $|k^+k^-|\ll k_T^2$ 定义，典型标度为 $Q(\lambda^2,\lambda^2,\lambda)$（见\cref{sec:ir-glauber}）。前五种都满足 $k_T^2\sim|k^+k^-|\sim|k^2|$。当软、超软或 Glauber 动量 $k$ 流过一条 $A$ 共线线 $p_A$ 时，程函近似 $(p_A+k)^2-p_A^2\simeq2p_A^+k^-$ 的相对误差：对软动量为 $O(\lambda)$；对超软动量，若该线沿喷注轴（$\mathbf p_{A,T}=0$）为 $O(\lambda^2)$，对一般的喷注内线（$p_{A,T}\sim\lambda Q$）因 $2\mathbf p_{A,T}\cdot\mathbf k_T$ 一项为 $O(\lambda)$；对 Glauber 动量为 $O(1)$。
+% VF-REG-7 (the two cases of the ultrasoft error: writer-verified, w04_extra.py X13)
+\textbf{单位。}Sterman 的红外发散度 $\omega$ 以 $\lambda_S\equiv\lambda^2$ 为单位，$\lambda$ 的幂次为 $p=2\omega$；Libby--Sterman 所说的“软”区即本书的超软区，TMD 因子化（第~14~章）则使用软标度。
+\uses{def:prelim-lightfront}
+\end{definition}
+
+\cref{fig:momentum-regions,fig:ir-mode-exponents}从两个角度画出这些标度；前者沿用文献中常见的记号，图中的 $n$ 共线、$\bar n$ 共线即本书的 $A$ 共线（沿 $n_A$）与 $B$ 共线（沿 $n_B$）。Glauber 模式在 $(\ln k^+,\ln k^-)$ 平面中与超软模式重合，只有加上横动量方向（后者）才能区分：它位于在壳平面 $c=\frac12(a+b)$ 之下。
+
+\paragraph{两种单位。}本书主要用 $\lambda$（“SCET 单位”，共线动量 $Q(1,\lambda^2,\lambda)$）；Sterman 与 CSS 用 $\lambda_S=\lambda^2$，喷注的法变量 $\ell^2$、$\ell\cdot p$ 与超软动量的全部分量都按 $\lambda_S$ 标度\cite[第~2.4~节]{Sterman:1995fz}，发散度 $\omega$ 是 $\lambda_S$ 的幂次。混用两种单位是常见的错误来源；本书在 $\omega$ 处总注明“Sterman 单位”，并记住 $p=2\omega$。
+
+%%% BEGIN fig:ir-mode-exponents
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x={(1.9cm,0cm)},y={(-0.996cm,0.575cm)},z={(0cm,1.55cm)},
+  fb ax/.style={lcaxis,gray!50!black},
+  fb guide/.style={draw=gray!60,line width=0.4pt,dash pattern=on 1pt off 1.6pt},
+  fb plane/.style={fill=gray!22,fill opacity=0.62,draw=gray!55!black,line width=0.6pt},
+  fb pt/.style={circle,draw=white,line width=0.4pt,inner sep=0pt,minimum size=5.6pt},
+  fb gl/.style={circle,draw=red!60!black,fill=white,line width=0.9pt,inner sep=0pt,minimum size=6pt},
+  fb lab/.style={font=\footnotesize,inner sep=2pt},
+  fb tick/.style={font=\scriptsize,text=gray!35!black,inner sep=1.5pt}]
+  % ---------------- base grid (c = 0) and axes ----------------
+  \foreach \t in {1,2} {
+    \draw[fb guide] (\t,0,0) -- (\t,2,0);
+    \draw[fb guide] (0,\t,0) -- (2,\t,0);
+  }
+  \draw[fb ax] (0,0,0) -- (2.75,0,0) node[right,font=\small] {$a$};
+  \draw[fb ax] (0,0,0) -- (0,2.85,0) node[left,font=\small] {$b$};
+  \foreach \t in {1,2} {
+    \draw[gray!50!black,line width=0.5pt] (\t,0,0) -- ++(0,0,-0.07) node[below,fb tick] {$\t$};
+    \draw[gray!50!black,line width=0.5pt] (0,\t,0) -- ++(0,0,-0.07) node[below,fb tick] {$\t$};
+  }
+  % vertical guides down to the base plane
+  \draw[fb guide] (2,2,0) -- (2,2,0.95);
+  \draw[fb guide] (2,0,0) -- (2,0,1);
+  \draw[fb guide] (0,2,0) -- (0,2,1);
+  % Glauber point and its vertical offset: below the plane, hence drawn before the translucent plane
+  \node[fb gl] (G) at (2,2,1) {};
+  \draw[red!60!black,line width=0.85pt,dash pattern=on 2.5pt off 1.8pt,-{Stealth[length=4pt,width=3.4pt]}]
+       (2,2,1.07) -- (2,2,1.93);
+  % ---------------- on-shell plane c = (a+b)/2 ----------------
+  \draw[fb plane] (0,0,0) -- (2,0,1) -- (2,2,2) -- (0,2,1) -- cycle;
+  \node[font=\footnotesize,text=gray!30!black,rotate=22.2] at (1.35,0.3,0.825) {在壳平面};
+  % the c axis lies in front of the plane
+  \draw[fb ax] (0,0,0) -- (0,0,2.8) node[above,font=\small] {$c$};
+  \foreach \t in {1,2}
+    \draw[gray!50!black,line width=0.5pt] (0,0,\t) -- ++(-0.045,0,0) node[left,fb tick] {$\t$};
+  % ---------------- modes ----------------
+  \node[fb pt,fill=black] (H)  at (0,0,0) {};
+  \node[fb pt,fill=blue!55!black] (CA) at (0,2,1) {};
+  \node[fb pt,fill=orange!85!black] (CB) at (2,0,1) {};
+  \node[fb pt,fill=green!40!black] (US) at (2,2,2) {};
+  \node[fb pt,fill=green!60!black] (S) at (1,1,1) {};
+  \node[fb lab,anchor=north east] at (H.south west) {硬 $(0,0,0)$};
+  \node[fb lab,anchor=east] at (CA.west) {$A$ 共线 $(0,2,1)$};
+  \node[fb lab,anchor=west] at (CB.east) {$B$ 共线 $(2,0,1)$};
+  \node[fb lab,anchor=west] at (US.east) {超软 $(2,2,2)$};
+  \node[fb lab,anchor=south] at ($(S.north)+(0cm,0.02cm)$) {软 $(1,1,1)$};
+  \node[fb lab,anchor=west,text=red!55!black] (GL) at (canvas cs:x=3.15cm,y=3.25cm) {Glauber $(2,2,1)$};
+  \node[fb lab,anchor=north west,text=red!55!black,inner sep=1pt] at ($(GL.south west)+(0.1cm,0cm)$) {$k^2\approx-k_T^2$，离壳};
+  \draw[red!55!black,line width=0.4pt] ($(G.east)+(0.02cm,0.03cm)$) -- (GL.west);
+  % ---------------- legend ----------------
+  \node[font=\small,anchor=east] at (canvas cs:x=-0.45cm,y=4.3cm) {$(k^+,\,k^-,\,k_T)\sim(\lambda^a,\,\lambda^b,\,\lambda^c)\,Q$};
+  \node[font=\footnotesize,anchor=north west,align=left,inner sep=0pt] at (canvas cs:x=6.45cm,y=3.38cm)
+    {平面上 $c=\tfrac12(a+b)$：\\[1pt]$\quad k_T^2\sim k^+k^-\sim|k^2|$\\[5pt]
+     平面下 $c<\tfrac12(a+b)$：\\[1pt]$\quad k_T^2\gg|k^+k^-|$，$k^2\approx-k_T^2$};
+\end{tikzpicture}
+\caption{动量模式在指数空间 $(a,b,c)$ 中的位置，$(k^+,k^-,k_T)\sim(\lambda^a,\lambda^b,\lambda^c)\,Q$，$\lambda\ll1$（指数越大，相应分量越小）。
+硬、$A$ 共线、$B$ 共线、软与超软模式都在在壳平面 $c=\frac12(a+b)$（半透明灰色平行四边形）上，即 $k_T^2$、$k^+k^-$ 与虚度 $|k^2|$ 同阶；
+硬、两种共线与超软模式恰为平行四边形的四个顶点，软模式 $(1,1,1)$（TMD 因子化所用的标度）为其中心。
+Glauber 模式 $(2,2,1)$（红色空心圆，透过平面看到）与超软模式有相同的 $k^\pm$，只是横动量大 $\lambda^{-1}$ 倍（红色虚线），因而位于平面之下：
+$|k^+k^-|\ll k_T^2$，$k^2\approx-k_T^2$，以横动量为主且离壳；在 $(\ln k^+,\ln k^-)$ 平面（\cref{fig:momentum-regions}）上它与超软模式重合，只有加上第三个方向 $\ln k_T$ 才能区分。
+本书的“超软”即 Libby--Sterman 的“软”。}
+\label{fig:ir-mode-exponents}
+\end{figure}
+%%% END fig:ir-mode-exponents
+
+\begin{proposition}[超表观红外发散度 \tagR]\label{prop:ir-power-counting}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设 $R$ 是 Feynman 规范中的一个约化图，由硬部分 $H$（割图中另有 $H^\dagger$）、喷注 $J$ 与超软子图 $S$ 组成，区域标度如\cref{def:ir-scalings}。对每个喷注 $J$ 记：$f^g_J$（$f^b_J$）为经好（坏）旋量分量与 $H$ 相连的夸克线数；$t_J$ 为横向极化胶子数，$u_J$ 为经 $J^-$ 分量（“$-$”极化）与 $H$ 相连的胶子数，经 $J^+$ 分量相连的标量极化胶子不计入；$e_J=1$（喷注带一个外部在壳部分子的振幅）或 $e_J=2$（前向振幅中的靶喷注，或割图中的末态喷注）；$s^q_J$ 为附着于 $J$ 的软夸克数。记 $b_{S\to H}$、$f_{S\to H}$ 为附着于 $H$ 的软胶子与软夸克数。则 $R$ 的邻域的齐次积分按 $\lambda_S^{\omega(R)}$ 标度（至多差对数因子；分子中进一步的相消只会使之更压低），
+\begin{equation}\label{eq:ir-omega}
+\omega(R)=\sum_J\tfrac12\big(f^g_J+t_J+2u_J+2f^b_J-e_J\big)+\tfrac12\sum_Js^q_J+b_{S\to H}+\tfrac32f_{S\to H} .
+\end{equation}
+% VF-REG-8
+% errtype: E-S
+以 $\lambda$ 为单位，各连接的贡献见\cref{tab:ir-connection-powers}。（本命题只涉及 Feynman 积分。）
+\uses{def:ir-scalings,lem:prelim-boost,def:prelim-feynman-rules,prop:appE-degree}
+\end{proposition}
+\begin{proof}
+完整证明见\cref{sec:appE-formula}。思路：沿喷注方向以快度 $\ln\lambda$ 推动（\cref{lem:prelim-boost}），共线标度 $Q(1,\lambda^2,\lambda)$ 变为各向同性的 $\lambda Q(1,1,1)$，喷注子图成为单一尺度 $\lambda Q$ 的协变函数，按量纲标度为 $\lambda^{\dim J}$；推回原参考系时，每个与 $H$ 或 $S$ 缩并的自由指标获得推动权重（上指标 $+$：$\lambda^{-1}$，$-$：$\lambda$，横向：$1$；好、坏旋量分量：$\lambda^{\mp1/2}$）；计入 $J$--$H$ 圈的测度与软子图的量纲，对各喷注与软子图求和即得\cref{eq:ir-omega}。
+\end{proof}
+
+\begin{table}[htbp]\centering\small
+\caption{幂次计数的组成部分（以 $\lambda$ 为单位，$k_T\sim\lambda Q$；Sterman 单位的 $\omega$ 是 $\lambda$ 的幂次的一半）。左栏：每个喷注的基数与每个连接对总幂次 $p=2\omega$ 的贡献；软线一栏已计入软子图本身的量纲。右栏：由\cref{eq:ir-omega}得到的若干约化图的 $\omega$（均经逐项核对）。}
+\label{tab:ir-connection-powers}
+\begin{tabularx}{\textwidth}{@{}lc@{\quad}>{\raggedright\arraybackslash}Xc@{}}
+\toprule
+组成部分 & $\lambda$ 的幂次 & 约化图（Feynman 规范） & $\omega$ \\
+\midrule
+每个喷注的基数 & $-e_J$ & Sudakov 顶点：喷注间软胶子 & $0$ \\
+好分量夸克 $J\to H$ & $+1$ & 共线胶子以标量极化接入 $H$ & $0$ \\
+坏分量夸克 $J\to H$ & $+2$ & 共线胶子以横向极化接入 $H$（扭度 3 型） & $\tfrac12$ \\
+横向极化胶子 $J\to H$ & $+1$ & “$-$”极化胶子接入 $H$ & $1$ \\
+标量（K）极化胶子 $J\to H$ & $0$ & 额外一对共线 $q\bar q$ 接入 $H$（扭度 4 型） & $1$ \\
+“$-$”极化胶子 $J\to H$ & $+2$ & 两喷注之间交换软夸克 & $1$ \\
+软胶子 $\to$ 喷注 & $0$ & 软胶子接入 $H$ & $1$ \\
+软夸克 $\to$ 喷注 & $+1$ & 软夸克接入 $H$ & $2$ \\
+软胶子 $\to H$ & $+2$ & $e^+e^-$ 双喷注割图（任意多标量胶子与软胶子） & $0$ \\
+软夸克 $\to H$ & $+3$ & 只有标量极化胶子的胶子喷注，$e_J=1$／$e_J=2$ & $-\tfrac12$／$-1$ \\
+\midrule
+超领头，$e_J=2$，$(n_F,n_T)=(0,0)$ & $p_J=-2$ & 一个横向、其余标量极化的胶子喷注，$e_J=2$ & $-\tfrac12$ \\
+超领头，$e_J=2$，$(n_F,n_T)=(0,1)$ & $p_J=-1$ & DIS 靶喷注、DY 两入射喷注（各一物理部分子） & $0$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+由\cref{tab:ir-connection-powers}可直接读出：附着于喷注的软胶子不付代价，软夸克或附着于 $H$ 的软线都受压低；每个喷注以一个物理部分子（好分量夸克或横向胶子）接入 $H$ 时恰为领头，每多一个物理部分子多付 $\lambda$（扭度增加一），而经 $J^+$ 分量接入的标量极化胶子不付代价——这是 Feynman 规范特有的，在物理规范中标量极化不传播\cite[第~2.4~节]{Sterman:1995fz}。剩下的是表中出现负幂次的构型。
+
+\begin{proposition}[超领头构型及其相消 \tagA]\label{prop:ir-super-leading}
+以 $\lambda$ 为单位。对 $e_J=2$ 的喷注（前向振幅中的靶喷注或割图中的末态喷注），与 $H$ 之间既无好分量夸克连接、也无横向胶子连接、只有标量极化胶子的构型 $(n_F,n_T)=(0,0)$ 有 $p_J=-2$，只有一个横向胶子（其余为标量极化胶子）的构型 $(n_F,n_T)=(0,1)$ 有 $p_J=-1$：它们是\emph{超领头}（super-leading）的。在对图求和的规范不变组合中，这些贡献在各自的领头阶相消（Ward 恒等式加上色中性）；其相对 $O(\lambda)$ 与 $O(\lambda^2)$ 的余项是领头幂次的，并经 $k^+A^j-k^jA^+$ 组合成场强 $G^{+j}$。当胶子是唯一的活动部分子时，$k\cdot H=0$，而 $G$ 项 $\propto k^+A^j-k^jA^+$ 是领头的。因此在胶子道中，“$n_T$ 个横向胶子”不是规范不变的计数方式。（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{prop:ir-power-counting,thm:prelim-slavnov-taylor}
+\end{proposition}
+\begin{proofsketch}
+(1)~由\cref{prop:ir-power-counting}，$p_J=(f^g_J+t_J-e_J)+2(u_J+f^b_J)$，取 $e_J=2$、$f^g_J=u_J=f^b_J=0$ 得 $p_J=t_J-2$，即 $(0,0)$ 与 $(0,1)$ 两行（此步只给出 E-S 型陈述）。
+(2)~把共线胶子场分解为 $A^\mu=\frac{k^\mu}{k^+}A^++\big(A^\mu-\frac{k^\mu}{k^+}A^+\big)$。第一项（K 部分）的极化正比于胶子自身的动量；对它在 $H$ 上的全部附着点求和，由 Ward 恒等式（\cref{thm:prelim-slavnov-taylor}）这些附着化为作用在 $H$ 的外线上的色转动，在规范不变的图之和中相消，对 $(0,0)$ 构型这还需要靶的总色荷为零（Labastida--Sterman\cite{Labastida:1984gy}，参见\cite[第~5.8.8~节]{Collins2011}）。这就是标量极化胶子从硬散射“退耦”的机制\cite[第~2.4~节]{Sterman:1995fz}；单个 Feynman 规范图可以比其规范不变的和奇异得多\cite[第~8.6~节]{CollinsSoperSterman1989}。
+(3)~第二项（G 部分）没有 $+$ 分量，其横向分量为 $(k^+A^j-k^jA^+)/k^+$；在动量空间中阿贝尔部分的场强为 $G^{+j}=-\ii(k^+A^j-k^jA^+)$。K 部分相消之后留下的相对 $O(\lambda)$、$O(\lambda^2)$ 项来自 G 部分，它们与真正的 $(0,2)$ 构型一起组成规范不变胶子分布中的 $G^{+j}\cdots G^{+j}$ 结构（第~8~章）。(2) 中的图形论证只在严格共线极限下给出零；离开这一极限，纯 K 胶子项经由胶子的横动量留下领头幂次的余项，它正是构造规范不变胶子分布所必需的\cite{Collins:2008sg}。
+(4)~若一个胶子是唯一的活动部分子，其余外线都是物理的，则 Ward 恒等式给出 $k_\mu H^\mu=0$，K 项为零，G 项给出领头贡献。
+完整论证见\cite[第~8.6~节]{CollinsSoperSterman1989}与\cite[第~5.8.8、5.9.1~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+超领头项的相消在文献中对相关的图组合给出了论证，但只是 E-S 层次的标度陈述：它说明领头幂次的系数相消，并未给出余项的积分界。全阶、积分范数形式的相应陈述属于附录~N 的\cref{asm:appN-envelope}（幂次计数包络，\tagA）与\cref{asm:appN-ward-product}（Ward 恒等式的乘积结构，\tagA）的内容；二者都用第~9~章的对象表述，在此只是指针而非前提。最弱的一步是 (2) 对任意多个非阿贝尔 K 胶子的 Ward 恒等式（第~9~章的\cref{lem:method-ward-multi}，\tagA）。升级途径：上述两个技术性假设的证明。G 部分在一般情形下的幂次压低及其“唯一活动胶子”例外，即第~9~章的\cref{prop:method-gy-suppression}（\tagA）。
+
+\begin{remark}[标度陈述与积分界]\label{rem:ir-scaling-vs-bound}
+\cref{prop:ir-power-counting}与下面的领头区域定理都是\emph{标度陈述}（E-S 型，\cref{def:intro-error-types}）：它们给出齐次积分在单一标度族下的幂次，而不是对整个邻域上积分的界。把它们化为证明所需的、对 $\varepsilon$ 与嵌套邻域一致的积分范数界（E-N 型）是附录~N 的两个技术性假设的内容：幂次计数包络\cref{asm:appN-envelope}与虚度分离\cref{asm:appN-separation}。二者都用第~9~章的邻域与近似算子表述，所以在本章只是指针。附录~E 的\cref{rem:appE-actual-bound}说明这一步为什么只有全阶论证的地位。
+\uses{prop:ir-power-counting}
+\end{remark}
+
+\begin{theorem}[领头区域 \tagA]\label{thm:ir-leading-regions}
+在 Feynman 规范中，对 $e^+e^-\to$ 强子、DIS、SIA 与 DY，$\omega(R)=0$ 的约化图恰为满足以下条件者：(i)~每个喷注在割线每侧以\emph{恰好一个物理部分子}（一条好分量夸克线或一个横向极化胶子）加上\emph{任意多个标量极化共线胶子}与 $H$（及 $H^\dagger$）相连；(ii)~软子图只与喷注相连，且只通过胶子相连（软子图内部可以有夸克圈）；(iii)~没有软线接入 $H$。对 DY 另有旁观者之间交换的 Glauber 子区域。超领头构型（\cref{prop:ir-super-leading}）在规范不变的和中相消。（本定理只涉及部分子态。）
+% errtype: E-S
+\uses{prop:ir-pinch-classification,prop:ir-power-counting,prop:ir-super-leading,thm:prelim-slavnov-taylor}
+\end{theorem}
+\begin{proofsketch}
+(1)~由\cref{prop:ir-pinch-classification}，钳夹面的约化图具有 $H$--$J$--$S$ 的形式。
+(2)~由\cref{eq:ir-omega}，$\omega=0$ 要求各项分别为零（在超领头项相消之后各项非负）：每个喷注 $f^g_J+t_J=e_J$、$u_J=f^b_J=0$，标量极化胶子不受限制；$s^q_J=0$，即软线只以胶子附着于喷注；$b_{S\to H}=f_{S\to H}=0$，即软线不接入 $H$。对 $e_J=2$，$f^g_J+t_J=2$ 就是割线每侧（或前向振幅的两侧）一个物理部分子：夸克喷注 $f^g_J=2$，胶子喷注 $t_J=2$；由费米子数守恒，$f_J$ 为偶数，不会出现 $f^g_J=t_J=1$。
+(3)~$\omega<0$ 的构型只能是 $f^g_J+t_J<e_J$ 的胶子喷注，由\cref{prop:ir-super-leading}在规范不变的和中相消（此步只给出 E-S 型陈述）。
+(4)~对 DY，旁观者之间的 Glauber 交换按区域标度计数为 $\lambda^0$（附录~E），并且可能被钳住（\cref{sec:ir-glauber}），须单独列出。
+文献：\cite{Sterman1978a,LibbySterman1978a,LibbySterman1978b}，\cite[第~5.8--5.11~节；领头区域规则见第~5.9.2~节与式~(5.75)--(5.79)]{Collins2011}，\cite[第~8.7~节]{CollinsSoperSterman1989}，\cite[第~2.3--2.4~节，式~(60)--(69)]{Sterman:1995fz}（其式~(63)预设软子图连通，一般情形应用式~(64)）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+最弱的一步是嵌套区域：\cref{eq:ir-omega}只是超表观度，子区域（某些法坐标更快趋于零）不破坏它这一点有论证而无证明——闵氏运动学中没有 Weinberg 紫外幂次计数定理\cite{Weinberg1960,Hahn:1968HZ}的红外类比。其次，在 Feynman 规范中，带额外不连通硬散射的区域只在对图求和之后才相消\cite{Labastida:1984gy}，\cite[第~14.4.8~节]{Collins2011}。该定理是 E-S 型陈述；其积分形式是\cref{asm:appN-envelope}与\cref{asm:appN-separation}（附录~N，均为 \tagA）——它们用第~9~章的邻域与近似算子表述，所以是指针而不是前提：第~4~章的陈述不能通过附录依赖第~9~章的对象。本定理只涉及部分子态；其强子版本正是全局假设\cref{asm:intro-bridge}(Br1)（区域完备性，\tagC）。升级途径：嵌套邻域上一致的积分界（\cref{asm:appN-envelope}的证明）。
+
+\begin{example}[单圈无质量顶点]\label{ex:ir-vertex}
+取 $\gamma^*(q)\to q(p_1)\bar q(p_2)$，$p_i^2=0$，$Q^2=2p_1\cdot p_2>0$；内线为胶子 $k$（参数 $\alpha_0$）、夸克 $p_1-k$（$\alpha_1$）与反夸克 $p_2+k$（$\alpha_2$）（\cref{fig:vertex-regions}）。
+
+\emph{参数空间。}由\cref{eq:ir-UF}，$\mathcal U=\alpha_0+\alpha_1+\alpha_2$，$\mathcal F=-\alpha_1\alpha_2q^2-\alpha_0\alpha_1p_1^2-\alpha_0\alpha_2p_2^2=-Q^2\alpha_1\alpha_2$，
+% VF-REG-4
+\cref{eq:ir-landau-alpha}给出 $\alpha_1\alpha_2=0$：Landau 集是单形的两条闭棱。由\cref{lem:ir-envelope}，$k_c=\alpha_1p_1-\alpha_2p_2$：棱 $\alpha_2=0$ 上 $k=xp_1$，线 $0$、$1$ 在壳且共线于 $p_1$，反夸克线的虚度 $xQ^2$ 不小——共线钳夹面 $C_1$；棱 $\alpha_1=0$ 上 $k=-yp_2$，为 $C_2$；角 $(1,0,0)$ 是软钳夹面 $S$；另两个角是零动量的夸克线（$C_1$、$C_2$ 的幂次压低端点）。棱 $\alpha_0=0$ 与内部对 $Q^2\ne0$ 无解：两条夸克线同时在壳的 $q\bar q$ 割面存在，却未被钳住，只产生吸收部分。与之一致，单圈 Cayley 矩阵 $Y_{ij}=\frac12(m_i^2+m_j^2-(r_i-r_j)^2)$ 只有 $Y_{12}=Y_{21}=-Q^2/2$ 非零，单圈 Landau 方程等价于 $\sum_{j\in S}Y_{ij}\alpha_j=0$（$i\in S$），而 $\det Y_{\{1,2\}}=-Q^4/4\ne0$。$C_1$ 上的 Coleman--Norton 图像已在\cref{sec:ir-coleman-norton}给出。
+
+\emph{共线区的 $k^-$ 积分。}取 $p_1=(p_1^+,0,\mathbf 0_T)$，$p_2=(0,p_2^-,\mathbf 0_T)$，$x=k^+/p_1^+$：$D_0=2k^+k^--k_T^2$，$D_1=-2(p_1^+-k^+)k^--k_T^2$，$D_2=2k^+(p_2^-+k^-)-k_T^2$（各带 $+\ii0$）。$0<x<1$ 时 $D_0$、$D_2$ 的 $k^-$ 极点在实轴下方，$D_1$ 的 $k^-=-\frac{k_T^2-\ii0}{2(1-x)p_1^+}$ 在上方；$x\notin[0,1]$ 时三个极点同侧，积分为零。$k_T\to0$ 时 $D_0$ 与 $D_1$ 的极点从两侧夹向 $k^-=0$——这就是共线钳夹。在上半平面闭合（$D_1$ 的留数处 $D_0=-\frac{k_T^2}{1-x}$，$D_2=xQ^2-\frac{k_T^2}{1-x}$）：
+\begin{equation}\label{eq:ir-vertex-kminus}
+\int_{-\infty}^{\infty}\frac{\dd k^-}{(D_0+\ii0)(D_1+\ii0)(D_2+\ii0)}=\frac{2\pi\ii}{2p_1^+}\,\frac{1}{k_T^2\big(xQ^2-k_T^2/(1-x)\big)}\ \xrightarrow{\ k_T\to0\ }\ \frac{2\pi\ii}{2p_1^+xQ^2}\,\frac{1}{k_T^2} .
+\end{equation}
+% VF-REG-6
+于是 $\int\dd^2k_T/k_T^2$ 对数发散：每个壳层 $\lambda<k_T<2\lambda$ 贡献同样的 $\pi\ln4\times\frac{2\pi\ii}{2p_1^+xQ^2}$；剩下的 $\int\dd x/x$ 在 $x\to0$ 处是软端点，给出第二个对数，合为 Sudakov 双对数（第~5~章）。
+
+\emph{法坐标计数。}在 $C_1$ 附近取法坐标 $k^-=\lambda^2\kappa$、$\mathbf k_T=\lambda\boldsymbol\tau$：测度 $\lambda^4$，$D_0,D_1\sim\lambda^2$，$D_2\simeq xQ^2\sim\lambda^0$，故 $p=4-2-2=0$。在壳无质量顶点的硬、共线、软、超软与 Glauber 标度都给出 $p=0$（数值拟合 $|p|<10^{-4}$；对照标度 $(0,1,1)$、$(2,2,3)$ 给出 $p=1$、$2$）：它没有内禀的小标度，所以其低能区域在维数正规化中都无标度。以上各式均经符号与数值核对。
+\uses{lem:ir-envelope,thm:ir-landau-alpha,prop:ir-coleman-norton,prop:ir-power-counting}
+\end{example}
+
+\begin{example}[Feynman 规范下共线区域的标量极化主导]\label{ex:ir-k-dominance}
+仍取\cref{ex:ir-vertex}的顶点，$p_1\parallel n_A$，$p_2\parallel n_B$。在 $C_1$ 区域中把 Feynman 规范的分子写成 $J^\nu H_\nu$，$J^\nu=\bar u(p_1)\gamma^\nu(\sla p_1-\sla k)$ 属于喷注，$H_\nu=\gamma^\mu(-\sla p_2-\sla k)\gamma_\nu v(p_2)$ 属于硬部分（$\mu$ 为流的指标）。按光锥分解 $J\cdot H=J^+H^-+J^-H^+-\mathbf J_T\cdot\mathbf H_T$，推动权重给出 $J^+\sim\lambda^0$、$\mathbf J_T\sim\lambda$、$J^-\sim\lambda^2$（倾斜喷注轴下数值拟合指数 $0.000$、$1.000$、$2.000$）。对严格的类光方向还有精确关系：由 $\bar u(p_1)\sla p_1=p_1^+\bar u(p_1)\gamma^-=0$ 得 $J^-=0$；由 $\gamma^+v(p_2)=0$ 得 $H^+=0$；在 $D=4$ 中还有 $\mathbf J_T\cdot\mathbf H_T=0$——这用到两维横空间的 $\sum_{i=1,2}\gamma^i\gamma^j\gamma^i=0$（$D$ 维中系数为 $D-4=-2\varepsilon$）、上述两个关系、$\bar u(p_1)\gamma^\pm v(p_2)=0$，以及 $J$ 与 $H$ 中的横动量都平行于 $\mathbf k_T$（数值上逐分量核对至 $10^{-12}$）；\cref{prop:ir-power-counting}的界 $\lambda^1$ 被满足而未被饱和。于是 $J\cdot H=J^+H^-$，并且
+\begin{equation}\label{eq:ir-k-dominance}
+J\cdot H=\frac{J^+}{k^+}\,k\cdot H+O(\lambda^2):
+\end{equation}
+% VF-REG-8 (K dominance)
+差 $-\frac{J^+}{k^+}\mathbf k_T\cdot\mathbf H_T$ 的 $O(\lambda)$ 部分（取 $J^+$ 的领头项 $(1-x)p_1^+\bar u\gamma^+\gamma^-$ 与 $\mathbf H_T$ 中来自 $-p_2^-\gamma^+$、$-k^+\gamma^-$ 的部分）对横向的流指标正比于 $\bar u(p_1)\gamma^+\gamma_T^\mu\gamma_T^iv(p_2)=\bar u(p_1)\gamma_T^\mu\gamma_T^i\gamma^+v(p_2)=0$ 或含 $\gamma^-\gamma_T^\mu\gamma^-=0$，恒为零（数值拟合的相对差指数 $2.00$）。所以领头幂次只有胶子的标量（K）极化——正比于其自身动量 $k^\nu$ 的部分——存活；经 Ward 恒等式，$k\cdot H$ 对附着点的求和化为 Wilson 线（第~8、9~章）。
+\uses{prop:ir-power-counting}
+\end{example}
+
+\begin{example}[$e^+e^-\to q\bar qg$ 的共线区]\label{ex:ir-real-emission}
+记 $y_{ij}=2p_i\cdot p_j/s$，$x_i=2E_i/\sqrt s$，$1-x_1=y_{23}$，$1-x_2=y_{13}$。在 $D=4$ 中（光子与胶子的极化以 $-g_{\mu\nu}$ 求和）胶子由夸克线辐射的那个图的模方（去掉 $g^2C_FN_ce_q^2$）为 $8y_{23}/y_{13}$，分子为 $32(p_1\cdot p_3)(p_2\cdot p_3)$；两个图及其干涉之和为
+\begin{equation}\label{eq:ir-qqg}
+-g_{\mu\nu}\sum\mathcal M^\mu\mathcal M^{\nu*}=8g^2C_FN_ce_q^2\,\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)} ;
+\end{equation}
+% VF-EE-5 (D=4)
+乘以 $\dd\Phi_3=\frac{s}{128\pi^3}\dd x_1\dd x_2$，再除以 Born 的 $4sN_ce_q^2$ 与 $\Phi_2=\frac1{8\pi}$，即得 $\frac1{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=\frac{C_F\as}{2\pi}\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$。%
+% VF-EE-5
+胶子共线于夸克（$\theta_{13}\sim\lambda$）时 $y_{13}\sim\lambda^2$：模方中逐项为 $\lambda^0$ 的 $\gamma^-\cdots\gamma^-$ 结构相消，分子只有 $\lambda^2$（数值拟合指数 $2.000$），传播子平方给出 $\lambda^{-4}$，共线相空间 $\dd y_{13}\sim\lambda^2$，合计 $\lambda^0$——对数型，与末态喷注 $f^g_J=2$、$e_J=2$ 的 $\omega=0$ 一致。令 $p_1\to zP$、$p_3\to(1-z)P$，则 $x_1\to z$、$x_2\to1$、$sy_{13}=s_{13}$，\cref{eq:ir-qqg}与 Born 之比趋于 $\frac{2g^2C_F}{s_{13}}\frac{1+z^2}{1-z}$，即\cref{prop:qcd-soft-collinear-limits}的树图共线极限；$x_3\to0$ 时 $(1-x_1)(1-x_2)\to y_{13}y_{23}$ 双重消失，对应软钳夹面。
+\uses{prop:ir-power-counting,prop:qcd-soft-collinear-limits}
+\end{example}
+%% =====================================================================
+\section{Glauber 区}\label{sec:ir-glauber}
+
+软与超软区的计数之所以简单，是因为程函近似在那里成立：软动量流过共线线时，分母只通过一个光锥分量感知它。有一个领头区域不满足这一点。
+
+\begin{definition}[Glauber 区]\label{def:ir-glauber}
+软动量 $k$ 的 \emph{Glauber 区}是 $|k^+k^-|\ll k_T^2$ 的区域，典型标度为 $Q(\lambda^2,\lambda^2,\lambda)$。在这一区域中，流过 $A$ 共线线 $p_A$ 的动量 $k$ 使
+\begin{equation}\label{eq:ir-glauber-denom}
+(p_A+k)^2\simeq p_A^2+2p_A^+k^--2\mathbf p_{A,T}\cdot\mathbf k_T-k_T^2 ,
+\end{equation}
+% VF-REG-7, VF-WL-11
+其中 $k_T^2$ 与 $2p_A^+k^-$ 同阶，不能略去：只保留 $2p_A^+k^-$ 的程函近似的相对误差为 $O(1)$。Glauber 胶子的传播子 $\simeq-1/k_T^2$（瞬时的“Coulomb”交换），它以 $A^-$ 分量与 $A$ 共线线耦合（$p_A\cdot A\simeq p_A^+A^-$），以 $A^+$ 分量与 $B$ 共线线耦合。
+\uses{def:ir-scalings}
+\end{definition}
+
+Glauber 区的幂次计数与软、超软区相同：在 $A$ 线与 $B$ 线之间交换一个胶子，Glauber 标度给出测度 $\lambda^6$、胶子传播子 $\lambda^{-2}$、两条线的分母各 $\lambda^{-2}$，合计 $\lambda^0$（软与超软标度分别给出 $\lambda^{4-2-1-1}$ 与 $\lambda^{8-4-2-2}$）。区别只在程函近似是否成立，所以关键在于 Glauber 区是否被钳住：若否，可把围道移到程函近似成立之处；若是，就必须另行处理。
+
+\begin{proposition}[单圈 Glauber 区的钳夹判据 \tagR]\label{prop:ir-glauber-trapping}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+(a)~单圈无质量顶点 $\gamma^*(q)\to q(p_1)\bar q(p_2)$（$p_1=(p_1^+,0,\mathbf 0_T)$，$p_2=(0,p_2^-,\mathbf 0_T)$，分母 $D_0=k^2=2k^+k^--k_T^2$、$D_1=(p_1-k)^2=-2(p_1^+-k^+)k^--k_T^2$、$D_2=(p_2+k)^2=2k^+(p_2^-+k^-)-k_T^2$，各带 $+\ii0$）在 Glauber 区没有钳夹点。具体地，固定 $k^+\sim\lambda^2Q$、$k_T\sim\lambda Q$ 时，三个分母的 $k^-$ 极点中只有 $D_1$ 的极点 $k^-\simeq-k_T^2/(2p_1^+)+\ii0$ 位于 $|k^-|\lesssim\lambda^2Q$ 的 Glauber 窗口内，$D_0$ 与 $D_2$ 的极点都在 $|k^-|\sim Q$ 处；对 $k^+$ 同理只有 $D_2$ 的一个极点。每个光锥积分在 Glauber 窗口内只遇到一个极点，围道可以移出该窗口，到 $|k^\pm|\sim k_T$ 处程函近似成立。
+(b)~若同一共线子图中携带 $k$ 的既有一条入射的 $A$ 共线线 $p_A-k$，又有一条出射的 $A$ 共线线 $p_{A'}+k$（$\mathbf p_{A,T}=\mathbf p_{A',T}=0$，$p_A^-$、$p_{A'}^-$ 可略），其分母 $-2p_A^+k^--k_T^2+\ii0$ 与 $2p_{A'}^+k^--k_T^2+\ii0$ 的极点
+\begin{equation}\label{eq:ir-glauber-poles}
+k^-=-\frac{k_T^2}{2p_A^+}+\ii0,\qquad k^-=\frac{k_T^2}{2p_{A'}^+}-\ii0
+\end{equation}
+分居实轴两侧，在 $|k^-|\sim k_T^2/p^+\sim\lambda^2Q$ 处钳住 $k^-$ 围道。精确的 $k^-$ 积分有限，
+\begin{equation}\label{eq:ir-glauber-exact}
+\int_{-\infty}^{\infty}\frac{\dd k^-}{(-2p_A^+k^--k_T^2+\ii0)(2p_{A'}^+k^--k_T^2+\ii0)}=\frac{2\pi\ii}{2k_T^2\,(p_A^++p_{A'}^+)} ,
+\end{equation}
+% VF-REG-9
+而略去 $k_T^2$ 的程函近似给出 $-\pi/[\delta(p_A^++p_{A'}^+)]$（$\ii0=\ii\delta$），在 $\delta\to0$ 时发散。（本命题只涉及 Feynman 积分。）
+\uses{def:ir-glauber,thm:ir-landau-momentum}
+\end{proposition}
+\begin{proof}
+(a)~$D_0=0$ 与 $D_2=0$ 的 $k^-$ 根 $(k_T^2-\ii0)/(2k^+)$、$-p_2^-+(k_T^2-\ii0)/(2k^+)$ 都是 $O(Q)$，$D_1=0$ 的根 $\simeq-k_T^2/(2p_1^+)+\ii0$ 为 $O(\lambda^2Q)$（数值拟合指数 $0$、$0$、$2$）。所以窗口内只有 $D_1$ 的极点，$k^-$ 围道可以向下半平面推离它直到 $|k^-|\sim k_T\ll Q$；对 $k^+$ 同理只有 $D_2$ 的极点。这与\cref{thm:ir-landau-momentum}一致：Glauber 区中 $D_0\simeq-k_T^2\ne0$，在壳线至多是 $D_1$、$D_2$，而 $u_1\simeq-2p_1$ 与 $u_2\simeq2p_2$ 不能以非负系数相消，没有 Landau 点。
+(b)~被积函数在 $|k^-|\to\infty$ 时按 $(k^-)^{-2}$ 衰减，在上半平面闭合只包围第一个极点 $k^-_1=(-k_T^2+\ii0)/(2p_A^+)$。该处第一个因子对 $k^-$ 的导数为 $-2p_A^+$，第二个因子的值为 $2p_{A'}^+k^-_1-k_T^2=-k_T^2(p_A^++p_{A'}^+)/p_A^+$，故积分 $=2\pi\ii\cdot\frac{1}{-2p_A^+}\cdot\frac{-p_A^+}{k_T^2(p_A^++p_{A'}^+)}$，即\cref{eq:ir-glauber-exact}。略去 $k_T^2$ 后两个极点 $k^-=\ii\delta/(2p_A^+)$ 与 $k^-=-\ii\delta/(2p_{A'}^+)$ 间距为 $O(\delta)$，同样的留数计算给出 $2\pi\ii\cdot\frac1{-2p_A^+}\cdot\frac{1}{\ii\delta(p_A^++p_{A'}^+)/p_A^+}=-\frac{\pi}{\delta(p_A^++p_{A'}^+)}$。两式及 (a) 中的极点位置都已数值核对（相对误差 $<10^{-8}$）。
+\end{proof}
+
+(a) 与 CSS 综述对顶点 Glauber 区的分析一致：每个光锥变量只出现在一个分母里，积分不被钳住，可以形变到 $|k^\pm|\sim k_T$\cite[第~8.4~节，式~(137)--(138)]{CollinsSoperSterman1989}。注意两个分量都要形变：只把 $k^-$ 推到 $|k^-|\sim k_T$ 而保持 $k^+\sim\lambda^2Q$，仍有 $|k^+k^-|\sim\lambda^3Q^2\ll k_T^2$，并未离开 Glauber 区；%
+% (misconception M31)
+一般图中两个分量须沿 $e_G=n_B-n_A$ 协调形变（第~9~章的\cref{rem:method-two-component}与\cref{prop:method-glauber-deformation}）。(b) 是 Drell--Yan 中初态与末态旁观者相互作用的情形：同一共线子图中携带 Glauber 动量的线既有在硬散射之前的、又有在其后的，Glauber 区被钳住，程函近似不能使用，必须借助对末态割线的求和（幺正性）另证其相消——这在第~9、12~章与附录~O 中完成。在光锥序微扰论中，Glauber 钳夹还可以出现在不同项之间（项间钳夹），它阻碍 Ward 恒等式的直接使用，这也是 Glauber 区必须在割图求和的层次上处理的原因之一。
+%% =====================================================================
+\section{KLN、Bloch--Nordsieck 与红外安全}\label{sec:ir-cancellation}
+
+单个割图的钳夹面给出红外与共线发散；物理截面必须使之相消（对不可分辨的软光子或简并态求和），或把它们吸收进可测量的长程因子。
+
+\begin{theorem}[QED 中的 Bloch--Nordsieck 定理 \tagR]\label{thm:ir-bn-qed}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在带质量带电费米子的 QED 中（光子无质量，红外以光子质量 $\mu$ 或维数正规化正规化），对任何外部带电粒子固定的过程，在 $\alpha$ 的每一阶：(a)~对总能量低于分辨率 $E$（在固定参考系中）的实光子求和的截面 $\dd\sigma(E)$ 在去掉红外正规化时有限——虚修正中的软光子发散与实发射中的相消；(b)~依赖于红外正规化的软光子因子在所有阶指数化（Yennie--Frautschi--Suura）。（本定理只涉及微扰 QED。）
+% uses: none
+\end{theorem}
+\begin{proofsketch}
+(1)~软光子 $k\to0$ 与外线 $n$（电荷 $eQ_n$，$\eta_n=+1$ 出射、$-1$ 入射）耦合时，振幅因子化为程函因子乘以无光子的振幅，$\mathcal M_{1\gamma}\simeq\mathcal M_0\,e\sum_n\eta_nQ_n\frac{p_n\cdot\varepsilon^*}{p_n\cdot k}$（整体相位依约定而定）；对极化以 $-g_{\mu\nu}$ 求和（程函流 $\sum_n\eta_nQ_np_n^\mu/(p_n\cdot k)$ 由电荷守恒 $\sum_n\eta_nQ_n=0$ 而守恒，故允许）并乘以相空间 $\frac{\dd^3k}{(2\pi)^32\omega}=\frac{\omega\,\dd\omega\,\dd\Omega}{16\pi^3}$，单个软光子的发射概率为 $A\,\dd\omega/\omega$，
+\begin{equation}\label{eq:ir-bn-A}
+A=-\frac{e^2}{16\pi^3}\int\dd\Omega\sum_{n,m}\eta_n\eta_m\,Q_nQ_m\frac{p_n\cdot p_m}{(p_n\cdot\hat n)(p_m\cdot\hat n)},\qquad \hat n=(1,\hat{\mathbf n});
+\end{equation}
+对一入一出、$Q=1$、质量为 $m$ 的两个粒子，$A=\frac{2\alpha}{\pi}\big[\frac{1}{2\beta}\ln\frac{1+\beta}{1-\beta}-1\big]$，$\beta=[1-m^4/(p\cdot p')^2]^{1/2}$ 为相对速度，高能时 $A\to\frac{2\alpha}{\pi}[\ln(-q^2/m^2)-1]$（$q=p'-p$）。
+(2)~单圈时，虚修正的红外部分为 $\dd\sigma_V=\dd\sigma_0[1-A\ln(\Lambda/\mu)+\dots]$，其中 $\Lambda$ 为软近似失效的能标；能量 $\mu\ll\omega<E$ 的实发射给出 $\dd\sigma_R=\dd\sigma_0[A\ln(E/\mu)+\dots]$；二者之和 $\dd\sigma_0[1+A\ln(E/\Lambda)+\dots]$ 与 $\mu$ 无关。同一个 $A$ 也可写为 $\frac{2\alpha}{\pi}f_{\rm IR}(q^2)$，$f_{\rm IR}$ 即顶点函数红外发散的系数\cite[第~6.4--6.5~节]{PeskinSchroeder1995}。
+(3)~高阶时，软光子的虚交换与实发射分别因子化为单圈因子的指数，红外正规化的依赖在两者之积中逐阶相消；对多个实光子能量之和的约束只改变不依赖于 $\mu$ 的因子\cite{BlochNordsieck1937,YennieFrautschiSuura1961,Weinberg1965}。
+\cref{eq:ir-bn-A}的角积分与闭式及 $f_{\rm IR}$ 的表示已在三组运动学下数值核对（相对误差 $<10^{-10}$）。
+\end{proofsketch}
+
+QED 的相消依赖于软光子耦合只依赖外线的电荷与动量、且光子之间没有相互作用；非阿贝尔理论中后一点不再成立。
+
+\begin{theorem}[KLN 定理 \tagA]\label{thm:ir-kln}
+在质量趋于零（或红外正规化去掉）时，对初态\emph{与}末态的简并态集合同时求和的跃迁概率在微扰论的每一阶都是红外有限的。（本定理只涉及部分子态。）
+\uses{prop:prelim-unitarity,thm:ir-bn-qed}
+\end{theorem}
+\begin{proofsketch}
+(1)~在含时（老式，old-fashioned）微扰论中，质量奇异性（mass singularity）来自能量分母 $E-E_n$ 在中间态与初态或末态简并时趋于零；简并的含义是：共线的无质量粒子组与单个粒子能量相同，零能粒子的加入不改变能量。
+(2)~Kinoshita\cite{Kinoshita1962}与 Lee--Nauenberg\cite{LeeNauenberg1964}论证了：把 $|S_{fi}|^2$ 对初态与末态的全部简并子空间求和后，这些奇异分母逐阶相消；其根源是 $S$ 矩阵在简并子空间上的幺正性（对割图即\cref{prop:prelim-unitarity}的物理幺正性）。对 Yang--Mills 理论的推广见\cite{Sterman:1976jh}，QED 的软光子部分即\cref{thm:ir-bn-qed}。
+(3)~$e^+e^-\to$ 强子中初态不带色，只需对末态求和。例如单圈时，以同一归一化 $N_\varepsilon$ 写出，$\sigma(q\bar q)^{(1)}/\sigma_0=N_\varepsilon[-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\pi^2]$，$\sigma(q\bar qg)/\sigma_0=N_\varepsilon[\frac2{\varepsilon^2}+\frac3\varepsilon+\frac{19}2-\pi^2]$，二者之和 $\frac32N_\varepsilon$ 有限，给出 $R=R_0(1+\frac{3C_F}4\frac{\as}\pi)$；而夸克能谱 $\frac1{\sigma_0}\frac{\dd\sigma}{\dd x}$ 保留共线极点 $-\frac1\varepsilon\frac{\as}{2\pi}P_{qq}(x)$——它没有对不同 $x$ 的简并共线态求和（第~6~章）%
+% VF-EE-11, VF-EE-6
+。
+\end{proofsketch}
+% VF-EE-11, VF-EE-6
+
+\paragraph{地位与缺口}
+一般情形的证明是全阶论证：老式微扰论中简并分母的组合相消在所有阶写出，但未达到 BPHZ 式的完整性。只对一侧（初态或末态）求和也足以相消，但一般需要计入前向散射与不连通的贡献\cite{Frye:2018xjj}。更重要的是物理上的限制：%
+% (misconception M8)
+强子对撞中初态共线奇异性并不相消，而是被因子化进部分子分布；带色初态的“对初态简并态求和”对强子束流没有物理意义，Bloch--Nordsieck 型的相消在有色初态时甚至会失效（\cref{prop:ir-bn-failure}）。所以 KLN 定理不能解释强子对撞截面为何有限——那是因子化定理的任务（第~12~章）。升级途径：在一般规范理论中把简并态求和的相消写成严格的逐阶陈述。
+
+\begin{proposition}[有色初态时非阿贝尔 Bloch--Nordsieck 抵消的失效 \tagV]\label{prop:ir-bn-failure}
+初态为两个有质量的有色夸克（对色平均）时，在两圈阶，两个软胶子产生的次领头红外发散在 Bloch--Nordsieck 意义下的单举截面中不相消；不相消的项在高能下是幂次压低的。（本命题只涉及部分子态。）
+\uses{thm:ir-bn-qed,def:prelim-feynman-rules}
+\end{proposition}
+\begin{proofsketch}
+定性地说，其结构如下（这是文献中对该机制的通常解释）。在阿贝尔理论中，两个入射带电粒子之间软光子交换的虚部（Coulomb 相位）是一个纯相位，在 $|\mathcal M|^2$ 中消失，其余的程函因子与实发射相消（\cref{thm:ir-bn-qed}）。在非阿贝尔理论中，Coulomb（Glauber）相位乘的是两入射夸克之间的色矩阵 $\mathbf T_1\cdot\mathbf T_2$；两圈时它与色关联的软实发射相干涉，而这些色矩阵彼此不对易，留下即使对初态色平均之后也不相消的红外发散项，它们随质量趋于零（固定 $s$）而压低。显式的两圈计算见\cite{DoriaFrenkelTaylor1980,DiLietoEtAl1981,Andrasi:1980qw}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+证据类型：显式的微扰计算（两圈，有质量有色初态），即 \tagV 的依据是一个显式的 QCD 反例。据其摘要，Doria、Frenkel 与 Taylor 发现两个有质量、色平均的初态夸克中两个软胶子产生的次领头红外发散不相消\cite{DoriaFrenkelTaylor1980}，Di'Lieto 等人确认了不相消（但中间结果有所不同）\cite{DiLietoEtAl1981}，Andrási 等人亦然\cite{Andrasi:1980qw}。据其摘要，不相消的项在高能下幂次压低：Frenkel 等人在 $O(g^4)$ 证明了这一点并论证了全阶推广\cite{Frenkel:1983di}，Catani 等人指出它们一般是高扭度型的\cite{Catani:1985xt}；CSS 的综述写道，在 Drell--Yan 过程中两圈的不相消发散出现在 $m^4/s^2$ 的层次，而微扰论在 $m^2/s$ 的层次尊重因子化\cite[第~10.2~节]{CollinsSoperSterman1989}。这一失效的前提与 Drell--Yan 因子化定理的前提不同——前者是固定色、有质量的有色入射部分子，后者是色单态强子中的无质量部分子——见第~12~章的\cref{rem:dy-dft-premises}。因此本命题并不与领头幂次的 Drell--Yan 因子化（全阶论证）矛盾，但它说明非阿贝尔理论中软胶子的相消不能简单搬用 QED 的论证。
+
+\begin{definition}[红外安全可观测量]\label{def:ir-safe}
+$e^+e^-\to$ 强子中的一个可观测量由一列对称函数 $\mathcal S_n(p_1,\dots,p_n)$（$n=2,3,\dots$，$p_i$ 为末态无质量部分子的动量）给出，其加权截面为 $\sigma[\mathcal S]=\sum_n\int\dd\Phi_n\,|\mathcal M_n|^2\,\mathcal S_n$。称它是\emph{红外安全}的，若每个 $\mathcal S_n$ 连续，并且：(i)~（软）对任意方向，$\mathcal S_{n+1}(p_1,\dots,p_n,\epsilon p)\to\mathcal S_n(p_1,\dots,p_n)$（$\epsilon\to0$）；(ii)~（共线）$\mathcal S_{n+1}(p_1,\dots,p_{n-1},zp,(1-z)p)=\mathcal S_n(p_1,\dots,p_{n-1},p)$（$0\le z\le1$）。这是红外安全性（infrared safety）的非形式定义\cref{def:qcd-ir-safety-informal}的精确形式：权重只依赖于能流，对零能部分子的加入与严格共线的分裂都不敏感。例：总截面（$\mathcal S_n\equiv1$）、推力等事件形状、Sterman--Weinberg 锥形喷注截面（第~16~章）；反例：部分子数、单个夸克的能谱。
+\uses{def:qcd-ir-safety-informal}
+\end{definition}
+
+\begin{theorem}[红外安全可观测量的有限性 \tagA]\label{thm:ir-safe-finite}
+红外安全的 $e^+e^-$ 可观测量在无质量微扰论中逐阶有限。（本定理只涉及部分子态。）
+% errtype: E-S
+\uses{def:ir-safe,thm:ir-leading-regions,prop:prelim-unitarity}
+\end{theorem}
+\begin{proofsketch}
+(1)~加权截面是割开的真空极化图对全部割线求和、每个割线乘以相应末态权重的结果（\cref{prop:prelim-unitarity}）。
+(2)~每个未割图的钳夹面由\cref{thm:ir-leading-regions}的约化图给出：硬顶点、末态喷注与软子图，且在超领头项相消后至多对数发散。
+(3)~在一个钳夹面附近，同一未割图的不同割法（切过喷注内部或软子图的不同线）对应同一能流：喷注中的共线部分子的总动量、软部分子的零能量。由红外安全性，这些割法的权重在钳夹面上相等；于是对割线的求和在权重相等的部分中重现未割图的幺正性关系，钳夹面上的奇异性在求和中相消，剩下的部分正比于权重之差，在钳夹面上为零，从而可积。
+文献：\cite{Sterman1978a,Sterman1978b,Sterman:1979uw,StermanWeinberg1977,Ore:1979ry}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+该论证依赖领头区域的分析（\cref{thm:ir-leading-regions}，\tagA）以及割线求和中末态奇异性的相消，后者只在 E-S 层次上给出（权重差在钳夹面附近的消失速度与幂次计数的结合未写成积分界）\cite{Sterman1978a,Sterman1978b}。总截面另有独立的严格证明（第~6~章的\cref{thm:ee-R-finite}，\tagR）。红外安全只处理末态奇异性：%
+% (misconception M9, first statement)
+初态强子仍需要因子化，而红外安全的观测量也可能有非全局对数、超领头对数、Glauber 敏感性与 $O(\Lambda/Q)$ 的强子化修正（第~16、21~章）。升级途径：把 (3) 写成对嵌套邻域一致的积分界。
+%% =====================================================================
+\section{区域方法及其地位}\label{sec:ir-regions}
+
+前几节由钳夹分析与幂次计数确定领头区域。实际计算中常用另一种思路——区域方法（expansion by regions）：先猜出一组区域，在每个区域中展开被积函数，再把各区域的结果相加。它是极有效的计算工具，但其地位必须与前面的结论严格区分。
+
+\begin{definition}[区域方法]\label{def:ir-regions}
+对一个依赖于小参数的 Feynman 积分，Beneke--Smirnov 的区域展开\cite{BenekeSmirnov1998}规定：(i)~选定一组区域（圈动量或 Feynman 参数的标度）；(ii)~在每个区域中把被积函数按该区域的小量作 Taylor 展开；(iii)~把每个展开项在\emph{整个}积分区域上积分，用维数正规化，必要时加辅助的解析正规子；(iv)~无标度积分取为零（\cref{lem:prelim-scaleless}）；(v)~对区域求和。Jantzen 从积分区域的划分出发，给出该方法成立所需的四个条件\cite[第~3~节]{Jantzen2011}：(1)~各区域的收敛域互不相交并覆盖积分区域；(2)~各展开彼此对易；(3)~原积分与一切展开项（无论是否限制在收敛域上）都已正规化；(4)~展开项在整个区域上积分时级数绝对收敛（或已正规化）。在这些条件下 $I=\sum_xT^{(x)}I-\sum_{x<x'}T^{(x)}T^{(x')}I+\cdots$，维数正规化下重叠项通常是无标度的。
+\uses{def:qcd-dimreg,lem:prelim-scaleless}
+\end{definition}
+
+\begin{theorem}[欧氏极限的渐近展开 \tagR]\label{thm:ir-regions-euclid}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）对外动量为大的欧氏动量的极限与内线质量为大质量的极限，区域展开与已有严格证明的子图展开（渐近展开的子图形式）逐项一致，因而对维数正规化的 Feynman 积分逐阶给出其渐近展开。（本定理只涉及 Feynman 积分。）
+\uses{def:ir-regions}
+\end{theorem}
+\begin{proof}
+子图展开的证明见\cite{Smirnov:1990rz}与\cite{Smirnov2002}，其在 $\MSbar$ 方案中的构造见\cite{Gorishnii1989}；在这两类极限中每个区域对应一个子图——硬子图按小量作 Taylor 展开、其余部分保持原样——两种展开逐项相同\cite{Smirnov2002}。
+\end{proof}
+
+\begin{proposition}[Minkowski 极限下区域方法的地位 \tagP]\label{prop:ir-regions-minkowski}
+对阈值、Sudakov、Regge 与在壳展开等 Minkowski 极限，区域方法没有一般的证明，只有部分结果：Jantzen 在上述四个条件之下的推导及其对有质量 Sudakov 形状因子的演示\cite{Jantzen2011}；Newton 多面体的几何表述\cite{Pak:2010pt}及其对势区与 Glauber 区的推广\cite{Jantzen:2012mw}；对正系数多项式，每个本质侧面的领头阶贡献以及只有一个侧面贡献时的全阶展开的证明\cite{Semenova:2018cwy}；区域与 Landau 解、Newton 多面体侧面的对应及一类区域的展开可交换性\cite{Gardi:2022khw}；宽角散射中区域的图论识别\cite{Ma:2023hrt}。即使离壳 Sudakov 三角形（四个侧面，$\mathcal F>0$）也没有完整的证明。（本命题只涉及 Feynman 积分。）
+\uses{def:ir-regions,thm:ir-regions-euclid}
+\end{proposition}
+
+\paragraph{地位与缺口}
+一般陈述是 \tagP：已证明的是欧氏极限（\cref{thm:ir-regions-euclid}），Jantzen 的推导以展开可对易、求和可交换为条件（恒等式本身在这些条件下成立，适用性则是部分的）\cite{Jantzen2011}，Semenova--Smirnov--Smirnov 证明了每个本质侧面的领头阶与单侧面情形的全阶结果\cite{Semenova:2018cwy}，而“积分的领头阶等于各侧面之和”被归结为一个未证明的可交换性。离壳 Sudakov 三角形只在单圈被精确验证（第~5~章的\cref{ex:sudakov-offshell}；其区域分析见\cite[第~2.2~节]{BecherBroggioFerroglia2015}，有质量交换的情形见其第~2.3~节与\cite[第~6~节]{Jantzen2011}）。“区域 $=$ Newton 多面体的下表面”作为一般陈述在 Minkowski 运动学中不成立：据该文摘要，从三圈起非平面的 $2\to2$ 图需要剖分多面体才能得到的新区域\cite{Gardi:2024axt}；另有一个三圈的活动--活动 Glauber 区被自动寻找区域的程序漏掉\cite{Becher:2024kmk}（第~24~章的\cref{prop:front-hidden-regions}，\tagV）。因此“侧面处方”在一般情形是 \tagV，而以正确补全的区域集合为前提的方法本身仍未证明（\tagP／\tagC，第~24~章的\cref{conj:front-mor-minkowski}）；SCET 的模式清单继承这一注意事项。在因子化证明中，领头区域必须由钳夹分析与幂次计数确定，区域方法只是交叉检验——反过来用区域方法“确认”领头区域，在 Minkowski 运动学中是循环论证。%
+% (critic C5)
+升级途径：Minkowski 极限下（含隐藏区域的识别算法）的一般证明。
+
+\begin{remark}[发散区域积分的值依赖于表示]\label{rem:ir-regions-values}
+单个区域积分往往本身发散，只由解析延拓定义，其值依赖于所用的表示。例如零区（zero-bin）型积分 $\int_0^\infty\dd\sigma\,\sigma^{-1-\varepsilon}$ 是无标度的，在维数正规化中为零：在 $\sigma=1$ 处分开，$\int_0^1$ 在 $\varepsilon<0$ 时收敛并等于 $-1/\varepsilon$，$\int_1^\infty$ 在 $\varepsilon>0$ 时收敛并等于 $1/\varepsilon$，二者各自延拓后相加为零（即 $\frac1{\varepsilon_{\rm UV}}-\frac1{\varepsilon_{\rm IR}}$ 的记账）；而同一个区域若在参数表示中写成 $\int_0^1\dd\sigma\,\sigma^{-1-\varepsilon}$，其值为 $-1/\varepsilon$。因此单个“区域贡献”不是与表示无关的量，只有在条件 (1)--(4) 之下的区域之和才有意义。Collins 的减除项则是绝对收敛的累次积分，没有这种歧义；把减除项的值与区域方法的逐项值等同时所需的取值规则，是附录~N 的约定\cref{asm:appN-values}。这也是\cref{prop:ir-regions-minkowski}缺乏一般证明的技术原因之一。
+\uses{def:ir-regions}
+\end{remark}
+
+\begin{example}[一维玩具积分与零区减除]\label{ex:ir-regions-toy}
+$I=\int_0^\infty\frac{\dd k}{(k+m)(k+M)}=\frac{\ln(M/m)}{M-m}$，$m\ll M$ 时领头幂次为 $\ln(M/m)/M$。两个区域：软区 $k\sim m$（把 $1/(k+M)$ 展开为 $1/M$）与硬区 $k\sim M$（把 $1/(k+m)$ 展开为 $1/k$）。二者各自发散，以解析正规子 $k^{-e}$ 定义：
+\begin{equation}\label{eq:ir-toy-regions}
+\begin{aligned}
+T_s&=\frac1M\int_0^\infty\frac{\dd k\,k^{-e}}{k+m}=\frac{m^{-e}\Gamma(e)\Gamma(1-e)}{M}\qquad(0<e<1),\\
+T_h&=\int_0^\infty\frac{\dd k\,k^{-e}}{k(k+M)}=M^{-1-e}\Gamma(-e)\Gamma(1+e)\qquad(-1<e<0).
+\end{aligned}
+\end{equation}
+% VF-REG-13
+由 $\Gamma(e)\Gamma(1-e)=-\Gamma(-e)\Gamma(1+e)=\pi/\sin\pi e$，得 $T_s+T_h=\frac{\pi}{M\sin\pi e}\big(m^{-e}-M^{-e}\big)\to\frac{\ln(M/m)}{M}$（$e\to0$）：两个区域各自的 $1/e$ 极点相消。两次展开的重叠 $T_sT_h=\frac1M\int_0^\infty\dd k\,k^{-1-e}=0$ 是无标度的，不需要另行减除。若改用截断 $[10^{-12},10^{12}]$（$m=10^{-3}$，$M=1$）代替解析正规子，则 $T_s+T_h=62.17$，重复计数了重叠区域，只有 $T_s+T_h-T_sT_h=6.9078=\ln10^3$ 才给出领头幂次——这就是零区减除。各数值均已核对。
+\uses{def:ir-regions,rem:ir-regions-values}
+\end{example}
+
+区域方法最重要的实例是第~5~章的 Sudakov 形状因子（\cref{ex:sudakov-offshell}；有质量交换须用解析正规子，\cref{ex:sudakov-massive}）；它与 Landau 分析、Newton 多面体的现代联系以及隐藏区域见\cref{sec:front-landau}等。
+
+%% ---------------------------------------------------------------------
+% misconception box: M29; M20 + critic O12; critic C15; M8; M9 (first statement); M19 + critic O11 + critic C5
+\begin{tcolorbox}[enhanced,breakable,title=常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{“欧氏区没有钳夹，所以欧氏 Green 函数红外有限。”}零动量无质量线总满足 Landau 方程；有限性来自幂次计数（\cref{rem:ir-euclid-corners}）。\par
+\textbf{“Landau 方程给出奇异性。”}只是必要条件；解可以无害（分子压低、可积），被钳住也不等于奇异；端点奇异性与第二类奇异性须另行处理；外部不变量的奇异性与固定外动量下的钳夹区域是两个问题（\cref{rem:ir-landau-status}）。\par
+\textbf{“Coleman--Norton 图像说明这里没有奇异性。”}它只刻画物理区钳夹（\cref{sec:ir-coleman-norton}）。\par
+\textbf{“KLN 定理解释了强子对撞截面为何有限。”}初态共线奇异性被因子化而非相消；有色初态的 Bloch--Nordsieck 相消会失效（\cref{prop:ir-bn-failure}）。\par
+\textbf{“红外安全保证了因子化。”}它只处理末态奇异性（\cref{thm:ir-safe-finite}）。\par
+\textbf{“区域方法是定理”“可以用它确定领头区域。”}只在欧氏极限下是定理；Minkowski 极限下无一般证明，侧面处方在三圈有反例；维数正规化不能分开各区域时（有质量交换、快度发散）还须加解析或快度正规子；用它确定领头区域是循环论证（\cref{prop:ir-regions-minkowski}）。
+\end{tcolorbox}
+
+\paragraph{本章小结。}
+长程敏感性只能出现在积分围道被钳住的地方。动量空间的 Landau 方程（带 $\alpha_j\ge0$）是钳夹的必要条件，参数形式的 Landau 条件控制外部不变量的解析性与红外有限性；二者都在微扰论中严格成立，但在钳夹层次上并不等价。Coleman--Norton 图像给出硬--喷注--软的约化图（\tagA）；幂次计数（严格的标度陈述）在 Feynman 规范中挑出每个喷注一个物理部分子加任意多个标量极化胶子、软线只以胶子附着于喷注的领头区域（\tagA），超领头构型只在规范不变的和中相消。Glauber 区在幂次计数上领头而程函近似失效：在顶点中未被钳住，在初、末态相互作用并存时被钳住。QED 的软光子发散在单举截面中相消；KLN 定理与红外安全给出末态相消的一般框架（\tagA），有色初态的非阿贝尔 Bloch--Nordsieck 相消不成立（\tagV）；区域方法只在欧氏极限下严格。从标度陈述到积分界的过渡（\cref{asm:appN-envelope}、\cref{asm:appN-separation}）是本章全部 \tagA 结论的共同瓶颈。
+
+\paragraph{这些工具在后文的用途。}
+第~5~章用钳夹面与区域分析 Sudakov 形状因子（\cref{sec:sudakov-regions}）；第~6~章的欧氏红外有限性与 $R(s)$ 的有限性（\cref{thm:ee-euclid-ir}、\cref{thm:ee-R-finite}）建立在\cref{rem:ir-euclid-corners}之上；第~9~章把领头区域、标量极化主导与 Glauber 形变发展为一般方法（\cref{def:method-regions}、\cref{prop:method-gy-suppression}、\cref{prop:method-glauber-deformation}），附录~N 给出其精确形式；第~10、12、14~章对 DIS、Drell--Yan（\cref{prop:dy-regions}）与 TMD 使用\cref{fig:reduced-dis,fig:reduced-dy}的约化图，附录~O 处理被钳住的 Glauber 区；第~16~章以\cref{def:ir-safe}为出发点（\cref{prop:jets-sw}）；第~24~章讨论 Landau 判据的完整证明（预印本）、Gordan 择一定理与隐藏区域（\cref{thm:front-collins-pinch}、\cref{prop:front-hidden-regions}）。

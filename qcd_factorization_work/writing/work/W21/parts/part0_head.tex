@@ -1,0 +1,23 @@
+% =====================================================================
+%  第 18 章  因子化的破坏与非标准情形                  （ch18_break.tex，writer W21）
+%  约定：本书约定（WRITER_SPEC_v2 §3）；n_A=(1^+,0^-,0_T)，n_B=(0^+,1^-,0_T)，n_A.v=v^-，n_B.v=v^+；
+%  D_mu = d_mu - i g A_mu^a t^a，顶点 +i g gamma^mu t^a；Tr(t^a t^b)=delta^{ab}/2；
+%  Catani--Seymour 色荷（全出射）：出射夸克 t^a，出射反夸克 -(t^a)^T，胶子 (F^a)_{bc}=-i f^{abc}；入射部分子 = 出射反部分子。
+%  核验脚本与日志：writing/work/W21/scripts/s1_colour.py ... s6_dps.py，writing/work/W21/logs/。
+% =====================================================================
+\chapter{因子化的破坏与非标准情形}\label{ch:break}
+
+前面各章的因子化定理都带着明确的前提：观测量对旁观者（spectator）的末态是单举的，领头区域的清单是完备的，Glauber 区可以用围道形变或幺正性处理掉，软因子要么等于 $1$，要么是 Wilson 线的真空矩阵元。这些前提汇集在\cref{thm:method-template}（全阶论证，\tagA）的五条假设 (H1)--(H5) 中。本章讨论它们不成立时会发生什么。对每一种情形我们回答两个问题：哪一条假设失效；证据属于哪一类——显式的模型反例、QCD 中显式的定阶计算、部分证明，还是实验。“因子化失效”有几种截然不同的含义（振幅的严格共线因子化、截面的共线因子化、标准与广义 TMD 因子化），前者的失效并不蕴含后者的失效，必须分别陈述；标签 \tagV 只在指明证据类型之后才使用。
+
+本章严格证明的是两条：单个额外胶子的“胶子极强度” $C_G=1+2\langle\mathbf T_a\cdot\mathbf T_b\rangle/C_F$ 及其各道的值（$R_{\mathrm{PT}}$），以及组织全章的测量相容性判据（$R_{\mathrm{cond}}$）——割线求和的光锥幺正性在插入测量算符 $\Pi$ 后仍成立的条件是 $\Pi$ 与光锥演化以及 $\tau=0$ 的插入对易。衍射 DIS 与双 Drell--Yan 有全阶论证；强子—强子碰撞中背对背强子的 TMD 因子化、类空极限中振幅的严格共线因子化、非单举观测量与对多重相互作用敏感的观测量的因子化，以及强子—强子硬衍射，都在指明证据类型的意义上被破坏；超出 NNLO 的质量奇异性因子化与有色末态的双部分子散射只是猜想。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:break-colour}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:break-measurement}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appO-lcopt}）；辅助引理\cref{lem:break-weighted-cut}（数学）；Collins 阿贝尔标量模型中反常贡献的 $\kT$ 积分为零而 $\kT=0$ 处为负（\cref{ex:break-c07}，本书给出的证明）。\par
+\textbf{给出全阶论证：}\cref{thm:break-ddis}、\cref{thm:break-double-dy}（\tagA；瓶颈分别为\cref{thm:disall-factorization}与\cref{thm:dy-factorization}的瓶颈，外加 $r^+$ 围道形变与双部分子的区域重叠）。\par
+\textbf{破坏（附证据类型）：}\cref{thm:break-tmd}（模型反例）、\cref{prop:break-spacelike}（显式单圈计算，振幅层次）、\cref{prop:break-fss}（显式计算）、\cref{prop:break-jet-veto}（显式模型反例）、\cref{prop:break-hh-diffraction}（实验）（\tagV）。\par
+\textbf{没有证明：}超出 NNLO 的质量奇异性因子化（\cref{prop:break-mass-singularity}，\tagC）；有色末态的双部分子散射与“口袋公式”（\cref{conj:break-dps-coloured,conj:break-pocket}，\tagC）；对 MPI 敏感观测量的标准因子化（\cref{conj:front-mpi-violation}，\tagC，第~24~章）。
+\end{tcolorbox}
+
+\cref{sec:break-overview}列出各情形中失效的假设（\cref{tab:break-cases}），定义标准与广义 TMD 因子化，并证明测量相容性判据，把“观测量足够单举”这一口号变成可检验的算符条件。\cref{sec:break-tmd}精确计算 TMD 因子化在强子—强子碰撞中如何失效；\cref{sec:break-spacelike}讨论类空共线极限、它对截面意味着什么与不意味着什么，以及它与超领头对数的联系；\cref{sec:break-mpi}讨论对多重相互作用敏感的观测量；\cref{sec:break-diffraction}比较衍射 DIS 与强子—强子硬衍射；\cref{sec:break-dps}讨论双部分子散射；\cref{sec:break-summary}给出与\cref{app:appO}的对应表与常见误解。

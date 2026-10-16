@@ -1,0 +1,61 @@
+\begin{figure}[htbp]
+\centering
+% Schematic (k_T=0 section): N_C1={|k^-|+|k_T|<=lam^(1/3)}, N_C2={|k^+|+|k_T|<=lam^(1/3)},
+% N_S={||k||<=lam^(1/9)} (def:method-neighbourhoods, beta_S=1/9, beta_C=1/3; units of Q);
+% drawn half-width 0.36 cm, radius 1.1 cm. Pinch sets: pi_C1 = {0<k^+<P}, pi_C2 = {0<k^-<P'}.
+\begin{tikzpicture}[fd,
+  fe tube A/.style={fill=blue!12,draw=blue!45!black,line width=0.4pt},
+  fe tube B/.style={fill=orange!18,draw=orange!70!black,line width=0.4pt},
+  fe ball/.style={fill=green!15,draw=green!45!black,line width=0.5pt},
+  fe pinch/.style={line width=2.2pt,line cap=round},
+  fe dim/.style={draw,line width=0.45pt,{Stealth[length=3pt,width=2.6pt]}-{Stealth[length=3pt,width=2.6pt]}},
+  fe box/.style={draw,rounded corners=2pt,line width=0.5pt,align=left,font=\footnotesize,inner sep=3pt,text width=5.15cm},
+  fe lead/.style={draw=gray!60!black,line width=0.45pt},
+  fe lab/.style={font=\footnotesize}]
+  \def\fehw{0.36}\def\feR{1.1}
+  % neighbourhoods (strips along the full axes in the window, ball on top)
+  \fill[fe tube A] (-1.4,-\fehw) rectangle (6.0,\fehw);
+  \fill[fe tube B] (-\fehw,-1.4) rectangle (\fehw,4.5);
+  \draw[blue!45!black,line width=0.4pt] (-1.4,\fehw) -- (6.0,\fehw) (-1.4,-\fehw) -- (6.0,-\fehw);
+  \draw[orange!70!black,line width=0.4pt] (-\fehw,-1.4) -- (-\fehw,4.5) (\fehw,-1.4) -- (\fehw,4.5);
+  \draw[fe ball] (0,0) circle[radius=\feR];
+  % axes
+  \draw[lcaxis] (-1.4,0) -- (6.35,0) node[right=1pt] {$k^+$};
+  \draw[lcaxis] (0,-1.4) -- (0,4.8) node[above=1pt] {$k^-$};
+  % pinch sets
+  \draw[fe pinch,blue!60!black] (0,0) -- (4.6,0);
+  \draw[fe pinch,orange!80!black] (0,0) -- (0,3.4);
+  \fill (0,0) circle[radius=2.2pt];
+  \draw[line width=0.5pt] (4.6,0.12) -- (4.6,-0.12); \draw[line width=0.5pt] (0.12,3.4) -- (-0.12,3.4);
+  \node[fe lab,anchor=south,inner sep=2pt] at (4.6,\fehw) {$P$};
+  \node[fe lab,anchor=east,inner sep=2pt] at (-\fehw,3.4) {$P'$};
+  \node[fe lab,text=blue!55!black,anchor=south,inner sep=2pt] at (3.8,\fehw) {$\pi_{C_1}$};
+  \node[fe lab,text=orange!65!black,anchor=west,inner sep=2pt] at (\fehw,3.05) {$\pi_{C_2}$};
+  \node[fe lab,anchor=north east,inner sep=1.5pt] at (-0.03,-0.03) {$\pi_S$};
+  % dimensions
+  \draw[fe dim] (2.4,0) -- (2.4,\fehw);
+  \node[font=\scriptsize,anchor=south west,inner sep=1pt] at (2.42,\fehw) {$\lambda^{1/3}$};
+  \draw[fe dim] (0,0) -- (135:\feR);
+  \node[font=\scriptsize,anchor=south east,inner sep=1pt] at (135:\feR) {$\lambda^{1/9}$};
+  % region labels
+  \node[fe lab] at (-0.66,-0.68) {$U_S$};
+  \node[fe lab,text=blue!50!black,anchor=south,inner sep=2pt] at (1.45,\fehw) {$U_{C_1}$};
+  \node[fe lab,text=orange!60!black,anchor=east,inner sep=2pt] at (-\fehw,2.0) {$U_{C_2}$};
+  \node[fe lab] at (2.9,3.3) {$U_H$};
+  % boxes with the grouped expressions
+  \node[fe box,anchor=west] (bH) at (7.35,3.95) {$U_H$：(CS1)\ $(1-T_H)X_H$，\\ \quad$X_H=\Gamma-C_S\Gamma-C_{C_1}\Gamma-C_{C_2}\Gamma$};
+  \node[fe box,anchor=west,fill=orange!10] (bB) at (7.35,2.55) {$U_{C_2}$：(CS1)\ $(1-T_{C_2})(\Gamma-C_S\Gamma)$\\ \quad\ \ \,(CS2)\ $C_{C_1}\Gamma,\ C_H\Gamma$};
+  \node[fe box,anchor=west,fill=blue!8] (bA) at (7.35,1.15) {$U_{C_1}$：(CS1)\ $(1-T_{C_1})(\Gamma-C_S\Gamma)$\\ \quad\ \ \,(CS2)\ $C_{C_2}\Gamma,\ C_H\Gamma$};
+  \node[fe box,anchor=west,fill=green!10] (bS) at (7.35,-0.5) {$U_S$：(CS1)\ $(1-T_S)\Gamma$\\ \quad\ \,(CS2)\ $C_{C_1}\Gamma,\ C_{C_2}\Gamma,\ C_H\Gamma$};
+  \draw[fe lead] (bH.west) -- (3.25,3.38);
+  \draw[fe lead] (bB.west) -- (0.22,2.35);
+  \draw[fe lead] (bA.west) -- (5.3,0.18);
+  \draw[fe lead] (bS.west) -- (-45:0.98);% runs below the tube N_C1 to the ball N_S
+  \fill[gray!60!black] (3.25,3.38) circle[radius=1pt] (0.22,2.35) circle[radius=1pt] (5.3,0.18) circle[radius=1pt] (-45:0.98) circle[radius=1pt];
+  % note on the soft approximation
+  \node[fe lab,anchor=north west,align=left] (nt) at (-1.4,-1.75) {原点附近：软近似只在穿过 $\Real k^-\sim\kT^2/(4k^+)$ 的围道上成立，在实轴 $k^-\approx0$ 处不成立};
+\end{tikzpicture}
+\caption{单圈离壳三角图（$p_1=(P,-\frac{m^2}{2P},\mathbf 0_T)$，$p_2=(\frac{m^2}{2P'},-P',\mathbf 0_T)$）的区域与邻域（$k_T=0$ 截面，示意）：$\pi_{C_1}$、$\pi_{C_2}$ 为两条共线钳夹线，$\pi_S=\{0\}$；$N_{C_1}=\{|k^-|+|\mathbf k_T|\le\lambda^{1/3}\}$、$N_{C_2}=\{|k^+|+|\mathbf k_T|\le\lambda^{1/3}\}$ 为半宽 $\lambda^{1/3}$ 的管（蓝、橙），$N_S$ 为半径 $\lambda^{1/9}$ 的球（绿；以 $Q$ 为单位），支配集 $U_S=N_S$、$U_{C_i}=N_{C_i}\setminus N_S$，$U_H$ 为其余部分。
+每个支配集 $U_R$ 上标出提供小因子的分组表达式，即 (CS1)(CS2) 在本例中的具体形式（\cref{def:method-collins-conditions}）。}
+\label{fig:appN-triangle-regions}
+\end{figure}

@@ -1,0 +1,463 @@
+% =====================================================================
+%  dy_oneloop.tex —— Drell--Yan：领头阶、O(alpha_s) MSbar 系数函数、Glauber 区域的阿贝尔玩具模型
+%  （第 10 章 / 附录 G 用）。研究目录：research/c_dy；全部公式由 DERIVATION.md 所列 python 脚本逐项核对。
+%  依赖：preamble_fact.tex 中的宏（\as \MSbar \order \dd \ee \ii \sla \tagR \tagA \tagP）与费曼图样式。
+% =====================================================================
+\section{Drell--Yan 过程：领头阶与 \texorpdfstring{$\order{\as}$}{O(αs)} 系数函数}
+\label{sec:dy1l}
+
+本节对 Drell--Yan 过程 $h_A(P_A)+h_B(P_B)\to\ell^+\ell^-(q)+X$（单味无质量轻子，只计虚光子交换）给出三部分结果：
+领头阶截面中每一个因子的来源；$D=4-2\varepsilon$ 维常规维数正规化（CDR）中 $\order{\as}$ 的完整计算与
+$\MSbar$ 系数函数；以及 Glauber 区域的一个阿贝尔玩具模型，其中我们精确地说明“旁观者之间的交换是相位、
+在单举截面中由幺正性相消”这一论断在何种意义下成立。记号同本书约定：强子 $A$ 沿 $+z$、$B$ 沿 $-z$ 运动，
+$\tau=Q^2/s$，部分子 $p_1=x_1P_A$、$p_2=x_2P_B$，$\hat s=x_1x_2s$，$z=Q^2/\hat s$，$a\equiv\as(\mu_R)/2\pi$，
+$D_k(z)\equiv[\ln^k(1-z)/(1-z)]_+$。光滑函数乘以加号分布理解为
+$\langle g\,D_k,h\rangle=\int_0^1\dd z\,[g(z)h(z)-g(1)h(1)]\ln^k(1-z)/(1-z)$。
+
+% ---------------------------------------------------------------------
+\subsection{主公式与领头阶}
+\label{sec:dy1l-lo}
+
+记 $H^\mu$ 为 $p_1+p_2\to\gamma^*(\mu)+X$ 的振幅（去掉光子传播子与轻子电荷，保留夸克电荷 $e_q$ 与全部 QCD 耦合）。
+对轻子自旋求和得 $|M|^2=\frac{e^4}{Q^4}L_{\mu\nu}H^\mu H^{\nu*}$，$L_{\mu\nu}=\Tr[\sla{\ell}_1\gamma_\mu\sla{\ell}_2\gamma_\nu]$。
+在四维中积掉轻子相空间，
+\begin{equation}\label{eq:dy1l-lep}
+\int\dd\Phi_2\,L_{\mu\nu}=\frac{1}{6\pi}\big(q_\mu q_\nu-q^2g_{\mu\nu}\big),
+\end{equation}
+再利用流守恒 $q_\mu H^\mu=0$、$\frac{\dd^4q}{(2\pi)^4}=\frac{\dd Q^2}{2\pi}\frac{\dd^3q}{(2\pi)^32q^0}$ 与通量 $1/2\hat s$，得到主公式
+\begin{equation}\label{eq:dy1l-master}
+\hat s\,\frac{\dd\hat\sigma}{\dd Q^2}=\frac{2\alpha^2}{3Q^2}\int\dd\Phi_{\gamma^*X}\,\big\langle-g_{\mu\nu}H^\mu H^{\nu*}\big\rangle ,
+\end{equation}
+其中 $\langle\cdot\rangle$ 表示初态自旋、颜色平均与末态求和，$\dd\Phi_{\gamma^*X}$ 含 $(2\pi)^D\delta^D(p_1+p_2-q-p_X)$。
+轻子张量对所有部分子道相同，在系数函数中消去，故始终保留在四维。
+
+Born 项（\cref{fig:dy1l-diagrams}(a)）：$\int\dd\Phi_{\gamma^*}=2\pi\delta(\hat s-Q^2)$，
+$\langle-gHH^*\rangle=\frac14\cdot\frac{1}{N_c^2}\cdot N_c\cdot e_q^2(D-2)\,2\hat s=e_q^2(1-\varepsilon)\hat s/N_c$，故
+\begin{equation}\label{eq:dy1l-born}
+\hat s\,\frac{\dd\hat\sigma^{(0)}}{\dd Q^2}=\sigma_0\,e_q^2\,(1-\varepsilon)\,\delta(1-z),\qquad
+\sigma_0\equiv\frac{4\pi\alpha^2}{3N_cQ^2}.
+\end{equation}
+在 $D=4$ 时，对 $\hat s$ 积分即得点粒子截面 $\hat\sigma(q\bar q\to\ell^+\ell^-)=4\pi\alpha^2e_q^2/(3N_c\hat s)$，
+角分布 $\propto1+\cos^2\theta$。各因子的来源列于\cref{tab:dy1l-factors}。
+
+\begin{table}[htbp]
+\centering
+\caption{领头阶 Drell--Yan 截面 \cref{eq:dy1l-LO} 中各因子的来源}
+\label{tab:dy1l-factors}
+\begin{tabularx}{0.92\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}X}
+\toprule
+因子 & 来源\\
+\midrule
+$4\pi\alpha^2/(3Q^2)$ & 质心能量平方为 $Q^2$ 的点截面 $\sigma(e^+e^-\to\mu^+\mu^-)$：轻子张量 \cref{eq:dy1l-lep}、光子传播子、$\dd Q^2/2\pi$ 与通量\\
+$e_q^2$ & 夸克电荷\\
+$1/N_c$ & 颜色平均 $\frac{1}{N_c^2}\sum_{ij}\delta_{ij}\delta_{ij}$\\
+$1/s$ & $\delta(x_1x_2s-Q^2)=\delta(x_1x_2-\tau)/s$\\
+两项之和 & 夸克来自 $A$、反夸克来自 $B$，以及相反的情形\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{proposition}[领头阶 Drell--Yan 截面]\label{prop:dy1l-LO}
+忽略强子质量（它们只以 $x_1x_2=\tau[1+\order{M^2/s}]$ 的形式出现），领头阶的质量分布与快度分布为
+\begin{align}
+\frac{\dd\sigma}{\dd Q^2}&=\frac{4\pi\alpha^2}{3N_cQ^2s}\sum_qe_q^2\int_0^1\!\dd x_1\dd x_2\,\delta(x_1x_2-\tau)
+\big[q(x_1)\bar q(x_2)+\bar q(x_1)q(x_2)\big]\nonumber\\
+&=\frac{4\pi\alpha^2}{3N_cQ^4}\,\tau\sum_qe_q^2\int_\tau^1\frac{\dd x_1}{x_1}\Big[q(x_1)\,\bar q\Big(\frac{\tau}{x_1}\Big)+\bar q(x_1)\,q\Big(\frac{\tau}{x_1}\Big)\Big],
+\label{eq:dy1l-LO}\\
+\frac{\dd^2\sigma}{\dd Q^2\,\dd y}&=\frac{4\pi\alpha^2}{3N_cQ^2s}\sum_qe_q^2\big[q(x_1)\bar q(x_2)+\bar q(x_1)q(x_2)\big],\qquad
+x_{1,2}=\sqrt\tau\,\ee^{\pm y},\quad|y|\le\tfrac12\ln\tfrac1\tau .
+\label{eq:dy1l-LOy}
+\end{align}
+这里 $y=\frac12\ln(q^+/q^-)$ 是轻子对在强子质心系（$P_A^+=P_B^-$）中的快度；由 $q^+=x_1P_A^+$、$q^-=x_2P_B^-$
+得 $Q^2=2q^+q^-=x_1x_2(2P_A^+P_B^-)$、$y=\frac12\ln(x_1/x_2)$。
+\end{proposition}
+
+\begin{proof}
+由 \cref{eq:dy1l-born} 与 $\delta(\hat s-Q^2)=\delta(1-z)/\hat s$ 得 $\dd\hat\sigma/\dd Q^2=\sigma_0e_q^2\delta(\hat s-Q^2)$，
+再对两种排序乘以部分子分布并用 $\delta(x_1x_2s-Q^2)=\delta(x_1x_2-\tau)/s$ 即得 \cref{eq:dy1l-LO}。
+对 \cref{eq:dy1l-LOy}，变量变换 $(x_1,x_2)\mapsto(y,x_1x_2)$ 的雅可比行列式等于 $1$，
+故 $\int\dd x_1\dd x_2\,\delta(x_1x_2-\tau)\,\delta\big(y-\frac12\ln\frac{x_1}{x_2}\big)F(x_1,x_2)=F(\sqrt\tau\ee^{y},\sqrt\tau\ee^{-y})$。
+\end{proof}
+
+% ---------------------------------------------------------------------
+\subsection{\texorpdfstring{$\order{\as}$}{O(αs)}：归一化、矩阵元与相空间}
+\label{sec:dy1l-me}
+
+\paragraph{归一化。}因子化公式写成
+\begin{multline}\label{eq:dy1l-fact}
+\frac{\dd\sigma}{\dd Q^2}=\frac{\sigma_0}{s}\sum_qe_q^2\int_0^1\!\dd x_1\dd x_2\dd z\,\delta(x_1x_2z-\tau)\\
+\times\Big\{\big[q\bar q+\bar qq\big]\Delta_{q\bar q}(z)+\big[g\,(q+\bar q)+(q+\bar q)\,g\big]\Delta_{qg}(z)\Big\}+\order{\as^2},
+\end{multline}
+方括号中第一个因子取 $x_1$、第二个取 $x_2$，部分子分布均为标度 $\mu_F$ 处的 $\MSbar$ 分布；
+$\Delta_{qg}$ 是“一个味为 $q$ 的夸克（或反夸克）与一个胶子”的系数函数。等价地，
+$\hat s\,\dd\hat\sigma_{ij}/\dd Q^2=\sigma_0e_q^2\Delta_{ij}(z)$（扣除后的部分子截面）。
+在 $D$ 维中我们定义裸系数
+\begin{equation}\label{eq:dy1l-bare}
+\Delta^{\rm bare}_{ij}(z,\varepsilon)=\frac{N_c}{2\pi e_q^2(1-\varepsilon)}\int\dd\Phi^{(D)}_{\gamma^*X}\big\langle-g_{\mu\nu}H^\mu H^{\nu*}\big\rangle ,
+\end{equation}
+即除以 $D$ 维 Born 项（含因子 $1-\varepsilon$），使 $\Delta^{(0)}_{q\bar q}=\delta(1-z)$；这与质量因子化抵消项
+$\Gamma\otimes\hat\sigma^{(0)}(\varepsilon)$ 乘的是 $D$ 维 Born 项相一致。裸耦合
+$g_0^2=4\pi\as(\mu)\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}(4\pi)^{-\varepsilon}$；初态平均：夸克自旋 $\frac12$、颜色 $\frac1{N_c}$，
+胶子极化 $\frac{1}{D-2}=\frac{1}{2(1-\varepsilon)}$、颜色 $\frac{1}{N_c^2-1}$。光子指标与（唯一的）外胶子的极化求和均可取
+$-g$：前者由流守恒，后者由 $k_\alpha M^{\mu\alpha}=0$（单个外胶子时无需鬼场）。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.92]
+  % (a) Born
+  \begin{scope}
+    \coordinate (q1) at (-1.3,0.8); \coordinate (q2) at (-1.3,-0.8); \coordinate (v) at (0,0);
+    \coordinate (w) at (1.3,0); \coordinate (l1) at (2.3,0.8); \coordinate (l2) at (2.3,-0.8);
+    \draw[quark] (q1) -- (v); \draw[quark] (v) -- (q2);
+    \draw[photon] (v) -- (w);
+    \draw[quark] (w) -- (l1); \draw[quark] (l2) -- (w);
+    \node[vertex] at (v) {}; \node[vertex] at (w) {};
+    \node[left] at (q1) {$q(p_1)$}; \node[left] at (q2) {$\bar q(p_2)$};
+    \node[right] at (l1) {$\ell^-$}; \node[right] at (l2) {$\ell^+$};
+    \node at (0.65,0.38) {$\gamma^*$};
+    \node at (0.5,-1.45) {(a)};
+  \end{scope}
+  % (b) virtual
+  \begin{scope}[xshift=4.6cm]
+    \coordinate (q1) at (-1.3,0.8); \coordinate (q2) at (-1.3,-0.8); \coordinate (v) at (0.2,0);
+    \coordinate (g1) at (-0.6,0.46); \coordinate (g2) at (-0.6,-0.46); \coordinate (w) at (1.3,0);
+    \draw[quark] (q1) -- (g1); \draw[quark] (g1) -- (v); \draw[quark] (v) -- (g2); \draw[quark] (g2) -- (q2);
+    \draw[gluon] (g1) -- (g2);
+    \draw[photon] (v) -- (w);
+    \node[vertex] at (v) {}; \node[vertex] at (g1) {}; \node[vertex] at (g2) {};
+    \node at (0.5,-1.45) {(b)};
+  \end{scope}
+  % (c) real emission from the quark
+  \begin{scope}[xshift=8.6cm]
+    \coordinate (q1) at (-1.3,0.8); \coordinate (q2) at (-1.3,-0.8); \coordinate (v) at (0,0);
+    \coordinate (g1) at (-0.65,0.4); \coordinate (gk) at (0.4,1.05); \coordinate (w) at (1.2,0);
+    \draw[quark] (q1) -- (g1); \draw[quark] (g1) -- (v); \draw[quark] (v) -- (q2);
+    \draw[gluon] (g1) -- (gk); \draw[photon] (v) -- (w);
+    \node[vertex] at (v) {}; \node[vertex] at (g1) {};
+    \node[right] at (gk) {$g(k)$};
+    \node at (0.5,-1.45) {(c)};
+  \end{scope}
+  % (d) real emission from the antiquark
+  \begin{scope}[xshift=12.2cm]
+    \coordinate (q1) at (-1.3,0.8); \coordinate (q2) at (-1.3,-0.8); \coordinate (v) at (0,0);
+    \coordinate (g2) at (-0.65,-0.4); \coordinate (gk) at (0.4,-1.05); \coordinate (w) at (1.2,0);
+    \draw[quark] (q1) -- (v); \draw[quark] (v) -- (g2); \draw[quark] (g2) -- (q2);
+    \draw[gluon] (g2) -- (gk); \draw[photon] (v) -- (w);
+    \node[vertex] at (v) {}; \node[vertex] at (g2) {};
+    \node at (0.5,-1.45) {(d)};
+  \end{scope}
+\end{tikzpicture}
+
+\vspace{4mm}
+\begin{tikzpicture}[fd,scale=0.92]
+  % (e) qg -> gamma* q, s channel
+  \begin{scope}
+    \coordinate (q1) at (-1.4,0.8); \coordinate (g) at (-1.4,-0.8); \coordinate (v1) at (-0.5,0);
+    \coordinate (v2) at (0.6,0); \coordinate (k) at (1.5,0.8); \coordinate (w) at (1.5,-0.8);
+    \draw[quark] (q1) -- (v1); \draw[gluon] (g) -- (v1); \draw[quark] (v1) -- (v2); \draw[quark] (v2) -- (k);
+    \draw[photon] (v2) -- (w);
+    \node[vertex] at (v1) {}; \node[vertex] at (v2) {};
+    \node[left] at (q1) {$q(p_1)$}; \node[left] at (g) {$g(p_2)$}; \node[right] at (k) {$q(k)$}; \node[right] at (w) {$\gamma^*$};
+    \node at (0.05,-1.45) {(e)};
+  \end{scope}
+  % (f) qg -> gamma* q, u channel
+  \begin{scope}[xshift=5.4cm]
+    \coordinate (q1) at (-1.4,0.8); \coordinate (g) at (-1.4,-0.8); \coordinate (v1) at (-0.2,0.6);
+    \coordinate (v2) at (-0.2,-0.6); \coordinate (k) at (1.2,-0.8); \coordinate (w) at (1.2,0.8);
+    \draw[quark] (q1) -- (v1); \draw[quark] (v1) -- (v2); \draw[quark] (v2) -- (k);
+    \draw[photon] (v1) -- (w); \draw[gluon] (g) -- (v2);
+    \node[vertex] at (v1) {}; \node[vertex] at (v2) {};
+    \node[right] at (k) {$q(k)$}; \node[right] at (w) {$\gamma^*$};
+    \node at (-0.1,-1.45) {(f)};
+  \end{scope}
+\end{tikzpicture}
+\caption{$\order{\as}$ Drell--Yan 的部分子图。(a) Born；(b) 虚修正（顶角修正；外线自能在维数正规化中为零）；
+(c)(d) $q\bar q\to\gamma^*g$；(e)(f) $qg\to\gamma^*q$。$\gamma^*\to\ell^+\ell^-$ 在 (b)--(f) 中未画出。}
+\label{fig:dy1l-diagrams}
+\end{figure}
+
+\paragraph{矩阵元。}对 $q(p_1)\bar q(p_2)\to\gamma^*(q)g(k)$，记 $\hat t=(p_1-k)^2$、$\hat u=(p_2-k)^2$，$\hat s+\hat t+\hat u=Q^2$，
+振幅（去掉耦合）为 $\bar v(p_2)\big[\gamma^\mu\frac{\sla{p}_1-\sla{k}}{\hat t}\gamma^\alpha+\gamma^\alpha\frac{\sla{k}-\sla{p}_2}{\hat u}\gamma^\mu\big]u(p_1)$。
+$D$ 维求迹给出
+\begin{equation}\label{eq:dy1l-Tqq}
+T_{q\bar q}=8(1-\varepsilon)\Big[(1-\varepsilon)\Big(\frac{\hat u}{\hat t}+\frac{\hat t}{\hat u}\Big)+\frac{2\hat sQ^2}{\hat t\hat u}-2\varepsilon\Big],\qquad
+\sum|H|^2=e_q^2g_0^2\,C_FN_c\,T_{q\bar q}.
+\end{equation}
+对 $q(p_1)g(p_2)\to\gamma^*(q)q(k)$，记 $\hat t=(p_2-k)^2$、$\hat u=(p_1-k)^2$，
+\begin{equation}\label{eq:dy1l-Tqg}
+T_{qg}=-8(1-\varepsilon)\Big[(1-\varepsilon)\Big(\frac{\hat s}{\hat t}+\frac{\hat t}{\hat s}\Big)+\frac{2\hat uQ^2}{\hat s\hat t}-2\varepsilon\Big],\qquad
+\sum|H|^2=e_q^2g_0^2\,T_F(N_c^2-1)\,T_{qg},
+\end{equation}
+二者满足交叉关系 $T_{qg}(\hat s,\hat t,\hat u)=-T_{q\bar q}(\hat s\to\hat u,\hat t\to\hat s,\hat u\to\hat t)$。
+
+\paragraph{相空间。}在部分子质心系中以 $v=(1-\cos\theta)/2$ 参数化，
+\begin{equation}\label{eq:dy1l-ps}
+\dd\Phi_2=\frac{1}{8\pi}\Big(\frac{4\pi}{\hat s}\Big)^{\varepsilon}\frac{(1-z)^{1-2\varepsilon}}{\Gamma(1-\varepsilon)}\,[v(1-v)]^{-\varepsilon}\dd v ,
+\end{equation}
+$q\bar q$ 道 $\hat t=-\hat s(1-z)v$、$\hat u=-\hat s(1-z)(1-v)$；$qg$ 道 $\hat u=-\hat s(1-z)v$、$\hat t=-\hat s(1-z)(1-v)$。
+
+% ---------------------------------------------------------------------
+\subsection{实辐射与虚修正的精确表达式}
+\label{sec:dy1l-exact}
+
+对 $v$ 的积分全是 Beta 函数。记
+$K_r(\varepsilon)=\frac{\ee^{\varepsilon\gamma_E}\Gamma(1-\varepsilon)}{\Gamma(1-2\varepsilon)}=1-\frac32\zeta_2\varepsilon^2+\order{\varepsilon^3}$，得
+\begin{align}
+\Delta^R_{q\bar q}&=-a\,\frac{2C_F}{\varepsilon}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}K_r(\varepsilon)\,z^{\varepsilon}(1-z)^{-1-2\varepsilon}
+\Big[1+z^2+\frac{2\varepsilon^2(1-z)^2}{1-2\varepsilon}\Big],\label{eq:dy1l-Rqq}\\
+\Delta^R_{qg}&=-a\,\frac{T_F}{2\varepsilon}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}K_r(\varepsilon)\,z^{\varepsilon}(1-z)^{-2\varepsilon}
+\frac{2\big(z^2+(1-z)^2\big)-\varepsilon(5z^2-6z+7)+\varepsilon^2(1+z)^2}{(1-\varepsilon)(1-2\varepsilon)} .\label{eq:dy1l-Rqg}
+\end{align}
+$qg$ 道多出的 $\frac{1}{1-\varepsilon}$ 来自胶子极化平均；该道只有 $\hat t\to0$ 的共线极点，没有软奇点。
+
+一圈顶角（\cref{fig:dy1l-diagrams}(b)，Feynman 规范、无质量、裸）用 Feynman 参数计算，
+对在壳无质量夸克以 $F=\Tr[\sla{p}_2\Gamma^\mu\sla{p}_1\gamma_\mu]/\Tr[\sla{p}_2\gamma^\mu\sla{p}_1\gamma_\mu]$ 投影（此投影精确）：
+\begin{equation}\label{eq:dy1l-ff}
+F^{(1)}=\frac{\as}{4\pi}C_F\Big(\frac{\mu^2}{-q^2-\ii0}\Big)^{\varepsilon}f(\varepsilon),\qquad
+f(\varepsilon)=-K_v(\varepsilon)\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)}=-\frac{2}{\varepsilon^2}-\frac{3}{\varepsilon}-8+\zeta_2+\order{\varepsilon},
+\end{equation}
+$K_v=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)/\Gamma(1-2\varepsilon)=1-\frac12\zeta_2\varepsilon^2+\order{\varepsilon^3}$。
+外线自能在维数正规化中为无标度积分而等于零，$Z_1=Z_2$，耦合重整化在此阶不出现。类时延拓
+$(-q^2-\ii0)^{-\varepsilon}=(Q^2)^{-\varepsilon}\ee^{\ii\pi\varepsilon}$ 后，与 Born 的干涉给出
+\begin{equation}\label{eq:dy1l-V}
+\Delta^V=2\Real F^{(1)}\,\delta(1-z)=a\,C_F\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\cos(\pi\varepsilon)\,f(\varepsilon)\,\delta(1-z).
+\end{equation}
+
+% ---------------------------------------------------------------------
+\subsection{按分布展开与 \texorpdfstring{$\MSbar$}{MS-bar} 质量因子化}
+\label{sec:dy1l-msbar}
+
+利用在 $[0,1]$ 上精确成立的分布恒等式
+\begin{equation}\label{eq:dy1l-expand}
+(1-z)^{-1-2\varepsilon}=-\frac{\delta(1-z)}{2\varepsilon}+\sum_{k\ge0}\frac{(-2\varepsilon)^k}{k!}D_k(z),
+\end{equation}
+把各部分化为 $\alpha\,\delta(1-z)+\sum_k\beta_kD_k+(\text{正规函数})$ 的标准形式，结果列于\cref{tab:dy1l-laurent}
+（$L=\ln(\mu^2/Q^2)$）。软双极点在实、虚修正之和中相消，剩下的单极点恰为 $-\frac{2}{\varepsilon}P_{qq}(z)$，
+每条入射部分子腿一个。
+
+\begin{table}[htbp]
+\centering
+\caption{各部分的 Laurent 展开（以 $a=\as/2\pi$ 为单位）}
+\label{tab:dy1l-laurent}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llll}
+\toprule
+ & $\varepsilon^{-2}$ & $\varepsilon^{-1}$ & $\varepsilon^{0}$\\
+\midrule
+实 $q\bar q$ & $2C_F\delta$ & $2C_FL\delta-4C_FD_0+2C_F(1+z)$ &
+$C_F(L^2-\frac{\pi^2}{2})\delta-4C_FLD_0+8C_FD_1$\\
+ & & & $\ +2C_F(1+z)L-4C_F(1+z)\ln(1-z)-2C_F\frac{1+z^2}{1-z}\ln z$\\
+虚 & $-2C_F\delta$ & $-C_F(3+2L)\delta$ & $C_F(-L^2-3L-8+\frac{7\pi^2}{6})\delta$\\
+实 $qg$ & --- & $-P_{qg}(z)$ & $T_F\big[(z^2+(1-z)^2)\ln\frac{(1-z)^2}{z}+\frac{1+6z-7z^2}{2}\big]-P_{qg}L$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+$\MSbar$ 部分子—部分子分布为纯极点：
+$\Gamma_{ki}(x)=\delta_{ki}\delta(1-x)-a\,\frac{1}{\varepsilon}\big(\frac{\mu^2}{\mu_F^2}\big)^{\varepsilon}P_{ki}(x)+\order{\as^2}$
+（$P_{ki}$ 为四维领头阶劈裂函数）。由 $\Delta^{\rm bare}_{ij}=\sum_{kl}\Gamma_{ki}\otimes\Gamma_{lj}\otimes\Delta_{kl}$ 得
+\begin{equation}\label{eq:dy1l-mf}
+\Delta_{q\bar q}=\Delta^{\rm bare}_{q\bar q}+\frac{2a}{\varepsilon}\Big(\frac{\mu^2}{\mu_F^2}\Big)^{\varepsilon}P_{qq},\qquad
+\Delta_{qg}=\Delta^{\rm bare}_{qg}+\frac{a}{\varepsilon}\Big(\frac{\mu^2}{\mu_F^2}\Big)^{\varepsilon}P_{qg},
+\end{equation}
+$qg$ 道扣除的是 $f_{\bar q/g}\otimes\hat\sigma_{q\bar q}$（$P_{\bar qg}=P_{qg}$）。
+
+\begin{proposition}[$\order{\as}$ 的 $\MSbar$ 系数函数 \tagR]\label{prop:dy1l-coef}
+在因子化公式 \cref{eq:dy1l-fact} 的归一化下（CDR，胶子极化按 $D-2$ 个态平均），
+\begin{align}
+\Delta_{q\bar q}&=\delta(1-z)+\frac{\as}{2\pi}\Big\{C_F\Big[4(1+z^2)\Big(\frac{\ln(1-z)}{1-z}\Big)_+-2\,\frac{1+z^2}{1-z}\ln z+\Big(\frac{2\pi^2}{3}-8\Big)\delta(1-z)\Big]\nonumber\\
+&\hspace{9.5em}+2P_{qq}(z)\ln\frac{Q^2}{\mu_F^2}\Big\},\label{eq:dy1l-Dqq}\\
+\Delta_{qg}&=\frac{\as}{2\pi}\Big\{T_F\Big[\big(z^2+(1-z)^2\big)\ln\frac{(1-z)^2}{z}+\frac12+3z-\frac72z^2\Big]+P_{qg}(z)\ln\frac{Q^2}{\mu_F^2}\Big\},\label{eq:dy1l-Dqg}
+\end{align}
+其中 $P_{qq}=C_F\big[\frac{1+z^2}{1-z}\big]_+=C_F\big[2D_0-(1+z)+\frac32\delta(1-z)\big]$，$P_{qg}=T_F[z^2+(1-z)^2]$，
+$\as=\as(\mu_R)$；此阶不依赖 $\mu_R$。$(1+z^2)$ 乘在加号分布之外。
+\end{proposition}
+
+\begin{proof}
+把\cref{tab:dy1l-laurent} 的三行与 \cref{eq:dy1l-mf} 的抵消项相加：所有极点相消，$L$ 相消，剩下的有限部分
+即 \cref{eq:dy1l-Dqq,eq:dy1l-Dqg}；$4(1+z^2)D_1=8D_1-4(1+z)\ln(1-z)$ 用于整理。全部步骤都从对 $\varepsilon$ 精确的
+\cref{eq:dy1l-Rqq,eq:dy1l-Rqg,eq:dy1l-V} 出发，以计算机代数完成。
+\end{proof}
+
+\begin{remark}[有限部分依赖的约定]\label{rem:dy1l-conv}
+(1) 若把加号放在整项上，$(1+z^2)D_1=[(1+z^2)\ln(1-z)/(1-z)]_++\frac74\delta(1-z)$
+（因 $\int_0^1(1+z)\ln(1-z)\dd z=-\frac74$），$\delta$ 项系数将变成 $C_F(\frac{2\pi^2}{3}-1)$。
+(2) 若胶子极化按 $\frac12$ 而非 $\frac{1}{2(1-\varepsilon)}$ 平均，$\Delta_{qg}\to\Delta_{qg}+P_{qg}$：这是另一种方案。
+(3) $\delta$ 项中的 $\frac{2\pi^2}{3}=-\frac{\pi^2}{2}$（$K_r$）$+\frac{\pi^2}{6}$（$K_v$）$+\pi^2$（类时延拓 $\cos\pi\varepsilon$）；
+最后一项即一圈的 $|F(q^2)/F(-q^2)|^2-1=a\,C_F\pi^2$，而活跃 $q\bar q$ 之间的 Coulomb 相位 $\ii\pi/\varepsilon$ 在 $2\Real F$ 中消去。
+(4) DIS 方案：以 c\_dis 的 $\MSbar$ 系数函数 $C_2^{q,g}$ 定义 $q^{\rm DIS}=q+a[C_2^q\otimes q+C_2^g\otimes g]$，得
+$\Delta^{\rm DIS}_{q\bar q}=C_F\big[(1+\frac{4\pi^2}{3})\delta(1-z)+2(1+z^2)D_1+3D_0-6-4z\big]$、
+$\Delta^{\rm DIS}_{qg}=T_F\big[(z^2+(1-z)^2)\ln(1-z)+\frac32-5z+\frac92z^2\big]$。
+\end{remark}
+
+\paragraph{矩与阈值极限。}在 $\mu_F=Q$：
+$\int_0^1\dd z\,\Delta^{(1)}_{q\bar q}=C_F(\frac{4\pi^2}{3}-\frac72)$，$\int_0^1\dd z\,z\,\Delta^{(1)}_{q\bar q}=C_F(\frac{4\pi^2}{3}+\frac{13}{18})$，
+$\int_0^1\dd z\,\Delta^{(1)}_{qg}=\frac{T_F}{9}$，$\int_0^1\dd z\,z\,\Delta^{(1)}_{qg}=-\frac{11T_F}{18}$；
+大 $N$ 时 $\Delta_{q\bar q,N}=1+a\,C_F\big[4\ln^2\bar N+8\zeta_2-8\big]+\order{\ln N/N}$，$\bar N=N\ee^{\gamma_E}$。
+
+\begin{proposition}[$\mu_F$ 无关性 \tagR]\label{prop:dy1l-muF}
+以 \cref{eq:dy1l-Dqq,eq:dy1l-Dqg} 与按 DGLAP 方程演化的部分子分布计算，
+$\dd\sigma/\dd\ln\mu_F^2=\order{\as^2}$。
+\end{proposition}
+
+\begin{proof}
+取 Mellin 矩 $f_N=\int_0^1x^{N-1}f$，\cref{eq:dy1l-fact} 化为乘积 $\sigma_N\propto\sum_qe_q^2\{(q_A\bar q_B+\bar q_Aq_B)\Delta_{q\bar q,N}
++[g_A(q_B+\bar q_B)+(q_A+\bar q_A)g_B]\Delta_{qg,N}\}$。记 $\gamma_{ij}(N)=\int_0^1z^{N-1}P_{ij}$、$\ell_F=\ln(\mu_F^2/Q^2)$，
+则 $\partial_{\ell_F}\Delta_{q\bar q,N}=-2a\gamma_{qq}$、$\partial_{\ell_F}\Delta_{qg,N}=-a\gamma_{qg}$，而
+$\partial_{\ell_F}q_N=a(\gamma_{qq}q_N+\gamma_{qg}g_N)$（$\bar q$ 同）。代入后 $\gamma_{qq}$ 项在 $q\bar q$ 道内相消，
+$\gamma_{qg}$ 项（$q$ 或 $\bar q$ 由胶子产生）与 $qg$ 道相消；胶子分布的演化只在 $\order{a^2}$ 出现。
+\end{proof}
+
+\paragraph{检验。}以上结果的检验列于\cref{tab:dy1l-checks}；文献检验所用的原始材料均已下载核对，
+约定的换算在表中注明。
+
+\begin{table}[htbp]
+\centering
+\caption{$\order{\as}$ Drell--Yan 结果的检验（全部通过）}
+\label{tab:dy1l-checks}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.3cm}X}
+\toprule
+检验 & 方法与约定换算\\
+\midrule
+矩阵元 \cref{eq:dy1l-Tqq,eq:dy1l-Tqg} & $D$ 维求迹；$D=4$ 时与显式旋量、物理胶子极化（不用 $-g$）的数值计算一致到 $10^{-15}$；Ward 恒等式\\
+一圈形状因子 \cref{eq:dy1l-ff} & 与 Moch--Vermaseren--Vogt [JHEP 08 (2005) 049] 的 $\mathcal F_1$ 逐项一致至 $\varepsilon^4$（其定义 $\mathcal F=1+a_s(Q^2/\mu^2)^{-\varepsilon}\mathcal F_1$，$a_s=\as/4\pi$，每圈吸收 $S_\varepsilon$）\\
+$\Delta_{q\bar q}$、$\Delta_{qg}$（含 $\mu_F$ 项）& 与 Duhr--Dulat--Mistlberger [JHEP 11 (2020) 143] 附件的 NLO 项精确一致；其展开参数 $a_S=\as/\pi$，故 $\Delta^{(1)}=2\eta^{(1)}$，$|V|^2\to1$\\
+阈值常数 & 大 $N$ 常数项与 Moch--Vogt [PLB 631 (2005) 48] 的 $g_{01}^{\rm DY}=C_F(-16+16\zeta_2+8\gamma_E^2)$ 一致（$a_s=\as/4\pi$，按 $\ln N$ 展开）\\
+$\mu_F$ 无关性 & Mellin 空间精确；$x$ 空间以试探分布数值验证，相消至 $10^{-13}$\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ---------------------------------------------------------------------
+\subsection{Glauber 区域：一个阿贝尔玩具模型}
+\label{sec:dy1l-glauber}
+
+\paragraph{模型与幂次计数。}取质量为 $m$（红外正规子）的阿贝尔矢量玻色子，Feynman 规范传播子
+$-\ii g_{\mu\nu}/(k^2-m^2+\ii0)$，带电标量 $\phi_j$ 的协变导数 $D_\mu=\partial_\mu-\ii g_jA_\mu$（顶角 $+\ii g_j(p+p')^\mu$；
+在领头幂次下换成费米子不改变任何结论，因 $\bar u(p+k)\gamma^\mu u(p)\to2p^\mu$）。强子 $A$ 分解为活跃部分子 $a$ 与旁观者 $s_A$，
+$B$ 分解为 $b$ 与 $s_B$，$a$、$b$ 在硬顶角湮灭（\cref{fig:dy1l-glauber}）。以 $\lambda\ll1$ 计，$A$ 共线动量
+$\sim(1,\lambda^2,\lambda)Q$，$B$ 共线 $\sim(\lambda^2,1,\lambda)Q$，Glauber 动量 $k\sim(\lambda^2,\lambda^2,\lambda)Q$。
+在 Glauber 区域的领头幂次，$A$ 共线传播子只依赖 $k^-$：$(p+k)^2-m^2\simeq2p^+(k^--k_0^-)$（$k_0^-$ 为实数），
+$B$ 共线传播子只依赖 $k^+$，玻色子传播子 $\simeq-1/(k_T^2+m^2)$。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.9]
+  \begin{scope}
+    \coordinate (A) at (-2.6,1.3); \coordinate (B) at (-2.6,-1.3); \coordinate (H) at (0,0);
+    \coordinate (sA) at (2.6,1.75); \coordinate (sB) at (2.6,-1.75); \coordinate (gs) at (2.6,0);
+    \draw[plain] (-3.5,1.3) -- (A); \draw[plain] (-3.5,-1.3) -- (B);
+    \draw[quark] (A) -- node[above,pos=0.45]{$a$} (H);
+    \draw[quark] (B) -- node[below,pos=0.45]{$b$} (H);
+    \draw[quark] (A) to[out=15,in=180] coordinate[pos=0.7] (gA) (sA);
+    \draw[quark] (B) to[out=-15,in=180] coordinate[pos=0.7] (gB) (sB);
+    \draw[glauber] (gA) -- (gB);
+    \draw[photon] (H) -- (gs);
+    \draw[hadron blob] (A) circle[radius=0.42]; \draw[hadron blob] (B) circle[radius=0.42];
+    \draw[hard blob] (H) circle[radius=0.25];
+    \node at (A) {$A$}; \node at (B) {$B$};
+    \node[right] at (sA) {$s_A$}; \node[right] at (sB) {$s_B$}; \node[right] at (gs) {$\gamma^*$};
+    \node at (0,-2.3) {(a) 旁观者—旁观者};
+  \end{scope}
+  \begin{scope}[xshift=7.6cm]
+    \coordinate (A) at (-2.6,1.3); \coordinate (B) at (-2.6,-1.3); \coordinate (H) at (0,0);
+    \coordinate (sA) at (2.6,1.75); \coordinate (sB) at (2.6,-1.75); \coordinate (gs) at (2.6,0);
+    \draw[plain] (-3.5,1.3) -- (A); \draw[plain] (-3.5,-1.3) -- (B);
+    \draw[quark] (A) -- node[above,pos=0.45]{$a$} (H);
+    \draw[quark] (B) -- coordinate[pos=0.55] (gb) node[below,pos=0.3]{$b$} (H);
+    \draw[quark] (A) to[out=15,in=180] coordinate[pos=0.55] (gA) (sA);
+    \draw[quark] (B) to[out=-15,in=180] (sB);
+    \draw[glauber] (gA) -- (gb);
+    \draw[photon] (H) -- (gs);
+    \draw[hadron blob] (A) circle[radius=0.42]; \draw[hadron blob] (B) circle[radius=0.42];
+    \draw[hard blob] (H) circle[radius=0.25];
+    \node at (A) {$A$}; \node at (B) {$B$};
+    \node[right] at (sA) {$s_A$}; \node[right] at (sB) {$s_B$}; \node[right] at (gs) {$\gamma^*$};
+    \node at (0,-2.3) {(b) 活跃 $b$—旁观者 $s_A$};
+  \end{scope}
+\end{tikzpicture}
+\caption{玩具模型中的一玻色子交换（暗红色线）。(a) 两个旁观者之间：Glauber 区域被夹住，贡献为相位；
+(b) $B$ 的活跃部分子与 $A$ 的旁观者之间（初态相互作用）：$k^+$ 围道可以变形离开 Glauber 区域。}
+\label{fig:dy1l-glauber}
+\end{figure}
+
+\begin{proposition}[旁观者之间的程函相位 \tagP]\label{prop:dy1l-phase}
+把两个旁观者表示为无限长直类光线 $x_j(\lambda)=b_j+\lambda v_j$，$v_A=(1^+,0^-,\mathbf 0_T)$、$v_B=(0^+,1^-,\mathbf 0_T)$。
+在自由阿贝尔理论中
+\begin{equation}\label{eq:dy1l-chi}
+\frac{\langle T\,W_AW_B\rangle}{\langle W_A\rangle\langle W_B\rangle}=\ee^{\ii\chi(b)},\qquad
+\chi(b)=-\frac{g_Ag_B}{2\pi}K_0(m|b|),\qquad b=b_A-b_B,
+\end{equation}
+其中 $W_j=\exp\big(\ii g_j\int_{-\infty}^{\infty}\dd\lambda\,v_j\cdot A(x_j(\lambda))\big)$；且 $\langle W_j\rangle=1$。
+\end{proposition}
+
+\begin{proof}
+Gauss 积分给出 $\langle T\ee^{\ii\int J\cdot A}\rangle=\ee^{-\frac12\langle(\int J\cdot A)^2\rangle}$。自身项正比于 $v_j^2=0$，在 Feynman 规范中为零。
+交叉项为
+$-g_Ag_B\,v_A\!\cdot\!v_B\int\frac{\dd^4k}{(2\pi)^4}\frac{-\ii\,\ee^{-\ii k\cdot(b_A-b_B)}}{k^2-m^2+\ii0}\,2\pi\delta(k^-)\,2\pi\delta(k^+)
+=-\ii g_Ag_B\int\frac{\dd^2k_T}{(2\pi)^2}\frac{\ee^{\ii k_T\cdot b}}{k_T^2+m^2}$，
+最后用 $\int\frac{\dd^2k}{(2\pi)^2}\frac{\ee^{\ii k\cdot b}}{k^2+m^2}=\frac{K_0(mb)}{2\pi}$。
+\end{proof}
+
+无限长线迫使 $k^\pm=0$：这一交换是纯 Glauber 的。$m\to0$ 时 $\chi\to\frac{g_Ag_B}{2\pi}[\ln\frac{mb}{2}+\gamma_E]$ 红外发散，
+但始终是实数，即一个（发散的）相位。对能量有限的旁观者，一圈的动量空间计算给出同样的结果：
+
+\begin{proposition}[一圈：留数与在壳旁观者 \tagP]\label{prop:dy1l-res}
+设 $s_A$、$s_B$ 的末态动量 $p'_A$、$p'_B$ 在壳，玻色子动量 $k$ 由 $s_B$ 流向 $s_A$。在 Glauber 区域的领头幂次，
+$k^-$ 积分中 $s_A$ 的极点在上半平面、$a$ 的极点在下半平面（$k^+$ 积分中 $s_B$ 在下、$b$ 在上），围道被夹住；
+闭合围道得
+$\int\frac{\dd k^-}{2\pi}\frac{\ii}{-2p'^+_A(k^--k_1^-)+\ii0}F(k^-)=\frac{F(k_1^-)}{2p'^+_A}$（旁观者在壳），并且
+\begin{equation}\label{eq:dy1l-M1}
+M_1(p'_A,p'_B)=\int\frac{\dd^2k_T}{(2\pi)^2}\,\frac{-\ii g_Ag_B}{k_T^2+m^2}\,M_0(p'_A-k_T,\,p'_B+k_T),
+\end{equation}
+即在与旁观者相对横动量共轭的冲击参数空间中 $M_1=\ii\chi(b)M_0$，与 \cref{eq:dy1l-chi} 的 $\order{g^2}$ 项一致。
+\end{proposition}
+
+\begin{proposition}[幺正性相消 \tagP]\label{prop:dy1l-unit}
+对任何不依赖旁观者相对横动量 $p=(p'_A-p'_B)/2$ 的可观测量（包括 $\dd\sigma/\dd Q^2$、$\dd\sigma/\dd Q^2\dd y$，
+在领头幂次下甚至包括 $q_T$ 谱），旁观者之间的交换对截面没有贡献：逐阶地，
+$\order{g^2}$：$\ii\chi-\ii\chi=0$；$\order{g^4}$：$\chi^2-\frac12\chi^2-\frac12\chi^2=0$；
+$\order{g^{2n}}$：$\sum_{j=0}^n\frac{(\ii\chi)^j}{j!}\frac{(-\ii\chi)^{n-j}}{(n-j)!}=0$；对全阶程函和 $|\ee^{\ii\chi}|^2=1$。
+\end{proposition}
+
+\begin{proof}
+交换只改变 $p$，不改变 $P=p'_A+p'_B=-q_T$，$q^\pm$ 的变化是 $\order{\lambda^2}$。对 $p$ 积分并用 Parseval 恒等式，
+$\int\dd^2p\,|M|^2=(2\pi)^2\int\dd^2b\,|\tilde M_0(P,b)|^2|\ee^{\ii\chi(b)}|^2=\int\dd^2p\,|M_0|^2$，因为 $\chi$ 为实数。
+逐阶的抵消对应于末态切割相对于被交换玻色子的不同位置；$n$ 次交换（含交叉梯形）求和为 $(\ii\chi)^n/n!$ 由程函恒等式
+$\sum_{\sigma}\prod_{j}(w_{\sigma1}+\dots+w_{\sigma j})^{-1}=\prod_jw_j^{-1}$ 保证。
+\end{proof}
+
+这一相消并不平凡：被积函数逐点不为零，旁观者相对横动量的分布确实被改变（数值演示见 DERIVATION.md \S7.4）；
+只有对旁观者末态求和之后才相消。在同一模型中还可以直接看到：对旁观者—旁观者交换，$k^\pm$ 两个围道都被
+Glauber 尺度的极点夹住，把围道上移或下移 $\ii\lambda$ 都会改变积分值，故不能用围道变形代替幺正性论证。
+
+\begin{proposition}[活跃—旁观者交换：围道变形 \tagP]\label{prop:dy1l-as}
+对 $s_A$ 与 $b$ 之间的一玻色子交换（初态相互作用），$k^-$ 围道被 $s_A$、$a$ 的极点夹住，但在 Glauber 区域附近
+领头幂次的 $k^+$ 依赖只来自 $b$ 的传播子 $1/(2p_b^-k^++c_b+\ii0)$，其极点在下半平面；其余 $k^+$ 奇点
+（玻色子极点 $k^+=K^2/2k^-$、$A$ 共线线）位于 $|k^+|\sim Q$。以精确的玻色子传播子，
+\begin{equation}\label{eq:dy1l-Ias}
+\int\dd k^+\,\frac{1}{(2p_b^-k^++c_b+\ii0)(2k^+k^--K^2+\ii0)}=\frac{2\pi\ii\,\theta(-k^-)}{2p_b^-K^2+2k^-c_b},\qquad K^2=k_T^2+m^2,
+\end{equation}
+它由 $|k^+|=K^2/2|k^-|\sim Q$ 处的极点给出；把 $k^+$ 围道在 $|{\rm Re}\,k^+|\lesssim\lambda$ 范围内上移 $\ii\lambda$ 不改变积分，
+而在变形后的围道上 $|2p_b^-k^+|\gg k_T^2$，$b$ 可代之以程函线 $1/(2p_b^-k^++\ii0)$，误差 $\order{\lambda^2}$。
+因此一圈时这一交换属于 $A$ 的共线子图，并附着在 $f_{q/A}$ 的（指向过去的）Wilson 线上。
+\end{proposition}
+
+对共线部分子分布，Wilson 线指向过去或未来无关紧要：当 $w$ 与 $0$ 位于同一条类光线上时，
+$W[w,-\infty n_-]\,W[-\infty n_-,0]=W[w,0]=W[w,+\infty n_-]\,W[+\infty n_-,0]$（群性质，算符恒等式）。
+在玩具模型中，半无限长线分别给出 $-\ii/(k-\ii0)$ 与 $\ii/(k+\ii0)$，各含 $\pi\delta(k)$，主值部分反号，
+二者之和为整条线的 $2\pi\delta(k)$。对 TMD 分布，横向分开的“订书钉”形 Wilson 线不能收缩，这种区别成为物理的（见第 11 章）。
+
+\begin{remark}[本节证明了什么，没有证明什么]\label{rem:dy1l-scope}
+在阿贝尔理论、有质量玻色子、Feynman 规范与领头幂次下，本节证明了：(i) 程函旁观者之间的交换精确地给出
+相位 $\ee^{\ii\chi(b)}$；(ii) 一圈时有限能量旁观者的 Glauber 区域贡献等于 $\ii\chi\otimes M_0$，且 $k^\pm$ 围道被夹住；
+(iii) 对旁观者相对横动量单举的截面不受影响（逐阶的切割求和与全阶程函模型）；(iv) 一圈时 $B$ 的活跃部分子与
+$A$ 的旁观者之间的交换在 $k^+$ 上不被夹住，可归入 $f_{q/A}$ 及其 Wilson 线。
+本节没有证明：非阿贝尔情形（相位成为不与硬过程颜色流对易的颜色矩阵，完整论证见 Collins--Soper--Sterman 1988）；
+全阶的区域分析（软、共线、Glauber 区域的重叠与扣除，多个同时的交换；Bodwin 1985，Collins--Soper--Sterman 1985，
+Collins 2011 第 14 章）；幂次修正（Bodwin--Brodsky--Lepage 1981 提出的问题）；以及测量末态强子的过程，
+在那里相应的相消失效（Collins--Qiu 2007，Rogers--Mulders 2010；第 12 章）。因此上述命题标为 \tagP，而包含
+Glauber 相消在内的领头幂次 Drell--Yan 共线因子化定理标为 \tagA。
+\end{remark}

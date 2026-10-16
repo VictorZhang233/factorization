@@ -1,0 +1,61 @@
+%%% BEGIN fig:dglap-ladder
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \def\toneX{1.3}
+  % heights: blob top 0.45, vertices 1.35, 2.5, 3.85, photon vertex 5.0; dots 2.95--3.25
+  % left chain (amplitude)
+  \draw[quark] (-\toneX,0.43) -- (-\toneX,1.35);
+  \draw[quark] (-\toneX,1.35) -- (-\toneX,2.5);
+  \draw[plain] (-\toneX,2.5) -- (-\toneX,2.82);
+  \draw[line width=0.8pt,dash pattern=on 0pt off 3pt,line cap=round] (-\toneX,2.95) -- (-\toneX,3.25);
+  \draw[quark] (-\toneX,3.38) -- (-\toneX,3.85);
+  \draw[quark] (-\toneX,3.85) -- (-\toneX,5.0);
+  % right chain (conjugate amplitude)
+  \draw[quark] (\toneX,1.35) -- (\toneX,0.43);
+  \draw[quark] (\toneX,2.5) -- (\toneX,1.35);
+  \draw[plain] (\toneX,2.82) -- (\toneX,2.5);
+  \draw[line width=0.8pt,dash pattern=on 0pt off 3pt,line cap=round] (\toneX,2.95) -- (\toneX,3.25);
+  \draw[quark] (\toneX,3.85) -- (\toneX,3.38);
+  \draw[quark] (\toneX,5.0) -- (\toneX,3.85);
+  % struck quark and photons
+  \draw[quark=0.25] (-\toneX,5.0) -- (\toneX,5.0);
+  \draw[photon] (-2.35,5.75) -- (-\toneX,5.0);
+  \draw[photon] (\toneX,5.0) -- (2.35,5.75);
+  % rungs: real partons crossing the cut
+  \foreach \y in {1.35,2.5,3.85} {
+    \draw[gluon] (-\toneX,\y) -- (\toneX,\y);
+    \node[vertex] at (-\toneX,\y) {}; \node[vertex] at (\toneX,\y) {};}
+  \node[vertex] at (-\toneX,5.0) {}; \node[vertex] at (\toneX,5.0) {};
+  % hadron blob (input PDF)
+  \draw[t1 hadron] (-3.2,0) -- (3.2,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.85,y radius=0.45];
+  \node at (-0.9,0) {$f(\xi_0;\mu_0)$};
+  \draw[cut] (0,-0.75) -- (0,5.9);
+  % labels: momentum fractions (left), splitting variables (vertices), k_T (right)
+  \node[left] at (-\toneX,0.89) {$\xi_0$};
+  \node[left] at (-\toneX,1.92) {$\xi_1=z_1\xi_0$};
+  \node[left] at (-\toneX,3.6) {$\xi_{n-1}$};
+  \node[left] at (-\toneX,4.42) {$\xi_n=z_n\xi_{n-1}\simeq x$};
+  \foreach \y/\z in {1.35/z_1,2.5/z_2,3.85/z_n}
+    \node[right,font=\footnotesize,inner sep=2pt] at (-\toneX,\y+0.31) {$\z$};
+  \node[right] at (\toneX,0.89) {$k_{\mathrm T0}\sim\mu_0$};
+  \node[right] at (\toneX,1.92) {$k_{\mathrm T1}$};
+  \node[right] at (\toneX,3.6) {$k_{\mathrm T,n-1}$};
+  \node[right] at (\toneX,4.42) {$k_{\mathrm Tn}$};
+  \node[above left,inner sep=1pt] at (-2.35,5.75) {$\gamma^*(q)$};
+  \node[left] at (-3.2,0) {$P$}; \node[right] at (3.2,0) {$P$};
+  % ordering arrow
+  \draw[lcaxis,line width=0.7pt] (3.75,0.89) -- (3.75,5.1);
+  \node[right,align=left,font=\small] at (3.9,3.0)
+    {$\mu_0^2\ll k_{\mathrm T1}^2\ll\cdots$\\[2pt]$\quad\ll k_{\mathrm T,n-1}^2\ll k_{\mathrm Tn}^2\ll Q^2$};
+\end{tikzpicture}
+\caption{DGLAP 演化在领头对数近似下的梯形图（物理规范中的非单态部分；单态部分的竖线也可以是胶子）。
+自初始尺度 $\mu_0$ 的部分子分布 $f(\xi_0;\mu_0)$ 出发，第 $i$ 个分裂顶点把动量分数由 $\xi_{i-1}$ 变为 $\xi_i=z_i\xi_{i-1}$，
+同时发射一个穿过末态割线的实部分子（带走 $(1-z_i)\xi_{i-1}$）。在横动量强序 $\mu_0^2\ll k_{\mathrm T1}^2\ll\cdots\ll k_{\mathrm Tn}^2\ll Q^2$ 的区域，
+每一级给出 $\frac{\as}{2\pi}\int\frac{\dd k_{\mathrm T}^2}{k_{\mathrm T}^2}P(z_i)$，$n$ 级梯形图贡献 $\frac{1}{n!}\big(\frac{\as}{2\pi}\ln\frac{Q^2}{\mu_0^2}\big)^n$ 乘以 $n$ 重卷积 $P\otimes\cdots\otimes P$（固定耦合）；
+连同提供加号分布的虚修正，对 $n$ 求和即得领头阶 DGLAP 方程的解。}
+\label{fig:dglap-ladder}
+\end{figure}
+%%% END fig:dglap-ladder

@@ -1,0 +1,63 @@
+%% ---------------------------------------------------------------------
+\section{非微扰地位与可解模型}\label{sec:power-np}
+
+领头幂次之外的一切，最终都依赖于 QCD 的非微扰结构。本节先说明全书的非微扰地位，再介绍能在渐近展开或微扰论之外检验 OPE 与部分子图像的三个“实验室”：微扰 $\varphi^4_4$ 中 OPE 的逐阶收敛、二维大 $N_c$ 的 't Hooft 模型，以及格点 QCD。后者提供非微扰的数值证据而不是证明：它计算定域算符的矩阵元（如扭度 2 算符的矩，第~22~章），也检验重整化子的预言（\cref{prop:power-renormalon-examples}(g)），但不检验强子截面的因子化本身，% critic C12
+其从欧氏关联函数到光锥分布的匹配又依赖于自己的因子化定理（第~22~章）。
+
+\begin{remark}[非微扰地位]\label{rem:power-np-status}
+\begin{enumerate}[label=(\roman*),leftmargin=1.8em,itemsep=1pt,topsep=2pt]
+\item 本书的每个因子化定理，要么是重整化微扰论中关于红外正规化的部分子态的陈述（\tagR，$R_{\mathrm{PT}}$，或 \tagA），要么是关于微扰论加编号假设\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}、\cref{asm:intro-growth}、\cref{asm:intro-bridge}的陈述（\cref{def:intro-MA}）。QCD 尚未作为四维量子场论被构造（四维 Yang--Mills 理论的存在性与质量间隙是千禧年问题之一），所以“对强子严格”永远意味着“在所列非微扰假设之下证明完整”（$R_{\mathrm{cond}}$），[R] 从不意味着对真实世界 QCD 的数学证明。% M28
+\item 在\cref{asm:intro-wightman}之下有真正的非微扰定理：谱函数的解析性与正定性（\cref{prop:ee-analytic}）、有限减除色散关系（\cref{prop:dis-dispersion-np}），以及另加非微扰 OPE 的 DIS 矩定理（\cref{thm:dis-moments-np}）；部分子分布的支撑（\cref{prop:pdf-support-hadron}，\tagA）与求和规则（\cref{prop:pdf-sum-rules}）也属于这一层次。最干净的非微扰连接是定域扭度 2 矩阵元的格点计算（第~22~章的\cref{prop:lattice-moments}）：它提供矩阵元，不检验强子截面的因子化。
+\item 幂次压低的逐阶含义：每一阶的余项在积分范数下被 $C\lambda^aL^K$ 控制，并对维数正规子一致（\cref{def:method-power-suppressed}）；常数随阶数增长，这些界不能对 $\as$ 求和。展开是渐近的，而重整化子表明微扰级数与幂次修正不能被干净地分开。
+\item 一般方法给出的指数可以远非最优。单圈离壳三角图中，一般估计（\cref{lem:appN-error-table}）在软区只保证相对 $O(\lambda^{1/9})$ 的误差，而精确余项是完整的一个幂次，且次领头幂次没有对数：$\int r=-\frac{4m^2}{Q^4}+\frac{m^4}{Q^6}(L^2-15+\frac{\pi^2}{3})+O(\frac{m^6}{Q^8}L^2)$，$L=\ln(Q^2/m^2)$（\cref{prop:appN-triangle-exact}(d)）；在纤维化积分范数下余项被 $C\lambda^2L^2$ 控制（\cref{prop:appN-triangle-cs}）。
+\item 在公理化场论中，OPE 可以在一个相空间条件之下被非微扰地导出（据该文摘要）\cite{Bostelmann:2005rr}，该条件对 QCD 尚未建立。
+\item 非微扰效应可以对 $\as$ 的任何幂次都不可见：瞬子贡献 $\propto\ee^{-2\pi/\as(Q)}=(\Lambda/Q)^{\beta_0}$（单圈），对偶性的破坏在 OPE 的幂次展开中也不可见（\cref{conj:ee-duality}）；二者与\cref{asm:intro-af-coeff}作为渐近陈述相容。可解模型的教训则是双向的：扭度展开可以收敛，也可以发散（\cref{prop:power-renormalon-examples}的地位与缺口）。
+\end{enumerate}
+\end{remark}
+
+\subsection{微扰 \texorpdfstring{$\varphi^4_4$}{phi4} 中 OPE 的收敛}
+
+\begin{theorem}[微扰 $\varphi^4_4$ 中 OPE 的收敛性 \tagR]\label{thm:power-ope-convergence}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（本定理只涉及 $\varphi^4_4$ 模型的微扰论。）考虑四维欧氏空间中质量 $m>0$ 的厄米标量场 $g\varphi^4$ 理论，取定圈数 $l$。复合场 $O_A=\partial^{w_1}\varphi\cdots\partial^{w_n}\varphi$ 的量纲为 $[A]=n+\sum_i|w_i|$；旁观场为 $\varphi(f_{p_i})=\int\dd^4x\,\varphi(x)f_{p_i}(x)$，$f_{p_i}$ 光滑，$\hat f_{p_i}$ 的支撑在以 $p_i$ 为心、半径 $\epsilon$ 的球内。把 OPE $O_A(x)O_B(0)\sim\sum_C\mathcal C^C_{AB}(x)O_C(0)$ 的求和限于 $[C]-[A]-[B]\le\Delta$，则在 $l$ 圈阶有
+\begin{multline}\label{eq:power-hk}
+\Big|\Big\langle O_A(x)O_B(0)\prod_{i=1}^n\varphi(f_{p_i})\Big\rangle-\sum_C\mathcal C^C_{AB}(x)\Big\langle O_C(0)\prod_{i=1}^n\varphi(f_{p_i})\Big\rangle\Big|\\
+\le m^{[A]+[B]+n}\sqrt{[A]!\,[B]!}\,\tilde K^{[A]+[B]}\prod_i\sup|\hat f_{p_i}|\,\Big(\sup\big(1,\tfrac{|\vec p|_n}{m}\big)\Big)^{2([A]+[B])(n+2l+1)+3n}\\
+\times\sum_{\lambda=0}^{n/2+2l}\frac{\ln^\lambda\sup(1,\frac{|\vec p|_n}{m})}{2^\lambda\lambda!}\cdot\frac{1}{\sqrt{\Delta!}}\Big(\tilde K\,m|x|\sup\big(1,\tfrac{|\vec p|_n}{m}\big)^{n+2l+1}\Big)^{\Delta},
+\end{multline}
+其中 $\tilde K$ 只依赖于 $n$ 与 $l$，$|\vec p|_n\equiv\sup_{J\subset\{1,\dots,n\}}|\sum_{i\in J}p_i|$\cite[定理~3]{Hollands:2011gf}。由于对任意 $c$ 有 $c^\Delta/\sqrt{\Delta!}\to0$，在每一圈阶上 OPE 在每个固定的 $|x|$ 处收敛，而不只是渐近成立。
+% VF-FRO-4
+% uses: none
+\end{theorem}
+
+\begin{proofsketch}
+证明\cite{Hollands:2011gf}采用 Wilson--Wegner--Polchinski 重整化群流方程：引入红外截断与紫外截断 $\Lambda_0$，对带复合算符插入的连通截肢 Green 函数在圈数与外腿数上归纳地给出对 $\Lambda_0$ 一致的界；关键是一个在归纳中自我复制、同时控制 OPE 余项的归纳假设。完整证明见\cite[定理~3 及其证明]{Hollands:2011gf}；无质量情形见\cite{Holland:2014pna}，弯曲时空中微扰 OPE 的构造见\cite{Hollands:2006ag}（二者均据摘要）。
+\end{proofsketch}
+
+收敛性依赖于旁观场所代表的“态”（$\hat f_{p_i}$ 的支撑离原点越远，收敛越差），不涉及圈数展开本身，在闵氏空间中只能期望对类空分离成立\cite{Hollands:2011gf}。这是模型陈述：对 QCD，微扰 OPE 是全阶论证（\cref{thm:dis-ope}，\tagA），其收敛性是猜想（另见 $O(N)$ $\sigma$ 模型，\cref{prop:power-renormalon-examples}(h)）；更多严格的 OPE 结果见第~24~章（\cref{prop:front-ope-scalar,prop:front-ope-ym,conj:front-ope-convergence,rem:front-ope-qcd-status}）。
+
+\subsection{二维大 \texorpdfstring{$N_c$}{Nc} 的 't Hooft 模型}
+
+二维 QCD 在 $N_c\to\infty$ 时可解\cite{tHooft1974}：夸克被禁闭、介子谱离散，深度非弹散射却仍可精确计算。取光锥坐标 $x^\pm=(x^0\pm x^1)/\sqrt2$ 与规范 $A^+=A_-=0$，则 $G^a_{+-}=-\partial_-A^a_+$，$\mathcal L_{\rm YM}=\frac12(\partial_-A^a_+)^2$：$A_+$ 没有传播自由度，其“传播子” $\ii\delta^{ab}/(k^+)^2$ 与 $k^-$ 无关（以截断 $|k^+|>\lambda$ 理解），顶点为 $\ii g\gamma^+t^a$；$N_c\to\infty$ 而 $m_0^2\equiv g^2N_c/(2\pi)$ 固定时只剩彩虹自能与梯形图。由 $\gamma^+\sla q\gamma^+=2q^+\gamma^+$，自能中对 $k^-$ 的积分（对称截断）给出 $-\ii\pi\,\mathrm{sgn}(p^+-k^+)$，于是 $\Sigma(p)=\frac{g^2N_c}{4\pi}\gamma^+[\frac{\mathrm{sgn}(p^+)}{\lambda}-\frac{1}{p^+}]$ 只依赖于 $p^+$，单胶子结果就是精确解；传播子 $\ii/(\sla p-m-\Sigma)$ 的分母 $2p^+p^--(m^2-m_0^2)-m_0^2|p^+|/\lambda+\ii0$ 在 $\lambda\to0$ 时把夸克极点推到无穷远。夸克（味 $a$）—反夸克（味 $b$）Bethe--Salpeter 振幅的梯形核与 $k^-$ 无关，对 $k^-$ 取留数后，$\phi(x)=\int\dd k^-\,\Psi(xP^+,k^-)$ 只在两个极点位于实轴两侧即 $0<x<1$ 时非零；与 $\lambda$ 有关的项相消后得到 't Hooft 方程\cite{tHooft1974}（$\mu^2=2P^+P^-$）
+\begin{gather}
+\mu^2\phi(x)=\Big(\frac{m_a^2}{x}+\frac{m_b^2}{1-x}\Big)\phi(x)-m_0^2\,\mathrm{P}\!\!\int_0^1\!\dd y\,\frac{\phi(y)-\phi(x)}{(y-x)^2},\label{eq:power-thooft-eq}\\
+\langle\phi,H\phi\rangle=\int_0^1\!\dd x\Big(\frac{m_a^2}{x}+\frac{m_b^2}{1-x}\Big)|\phi(x)|^2+\frac{m_0^2}{2}\int_0^1\!\!\int_0^1\!\dd x\,\dd y\,\frac{|\phi(x)-\phi(y)|^2}{(x-y)^2}\;\ge0 ;\label{eq:power-thooft-form}
+\end{gather}
+用 Hadamard 有限部分 $\mathrm{f.p.}\int_0^1\dd y\,(y-x)^{-2}=-\frac1x-\frac1{1-x}$，第一式等价于 't Hooft 的原始形式：质量移为 $m_{a,b}^2-m_0^2$、核为 $-m_0^2\,\mathrm{f.p.}\int_0^1\dd y\,\phi(y)(y-x)^{-2}$；第二式是对应的二次型。
+
+\begin{proposition}['t Hooft 模型 \tagP]\label{prop:power-thooft-model}
+（在二维 QCD 的 $N_c\to\infty$ 极限中精确；作为关于 QCD 的陈述只是部分的。）在上述模型中：(a) 介子的质量与光锥波函数由\eqref{eq:power-thooft-eq}的本征值问题给出；谱离散、非负，$m_a=m_b=0$ 时最低态无质量且 $\phi_0=1$；$x\to0$ 时 $\phi_n\sim x^{\beta_a}$，$\pi\beta_a\cot(\pi\beta_a)=1-m_a^2/m_0^2$（$x\to1$ 处同理）；高激发态满足 $\mu_n^2\simeq\pi^2m_0^2\,n$。(b) 介子 $n$ 的夸克与反夸克分布为 $q_n(x)=|\phi_n(x)|^2$、$\bar q_n(x)=|\phi_n(1-x)|^2$，支撑在 $[0,1]$ 内，满足 $\int_0^1q_n=1$ 与 $\int_0^1x\,[q_n+\bar q_n]\,\dd x=1$（胶子不携带动量）。(c)（Einhorn\cite{Einhorn1976}）在 Bjorken 极限下，介子的深度非弹结构函数标度化；对强子末态求和精确再现以 (b) 中分布表示的部分子模型（作为 $x$ 的分布，即对末态的离散共振取平均），修正按 $1/Q^2$ 的幂次（$m_0^2/Q^2$、$m_a^2/Q^2$）出现，没有对数型的标度破坏。这是规范理论中从第一原理非微扰地算出束缚态部分子分布的例子；该模型中的准部分子分布见第~23~章（\cref{prop:yzliu-2dqcd}）。
+（本命题只涉及二维大 $N_c$ 模型。）
+\uses{def:pdf-quark}
+\end{proposition}
+
+\begin{proof}
+(a) \eqref{eq:power-thooft-form}由\eqref{eq:power-thooft-eq}关于 $x,y$ 对称化得到，两项都非负，故 $\mu^2\ge0$。$m_a=m_b=0$ 时第一项消失，第二项对常数为零，故 $\phi_0=1$、$\mu_0^2=0$（手征极限下无质量的“$\pi$ 介子”）。把 $\phi\simeq x^\beta$ 代入原始形式并保留 $x\to0$ 时最奇异的项，用 $\mathrm{f.p.}\int_0^\infty\dd y\,y^\beta(y-x)^{-2}=-\pi\beta\cot(\pi\beta)\,x^{\beta-1}$（$-1<\beta<1$），得 $(m_a^2-m_0^2)+m_0^2\pi\beta\cot(\pi\beta)=0$。对高度振荡的 $\phi_n\simeq\sqrt2\sin(n\pi x)$，主值核作用于 $\ee^{\ii ky}$ 给出 $\pi|k|\ee^{\ii kx}$，故 $\mu_n^2\simeq\pi^2m_0^2n$。$H$ 是 $L^2[0,1]$ 上预解式为紧的正自伴算符，故谱离散、本征函数完备\cite{tHooft1974,Einhorn1976}。
+(b) 光锥规范中 Wilson 线为 1，部分子分布（\cref{def:pdf-quark}的二维形式）是 $x^+=0$ 上数密度算符的矩阵元；$N_c\to\infty$ 时介子价夸克—反夸克分量的波函数就是 $\phi_n$，更高的 Fock 分量被 $1/N_c$ 压低\cite{Einhorn1976}，故夸克动量分数的几率密度为 $|\phi_n(x)|^2$，反夸克携带 $1-x$；归一化 $\int_0^1|\phi_n|^2=1$ 给出数目求和规则，$x+(1-x)=1$ 给出动量求和规则，支撑来自 (a)。
+(c) 领头幂次的“手提包”项等于 (b) 中分布的部分子模型表达式：Bjorken 极限下被击夸克在长度为 $O(1/q^-)$ 的光锥时间间隔内传播，而二维耦合 $g^2$ 有质量平方的量纲，硬部分中每次瞬时相互作用的插入都带来 $m_0^2/Q^2$ 量级的压低；二维中没有对数发散的重整化，因而没有对数。固定 $Q^2$ 时结构函数是 $x$ 的一串 $\delta$ 函数，相邻共振的间距按 $m_0^2/Q^2$ 趋于零，所以标度化只在分布意义下成立。对全部强子末态的求和精确再现部分子模型，是 Einhorn 用 't Hooft 波函数显式完成的计算（同时验证了 Drell--Yan--West 关系与 Bloom--Gilman 对偶）\cite{Einhorn1976}；电流振幅与束缚态散射振幅的幺正性见\cite{CallanCooteGross1976}。
+\end{proof}
+
+\paragraph{地位与缺口}
+作为关于 QCD 的陈述这是 \tagP：模型在二维（无横向自由度、胶子不传播、超可重整，因而没有对数型标度破坏、Sudakov 对数与 Glauber 问题）并取 $N_c\to\infty$；谱的完备性依赖于所引的分析，(c) 中对末态共振的求和是\cite{Einhorn1976}的结果。它说明禁闭本身不破坏部分子模型意义下的因子化，束缚态的部分子分布可以从第一原理算出；它不说明四维 QCD 中的任何东西（\cref{asm:intro-bridge}的地位不因此改变）。
+
+\paragraph{本章小结。}
+领头幂次之外严格性迅速下降（各陈述的地位见章首的方框）。贯穿全章的一点是：超出领头幂次后，“微扰系数”与“非微扰矩阵元”的划分本身就有与幂次修正同量级的歧义（\cref{prop:power-rearrangement}，\cref{ex:power-renormalon-chain}），因此“精确到幂次修正”只有在幂次修正项被定义之后才有确切含义——这正是\cref{asm:intro-bridge}(Br3) 所表达的内容。

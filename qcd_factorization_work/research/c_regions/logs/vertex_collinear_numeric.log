@@ -1,0 +1,28 @@
+=== C1/C2: pole positions in the complex k^- plane ===
+  x=0.3 kT=1e-01:  Im z0=-2.4e-08 (Re +2.36e-02)  Im z1=+1.0e-08 (Re -1.01e-02)  Im z2=-2.4e-08
+  x=0.3 kT=1e-02:  Im z0=-2.4e-08 (Re +2.36e-04)  Im z1=+1.0e-08 (Re -1.01e-04)  Im z2=-2.4e-08
+  x=0.3 kT=1e-03:  Im z0=-2.4e-08 (Re +2.36e-06)  Im z1=+1.0e-08 (Re -1.01e-06)  Im z2=-2.4e-08
+  x=0.7 kT=1e-01:  Im z0=-1.0e-08 (Re +1.01e-02)  Im z1=+2.4e-08 (Re -2.36e-02)  Im z2=-1.0e-08
+  x=0.7 kT=1e-02:  Im z0=-1.0e-08 (Re +1.01e-04)  Im z1=+2.4e-08 (Re -2.36e-04)  Im z2=-1.0e-08
+  x=0.7 kT=1e-03:  Im z0=-1.0e-08 (Re +1.01e-06)  Im z1=+2.4e-08 (Re -2.36e-06)  Im z2=-1.0e-08
+PASS C1 for 0<x<1: D0,D2 poles below, D1 pole above the real k^- axis
+PASS C1 pinch: Re z0, Re z1 -> 0 from opposite sides as kT -> 0 (|z0|,|z1| ~ kT^2)
+  x=-0.4: signs of Im(poles) = [mpf('1.0'), mpf('1.0'), mpf('1.0')]
+  x=+1.5: signs of Im(poles) = [mpf('-1.0'), mpf('-1.0'), mpf('-1.0')]
+PASS C2 for x<0 or x>1 all three poles on the same side -> int dk^- = 0
+=== C3: residue formula vs direct numerical k^- integration (finite i eps) ===
+  x=0.3 kT=0.2: numeric (-8.7456540805e-9 + 457.355596575j)   residue (0.0 + 457.355596575j)   rel.diff 1.9e-11
+  x=0.6 kT=0.05: numeric (-1.18463866216e-6 + 2993.10008465j)   residue (0.0 + 2993.10008465j)   rel.diff 4.0e-10
+  x=0.8 kT=0.3: numeric (4.46163369361e-10 + 141.043902799j)   residue (0.0 + 141.043902799j)   rel.diff 3.2e-12
+PASS C3 residue formula agrees with direct integration (rel. diff < 1e-6)
+=== C4: logarithmic scaling in the normal coordinate k_T ===
+  kT=1e-01:  kT^2 J / limit = (1.043478261 + 0.0j)    shell integral / (pi ln4 * limit) = (1.100816931 + 0.0j)
+  kT=1e-02:  kT^2 J / limit = (1.00041684 + 0.0j)    shell integral / (pi ln4 * limit) = (1.000902625 + 0.0j)
+  kT=1e-03:  kT^2 J / limit = (1.000004167 + 0.0j)    shell integral / (pi ln4 * limit) = (1.000009017 + 0.0j)
+  kT=1e-04:  kT^2 J / limit = (1.000000042 + 0.0j)    shell integral / (pi ln4 * limit) = (1.00000009 + 0.0j)
+PASS C4 each shell lambda<kT<2lambda gives the same contribution as lambda->0 (log divergence)
+=== C5: power counting in normal coordinates (k^- = lambda^2 kappa, k_T = lambda tau) ===
+  fitted exponents: [ 1.e-06 -0.e+00 -0.e+00  1.e-06  1.e-06]
+PASS C5 measure x integrand scales as lambda^0 in the collinear region
+
+SUMMARY: 6/6 checks passed

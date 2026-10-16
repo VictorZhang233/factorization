@@ -1,0 +1,107 @@
+
+% =====================================================================
+\section{共线半单举 DIS}\label{sec:coll-sidis}
+
+半单举深度非弹散射（semi-inclusive DIS，SIDIS）$e(l)+A(P)\to e(l')+h(p_h)+X$ 是 DIS 中测量一个末态强子的过程。它同时含 DIS 的靶强子与 $e^+e^-\to hX$ 的被观测末态强子，
+所以因子化公式含一个 PDF 与一个碎裂函数，证明则由第~10~章与\cref{sec:coll-sia}的两部分组合而成——唯一需要重新检查的是 Glauber 区，因为靶子图既有初态线又有末态线。
+
+\paragraph{运动学。}
+$q=l-l'$，$Q^2=-q^2$，$x=Q^2/(2P\cdot q)$，$y=P\cdot q/P\cdot l$（\cref{def:dis-kinematics}），再加上
+\begin{equation}\label{eq:coll-sidis-z}
+z\equiv\frac{P\cdot p_h}{P\cdot q},
+\end{equation}
+以及 $h$ 相对于虚光子—靶轴的横动量 $\bm P_{h\mathrm T}$ 与方位角 $\phi_h$（Trento 约定\cite{BacchettaEtAl2004}）。在 Breit 系中 $P=(P^+,\frac{M^2}{2P^+},\mathbf 0_T)$，$q=(-xP^+,\frac{Q^2}{2xP^+},\mathbf 0_T)$\cite[式~(12.89)]{Collins2011}；
+部分子模型中被击夸克 $k+q\simeq(0,q^-,\mathbf 0_T)$ 沿 $-z$ 方向，故 $z\simeq p_h^-/q^-$ 是 $h$ 带走的被击夸克光锥分量的份额，正如 $x$ 是被击夸克带走的靶的份额。
+我们只讨论“流碎裂区”（$h$ 来自硬喷注，$z$ 固定、$z\gg m/Q$）；$h$ 来自靶碎裂区时需要断裂函数（fracture function）\cite[第~12.15~节]{Collins2011}，不在本节范围内。
+$P_{h\mathrm T}\sim Q$（或对 $\bm P_{h\mathrm T}$ 积分）时 $h$ 的横动量来自硬辐射，适用共线因子化；$P_{h\mathrm T}\ll Q$ 时需要横动量依赖（TMD）的分布与碎裂函数（\cref{ch:tmd}），两种描述在中间区域由 $W+Y$ 衔接（\cref{fig:coll-sidis}）。
+
+%%% BEGIN fig:coll-sidis
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fb harc/.style={draw=black!75,line width=1.6pt,line cap=round}]
+  \coordinate (HL) at (-1.05,0); \coordinate (HR) at (1.05,0);
+  % hard radiation crossing the cut (needed for P_hT ~ Q)
+  \draw[gluon] (HL) -- (HR);
+  % parton lines: A -> H -> current jet -> H^dagger -> A
+  \draw[quark] (-1.05,-1.63) -- (HL);
+  \draw[quark] (HL) -- (-1.05,1.63);
+  \draw[quark] (1.05,1.63) -- (HR);
+  \draw[quark] (HR) -- (1.05,-1.63);
+  % photons
+  \draw[photon] (-2.45,0.75) -- (HL);
+  \draw[photon] (HR) -- (2.45,0.75);
+  % target hadron A and the PDF; current jet and the FF
+  \draw[fb hadron] (-2.6,-2.0) -- (2.6,-2.0);
+  \draw[jet blob] (0,-2.0) ellipse[x radius=1.6,y radius=0.43];
+  \draw[jetB blob] (0,2.0) ellipse[x radius=1.6,y radius=0.43];
+  \draw[fb harc] (-0.42,2.4) to[out=80,in=180] (0,2.95) to[out=0,in=100] (0.42,2.4);
+  \draw[hard blob] (HL) circle[radius=0.36];
+  \draw[hard blob] (HR) circle[radius=0.36];
+  \draw[cut] (0,-2.75) -- (0,3.3);
+  % labels
+  \node[fb lab] at (HL) {$H$}; \node[fb lab] at (HR) {$H^\dagger$};
+  \node[font=\footnotesize] at (-0.78,-2.0) {$f_{i/A}(\xi)$};
+  \node[font=\footnotesize] at (-0.78,2.0) {$d_{h/j}(\zeta)$};
+  \node[fb lab,anchor=south west] at (0.07,2.98) {$h(p_h)$};
+  \node[fb lab,anchor=east] at (-2.62,-2.0) {$A$}; \node[fb lab,anchor=west] at (2.62,-2.0) {$A$};
+  \node[fb lab,anchor=east] at (-2.47,0.75) {$\gamma^*(q)$};
+  \path[mom={$\xi P_A$},mom pos=0.42,mom sep=0.26cm,mom length=0.5cm] (-1.05,-1.63) -- (HL);
+  \path[mom={$p_h/\zeta$},mom pos=0.6,mom sep=0.26cm,mom length=0.5cm] (HL) -- (-1.05,1.63);
+  \node[fb note,anchor=north,inner sep=1.5pt] at (0.36,-0.15) {$X_H$};
+  % kinematics and the two regimes
+  \node[anchor=west,align=left,font=\footnotesize] (K) at (3.45,1.55) {%
+    $x=\dfrac{Q^2}{2P_A\cdot q}\le\xi$，\quad$z=\dfrac{P_A\cdot p_h}{P_A\cdot q}\le\zeta$\\[6pt]
+    $P_{hT}$：$h$ 相对 $\gamma^*$--靶轴的横动量};
+  \node[anchor=north west,align=left,font=\footnotesize,draw=blue!45!black,fill=blue!4,rounded corners=2pt,
+        line width=0.5pt,inner sep=4pt] (C1) at ($(K.south west)+(0.05,-0.35)$)
+    {$P_{hT}\sim Q$（共线）：\\$\dd\sigma=\sum_{ij}f_{i/A}\otimes\dd\hat\sigma_{ij}\otimes d_{h/j}$（\cref{thm:coll-sidis}）};
+  \node[anchor=north west,align=left,font=\footnotesize,draw=orange!70!black,fill=orange!6,rounded corners=2pt,
+        line width=0.5pt,inner sep=4pt] at ($(C1.south west)+(0,-0.25)$)
+    {$P_{hT}\ll Q$（TMD，\cref{ch:tmd}）：\\横动量依赖的分布与碎裂函数、软因子};
+\end{tikzpicture}
+\caption{半单举 DIS $\ell A\to\ell' hX$ 的共线因子化（割图示意；竖直虚线为末态割线，左侧为振幅）。
+靶 $A$ 的共线子图给出部分子分布 $f_{i/A}(\xi)$（蓝色，沿 $+z$），流出硬部分的部分子 $j$ 碎裂为被观测强子 $h$（粗线穿过割线），给出碎裂函数 $d_{h/j}(\zeta)$（橙色）；
+$P_{hT}\sim Q$ 时 $h$ 的横动量来自硬辐射 $X_H$，截面为 $f\otimes\dd\hat\sigma\otimes d$ 的共线因子化形式；$P_{hT}\ll Q$ 时需要 TMD 因子化，二者在中间区域由 $W+Y$ 衔接（\cref{ch:tmd}）。}
+\label{fig:coll-sidis}
+\end{figure}
+%%% END fig:coll-sidis
+
+\begin{theorem}[共线 SIDIS 的因子化 \tagA]\label{thm:coll-sidis}
+在流碎裂区，对固定的 $0<x<1$、$0<z<1$、$0<y<1$，当 $Q\to\infty$ 且 $P_{h\mathrm T}\sim Q$（或对 $\bm P_{h\mathrm T}$ 在宽于 $\Lambda$ 的范围内积分）时
+\begin{equation}\label{eq:coll-sidis-fact}
+\frac{\dd\sigma}{\dd x\,\dd y\,\dd z}=\sum_{i,j}\int_x^1\frac{\dd\xi}{\xi}\int_z^1\frac{\dd\zeta}{\zeta}\,f_{i/A}(\xi;\mu)\,\frac{\dd\hat\sigma_{ij}}{\dd\hat x\,\dd y\,\dd\hat z}\Big(\hat x=\frac x\xi,\hat z=\frac z\zeta,\frac{Q^2}{\mu^2},\as(\mu)\Big)\,d_{h/j}(\zeta;\mu)+\text{幂次修正},
+\end{equation}
+$f_{i/A}$ 为\cref{def:pdf-quark,def:pdf-gluon}的 $\MSbar$ PDF，$d_{h/j}$ 为\cref{def:pdf-ff}的 $\MSbar$ 碎裂函数，$\dd\hat\sigma_{ij}$ 是 $\MSbar$ 减除的部分子截面；在领头阶
+\begin{equation}\label{eq:coll-sidis-lo}
+\frac{\dd\sigma}{\dd x\,\dd y\,\dd z}=\frac{4\pi\alpha^2}{yQ^2}\Big(1-y+\frac{y^2}2\Big)\sum_qe_q^2\big[f_{q/A}(x)\,d_{h/q}(z)+f_{\bar q/A}(x)\,d_{h/\bar q}(z)\big]+\order{\as}.
+\end{equation}
+$P_{h\mathrm T}\sim Q$ 时 $\bm P_{h\mathrm T}$ 的分布由同一形式的硬截面给出；$P_{h\mathrm T}\ll Q$ 的区域属于 TMD 因子化（第~14~章）。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+% errtype: E-S
+\uses{thm:method-template,thm:disall-factorization,thm:coll-sia,lem:coll-final-poles,lem:coll-unobserved-jet,prop:method-glauber-deformation,lem:method-soft-unitarity,def:dis-kinematics,def:pdf-quark,def:pdf-gluon,def:pdf-ff,asm:appN-multren,asm:intro-bridge}
+\end{theorem}
+
+\begin{proofsketch}
+(1) \emph{领头区域。}由幂次计数，领头区域有：含光子顶点的硬子图（割线两侧各一个）；含靶的共线子图 $J_A$；至少一个“硬喷注”共线子图，其中之一 $J_h$ 含 $h$；只以胶子附着的软子图\cite[第~12.14.2~节]{Collins2011}。
+每个共线子图以一条部分子线加任意多条 K 胶子连接硬子图。
+(2) \emph{Glauber 区。}这是与 $e^+e^-$ 唯一不同之处。对连接 $J_A$ 与 $J_h$ 的软动量 $l$，$J_A$ 的线一部分沿正分量流的方向（活动部分子），一部分逆着它（旁观者），$l^-$ 被初态与末态极点钳住\cite[式~(12.94)]{Collins2011}；
+而 $J_h$ 的全部外共线线都是末态线，由\cref{lem:coll-final-poles}（在 $J_h$ 的光锥坐标中应用），$l^+$ 的极点都在同一侧，可以把 $l^+$ 的围道移开，直到离开 Glauber 区。按\cref{prop:method-glauber-deformation}(b)，这种单分量形变只使 $J_h$ 一端的程函近似成立；
+在 SIDIS 中这已足够：靶一端不作软近似，这些胶子在 $J_h$ 一侧化为 Wilson 线之后，就是靶共线因子（PDF）的 Wilson 线的一部分——与 DIS 中末态相互作用的处理相同（\cref{thm:disall-factorization}的 (H3)(H4)）。
+(3) \emph{Ward 恒等式。}从硬子图提取 K 胶子：$J_A$ 给出\cref{def:pdf-quark,def:pdf-gluon}的 PDF（沿 $n_B$ 的直线段 Wilson 线），$J_h$ 给出碎裂函数（沿 $J_h$ 共轭方向的未来指向 Wilson 线，\cref{def:pdf-ff}经旋转）；软胶子化为沿各喷注方向的 Wilson 线。
+(4) \emph{幺正性。}除 $J_A$ 与 $J_h$ 外，其余硬喷注按\cref{lem:coll-unobserved-jet}并入硬子图；只要对 $\bm P_{h\mathrm T}$ 在宽范围内积分（或 $P_{h\mathrm T}\sim Q$，使软动量对 $\bm P_{h\mathrm T}$ 的影响为幂次压低），软因子对其末态的求和不受约束，由\cref{lem:method-soft-unitarity}等于 $1$\cite[第~12.14.4~节]{Collins2011}。
+(5) \emph{减除项与重整化。}PDF 的乘法可重整性是定理，碎裂函数的是独立输入\cref{asm:appN-multren}(Z1)，余下各步与\cref{thm:disall-factorization,thm:coll-sia}相同。于是\cref{thm:method-template}给出不变截面
+$E_h\frac{\dd\sigma}{\dd^3p_h}=\sum_{ij}\int_x^1\frac{\dd\xi}\xi\int_z^1\frac{\dd\zeta}{\zeta^2}E_k\frac{\dd\hat\sigma_{ij}}{\dd^3k}\,d_{h/j}(\zeta)f_{i/A}(\xi)$\cite[式~(12.95)]{Collins2011}，换成 $(x,y,z)$ 即\cref{eq:coll-sidis-fact}。
+(6) \emph{领头阶。}硬截面是 $\gamma^*q\to q$ 的 Born 截面，$\xi=x$、$\zeta=z$；把碎裂函数附加到 DIS 的部分子模型上即得\cref{eq:coll-sidis-lo}\cite[式~(12.91)]{Collins2011}。
+检验：对 $h$ 求和并以 $z$ 加权，由动量求和规则 $\sum_h\int\dd z\,z\,d_{h/q}=1$ 得 $\frac{4\pi\alpha^2}{yQ^2}(1-y+\frac{y^2}2)\sum_qe_q^2(f_q+f_{\bar q})$，正是领头阶 $F_2=x\sum_qe_q^2(q+\bar q)$、$F_L=0$ 的 DIS 截面
+$\frac{\dd\sigma}{\dd x\,\dd y}=\frac{2\pi\alpha^2}{xyQ^2}[1+(1-y)^2]F_2$（\cref{def:dis-kinematics}）。% check: s8 (A)
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+本定理是全阶论证（[A]），其瓶颈是\cref{thm:disall-factorization}与\cref{thm:coll-sia}瓶颈的并集：\cref{asm:appN-collins}、\cref{asm:appN-envelope}、\cref{asm:appN-separation}、\cref{asm:appN-cutsum}、\cref{asm:appN-ward-product}、\cref{asm:appN-uv}、
+碎裂函数的\cref{asm:appN-multren}(Z1)，以及强子层次的\cref{asm:intro-bridge}；具名缺口\cref{asm:appN-brst-nonlocal}（[C]）经由\cref{thm:method-template}进入。新的一步是 (2) 中靶一端不作软近似的论证，它与 DIS 的末态相互作用一样，是标度陈述（E-S）。
+本定理不覆盖靶碎裂区（断裂函数）、软强子（$z\sim m/Q$）与 $P_{h\mathrm T}\ll Q$ 的区域。次领头阶系数函数见\cite{Graudenz1994}；小 $q_T$ 区的重求和与 $W+Y$ 衔接见\cite{Meng:1995yn,Nadolsky:1999kb}及第~14~章。
+同一组碎裂函数出现在 $e^+e^-\to hX$ 与 SIDIS 中，这一普适性正是两条定理的内容；对横动量依赖的碎裂函数（包括 T 奇的 Collins 函数），Collins 与 Metz 论证了 Wilson 线方向的改变不影响其值\cite{CollinsMetz2004}。

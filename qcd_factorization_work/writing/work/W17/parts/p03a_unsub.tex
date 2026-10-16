@@ -1,0 +1,176 @@
+% =====================================================================
+\section{定义：订书钉形 Wilson 线、软因子、平方根恒等式与 Collins 定义}\label{sec:tmd-definitions}
+% =====================================================================
+
+TMD 分布的定义要满足三个要求：规范不变；与因子化推导中出现的 Wilson 线方向一致（SIDIS 指向未来，Drell--Yan 指向过去）；只把软区与共线区的重叠计算一次。前两点由订书钉形 Wilson 线（\cref{fig:tmd-staple}）实现，第三点要求把软因子的平方根分配进两个 TMD。\cref{fig:tmd-staple}与\cref{fig:sidis-dy-links}中的 $n$ 是满足 $n\cdot v=v^+$ 的类光矢量，即本书的 $n_B$；图中画的是 Collins TMD 的类光订书钉，格点准 TMD 所用的类空订书钉画在第~22~章（\cref{fig:lamet-lattice-geometries}）。
+
+%%% BEGIN fig:tmd-staple
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 ax/.style={lcaxis,gray!60!black},
+  t3 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ---------------- (a) SIDIS: future-pointing staple ----------------
+  \begin{scope}
+    \coordinate (O) at (0,0);     \coordinate (w) at (1.5,1.5);
+    \coordinate (C1) at (4.3,0);  \coordinate (C2) at (4.3,1.5);
+    \draw[t3 ax] (-0.7,0) -- (5.3,0) node[below left=2pt and -4pt] {$w^-$};
+    \draw[t3 ax] (0,-0.6) -- (0,2.4) node[left] {$w_{\mathrm T}$};
+    \draw[t3 dim] (1.5,0.05) -- node[t3 lab,right=1pt] {$b_{\mathrm T}$} (1.5,1.36);
+    \draw[wilson plain] (O) -- (C1) -- (C2) -- (w);
+    \path[t3 warrow=0.6] (O) -- (C1);
+    \path[t3 warrow=0.5] (C1) -- (C2);
+    \path[t3 warrow=0.45] (C2) -- (w);
+    \node[opvertex] at (O) {}; \node[opvertex] at (w) {};
+    \node[t3 lab,below right=1pt] at (O) {$\psi(0)$};
+    \node[t3 lab,above left=1pt and -3pt] at (w) {$\bar\psi(w)$};
+    \node[t3 note,below=3pt] at (2.95,0) {$W[\infty n,0]$};
+    \node[t3 note,above=3pt] at (3.05,1.5) {$W[w,w+\infty n]$};
+    \node[t3 note,right=3pt] at (4.3,0.75) {$W_{\mathrm T}$};
+    \node[t3 note,below=3pt] at (4.3,0) {$+\infty$};
+    \node[t3 lab] at (2.3,-1.25) {(a)\ SIDIS：未来指向};
+  \end{scope}
+  % ---------------- (b) Drell--Yan: past-pointing staple ----------------
+  \begin{scope}[xshift=10.9cm]
+    \coordinate (O) at (0,0);      \coordinate (w) at (1.5,1.5);
+    \coordinate (C1) at (-3.4,0);  \coordinate (C2) at (-3.4,1.5);
+    \draw[t3 ax] (-4.3,0) -- (2.6,0) node[below left=2pt and -4pt] {$w^-$};
+    \draw[t3 ax] (0,-0.6) -- (0,2.4) node[left] {$w_{\mathrm T}$};
+    \draw[t3 dim] (1.5,0.05) -- node[t3 lab,right=1pt] {$b_{\mathrm T}$} (1.5,1.36);
+    \draw[wilson plain] (O) -- (C1) -- (C2) -- (w);
+    \path[t3 warrow=0.6] (O) -- (C1);
+    \path[t3 warrow=0.5] (C1) -- (C2);
+    \path[t3 warrow=0.3] (C2) -- (w);
+    \node[opvertex] at (O) {}; \node[opvertex] at (w) {};
+    \node[t3 lab,below right=1pt] at (O) {$\psi(0)$};
+    \node[t3 lab,above=2pt] at (w) {$\bar\psi(w)$};
+    \node[t3 note,below=3pt] at (-1.75,0) {$W[-\infty n,0]$};
+    \node[t3 note,above=3pt] at (-1.75,1.5) {$W[w,w-\infty n]$};
+    \node[t3 note,left=3pt] at (-3.4,0.75) {$W_{\mathrm T}$};
+    \node[t3 note,below=3pt] at (-3.4,0) {$-\infty$};
+    \node[t3 lab] at (-0.9,-1.25) {(b)\ Drell--Yan：过去指向};
+  \end{scope}
+\end{tikzpicture}
+\caption{TMD 夸克分布算符中的“订书钉”形 Wilson 线，画在 $(w^-,w_{\mathrm T})$ 平面内（$w^+=0$）。未减除的 TMD 关联函数为
+$\tilde f^{\,\mathrm{unsub}}_{q/H}(x,b_{\mathrm T})=\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii xP^+w^-}\langle P|\,\bar\psi(w)\gamma^+\,W_{\sqsupset}[w,0]\,\psi(0)\,|P\rangle$，
+$w=(0^+,w^-,b_{\mathrm T})$（颜色求和、自旋平均），$n$ 为满足 $n\cdot v=v^+$ 的光型矢量。
+(a)~SIDIS：$W_{\sqsupset}[w,0]=W[w,w+\infty n]\,W_{\mathrm T}\,W[\infty n,0]$，路径由 $0$ 沿 $n$ 走到 $w^-=+\infty$，
+经该处的横向连接 $W_{\mathrm T}=W[w+\infty n,\infty n]$，再沿 $-n$ 回到 $w$；它来自被击出夸克与靶残余之间的末态相互作用。
+(b)~Drell--Yan：路径改经 $w^-=-\infty$，$W_{\sqsupset}[w,0]=W[w,w-\infty n]\,W_{\mathrm T}\,W[-\infty n,0]$；它来自强子 $B$ 的入射反夸克与强子 $A$ 残余之间的初态相互作用（见\cref{fig:sidis-dy-links}）。
+双线为 Wilson 线，箭头为路径方向（$W[b,a]$ 由 $a$ 指向 $b$），与被本征化部分子的费米子数（色）流向一致：(a) 中为出射夸克，(b) 中为入射反夸克（其费米子数箭头逆着动量，指向过去）。
+在共变规范中无穷远处的横向连接可以略去，在光锥规范中则不可缺少。$b_{\mathrm T}=0$ 时两种路径都化为共线 PDF 中的直线 $W[w,0]$（往返部分相消）；对光型的 $n$，算符含快度发散（见正文）。}
+\label{fig:tmd-staple}
+\end{figure}
+%%% END fig:tmd-staple
+
+\begin{definition}[未减除的 TMD 关联函数]\label{def:tmd-unsub}
+设强子 $H$ 的动量 $P=(P^+,\frac{M^2}{2P^+},\mathbf 0_T)$、自旋矢量 $S$，$n$ 为指向未来（$n^0>0$）的方向矢量。对 $w=(0^+,w^-,\mathbf b_T)$ 定义从 $0$ 到 $w$ 的订书钉形 Wilson 线
+\begin{equation}\label{eq:tmd-staple}
+\mathcal W^{[\pm]}(w,0;n)\equiv W[w,\,w\pm\infty n]\;W[w\pm\infty n,\,\pm\infty n]\;W[\pm\infty n,\,0],
+\end{equation}
+各段按\cref{def:prelim-wilson}定义，中间一段是位于“$\pm\infty n$”处、在横平面内从 $\mathbf 0_T$ 走到 $\mathbf b_T$ 的横向连接；$[+]$ 指向未来，$[-]$ 指向过去。夸克的未减除 TMD 关联函数为
+\begin{equation}\label{eq:tmd-unsub}
+\tilde f^{[\pm],\mathrm{unsub}}_{q/H}(x,\mathbf b_T;n,S)\equiv\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii xP^+w^-}\,\big\langle P,S\big|\bar\psi_q(w)\,\gamma^+\,\mathcal W^{[\pm]}(w,0;n)\,\psi_q(0)\big|P,S\big\rangle_{\mathrm c},
+\end{equation}
+对颜色求和；SIDIS 用 $[+]$，Drell--Yan 用 $[-]$。动量空间的分布由
+\begin{equation}\label{eq:tmd-fourier}
+\tilde f(x,\mathbf b_T)=\int\dd^{2-2\varepsilon}k_T\,\ee^{-\ii\mathbf k_T\cdot\mathbf b_T}f(x,\mathbf k_T)
+\end{equation}
+% VF-CONV-11
+定义。若 $n$ 取类光的 $n_B$，\cref{eq:tmd-unsub}含快度发散；Collins 的定义用快度为 $y_B$ 的类空矢量
+\begin{equation}\label{eq:tmd-nB}
+n_B(y_B)\equiv(-\ee^{2y_B},1,\mathbf 0_T),\qquad n_A(y_A)\equiv(1,-\ee^{-2y_A},\mathbf 0_T)
+\end{equation}
+（矢量 $v$ 的快度为 $\frac12\ln|v^+/v^-|$；$y_B<0$ 时 $n_B(y_B)^0>0$，$y_B\to-\infty$ 时 $n_B(y_B)\to n_B$；强子 $B$ 的分布用 $n_A(y_A)$ 与 $\gamma^-$），记作 $\tilde f^{\mathrm{unsub}}_{q/H}(x,\mathbf b_T;y_P-y_B)$（$y_P=\frac12\ln(P^+/P^-)$），并约定不计 Wilson 线的自相互作用（两端都在同一条非类光直线上的胶子）。
+\uses{def:prelim-wilson,def:pdf-quark}
+\end{definition}
+
+关于这一定义有几点说明。
+
+\emph{(i) Fourier 符号。}在两个场之间插入末态完备集，平移给出 $\langle P|\bar\psi(w)|X\rangle\langle X|\psi(0)|P\rangle\propto\ee^{\ii k\cdot w}$，$k=P-p_X$ 是被取走的部分子动量。在 $w^+=0$ 处 $k\cdot w=k^+w^--\mathbf k_T\cdot\mathbf w_T$，于是 $w^-$ 积分把 $k^+$ 固定为 $xP^+$，而 $f(x,\mathbf k_T)=\int\frac{\dd w^-\dd^2w_T}{16\pi^3}\ee^{-\ii xP^+w^-+\ii\mathbf k_T\cdot\mathbf w_T}\langle\cdots\rangle$ 中的 $\ee^{+\ii\mathbf k_T\cdot\mathbf w_T}$ 把部分子横动量固定为 $\mathbf k_T$：$f$ 是部分子横动量的密度；$\int\dd^2k_T\,\ee^{-\ii\mathbf k_T\cdot\mathbf b_T}\ee^{\ii\mathbf k_T\cdot\mathbf w_T}=(2\pi)^2\delta^{(2)}(\mathbf w_T-\mathbf b_T)$ 与 $\frac{(2\pi)^2}{16\pi^3}=\frac1{4\pi}$ 给出\cref{eq:tmd-unsub}。Collins 的书对 TMD 部分子分布用同一符号，但对软因子与 TMD 碎裂函数用 $\ee^{+\ii\mathbf k_T\cdot\mathbf b_T}$\cite[式~(13.35)]{Collins2011}；对 $b$ 的奇函数（Sivers 结构）必须逐一换算。
+
+\emph{(ii) 规范不变性与横向连接。}每一段 Wilson 线按 $W[b,a]\to U(b)W[b,a]U^\dagger(a)$ 变换（\cref{prop:prelim-wilson-covariance}），相邻段在拐点处的 $U^\dagger U$ 相消，所以 $\mathcal W^{[\pm]}\to U(w)\mathcal W^{[\pm]}U^\dagger(0)$，算符对所有规范变换（包括在无穷远处不趋于单位元的）都不变；若略去横向连接，则只对在光锥无穷远处平凡的变换不变。在共变规范中规范势在无穷远处趋于零，横向连接等于 $1$\cite[第~13.7.2~节]{Collins2011}。在光锥规范 $A^+=0$ 中纵向的段都等于 $1$，而 $\mathbf A_T(w^-\to\pm\infty)$ 不必为零：由 $G^{+\perp}=\partial^+A^\perp$ 与 $A(x)=\int\frac{\dd^4l}{(2\pi)^4}\ee^{-\ii l\cdot x}\tilde A(l)$ 得 $\tilde A^\perp=\ii\tilde G^{+\perp}/[l^+]$，其中 $1/l^+$ 的处方等价于边界条件：
+\begin{equation}\label{eq:tmd-lc-prescription}
+\mathbf A_T(-\infty^-)=0\iff\Big[\frac1{l^+}\Big]=\frac1{l^++\ii0},\qquad \mathbf A_T(+\infty^-)=0\iff\Big[\frac1{l^+}\Big]=\frac1{l^+-\ii0}
+\end{equation}
+（例如 $A^\perp(x^-)-A^\perp(-\infty)=\int_{-\infty}^{x^-}\dd y^-\,G^{+\perp}(y^-)$，而 $\int_{-\infty}^{x^-}\dd y^-\ee^{-\ii(l^++\ii0)y^-}=\ii\ee^{-\ii l^+x^-}/(l^++\ii0)$）。对 SIDIS 取 $1/(l^+-\ii0)$ 时横向连接平凡，末态相互作用的相位出现在胶子传播子的规范项中，其处方与 Feynman 规范中未来指向的程函传播子相同；取主值处方时相位全由横向连接携带。Ji--Yuan\cite{JiYuan2002}与 Belitsky--Ji--Yuan\cite{BelitskyJiYuan2003}正是指出了光锥规范中这些横向连接对规范不变性与末态相互作用的必要性（据其摘要）。
+
+\emph{(iii) 树图与共线极限。}对在壳夸克靶，树图给出 $f^{(0)}=\delta(1-x)\,\delta^{(2-2\varepsilon)}(\mathbf k_T)$，即 $\tilde f^{(0)}=\delta(1-x)$。$\mathbf b_T=0$ 且 $n=n_B$ 时，订书钉的往返两段落在同一条类光直线上，由\cref{prop:dy-universality}中的复合律，算符化为\cref{def:pdf-quark}的共线分布算符：未减除 TMD 在 $\mathbf b_T=0$ 处是裸的共线分布。这一关系只对裸算符成立；重整化之后 $\int\dd^2k_T\,f\neq f$（\cref{rem:tmd-kt-integral}）。
+
+\emph{(iv) 快度发散与正规子线。}以类光 $n_B$ 计算单胶子实辐射时，Wilson 线与夸克线的干涉图在固定 $k_T$ 下给出 $\frac{\as C_F}{\pi^2}\frac{x}{(1-x)k_T^2}$（\cref{lem:tmd-unsub-oneloop}），在 $x\to1$ 处不可积，而维数正规化只作用于横向积分，不能正规化它。被辐射胶子的快度是 $y_l=\ln[\sqrt2(1-x)p^+/k_T]$，$x\to1$ 正是 $y_l\to-\infty$：胶子沿强子 $B$ 的方向飞去。把 $n_B$ 换成 $n_B(y_B)$ 后，$n_B(y_B)\cdot l$ 在 $y_l\lesssim y_B$ 处不再随 $y_l$ 减小，积分被截断在 $y_l\approx y_B$（\cref{lem:tmd-unsub-oneloop}(b)）。
+
+\emph{(v) 为什么用类空线。}Collins 与 Metz 指出，为使软近似子与 Glauber 区的两种（非对称的）围道变形都相容、从而使软因子与共线因子在不同过程间普适，正规子线必须是类空的\cite{CollinsMetz2004}；Collins 还强调，由于类空间隔的胶子场相互对易，类空 Wilson 线的路径编序与定义 Green 函数的时间编序自动相容，而用类时线就要放弃这一普适性论证\cite[第~10.6.4~节，第~349--350~页]{Collins2011}。\cref{lem:tmd-unsub-oneloop}(c) 在单圈上显式地展示了类时线的问题。
+
+下面的引理把未减除 TMD 的单圈计算完整地写出来；它是本章所有单圈陈述的基础。记
+\begin{equation}\label{eq:tmd-oneloop-notation}
+a\equiv\frac{\as C_F}{2\pi},\qquad c_S\equiv\frac{4\pi\as\mu^{2\varepsilon}C_F}{(2\pi)^{3-2\varepsilon}},\qquad p(x)\equiv(1+x^2)\Big[\frac1{1-x}\Big]_+=(1-x)+2x\Big[\frac1{1-x}\Big]_+ ,
+\end{equation}
+加号分布按\cref{def:prelim-plus}；$c_S$ 在 $\varepsilon=0$ 时等于 $\frac{\as C_F}{2\pi^2}$，$P_{qq}=C_F[p(x)+\frac32\delta(1-x)]$。
+
+\begin{lemma}[未减除 TMD 的单圈图 \tagR]\label{lem:tmd-unsub-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本引理是单圈（$\order{\as}$）的陈述。靶为在壳无质量夸克 $p=(p^+,0^-,\mathbf 0_T)$（对自旋与颜色平均），Feynman 规范，$D=4-2\varepsilon$；正规子线取 $n=(s\,\ee^{2y_B},1^-,\mathbf 0_T)$，$s=-1$ 为 Collins 的类空线\cref{eq:tmd-nB}，$s=+1$ 为类时线（作对照），并记 $\delta^2\equiv\ee^{2y_B}k_T^2/[2(p^+)^2]$。
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item（实辐射）对 $k_T\neq0$，单胶子末态 $l=p-k$ 给出 $f^{\mathrm{unsub}(1)}(x,\mathbf k_T)=\frac{c_S}{k_T^2}\,(F_a+F_b+F_c)$，其中
+\begin{equation}\label{eq:tmd-real-graphs}
+F_a=(1-\varepsilon)(1-x),\qquad F_b=\frac{2x(1-x)}{(1-x)^2+s\delta^2},\qquad F_c=-\frac{2s\,\delta^2(1-x)}{\big[(1-x)^2+s\delta^2\big]^2}
+\end{equation}
+分别来自夸克—夸克、干涉（两种次序）与 Wilson 线—Wilson 线的割图；对类空线，$F_b$ 中 $(1-x)^2-\delta^2$ 的零点按主值处理，SIDIS 与 Drell--Yan 给出同一结果；$F_c$ 是 Wilson 线的自能，对 $s=-1$ 不可积，按\cref{def:tmd-unsub}的约定除去，对 $s=+1$ 有限。
+\item（快度正规化的极限）$\delta\to0$ 时在检验函数意义下 $F_b\to2x[\frac1{1-x}]_++\delta(1-x)\ln\frac1{\delta^2}$，$F_c|_{s=+1}\to-\delta(1-x)$，于是
+\begin{equation}\label{eq:tmd-unsub-kspace}
+f^{\mathrm{unsub}(1)}(x,\mathbf k_T;y_B)=\frac{c_S}{k_T^2}\Big\{p(x)-\varepsilon(1-x)+\delta(1-x)\Big[\ln\frac{2(p^+)^2\ee^{-2y_B}}{k_T^2}-\sigma\Big]\Big\}+\order{\delta},
+\end{equation}
+$\sigma=1$（类时线，含自能）或 $\sigma=0$（类空线，无自作用）；$-2y_B$ 一项是快度发散。在固定 $\mathbf b_T$ 处，被略去的 $\order{\delta}$ 项的 Fourier 变换在 $y_B\to-\infty$ 时趋于零。
+\item（虚图）外线夸克自能与 Wilson 线自能是无标度积分，在维数正规化中为零。夸克—Wilson 线顶角图 $V$（胶子连接割线同一侧的夸克线与 Wilson 线）不是无标度的：对类时、未来指向的线
+\begin{equation}\label{eq:tmd-vertex-closed}
+V^{\mathrm{time}}_{\mathrm{SIDIS}}=-\frac{\as C_F}{4\pi}\Big(\frac{\pi\mu^2n^2}{(p\cdot n)^2}\Big)^{\varepsilon}\,\frac{\Gamma(1-\varepsilon)\Gamma(1+2\varepsilon)(1-\varepsilon)}{(1-2\varepsilon)\varepsilon^2}\equiv V^{\mathrm{time}},
+\end{equation}
+而 $V^{\mathrm{time}}_{\mathrm{DY}}=\ee^{2\pi\ii\varepsilon}V^{\mathrm{time}}$，$V^{\mathrm{space}}_{\mathrm{SIDIS}}=\ee^{-\ii\pi\varepsilon}V^{\mathrm{time}}$，$V^{\mathrm{space}}_{\mathrm{DY}}=\ee^{\ii\pi\varepsilon}V^{\mathrm{time}}$（类空情形中 $n^2$ 换成 $|n^2|$）。因此：对类空线 $V_{\mathrm{SIDIS}}=(V_{\mathrm{DY}})^*$，两者的 $2\Real V$ 相同；对类时线 $\Real V_{\mathrm{DY}}-V_{\mathrm{SIDIS}}=\frac{\as C_F}{4\pi}[2\pi^2+\order{\varepsilon}]$，而 $\Imag V_{\mathrm{DY}}=\frac{\as C_F}{4\pi}[-\frac{2\pi}{\varepsilon}+\order{1}]$；所有 $V$ 都正比于 $(\mu^2|n^2|/(p\cdot n)^2)^{\varepsilon}$，在固定的 $\Real\varepsilon>0$ 下当 $y_B\to-\infty$ 时趋于零。
+\end{enumerate}
+（本引理只涉及部分子态。）
+\uses{def:tmd-unsub,prop:prelim-wilson-rules,def:prelim-plus}
+\end{lemma}
+
+\begin{proof}
+(a) 把单胶子末态 $|g(l)\rangle$ 插入\cref{eq:tmd-unsub}：$\int\dd w^-\ee^{-\ii xp^+w^-}\ee^{\ii(p^+-l^+)w^-}=2\pi\delta(l^+-(1-x)p^+)$，光锥相空间 $\frac{\dd l^+\dd^{D-2}l_T}{(2\pi)^{D-1}2l^+}$ 与横动量守恒 $\mathbf l_T=-\mathbf k_T$ 给出
+\[
+f^{\mathrm{real}}(x,\mathbf k_T)=\frac{1}{4(2\pi)^{D-1}l^+}\;\frac12\sum_{\text{自旋},\text{极化}}\bar{\mathcal M}\gamma^+\mathcal M,\qquad l^+=(1-x)p^+,\quad l^-=\frac{k_T^2}{2l^+}.
+\]
+振幅 $\langle g(l)|W[\infty n,0]\psi(0)|q(p)\rangle$ 有两项：夸克辐射胶子后被 $\psi(0)$ 湮灭（顶点 $\ii g\gamma^\mu t^a$，传播子 $\ii\sla k/(k^2+\ii0)$），或胶子由 Wilson 线放出（\cref{prop:prelim-wilson-rules}的单胶子规则 $g t^a n^\mu/(n\cdot k'-\ii0)$，流入的动量 $k'=-l$）：
+\[
+\mathcal M^\mu=-g\,t^a\Big[\frac{\sla k\gamma^\mu}{k^2+\ii0}+\frac{n^\mu}{n\cdot l+\ii0}\Big]u(p)\qquad(\text{Drell--Yan：}n\cdot l-\ii0).
+\]
+由 $\sla l\,u(p)=-\sla k\,u(p)$，$l_\mu\mathcal M^\mu=-g t^a[\sla k\sla l/k^2+1]u=-g t^a[-k^2/k^2+1]u=0$，所以极化求和可以取 $-g_{\mu\nu}$；颜色因子为 $C_F$。于是 $f^{\mathrm{real}}=\frac{c_S}{4(1-x)p^+}\mathcal N$，$\mathcal N\equiv\frac12(-g^{\mu\nu})\TrD[\sla p\,\bar G_\nu\gamma^+G_\mu]$，$G_\mu\equiv\frac{\sla k\gamma_\mu}{k^2}+\frac{n_\mu}{n\cdot l}$。运动学：$k^+=xp^+$，$k^2=-\frac{k_T^2}{1-x}$，$p\cdot k=-\frac{k_T^2}{2(1-x)}$，$n\cdot l=n^+l^-+n^-l^+=\frac{p^+}{1-x}[(1-x)^2+s\delta^2]$，$n^2=2s\ee^{2y_B}$，$\gamma^+=\sla n_B$。三类割图的 $D$ 维迹（$\TrD1=4$）为：由 $\gamma^\mu\sla k\gamma^+\sla k\gamma_\mu=-(D-2)\sla k\gamma^+\sla k$ 与 $\sla k\gamma^+\sla k=2k^+\sla k-k^2\gamma^+$，
+\[
+\mathcal N_a=\frac{D-2}{2k^4}\TrD[\sla p\sla k\gamma^+\sla k]=\frac{2(D-2)}{k^4}\big(2k^+\,p\cdot k-k^2p^+\big)=\frac{2(D-2)p^+(1-x)^2}{k_T^2};
+\]
+两个干涉项相等，$\mathcal N_b=-\frac{\TrD[\sla p\sla n\sla k\sla n_B]}{k^2\,n\cdot l}=-\frac{8x(p^+)^2}{k^2\,n\cdot l}=\frac{8x\,p^+(1-x)^2}{k_T^2[(1-x)^2+s\delta^2]}$（迹中依赖 $s$ 的两项相消）；$\mathcal N_c=-\frac{n^2\TrD[\sla p\gamma^+]}{2(n\cdot l)^2}=-\frac{2n^2p^+}{(n\cdot l)^2}$。乘以 $\frac{k_T^2}{4(1-x)p^+}$ 即得\cref{eq:tmd-real-graphs}。（这三项也用独立编写的 $D$ 维迹程序逐项核对过。）% check: s02_real_graphs.py
+对 $s=-1$，$\frac1{n\cdot l+\ii0}+\frac1{n\cdot l-\ii0}=2\,\mathrm{PV}\frac1{n\cdot l}$，所以两种次序的干涉项之和取主值，SIDIS 与 Drell--Yan 相同；$F_c\propto[(1-x)^2-\delta^2]^{-2}$ 在 $1-x=\delta$ 处是不可积的二阶极点。
+
+(b) 对检验函数 $h$ 写 $\int_0^1F_bh=\int_0^1F_b\,[h(x)-h(1)]+h(1)\int_0^1F_b$。第一项中 $F_b[h-h(1)]\to\frac{2x[h(x)-h(1)]}{1-x}$，被可积函数控制（类时时 $F_b\le\frac{2x}{1-x}$；类空时把主值的对称部分配对后同理），所以收敛到 $\int_0^1\frac{2x[h(x)-h(1)]}{1-x}\dd x$。第二项中 $\int_0^1F_b\,\dd x=\ln(1+\delta^{-2})+2\delta\arctan\frac1\delta-2$（类时）或 $\mathrm{PV}\!\int_0^1F_b\,\dd x=\ln(1-\delta^2)-\ln\delta^2-2-\delta\ln\frac{1-\delta}{1+\delta}$（类空），两者都等于 $\ln\frac1{\delta^2}-2+\order{\delta}$。两项相加，并用 $\int_0^1\frac{2x[h-h(1)]}{1-x}-2h(1)=\int_0^1\frac{2xh(x)-2h(1)}{1-x}$，即得 $F_b\to2x[\frac1{1-x}]_++\delta(1-x)\ln\frac1{\delta^2}$。$s=+1$ 时 $\int_0^1F_c\,\dd x=-\frac1{1+\delta^2}$，且 $F_c$ 集中在 $1-x\lesssim\delta$，故 $F_c\to-\delta(1-x)$。代入 $\delta^2$ 的定义与 $(1-x)+2x[\frac1{1-x}]_+=p(x)$ 即得\cref{eq:tmd-unsub-kspace}。（我们对若干检验函数在 $\delta=10^{-3},10^{-4}$ 作了数值检验，误差按 $\delta$ 减小。）% check: s03_rapidity_limit.py
+被略去的修正集中在 $k_T\gtrsim\Lambda_B\equiv\sqrt2\,p^+\ee^{-y_B}$：例如类时情形 $\delta(1-x)$ 项的“精确减极限”为 $D(\kappa)=\ln(1+\kappa^2)+2\kappa\arctan\frac1\kappa$，$\kappa=k_T/\Lambda_B$，其二维 Fourier 变换 $2\pi\int_0^\infty\frac{\dd\kappa}{\kappa}J_0(\kappa\Lambda_Bb_T)D(\kappa)$ 等于 $2\pi^2/(\Lambda_Bb_T)$ 加上指数小的项，在固定 $b_T$ 下当 $\Lambda_B\to\infty$ 时趋于零。
+
+(c) 自能图不含任何量纲参数（外线 $p^2=0$；Wilson 线的自能只依赖于 $n$，而 Wilson 线规则在 $n\to\alpha n$ 下不变），为零。顶角图按单胶子规则为
+\[
+V=\ii g^2C_F\mu^{2\varepsilon}\!\int\!\frac{\dd^Dl}{(2\pi)^D}\,\frac{N(l)}{(n\cdot l\mp\ii0)(l^2+\ii0)\big((p-l)^2+\ii0\big)},\qquad N=\frac{\bar u\gamma^+(\sla p-\sla l)\sla n u}{\bar u\gamma^+u},
+\]
+SIDIS 取 $-\ii0$，Drell--Yan 取 $+\ii0$。由 Lorentz 不变性、量纲与 $V$ 对 $n$ 的零次齐次性，$V=c(\varepsilon)(\mu^2n^2/(p\cdot n)^2)^\varepsilon$，对 $n^2\neq0$ 不是无标度的。对两个二次分母用 Feynman 参数 $x$，对线性分母用 Schwinger 参数 $\lambda$（SIDIS 先写 $\frac1{n\cdot l-\ii0}=-\frac1{-n\cdot l+\ii0}$），平移 $l=l'+xp\pm\frac\lambda2n$ 后分母为 $(l'^2-\Delta+\ii0)^3$，
+\[
+\Delta_{\mathrm{SIDIS}}=x\lambda\,p\cdot n+\tfrac14\lambda^2n^2,\qquad \Delta_{\mathrm{DY}}=-x\lambda\,p\cdot n+\tfrac14\lambda^2n^2,\qquad N\to2(1-x)\,p\cdot n\mp\tfrac12\lambda n^2
+\]
+（$\sla p\sla n u=2p\cdot n\,u$；$l'$ 的奇次项为零，$N$ 对 $l$ 是线性的）。对类时线与 SIDIS，$\Delta>0$；动量积分后作代换 $\lambda=4x\,(p\cdot n)\,t/n^2$，$x$ 与 $t$ 的积分化为 Beta 函数：
+\[
+V^{\mathrm{time}}_{\mathrm{SIDIS}}=-\frac{\as C_F}{4\pi}\Big(\frac{\pi\mu^2n^2}{(p\cdot n)^2}\Big)^{\varepsilon}2\Gamma(1+\varepsilon)\Big[B(-2\varepsilon,2)B(-\varepsilon,1+2\varepsilon)-\frac{B(1-\varepsilon,2\varepsilon)}{1-2\varepsilon}\Big],
+\]
+化简即\cref{eq:tmd-vertex-closed}。其余三种情形中 $\Delta$ 在 $t$ 的一段上变号（Drell--Yan 类时线在小 $t$ 处，类空线在大 $t$ 处），$(\Delta-\ii0)^{-1-\varepsilon}$ 在那里取 $\ee^{\ii\pi(1+\varepsilon)}$ 的相位。把 $t$ 的积分围道由正实轴转到负实轴（转动方向由 $-\ii0$ 决定，转动途中不越过奇点，无穷远处的弧在收敛带内贡献为零），每个 $t$ 积分都化回同一个 Beta 函数乘以相位：例如 Drell--Yan 类时线 $\int_0^\infty\dd t\,t^{-1-\varepsilon}(t-1-\ii0)^{-1-\varepsilon}=\ee^{\ii\pi(1+2\varepsilon)}B(-\varepsilon,1+2\varepsilon)$，SIDIS 类空线 $\int_0^\infty\dd t\,t^{-1-\varepsilon}(1-t-\ii0)^{-1-\varepsilon}=\ee^{-\ii\pi\varepsilon}B(-\varepsilon,1+2\varepsilon)$；连同两种情形 $N$ 的符号与整体符号，即得所述的三个相位。（我们用端点级数作解析延拓、在实与复的 $\varepsilon$ 处对完整的 $V$ 作了数值核对，相对误差 $<10^{-15}$。）% check: s05_vertex.py
+由这些相位，$V^{\mathrm{space}}_{\mathrm{SIDIS}}$ 与 $V^{\mathrm{space}}_{\mathrm{DY}}$ 互为复共轭（$V^{\mathrm{time}}$ 是实的），而 $\Real V^{\mathrm{time}}_{\mathrm{DY}}-V^{\mathrm{time}}=-2\sin^2(\pi\varepsilon)V^{\mathrm{time}}=\frac{\as C_F}{4\pi}[2\pi^2+\order{\varepsilon}]$（因 $V^{\mathrm{time}}=-\frac{\as C_F}{4\pi}[\varepsilon^{-2}+\order{\varepsilon^{-1}}]$），$\Imag V^{\mathrm{time}}_{\mathrm{DY}}=\sin(2\pi\varepsilon)V^{\mathrm{time}}$。最后，对 $n=n_B(y_B)$ 有 $|n^2|=2\ee^{2y_B}$、$p\cdot n=p^+$，故 $|(\mu^2|n^2|/(p\cdot n)^2)^\varepsilon|=(\mu^2\ee^{2y_B}/2(p^+)^2)^{\Real\varepsilon}\to0$。
+\end{proof}
+
+引理的 (c) 有两个后果。第一，它给出了\cref{def:tmd-collins}中极限次序的理由：若先在 $\Real\varepsilon>0$ 下取 $y_B\to-\infty$，顶角图恒为零，结果再解析延拓到全部 $\varepsilon$；若先展开 $\varepsilon$，则用本书的 $S_\varepsilon$，
+\begin{equation}\label{eq:tmd-vertex-expanded}
+V^{\mathrm{time}}=-\frac{\as C_F}{4\pi}S_\varepsilon\Big[\frac1{\varepsilon^2}+\frac{1-\ell}{\varepsilon}+2+\frac{5\pi^2}{12}-\ell+\frac{\ell^2}{2}+\order{\varepsilon}\Big],\qquad \ell\equiv\ln\frac{\Lambda_B^2}{\mu^2},\quad\Lambda_B^2=\frac{4(p\cdot n)^2}{|n^2|}=2(p^+)^2\ee^{-2y_B},
+\end{equation}
+其中 $\frac{\ell^2}2$ 项在 $y_B\to-\infty$ 时发散：两个极限不可交换。第二，类时与类空正规子线的差别：对类时、过去指向的线，路径编序是\emph{反}时间编序，而 Feynman 规则（以及因子化推导）给出的是时间编序；二者在单圈顶角图中相差入射夸克与入射程函线之间的 Coulomb 相位，实部之差 $\frac{\as C_F}{4\pi}2\pi^2$ 在有限快度下甚至使 $f_1$ 依赖于过程。这些项都正比于 $|n^2|^\varepsilon$，在类光极限下消失。这一显式的单圈比较是本书给出的推导；其机制（类空线保证路径编序与时间编序相容；若用类时线，有关普适性的问题“need further investigation”，即有待进一步研究）在\cite{CollinsMetz2004}与\cite[第~10.6.4~节、第~10.11.1~节，第~381~页]{Collins2011}中有定性的说明，Collins 的书的习题 13.8 正是提出了“若用类时线是否会造成问题”这一问题\cite[第~538~页]{Collins2011}。

@@ -1,0 +1,95 @@
+% ---------------------------------------------------------------------
+\section{模板假设的验证与主定理}\label{sec:disall-theorem}
+
+\cref{thm:method-template}（全阶论证，[A]）把因子化归结为五个假设：(H1) 领头区域，(H2) 共线近似与 K 胶子的分离，(H3) 软近似与 Glauber 区，(H4) 末态相互作用与软因子，(H5) 减除项与重整化 PDF 的等同。
+(H1) 即\cref{prop:disall-regions}（积分形式为\cref{asm:appN-envelope,asm:appN-separation}）；本节验证其余各条并组装主定理。
+
+\begin{proposition}[(H2) 的验证 \tagA]\label{prop:disall-h2}
+在 DIS 中，共线近似（\cref{def:method-collinear-approx}）加上 K 胶子的 Ward 恒等式（\cref{lem:method-ward-multi}）与共线 Wilson 线（\cref{prop:method-collinear-wilson}）给出\cref{ch:pdf}的 PDF，
+其 Wilson 线是沿 $n_B$ 的直线段：振幅中为未来指向的 $W[\infty n_B,0]$，与共轭振幅中的 $W[w,\infty n_B]$ 合成 $W[w,0]$。色单态靶的色投影为 $\Trc[HJ]\simeq\frac1{N_c}\Trc H\,\Trc J$；
+归一化由 $\int\dd^4k=P^+\!\int\dd\xi\int\dd k^-\dd^2\mathbf k_T$ 与 $\int\frac{\dd k^-\dd^2\mathbf k_T}{(2\pi)^4}\Tr[\gamma^+J]=2f$ 给出（\cref{eq:disall-chain}）。（本命题只涉及部分子态。）
+\uses{def:method-collinear-approx,lem:method-ward-multi,prop:method-collinear-wilson,prop:method-ward-tree,prop:disall-regions}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+(1) 共线近似作 $H(k)\Phi(k)\to H(\hat k)\frac14\gamma^-\Tr[\gamma^+\Phi(k)]$（对 $\Phi=\sla p$ 给出 $p^+\gamma^-$），其余 Clifford 分量被推动因子压低或对非极化靶为零。
+(2) 种子（\cref{prop:method-ward-tree}(b)，\cref{fig:disall-seed}）：$k_\mu H^\mu_a=gt^aH_0$，加上 K 投影即 $W^{(1)}[\infty n_B,0]H_0$；两个 K 胶子精确地给出 $(n_B\cdot k_1)(n_B\cdot k_2)W^{(2)}_{ab}[\infty n_B,0]H_0$，
+路径排序来自对易子项；K 胶子附着在末态线上，故 Wilson 线未来指向。(3) 一般阶由\cref{lem:method-ward-multi}与\cref{prop:method-collinear-wilson}：积出 $k^-$、$\mathbf k_T$（\cref{eq:disall-chain}）得到裸 PDF，
+$\mathbf w_T=0$ 时 $W[w,\infty n_B]W[\infty n_B,0]=W[w,0]$；色投影来自 $\langle J_{ab}\rangle\propto\delta_{ab}$（\cref{prop:disall-regions}给出的界面结构）。完整论证见\cite[第~11.3、11.9~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+最弱的一步是非阿贝尔多胶子 Ward 恒等式（含鬼场）对已被近似子改变过的被积函数成立，即\cref{asm:appN-ward-product}(WI1)，它是\cref{lem:method-ward-multi}（全阶论证，[A]）的精确形式；
+阿贝尔情形与树图层次 $n\le2$ 是严格的。该论证中被明确假定的一步是非定域算符的 BRST 分类，\cite[第~11.3.2~节，第~407--410~页]{Collins2011}明言对非定域算符没有证明而予以假定：
+即具名缺口\cref{asm:appN-brst-nonlocal}（[C]；只是点名，不是本命题的前提）。全部由纵向胶子诱导硬散射的单个 Feynman 规范图有超领头幂次，对图求和后相消，
+但靶中胶子的横动量与规范群的非阿贝尔性留下一个非零的领头项，它正是规范不变胶子 PDF 所需要的\cite{Collins:2008sg}。这一步给出标度陈述（E-S）。
+解除途径：对已被近似子改变过的被积函数完成归纳的 Ward 论证（\cref{prop:appF-induction}），并证明多定域 BRST 分类。
+
+\begin{proposition}[(H3)(H4) 平凡成立 \tagA]\label{prop:disall-h3h4}
+在 DIS 中，领头幂次没有软因子，也没有 Glauber 问题：只有一个强子，末态被求和，而非物理区的前向振幅中没有末态喷注。（本命题只涉及部分子态。）
+\uses{prop:disall-regions,lem:disall-fsi,lem:method-soft-unitarity}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+(H3)：领头区域没有软子图（\cref{prop:disall-regions}）；Glauber 钳夹需要两个反向运动、不被末态求和消去的共线子图（Drell--Yan 中两个强子的旁观者），而靶残余与流喷注之间的交换在割图求和后不被钳夹（\cref{lem:disall-fsi}）。
+(H4)：末态相互作用由\cref{lem:disall-fsi}处理；对共线单举截面，形式上保留的、对割图求和的软因子等于 1（\cref{lem:method-soft-unitarity}，[R]，$R_{\mathrm{def}}$）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+E-S 型论证，强度与\cref{lem:disall-fsi,prop:disall-regions}相同：割图版本依赖于\cref{asm:appN-cutsum}，积分形式依赖于\cref{asm:appN-envelope,asm:appN-separation}；
+文献中的根据是割图求和后的领头区域只含入射喷注及其内部的软交换\cite[第~8.7~节]{CollinsSoperSterman1989}，解除途径与\cref{lem:disall-fsi,prop:disall-regions}相同。“平凡”只是相对于 Drell--Yan 而言，那里 (H3) 需要附录~O 的 Glauber 分析（\cref{ch:dy}）。
+
+\begin{proposition}[(H5) 的验证 \tagA]\label{prop:disall-h5}
+在 DIS 中，减除项等于 $C\otimes f_{\cdot/j}$，其中 $f_{i/j}$ 为重整化的部分子 PDF；因此系数函数由部分子靶算出：$C_{2,i}=\hat F_2^{(j)}\otimes(f^{\mathrm{partonic}})^{-1}_{ji}$（对 $j$ 求和），
+在纯维数正规化中单圈为 $C^{(1)}=\hat F^{(1)}+\frac{\as}{2\pi}\frac1\varepsilon P\otimes\hat F^{(0)}$。（本命题只涉及部分子态。）
+\uses{prop:pdf-partonic-dr,thm:method-subtraction,prop:disall-factorized-subtraction,asm:appN-multren,asm:appN-collins}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+由\cref{thm:method-subtraction}（[A]，瓶颈\cref{asm:appN-collins}）与\cref{prop:disall-factorized-subtraction}，$T=\sum_i\hat{\mathsf H}^{\mathrm{bare}}_i\otimes f^{\mathrm{bare}}_{i/j}+r$；由\cref{asm:appN-multren}(Z1) 主项为 $Cf^{\mathrm{ren}}$，
+$C\equiv\hat{\mathsf H}^{\mathrm{bare}}Z$，由 (Z3)(ii) 它没有极点。对在壳无质量部分子靶，$f^{\mathrm{bare}}_{\cdot/j}=\delta$，$f^{\mathrm{ren}}_{\cdot/j}=Z^{-1}=\delta-\frac{\as}{2\pi}\frac1\varepsilon P+\order{\as^2}$（\cref{prop:pdf-partonic-dr}），
+$T^{\mathrm{DR}}_{(j)}=\hat{\mathsf H}^{\mathrm{bare}}$，故 $C=T^{\mathrm{DR}}_{(j)}(f^{\mathrm{ren}}_{\cdot/j})^{-1}$，单圈即所述公式（\cref{sec:disall-nlo}）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+等级由减除条件\cref{asm:appN-collins}与乘法重整化\cref{asm:appN-multren}决定：(Z1) 对 PDF 是定理（壳上规范不变的定域扭度 2 算符），(Z3)(ii) 是维数正规化的质量因子化（[A] 层次，在 NNLO 与 N$^3$LO 系数函数的有限性中被逐阶验证）；
+精确路线是\cref{prop:disall-factorized-subtraction}加 (Z3)(ii)。文献中减除项与重整化 PDF 的等同是标度层次的论证（E-S）\cite[第~10~章]{Collins2011}，
+而\cite[第~10.1~节]{CollinsSoperSterman1989}明言即使对 DIS 也还没有完整的 QCD 减除程序；在附录~N 的编号假设之下它是 E-N 型的条件陈述。正规子路线\cref{thm:disall-renorm-compat}（内容等级 [C]，经由\cref{asm:appN-ir-regulator}）只是参照而不是依赖：全阶论证的陈述不能以内容等级为 [C] 的前提为依据。
+
+\begin{theorem}[DIS 共线因子化（动量空间，$x$ 空间逐点） \tagA]\label{thm:disall-factorization}
+对固定的 $0<x<1$ 且 $W^2=Q^2(1-x)/x+M^2\gg\Lambda^2$，当 $Q\to\infty$ 时
+\begin{equation}\label{eq:disall-main}
+\frac{F_2(x,Q^2)}{x}=\sum_i\int_x^1\frac{\dd\xi}{\xi}\,C_{2,i}\Big(\frac x\xi,\frac{Q^2}{\mu^2},\as(\mu)\Big)f_i(\xi;\mu)+R(x,Q),
+\end{equation}
+$F_L$ 同理；其中 $i$ 遍历夸克、反夸克与胶子，$f_i$ 为\cref{def:pdf-quark,def:pdf-gluon}定义的 $\MSbar$ PDF，$C_{2,i}$ 为 $\MSbar$ 减除的部分子结构函数（\cref{prop:disall-h5}）。
+余项 $R=\order{\Lambda^2/Q^2}$，其系数依赖于 $x$：当 $x\to1$ 时不一致（启发式的展开参数为 $\Lambda^2/(Q^2(1-x))$），当 $x\to0$ 时亦不一致。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2、MA4）。
+\uses{thm:method-template,prop:disall-regions,lem:disall-fsi,prop:disall-h2,prop:disall-h3h4,prop:disall-h5,prop:disall-two-routes,def:pdf-quark,def:pdf-gluon,asm:intro-bridge,asm:appN-collins,asm:appN-envelope,asm:appN-separation,asm:appN-cutsum,asm:appN-ward-product,asm:appN-uv,asm:appN-multren}
+% errtype: E-S
+\end{theorem}
+
+\begin{proofsketch}
+先对带红外正规化的部分子靶在每一阶证明余项为 $\order{\lambda^aL^K}$，最后过渡到强子。
+(1)--(4) 模板的五个假设依次由\cref{prop:disall-regions}（(H1)，积分形式\cref{asm:appN-envelope}与\cref{asm:appN-separation}）、\cref{prop:disall-h2}（(H2)，多胶子形式\cref{asm:appN-ward-product}）、
+\cref{prop:disall-h3h4}与\cref{lem:disall-fsi}（(H3)(H4)，割图形式\cref{asm:appN-cutsum}）、\cref{prop:disall-h5}（(H5)，用到减除定理（瓶颈\cref{asm:appN-collins}）、\cref{asm:appN-uv}与\cref{asm:appN-multren}）保证。
+(5) 于是\cref{thm:method-template}的假设全部成立，给出非物理区前向振幅的因子化 $T_a(\omega)=\sum_i\int\frac{\dd\xi}{\xi}\hat C_{a,i}(\xi\omega)f_i(\xi)+\order{\lambda^aL^K}$（$\omega\in[-\rho,\rho]$），
+即\cref{prop:disall-two-routes}(a) 与 (H2)、(H5) 的结合。
+(6) 回到物理区：主项的 $\omega$ 依赖只在 $\hat C_{a,i}(\xi\omega)$ 中，其右割线在 $\xi\omega\ge1$，故在 $\omega=1/x$ 处的不连续部分只来自 $\xi\ge x$，给出\cref{eq:disall-main}的下限
+（对 $\xi<0$，$\hat C$ 在 $\xi\omega\le-1$ 处的交叉割线给出反夸克项，$f_{\bar q}(\xi)=-f_q(-\xi)$）。余项不能这样延拓：复圆盘上的一致界只给出矩（\cref{prop:disall-two-routes}(b)），固定 $x$ 的陈述来自\cref{asm:appN-cutsum}之下对割图求和后的被积函数应用减除定理（\cref{prop:disall-two-routes}(c)），
+常数在 $x\to1$ 时增长。这给出部分子形式的\cref{eq:disall-main}。
+(7) 强子：\cref{asm:intro-bridge}的 (Br1) 断言没有新的领头区域，(Br2) 断言全部 $\Lambda$ 敏感性都在同一组算符（PDF）的强子矩阵元中，(Br3) 把余项读作 $\order{(\Lambda/Q)^p}$ 的渐近陈述；
+对 DIS，$p=2$ 与矩的扭度展开一致，高扭度系数随矩的阶增长，使余项在 $x\to1$ 处不一致，在 $x\to0$ 处则由 $\as\ln(1/x)$ 的增强与饱和效应破坏一致性。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+本定理是全阶论证（[A]）。其瓶颈为：\cref{asm:appN-collins}（一般图在积分范数下的减除条件）、\cref{asm:appN-envelope}与\cref{asm:appN-separation}（幂次计数的积分形式）、
+\cref{asm:appN-cutsum}（割图求和的公共表示）、\cref{asm:appN-ward-product}（多胶子 Ward 恒等式的乘积结构）、\cref{asm:appN-uv}（被积函数层次的紫外重整化）、
+\cref{asm:appN-multren}（共线因子的乘法重整化），以及强子层次的\cref{asm:intro-bridge}。文献给出这些步骤的标度陈述（E-S）；在附录~N 的编号假设之下余项在积分范数意义下（E-N）受控，条件形式为\cref{thm:appN-structure}。
+该论证中被明确假定的一步是非定域算符的 BRST 分类（\cite[第~11.3.2~节，第~407--410~页]{Collins2011}），即具名缺口\cref{asm:appN-brst-nonlocal}（[C]），它经由\cref{lem:method-ward-multi}与\cref{thm:method-template}进入，
+只是点名，不是本定理的前提；纵向极化胶子的单个图在对图求和后仍留下非零的领头项，它须被吸收进规范不变的胶子 PDF\cite{Collins:2008sg}。非规范理论中的完整证明见\cite[第~8.9~节]{Collins2011}；对 QCD，\cite[第~10.1~节]{CollinsSoperSterman1989}写道
+「“there is as yet in the literature no complete and systematic subtraction procedure in QCD \ldots{} even in the case of deeply inelastic scattering”」，即即使对 DIS，文献中也还没有完整而系统的 QCD 减除程序。
+早期的全阶论证\cite{EllisEtAl1979,Ellis:1978sf,AmatiPetronzioVeneziano1978a,AmatiPetronzioVeneziano1978b,Mueller1978,CurciFurmanskiPetronzio1980}多在物理规范（轴规范、光锥规范）中进行；
+物理规范的非物理奇点阻碍把围道变形出 Glauber 区，因而一般而可靠的证明应在 Feynman 规范中进行\cite[第~12.6~节]{Collins2011}。提升本定理须解除上述假设；$x\to1$ 处的一致性还需要阈值区的重新因子化（\cref{ch:thr}）。

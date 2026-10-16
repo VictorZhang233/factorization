@@ -1,0 +1,78 @@
+%%% BEGIN fig:yzliu-complex-lorentz
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=1.08,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lc/.style={draw=gray!55,line width=0.5pt,dash pattern=on 3pt off 2pt},
+  fd2 wl/.style={wilson=#1},
+  fd2 wlc/.style={draw=violet!70!black,solid,double,double distance=1.6pt,line width=0.55pt,
+      postaction={decorate,solid,decoration={markings,mark=at position #1 with
+      {\arrow[xshift=3.2pt,line width=0.6pt,violet!70!black]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 vtx/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=4pt},
+  fd2 vtxc/.style={circle,fill=violet!70!black,draw=none,inner sep=0pt,minimum size=4pt},
+  fd2 shift/.style={draw=#1,line width=0.6pt,-{Stealth[length=4pt,width=3.4pt]}},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ===================== left: S, DY shape, exponential regulator =====================
+  \begin{scope}
+    \draw[fd2 ax] (-2.15,1.0) -- (-1.55,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (-2.15,1.0) -- (-2.15,1.6) node[above=-1pt,fd2 note] {$t$};
+    \draw[fd2 lc] (-1.85,-1.85) -- (1.25,1.25);
+    \draw[fd2 lc] (1.85,-1.85) -- (-1.25,1.25);
+    % amplitude T[W^dag_nbar(0) W_n(0)]: past-pointing lines meeting at 0
+    \draw[fd2 wl=0.55] (-1.5,-1.5) -- (0,0);
+    \draw[fd2 wl=0.72] (0,0) -- (1.5,-1.5);
+    \node[fd2 vtx] at (0,0) {};
+    % conjugate amplitude Tbar[W^dag_n W_nbar] at b - i nu e_t (drawn displaced)
+    \draw[fd2 wlc=0.55] (1.5,-2.65) -- (0,-1.15);
+    \draw[fd2 wlc=0.55] (0,-1.15) -- (-1.5,-2.65);
+    \node[fd2 vtxc] at (0,-1.15) {};
+    \draw[fd2 shift=violet!60!black,dotted,line width=0.8pt] (0,-0.1) -- (0,-1.04);
+    \node[font=\scriptsize,text=violet!55!black,anchor=west,inner sep=1pt] at (0.04,-0.9) {$-\ii\nu e_t$};
+    % labels
+    \node[fd2 note,anchor=west] at (0.1,0.02) {$0$};
+    \node[fd2 note,anchor=north east] at (-1.42,-1.45) {$n$};
+    \node[fd2 note,anchor=north west] at (1.42,-1.45) {$\bar n$};
+    \node[fd2 note,anchor=south] at (0,0.14) {$T[W_{\bar n}^\dagger W_n](0)$};
+    \node[fd2 note,anchor=north,align=center,text=violet!55!black] at (0,-2.75) {$\bar T[W_n^\dagger W_{\bar n}](\vec b_\perp-\ii\nu e_t)$\\[1pt]（虚时间位移）};
+    \node[fd2 lab,align=center] at (0,-4.2) {$S$：DY 形软因子（指数正规子）};
+  \end{scope}
+  % ===================== right: S_t, single time ordering, space-like form factor =====================
+  \begin{scope}[xshift=9.6cm]
+    \draw[fd2 ax] (0.55,1.0) -- (1.15,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (0.55,1.0) -- (0.55,1.6) node[above=-1pt,fd2 note] {$t$};
+    \draw[fd2 lc] (-1.85,-1.85) -- (1.0,1.0);
+    \draw[fd2 lc] (1.0,-1.0) -- (-1.85,1.85);
+    % pair at 0: incoming along n (past), outgoing along nbar (future)
+    \draw[fd2 wl=0.55] (-1.5,-1.5) -- (0,0);
+    \draw[fd2 wl=0.6] (0,0) -- (-1.5,1.5);
+    \node[fd2 vtx] at (0,0) {};
+    % pair at b - nu e_z (real space-like shift)
+    \draw[fd2 wlc=0.5] (-2.7,1.5) -- (-1.2,0);
+    \draw[fd2 wlc=0.55] (-1.2,0) -- (-2.7,-1.5);
+    \node[fd2 vtxc] at (-1.2,0) {};
+    \draw[fd2 shift=violet!60!black] (-0.1,0) -- (-1.1,0);
+    \node[font=\scriptsize,text=violet!55!black,anchor=south,inner sep=1pt] at (-0.68,0.05) {$-\nu e_z$};
+    % labels
+    \node[fd2 note,anchor=west] at (0.1,0) {$0$};
+    \node[fd2 note,anchor=north west] at (-1.42,-1.45) {$n$};
+    \node[fd2 note,anchor=south west] at (-1.42,1.45) {$\bar n$};
+    \node[fd2 note,anchor=north,align=center,text=violet!55!black] at (-2.0,-1.62) {$\vec b_\perp-\nu e_z$\\[1pt]（实的类空位移）};
+    \node[fd2 note,anchor=south,align=center] at (-1.2,1.95) {$T[W_n^\dagger W_{\bar n+}^\dagger\,W_{\bar n+}W_n]$（单一时序）};
+    \node[fd2 lab,align=center] at (-1.1,-4.2) {$S_t$：单一时序的类空形状因子};
+  \end{scope}
+  % ===================== the complex Lorentz transformation =====================
+  \draw[line width=1.5pt,{Stealth[length=8pt,width=8pt]}-{Stealth[length=8pt,width=8pt]}] (2.25,0.05) -- (6.3,0.05);
+  \node[fd2 lab,anchor=south] at (4.27,0.22) {$\Lambda(t,z)=(\ii z,\ii t)$};
+  \node[fd2 note,anchor=north,align=left] at (4.27,-0.2) {$\Lambda(-\ii\lambda n)=\lambda n$\\[1pt]$\Lambda(-\ii\lambda\bar n)=-\lambda\bar n$\\[1pt]$\Lambda(-\nu e_z)=-\ii\nu e_t$};
+  % ===================== invariant lengths =====================
+  \node[fd2 lab] at (4.3,-5.0) {$x^2_{B,ij}=-\nu^2-b_\perp^2-\sqrt2\,\ii\nu\big(\lambda^L_i-\lambda^R_j\big)$：实部 $\le-b_\perp^2-\nu^2<0$，阈下、无割线};
+\end{tikzpicture}
+\caption{时序无关性的解析延拓图像（$(z,t)$ 平面示意；双线为类光 Wilson 线，箭头为路径方向；$n$、$\bar n$ 分别沿 $+z$、$-z$，即本书 $n_A$、$n_B$ 的方向；横向间隔 $\vec b_\perp$ 垂直于纸面）。
+左：指数正规子下的 DY 形软因子 $S$——振幅中的 $T[W_{\bar n}^\dagger W_n](0)$ 与共轭振幅中位于 $\vec b_\perp-\ii\nu e_t$ 的 $\bar T[W_n^\dagger W_{\bar n}]$（紫色，虚时间位移画成竖直错开）；
+右：单一时序的类空形状因子 $S_t$——位于 $0$ 与 $\vec b_\perp-\nu e_z$ 的一对类光色源，沿 $n$ 入射、沿 $\bar n$ 出射。
+二者由复 Lorentz 变换 $\Lambda(t,z)=(\ii z,\ii t)$（快度为 $\ii\pi/2$ 的推动）相联系，所有不变间隔的实部都为负（阈下表示，例如图下的 $x^2_{B,ij}$）。
+在维数正规化中胶子 Wightman 函数满足谱条件与局域对易性的假设下（\cref{asm:yzliu-wightman-pt}；复 Lorentz 协变性来自 Bargmann--Hall--Wightman 定理），微扰论各阶 $S=S_t$（\cref{thm:yzliu-time-ordering}，全阶论证 [A]；VF-YZL-12）。}
+\label{fig:yzliu-complex-lorentz}
+\end{figure}
+%%% END fig:yzliu-complex-lorentz

@@ -1,0 +1,65 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe heavy/.style={quark=#1,line width=1.25pt},
+  fe heavy/.default=0.5,
+  fe cA/.style={draw=blue!60!black},
+  fe cB/.style={draw=orange!80!black},
+  fe cS/.style={draw=green!45!black},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) the b-quark loop =======================
+  \begin{scope}
+    \coordinate (Hv) at (0,0); \coordinate (V1) at (2.0,1.15); \coordinate (V2) at (2.0,-1.15);
+    \draw[scalar] (-1.55,0) -- (Hv);
+    \draw[fe heavy,fe cA] (Hv) -- (V1);
+    \draw[fe heavy,fe cS] (V1) -- (V2);
+    \draw[fe heavy,fe cB] (V2) -- (Hv);
+    \draw[photon] (V1) -- ++(30:1.85);
+    \draw[photon] (V2) -- ++(-30:1.85);
+    \foreach \p in {Hv,V1,V2} \node[vertex] at (\p) {};
+    \node[anchor=east,inner sep=2pt] at (-1.55,0) {$h$};
+    \node[anchor=south west,inner sep=1pt] at ($(V1)+(30:1.85)$) {$\gamma$};
+    \node[anchor=north west,inner sep=1pt] at ($(V2)+(-30:1.85)$) {$\gamma$};
+    \path[mom={$k_1$},mom pos=0.5] (V1) -- ++(30:1.85);
+    \path[mom'={$k_2$},mom pos=0.5] (V2) -- ++(-30:1.85);
+    \node[fe lab,text=blue!55!black,anchor=south east,inner sep=1.5pt] at ($(Hv)!0.5!(V1)$) {$n_1$ 共线};
+    \node[fe lab,text=orange!65!black,anchor=north east,inner sep=1.5pt] at ($(Hv)!0.5!(V2)$) {$n_2$ 共线};
+    \node[fe lab,text=green!35!black,anchor=west,inner sep=3pt] at ($(V1)!0.5!(V2)$) {软夸克};
+    \node at (1.15,-3.25) {(a)\ $b$ 夸克圈：软夸克交换};
+  \end{scope}
+  % ======================= (b) third term H3 J (x) J (x) S =======================
+  \begin{scope}[xshift=7.3cm]
+    \coordinate (H) at (0,0);
+    \coordinate (J1) at (1.75,1.05); \coordinate (J2) at (1.75,-1.05); \coordinate (S) at (3.15,0);
+    \draw[scalar] (-1.55,0) -- (H);
+    \draw[quark,fe cA] (H) -- (J1);
+    \draw[quark,fe cB] (J2) -- (H);
+    \draw[quark,fe cS] ($(J1)+(-58:0.3)$) -- (S);
+    \draw[quark,fe cS] (S) -- ($(J2)+(58:0.3)$);
+    \draw[photon] (J1) ++(30:0.62) -- ++(30:1.2);
+    \draw[photon] (J2) ++(-30:0.62) -- ++(-30:1.2);
+    \draw[hard blob] (H) circle[radius=0.42];
+    \draw[jet blob,rotate around={30:(J1)}] (J1) ellipse[x radius=0.66cm,y radius=0.3cm];
+    \draw[jetB blob,rotate around={-30:(J2)}] (J2) ellipse[x radius=0.66cm,y radius=0.3cm];
+    \draw[soft blob] (S) circle[radius=0.36];
+    \node at (H) {$H_3$};
+    \node[font=\footnotesize] at (J1) {$J$};
+    \node[font=\footnotesize] at (J2) {$J$};
+    \node[font=\footnotesize] at (S) {$S$};
+    \node[anchor=east,inner sep=2pt] at (-1.55,0) {$h$};
+    \node[anchor=south west,inner sep=1pt] at ($(J1)+(30:1.82)$) {$\gamma(k_1)$};
+    \node[anchor=north west,inner sep=1pt] at ($(J2)+(-30:1.82)$) {$\gamma(k_2)$};
+    \node[fe lab,text=green!35!black,anchor=south west,inner sep=1pt] at ($(J1)!0.55!(S)+(0.08,0.02)$) {$\ell_+$};
+    \node[fe lab,text=green!35!black,anchor=north west,inner sep=1pt] at ($(S)!0.45!(J2)+(0.08,-0.02)$) {$\ell_-$};
+    \node[fe lab,text=red!60!black,anchor=west,align=left] at (3.65,0.1) {$\ell_\pm\to0$：\\端点发散};
+    \node[fe lab,anchor=north west,align=left] at (3.62,-0.55) {重因子化条件\\$\Rightarrow$ 各项分别有限};
+    \node[anchor=north] at (1.6,-2.33)
+      {$H_3\int_{\color{red!65!black}0}\frac{\dd\ell_+}{\ell_+}\int_{\color{red!65!black}0}\frac{\dd\ell_-}{\ell_-}\,J(-M_h\ell_+)\,J(M_h\ell_-)\,S(\ell_+\ell_-)$};
+    \node at (1.6,-3.25) {(b)\ 第三项 $H_3\,J\otimes J\otimes S$};
+  \end{scope}
+\end{tikzpicture}
+\caption{$h\to\gamma\gamma$ 的 $b$ 夸克圈贡献的重整化端点因子化定理\cite{Liu:2019oav,Liu:2020wbn}（$\lambda=m_b/M_h$，一次质量插入，次领头幂次振幅）。
+(a)~软夸克（绿）在两个光子共线扇区之间交换，与 Higgs 顶点相连的两条线分别与 $n_1$、$n_2$ 共线（蓝、橙）；箭头为费米子数流向，另一取向的圈图未画出；
+(b)~因子化公式的第三项 $H_3\,J\otimes J\otimes S$：两个辐射喷注函数 $J$ 分别只依赖软夸克动量的分量 $\ell_+$、$\ell_-$，对 $\ell_\pm$ 的卷积在端点 $\ell_\pm\to0$ 发散；重因子化条件把端点发散在各项之间重新分配，给出各项分别有限的重整化定理，并再现领头双对数 $\mathcal M_0\frac{\hat L^2}2\,{}_2F_2(1,1;\frac32,2;-\frac{C_F\alpha_s}{8\pi}\hat L^2)$（全阶论证，VF-FRO-9）。}
+\label{fig:front-endpoint}
+\end{figure}

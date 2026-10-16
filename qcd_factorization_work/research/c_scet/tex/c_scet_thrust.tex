@@ -1,0 +1,402 @@
+% =====================================================================================
+% c_scet_thrust.tex —— 推力分布的 SCET 因子化 dσ/dτ = H J⊗J⊗S：一圈硬、喷注、软函数，反常维数，
+%                     重整化群一致性，与全 QCD 的 O(αs) 比较，LL 重求和（第 14 章；DERIVATION.md §3）
+% 验证脚本：scripts/s2_thrust_oneloop.py（21 项）、scripts/s2_thrust_rg.py（18 项），全部通过。
+% 记号：a ≡ C_F αs(μ)/(4π)；L_Q = ln(Q^2/μ^2)；Laplace 变量 ν，s ≡ 1/(e^{γE} ν)，ℓ ≡ ln(ν e^{γE}) = ln(1/s)。
+% τ 空间的加号分布在 τ = 0 处减除（与 CONTEXT.md 在 z = 1 处减除的 DGLAP 加号分布不同，见 \cref{rem:thrust-plus}）。
+% =====================================================================================
+\providecommand{\nslash}{\sla{n}}
+\providecommand{\nbslash}{\bar{\sla{n}}}
+
+\section{推力分布的因子化：\texorpdfstring{$H\,J\otimes J\otimes S$}{H J J S}}\label{sec:scet-thrust}
+
+推力是 SCET$_{\rm I}$ 因子化的原型：观测量对红外安全（第~9~章），末态只有出射的共线粒子，因而 Glauber 区不构成障碍；
+因子化定理在 SCET 中可以写到所有阶（\tagA），而它的每一个一圈成分都可以独立计算并与全 QCD 比较（\tagR）。
+本节给出完整的一圈计算，并验证三件事：重整化群（RG）一致性、对全 QCD $\order{\as}$ 推力分布奇异项的再现、
+以及领头对数（LL）指数。
+% XREF: ch:sia-eventshapes (第 9 章)
+
+\subsection{运动学}
+推力 $T=\max_{\hat{\bm n}}\sum_i|\bm p_i\cdot\hat{\bm n}|/\sum_i|\bm p_i|$~\cite{Farhi1977}，$\tau\equiv1-T$。取质心系 $Q=\sqrt s$，
+推力轴把末态分为两个半球（$n$ 喷注所在的 R 半球与 $\bar n$ 喷注所在的 L 半球）。对无质量粒子，推力轴平行于某一半球的总动量，
+由此可得\emph{精确}关系
+\begin{equation}\label{eq:thrust-hemi}
+\frac{M_L^2+M_R^2}{Q^2}=\tau-\frac{\tau^2}{2}+\frac{(M_R^2-M_L^2)^2}{2Q^4},\qquad\text{故}\qquad \tau=\frac{M_L^2+M_R^2}{Q^2}+\order{\tau^2},
+\end{equation}
+其中 $M_{L,R}$ 为半球不变质量；三个部分子时 $M_L^2+M_R^2=Q^2\tau$ 精确成立（\texttt{s2\_\allowbreak thrust\_\allowbreak rg.py} 对随机的 3、4 体事例核对至 $10^{-15}$）。
+在领头幂次，$M_R^2=(p_n+p_{us,R})^2\simeq p_n^2+\bar n\cdot p_n\,n\cdot p_{us,R}=p_n^2+Q\,n\cdot p_{us,R}$，L 半球同理，于是
+\begin{equation}\label{eq:thrust-measure}
+\tau=\frac{p_n^2+p_{\bar n}^2}{Q^2}+\frac{k}{Q},\qquad k\equiv n\cdot p_{X_R}+\bar n\cdot p_{X_L},
+\end{equation}
+$p_{X_R}$（$p_{X_L}$）为 R（L）半球中超软粒子的总动量。
+
+\subsection{因子化定理}
+
+\begin{theorem}[推力分布的因子化]\tagA\label{thm:thrust-factorization}
+对 $e^+e^-\to\gamma^*\to$ 强子，在 $\tau\ll1$ 的领头幂次，
+\begin{equation}\label{eq:thrust-fact}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=H(Q^2,\mu)\int\dd p_L^2\,\dd p_R^2\,\dd k\;J(p_L^2,\mu)\,J(p_R^2,\mu)\,S_T(k,\mu)\;
+\delta\Big(\tau-\frac{p_L^2+p_R^2}{Q^2}-\frac{k}{Q}\Big)\;+\;\frac{1}{\sigma_0}\frac{\dd\sigma^{\rm ns}}{\dd\tau},
+\end{equation}
+其中非奇异余项 $\dd\sigma^{\rm ns}/\dd\tau$ 在 $\tau\to0$ 可积（相对于 $1/\tau$ 型奇异项压低一个 $\tau$ 的幂次）。各因子定义为：
+\begin{itemize}
+\item 硬函数 $H(Q^2,\mu)=|C_V(-Q^2-\ii0,\mu)|^2$，$C_V$ 是 $\bar\psi\gamma^\mu\psi\to C_V\,\bar\chi_n\gamma_\perp^\mu\chi_{\bar n}$ 的 $\MSbar$ 匹配系数（\cref{prop:hard-matching}）；
+\item 喷注函数由
+\begin{equation}\label{eq:thrust-Jdef}
+\sum_X(2\pi)^D\delta^D(p-p_X)\,\langle0|\chi_n|X\rangle\langle X|\bar\chi_n|0\rangle=2\pi\,\frac{\nslash}{2}\,\bar n\cdot p\;J(p^2,\mu)\;\mathbb 1_{\rm c}
+\end{equation}
+定义（$\mathbb 1_{\rm c}$ 为色单位矩阵；树图 $J^{(0)}=\delta(p^2)$）；
+\item 推力软函数
+\begin{equation}\label{eq:thrust-Sdef}
+S_T(k,\mu)=\frac{1}{N_c}\sum_{X}\Trc\Big[\langle0|\bar T\big(Y_{\bar n}^\dagger Y_n\big)|X\rangle\langle X|T\big(Y_n^\dagger Y_{\bar n}\big)|0\rangle\Big]\,
+\delta\big(k-n\cdot p_{X_R}-\bar n\cdot p_{X_L}\big).
+\end{equation}
+\end{itemize}
+等价地，对两个半球质量，
+$\frac{\dd^2\sigma}{\dd M_L^2\dd M_R^2}=\sigma_0H\int\dd k_L\dd k_R\,J(M_R^2-Qk_R)\,J(M_L^2-Qk_L)\,S_{\rm hemi}(k_L,k_R)$，
+$S_T(k)=\int\dd k_L\dd k_R\,\delta(k-k_L-k_R)\,S_{\rm hemi}(k_L,k_R)$。
+\end{theorem}
+
+\begin{proofsketch}
+(1) \emph{硬匹配}：在 $\order{\lambda^0}$，QCD 流匹配到 $C_V\,\bar\chi_n\gamma_\perp^\mu\chi_{\bar n}$（加 $n\leftrightarrow\bar n$），$C_V$ 由在壳形状因子确定
+（\cref{prop:hard-matching}）。(2) \emph{超软退耦}：由 \cref{thm:usoft-decoupling} 与 \cref{cor:scet-current-Y}，流化为
+$\bar\chi^{(0)}_nY_n^\dagger\gamma_\perp^\mu Y_{\bar n}\chi^{(0)}_{\bar n}$，而 $\mathcal L^{(0)}$ 分解为互不作用的 $n$、$\bar n$、超软三部分，
+态空间相应分解为 $|X\rangle=|X_n\rangle|X_{\bar n}\rangle|X_{us}\rangle$。(3) \emph{测量的分解}：在领头幂次 $\tau$ 按 \cref{eq:thrust-measure}
+分解为三部分之和；共线粒子总在其喷注所在的半球。(4) 对末态求和、对色指标缩并（色单态流给出 $1/N_c$ 的归一化），
+轻子张量与 $\gamma_\perp^\mu$ 的迹给出 $\sigma_0$，于是截面化为 \cref{eq:thrust-fact} 的卷积。(5) \emph{Glauber}：所有共线粒子都是出射的，
+Glauber 区不形成夹挤（第~7~章），故不需要 Glauber 算符；零区积分在纯维数正规化中无标度。
+状态为 \tagA：SCET 内部的论证在每一阶都成立，但以 \cref{rem:eft-assumptions} 中的前提（模式完备、零区、Glauber）为条件。
+原始文献：\cite{BauerEtAl2004a,Schwartz2008,BecherSchwartz2008,FlemingEtAl2008a}；早期的 QCD 重求和见 \cite{CataniEtAl1993}，
+因子化与幂次修正见 \cite{KorchemskySterman1999}。
+% XREF: prop:glauber-final-state (第 7 章 P7.19)
+\end{proofsketch}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=1.0]
+  \coordinate (HL) at (-2.9,0); \coordinate (HR) at (2.9,0);
+  % jets
+  \draw[jet blob] (0,1.55) ellipse[x radius=1.2cm,y radius=0.42cm];
+  \draw[jetB blob] (0,-1.55) ellipse[x radius=1.2cm,y radius=0.42cm];
+  \draw[quark=0.55] (HL) to[out=55,in=180] (-1.2,1.55);
+  \draw[quark=0.45] (1.2,1.55) to[out=0,in=125] (HR);
+  \draw[quark=0.45] (-1.2,-1.55) to[out=180,in=-55] (HL);
+  \draw[quark=0.55] (HR) to[out=-125,in=0] (1.2,-1.55);
+  \node[font=\footnotesize] at (-0.62,1.55) {$J_n$};
+  \node[font=\footnotesize] at (-0.62,-1.55) {$J_{\bar n}$};
+  % soft function with Wilson lines
+  \draw[wilson plain] (HL) -- (-0.66,0.13); \draw[wilson plain] (HL) -- (-0.66,-0.13);
+  \draw[wilson plain] (HR) -- (0.66,0.13); \draw[wilson plain] (HR) -- (0.66,-0.13);
+  \draw[soft blob] (0,0) ellipse[x radius=0.72cm,y radius=0.36cm];
+  \node[font=\footnotesize] at (-0.36,0) {$S_T$};
+  \node[font=\scriptsize,anchor=south] at (-1.75,0.12) {$Y_n^\dagger Y_{\bar n}$};
+  \node[font=\scriptsize,anchor=south] at (1.75,0.12) {$Y_{\bar n}^\dagger Y_n$};
+  % hard vertices
+  \draw[hard blob] (HL) circle[radius=0.3cm]; \draw[hard blob] (HR) circle[radius=0.3cm];
+  \node[font=\scriptsize] at (HL) {$C_V$}; \node[font=\scriptsize] at (HR) {$C_V^*$};
+  \draw[photon] (-4.2,0) -- ($(HL)+(-0.3,0)$); \draw[photon] ($(HR)+(0.3,0)$) -- (4.2,0);
+  \node[above,font=\footnotesize] at (-3.7,0.1) {$\gamma^*$};
+  \draw[cut] (0,2.2) -- (0,-2.2);
+\end{tikzpicture}
+\caption{推力因子化 \cref{eq:thrust-fact} 的割图表示：硬匹配系数 $C_V$（灰），$n$、$\bar n$ 喷注函数 $J(p_R^2)$、$J(p_L^2)$（蓝、橙），
+超软 Wilson 线 $Y_n^\dagger Y_{\bar n}$（双线）的矩阵元构成的软函数 $S_T(k)$（绿）；虚线为末态割线。}
+\label{fig:thrust-HJJS}
+\end{figure}
+
+\subsection{硬函数}
+
+\begin{proposition}[两喷注流的一圈匹配]\tagR\label{prop:hard-matching}
+（一圈。）Feynman 规范中，无质量夸克矢量流的一圈顶角修正为
+$\delta\Gamma^\mu=-\ii g_0^2C_F\int\frac{\dd^Dk}{(2\pi)^D}\frac{\gamma^\alpha(\sla p_2-\sla k)\gamma^\mu(\sla p_1-\sla k)\gamma_\alpha}{k^2(k-p_2)^2(k-p_1)^2}$，
+$g_0^2=4\pi\as\mu_0^{2\varepsilon}$。对类空的 $Q^2\equiv-q^2=2p_1\cdot p_2>0$，裸形状因子精确为
+\begin{equation}\label{eq:thrust-F1}
+F^{(1)}_{\rm bare}=\frac{\as C_F}{4\pi}\Big(\frac{4\pi\mu_0^2}{Q^2}\Big)^{\varepsilon}
+\frac{\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)}
+\Big[-\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)}\Big]
+=\dots\Big[-\frac{2}{\varepsilon^2}-\frac{3}{\varepsilon}-8-16\varepsilon+\order{\varepsilon^2}\Big].
+\end{equation}
+在壳 SCET 图在维数正规化中无标度，故 $F$ 的红外极点 $-\frac{2}{\varepsilon^2}+\frac{2L-3}{\varepsilon}$ 等于 SCET 流的紫外极点，
+$\MSbar$ 匹配系数为
+\begin{equation}\label{eq:thrust-CV}
+C_V(-q^2,\mu)=1+\frac{\as C_F}{4\pi}\Big[-L^2+3L-8+\zeta_2\Big],\qquad L\equiv\ln\frac{-q^2-\ii0}{\mu^2},
+\qquad \frac{\dd C_V}{\dd\ln\mu}=\big[\Gamma_{\rm cusp}L+\gamma^V\big]C_V,
+\end{equation}
+$\Gamma_0=4C_F$，$\gamma^V_0=-6C_F$。对类时的 $q^2=Q^2>0$，$L=L_Q-\ii\pi$，故
+\begin{equation}\label{eq:thrust-H}
+H(Q^2,\mu)=1+\frac{\as C_F}{4\pi}\Big[-2L_Q^2+6L_Q-16+\frac{7\pi^2}{3}\Big],\qquad
+\frac{\dd H}{\dd\ln\mu}=\big[2\Gamma_{\rm cusp}L_Q+2\gamma^H\big]H,\quad \gamma^H=\gamma^V .
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+用 $\Tr[\sla p_2\,\delta\Gamma^\mu\,\sla p_1\gamma_\mu]/\Tr[\sla p_2\gamma^\mu\sla p_1\gamma_\mu]$ 投影出 $F^{(1)}$（对无质量夸克这是精确的：手征性只允许
+$\gamma^\mu$ 结构）。Feynman 参数化后分母为 $\Delta=xyQ^2$，$D$ 维迹由经 $4\times4$ 矩阵检验的迹程序计算，参数积分化为 Beta 函数，
+得 \cref{eq:thrust-F1}（精确于 $\varepsilon$）。在 $\MSbar$ 中、$\mu^2=Q^2$ 时，方括号为
+$-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\zeta_2+\varepsilon\big(-16+\frac32\zeta_2+\frac{14}{3}\zeta_3\big)$，与 c\_dis 的独立计算一致。
+减去极点即得 \cref{eq:thrust-CV}；$\dd L/\dd\ln\mu=-2$ 给出 $\dd C_V^{(1)}/\dd\ln\mu=4L-6$。类时延拓：
+$\Real(L_Q-\ii\pi)^2=L_Q^2-\pi^2$，故 $|C_V|^2=1+2a\big[-L_Q^2+\pi^2+3L_Q-8+\frac{\pi^2}{6}\big]$，即 \cref{eq:thrust-H}。
+与文献比较：Becher--Schwartz 写 $H=1+\frac{\as}{4\pi}\big[-\frac12\Gamma_0L_Q^2-\gamma^H_0L_Q+c^H_1\big]$，
+$c_1^H=C_F\big(-16+\frac{7\pi^2}{3}\big)$，$\gamma^H_0=-6C_F$~\cite{BecherSchwartz2008}：一致。
+\end{proof}
+
+\subsection{喷注函数}
+
+\begin{proposition}[一圈喷注函数]\tagR\label{prop:thrust-jet}
+（一圈。）按 \cref{eq:thrust-Jdef}，
+\begin{equation}\label{eq:thrust-Jbare}
+J^{(1)}_{\rm bare}(p^2)=-\frac{\as C_F}{4\pi}\,(4\pi\mu_0^2)^{\varepsilon}\,\frac{4-\varepsilon}{\varepsilon}\,
+\frac{\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}\,(p^2)^{-1-\varepsilon}\qquad(\text{精确于 }\varepsilon),
+\end{equation}
+$\MSbar$ 重整化后
+\begin{equation}\label{eq:thrust-J}
+J(p^2,\mu)=\delta(p^2)+\frac{\as C_F}{4\pi}\Big\{(7-\pi^2)\,\delta(p^2)-3\Big[\frac{1}{p^2}\Big]_*+4\Big[\frac{\ln(p^2/\mu^2)}{p^2}\Big]_*\Big\},
+\end{equation}
+其 Laplace 变换 $\tilde j(L)=1+\frac{\as C_F}{4\pi}\big(2L^2-3L+7-\frac{2\pi^2}{3}\big)$，$L=\ln\frac{sQ^2}{\mu^2}$ 时
+$\frac{\dd\tilde j}{\dd\ln\mu}=\big[-2\Gamma_{\rm cusp}L-2\gamma^J\big]\tilde j$，$\gamma^J_0=-3C_F$。
+\end{proposition}
+
+\begin{proof}
+一圈实辐射末态 $q(k_1)g(k_2)$，$p=k_1+k_2$，$x\equiv\bar n\cdot k_2/\bar n\cdot p$。两项（胶子由共线夸克线发射、由 $W_n$ 发射）为
+$\langle qg|\bar\chi_n|0\rangle=g\,t^a\,\bar u(k_1)\Big[-\gamma^\nu\frac{\sla p}{p^2}+\frac{\bar n^\nu}{\bar n\cdot k_2}\Big]P_{\bar n}\,\varepsilon^*_\nu$。
+取 $\varepsilon^*\to k_2$ 时两项相消（Ward 恒等式），故极化求和可用 $-g_{\nu\nu'}$。平方、对自旋求和并取 $\Tr[\frac{\nbslash}{2}\,\cdot\,]$，得
+\[
+\frac{4\,\bar n\cdot p}{p^2}\Big[\frac{1+(1-x)^2}{x}-\varepsilon x\Big],
+\]
+方括号正是 $D$ 维劈裂函数 $P_{gq}(x)/C_F$。$D$ 维两体相空间为
+$\int\dd\Phi_2=\frac{1}{8\pi}\big(\frac{4\pi}{p^2}\big)^{\varepsilon}\frac{1}{\Gamma(1-\varepsilon)}\int_0^1\dd x\,(x\bar x)^{-\varepsilon}$
+（与静止系公式精确一致）。$x$ 积分化为 Beta 函数之和，得
+\[
+\int_0^1\dd x\,(x\bar x)^{-\varepsilon}\Big[\frac{1+\bar x^2}{x}-\varepsilon x\Big]=-\frac{(4-\varepsilon)(1-\varepsilon)}{2\varepsilon(1-2\varepsilon)}\,\frac{\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)},
+\]
+从而 \cref{eq:thrust-Jbare}。虚图与零区积分均无标度。用分布恒等式
+\begin{equation}\label{eq:thrust-distid}
+\begin{gathered}
+\mu^{2\varepsilon}(p^2)^{-1-\varepsilon}=-\frac{\delta(p^2)}{\varepsilon}+\sum_{k\geq0}\frac{(-\varepsilon)^k}{k!}\Big[\frac{\ln^k(p^2/\mu^2)}{p^2}\Big]_*,\\
+\int_0^{\mu^2}\!\dd p^2\Big[\frac{\ln^k(p^2/\mu^2)}{p^2}\Big]_*f(p^2)\equiv\int_0^{\mu^2}\!\dd p^2\,\frac{\ln^k(p^2/\mu^2)}{p^2}\big[f(p^2)-f(0)\big]
+\end{gathered}
+\end{equation}
+（在 $p^2>\mu^2$ 处为普通函数），裸喷注函数为
+$a\big\{(\frac{4}{\varepsilon^2}+\frac{3}{\varepsilon}+7-\pi^2)\delta(p^2)-(\frac4\varepsilon+3)[\frac1{p^2}]_*+4[\frac{\ln(p^2/\mu^2)}{p^2}]_*\big\}$；
+极点由喷注函数的 $\MSbar$ 重整化常数吸收，得 \cref{eq:thrust-J}。Laplace 变换（与 \cref{eq:thrust-laplace} 一致，$\tau_J=p^2/Q^2$ 共轭于 $\nu$）用
+\[
+\int_0^\infty\!\dd p^2\,\ee^{-p^2/(\ee^{\gamma_E}sQ^2)}\Big[\frac{1}{p^2}\Big]_*=L,\qquad
+\int_0^\infty\!\dd p^2\,\ee^{-p^2/(\ee^{\gamma_E}sQ^2)}\Big[\frac{\ln(p^2/\mu^2)}{p^2}\Big]_*=\frac{L^2}{2}+\frac{\pi^2}{12},
+\]
+其中 $L=\ln(sQ^2/\mu^2)$。
+文献：$c_1^J=C_F(7-\frac{2\pi^2}{3})$，$\gamma^J_0=-3C_F$~\cite{BecherSchwartz2008}；一圈结果见 \cite{BauerManohar2004}，两圈见 \cite{BecherNeubert2006}（据 \cite{BecherSchwartz2008} 的引述）。
+\end{proof}
+
+\begin{remark}[喷注函数定义的归一化]\label{rem:thrust-Jnorm}
+Becher--Schwartz 把喷注函数写成
+\[
+J(p^2)=\frac{1}{\bar n\cdot p}\frac1\pi\Imag\Big[\ii\int\dd^4x\,\ee^{-\ii px}\langle0|T\{\bar\chi_n(x)\tfrac{\nbslash}{2}\chi_n(0)\}|0\rangle\Big]=\delta(p^2)+\order{\as}
+\]
+\cite{BecherSchwartz2008}，但没有写出 Dirac 迹与色迹的归一化：若按字面（费米子编时的符号、对 Dirac 与色指标求迹）计算自由场，
+得到 $-2N_c\,\delta(p^2)$，即其中隐含因子 $-\frac{1}{2N_c}\Trc\TrD$（\texttt{s1\_\allowbreak scet\_\allowbreak algebra.py} 核对）。本书采用归一化明确的割定义 \cref{eq:thrust-Jdef}。
+\end{remark}
+
+\subsection{软函数}
+
+\begin{proposition}[一圈推力软函数]\tagR\label{prop:thrust-soft}
+（一圈。）按 \cref{eq:thrust-Sdef}，
+\begin{equation}\label{eq:thrust-Sbare}
+S^{(1)}_{\rm bare}(k)=\frac{\as C_F}{4\pi}\,\frac{8\,(4\pi\mu_0^2)^{\varepsilon}}{\varepsilon\,\Gamma(1-\varepsilon)}\,k^{-1-2\varepsilon}
+\ \xrightarrow{\ \MSbar\ }\
+\frac{\as C_F}{4\pi}\Big\{\Big(-\frac{4}{\varepsilon^2}+\frac{\pi^2}{3}\Big)\delta(k)+\frac{8}{\varepsilon}\Big[\frac1k\Big]_*-16\Big[\frac{\ln(k/\mu)}{k}\Big]_*\Big\},
+\end{equation}
+\begin{equation}\label{eq:thrust-S}
+S_T(k,\mu)=\delta(k)+\frac{\as C_F}{4\pi}\Big\{\frac{\pi^2}{3}\,\delta(k)-16\Big[\frac{\ln(k/\mu)}{k}\Big]_*\Big\},\qquad
+\tilde s_T(L)=1+\frac{\as C_F}{4\pi}\big(-8L^2-\pi^2\big),
+\end{equation}
+$L=\ln\frac{sQ}{\mu}$ 时 $\frac{\dd\tilde s_T}{\dd\ln\mu}=\big[4\Gamma_{\rm cusp}L-2\gamma^S\big]\tilde s_T$，$\gamma^S_0=0$。
+（此处 $[\cdot]_*$ 以 $\mu$ 为参考点：$\mu^{2\varepsilon}k^{-1-2\varepsilon}=-\frac{\delta(k)}{2\varepsilon}+\sum_k\frac{(-2\varepsilon)^k}{k!}[\frac{\ln^k(k/\mu)}{k}]_*$。）
+\end{proposition}
+
+\begin{proof}
+单胶子实辐射：$Y_n^\dagger Y_{\bar n}$ 的单胶子项给出流 $g\,t^a\big(\frac{n^\mu}{n\cdot k}-\frac{\bar n^\mu}{\bar n\cdot k}\big)$，平方并用 $-g_{\mu\nu}$
+求和得 $|M|^2=\frac{4g^2C_F}{n\cdot k\,\bar n\cdot k}$（$\ii0$ 无关，见 \cref{rem:Y-direction}）。测度
+$\int\frac{\dd^Dk}{(2\pi)^{D-1}}\delta^+(k^2)=\frac{\pi^{1-\varepsilon}}{2(2\pi)^{3-2\varepsilon}\Gamma(1-\varepsilon)}\int\dd n\cdot k\,\dd\bar n\cdot k\,(n\cdot k\,\bar n\cdot k)^{-\varepsilon}$。
+R 半球（$n\cdot k<\bar n\cdot k$）测量 $n\cdot k$，L 半球测量 $\bar n\cdot k$，两者相等；对 R 半球，
+$\int_k^\infty\dd\bar n\cdot k\,(\bar n\cdot k)^{-1-\varepsilon}=k^{-\varepsilon}/\varepsilon$，即得 \cref{eq:thrust-Sbare}。虚图无标度。
+$\MSbar$ 中 $\frac{8\ee^{\varepsilon\gamma_E}}{\varepsilon\Gamma(1-\varepsilon)}=\frac8\varepsilon-4\zeta_2\varepsilon+\dots$，与分布恒等式相乘得 \cref{eq:thrust-Sbare} 右边，
+去掉极点得 \cref{eq:thrust-S}。文献：$c_1^S=-C_F\pi^2$~\cite{BecherSchwartz2008}；一圈软函数的早期推导见 \cite{Schwartz2008,FlemingEtAl2008b}。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.31\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.85]
+  \node[opvertex] (L) at (-1.5,0) {}; \node[opvertex] (R) at (1.5,0) {};
+  \draw[quark] (L) -- (-0.6,0.0); \draw[quark] (-0.6,0) -- (0.6,0); \draw[quark] (0.6,0) -- (R);
+  \draw[gluon] (-0.6,0) to[out=90,in=90] (0.6,0);
+  \node[vertex] at (-0.6,0) {}; \node[vertex] at (0.6,0) {};
+  \draw[cut] (0,1.0) -- (0,-0.55);
+  \node[below,font=\scriptsize] at (L) {$\bar\chi_n$}; \node[below,font=\scriptsize] at (R) {$\chi_n$};
+\end{tikzpicture}
+\caption{喷注：共线顶角}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.31\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.85]
+  \node[opvertex] (L) at (-1.5,0) {}; \node[opvertex] (R) at (1.5,0) {};
+  \draw[quark] (L) -- (0.6,0); \draw[quark] (0.6,0) -- (R);
+  \draw[wilson plain] (L) -- (-1.0,0.75);
+  \draw[gluon] (-1.12,0.58) to[out=40,in=90] (0.6,0);
+  \node[vertex] at (0.6,0) {};
+  \draw[cut] (0,1.0) -- (0,-0.55);
+  \node[above left,font=\scriptsize] at (-1.0,0.7) {$W_n$};
+\end{tikzpicture}
+\caption{喷注：$W_n$ 发射（$+$镜像）}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.31\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.85]
+  \node[opvertex] (L) at (-1.5,0) {}; \node[opvertex] (R) at (1.5,0) {};
+  \draw[wilson plain] (L) -- (-0.4,0.75); \draw[wilson plain] (L) -- (-0.4,-0.75);
+  \draw[wilson plain] (R) -- (0.4,0.75); \draw[wilson plain] (R) -- (0.4,-0.75);
+  \draw[gluon] (-0.75,0.5) to[out=20,in=160] (0.75,0.5);
+  \draw[cut] (0,1.0) -- (0,-0.85);
+  \node[left,font=\scriptsize] at (-0.4,0.85) {$Y_n^\dagger$}; \node[left,font=\scriptsize] at (-0.4,-0.85) {$Y_{\bar n}$};
+\end{tikzpicture}
+\caption{软：$Y_n$–$Y_n^\dagger$（及 $Y_n$–$Y_{\bar n}$ 等）}
+\end{subfigure}
+\caption{一圈实辐射图。(a)(b) 喷注函数 \cref{eq:thrust-Jdef}：胶子由共线夸克或 $W_n$ 发射；(c) 软函数 \cref{eq:thrust-Sdef}：
+胶子在割线两侧的超软 Wilson 线之间交换。只有 $n$–$\bar n$ 交换的项非零（$n^2=\bar n^2=0$）。虚图在维数正规化中无标度。}
+\label{fig:thrust-oneloop}
+\end{figure}
+
+\subsection{反常维数与重整化群一致性}
+
+在 Laplace 空间，$\tilde t(\nu)\equiv\int_0^\infty\dd\tau\,\ee^{-\nu\tau}\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}$，因子化化为乘积
+\begin{equation}\label{eq:thrust-laplace}
+\tilde t(\nu)=H(Q^2,\mu)\,\Big[\tilde j\Big(\ln\frac{sQ^2}{\mu^2},\mu\Big)\Big]^2\,\tilde s_T\Big(\ln\frac{sQ}{\mu},\mu\Big),\qquad s\equiv\frac{1}{\ee^{\gamma_E}\nu},
+\end{equation}
+\cite{BecherSchwartz2008}。记 $L_J=\ln\frac{sQ^2}{\mu^2}$，$L_S=\ln\frac{sQ}{\mu}$，$\ell\equiv\ln(\nu\ee^{\gamma_E})$，则 $L_J=L_Q-\ell$，$L_S=\frac12L_Q-\ell$。
+反常维数按 $\Gamma_{\rm cusp}=\sum_n(\frac{\as}{4\pi})^{n+1}\Gamma_n$ 展开，$\gamma^{H,J,S}$ 同理。
+
+\begin{proposition}[RG 一致性]\tagR\label{prop:thrust-RG}
+设 $H$、$\tilde j$、$\tilde s_T$ 满足 \cref{eq:thrust-H}、\cref{prop:thrust-jet}、\cref{prop:thrust-soft} 中的 RG 方程（对任意阶的 $\Gamma_{\rm cusp}(\as)$、
+$\gamma^{H,J,S}(\as)$）。则
+\begin{equation}\label{eq:thrust-RGsum}
+\frac{\dd\ln\tilde t}{\dd\ln\mu}=\Gamma_{\rm cusp}\big[2L_Q-4L_J+4L_S\big]+2\gamma^H-4\gamma^J-2\gamma^S,\qquad 2L_Q-4L_J+4L_S\equiv0,
+\end{equation}
+即尖点项对任意 $\Gamma_{\rm cusp}(\as)$ 恒等相消，而 $\tilde t$ 与 $\mu$ 无关当且仅当
+\begin{equation}\label{eq:thrust-gS}
+\gamma^S=\gamma^H-2\gamma^J .
+\end{equation}
+一圈：$\gamma^S_0=-6C_F-2(-3C_F)=0$，与软函数的直接计算一致；且
+$H^{(1)}+2\tilde j^{(1)}(L_Q-\ell)+\tilde s^{(1)}_T(\frac12L_Q-\ell)=-4\ell^2+6\ell-2$（以 $a$ 为单位）与 $L_Q$ 无关。
+两圈：$\gamma_1^H-2\gamma_1^J$ 中的 $C_F^2$ 项精确相消，
+\begin{equation}\label{eq:thrust-gS1}
+\gamma^S_1=C_FC_A\Big(\frac{808}{27}-\frac{11\pi^2}{9}-28\zeta_3\Big)+C_FT_Fn_f\Big(-\frac{224}{27}+\frac{4\pi^2}{9}\Big),
+\end{equation}
+符合非阿贝尔指数化对软函数色因子的要求（软函数的反常维数中不能出现 $C_F^2$）。
+\end{proposition}
+
+\begin{proof}
+$L_J=L_Q+\ln s$，$L_S=\frac12L_Q+\ln s$，故 $2L_Q-4L_J+4L_S=0$ 恒成立；其余为代数（\texttt{s2\_\allowbreak thrust\_\allowbreak rg.py}）。两圈数值取自
+\cite{BecherSchwartz2008} 附录 A（见 \cref{tab:thrust-anomdim}）。
+\end{proof}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & 一圈 & 两圈 \\
+\midrule
+$\Gamma_{\rm cusp}$ & $\Gamma_0=4C_F$ & $\Gamma_1=4C_F\big[(\frac{67}{9}-\frac{\pi^2}{3})C_A-\frac{20}{9}T_Fn_f\big]$ \\
+$\gamma^H$ & $-6C_F$ & $C_F^2(-3+4\pi^2-48\zeta_3)+C_FC_A(-\frac{961}{27}-\frac{11\pi^2}{3}+52\zeta_3)+C_FT_Fn_f(\frac{260}{27}+\frac{4\pi^2}{3})$ \\
+$\gamma^J$ & $-3C_F$ & $C_F^2(-\frac32+2\pi^2-24\zeta_3)+C_FC_A(-\frac{1769}{54}-\frac{11\pi^2}{9}+40\zeta_3)+C_FT_Fn_f(\frac{242}{27}+\frac{4\pi^2}{9})$ \\
+$\gamma^S$ & $0$ & \cref{eq:thrust-gS1} \\
+常数 & \multicolumn{2}{l}{$c_1^H=C_F(-16+\frac{7\pi^2}{3})$，\quad $c_1^J=C_F(7-\frac{2\pi^2}{3})$，\quad $c_1^S=-C_F\pi^2$} \\
+\bottomrule
+\end{tabular}
+\caption{推力因子化中的反常维数（Becher--Schwartz 归一化：$\dd\ln H/\dd\ln\mu=2\Gamma_{\rm cusp}L_Q+2\gamma^H$ 等）。一圈值由本节独立推导；
+两圈值取自 \cite{BecherSchwartz2008} 附录 A，其中 $\Gamma_1$ 按 Korchemsky--Radyushkin~\cite{KorchemskyRadyushkin1987} 改正
+（见 \cref{rem:thrust-typo}）。更高阶见 \cite{BecherSchwartz2008,MochVermaserenVogt2005}。}
+\label{tab:thrust-anomdim}
+\end{table}
+
+\begin{remark}[RG 一致性关系的写法]\label{rem:thrust-RGform}
+“$\gamma_H+2\gamma_J+\gamma_S=0$”只有在把 $\gamma$ 理解为\emph{全部}对数导数
+（$\frac{\dd\ln H}{\dd\ln\mu}+2\frac{\dd\ln\tilde j}{\dd\ln\mu}+\frac{\dd\ln\tilde s_T}{\dd\ln\mu}=0$）时才正确。采用标准归一化
+（$\dd\ln H=\dots+2\gamma^H$，$\dd\ln\tilde j=\dots-2\gamma^J$，$\dd\ln\tilde s=\dots-2\gamma^S$）时，正确的陈述是 \cref{eq:thrust-gS} 加上尖点部分的恒等式
+$2L_Q-4L_J+4L_S=0$。书中须固定约定并同时写出两者。
+\end{remark}
+
+\begin{remark}[文献中的一处排印错误]\label{rem:thrust-typo}
+\cite{BecherSchwartz2008} 的 arXiv 源文件附录 A 印作 $\Gamma_1=4C_F\big[C_A(\frac{67}{9}-\frac{\pi^2}{3})-\frac{20}{9}C_FT_Fn_f\big]$，括号内的 $C_F$ 是多余的；
+正确形式为 $\Gamma_1=4C_F\big[(\frac{67}{9}-\frac{\pi^2}{3})C_A-\frac{20}{9}T_Fn_f\big]$~\cite{KorchemskyRadyushkin1987}。
+\end{remark}
+
+\subsection{与全 QCD 的 \texorpdfstring{$\order{\as}$}{O(as)} 比较}
+
+\begin{example}[奇异项与 $\delta(\tau)$ 系数]\label{ex:thrust-fixed-order}
+取 $\mu=Q$，把 $J\to Q^2J(Q^2\tau)$、$S_T\to Q\,S_T(Q\tau)$，星号分布变为 $[0,1]$ 上在 $\tau=0$ 处减除的加号分布：
+\begin{equation}\label{eq:thrust-singular}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=\delta(\tau)+\frac{C_F\as}{2\pi}\Big\{\Big(\frac{\pi^2}{3}-1\Big)\delta(\tau)-3\Big[\frac1\tau\Big]_+-4\Big[\frac{\ln\tau}{\tau}\Big]_+\Big\}+(\text{可积项}).
+\end{equation}
+$\delta(\tau)$ 的系数是 $H$、$2J$、$S$ 常数之和：$(-16+\frac{7\pi^2}3)+2(7-\pi^2)+\frac{\pi^2}{3}=-2+\frac{2\pi^2}{3}$（以 $a$ 为单位）。
+全 QCD 的独立计算：由 $e^+e^-\to q\bar qg$ 的矩阵元（用 $D$ 维迹程序导出）
+$\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=\frac{C_F\as}{2\pi}\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$，沿 $T=\max_ix_i$ 积分得
+\begin{equation}\label{eq:thrust-DEFG}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd T}=\frac{C_F\as}{2\pi}\Big[\frac{2(3T^2-3T+2)}{T(1-T)}\ln\frac{2T-1}{1-T}-\frac{3(3T-2)(2-T)}{1-T}\Big]
+\end{equation}
+（数值积分与此解析式之差 $<7\times10^{-15}$；此式即 \cite{DeRujulaEtAl1978} 的结果，引文出处凭记忆，未重新查对原文）。$\tau\to0$ 时它等于
+$-(4\ln\tau+3)/\tau+\order{\ln\tau}$，与 \cref{eq:thrust-singular} 的加号分布系数一致。$\delta(\tau)$ 系数由总截面
+$\sigma_{\rm tot}=\sigma_0(1+\frac{3C_F\as}{4\pi})$ 的求和规则确定：$c_\delta=\frac32-\int_0^1r(\tau)\dd\tau=2.289868133697$，其中 $r$ 为
+\cref{eq:thrust-DEFG} 减去奇异部分；而 $\frac{\pi^2}{3}-1=2.289868133696$——SCET 的 $H+2J+S$ 常数与全 QCD 一致到 $10^{-12}$。
+累积分布 $R(\tau)=1+\frac{C_F\as}{2\pi}\big(-2\ln^2\tau-3\ln\tau+\frac{\pi^2}{3}-1\big)+\order{\tau\ln\tau}$ 的 Laplace 变换
+（用 $\nu\int\ee^{-\nu t}\ln t=-\ell$、$\nu\int\ee^{-\nu t}\ln^2t=\ell^2+\zeta_2$）恰为 $\tilde t=1+a(-4\ell^2+6\ell-2)$。
+\end{example}
+
+\begin{remark}[加号分布的两种减除点]\label{rem:thrust-plus}
+\cref{eq:thrust-singular} 中 $\int_0^1\dd\tau\,[g(\tau)]_+h(\tau)=\int_0^1\dd\tau\,g(\tau)[h(\tau)-h(0)]$，在 $\tau=0$ 处减除；
+CONTEXT.md 中 DGLAP 的加号分布在 $z=1$ 处减除。全书应区分两种记号（例如 $[\cdot]_+$ 用于 $z\to1$，$\mathcal D_k(\tau)\equiv[\ln^k\tau/\tau]_+$ 用于 $\tau\to0$）。
+\end{remark}
+
+\subsection{领头对数重求和}
+
+\begin{proposition}[LL 指数]\tagR\label{prop:thrust-LL}
+在 LL 精度（一圈 $\Gamma_{\rm cusp}$ 与一圈 $\beta$ 函数，$\as(\mu')=\as(Q)/[1+b\,\as(Q)\ln(\mu'^2/Q^2)]$，$b\equiv\beta_0/(4\pi)$），
+把 $\tilde j$ 自 $\mu_j^2=sQ^2$、$\tilde s_T$ 自 $\mu_s=sQ$ 演化到 $\mu=Q$（$H$ 在此处无大对数），得
+\begin{equation}\label{eq:thrust-LL}
+\begin{gathered}
+\ln\tilde t_{\rm LL}=\ell\,g_1(\lambda),\qquad
+g_1(\lambda)=-\frac{C_F}{\pi b\lambda}\Big[(1-2\lambda)\ln(1-2\lambda)-2(1-\lambda)\ln(1-\lambda)\Big],\\
+\lambda=b\,\as(Q)\,\ell=\frac{\beta_0\as(Q)}{4\pi}\ln(\nu\ee^{\gamma_E}).
+\end{gathered}
+\end{equation}
+展开为 $\ln\tilde t_{\rm LL}=-\frac{C_F\as}{\pi}\ell^2-\frac{C_Fb}{\pi}\as^2\ell^3-\frac{7C_Fb^2}{6\pi}\as^3\ell^4-\cdots$，首项即定阶结果 $-4a\ell^2$。
+\end{proposition}
+
+\begin{proof}
+$\ln\tilde t_{\rm LL}=\frac{C_F\as(Q)}{\pi}\big[2I_J-I_S\big]$，其中
+$I_J=\int_{-\ell}^0\frac{(\ell+t)\dd t}{1+b\as t}=\frac{(1-\lambda)\ln(1-\lambda)+\lambda}{(b\as)^2}$，
+$I_S=\int_{-2\ell}^0\frac{(2\ell+t)\dd t}{1+b\as t}=\frac{(1-2\lambda)\ln(1-2\lambda)+2\lambda}{(b\as)^2}$；
+组合即得 \cref{eq:thrust-LL}（符号运算与 25 位数值核对）。
+\end{proof}
+
+这正是 Catani--Trentadue--Turnock--Webber 对推力的 LL 函数~\cite{CataniEtAl1993}（他们的 $\beta_0=(11C_A-2n_f)/(12\pi)$ 即这里的 $b$；
+该文早于 arXiv，此处的比较凭记忆）。Laplace 空间与 $\tau$ 空间累积分布的 LL 函数相同，从 NLL 起才不同。$\lambda\to\frac12$ 处的奇点对应
+软标度 $\mu_s=Q/(\nu\ee^{\gamma_E})$ 降到 $\Lambda$：这里微扰重求和失效。Becher--Schwartz 用两圈软常数把重求和推进到 N$^3$LL 并由此
+确定 $\as$~\cite{BecherSchwartz2008}。
+
+\paragraph{非微扰效应与状态。}
+当 $Q\tau\sim\Lambda$ 时软函数成为非微扰的形状函数，可写为微扰软函数与非微扰模型函数的卷积
+\cite{KorchemskySterman1995,KorchemskySterman1999,BauerEtAl2004a}；在尾部 $\Lambda/Q\ll\tau$，主要的强子化效应是分布平移 $\propto\Lambda/Q$。
+作为在不同事件形状之间普适的陈述，它属于 \tagC。
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.42\linewidth} l >{\raggedright\arraybackslash}X@{}}
+\toprule
+陈述 & 状态 & 依据 \\
+\midrule
+\cref{thm:thrust-factorization}（推力因子化） & \tagA & SCET 全阶论证，以 \cref{rem:eft-assumptions} 为前提 \\
+一圈 $H$、$J$、$S$（\cref{prop:hard-matching,prop:thrust-jet,prop:thrust-soft}） & \tagR & 独立计算，与文献及全 QCD 一致 \\
+RG 一致性（\cref{prop:thrust-RG}） & \tagR & 给定各因子的 RG 方程后为恒等式 \\
+LL 指数（\cref{prop:thrust-LL}） & \tagR & 给定一圈 $\Gamma$ 与 $\beta$ 后的精确积分 \\
+$\Lambda/Q$ 平移的普适性 & \tagC & \\
+\bottomrule
+\end{tabularx}
+\end{center}

@@ -1,0 +1,53 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 light/.style={draw=gray!60},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs/\wpos/\ttl in {a/0/0.5/{(a)\ 顶点}, b/3.1/0.32/{(b)\ 帆}, c/6.2/0.68/{(c)\ 帆（镜像）}, d/9.3/0.5/{(d)\ Wilson 线自能}, e/12.4/0.5/{(e)\ 外线自能}} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (O1) at (-0.85,0);   \coordinate (O2) at (0.85,0);
+    \coordinate (I) at (-1.35,-1.35); \coordinate (F) at (1.35,-1.35);
+    \coordinate (i1) at ($(I)!0.5!(O1)$); \coordinate (f1) at ($(O2)!0.5!(F)$);
+    \if a\panel \draw[gluon] (i1) -- (f1); \fi
+    \if b\panel \draw[gluon] (i1) to[bend right=28] (0.32,0); \fi
+    \if c\panel \draw[gluon] (-0.32,0) to[bend right=28] (f1); \fi
+    \if d\panel \draw[gluon] (-0.48,0) arc[start angle=180,end angle=360,radius=0.48]; \fi
+    \if e\panel
+      \draw[gluon,fd2 light] ($(I)!0.22!(O1)$) to[bend left=80] ($(I)!0.78!(O1)$);
+    \fi
+    \draw[wilson=\wpos] (O1) -- (O2);
+    \if e\panel
+      \draw[quark=0.88,fd2 light] (I) -- (O1);
+    \else
+      \draw[quark=0.3] (I) -- (O1);
+    \fi
+    \draw[quark=0.7] (O2) -- (F);
+    \if a\panel \node[vertex] at (i1) {}; \node[vertex] at (f1) {}; \fi
+    \if b\panel \node[vertex] at (i1) {}; \node[vertex] at (0.32,0) {}; \fi
+    \if c\panel \node[vertex] at (-0.32,0) {}; \node[vertex] at (f1) {}; \fi
+    \if d\panel \node[vertex] at (-0.48,0) {}; \node[vertex] at (0.48,0) {}; \fi
+    \if e\panel
+      \node[vertex,fill=gray!60] at ($(I)!0.22!(O1)$) {}; \node[vertex,fill=gray!60] at ($(I)!0.78!(O1)$) {};
+    \fi
+    \node[opvertex] at (O1) {};  \node[opvertex] at (O2) {};
+    \node[fd2 note,above=2pt] at (O1) {$0$};
+    \node[fd2 note,above=1pt] at (O2) {$z\hat e_z$};
+    \node[fd2 lab] at (0,-1.78) {\ttl};
+  \end{scope}}
+  % external momenta (same in all panels)
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.24] (-1.35,-1.35) -- (-0.85,0);
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.76] (0.85,0) -- (1.35,-1.35);
+  % unphysical-region contributions (xi > 1), VF-LAM-7
+  \node[fd2 lab] at (0,-2.62) {$a\displaystyle\int_0^1\!\dd y\,\frac{1-y}{|\xi-y|}$};
+  \draw[fd2 bracket] (1.75,-2.08) -- (1.75,-2.16) -- (7.75,-2.16) -- (7.75,-2.08);
+  \node[fd2 lab] at (4.65,-2.62) {(b)+(c)：$\dfrac{a}{1-\xi}\displaystyle\int_0^1\!\dd y\,\frac{\xi+y}{|\xi-y|}$};
+  \node[fd2 lab] at (9.3,-2.62) {$-\dfrac{a}{|1-\xi|}$};
+  \node[fd2 note,text=gray!45!black] at (12.4,-2.62) {（只出现在 $\delta(1-\xi)$ 中）};
+\end{tikzpicture}
+\caption{准 PDF 的单圈图（Feynman 规范，在壳无质量夸克 $p=(p^z,0,0,p^z)$，$\Gamma=\gamma^0$；入射与出射夸克动量同为 $p$，前向矩阵元，无割线）。双线为等时、沿 $\hat z$ 的类空 Wilson 线 $W[z\hat e_z,0]$（箭头为路径方向），$\otimes$ 为算符端点 $\psi(0)$、$\bar\psi(z\hat e_z)$：
+(a)~顶点图，(b)(c)~“帆”图，(d)~Wilson 线自能，(e)~外线自能。图下为非物理区 $\xi>1$ 中各图的贡献（$y$ 为 Feynman 参数，$a=\frac{\alpha_sC_F}{2\pi}$），在 $d=4$ 中都有限，其和为
+$\tilde q^{(1)}=a\big[\frac{1+\xi^2}{1-\xi}\ln\frac{\xi}{\xi-1}+1\big]$（VF-LAM-7，与\cite{IzubuchiEtAl2018}附录 B 一致）；维数正规化中 Wilson 线自能没有线性发散。}
+\label{fig:lamet-oneloop}
+\end{figure}

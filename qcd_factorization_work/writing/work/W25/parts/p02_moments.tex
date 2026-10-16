@@ -1,0 +1,22 @@
+\section{格点矩与欧氏 Compton 振幅}\label{sec:lattice-moments}
+
+最早、也最干净的做法是只算 PDF 的矩；它只用到第~7、8~章已有的结果。
+
+\begin{proposition}[格点可计算的矩 \tagR]\label{prop:lattice-moments}
+（$R_{\mathrm{OPE}}$：以 OPE 为前提而严格。QCD 中含夸克的微扰 OPE 是全阶论证（\cref{thm:dis-ope}），严格证明只对标量理论与纯 Yang--Mills 的规范不变算符给出；对强子态还须非微扰 OPE（\cref{asm:intro-np-ope}）。）
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item （由算符定义推出的部分）PDF 的矩 $A^{(n)}_i(\mu)$ 是定域扭度 2 算符的前向矩阵元，$A^{(n)}_q=\langle P|[\bar\psi\gamma^+(\ii D^+)^{n-1}\psi]_\mu|P\rangle/(2(P^+)^n)$，因而是欧氏空间可达的量：等时的定域算符矩阵元可以由欧氏时间的三点与两点关联函数之比得到。
+\item 在 $Q^2>0$、$|\omega|<1$（$\omega=1/x$）处，前向 Compton 振幅 $T^{\mu\nu}(\omega,Q^2)$ 位于所有割线之外，是实解析的，可由欧氏关联函数得到（例如借助虚构重夸克传递的 Compton 张量\cite{DetmoldLin2006}或 Feynman--Hellmann 方法\cite{ChambersEtAl2017}，据该文摘要）；它关于 $\omega$ 的 Taylor 系数是结构函数的矩，$T_2=\sum_{n=2,4,\dots}4\omega^{n-1}\int_0^1\dd x\,x^{n-2}F_2$（部分子靶；强子靶见有限减除形式），而这些矩的 OPE 分解是 $\sum_iC^{(n)}_{2,i}A^{(n)}_i+\order{\Lambda^2/Q^2}$。
+\item 因此，格点得到的矩及欧氏 Compton 振幅的 Taylor 系数直接检验矩因子化的非微扰条件定理，包括低阶矩 $n<n_0$ 处的增长条件；扭度 2 算符基可以在格点上非微扰地归一化，从而消除扭度 2 系数的 $\order{\Lambda^2/Q^2}$ 重排自由。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}（MA0、MA4）；$n<n_0$ 的矩另需\cref{asm:intro-growth}（MA3）。
+\uses{thm:pdf-moments-local, prop:dis-dispersion, prop:dis-dispersion-np, thm:dis-moments, thm:dis-moments-np, prop:power-rearrangement}
+\end{proposition}
+
+\begin{proof}
+(a) 是\cref{thm:pdf-moments-local}（\tagR，$R_{\mathrm{PT}}$；强子态在其非微扰地位所列假设下）：光线算符的矩等于定域扭度 2 算符的前向矩阵元；后者只含等时插入，欧氏时间演化只用来投影出基态强子。
+(b) 部分子靶：$|\omega|<1$ 处 $T_2$ 的 Taylor 系数等于矩，即\cref{prop:dis-dispersion}（\tagR，$R_{\mathrm{PT}}$）。强子靶：\cref{prop:dis-dispersion-np}（\tagR，$R_{\mathrm{cond}}$，前提只有\cref{asm:intro-wightman}）给出 $T_2$ 在 $\mathbb C\setminus((-\infty,-1]\cup[1,\infty))$ 中的解析性与偶数 $n\ge n_0$ 的有限减除色散关系，故 Taylor 系数等于对应的矩；$|\omega|<1$ 在割线之外，振幅不含在壳中间态，可由欧氏关联函数得到。矩的 OPE 分解：部分子靶为\cref{thm:dis-moments}(a)（\tagR，$R_{\mathrm{OPE}}$），强子靶为\cref{thm:dis-moments-np}（\tagR，$R_{\mathrm{cond}}$），二者的前提正是非微扰地位一行所列的全局假设。
+(c) 由 (a)(b)，格点上的 $A^{(n)}_i$ 与 Compton 振幅的 Taylor 系数分别代入\cref{thm:dis-moments-np}(ii) 的两边，即构成对该定理的直接检验；$n<n_0$ 时同时检验其额外前提\cref{asm:intro-growth}。\cref{prop:power-rearrangement}(a)（\tagR，$R_{\mathrm{def}}$）表明扭度 2 系数只在相对 $\order{\Lambda^2/Q^2}$ 的精度内有意义，除非算符基被非微扰地固定，而格点上定域算符的非微扰重整化正提供这种归一化。
+\end{proof}
+
+格点重整化与连续极限是数值问题，不属于本命题。更重要的限制是：超立方群的不可约表示有限，高阶定域矩的算符与低维算符以 $1/a$ 的幂次发散系数混合，可靠的只有最低几个矩（\cref{rem:lattice-critiques}）——这正是转向非定域算符的动机。

@@ -1,0 +1,71 @@
+%%% BEGIN fig:jets-gap
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ax/.style={lcaxis,gray!60!black},
+  fc jet/.style={fill=blue!12,draw=blue!50!black,line width=0.7pt},
+  fc gap/.style={pattern=north east lines,pattern color=gray!55},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc tiny/.style={font=\scriptsize}]
+  % =====================================================================
+  % rapidity-azimuth plane (y in units of 0.85 cm, phi in [0,2pi] -> [0,3.2] cm)
+  % =====================================================================
+  \begin{scope}
+    \fill[gray!4] (-4.25,0) rectangle (4.25,3.2);
+    \fill[fc gap] (-1.15,0) rectangle (1.15,3.2);
+    \draw[gray!60!black,line width=0.5pt] (-1.15,0) -- (-1.15,3.2) (1.15,0) -- (1.15,3.2);
+    \draw[line width=0.5pt,gray!60!black] (-4.25,0) rectangle (4.25,3.2);
+    \draw[fc ax] (-4.6,-0.45) -- (4.75,-0.45) node[right,fc lab,text=black] {$y$};
+    \draw[fc ax] (-4.6,-0.45) -- (-4.6,3.55) node[above,fc lab,text=black] {$\phi$};
+    \node[fc tiny,anchor=east] at (-4.65,0) {$0$};
+    \node[fc tiny,anchor=east] at (-4.65,3.2) {$2\pi$};
+    % jets
+    \draw[fc jet] (-2.55,1.0) circle[radius=0.62];
+    \draw[fc jet] (2.55,2.6) circle[radius=0.62];
+    \node[fc note,align=center] at (-2.55,1.0) {喷注\\[-2pt]1};
+    \node[fc note,align=center] at (2.55,2.6) {喷注\\[-2pt]2};
+    \draw[gray!60!black,line width=0.45pt] (-2.55,-0.38) -- (-2.55,-0.52) (2.55,-0.38) -- (2.55,-0.52);
+    \node[fc tiny,anchor=north] at (-2.55,-0.5) {$y_1$};
+    \node[fc tiny,anchor=north] at (2.55,-0.5) {$y_2$};
+    % the gap
+    \node[fc note,fill=white,inner sep=1.5pt,align=center] at (0,1.6) {间隙：\\$E_T<Q_0$};
+    \draw[gray!60!black,line width=0.5pt,{Stealth[length=3.2pt,width=3pt]}-{Stealth[length=3.2pt,width=3pt]}] (-1.15,3.42) -- (1.15,3.42);
+    \node[fc note,anchor=south] at (0,3.45) {$Y$};
+    % an out-of-gap soft gluon (the SLL needs radiation outside the gap)
+    \fill[green!45!black] (-3.55,2.45) circle[radius=2.2pt];
+    \node[fc tiny,anchor=north,text=green!35!black,align=center] at (-3.55,2.38) {间隙外\\[-2pt]软胶子};
+    % beam directions
+    \node[fc note,anchor=north west] at (-4.25,-0.95) {$\longleftarrow$束流$B$（$y\to-\infty$）};
+    \node[fc note,anchor=north east] at (4.25,-0.95) {束流$A$（$y\to+\infty$）$\longrightarrow$};
+    \node[fc lab] at (0,-1.9) {(a)\ $(y,\phi)$平面中的间隙可观测量};
+  \end{scope}
+  % =====================================================================
+  % inset: Coulomb/Glauber exchange between the incoming partons + soft emission
+  % =====================================================================
+  \begin{scope}[shift={(7.75,1.55)}]
+    \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt,font=\footnotesize] (H) at (0.35,0) {$H$};
+    \draw[quark] (-2.1,1.15) -- (H.150);
+    \draw[quark] (-2.1,-1.15) -- (H.210);
+    \draw[quark] (H.30) -- (1.65,1.15);
+    \draw[quark] (H.330) -- (1.65,-1.15);
+    \draw[glauber] (-0.95,0.58) -- (-0.95,-0.58);
+    \draw[fc soft] (-1.6,0.88) -- (-1.05,1.75);
+    \node[vertex] at (-0.95,0.58) {};  \node[vertex] at (-0.95,-0.58) {};  \node[vertex] at (-1.6,0.88) {};
+    \node[fc note,anchor=east] at (-2.1,1.15) {$1$};
+    \node[fc note,anchor=east] at (-2.1,-1.15) {$2$};
+    \node[fc note,anchor=west] at (1.65,1.15) {$3$};
+    \node[fc note,anchor=west] at (1.65,-1.15) {$4$};
+    \node[fc tiny,anchor=east,text=red!55!black,align=right] at (-1.1,0) {Glauber\\[-2pt]（$\ii\pi$）};
+    \node[fc tiny,anchor=west,text=green!35!black] at (-1.0,1.65) {软发射};
+    \node[fc lab] at (-0.2,-3.45) {(b)\ 初态 Glauber 相位与软发射};
+  \end{scope}
+\end{tikzpicture}
+\caption{强子对撞中的“喷注间隙”可观测量（示意）。(a)~两个硬喷注位于快度$y_1$、$y_2$，其间宽为$Y$的快度区间（阴影）内辐射的横能量被否决，$E_T<Q_0\ll Q$；束流沿$y\to\pm\infty$。
+(b)~初态两个有色部分子之间的 Coulomb/Glauber 交换（暗红色，虚部$\ii\pi$）与软辐射（绿色，例如间隙外的软胶子）不对易，实—虚相消失效，产生超领头对数：首项为相对 Born 的$\alpha_s^4\ln^5(Q/Q_0)$（VF-GLA-13）。
+其地位分三层：振幅层次严格共线因子化的破坏 [V]；超领头对数的固定阶与重求和结果 [P]；间隙截面的 PDF 因子化仍是猜想 [C]，并有恢复的证据（\cref{prop:jets-sll}）。}
+\label{fig:jets-gap}
+\end{figure}
+%%% END fig:jets-gap

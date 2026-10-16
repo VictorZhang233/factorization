@@ -1,0 +1,38 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \node[jet blob,ellipse,minimum width=3.6cm,minimum height=1.0cm,inner sep=0pt] (A) at (0,-2.05) {$A$};
+  \node[jetB blob,ellipse,minimum width=3.6cm,minimum height=1.0cm,inner sep=0pt] (B) at (0,2.05) {$B$};
+  \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H1) at (-1.75,0) {$H_1$};
+  \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H2) at (1.75,0) {$H_2$};
+  \coordinate (a1) at (-1.0,-1.634); \coordinate (a2) at (1.0,-1.634);
+  \coordinate (b1) at (-1.0,1.634);  \coordinate (b2) at (1.0,1.634);
+  \draw[t3 hadron] (-3.6,-2.05) -- (A.west);  \draw[t3 hadron] (A.east) -- (3.6,-2.05);
+  \draw[t3 hadron] (-3.6, 2.05) -- (B.west);  \draw[t3 hadron] (B.east) -- (3.6, 2.05);
+  % two quarks from A, two antiquarks from B (fermion arrows H -> B)
+  \draw[quark] (a1) -- (H1.290);  \draw[quark] (a2) -- (H2.250);
+  \draw[quark] (H1.70) -- (b1);   \draw[quark] (H2.110) -- (b2);
+  % the two hard final states
+  \draw[photon] (H1.west) -- (-3.35,0);  \draw[photon] (H2.east) -- (3.35,0);
+  \draw[t3 dim] (H1.east) -- node[t3 lab,above=1pt] {$\boldsymbol y$} (H2.west);
+  % labels
+  \path[mom={$x_1P_A$},mom sep=0.26cm,mom length=0.45cm] (a1) -- (H1.290);
+  \path[mom'={$x_2P_A$},mom sep=0.26cm,mom length=0.45cm] (a2) -- (H2.250);
+  \path[mom'={$\bar x_1P_B$},mom sep=0.26cm,mom length=0.45cm] (b1) -- (H1.70);
+  \path[mom={$\bar x_2P_B$},mom sep=0.26cm,mom length=0.45cm] (b2) -- (H2.110);
+  \node[t3 lab,above=1pt] at (-2.95,0.06) {$\gamma^*_1$};
+  \node[t3 lab,above=1pt] at (2.95,0.06) {$\gamma^*_2$};
+  \node[t3 lab,below=1pt] at (-3.2,-2.1) {$P_A$};  \node[t3 lab,above=1pt] at (-3.2,2.1) {$P_B$};
+  \node[t3 note,anchor=north] at (0,-2.6) {$F_{a_1a_2/A}(x_1,x_2,\boldsymbol y)$};
+  \node[t3 note,anchor=south] at (0,2.6) {$F_{b_1b_2/B}(\bar x_1,\bar x_2,\boldsymbol y)$};
+\end{tikzpicture}
+\caption{双部分子散射（DPS）的示意（振幅层次，以双 Drell--Yan 过程为例）。每个强子各提供两个部分子，参与两个硬散射 $H_1$、$H_2$，二者在横向平面上相距 $\boldsymbol y$；
+来自 $B$ 的反夸克的费米子数箭头由硬散射指向 $B$。截面的因子化形式为 $\dd\sigma_{\mathrm{DPS}}=\frac1C\sum\int\dd^2\boldsymbol y\,F_{a_1a_2/A}\,F_{b_1b_2/B}\,\dd\hat\sigma_{a_1b_1}\,\dd\hat\sigma_{a_2b_2}$
+（对部分子种类求和，$F$ 的自变量如图），其中 $F$ 为双部分子分布，依赖于两部分子的动量分数及其横向间距 $\boldsymbol y$；$C$ 为对称因子（两个硬过程相同时 $C=2$，否则 $C=1$）。
+对双 Drell--Yan，旁观者之间 Glauber 交换的相消已有全阶论证（[A]）；而色关联、$1\to2$ 微扰劈裂（小 $\boldsymbol y$ 处 $F\propto1/\boldsymbol y^2$）以及与单部分子散射之间的重复计数等问题，使完整框架仍只具 [P] 地位。}
+\label{fig:dps}
+\end{figure}

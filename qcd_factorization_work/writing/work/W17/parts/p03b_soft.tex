@@ -1,0 +1,117 @@
+\paragraph{软因子。}软子图在 Ward 恒等式之后退耦为两组 Wilson 线的真空矩阵元：沿 $n_A$ 的线代替强子 $A$ 的活动部分子，沿 $n_B$ 的线代替强子 $B$ 的活动部分子；振幅一侧的线从横向位置 $-\mathbf b_T/2$ 出发，共轭振幅一侧的线从 $+\mathbf b_T/2$ 出发（\cref{fig:tmd-soft-factor}）。与 TMD 一样，为了正规化快度发散，Collins 用非类光的类空线\cref{eq:tmd-nB}。
+
+\begin{definition}[软因子]\label{def:tmd-soft}
+对 $\mathbf b_T$ 与快度 $y_A>y_B$，记 $\mathcal V(x)\equiv W[x+\infty n_A(y_A),x]\;W[x+\infty n_B(y_B),x]^\dagger$（色指标都在无穷远端，两条线在 $x$ 处构成色单态），定义
+\begin{equation}\label{eq:tmd-soft-def}
+\tilde S(\mathbf b_T;y_A,y_B)\equiv\frac1{N_c}\,\big\langle0\big|\Trc\big[\mathcal V(\tfrac12\mathbf b_T)^\dagger\,\mathcal V(-\tfrac12\mathbf b_T)\big]\big|0\big\rangle_{\text{无自作用}},
+\end{equation}
+其中两端在无穷远处由横向连接闭合（在共变规范中等于 $1$），振幅一侧的 $\mathcal V(-\frac12\mathbf b_T)$ 取编时积、共轭一侧取反编时积（对类空线，路径编序与时间编序重合），并且不计两端都在同一条直线上的胶子（Wilson 线的自相互作用）。这是 Collins 的软因子\cite[式~(13.39)]{Collins2011}换算到本书约定（$g\to-g$）后的形式。动量空间的软因子按\cref{eq:tmd-fourier}的符号定义。$\tilde S$ 的两个基本性质是：(i) 它只依赖于 $y_A-y_B$（沿 $z$ 方向的 boost 不变性，精确成立）；(ii) 在维数正规化中 $\tilde S(\mathbf b_T=0)=1$（树图以外的图都是无标度的）。
+\uses{def:prelim-wilson,def:tmd-unsub}
+\end{definition}
+
+性质 (i) 的证明只需一行：沿 $z$ 方向快度为 $\omega$ 的 boost 把 $v^\pm$ 变为 $\ee^{\pm\omega}v^\pm$，于是 $n_A(y_A)\mapsto\ee^{\omega}n_A(y_A+\omega)$、$n_B(y_B)\mapsto\ee^{-\omega}n_B(y_B+\omega)$；半无限 Wilson 线在 $n\to\alpha n$（$\alpha>0$）下不变（它只依赖于路径这个点集），真空与横向位置 $\pm\frac12\mathbf b_T$ 都不变，所以 $\tilde S(y_A,y_B)=\tilde S(y_A+\omega,y_B+\omega)$。\cref{eq:tmd-soft-def}用的是指向未来的线，适用于 $e^+e^-\to h_1h_2X$ 与 SIDIS 的约定；对 Drell--Yan，因子化推导给出两条指向过去的线。两者数值相等：把\cref{thm:tmd-sivers-sign}证明中的 PT 变换用于\cref{eq:tmd-soft-def}即得（软因子与自旋无关）\cite[第~13.17.5~节]{Collins2011}；对 $q_T$ 积分的截面，这一等式与幺正性一起给出共线因子化中的“软因子为 $1$”（\cref{lem:dy-soft}）。
+
+%%% BEGIN fig:tmd-soft-factor
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \coordinate (V) at (-3.9,0);  \coordinate (Vp) at (3.9,0);
+  \coordinate (T) at (0,1.8);   \coordinate (Bm) at (0,-1.8);
+  % gluons (drawn first, the Wilson lines and vertices on top)
+  \coordinate (g1a) at ($(V)!0.42!(T)$);  \coordinate (g1b) at ($(V)!0.42!(Bm)$);  % virtual
+  \coordinate (g2a) at ($(V)!0.76!(T)$); \coordinate (g2b) at ($(Vp)!0.76!(Bm)$); % real, crosses the cut
+  \draw[gluon] (g1a) -- (g1b);
+  \draw[gluon] (g2a) -- (g2b);
+  % Wilson lines: n_A (upper), n_B (lower); amplitude left of the cut, conjugate right
+  \draw[wilson plain] (V) -- (T) -- (Vp);
+  \draw[wilson plain] (V) -- (Bm) -- (Vp);
+  \path[t3 warrow=0.24] (V) -- (T);   \path[t3 warrow=0.5] (T) -- (Vp);
+  \path[t3 warrow=0.5] (Vp) -- (Bm);  \path[t3 warrow=0.8] (Bm) -- (V);
+  \draw[cut] (0,-2.3) -- (0,2.3);
+  \foreach \p in {V,Vp,g1a,g1b,g2a,g2b} \node[vertex] at (\p) {};
+  % labels
+  \node[t3 lab,left=2pt] at (V) {$0$};
+  \node[t3 lab,right=2pt] at (Vp) {$b_{\mathrm T}$};
+  \node[t3 lab,above left=0pt] at ($(V)!0.62!(T)$) {$n_A$};
+  \node[t3 lab,above right=0pt] at ($(Vp)!0.62!(T)$) {$n_A$};
+  \node[t3 lab,below left=0pt] at ($(V)!0.62!(Bm)$) {$n_B$};
+  \node[t3 lab,below right=0pt] at ($(Vp)!0.62!(Bm)$) {$n_B$};
+  \path[mom={$\ell$},mom pos=0.68,mom sep=0.27cm] (g2a) -- (g2b);
+  \node[t3 note] at (-2.1,-2.15) {振幅};
+  \node[t3 note] at (2.1,-2.15) {共轭振幅};
+\end{tikzpicture}
+\caption{TMD 软因子 $\tilde S(b_{\mathrm T})$ 的割图表示。两条 Wilson 线（双线）分别沿 $n_A$、$n_B$ 方向，代替两个沿相反方向运动的硬部分子：
+在振幅中自同一点 $0$ 出发，在共轭振幅中自横向位置 $b_{\mathrm T}$ 出发；两侧的 Wilson 线在割线处（无穷远）相接，构成闭合的色迹 $\frac1{N_c}\mathrm{Tr}_{\mathrm c}$。
+软胶子可在割线同一侧交换（虚修正，如图中左侧的胶子），也可穿过割线（实发射）；横向动量为 $\ell_{\mathrm T}$ 的实胶子给出相因子 $\ee^{\ii\ell_{\mathrm T}\cdot b_{\mathrm T}}$。
+箭头为路径方向，即色（费米子数）流向。图中两条线都按未来指向画出，对应两个出射部分子（$e^+e^-\to h_1h_2X$）；对 Drell--Yan 两条线都是过去指向（两个入射部分子），
+对 SIDIS 则各有一条——胶子的连接方式与图示相同。对光型的 $n_A$、$n_B$，固定 $\ell_{\mathrm T}$ 时胶子快度的积分发散（快度发散），需要快度正规化（见正文）。}
+\label{fig:tmd-soft-factor}
+\end{figure}
+%%% END fig:tmd-soft-factor
+
+\cref{fig:tmd-soft-factor}把两侧的端点画在 $0$ 与 $\mathbf b_T$ 处，这与\cref{eq:tmd-soft-def}中的 $\mp\frac12\mathbf b_T$ 只差一个整体平移。单圈软因子可以完全算出；它是本章快度结构的原型。
+
+\begin{lemma}[单圈软因子 \tagR]\label{lem:tmd-soft-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本引理是单圈（$\order{\as}$）的陈述，维数正规化，$\MSbar$ 以本书的 $S_\varepsilon=(4\pi)^\varepsilon\ee^{-\varepsilon\gamma_E}$ 记账，$Y\equiv y_A-y_B>0$，$L_b\equiv\ln(\mu^2b_T^2/b_0^2)$。
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item（大快度间隔）$\tilde S(\mathbf b_T;y_A,y_B)=1+\tilde K(b_T;\mu)\,(y_A-y_B)+\order{\as(y_A-y_B)^0}+\order{\as^2}$，其中
+\begin{equation}\label{eq:tmd-K1}
+\tilde K(b_T;\mu)=-\frac{\as C_F}{\pi}\ln\frac{\mu^2b_T^2}{b_0^2}.
+\end{equation}
+% VF-TMD-1
+\item（精确的快度依赖）对类时线（含 Wilson 线自能）与类空线（无自作用），
+\begin{equation}\label{eq:tmd-S1}
+\tilde S^{(1)}_{\text{裸}}=\frac{\as C_F}{\pi}S_\varepsilon\,(Y\coth Y-\sigma)\,A(\varepsilon),\qquad A(\varepsilon)\equiv-\frac{\ee^{\varepsilon L_b}\ee^{-\varepsilon\gamma_E}\Gamma(1-\varepsilon)}{\varepsilon}=-\frac1\varepsilon-L_b+\order{\varepsilon},
+\end{equation}
+% VF-TMD-8
+$\sigma=1$（类时）或 $\sigma=0$（类空），极点减除后 $\tilde S^{(1)}=-\frac{\as C_F}{\pi}(Y\coth Y-\sigma)L_b$。两种线的快度积分（类空线取主值）都给出 $4(Y\coth Y-\sigma)$。对 $\sigma=1$，极点 $-\frac{\as C_F}{\pi\varepsilon}(Y\coth Y-1)$ 是两个夹角为 $Y$ 的尖点，各带\cref{def:sudakov-cusp}中的单圈 cusp 反常维度 $\frac{\as C_F}{\pi}(Y\coth Y-1)$。
+\item（类空线的自能）对在壳的 $k$，$n_A(y_A)\cdot k=-\sqrt2\,k_T\,\ee^{-y_A}\sinh(y_k-y_A)$ 在实胶子相空间\emph{内部}的 $y_k=y_A$ 处为零，类空线的自能项给出不可积的二阶极点 $-1/\sinh^2(y_k-y_A)$（线长发散）。因此自能必须除去，或在 $\tilde f^{\mathrm{unsub}}$ 与 $\tilde S$ 中按同一约定处理；由此产生的任何常数（如 (b) 中的 $\sigma$）在组合 $\tilde f_A^{\mathrm{unsub}}(y_B)\sqrt{\tilde S(y_A,y_n)/[\tilde S(y_A,y_B)\tilde S(y_n,y_B)]}$ 中恒等相消。
+\item（高阶）本引理只断言单圈内容；高阶的软因子由非阿贝尔指数化（web）组织\cite{Gatheral1983,FrenkelTaylor1984}。
+\end{enumerate}
+（本引理只涉及 Wilson 线的真空矩阵元。）
+\uses{def:tmd-soft,prop:prelim-wilson-rules,def:sudakov-cusp,prop:appB-cusp-oneloop,lem:tmd-unsub-oneloop}
+\end{lemma}
+
+\begin{proof}
+\emph{虚图。}割线同一侧的单胶子交换只依赖于无量纲的 $n_A$、$n_B$，是无标度积分，在维数正规化中为零；所以单圈软因子只来自穿过割线的实胶子。
+
+\emph{实胶子。}由\cref{prop:prelim-wilson-rules}，两条线放出一个胶子 $l$ 的流是色单态的程函流 $J^\mu=g t^a\big[\frac{n_A^\mu}{n_A\cdot l}-\frac{n_B^\mu}{n_B\cdot l}\big]$（类空线的 $\pm\ii0$ 见下），$J\cdot l=0$，故极化求和可以取 $-g_{\mu\nu}$，颜色求和给出 $\frac1{N_c}\Trc(t^at^a)=C_F$：
+\[
+-\frac{J\cdot J}{g^2C_F}=\frac{2\,n_A\cdot n_B}{(n_A\cdot l)(n_B\cdot l)}-\frac{n_A^2}{(n_A\cdot l)^2}-\frac{n_B^2}{(n_B\cdot l)^2}.
+\]
+相空间 $\int\frac{\dd^Dl}{(2\pi)^{D-1}}\delta^+(l^2)=\int\frac{\dd^{D-2}l_T}{2(2\pi)^{D-1}}\int\dd y$，其中 $l=(\frac{l_T}{\sqrt2}\ee^{y},\frac{l_T}{\sqrt2}\ee^{-y},\mathbf l_T)$。对类时线 $n_A=(1,\ee^{-2y_A})$、$n_B=(\ee^{2y_B},1)$，直接计算得
+\[
+l_T^2\frac{n_A\cdot n_B}{(n_A\cdot l)(n_B\cdot l)}=\frac{\cosh Y}{\cosh(y-y_A)\cosh(y-y_B)}=\coth Y\,\big[\tanh(y-y_B)-\tanh(y-y_A)\big],\qquad l_T^2\frac{n_A^2}{(n_A\cdot l)^2}=\frac1{\cosh^2(y-y_A)};
+\]
+对类空线 $n_A=(1,-\ee^{-2y_A})$、$n_B=(-\ee^{2y_B},1)$，
+\[
+l_T^2\frac{n_A\cdot n_B}{(n_A\cdot l)(n_B\cdot l)}=\frac{-\cosh Y}{\sinh(y-y_A)\sinh(y-y_B)}=\coth Y\,\big[\coth(y-y_B)-\coth(y-y_A)\big].
+\]
+由 $\int_{-\Lambda}^{\Lambda}\tanh(y-c)\,\dd y\to-2c$ 与 $\mathrm{PV}\!\int_{-\Lambda}^{\Lambda}\coth(y-c)\,\dd y\to-2c$（$\Lambda\to\infty$），两种情形的交叉项都给出 $\int\dd y=2Y\coth Y$；对类空线，$(n_A\cdot l\mp\ii0)^{-1}(n_B\cdot l\pm\ii0)^{-1}$ 在割图中与其共轭相加，实部是两个主值之积（$Y\neq0$ 时两个零点不重合），这就是所取的主值。类时线的两个自能项各给出 $-\int\frac{\dd y}{\cosh^2(y-y_A)}=-2$；类空线的自能是 (c) 中的不可积项，按定义除去。于是 $\int\dd y\,l_T^2(-J\cdot J)/(g^2C_F)=4(Y\coth Y-\sigma)$，动量空间中（以 $\delta^{(2-2\varepsilon)}(\mathbf k_T-\mathbf l_T)$ 固定胶子横动量）
+\begin{equation}\label{eq:tmd-S1-kspace}
+S^{(1)}(\mathbf k_T;y_A,y_B)=\frac{g^2C_F\mu^{2\varepsilon}}{2(2\pi)^{3-2\varepsilon}}\,\frac{4(Y\coth Y-\sigma)}{k_T^2}=\frac{c_S}{k_T^2}\,2(Y\coth Y-\sigma).
+\end{equation}
+（快度积分也作了数值检验。）% check: s04_soft_factor.py
+
+\emph{Fourier 变换。}由 $\int\dd^dk\,\ee^{-\ii\mathbf k\cdot\mathbf b}(k^2)^{-\alpha}=\pi^{d/2}2^{d-2\alpha}\frac{\Gamma(d/2-\alpha)}{\Gamma(\alpha)}(b^2)^{\alpha-d/2}$（$d=2-2\varepsilon$，$\alpha=1$）与 $b_0=2\ee^{-\gamma_E}$，
+\begin{equation}\label{eq:tmd-A-eps}
+c_S\int\dd^{2-2\varepsilon}k_T\,\frac{\ee^{-\ii\mathbf k_T\cdot\mathbf b_T}}{k_T^2}=a\,S_\varepsilon\,A(\varepsilon),\qquad A(\varepsilon)=-\frac{\ee^{\varepsilon L_b}\ee^{-\varepsilon\gamma_E}\Gamma(1-\varepsilon)}{\varepsilon}=-\frac1\varepsilon-L_b-\varepsilon\Big(\frac{L_b^2}{2}+\frac{\pi^2}{12}\Big)+\order{\varepsilon^2}
+\end{equation}
+（$a=\frac{\as C_F}{2\pi}$；用 Collins 的 $S^{\mathrm C}_\varepsilon=(4\pi)^\varepsilon/\Gamma(1-\varepsilon)$ 记账时 $\frac{\pi^2}{12}\to\frac{\pi^2}{6}$）。% check: s04, s06
+代入\cref{eq:tmd-S1-kspace}得\cref{eq:tmd-S1}。$\MSbar$ 减去 $S_\varepsilon$ 乘以极点后得 $-\frac{\as C_F}\pi(Y\coth Y-\sigma)L_b$。极点来自 $l_T\to0$（红外）；因为虚图是“紫外减红外”的无标度积分，它同样是紫外极点，对 $\sigma=1$ 等于两个尖点各自的 $-\frac{\as C_F}{2\pi\varepsilon}(Y\coth Y-1)$（\cref{prop:appB-cusp-oneloop}，\tagR，$R_{\mathrm{PT}}$），即两个各带 cusp 反常维度 $\frac{\as C_F}{\pi}(Y\coth Y-1)$ 的尖点。这证明了 (b)。
+
+\emph{大快度间隔。}$Y\coth Y=Y+2Y/(\ee^{2Y}-1)$，所以重整化的 $\tilde S^{(1)}=-\frac{\as C_F}{\pi}L_b\,Y+\frac{\as C_F}{\pi}\sigma L_b+\order{Y\ee^{-2Y}}$；$Y$ 的系数就是\cref{eq:tmd-K1}，这证明了 (a)。
+
+\emph{类空线的自能。}在壳 $k$ 有 $n_A(y_A)\cdot k=k^-- \ee^{-2y_A}k^+=\frac{k_T}{\sqrt2}(\ee^{-y_k}-\ee^{y_k-2y_A})=-\sqrt2\,k_T\ee^{-y_A}\sinh(y_k-y_A)$，% VF-REF-19
+于是 $l_T^2\,n_A^2/(n_A\cdot l)^2=-2\ee^{-2y_A}l_T^2/[2l_T^2\ee^{-2y_A}\sinh^2(y-y_A)]=-1/\sinh^2(y-y_A)$，在 $y=y_A$ 处是不可积的二阶极点，主值不能处理它。对组合中的常数：设一条快度为 $y_i$ 的线的自能给出（以 $\frac{c_S}{k_T^2}\delta(1-x)$ 为单位）常数 $-\sigma_i$，则 $\tilde S(y_i,y_j)$ 中出现 $2(|y_i-y_j|)-(\sigma_i+\sigma_j)$，未减除分布 $\tilde f_A^{\mathrm{unsub}}(y_B)$ 中出现 $-\sigma_B$（\cref{lem:tmd-unsub-oneloop}(b)）；组合的单圈项
+\[
+-\sigma_B+\tfrac12\big[(2(y_A-y_n)-\sigma_A-\sigma_n)-(2(y_A-y_B)-\sigma_A-\sigma_B)-(2(y_n-y_B)-\sigma_n-\sigma_B)\big]=2(y_B-y_n)
+\]
+不含任何 $\sigma_i$。这证明了 (c)。(d) 只是对单圈范围的说明。
+\end{proof}
+
+这里 $Y\coth Y$ 的出现有简单的几何意义：两条非类光线之间的交换胶子沿快度均匀分布在 $y_B<y<y_A$ 之间（$\frac{\cosh Y}{\cosh(y-y_A)\cosh(y-y_B)}$ 在这一区间内近似等于 $2$，在外面指数衰减），所以软因子随快度间隔线性增长，斜率 $2\times\frac{c_S}{k_T^2}$ 在 $b$ 空间中就是 $\tilde K$。线性增长的系数与 $y_A,y_B$ 无关，这是 Collins--Soper 方程的单圈内容；当两条线趋于类光时，间隔 $Y\to\infty$，软因子发散——这就是快度发散的另一面。对类时线，两条线的自能把 $Y\coth Y$ 改为 $Y\coth Y-1$，使 $Y\to0$ 时紫外极点消失（直线没有尖点）；对类空线，自能不可积，只能除去，此时 $\sigma=0$。两种做法给出的软因子相差一个与 $Y$ 无关的常数，(c) 表明它在 TMD 的组合中相消；同样，类时与类空线的顶角图在有限快度下相差 $\frac{\as C_F}{4\pi}2\pi^2$（\cref{lem:tmd-unsub-oneloop}(c)），这一差别也只存在于单个因子中，在类光极限下消失。只有组合起来的对象才与正规子无关，这是下面平方根构造的意义。

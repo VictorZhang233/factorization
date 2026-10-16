@@ -1,0 +1,278 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Finite $P_z$ Corrections for Unpolarized PDFs}\label{sec:corrections}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section, we detail the procedure to implement the $P_z$ corrections
+needed to extract the physical $q(x,\mu)$ from the quasi-distribution
+$\tilde{q}(x,\Lambda,P_z)$ computed from the lattice. We first explain each of the
+corrections and then summarize the procedure at the end of the section.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{One-Loop Matching}
+
+In the limit $P_z \rightarrow \infty$, the matching becomes the most
+important $P_z$ correction. The factor
+$Z\left(\xi=\frac{x}{y},\frac{\mu}{P_z},\frac{\Lambda}{P_z}\right)$
+has been computed up to one loop in
+Ref.~\cite{Xiong:2013bka} using a momentum-cutoff regulator instead of a
+lattice regulator. Therefore, this $Z$ factor is accurate up to the
+leading logarithm but not for the numerical constant. To determine this
+constant, a lattice perturbation theory calculation using the same lattice
+action is required.
+
+At tree level, the $Z$ factor is just a delta function,
+%
+\begin{equation}
+Z(\xi) = \delta (\xi-1) + \frac{\alpha_s}{2\pi} \overline{Z}(\xi)
+  + \mathcal{O}\left(\alpha_s^2 \right),
+\end{equation}
+%
+such that
+%
+\begin{equation}
+\widetilde{q}(x) \simeq q(x)
+  + \frac{\alpha_s}{2\pi} \int \frac{dy}{\left\vert y\right\vert}\,
+    \overline{Z}\!\left(\frac{x}{y}\right)q(y).
+\end{equation}
+%
+Since the difference between $\widetilde{q}(x)$ and $q(x)$ starts at
+the loop level, we can rewrite the above equation as
+%
+\begin{equation}
+q(x) \simeq \widetilde{q}(x)
+  - \frac{\alpha_s}{2\pi} \int \frac{dy}{\left\vert y\right\vert}\,
+    \overline{Z}\!\left(\frac{x}{y}\right)\widetilde{q}(y)
+\label{q}
+\end{equation}
+%
+with an error of $\mathcal{O}\left(\alpha_s^2\right)$~\cite{Ma:2014jla}.
+
+$\overline{Z}(\xi)$ is a singular function of $\xi$ with terms like
+$a/\left(1-\xi\right)^2$ and
+$\left(b\ln \left\vert 1-\xi \right\vert + c\right)/(1-\xi)$~\cite{Xiong:2013bka}. The value of $\left\vert \xi \right\vert$ is not bounded by unity when $P_z$ is
+finite. This is because $\overline{Z}$ describes the evolution of partons, which
+includes the gluon emission process where a mother quark splits into a daughter
+quark and a gluon. When $P_z$ is finite, the gluon can travel in the opposite
+direction from the mother quark, which makes the momentum fraction of the
+daughter quark bigger than that of the mother quark; hence, $\xi$ can be bigger
+than one. To show that these singular terms are not harmful, we use the fact
+that $\overline{Z}$ has the structure
+%
+\begin{equation}
+\overline{Z}(\xi) = \left(Z^{(1)}(\xi) - C\delta(\xi-1)\right),
+\end{equation}
+%
+with the first term coming from gluon emission and the second term from the quark
+self-energy diagram. $C=\int_{-\infty}^{\infty}\!d\xi^{\prime}\,Z^{(1)}(\xi
+^{\prime})$ such that $\int\!d\xi\,\overline{Z}(\xi)=0$ and particle-number
+conservation is satisfied. Using this, Eq.~\ref{q} becomes
+%
+\begin{equation}
+q(x) \simeq \widetilde{q}(x)
+  - \frac{\alpha_s}{2\pi} \int_{-\infty}^{\infty}\!dy\,
+  \left[ Z^{(1)}\!\left(\frac{x}{y}\right)
+    \frac{\widetilde{q}(y)}{\left\vert y\right\vert}
+  - Z^{(1)}\!\left(\frac{y}{x}\right)
+    \frac{\widetilde{q}(x)}{\left\vert x\right\vert}\right] .  \label{cov}
+\end{equation}
+%
+Then, when $\xi=x/y$ is close to one, the double poles
+$1/\left(1-\xi\right)^2$ in $Z^{(1)}(\xi)$ cancel out. The single pole
+$\left(b\ln \left\vert 1-\xi \right\vert + c\right)/(1-\xi)$ is odd in $(y-x)$,
+which is not an endpoint singularity in $y$ because $\xi$ is not bounded
+by unity. Therefore, the integral and $q(x)$ are finite.
+
+Another observation is that the double-pole structure in $Z^{(1)}$ makes
+$\widetilde{q}(x)$ behave like $\alpha_s/x^2$ at large $x$. This can be
+seen by approximating $\widetilde{q}(y)$ in the integral by $q(y)$ with $y$
+bounded by unity. So even though $\widetilde{q}(x)$ is finite, its higher
+moments are not. This is consistent with the fact that moments of
+$\tilde{q}(x)$, $q(x)$ and $Z(x)$ satisfy
+%
+\begin{equation}\label{momentrelation}
+\left\langle x^n \right\rangle_{\tilde{q}} =
+  \left\langle x^n \right\rangle_Z \left\langle x^n \right\rangle_q,
+\end{equation}
+%
+where
+\begin{equation}
+\langle x^{n}\rangle_{f}=\int_{-\infty}^{\infty}dx\,x^{n}f(x).
+\end{equation}
+Note that for $f=q$ this is identical to the usual moments since $q(x)$ vanishes outside $[-1,1]$. Eq.~\ref{momentrelation} can be obtained by taking moments of Eq.~\ref{Z}, and the divergence
+of higher moments of $Z$ implies the divergences of higher moments of $\tilde{q}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{$M^{2n}/P_z^{2n}$ Correction}
+
+In this subsection, we show how the $M^2/P_z^2$ correction to all
+orders (denoted as $M^{2n}/P_z^{2n}$) can be computed exactly. We will
+make use of the property
+%
+\begin{equation}
+\lambda_{\mu_1}\cdots \lambda_{\mu_n} P^{(\mu_1}\cdots P^{\mu_n)} =
+  \lambda_{(\mu_1}\cdots \lambda_{\mu_n)} P^{\mu_1}\cdots P^{\mu_n},
+\end{equation}
+%
+where $(...)$ means the indices enclosed are symmetric and traceless.
+
+A useful identity is
+%
+\begin{equation}
+\lambda_{(\mu_1}\cdots \lambda_{\mu_n)} =
+  \sum_{i=0}^{i_\text{max}} B_{n,i} \left(\lambda^2\right)^i
+    \left(\frac{\partial^2}{\partial\lambda_\alpha \partial\lambda^\alpha}\right)^i
+    \lambda_{\mu_1}\cdots \lambda_{\mu_n},  \label{a1}
+\end{equation}
+%
+where $i_\text{max}=\frac{n-\text{Mod}[n,2]}{2}$ and $B_{n,0}=1$.
+The $B$ coefficients can be determined by the tracelessness of
+$\lambda_{(\mu_1}\cdots \lambda_{\mu_n)}$ which implies
+%
+\begin{equation}
+g^{\mu_1 \mu_2}P^{\mu_3}\cdots P^{\mu_n}
+  \lambda_{(\mu_1}\cdots \lambda_{\mu_n)} = 0,
+\end{equation}
+%
+or
+%
+\begin{equation}
+\sum_{i=0}^{i_\text{max}} B_{n,i} \left(\lambda^2\right)^i
+  \left(\frac{\partial^2}{\partial\lambda_\alpha \partial\lambda^\alpha}\right)^i
+  \lambda^2 \left(\lambda \cdot P\right)^{n-2} = 0.  \label{C}
+\end{equation}
+%
+The left-hand side of this equation is a polynomial of powers of $\lambda^2$
+with each term involving at most two $B$ coefficients. Then, the identity of
+Eq.~\ref{C} yields the following recurrence relation:
+%
+\begin{equation}
+B_{n,i} = -\frac{B_{n,i-1}}{4i(n-i+1)}.  \label{a3}
+\end{equation}
+
+To implement the $M^{2n}/P_z^{2n}$ correction, we first compute the ratio of the moments 
+%
+\begin{align}
+K_n  &\equiv\frac{\left\langle x^{n-1}\right\rangle_{\tilde q}}{\left\langle x^{n-1}\right\rangle_q}=\frac{\lambda_{(\mu_1}\cdots \lambda_{\mu_n)}
+  P^{\mu_1}\cdots P^{\mu_n}}{\lambda_{\mu_1}\cdots \lambda_{\mu_n}
+  P^{\mu_1}\cdots P^{\mu_n}}  \notag \\
+&= \sum_{i=0}^{i_\text{max}} C_{n-i}^i c^i   \label{Kn},
+\end{align}
+%
+where $C$ is the binomial function and
+$c=-\lambda^2 M^2/4\left(\lambda\cdot P\right)^2 = M^2/4 P_z^2$
+with $\lambda^\mu = (0,0,0,-1)$ and $\lambda \cdot P=P_z$. 
+
+As shown in Appendix B, the above factors can be converted to the following relation between PDFs
+\begin{align}
+q(x)&=\sqrt{1+4c}\sum_{n=0}^\infty \frac{f_-^n}{f_+^{n+1}}\Big[(1+(-1)^n)\tilde q\Big(\frac{f_+^{n+1}x}{2f_-^n}\Big)+(1-(-1)^n)\tilde q\Big(\frac{-f_+^{n+1}x}{2f_-^n}\Big)\Big]\non\\
+&=\sqrt{1+4c}\sum_{n=0}^\infty \frac{(4c)^n}{f_+^{2n+1}}\Big[(1+(-1)^n)\tilde q\Big(\frac{f_+^{2n+1}x}{2(4c)^n}\Big)+(1-(-1)^n)\tilde q\Big(\frac{-f_+^{2n+1}x}{2(4c)^n}\Big)\Big],
+\end{align}
+where $f_{\pm}=\sqrt{1+4c}\pm 1$. Unlike the mass-correction expression of Ref.~\cite{Alexandrou:2015rja}, particle number is conserved in this expression.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{$\Lambda_\text{QCD}^2/P_z^2$ Correction}
+
+This correction comes from the trace part on the left-hand side of Eq.~\ref{O3},
+which is a twist-4 effect and can be implemented by adding a
+$\tilde{q}_\text{twist-4}$ contribution to $\tilde{q}$, such that
+%
+\begin{equation}
+\tilde{q}(x,\Lambda,P_z) \rightarrow
+  \tilde{q}(x,\Lambda,P_z) + \tilde{q}_\text{twist-4}(x,\Lambda,P_z).
+\end{equation}
+%
+As derived in Appendix~C,
+%
+\begin{equation}
+\tilde{q}_\text{twist-4}(x,\Lambda,P_z) =
+  \frac{1}{8\pi}\int_{-\infty}^\infty\!dz\,\Gamma_0 \left(-ixzP_z\right)
+  \left\langle P\left\vert \mathcal{O}_\text{tr}(z)\right\vert P\right\rangle,
+  \label{t4-1}
+\end{equation}
+%
+where $\Gamma_0$ is the incomplete Gamma function and
+%
+\begin{align}
+\mathcal{O}_\text{tr}(z) &=
+  \int_0^z\!dz_1\,\bar{\psi}(0) \Big[ \gamma^\nu \Gamma\left(0,z_1\right)
+    D_\nu\Gamma \left(z_1,z\right) \notag \\
+&{} + \int_0^{z_1}\!dz_2\, \lambda \cdot \gamma
+  \Gamma\left(0,z_2 \right) D^\nu \Gamma \left(z_2,z_1\right)
+  D_\nu \Gamma\left(z_1,z\right) \Big] \psi (z\lambda).  \label{t4-2}
+\end{align}
+%
+Instead of computing these corrections directly on the lattice, we only
+parametrize and fit them as a $1/P_z^2$ correction after we have
+removed other leading-$P_z$ corrections.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Summary of the Finite $P_z$ Corrections}
+
+Here we summarize the procedure needed to implement finite-$P_z$ corrections,
+and use the unpolarized $u(x)-d(x)$ PDF as an example. We focus on the flavor-nonsinglet PDF such that there is no mixing with the gluon PDF.
+The generalization to the polarized case will be shown in the next section.
+
+We start with the computation of the equal-time correlator on a Euclidean
+lattice:
+%
+\begin{equation}
+h_\text{lat}\left(z,P_z,\Lambda\right) =
+  \frac{1}{2P_z} \left\langle P\left\vert \bar{\psi}(0) \gamma_z
+  \left(\prod_n U_z (n\hat{z})\right) \psi(z) \right\vert P\right\rangle,
+  \label{hlat}
+\end{equation}
+%
+which is the lattice version of Eq.~\ref{eq:h-definition} with
+$\lambda^\mu=(0,0,0,-1)$ and $U_\mu$ is a discrete gauge link in the $\mu$
+direction. $h_\text{lat}\left(0\right)$ is the total quark number of
+the hadronic state. The quasi-PDF is the Fourier transform of $h_\text{lat}$:
+%
+\begin{equation}
+\widetilde{q}(x,P_z,\Lambda) \equiv
+  \int_{-\infty}^\infty \frac{dz\,P_z}{2\pi} e^{ixzP_z} h_\text{lat}.
+\end{equation}
+
+The second step is to implement the one-loop matching to convert
+$\widetilde{q}(x,P_z,\Lambda)$ in the lattice scheme to $q_I(x,P_z,\mu)$
+in the $\overline{\text{MS}}$ scheme:
+
+\begin{equation}
+q_I(x) \simeq \widetilde{q}(x) -
+  \frac{\alpha_s}{2\pi} \int_{-\infty}^\infty\!dy\,
+  \left[ Z^{(1)}\!\left(\frac{x}{y}\right)
+    \frac{\widetilde{q}(y)}{\left\vert y\right\vert} - 
+    Z^{(1)}\!\left(\frac{y}{x}\right)
+    \frac{\widetilde{q}(x)}{\left\vert x\right\vert} \right] .  \label{Z(1)}
+\end{equation}
+%
+We will use the $Z^{(1)}$ factor derived in Ref.~\cite{Xiong:2013bka} (also listed in Appendix~A for completeness),
+which matches the momentum cutoff scheme with the $\overline{\text{MS}}$
+scheme. This $Z^{(1)}$ factor is accurate up to the leading logarithm
+but not for the numerical constant. One should replace the momentum cutoff
+calculation with a lattice perturbation theory calculation to get the
+correct numerical constant in the future.
+
+The third step is to remove the $\mathcal{O}(M^{2n}/P_z^{2n})$
+correction from $q_I (x,P_z,\mu)$:
+%
+\begin{align}
+q_{II}(x)&=\sqrt{1+4c}\sum_{n=0}^\infty \frac{f_-^n}{f_+^{n+1}}\Big[(1+(-1)^n) q_I\Big(\frac{f_+^{n+1}x}{2f_-^n}\Big)+(1-(-1)^n)q_{I}\Big(\frac{-f_+^{n+1}x}{2f_-^n}\Big)\Big]\non\\
+&=\sqrt{1+4c}\sum_{n=0}^\infty \frac{(4c)^n}{f_+^{2n+1}}\Big[(1+(-1)^n) q_I\Big(\frac{f_+^{2n+1}x}{2(4c)^n}\Big)+(1-(-1)^n) q_I\Big(\frac{-f_+^{2n+1}x}{2(4c)^n}\Big)\Big].
+\end{align}
+%
+This gives rise to $q_{II}(x,P_z,\mu)$ whose remaining
+$\mathcal{O}\left(\Lambda_\text{QCD}^2/P_z^2\right)$ correction can be removed by
+adding the twist-4 contribution $\tilde{q}_\text{twist-4}$ defined in
+Eqs.~\ref{t4-1}--\ref{t4-2}
+%
+\begin{equation}
+q(x,\mu) = q_{II}(x,P_z,\mu) + \tilde{q}_\text{twist-4}(x,P_z,\mu).
+\label{final step}
+\end{equation}
+%
+$\tilde{q}_\text{twist-4}(x,P_z,\Lambda)$ can be computed on the lattice and in
+principle another matching to the $\overline{\text{MS}}$ scheme is
+required to obtain $\tilde{q}_\text{twist-4}(x,P_z,\mu)$. However, the difference
+is $\mathcal{O}\left(\alpha_s\,\tilde{q}_\text{twist-4}\right)$ and hence negligible. In this work, the effect of $\tilde{q}_\text{twist-4}$ will be
+parametrized, fitted to data and extrapolated $P_z \to \infty$ to obtain the $P_z$-independent left-hand side of
+Eq.~\ref{final step}.

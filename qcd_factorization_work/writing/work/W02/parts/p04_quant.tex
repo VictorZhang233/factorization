@@ -1,0 +1,243 @@
+% -------------------------------------------------------------------------------------
+\section{量子化：规范固定、Faddeev--Popov 鬼场与 Feynman 规则}\label{sec:qcd-quantization}
+
+微扰论从自由理论出发，需要每个场的传播子，即二次型的逆。经典拉氏量中胶子场的二次部分是
+\[
+-\frac14\big(\partial_\mu A^a_\nu-\partial_\nu A^a_\mu\big)^2=\frac12A^a_\mu\big(\partial^2g^{\mu\nu}-\partial^\mu\partial^\nu\big)A^a_\nu+(\text{全导数}),
+\]
+在动量空间中是矩阵 $-k^2g^{\mu\nu}+k^\mu k^\nu$，它把 $k_\nu$ 映为零：纯规范的模式 $A^a_\mu\propto k_\mu$ 不付出任何作用量，二次型不可逆，传播子不存在。这正是规范不变性的代价——作用量在整条规范轨道上相同，路径积分沿轨道方向没有阻尼。下面的注给出补救办法的形式推导。
+
+\begin{remark}[Faddeev--Popov 构造（形式推导）]\label{rem:qcd-fp-derivation}
+设 $Z=\int\mathcal DA\,\ee^{\ii S[A]}$，$S$ 与测度 $\mathcal DA$ 都规范不变。记 $A^U$ 为 $A$ 经变换 $U$ 所得的场，取规范条件 $F^a(A)=\partial^\mu A^a_\mu-\omega^a(x)$，并插入恒等式
+\[
+1=\Delta_{\mathrm{FP}}[A]\int\mathcal DU\,\delta\big[F(A^U)\big],\qquad \Delta_{\mathrm{FP}}[A]=\det\frac{\delta F^a(A^U(x))}{\delta\theta^b(y)}\Big|_{F(A^U)=0},
+\]
+其中 $U=\ee^{\ii\theta^at^a}$；$\Delta_{\mathrm{FP}}$ 规范不变（群测度不变）。作变量替换 $A\to A^{U^{-1}}$，被积函数与 $U$ 无关，$\int\mathcal DU$ 成为一个无穷大的常数因子而被提出。再对 $\omega^a$ 以权重 $\exp(-\frac{\ii}{2\xi_g}\int\omega^a\omega^a)$ 平均，$\delta$ 函数化为 $\exp(\ii\int\mathcal L_{\mathrm{gf}})$，$\mathcal L_{\mathrm{gf}}=-\frac1{2\xi_g}(\partial\cdot A^a)^2$。由\cref{prop:qcd-covariance}(c)，$\delta(\partial\cdot A^a)=\frac1g\partial^\mu(D_\mu\theta)^a$，故 $\Delta_{\mathrm{FP}}\propto\det(-\partial^\mu D^{ac}_\mu)$；用 Grassmann 积分把行列式写成指数，
+\[
+\det\big(-\partial^\mu D_\mu\big)\propto\int\mathcal D\bar c\,\mathcal Dc\,\exp\Big[\ii\int\dd^4x\,\bar c^a\big(-\partial^\mu D^{ac}_\mu\big)c^c\Big],
+\]
+即得\cref{eq:qcd-lagrangian}的后两项\cite{Faddeev:1967fc}。这个推导是\emph{形式的}：四维规范理论的路径积分没有数学定义。在微扰论中我们把它的结果直接作为\emph{定义}（\cref{def:qcd-fp}），其自洽性——物理 S 矩阵的幺正性、物理量与规范参数无关——随后由 BRST 对称性证明（\cref{thm:qcd-renormalizability}、\cref{prop:qcd-xi-independence}）。非微扰地看，规范固定曲面在场强较大处可以与同一条规范轨道相交多次（Gribov 复本\cite{Gribov:1977wm}，\cref{fig:qcd-gauge-orbit}）；微扰论围绕 $A=0$ 展开，在其任何一阶中都不出现这一问题。参见\cite[第~16.2~节]{PeskinSchroeder1995}与\cite[第~15~章]{Weinberg1996}。
+\end{remark}
+
+%%% BEGIN fig:qcd-gauge-orbit
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa orbit/.style={draw=blue!55!black,line width=0.7pt},
+  fa gf/.style={draw=orange!80!black,line width=1.1pt},
+  fa pt/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=4.2pt},
+  fa lab/.style={font=\footnotesize}]
+  % configuration space of gauge fields
+  \fill[gray!8,rounded corners=8pt] (-0.45,-1.85) rectangle (10.75,5.05);
+  \node[fa lab,anchor=north west,text=gray!45!black] at (-0.35,4.95) {规范场位形空间 $\{A^a_\mu(x)\}$};
+  % gauge orbits {A^U}: x = x_i + a sin(0.9 y + phi)
+  \draw[fa orbit] plot[domain=0:4.2,samples=40,variable=\t] ({1.8+0.18*sin(deg(0.9*\t))},{\t});
+  \draw[fa orbit] plot[domain=0:4.2,samples=40,variable=\t] ({3.4+0.22*sin(deg(0.9*\t+0.6))},{\t});
+  \draw[fa orbit] plot[domain=0:4.2,samples=40,variable=\t] ({5.0+0.22*sin(deg(0.9*\t+1.2))},{\t});
+  \draw[fa orbit] plot[domain=0:4.2,samples=40,variable=\t] ({6.6+0.2*sin(deg(0.9*\t+1.8))},{\t});
+  \draw[fa orbit] plot[domain=0:4.2,samples=40,variable=\t] ({8.4+0.18*sin(deg(0.9*\t+2.4))},{\t});
+  \node[fa lab,text=blue!50!black,anchor=south] at (4.8,4.22) {规范轨道 $\{A^U\}$};
+  % gauge-fixing surface F(A)=0 (folds back far from A=0)
+  \draw[fa gf] (-0.2,1.02) -- (0.9,1.25) .. controls (3.3,1.75) and (5.5,1.45) .. (7.4,1.85)
+               .. controls (9.3,2.25) and (9.65,3.45) .. (7.95,3.75);
+  \node[fa lab,text=orange!65!black,anchor=south west,align=left] at (-0.3,1.32) {规范固定曲面\\$F(A)=0$};
+  % intersections (computed from the curves above)
+  \node[fa pt] at (1.973,1.427) {};
+  \node[fa pt] at (3.601,1.558) {};
+  \node[fa pt] at (5.105,1.615) {};
+  \node[fa pt] at (6.561,1.716) {};
+  \node[fa pt,red!65!black] at (8.235,2.116) {};
+  \node[fa pt,red!65!black] at (8.300,3.667) {};
+  \node[fa lab,anchor=north west,inner sep=1.5pt] at (2.0,1.38) {$A=0$};
+  % Faddeev--Popov Jacobian: gauge direction along an orbit at the crossing
+  \draw[lcaxis,line width=0.7pt,blue!55!black] (5.105,1.615) -- ++(-0.12,0.85);
+  \node[fa lab,anchor=west,text=blue!50!black] at (5.02,2.42) {$\delta\theta$};
+  % Gribov copies
+  \draw[red!60!black,line width=0.6pt,dashed] (8.27,2.89) ellipse[x radius=0.36,y radius=1.12];
+  \node[fa lab,text=red!55!black,anchor=west,align=left] at (9.2,2.9) {Gribov\\复本};
+  % explanations in the lower band
+  \node[fa lab,align=center,anchor=north] at (1.75,-0.12) {微扰论在 $A=0$ 附近展开：\\每条轨道只交一次};
+  \node[fa lab,align=center,anchor=north] at (5.5,-0.12) {交点处的 Jacobian\\$\Delta_{\mathrm{FP}}=\det\dfrac{\delta F(A^U)}{\delta\theta}$\\给出鬼场};
+  \node[fa lab,align=center,anchor=north,text=red!55!black] at (9.15,-0.12) {大场强区：同一轨道\\被交多次（Gribov 复本，\\微扰论中不出现）};
+\end{tikzpicture}
+\caption{规范固定与 Faddeev--Popov 行列式（示意）：规范固定曲面与每条规范轨道相交一次，交点处的 Jacobian 给出鬼场。
+在远离 $A=0$ 的大场强区域，规范固定曲面可能与同一条轨道相交多次（Gribov 复本，红点）；它们在微扰论的任何一阶中都不出现。}
+\label{fig:qcd-gauge-orbit}
+\end{figure}
+%%% END fig:qcd-gauge-orbit
+
+\begin{definition}[协变规范、Faddeev--Popov 鬼场与微扰 QCD]\label{def:qcd-fp}
+(a) 协变规范的规范固定项（规范参数 $\xi_g$；Feynman 规范 $\xi_g=1$，Landau 规范 $\xi_g\to0$ 理解为极限）为 % VF-QCD-3
+\begin{equation}\label{eq:qcd-gf}
+\mathcal L_{\mathrm{gf}}=-\frac1{2\xi_g}\big(\partial^\mu A^a_\mu\big)^2,\qquad\text{等价地}\qquad \mathcal L_{\mathrm{gf}}=B^a\partial^\mu A^a_\mu+\frac{\xi_g}2B^aB^a ,
+\end{equation}
+其中 $B^a$ 是辅助的 Nakanishi--Lautrup 场；代入其运动方程 $B^a=-\partial\cdot A^a/\xi_g$ 回到第一种形式。
+
+(b) 鬼场拉氏量为 $\mathcal L_{\mathrm{FP}}=\bar c^a(-\partial^\mu D^{ac}_\mu)c^c$，与 $(\partial^\mu\bar c^a)(D_\mu c)^a$ 只差一个全导数；$c^a$、$\bar c^a$ 是伴随表示中彼此独立的 Grassmann 奇标量场。
+
+(c) \emph{微扰 QCD} 指由 $\mathcal L=\mathcal L_{\mathrm{cl}}+\mathcal L_{\mathrm{gf}}+\mathcal L_{\mathrm{FP}}$（即\cref{def:prelim-qcd}）生成的 Green 函数作为 $g$ 的形式幂级数，并按\cref{sec:prelim-renorm}的方式正规化与重整化。
+\uses{def:prelim-qcd}
+\end{definition}
+
+本书的全阶证明都在协变规范（主要是 Feynman 规范）中进行；光锥规范等轴向规范只用于启发式论证（例如第~8~章的\cref{rem:pdf-number-density}），因为其中的伪极点 $1/n\cdot k$ 需要额外的处方，全阶论证要困难得多（参见\cite{Collins2011}）。
+
+\begin{example}[由拉氏量导出传播子、鬼场顶点与闭合鬼圈因子]\label{ex:qcd-fp-lowest-order}
+(a) \emph{胶子传播子。}$\mathcal L_{\mathrm{cl}}+\mathcal L_{\mathrm{gf}}$ 的二次部分为 $\frac12A^a_\mu[\partial^2g^{\mu\nu}-(1-\xi_g^{-1})\partial^\mu\partial^\nu]A^a_\nu$。对平面波 $A\propto\ee^{-\ii k\cdot x}$（$\partial\to-\ii k$），二次型的矩阵为 $M^{\mu\nu}=-k^2g^{\mu\nu}+(1-\xi_g^{-1})k^\mu k^\nu$。它现在可逆：直接相乘可验证
+\[
+M^{\mu\nu}\cdot\frac{-1}{k^2}\Big[g_{\nu\rho}-(1-\xi_g)\frac{k_\nu k_\rho}{k^2}\Big]=g^\mu{}_\rho+\frac{k^\mu k_\rho}{k^2}\Big[-(1-\xi_g)-(1-\xi_g^{-1})+(1-\xi_g^{-1})(1-\xi_g)\Big]=g^\mu{}_\rho ,
+\]
+方括号中三项之和为 $-2+\xi_g+\xi_g^{-1}+(2-\xi_g-\xi_g^{-1})=0$。传播子是 $\ii$ 乘以二次型的逆，再配以 Feynman 的 $+\ii0$：
+\[
+\frac{-\ii\,\delta^{ab}}{k^2+\ii0}\Big[g^{\mu\nu}-(1-\xi_g)\frac{k^\mu k^\nu}{k^2}\Big].
+\]
+(b) \emph{鬼场。}$\mathcal L_{\mathrm{FP}}$ 的二次部分 $(\partial^\mu\bar c^a)(\partial_\mu c^a)$ 与复标量场 $\partial\phi^*\partial\phi$ 的形式相同，传播子为 $\ii\delta^{ab}/(p^2+\ii0)$。相互作用部分为 $\mathcal L_{\mathrm{gh}}=gf^{abc}(\partial^\mu\bar c^a)A^b_\mu c^c$（来自 $(D_\mu c)^a$ 中的 $gf^{abc}A^b_\mu c^c$）。顶点等于 $\ii$ 乘以单项式的系数；导数作用于 $\bar c^a$，而 $\bar c^a$ 对应以动量 $p$ \emph{离开}顶点的鬼场线，其平面波因子为 $\ee^{+\ii p\cdot x}$，故 $\partial^\mu\to+\ii p^\mu$，顶点为
+\[
+\ii\cdot gf^{abc}\cdot\ii p^\mu=-gf^{abc}p^\mu\qquad(a\text{：出射鬼场，动量 }p\text{；}b\text{：胶子；}c\text{：入射鬼场}).
+\]
+(c) \emph{闭合鬼圈。}鬼场是 Grassmann 奇的，与夸克一样，每个闭合鬼圈带一个因子 $-1$；鬼场传播子在色空间中是 $\delta^{ab}$，闭合鬼圈的色因子是 $f^{abc}$ 沿圈的缩并，即伴随表示中的迹。鬼场违背自旋--统计关系（Grassmann 奇的标量），这正说明它们不是物理粒子：它们只出现在圈图中，作用是抵消非物理极化的胶子（\cref{ex:qcd-qqbar-gg}）。
+\uses{def:qcd-fp}
+\end{example}
+
+把 $\mathcal L$ 写成 $\mathcal L_0+\mathcal L_{\mathrm{int}}$，$\mathcal L_0$ 为 $g=0$ 的部分。把 $G^a_{\mu\nu}$ 代入 $-\frac14G^aG^a$，交叉项的两半在 $\mu\leftrightarrow\nu$、$b\leftrightarrow c$ 下相等，于是
+\begin{equation}\label{eq:qcd-Lint}
+\begin{gathered}
+\mathcal L_{\mathrm{int}}=\sum_qg\,\bar\psi_q\gamma^\mu t^a\psi_q\,A^a_\mu-gf^{abc}\big(\partial_\mu A^a_\nu\big)A^{b\mu}A^{c\nu}-\frac{g^2}4f^{eab}f^{ecd}A^a_\mu A^b_\nu A^{c\mu}A^{d\nu}+gf^{abc}\big(\partial^\mu\bar c^a\big)A^b_\mu c^c .
+\end{gathered}
+\end{equation}
+% s2_lagrangian.py: cubic and quartic terms of -1/4 G G checked symbolically (SU(2))
+
+\begin{definition}[Feynman 规则]\label{def:prelim-feynman-rules}
+微扰 QCD（\cref{def:qcd-fp}）的 Feynman 规则如\cref{fig:prelim-feynman-rules}所示（Peskin--Schroeder 约定\cite{PeskinSchroeder1995}）：夸克传播子 $\frac{\ii(\sla p+m)}{p^2-m^2+\ii0}\delta_{ij}$；协变规范的胶子传播子 $\frac{-\ii\delta^{ab}}{k^2+\ii0}[g^{\mu\nu}-(1-\xi_g)\frac{k^\mu k^\nu}{k^2}]$；鬼场传播子 $\frac{\ii\delta^{ab}}{p^2+\ii0}$；夸克--胶子顶点 $\ii g\gamma^\mu t^a$；三胶子顶点（动量 $(k,\mu,a)$、$(p,\nu,b)$、$(q,\rho,c)$ 全部流入）$gf^{abc}[g^{\mu\nu}(k-p)^\rho+g^{\nu\rho}(p-q)^\mu+g^{\rho\mu}(q-k)^\nu]$；四胶子顶点 $-\ii g^2[f^{abe}f^{cde}(g^{\mu\rho}g^{\nu\sigma}-g^{\mu\sigma}g^{\nu\rho})+f^{ace}f^{bde}(g^{\mu\nu}g^{\rho\sigma}-g^{\mu\sigma}g^{\nu\rho})+f^{ade}f^{bce}(g^{\mu\nu}g^{\rho\sigma}-g^{\mu\rho}g^{\nu\sigma})]$；鬼场--胶子顶点 $-gf^{abc}p^\mu$（$p$ 为出射鬼场 $a$ 的动量）。导出规则：顶点等于 $\ii$ 乘以\cref{eq:qcd-Lint}中相应单项式的系数，对外腿与单项式中各场的一切指派求和（三、四胶子顶点分别为 $3!$、$4!$ 种指派），作用在携带流入动量 $p$ 的场上的 $\partial_\mu$ 换成 $-\ii p_\mu$。此外：每个圈动量积分 $\int\frac{\dd^Dl}{(2\pi)^D}$（$D$ 见\cref{sec:qcd-regularization}），每个闭合夸克圈或鬼场圈带因子 $-1$ 并对其色与 Dirac 指标求迹，并配以 Feynman 图通常的对称因子。% VF-CONV-3
+\uses{def:prelim-qcd, def:qcd-fp}
+\end{definition}
+
+%%% BEGIN fig:prelim-feynman-rules
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa idx/.style={font=\footnotesize,inner sep=2pt},
+  fa rule/.style={font=\small},
+  fa cap/.style={font=\footnotesize}]
+  % ===================== row 1: propagators =====================
+  % (a) quark
+  \begin{scope}
+    \draw[quark] (0,0) node[fa idx,left]{$j$} -- (2.4,0) node[fa idx,right]{$i$};
+    \path[mom={$p$}] (0,0) -- (2.4,0);
+    \node[fa rule] at (1.2,-0.95) {$\dfrac{\ii(\sla p+m)}{p^2-m^2+\ii0}\,\delta_{ij}$};
+    \node[fa cap] at (1.2,-1.85) {(a)\ 夸克传播子};
+  \end{scope}
+  % (b) gluon, Feynman gauge
+  \begin{scope}[xshift=5.3cm]
+    \draw[gluon] (0,0) node[fa idx,left]{$\mu,a$} -- (2.4,0) node[fa idx,right]{$\nu,b$};
+    \path[mom={$k$},mom sep=0.32cm] (0,0) -- (2.4,0);
+    \node[fa rule] at (1.2,-0.95) {$\dfrac{-\ii g_{\mu\nu}\,\delta^{ab}}{k^2+\ii0}$};
+    \node[fa cap] at (1.2,-1.85) {(b)\ 胶子传播子（Feynman 规范 $\xi_g=1$）};
+  \end{scope}
+  % (c) ghost
+  \begin{scope}[xshift=10.6cm]
+    \draw[ghost] (0,0) node[fa idx,left]{$a$} -- (2.4,0) node[fa idx,right]{$b$};
+    \path[mom={$p$}] (0,0) -- (2.4,0);
+    \node[fa rule] at (1.2,-0.95) {$\dfrac{\ii\,\delta^{ab}}{p^2+\ii0}$};
+    \node[fa cap] at (1.2,-1.85) {(c)\ 鬼场传播子};
+  \end{scope}
+  % ===================== row 2: three-point vertices =====================
+  % (d) quark-gluon vertex
+  \begin{scope}[yshift=-3.55cm]
+    \coordinate (v) at (1.45,0);
+    \draw[quark] (0.35,-0.85) node[fa idx,left]{$j$} -- (v);
+    \draw[quark] (v) -- (0.35,0.85) node[fa idx,left]{$i$};
+    \draw[gluon] (v) -- (2.75,0) node[fa idx,right]{$\mu,a$};
+    \node[vertex] at (v) {};
+    \node[fa rule] at (1.2,-1.75) {$\ii g\,\gamma^\mu\,(t^a)_{ij}$};
+    \node[fa cap] at (1.2,-2.62) {(d)\ 夸克—胶子顶点};
+  \end{scope}
+  % (e) ghost-gluon vertex
+  \begin{scope}[xshift=5.3cm,yshift=-3.55cm]
+    \coordinate (v) at (1.2,-0.3);
+    \draw[ghost] (0,-0.3) node[fa idx,left]{$c$} -- (v);
+    \draw[ghost] (v) -- (2.4,-0.3) node[fa idx,right]{$a$};
+    \draw[gluon] (v) -- (1.2,0.9) node[fa idx,above]{$\mu,b$};
+    \path[mom'={$p$}] (v) -- (2.4,-0.3);
+    \node[vertex] at (v) {};
+    \node[fa rule] at (1.2,-1.75) {$-g\,f^{abc}\,p^\mu$};
+    \node[fa cap] at (1.2,-2.62) {(e)\ 鬼场—胶子顶点};
+  \end{scope}
+  % (f) three-gluon vertex, all momenta incoming
+  \begin{scope}[xshift=11.8cm,yshift=-3.55cm]
+    \coordinate (v) at (0,0);
+    \draw[gluon] (v) -- (180:1.2) coordinate (ea) node[fa idx,left]{$\mu,a$};
+    \draw[gluon] (v) -- (-56:1.0) coordinate (eb) node[fa idx,anchor=west]{$\nu,b$};
+    \draw[gluon] (v) -- (56:1.0) coordinate (ec) node[fa idx,anchor=west]{$\rho,c$};
+    \path[mom={$k$},mom sep=0.3cm] (ea) -- (v);
+    \path[mom={$p$},mom sep=0.3cm] (eb) -- (v);
+    \path[mom={$q$},mom sep=0.3cm] (ec) -- (v);
+    \node[vertex] at (v) {};
+    \node[fa rule] at (0,-1.82)
+      {$\begin{aligned}gf^{abc}\big[&g^{\mu\nu}(k-p)^\rho+g^{\nu\rho}(p-q)^\mu\\[-1pt]&+g^{\rho\mu}(q-k)^\nu\big]\end{aligned}$};
+    \node[fa cap] at (0,-2.62) {(f)\ 三胶子顶点（动量 $k,p,q$ 均流入）};
+  \end{scope}
+  % ===================== row 3: four-gluon vertex =====================
+  \begin{scope}[xshift=2.3cm,yshift=-7.75cm]
+    \coordinate (v) at (1.2,0);
+    % short straight stubs keep the four coils from piling up at the vertex
+    \foreach \a/\l/\an in {135/{\mu,a}/-45,225/{\nu,b}/45,315/{\rho,c}/135,45/{\sigma,d}/-135} {
+      \draw[plain] (v) -- ++(\a:0.16);
+      \draw[gluon] ($(v)+(\a:0.16)$) -- ++(\a:1.04) node[fa idx,anchor=\an]{$\l$};
+    }
+    \node[vertex] at (v) {};
+    \node[fa rule,anchor=west] at (3.3,0)
+      {$\begin{aligned}
+        -\ii g^2\big[&f^{abe}f^{cde}\,(g^{\mu\rho}g^{\nu\sigma}-g^{\mu\sigma}g^{\nu\rho})\\
+        &+f^{ace}f^{bde}\,(g^{\mu\nu}g^{\rho\sigma}-g^{\mu\sigma}g^{\nu\rho})\\
+        &+f^{ade}f^{bce}\,(g^{\mu\nu}g^{\rho\sigma}-g^{\mu\rho}g^{\nu\sigma})\big]
+      \end{aligned}$};
+    \node[fa cap,anchor=west] at (3.3,-1.45) {(g)\ 四胶子顶点};
+  \end{scope}
+\end{tikzpicture}
+\caption{本书使用的 Feynman 规则（协变规范，$D_\mu=\partial_\mu-\ii gA^a_\mu t^a$，与 Peskin--Schroeder 第 16 章一致；图中胶子传播子取 Feynman 规范 $\xi_g=1$，一般 $\xi_g$ 的形式见正文）。
+夸克与鬼场传播子中的动量沿线上的箭头；夸克—胶子顶点 $(t^a)_{ij}$ 中的 $i$ 属于沿箭头离开顶点的夸克线；三胶子顶点的动量 $k,p,q$ 均流入顶点；
+鬼场—胶子顶点中 $a$ 为出射鬼场（动量 $p$ 流出顶点），$c$ 为入射鬼场，$b$ 为胶子的色指标。每个闭合夸克圈与闭合鬼场圈各带因子 $-1$。}
+\label{fig:prelim-feynman-rules}
+\end{figure}
+%%% END fig:prelim-feynman-rules
+
+以三胶子顶点为例说明“对指派求和”。$\mathcal L_3=-gf^{abc}(\partial_\mu A^a_\nu)A^{b\mu}A^{c\nu}$ 的三个场槽位分别指派给三条外腿 $(k,\mu,a)$、$(p,\nu,b)$、$(q,\rho,c)$，共 $3!$ 种；每种指派中导数给出 $-\ii$ 乘以所在腿的流入动量。把六项相加并乘以 $\ii$，利用 $f$ 的全反对称性合并，正好得到\cref{fig:prelim-feynman-rules}(f)。四胶子顶点同理由 $4!$ 种指派给出 (g)。这些推导都用平面波作了数值核对；% s2_lagrangian.py (3-, 4-gluon and ghost vertices from plane waves)
+若把规则中的某个符号弄反（例如三胶子顶点取相反的整体符号），下一个例子中的 Ward 恒等式就不再成立，这是检验约定自洽的灵敏手段。
+
+\begin{example}[树图 $q\bar q\to gg$：为什么需要鬼场]\label{ex:qcd-qqbar-gg}
+考虑 $q(p_1)\bar q(p_2)\to g(k_1,\mu,a)\,g(k_2,\nu,b)$，记 $Q=p_1+p_2$，$s=Q^2$，$t=(p_1-k_1)^2$，$u=(p_1-k_2)^2$，$J^\sigma_c=\bar v(p_2)\gamma^\sigma t^cu(p_1)$。Feynman 图的和（$=\ii\mathcal M$）为
+\[
+\mathcal A^{\mu\nu}_{ab}=\bar v(p_2)\Big[\ii g\gamma^\nu t^b\,\frac{\ii(\sla p_1-\sla k_1)}{t}\,\ii g\gamma^\mu t^a+\ii g\gamma^\mu t^a\,\frac{\ii(\sla p_1-\sla k_2)}{u}\,\ii g\gamma^\nu t^b\Big]u(p_1)
++\ii gJ_{c\rho}\frac{-\ii}{s}\,gf^{cab}\big[g^{\rho\mu}(Q+k_1)^\nu+g^{\mu\nu}(k_2-k_1)^\rho-g^{\nu\rho}(Q+k_2)^\mu\big],
+\]
+三项分别是 $t$ 道、$u$ 道与经三胶子顶点的 $s$ 道图（Feynman 规范）。
+
+\emph{第一步：Ward 恒等式的破坏。}把胶子 1 的极化换成其动量，对离壳的胶子动量与在壳夸克有 % VF-WL-9
+\begin{equation}\label{eq:qcd-qqgg-ward}
+k_{1\mu}\mathcal A^{\mu\nu}_{ab}=\frac{g^2f^{abc}}{s}\big(k_2^2g^{\nu\sigma}-k_2^\nu k_2^\sigma\big)J_{c\sigma}.
+\end{equation}
+在 QED 中（$f^{abc}\to0$）右边为零；非阿贝尔的 $s$ 道图使它不为零。两个胶子都在壳时（$k_2^2=0$），由流守恒 $Q\cdot J_c=0$ 得 $k_2\cdot J_c=-k_1\cdot J_c$，于是
+\begin{equation}\label{eq:qcd-qqgg-onshell}
+k_{1\mu}\mathcal A^{\mu\nu}_{ab}=k_2^\nu\,\mathcal A_{\mathrm{gh}},\qquad \mathcal A^{\mu\nu}_{ab}k_{2\nu}=k_1^\mu\,\mathcal A_{\mathrm{gh}},\qquad \mathcal A_{\mathrm{gh}}\equiv\frac{g^2f^{abc}}{s}\,k_1\cdot J_c .
+\end{equation}
+因此若胶子 2 取物理极化（$\epsilon_2\cdot k_2=0$），$k_{1\mu}\mathcal A^{\mu\nu}\epsilon^*_{2\nu}=0$：单个纵向胶子退耦。但若两个胶子都取非物理极化，结果不为零。$\mathcal A_{\mathrm{gh}}$ 恰好是 $q\bar q\to c^a(k_1)\,\bar c^b(k_2)$ 的振幅：经 $s$ 道胶子与鬼场顶点 $-gf^{acb}k_1^\sigma$，$\ii gJ_{c\rho}\cdot\frac{-\ii g^{\rho\sigma}}s\cdot(-gf^{acb}k_{1\sigma})=\frac{g^2f^{abc}}sk_1\cdot J_c$。
+
+\emph{第二步：极化求和。}对在壳胶子取类光矢量 $\bar k=(k^0,-\mathbf k)$，两个横向极化之和为
+\[
+P^{\mu\mu'}(k)\equiv\sum_{\lambda=1,2}\epsilon^\mu_\lambda\epsilon^{\mu'*}_\lambda=-g^{\mu\mu'}+\Delta^{\mu\mu'}(k),\qquad \Delta^{\mu\mu'}(k)=\frac{k^\mu\bar k^{\mu'}+\bar k^\mu k^{\mu'}}{k\cdot\bar k}.
+\]
+在 $\sum_{\mathrm{phys}}|\mathcal A|^2=\mathcal A^{\mu\nu}\mathcal A^{*\mu'\nu'}P_{\mu\mu'}(k_1)P_{\nu\nu'}(k_2)$（对夸克自旋与全部颜色求和）中展开 $P=-g+\Delta$。由\cref{eq:qcd-qqgg-onshell}，$(-g)\otimes\Delta(k_2)$ 的两项各给出 $-\sum|\mathcal A_{\mathrm{gh}}|^2$（例如 $-\mathcal A^{\mu\nu}k_{2\nu}\,\mathcal A^*_{\mu\nu'}\bar k_2^{\nu'}/(k_2\cdot\bar k_2)=-\mathcal A_{\mathrm{gh}}\mathcal A^*_{\mathrm{gh}}$），$\Delta(k_1)\otimes(-g)$ 同样给出 $-2\sum|\mathcal A_{\mathrm{gh}}|^2$；$\Delta\otimes\Delta$ 的四项中，含 $k_{1\mu}k_{2\nu}\mathcal A^{\mu\nu}=k_2^2\mathcal A_{\mathrm{gh}}=0$ 的两项为零，其余两项各给出 $+\sum|\mathcal A_{\mathrm{gh}}|^2$。合计
+\begin{equation}\label{eq:qcd-qqgg-ghost}
+\sum_{\mathrm{phys}}|\mathcal A|^2=\sum_{-g,-g}|\mathcal A|^2-2\sum|\mathcal A_{\mathrm{gh}}|^2 .
+\end{equation}
+
+\emph{第三步：结果。}对初态自旋（$\frac14$）与颜色（$\frac19$）平均，% VF-WL-9
+\begin{equation}\label{eq:qcd-qqgg-ckr}
+\frac1{36}\sum_{\mathrm{phys}}|\mathcal A|^2=g^4\Big[\frac{32}{27}\,\frac{t^2+u^2}{tu}-\frac83\,\frac{t^2+u^2}{s^2}\Big],
+\end{equation}
+与 Combridge、Kripfganz、Ranft\cite{CombridgeKripfganzRanft1977}的结果一致，并且与胶子传播子的规范参数 $\xi_g$ 无关。% s4_qqgg_ghosts.py, s6_qqgg_projector.py: (1)-(4), xi = 0, 1, 3
+
+\emph{寓意。}用 $-g_{\mu\nu}$ 对末态胶子求极化和，会把非物理的纵向与类时极化也计入；在 QED 中它们的贡献由 Ward 恒等式自动为零，在 QCD 中却不为零，必须减去 $2\sum|\mathcal A_{\mathrm{gh}}|^2$。这一项正是末态含一对鬼场的割图的贡献（闭合鬼圈的 $-1$，两种指派 $c^a\bar c^b$ 与 $\bar c^ac^b$ 给出因子 $2$）。所以在协变规范中计算截面时，鬼场割线不可省略。其一般原因是 BRST 四重态机制（\cref{prop:qcd-brst-cohomology}）与割图的物理幺正性（第~3~章的\cref{prop:prelim-unitarity}；附录~J 的\cref{prop:appJ-ghost-cuts}）。
+\uses{def:prelim-feynman-rules}
+\end{example}
+

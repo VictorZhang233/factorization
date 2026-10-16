@@ -1,0 +1,53 @@
+%%% BEGIN fig:tmd-dy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \node[jet blob,ellipse,minimum width=5.0cm,minimum height=1.1cm,inner sep=0pt] (A) at (0,-2.3) {};
+  \node[jetB blob,ellipse,minimum width=5.0cm,minimum height=1.1cm,inner sep=0pt] (B) at (0,2.3) {};
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] (S) at (0,0) {};
+  % hadrons (both enter on the amplitude side, leave on the conjugate side)
+  \draw[t3 hadron] (-4.8,-2.3) -- (A.west);  \draw[t3 hadron] (A.east) -- (4.8,-2.3);
+  \draw[t3 hadron] (-4.8, 2.3) -- (B.west);  \draw[t3 hadron] (B.east) -- (4.8, 2.3);
+  % active partons: quark from A, antiquark from B (fermion arrow H -> B)
+  \draw[quark] (A.162) -- (H.262);
+  \draw[quark] (Hd.278) -- (A.18);
+  \draw[quark] (H.98) -- (B.198);
+  \draw[quark] (B.342) -- (Hd.82);
+  % current insertions
+  \draw[photon] (H.west) -- (-4.35,0);
+  \draw[photon] (Hd.east) -- (4.35,0);
+  % soft gluons, on both sides of the cut
+  % (explicit border points: angle anchors of a wide ellipse lie near its centre)
+  \draw[gluon] (S.235) -- (-1.05,-1.79);  \draw[gluon] (S.305) -- (1.05,-1.79);
+  \draw[gluon] (S.125) -- (-1.05, 1.79);  \draw[gluon] (S.55)  -- (1.05, 1.79);
+  \draw[cut] (0,-3.15) -- (0,3.15);
+  % labels
+  \node[t3 lab] at (-1.15,-2.3) {$A$};  \node[t3 lab] at (-1.15,2.3) {$B$};
+  \node[t3 lab] at (H) {$H$};  \node[t3 lab] at (Hd) {$H^\dagger$};
+  \node[t3 lab] at (-0.5,0.0) [left] {$S$};
+  \node[t3 lab,above=1pt] at (-4.0,0.08) {$\gamma^*(q)$};
+  \node[t3 lab,above=1pt] at ( 4.0,0.08) {$\gamma^*(q)$};
+  \path[mom'={$k_A$},mom sep=0.26cm] (A.162) -- (H.262);
+  \path[mom={$k_B$},mom sep=0.26cm] (B.198) -- (H.98);
+  \node[t3 lab,below=1pt] at (-4.25,-2.35) {$P_A$};  \node[t3 lab,above=1pt] at (-4.25,2.35) {$P_B$};
+  \node[t3 note,anchor=west] at (0.52,0.13) {$k_S\sim q_{\mathrm T}$};
+  \node[t3 note,anchor=west] at (0.52,-0.27) {$\Rightarrow\tilde S(b_{\mathrm T})$};
+  \node[t3 note,anchor=north] at (0,-2.95) {$k_A\sim(Q,\,q_{\mathrm T}^2/Q,\,q_{\mathrm T})\ \Rightarrow\ \tilde f_{q/A}(x_A,b_{\mathrm T};\mu,\zeta_A)$};
+  \node[t3 note,anchor=south] at (0,2.95) {$k_B\sim(q_{\mathrm T}^2/Q,\,Q,\,q_{\mathrm T})\ \Rightarrow\ \tilde f_{\bar q/B}(x_B,b_{\mathrm T};\mu,\zeta_B)$};
+  \node[t3 note,anchor=north] at (-3.85,-0.12) {$H(Q;\mu)$};
+\end{tikzpicture}
+\caption{小 $q_{\mathrm T}$（$q_{\mathrm T}\ll Q$，可低至 $\Lambda$ 量级）Drell--Yan 过程的约化割图与 TMD 因子化的结构。竖直虚线为末态割线，两个强子都自左（振幅）入射、向右（共轭振幅）出射。
+$A$、$B$ 为分别与两强子共线的子图（各含穿过割线的强子残余），动量按 $(k^+,k^-,\boldsymbol k_{\mathrm T})$ 的标度如图所示；软子图 $S$ 的所有分量都是 $q_{\mathrm T}$ 量级（软区，而非超软区），
+以胶子与 $A$、$B$ 相连；$H$、$H^\dagger$ 为虚度 $\sim Q^2$ 的硬子图，经电流插入与 $\gamma^*$ 相连。来自 $B$ 的反夸克的费米子数箭头由 $H$ 指向 $B$，其动量 $k_B$ 则流入 $H$。
+对各区域作近似、用 Ward 恒等式把纵向极化胶子收入 Wilson 线并扣除共线区与软区的重叠之后，横向动量守恒 $\boldsymbol q_{\mathrm T}=\boldsymbol k_{A\mathrm T}+\boldsymbol k_{B\mathrm T}+\boldsymbol k_{S\mathrm T}$ 使三个因子在动量空间中作卷积、在 $b_{\mathrm T}$ 空间中相乘；把软因子 $\tilde S(b_{\mathrm T})$ 按定义分配进两个 TMD（见正文）后，得
+$\frac{\dd\sigma}{\dd Q^2\,\dd y\,\dd^2\boldsymbol q_{\mathrm T}}=\sigma_0\sum_q e_q^2\,H(Q;\mu)\int\frac{\dd^2\boldsymbol b_{\mathrm T}}{(2\pi)^2}\,\ee^{\ii\boldsymbol q_{\mathrm T}\cdot\boldsymbol b_{\mathrm T}}\,
+\tilde f_{q/A}(x_A,b_{\mathrm T};\mu,\zeta_A)\,\tilde f_{\bar q/B}(x_B,b_{\mathrm T};\mu,\zeta_B)+(q\leftrightarrow\bar q)+Y$，$\zeta_A\zeta_B=Q^4$，$Y$ 为与 $q_{\mathrm T}\sim Q$ 的固定阶结果相衔接的修正项。
+Glauber 区的贡献对此单举观测量相消，未画出。}
+\label{fig:tmd-dy}
+\end{figure}
+%%% END fig:tmd-dy

@@ -1,0 +1,42 @@
+=== 1. Dirac-matrix and epsilon conventions ===
+PASS  gamma5 = i g0 g1 g2 g3 is the off-diagonal unit block (Dirac rep.)
+PASS  gamma5^2 = 1
+PASS  {gamma5, gamma^mu} = 0 for all mu
+PASS  Tr(g^mu g^nu g^rho g^sigma g5) = -4 i eps^{mu nu rho sigma} with eps^{0123}=+1 (all 256 index sets)
+PASS  (gamma^+)^2 = (gamma^-)^2 = 0
+PASS  {gamma^+, gamma^-} = 2
+PASS  vslash = v^+ g^- + v^- g^+ - v^1 g^1 - v^2 g^2
+=== 2. leading-twist Fierz projection (used for DA and GPD projectors) ===
+PASS  Pu, Pv are projectors; gamma^- Pu = 0, Pv gamma^- = 0
+PASS  Pu M Pv = 1/4 [Tr(g+ M) g- + Tr(g+ g5 M) g5 g- + sum_j Tr(g+ g^j M) g- g^j]  for arbitrary M
+=== 3. pion projector ===
+PASS  Tr[gamma^mu gamma5 M_in] = i f p^mu  with M_in = (i f/4) gamma5 pslash  (=> <0|dbar g^mu g5 u|pi+> = i f p^mu)
+PASS  Tr[M_in] = Tr[gamma5 M_in] = Tr[gamma^mu M_in] = 0
+PASS  M_in is of leading twist: Pu M_in Pv = M_in
+PASS  <pi+(p)| ubar_a d_b |0> projector = gamma0 M_in^dagger gamma0 = (i f*/4) pslash gamma5
+=== 4. Fourier conventions of the DA ===
+PASS  free q qbar state: phase = e^{i(2x0-1) p.z}  => phi(x) = delta(x-x0), x = u-quark fraction
+PASS  symmetric <-> asymmetric form: e^{-i p.z} e^{i(2x-1)p.z} = e^{-i (1-x) p.(2z)}
+PASS  inversion: int dz^- e^{-i(2x-1)p^+z^-}[i f p^+ int dy e^{i(2y-1)p^+z^-}phi(y)] = i pi f phi(x)  (numerical, regulated)   [got 2.37635054098+0i, expected 2.37300698911+0i]
+=== 5. Gegenbauer expansion ===
+PASS  int_0^1 x(1-x) C_n C_m dx = delta_nm (n+1)(n+2)/(4(2n+3))   (n,m <= 8)
+PASS  a_n = 2(2n+3)/[3(n+1)(n+2)] int_0^1 dx C_n^{3/2}(2x-1) phi(x)  (recovers a test DA, n<=8)
+PASS  int_0^1 phi = a_0 = 1 for any a_{n>=1} (normalization fixed by a_0)
+PASS  int_0^1 6 x(1-x) C_n(2x-1)/x dx = 3 (-1)^n  (n<=12)  => int phi/x = 3 sum_n (-1)^n a_n
+PASS  int_0^1 6 x(1-x) C_n(2x-1)/(1-x) dx = 3        (n<=12)  => int phi/(1-x) = 3 sum_n a_n
+PASS  C_n^{3/2}(xi) = d/dxi P_{n+1}(xi)  (n<=11)
+PASS  C_n^{3/2}(1) = (n+1)(n+2)/2
+PASS  CZ DA 30x(1-x)(1-2x)^2 = 6x(1-x)[1 + (2/3) C_2^{3/2}(2x-1)]  (a_2 = 2/3, a_{n>2}=0)
+PASS  int phi_CZ/x = 5
+PASS  <xi^2> = int (2x-1)^2 phi = (1/5)(1 + 12 a_2/7)  (a_4 drops out)
+PASS  <xi^4> = int (2x-1)^4 phi = 3/35 + 8 a_2/35 + 8 a_4/77
+PASS  int dx e^{i(2x-1)lam} phi_as(x) = sum_n (i lam)^n <xi^n>/n!  (local OPE, through lam^5)
+PASS  closed form: int_0^1 dx e^{i(2x-1)lam} 6x(1-x) = 3 (sin lam - lam cos lam)/lam^3  (lam != 0; -> 1 as lam -> 0)
+=== 6. f_pi normalization from pi -> mu nu (tree level, no radiative corrections) ===
+   f_pi (tree level, from tau_pi and |V_ud|) = 131.70 MeV ;  f_pi/sqrt2 = 93.13 MeV
+PASS  tree-level f_pi from Gamma(pi->mu nu) is ~130 MeV (not ~93): the normalization <0|dbar g^mu g5 u|pi+> = i f_pi p^mu   [131.7 MeV]
+PASS  F_pi = f_pi/sqrt2 ~ 92-93 MeV (chiral-perturbation-theory / Lepage-Brodsky normalization)
+=== 7. dictionary to the Lepage-Brodsky normalization ===
+PASS  int phi_LB = f131/(2 sqrt(2 Nc)) = f93/(2 sqrt(Nc))
+----------------------------------------------------------------------
+s1_da: 32/32 PASS

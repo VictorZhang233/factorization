@@ -1,0 +1,106 @@
+%%% BEGIN fig:ee-cutsum-disc
+\begin{figure}[htbp]
+\centering
+% three-loop ladder graph of the current correlator (origin at its centre); #1 = cut path
+\newcommand{\fbEEladder}[1]{%
+  \draw[photon] (-1.85,0) -- (-1.25,0);
+  \draw[photon] (1.25,0) -- (1.85,0);
+  \draw[plain] (-1.25,0) to[out=62,in=180] (-0.62,0.72) -- (-0.42,0.72);
+  \draw[plain] (-0.42,0.72) -- (0.42,0.72);
+  \draw[quark=0.55] (0.42,0.72) -- (0.62,0.72) to[out=0,in=118] (1.25,0);
+  \draw[plain] (1.25,0) to[out=-118,in=0] (0.62,-0.72) -- (0.42,-0.72);
+  \draw[plain] (0.42,-0.72) -- (-0.42,-0.72);
+  \draw[quark=0.55] (-0.42,-0.72) -- (-0.62,-0.72) to[out=180,in=-62] (-1.25,0);
+  \draw[gluon] (-0.42,0.72) -- (-0.42,-0.72);
+  \draw[gluon] (0.42,0.72) -- (0.42,-0.72);
+  \foreach \p in {(-1.25,0),(1.25,0),(-0.42,0.72),(0.42,0.72),(-0.42,-0.72),(0.42,-0.72)} \node[vertex] at \p {};
+  \draw[cut] #1;}
+% reduced diagram of e+e- (origin at its centre); #1 = 1 draws the cut, 0 the forward box
+\newcommand{\fbEEred}[1]{%
+  \node[hard blob,circle,minimum size=0.42cm,inner sep=0pt] (H)  at (-1.13,0) {};
+  \node[hard blob,circle,minimum size=0.42cm,inner sep=0pt] (Hd) at ( 1.13,0) {};
+  \node[jet blob,ellipse,minimum width=1.42cm,minimum height=0.46cm,inner sep=0pt] (J1) at (0, 0.78) {};
+  \node[jetB blob,ellipse,minimum width=1.42cm,minimum height=0.46cm,inner sep=0pt] (J2) at (0,-0.78) {};
+  \node[soft blob,circle,minimum size=0.46cm,inner sep=0pt] (S) at (0,0) {};
+  \draw[photon] (-1.5,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (1.5,0);
+  \draw[quark] (H.70) -- (J1.188);
+  \draw[quark] (J1.352) -- (Hd.110);
+  \draw[quark] (Hd.250) -- (J2.8);
+  \draw[quark] (J2.172) -- (H.290);
+  \draw[gluon] (S.140) -- (-0.36,0.56);
+  \draw[gluon] (S.40) -- (0.36,0.56);
+  \draw[gluon] (S.220) -- (-0.36,-0.56);
+  \draw[gluon] (S.320) -- (0.36,-0.56);
+  \ifnum#1=1 \node[font=\scriptsize,inner sep=0pt,anchor=east] at ($(S.west)+(-0.04,0)$) {$S$};\else \node[font=\scriptsize] at (S) {$S$};\fi
+  \node[font=\scriptsize] at (-0.47,0.78) {$J_1$};
+  \node[font=\scriptsize] at (-0.47,-0.78) {$J_2$};
+  \node[font=\scriptsize,anchor=north] at (H.south) {$H$};
+  \node[font=\scriptsize,anchor=north] at (Hd.south) {$H^\dagger$};
+  \ifnum#1=1 \draw[cut] (0,1.18) -- (0,-1.18);
+  \else \draw[draw=gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt,rounded corners=4pt]
+          (-0.9,-1.14) rectangle (0.9,1.14);
+  \fi}
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize},
+  fb note/.style={font=\scriptsize,text=red!55!black},
+  fb bcut/.style={draw,line width=0.9pt,decorate,decoration={zigzag,segment length=4.2pt,amplitude=1.6pt}},
+  fb contour/.style={draw=blue!60!black,line width=0.9pt},
+  fb carrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}}]
+  % ======================= (a) cut classes of one O(alpha_s^2) graph =======================
+  \begin{scope}
+    \fbEEladder{(0,1.05) -- (0,-1.05)}
+    \node[fb lab] at (0,-1.38) {两粒子割线 $q\bar q$};
+    \node[fb note] at (0,-1.76) {单类至多 $1/\varepsilon^4$ 极点};
+  \end{scope}
+  \begin{scope}[xshift=4.35cm]
+    \fbEEladder{(-0.79,0.96) -- (0.09,-0.96)}
+    \node[fb lab] at (0,-1.38) {三粒子割线 $q\bar qg$};
+    \node[fb note] at (0,-1.76) {单类至多 $1/\varepsilon^4$ 极点};
+  \end{scope}
+  \begin{scope}[xshift=8.7cm]
+    \fbEEladder{(-0.91,0.965) -- (0.91,-0.965)}
+    \node[fb lab] at (0,-1.38) {四粒子割线 $q\bar qgg$};
+    \node[fb note] at (0,-1.76) {单类至多 $1/\varepsilon^4$ 极点};
+  \end{scope}
+  % hand-made brace and the statement
+  \draw[gray!45!black,line width=0.7pt] (-1.7,-2.0) to[out=-90,in=180] (-1.5,-2.2) -- (4.15,-2.2)
+       to[out=0,in=90] (4.35,-2.4) to[out=90,in=180] (4.55,-2.2) -- (10.2,-2.2) to[out=0,in=-90] (10.4,-2.0);
+  \node[font=\small] at (4.35,-2.75) {对全部割线求和（连同 $\MSbar$ 抵消项）：红外极点相消 $\;\Longrightarrow\;$ 有限};
+  \node[font=\footnotesize,text=gray!30!black] at (4.35,-3.25) {（单态项 $\propto(\sum_qe_q)^2$ 自 $\order{\as^3}$ 起：Furry 定理）};
+  \node[font=\small,anchor=west] at (-2.0,1.2) {(a)};
+  % ======================= (b) cut sum = discontinuity of the forward function =======================
+  \begin{scope}[yshift=-5.7cm]
+    \node[font=\small,anchor=west] at (-2.0,1.45) {(b)};
+    \node[font=\large] at (-1.55,0) {$\displaystyle\sum_{C}$};
+    \begin{scope}[xshift=0.4cm]\fbEEred{1}\end{scope}
+    \node[font=\normalsize] at (2.78,0) {$=\ \Disc_s$};
+    \begin{scope}[xshift=5.25cm]\fbEEred{0}\end{scope}
+    \node[fb lab,anchor=north] at (0.4,-1.28) {割线只穿过 $J_1$、$J_2$、$S$};
+    \node[fb lab,anchor=north,align=center] at (5.25,-1.28) {前向（编时）组合 $F(s)$};
+    % complex s plane
+    \begin{scope}[xshift=10.0cm]
+      \draw[lcaxis] (-1.95,0) -- (2.7,0) node[right,font=\footnotesize,inner sep=2pt] {$\Real s$};
+      \draw[lcaxis] (0,-1.8) -- (0,1.95) node[left,font=\footnotesize] {$\Imag s$};
+      \draw[fb bcut] (0,0) -- (2.45,0);
+      \draw[fb contour,fb carrow=0.2,fb carrow=0.5,fb carrow=0.8] (5:1.45) arc[start angle=5,end angle=355,radius=1.45];
+      \fill[blue!60!black] (5:1.45) circle[radius=1.5pt];
+      \fill[blue!60!black] (-5:1.45) circle[radius=1.5pt];
+      \node[font=\scriptsize,anchor=south west,inner sep=1pt] at ($(5:1.45)+(0.04,0.07)$) {$s+\ii0$};
+      \node[font=\scriptsize,anchor=north west,inner sep=1pt] at ($(-5:1.45)+(0.04,-0.07)$) {$s-\ii0$};
+      \node[font=\scriptsize,text=blue!55!black,anchor=south east,inner sep=1pt] at (132:1.5) {$|z|=s$：无钳夹};
+      \node[font=\scriptsize,align=left,text=gray!25!black,anchor=north west,inner sep=1pt] at (1.62,-0.62) {钳夹（Landau\\奇点）只在\\实轴上};
+      \node[font=\scriptsize,anchor=north] at (0.35,-1.95) {$F(s+\ii0)-F(s-\ii0)=-\displaystyle\int_{|z|=s}\!\dd z\,F'(z)$};
+    \end{scope}
+  \end{scope}
+\end{tikzpicture}
+\caption{割线求和与前向函数的不连续性（$e^+e^-$ 总截面；红色虚线为末态割线，左侧为振幅，右侧为共轭振幅）。
+(a)~$\order{\as^2}$ 的一个三圈流关联函数图（夸克圈上两条胶子横档）的三类割线：两粒子 $q\bar q$、三粒子 $q\bar qg$ 与四粒子 $q\bar qgg$（每类只画一例，其余割线位置与镜像未画出）。
+每类割图单独含有直到 $1/\varepsilon^4$ 的软、共线极点，只有对全部割线求和（连同 $\MSbar$ 抵消项）才有限（\cref{cor:ee-cuts}）；
+两个夸克圈各连一个光子的单态项 $\propto(\sum_qe_q)^2$ 由 Furry 定理自 $\order{\as^3}$ 起才出现。
+(b)~在钳夹面附近，割线只能穿过末态喷注 $J_1$、$J_2$ 与软子图 $S$，不能穿过 $H$、$H^\dagger$；对固定的 $H$、$H^\dagger$，由幺正性，对这些割线求和等于不加割线的前向（编时）组合 $F$（虚线框）的不连续性 $F(s+\ii0)-F(s-\ii0)$。
+$F$ 是 $s$ 的解析函数，钳夹（Landau 奇点）只出现在实轴的割线上；由 Cauchy 定理，不连续性等于沿圆周 $|z|=s$ 的积分，圆周除两端外离实轴 $\order{s}$，那里没有钳夹，只剩欧氏区可计算的部分（围道公式，\cref{prop:ee-contour}）。}
+\label{fig:ee-cutsum-disc}
+\end{figure}
+%%% END fig:ee-cutsum-disc

@@ -1,0 +1,212 @@
+% =====================================================================================================
+% appK_moments.tex  —  附录 K  矩问题与解析延拓引理
+% writer W09 (spec v2.3.1; LEAD_DECISIONS LA-1…LA-16). Checks: writing/work/W09/v7_appK.py, v11_appKL_extra.py
+% (logs/v7_appK.log 95/95 PASS, logs/v11_appKL_extra.log 22/22 PASS); research/c_pdf s6 (15/15 PASS).
+% All statements are pure mathematics (no tag); classical facts, own proofs, novelty not claimed.
+% =====================================================================================================
+\chapter{矩问题与解析延拓引理}\label{app:appK}
+
+正文多次遇到同一类问题：DIS 的算符乘积展开只提供结构函数的\emph{矩}，而且电磁流只给出偶数矩；定域算符只在整数 $N$ 处给出反常维度；强子层次的论证只在一段很短的虚线段上控制前向振幅。本附录回答由此产生的四个数学问题，并给出证明：(1) 一族矩在什么意义上唯一确定一个函数或分布，偶数矩能确定什么（\cref{sec:appK-hausdorff}）；(2) 由整数点上的值出发的解析延拓何时唯一（\cref{sec:appK-continuation}）；(3) \cref{ch:dis}非微扰论证所需的两个工具——受控增长的整函数与多项式系数的 Markov 不等式（\cref{sec:appK-entire}）；(4) 唯一性的限度：唯一不等于稳定，矩的 $\order{1/Q^2}$ 不等于逐点的 $\order{1/Q^2}$（\cref{sec:appK-counterexamples}）。全部陈述都是纯数学，不带严格性标签。Hausdorff 唯一性、紧支撑分布的矩唯一性、偶数矩定理及其推论、核的唯一性、多项式有界条件下延拓的唯一性、受控增长整函数引理与 Markov 不等式中常数的存在性都给出完整证明；Carlson 定理、Müntz--Szász 定理与 Markov 不等式的精确常数引用经典文献。这些都是经典结果，这里的证明只为本书自足而写，不声称新颖。
+
+用途一览：\cref{lem:appK-hausdorff}与\cref{thm:appK-even-moments}用于\cref{ch:prelim}的工具汇总与\cref{cor:dis-weak-xspace}；\cref{cor:appK-pdf}与\cref{prop:appK-kernels}用于\cref{thm:pdf-dis-xspace}与\cref{cor:disall-consistency}；\cref{prop:appK-continuation}用于\cref{rem:pdf-ns-plusminus}；\cref{lem:appK-compact}用于\cref{prop:appL-renormalized}；\cref{lem:appK-entire}用于\cref{prop:dis-dispersion-np}；\cref{lem:appK-markov}用于\cref{lem:dis-ope-segment}与\cref{thm:dis-fixed-n}（后三者的证明在\cref{app:appM}）；\cref{thm:appK-muntz}用于\cref{ch:front}中光线算符重整化的矩约化（\cref{prop:front-brst-bilocal}）。
+
+% -----------------------------------------------------------------------------------------------------
+\section{矩的唯一性}\label{sec:appK-hausdorff}
+
+矩问题有两半：哪些序列是矩序列（存在性），矩序列是否唯一确定对象（唯一性）。正文只用到容易的一半——唯一性；存在性的一个后果见\cref{rem:appK-counterexamples}(iv)。
+
+\begin{lemma}[Hausdorff 唯一性]\label{lem:appK-hausdorff}
+设 $\mu$ 是 $[0,1]$ 上的有限带号 Borel 测度，且 $\int_{[0,1]}t^m\,\dd\mu(t)=0$ 对一切 $m\in\mathbb N_0$ 成立，则 $\mu=0$。特别地，若 $h\in L^1(0,1)$ 且 $\int_0^1t^mh(t)\,\dd t=0$ 对一切 $m\ge0$ 成立，则 $h=0$ 几乎处处成立。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+对 $\varphi\in C[0,1]$，由 Weierstrass 逼近定理取多项式 $p_j\to\varphi$ 一致收敛。$\mu$ 消灭一切多项式，故
+$|\int\varphi\,\dd\mu|=|\int(\varphi-p_j)\,\dd\mu|\le\|\varphi-p_j\|_\infty\,|\mu|([0,1])\to0$，即 $\int\varphi\,\dd\mu=0$ 对一切连续函数成立；紧度量空间上的有限 Borel 测度都是正则的，由 Riesz 表示定理的唯一性部分得 $\mu=0$\cite[第~2、6~章]{Rudin1987}。对 $h\in L^1$ 也可以不用测度论：取连续函数 $0\le\varphi_k\le1$ 逐点收敛于区间 $[a,b]$ 的示性函数，由控制收敛定理得 $\int_a^bh\,\dd t=0$ 对一切 $0\le a<b\le1$ 成立，于是 $H(x)=\int_0^xh\equiv0$，由 Lebesgue 微分定理 $h=H'=0$ 几乎处处成立\cite[第~7~章]{Rudin1987}。有限区间矩问题的系统理论见\cite{Hausdorff1921a,Hausdorff1921b,Hausdorff1923}。
+\end{proof}
+
+正文中的分布并不都是函数或测度：$\MSbar$ 抵消项含加号分布与 $\delta(1-x)$，强子 PDF 一般只是分布。对紧支撑分布，Fourier--Laplace 变换给出同样的结论。
+
+\begin{lemma}[紧支撑分布由其矩决定]\label{lem:appK-compact}
+设 $T$ 是支撑在 $[-a,a]$（$a>0$）上的分布，$\langle T,\xi^m\rangle$ 表示 $T$ 与在 $[-a,a]$ 的一个邻域上等于 $\xi^m$ 的光滑紧支撑函数的配对（与该函数的选取无关）。若 $\langle T,\xi^m\rangle=0$ 对一切 $m\in\mathbb N_0$ 成立，则 $T=0$。进一步：
+(i) 若只知 $\langle T,\xi^m\rangle=0$ 对 $m\ge m_0$ 成立，则 $T=\sum_{j<m_0}c_j\,\delta^{(j)}(\xi)$，即不确定性只是 $\xi=0$ 处有限个 $\delta$ 导数的组合；
+(ii) 若 $T$ 是奇（偶）分布，它的偶（奇）次矩自动为零，因此奇（偶）次矩全为零已推出 $T=0$。
+对 $[-a,a]$ 上的有限带号测度，本引理就是\cref{lem:appK-hausdorff}。
+\uses{lem:appK-hausdorff}
+\end{lemma}
+
+\begin{proof}
+取 $\chi\in C_c^\infty(\mathbb R)$ 在 $[-a,a]$ 的一个邻域上等于 $1$。$T$ 的 Fourier--Laplace 变换 $\hat T(\zeta)=\langle T,\chi(\xi)\ee^{-\ii\zeta\xi}\rangle$ 是 $\zeta\in\mathbb C$ 的整函数（Paley--Wiener--Schwartz 定理\cite[定理~7.3.1]{Hormander2003}），并可在配对号下对 $\zeta$ 求导：
+$\hat T^{(m)}(0)=\langle T,\chi\,(-\ii\xi)^m\rangle=(-\ii)^m\langle T,\xi^m\rangle=0$。整函数的 Taylor 系数全为零，故 $\hat T\equiv0$；Fourier 变换在缓增分布上是单射\cite[第~7.1~节]{Hormander2003}，所以 $T=0$。
+(i) 分布 $\xi^{m_0}T$ 的全部矩 $\langle T,\xi^{m+m_0}\rangle$ 为零，故 $\xi^{m_0}T=0$；于是对支撑避开 $0$ 的检验函数 $\phi$，$\langle T,\phi\rangle=\langle\xi^{m_0}T,\phi/\xi^{m_0}\rangle=0$，$T$ 支撑在 $\{0\}$ 上，从而是 $\delta$ 的有限个导数的组合\cite[定理~2.3.4]{Hormander2003}。由 $\langle\xi^{m_0}\delta^{(j)},\phi\rangle=(-1)^j\binom{j}{m_0}m_0!\,\phi^{(j-m_0)}(0)$（$j\ge m_0$）且对 $j<m_0$ 为零，$\xi^{m_0}T=0$ 迫使 $j\ge m_0$ 的系数为零。
+(ii) 奇分布与偶函数 $\xi^{2l}$ 的配对为零，偶分布同理。
+测度情形：在仿射变换 $t=(\xi+a)/(2a)$ 下，像测度的矩是 $\mu$ 的矩的有限线性组合，全为零，由\cref{lem:appK-hausdorff}即得。
+\end{proof}
+
+DIS 只给出偶数矩，下面的定理说明这已足够确定 C 偶组合；证明只是一个变量代换。
+
+\begin{theorem}[偶数矩决定函数]\label{thm:appK-even-moments}
+设 $g$ 在 $(0,1)$ 上可测，且对某个整数 $k_0\ge0$ 有 $x^{2k_0}g\in L^1(0,1)$。若 $\int_0^1x^{2k}g(x)\,\dd x=0$ 对一切整数 $k\ge k_0$ 成立，则 $g=0$ 几乎处处成立。
+\uses{lem:appK-hausdorff}
+\end{theorem}
+
+\begin{proof}
+令 $h(t)=\frac12t^{k_0-\frac12}g(\sqrt t)$，$0<t<1$。代换 $t=x^2$（$\dd t=2x\,\dd x$）给出 $\int_0^1|h(t)|\,\dd t=\int_0^1x^{2k_0}|g(x)|\,\dd x<\infty$，以及对一切 $m\ge0$
+\[
+\int_0^1t^mh(t)\,\dd t=\int_0^1x^{2m}\cdot\tfrac12x^{2k_0-1}g(x)\cdot2x\,\dd x=\int_0^1x^{2(m+k_0)}g(x)\,\dd x=0 .
+\]
+由\cref{lem:appK-hausdorff}，$h=0$ 几乎处处成立。映射 $x\mapsto x^2$ 及其逆在 $(0,1)$ 上局部 Lipschitz，把零测集映为零测集，故 $g=0$ 几乎处处成立。
+\end{proof}
+
+证明只用到偶数矩的任一尾部 $k\ge k_0$，并且不需要 Müntz--Szász 定理（\cref{thm:appK-muntz}）：代换 $t=x^2$ 把偶数幂变成了全部整数幂。
+
+\begin{corollary}[PDF 的唯一性]\label{cor:appK-pdf}
+设 $q,\bar q,g$ 在 $(0,1)$ 上可测，且对某个整数 $N_1\ge1$，$x^{N_1-1}q$、$x^{N_1-1}\bar q$、$x^{N_1-1}g$ 都属于 $L^1(0,1)$。记 $a_N=\int_0^1x^{N-1}[q+(-1)^N\bar q]\,\dd x$（即 $\int_{-1}^1\xi^{N-1}f_q\,\dd\xi$），$b_N=\int_0^1x^{N-1}g\,\dd x$。则在几乎处处的意义下：
+(i) 偶数 $N\ge N_1$ 的 $a_N$ 决定 $q+\bar q$；(ii) 奇数 $N\ge N_1$ 的 $a_N$ 决定 $q-\bar q$；(iii) 偶数 $N\ge N_1$ 的 $b_N$ 决定 $g$；
+(iv) 偶数矩本身不能把 $q$ 与 $\bar q$ 分开：$(q,\bar q)$ 与 $(q+x(1-x),\,\bar q-x(1-x))$ 的偶数矩全同，奇数矩相差 $\frac{2}{(N+1)(N+2)}\ne0$。
+\uses{thm:appK-even-moments}
+\end{corollary}
+
+\begin{proof}
+由线性，只需证明矩全为零时函数为零。(i) 偶数 $N=2k$ 时 $x^{N-1}(q+\bar q)=x^{2k}\cdot\frac{q+\bar q}{x}$。取 $k_0=\lceil N_1/2\rceil$，则 $2k_0-1\ge N_1-1$，在 $(0,1)$ 上 $x^{2k_0}\frac{|q+\bar q|}{x}\le x^{N_1-1}|q+\bar q|$ 可积，对 $\frac{q+\bar q}{x}$ 用\cref{thm:appK-even-moments}。(ii) 奇数 $N=2k+1$ 时 $x^{N-1}(q-\bar q)=x^{2k}(q-\bar q)$；取 $k_0=\lceil(N_1-1)/2\rceil$，$2k_0\ge N_1-1$，对 $q-\bar q$ 用\cref{thm:appK-even-moments}。(iii) 与 (i) 相同，对 $g/x$ 用。(iv) $\delta q=x(1-x)$ 不改变 $q+\bar q$，把 $q-\bar q$ 改变 $2\delta q$，而 $\int_0^1x^{N-1}\,2x(1-x)\,\dd x=2(\frac1{N+1}-\frac1{N+2})=\frac{2}{(N+1)(N+2)}$。
+\end{proof}
+
+物理含义：电磁 DIS 只测得 C 偶组合 $q+\bar q$ 与 $g$；$q-\bar q$ 需要奇数矩，例如中微子 DIS 的 $F_3$（\cref{ch:dis}与\cref{ch:coll}）。若把夸克分布看作 $[-1,1]$ 上的分布 $f_q$ 而不要求它是函数，由\cref{lem:appK-compact}(ii)，全部偶数 $N\ge2$ 的矩决定 $f_q$ 的奇部分（$\xi\ne0$ 处为 $\frac12\,\mathrm{sgn}(\xi)(q+\bar q)(|\xi|)$）；只知 $N\ge N_1$ 时，不确定性是 $\xi=0$ 处 $\delta$ 函数的有限个奇数阶导数（\cref{lem:appK-compact}(i)）——这正是“$x=0$ 一点需要小心”的数学形式。
+
+下面的命题处理正文中真正出现的对象：带加号分布与 $\delta$ 项的核与系数函数。
+
+\begin{proposition}[领头阶核由偶数矩唯一确定]\label{prop:appK-kernels}
+(a) 设 $P=r(x)+a\,[\frac1{1-x}]_++b\,\delta(1-x)$，$a,b\in\mathbb R$，$r$ 可测且 $|r(x)|\le C/x$（$0<x\le1$）。其 Mellin 变换为 $M_P(N)=\int_0^1x^{N-1}r\,\dd x-a\,S_1(N-1)+b$（$N>1$；$S_1(N-1)=\psi(N)+\gamma_E$）。若 $M_P(N)=0$ 对一切偶数 $N\ge N_1$（$N_1\ge2$）成立，则 $a=b=0$，且 $r=0$ 几乎处处成立。
+(b) 更一般地，设 $\Delta=r+\sum_{k=0}^Ka_k\mathcal D_k+b\,\delta(1-x)$，$\mathcal D_k=[\ln^k(1-x)/(1-x)]_+$，$|r(x)|\le Cx^{-1}(1+|\ln x|)^L(1+|\ln(1-x)|)^L$（某 $L\ge0$）。若 $\int_0^1x^{N-1}\Delta=0$ 对一切偶数 $N\ge N_1$（$N_1\ge2$）成立，则一切 $a_k=0$，$b=0$，且 $r=0$ 几乎处处成立。
+\uses{thm:appK-even-moments}
+\end{proposition}
+
+\begin{proof}
+(a) Mellin 变换：由 $\frac1{1-x}=\sum_jx^j$，$\int_0^1\frac{x^{N-1}-1}{1-x}\dd x=-\sum_{j\ge0}(\frac1{j+1}-\frac1{j+N})=-S_1(N-1)$。沿偶数 $N\to\infty$，$|\int_0^1x^{N-1}r|\le C\int_0^1x^{N-2}=\frac{C}{N-1}\to0$，而 $S_1(N-1)=\ln N+\gamma_E+\order{1/N}$，故 $0=-a(\ln N+\gamma_E)+b+o(1)$，依次得 $a=0$、$b=0$。其余条件是 $\int_0^1x^{2k}\,\frac{r(x)}{x}\,\dd x=0$（$N=2k$，$k\ge N_1/2$）；$x^{2k_0}|r/x|\le Cx^{2k_0-2}$ 在 $k_0\ge1$ 时可积，由\cref{thm:appK-even-moments}，$r/x=0$，即 $r=0$ 几乎处处成立。
+(b) \emph{$\mathcal D_k$ 的矩。}对 $N\ge1$ 与 $0<\eta<1$，$\int_0^1(x^{N-1}-1)(1-x)^{\eta-1}\dd x=B(N,\eta)-\frac1\eta=\frac1\eta\big[\frac{\Gamma(N)\Gamma(1+\eta)}{\Gamma(N+\eta)}-1\big]$；右边在 $|\eta|<1$ 内全纯，左边按 $(1-x)^\eta=\sum_k\eta^k\ln^k(1-x)/k!$ 展开（控制收敛），比较系数得
+\[
+\langle\mathcal D_k,x^{N-1}\rangle=k!\,[\eta^{k+1}]\,\frac{\Gamma(N)\Gamma(1+\eta)}{\Gamma(N+\eta)} .
+\]
+由 Stirling 公式，$\Gamma(N)/\Gamma(N+\eta)=N^{-\eta}(1+\rho_N(\eta))$，$|\rho_N(\eta)|\le c/N$ 对 $|\eta|\le\frac12$ 一致成立；又 $\Gamma(1+\eta)N^{-\eta}=\exp\{-\eta\ell+\sum_{j\ge2}(-1)^j\zeta_j\eta^j/j\}$，$\ell=\ln N+\gamma_E$。在半径 $1/\ell$ 的圆周上用 Cauchy 估计（那里 $|N^{-\eta}|\le\ee$）得
+\[
+\langle\mathcal D_k,x^{N-1}\rangle=p_k(\ell)+\order{\ell^{k+1}/N},\qquad p_k(\ell)=k!\,[\eta^{k+1}]\exp\Big\{-\eta\ell+\sum_{j\ge2}\frac{(-1)^j\zeta_j}{j}\eta^j\Big\}=\frac{(-1)^{k+1}}{k+1}\ell^{k+1}+(\text{低次项}),
+\]
+例如 $p_0=-\ell$，$p_1=\frac12(\ell^2+\zeta_2)$。\emph{唯一性。}$|x^{N-1}r|$ 被 $N=N_1$ 时的可积函数控制且逐点趋于零，故 $\int_0^1x^{N-1}r\to0$。于是条件给出 $\sum_ka_kp_k(\ell_N)+b=o(1)$（$N\to\infty$ 取偶数）；左边是 $\ell$ 的多项式，$\ell_N\to\infty$，故它恒为零。$\ell^{K+1}$ 的系数只来自 $a_K$，得 $a_K=0$；依次得 $a_{K-1}=\dots=a_0=0$，再得 $b=0$。最后与 (a) 相同，由\cref{thm:appK-even-moments}得 $r=0$。
+\end{proof}
+% (b): asymptotics checked in v11 (c): remainder * N / L^k bounded for k <= 3, N up to 1e6.
+
+单圈的分裂函数与系数函数，以及文献中已经算出的高阶分裂函数\cite{MochVermaserenVogt2004,VogtMochVermaseren2004}与系数函数\cite{Moch:2004xu,Vermaseren:2005qc}，都属于 (b) 的分布类；(b) 正是\cref{thm:pdf-dis-xspace}与\cref{cor:disall-consistency}的证明中“系数函数由其偶数矩唯一确定”所需的形式。
+
+% -----------------------------------------------------------------------------------------------------
+\section{解析延拓}\label{sec:appK-continuation}
+
+定域算符只在整数 $N$ 处给出反常维度与 Wilson 系数，$x$ 空间的核是某个解析延拓的 Mellin 逆变换。两个不同的全纯函数可以在全部整数上相等（差一个 $\sin\pi N$），所以延拓的唯一性需要增长条件。
+
+\begin{theorem}[Carlson 定理]\label{thm:appK-carlson}
+设 $F$ 在 $\Real z>0$ 内全纯、在 $\Real z\ge0$ 上连续，存在 $\tau<\infty$ 使 $|F(z)|\le C\ee^{\tau|z|}$（$\Real z\ge0$），并且在虚轴上 $|F(\ii y)|\le C\ee^{c|y|}$，$c<\pi$。若 $F(n)=0$ 对 $n=0,1,2,\dots$ 成立，则 $F\equiv0$。常数 $\pi$ 不可改进：$\sin\pi z$ 在全部整数上为零，而 $|\sin(\pi\ii y)|=\sinh(\pi|y|)$。若 $F$ 只在偶数 $N\ge N_1$ 处为零，对 $G(z)=F(2z+N_1')$（$N_1'$ 为不小于 $N_1$ 的最小偶数）应用上述结论：$G$ 在虚轴上的型是 $F$ 在直线 $\Real z=N_1'$ 上的型的两倍，因此要求后者小于 $\pi/2$；临界反例是 $\sin(\pi z/2)$（型恰为 $\pi/2$，$|\sin(\pi(2+\ii y)/2)|=\sinh(\pi|y|/2)$），而不是型为 $\pi$ 的 $\sin^2(\pi z/2)=\frac12(1-\cos\pi z)$。
+% uses: none
+\end{theorem}
+
+定理属于 Carlson\cite{Carlson1914}；在整个右半平面上型小于 $\pi$ 的较弱形式见\cite[第~5.81~节]{Titchmarsh1939}，这里的形式见\cite[定理~9.2.1]{Boas1954}。对矩与 DGLAP 核，下面更简单而且完整证明的命题已经足够。
+
+\begin{proposition}[多项式有界条件下延拓的唯一性]\label{prop:appK-continuation}
+设 $F$ 在 $\Real z>\sigma_0$ 内全纯，且 $|F(z)|\le C(1+|z|)^m$（某 $m\ge0$）。若 $F$ 在实算术级数 $z_k=z_0+kd$（$k=1,2,\dots$；$d>0$，$z_1>\sigma_0$）上为零，则 $F\equiv0$。推论：
+(i) 若 $x^{\sigma_0-1}q\in L^1(0,1)$，则 $M_q(N)=\int_0^1x^{N-1}q\,\dd x$ 在 $\Real N>\sigma_0$ 中全纯、在 $\Real N\ge\sigma_0$ 中以 $\int_0^1x^{\sigma_0-1}|q|$ 为界，故它由偶数（或奇数）$N$ 上的值唯一确定；
+(ii) \cref{prop:appK-kernels}中的核的 Mellin 变换在 $\Real N\ge\sigma_0>1$ 中多项式有界（$\mathcal D_k$ 项为 $\order{\ln^{k+1}|N|}$），故由偶数 $N$ 出发的延拓唯一，例如 $S_1(N)\mapsto\psi(N+1)+\gamma_E$；加上 $c\sin(\pi N/2)$ 不改变偶数点上的值，但它按 $\ee^{\pi|\Imag N|/2}$ 增长，因而被排除；
+(iii) 由偶数 $N$ 出发的延拓与由奇数 $N$ 出发的延拓各自唯一，但一般是\emph{不同}的函数（分别对应 $q+\bar q$ 与 $q-\bar q$）。
+\uses{prop:appK-kernels}
+\end{proposition}
+
+\begin{proof}
+平移后可设 $\sigma_0=0$，此时 $z_1>0$。令 $H(z)=F(z)/(z+1)^m$。$\Real z>0$ 时 $|z+1|^2=|z|^2+2\Real z+1>\max(1,|z|^2)$，故 $1+|z|\le2|z+1|$，$|H|\le2^mC\equiv M_0$。Cayley 变换 $w=\frac{z-1}{z+1}$ 把右半平面一一地映为单位圆盘（逆为 $z=\frac{1+w}{1-w}$），$\Phi(w)=H(\frac{1+w}{1-w})$ 在 $|w|<1$ 内全纯且 $|\Phi|\le M_0$，零点为 $w_k=\frac{z_k-1}{z_k+1}\in(-1,1)$；$z_k>1$ 时 $1-|w_k|=\frac{2}{z_k+1}$，与调和级数比较知 $\sum_k(1-|w_k|)=\infty$。设 $\Phi\not\equiv0$，写 $\Phi(w)=w^j\Psi(w)$，$\Psi(0)\ne0$；在 $|w|=r$ 上 $|\Psi|\le M_0r^{-j}$，由极大模原理并令 $r\to1$ 得 $|\Psi|\le M_0$。对 $0<r<1$，Jensen 公式\cite[第~15.16--15.20~节]{Rudin1987}给出
+\[
+\log|\Psi(0)|=\sum_{0<|w_k|\le r}\log\frac{|w_k|}{r}+\frac1{2\pi}\int_0^{2\pi}\log|\Psi(r\ee^{\ii\theta})|\,\dd\theta\le\sum_{0<|w_k|\le r}\log\frac{|w_k|}{r}+\log M_0 ,
+\]
+即 $\sum_{0<|w_k|\le r}\log\frac{r}{|w_k|}\le\log\frac{M_0}{|\Psi(0)|}$ 对一切 $r<1$ 成立。令 $r\uparrow1$，由单调收敛得 $\sum_k\log\frac1{|w_k|}<\infty$；而 $\log\frac1s\ge1-s$（$0<s\le1$），故 $\sum_k(1-|w_k|)<\infty$，矛盾。所以 $F\equiv0$。
+(i) $|x^{N-1}q|\le x^{\sigma_0-1}|q|$（$\Real N\ge\sigma_0$，$0<x<1$），在积分号下求导即得全纯性；两个这样的变换之差在偶数点为零，对它用本命题（$m=0$）。(ii) 由 (a) 的证明，$|\int x^{N-1}r|\le C/(\Real N-1)$，$\psi(N)=\order{\ln|N|}$，$\mathcal D_k$ 项由 $\Gamma$ 函数表示同样多项式有界；而 $|\sin(\pi(\sigma+\ii y)/2)|\ge\sinh(\pi|y|/2)$。(iii) 由 (i)，两种延拓分别由各自的 $q\pm\bar q$ 唯一确定。
+\end{proof}
+
+领头阶 $qq$ 道两种延拓相同；从次领头阶起非单态的 C 偶与 C 奇反常维度不同，$P^+_{\mathrm{NS}}\ne P^-_{\mathrm{NS}}$（\cref{rem:pdf-ns-plusminus}）。Carlson 定理本身只在没有多项式界、只知整数点上的值时才需要。
+
+\begin{theorem}[Müntz--Szász 定理]\label{thm:appK-muntz}
+设 $0<\lambda_1<\lambda_2<\cdots\to\infty$。则 $\{1,x^{\lambda_1},x^{\lambda_2},\dots\}$ 的线性组合在 $C[0,1]$ 中稠密，当且仅当 $\sum_k1/\lambda_k=\infty$。在 $L^2(0,1)$ 中有显式的距离公式：对互不相同的 $\lambda,\lambda_1,\dots,\lambda_K>-\frac12$，
+\begin{equation}\label{eq:appK-muntz}
+\operatorname{dist}_{L^2(0,1)}\big(x^\lambda,\operatorname{span}\{x^{\lambda_1},\dots,x^{\lambda_K}\}\big)=\frac{1}{\sqrt{2\lambda+1}}\prod_{k=1}^K\frac{|\lambda-\lambda_k|}{\lambda+\lambda_k+1}.
+\end{equation}
+% uses: none
+\end{theorem}
+
+定理见\cite{Muntz1914,Szasz1916}，证明见\cite[第~15.25--15.27~节]{Rudin1987}（与\cref{prop:appK-continuation}同一思路：Jensen 公式与 Blaschke 条件）。距离公式可直接验证：$\{x^{a_i}\}$ 在 $L^2(0,1)$ 中的 Gram 矩阵 $(\frac1{a_i+a_j+1})$ 是 Cauchy 矩阵，距离的平方等于两个 Gram 行列式之比，由 Cauchy 行列式 $\det(\frac1{u_i+v_j})=\prod_{i<j}(u_j-u_i)(v_j-v_i)/\prod_{i,j}(u_i+v_j)$ 化简即得\cref{eq:appK-muntz}。例：$x$ 到 $\{x^2,x^4,\dots,x^{2K}\}$ 的距离为 $\frac1{\sqrt3}\prod_{k\le K}\frac{2k-1}{2k+2}\sim K^{-3/2}\to0$；$x$ 到 $\{x^{k^2+1}\}_{k\ge1}$ 的距离为 $\frac1{\sqrt3}\prod_{k\ge1}\frac{k^2}{k^2+3}=\frac{\pi}{\sinh(\sqrt3\pi)}=0.02723\ne0$（用 $\sinh\pi z=\pi z\prod_k(1+z^2/k^2)$）。由 Hahn--Banach 定理，$[0,1]$ 上的有限测度由幂次 $\{1,x^{\lambda_k}\}$ 的矩唯一确定，当且仅当这些幂次在 $C[0,1]$ 中稠密；\cref{thm:appK-even-moments}以代换 $t=x^2$ 避开了这一定理。
+% Gram-determinant identity and pi/sinh(sqrt3 pi) checked in v7 (f).
+
+% -----------------------------------------------------------------------------------------------------
+\section{整函数与多项式系数的估计}\label{sec:appK-entire}
+
+以下两个引理用于\cref{ch:dis}强子层次的论证（证明在\cref{app:appM}）。前者把“全纯函数在实轴外的受控增长”化为“多项式”，用于由 Wightman 公理得到有限减除的色散关系（\cref{prop:dis-dispersion-np}）。后者把“多项式在一段短线段上很小”化为“系数很小”：OPE 只在长度为 $\order{M/Q}$ 的欧氏线段上控制前向 Compton 振幅（\cref{lem:dis-ope-segment}），要由此提取固定 $n$ 的 Taylor 系数（\cref{thm:dis-fixed-n}），必须付出因子 $h^{-k}$，而其常数正是 Markov 不等式给出的。
+
+\begin{lemma}[受控增长的整函数]\label{lem:appK-entire}
+设 $f$ 是整函数，存在 $C>0$ 与 $A,B\ge0$，使 $|f(z)|\le C(1+|z|)^A|\Imag z|^{-B}$ 对一切 $\Imag z\ne0$ 成立。则 $|f(z)|\le C(3+|z|)^A$ 对一切 $z\in\mathbb C$ 成立；因此 $f$ 是次数不超过 $A$ 的多项式。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+(1) \emph{平均值不等式。}对整函数 $f$、任意 $z_0$ 与 $r>0$，若 $f(z_0)\ne0$，Jensen 公式（允许圆周上有零点）\cite[第~15.16--15.20~节]{Rudin1987}给出
+$\log|f(z_0)|+\sum_{|a_l-z_0|\le r}\log\frac{r}{|a_l-z_0|}=\frac1{2\pi}\int_0^{2\pi}\log|f(z_0+r\ee^{\ii\theta})|\,\dd\theta$（$a_l$ 为零点），左边的和非负，故
+\[
+\log|f(z_0)|\le\frac1{2\pi}\int_0^{2\pi}\log|f(z_0+r\ee^{\ii\theta})|\,\dd\theta ;
+\]
+$f(z_0)=0$ 时此式平凡成立。
+(2) \emph{代入增长条件。}取 $r=2$，$z_0=x_0+\ii y_0$。圆周上除至多两点外 $\Imag(z_0+2\ee^{\ii\theta})=y_0+2\sin\theta\ne0$，且 $|z_0+2\ee^{\ii\theta}|\le|z_0|+2$，故
+\[
+\log|f(z_0)|\le\log C+A\log(3+|z_0|)-B\,J(y_0),\qquad J(y)\equiv\frac1{2\pi}\int_0^{2\pi}\log|y+2\sin\theta|\,\dd\theta .
+\]
+(3) \emph{$J(y)\ge0$。}令 $w=\ee^{\ii\theta}$，则 $2\sin\theta=-\ii(w-w^{-1})$，$|y+2\sin\theta|=|\ii w(y+2\sin\theta)|=|w^2+\ii yw-1|$。对 $p(w)=w^2+\ii yw-1$ 在单位圆上用 Jensen 公式：$p(0)=-1$，两根 $w_{1,2}$ 之积为 $-1$，故
+\[
+J(y)=\log|p(0)|+\sum_{|w_l|\le1}\log\frac1{|w_l|}=\log\max(|w_1|,|w_2|)=\log\max\Big(1,\frac{|y|+\sqrt{y^2-4}}{2}\Big)\ge0
+\]
+（$|y|\le2$ 时两根都在单位圆上，$J=0$）。
+(4) 由 (2)(3)，$|f(z_0)|\le C(3+|z_0|)^A$。由 Cauchy 估计，$|f^{(k)}(0)|/k!\le C(3+R)^A/R^k\to0$（$R\to\infty$，$k>A$），所以 $f$ 是次数不超过 $A$ 的多项式。
+\end{proof}
+% J(y) closed form, Jensen identity and the sub-mean inequality checked numerically in v7 (b).
+
+\begin{lemma}[V. A. Markov 系数不等式]\label{lem:appK-markov}
+设 $p(x)=\sum_{k=0}^Na_kx^k$ 是实系数多项式，$h>0$，记 $\|p\|_h=\max_{|x|\le h}|p(x)|$；Chebyshev 多项式记为 $T_m(x)=\cos(m\arccos x)=\sum_kt_{m,k}x^k$。则对 $0\le k\le N$
+\begin{equation}\label{eq:appK-markov}
+|a_k|\le c_{N,k}\,\|p\|_h\,h^{-k},\qquad
+c_{N,k}=\begin{cases}|t_{N,k}|,& N-k\ \text{为偶数},\\ |t_{N-1,k}|,& N-k\ \text{为奇数},\end{cases}
+\end{equation}
+且界由 $T_N(x/h)$（$N-k$ 为偶数）或 $T_{N-1}(x/h)$（$N-k$ 为奇数）取到。初等的较弱界 $|a_k|\le c'_{N,k}\|p\|_hh^{-k}$，$c'_{N,k}=2\sum_{m=k}^N|t_{m,k}|$，有完整证明；后文的定理只用到“存在只依赖于 $N$ 与 $k$ 的常数”。复系数情形：对 $u(\omega)=\sum_{k\le N}b_k\omega^k$，记 $\|u\|=\max_{|y|\le r}|u(\ii y)|$（虚线段 $\{\ii y:|y|\le r\}$ 上的最大模），则 $|b_k|\le\sqrt2\,c_{N,k}\|u\|r^{-k}$（以 $c'_{N,k}$ 代替 $c_{N,k}$ 亦然）。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+\emph{化到 $[-1,1]$。}$\tilde p(x)=p(hx)=\sum_ka_kh^kx^k$ 满足 $\max_{[-1,1]}|\tilde p|=\|p\|_h$，故只需对 $h=1$ 证明。
+\emph{初等界。}把 $\tilde p$ 按 Chebyshev 多项式展开，$\tilde p=\sum_{m=0}^Nc_mT_m$。由正交关系 $\int_0^\pi\cos m\theta\cos m'\theta\,\dd\theta=\frac\pi2(1+\delta_{m0})\delta_{mm'}$，
+$c_0=\frac1\pi\int_0^\pi\tilde p(\cos\theta)\,\dd\theta$，$c_m=\frac2\pi\int_0^\pi\tilde p(\cos\theta)\cos m\theta\,\dd\theta$（$m\ge1$），故 $|c_m|\le2\|p\|_h$。比较 $x^k$ 的系数（$T_m$ 的次数为 $m$）得 $a_kh^k=\sum_{m=k}^Nc_mt_{m,k}$，于是 $|a_k|h^k\le2\|p\|_h\sum_{m=k}^N|t_{m,k}|=c'_{N,k}\|p\|_h$。
+\emph{精确常数。}\cref{eq:appK-markov}是 V. A. Markov 在 1892 年的俄文专著中得到的，德译本见\cite{Markoff1916}。$T_N(x/h)$ 在 $[-h,h]$ 上以 $1$ 为界，其 $x^k$ 系数为 $t_{N,k}h^{-k}$，所以 $N-k$ 为偶数时界可以取到；$N-k$ 为奇数时 $t_{N,k}=0$，由次数不超过 $N$ 的 $T_{N-1}$ 取到。
+\emph{复系数。}$u(\ii y)=\sum_k(\ii^kb_k)y^k$，其实部与虚部都是 $y$ 的实系数多项式，在 $|y|\le r$ 上以 $\|u\|$ 为界，故 $|\Real(\ii^kb_k)|,|\Imag(\ii^kb_k)|\le c_{N,k}\|u\|r^{-k}$，从而 $|b_k|=|\ii^kb_k|\le\sqrt2\,c_{N,k}\|u\|r^{-k}$。
+\end{proof}
+% sharp constants: LP check N <= 9 (v7 (a)); elementary bound and |c_m| <= 2||p|| (v11 (a)).
+% Parity form attributed to V. A. Markov (1892; German transl. Math. Ann. 77 (1916)) as in Milovanovic-Marinkovic,
+% Facta Univ. Ser. Math. Inform. 5 (1990) 25, eq. (1.1) (read 2026-10-14); location inside Markoff1916 not checked.
+
+例：$N=4$ 时，由 $T_4=8x^4-8x^2+1$ 与 $T_3=4x^3-3x$ 得 $(c_{4,0},\dots,c_{4,4})=(1,3,8,4,8)$，初等界为 $(6,8,20,8,16)$。常数随 $N$ 指数增长（如 $c_{N,N}=2^{N-1}$），所以由短线段上的误差估计系数时，结论只对固定的 $N$ 与 $k$ 有意义——这与\cref{thm:dis-fixed-n}只对固定的 $n$ 成立相一致。
+
+% -----------------------------------------------------------------------------------------------------
+\section{反例与稳定性}\label{sec:appK-counterexamples}
+
+\begin{remark}[反例与稳定性]\label{rem:appK-counterexamples}
+(i) \emph{分布可以逃过偶数矩。}$\delta'(x)$ 满足 $\langle\delta',x^{2k}\rangle=-\frac{\dd}{\dd x}x^{2k}\big|_{x=0}=0$（$k\ge0$），却不是零分布：$\langle\delta',x\rangle=-1$。所以\cref{thm:appK-even-moments}中“$g$ 是（加权可积的）函数”这一条件不能去掉；在 $[-1,1]$ 的表述中，这类不确定性恰是\cref{lem:appK-compact}(i) 中 $\xi=0$ 处的 $\delta$ 导数。
+
+(ii) \emph{矩的 $\order{1/Q^2}$ 不蕴含逐点的 $\order{1/Q^2}$。}取 $R_Q(x)=\sin(Q^2x)$。分部积分给出（$n\ge1$）
+\[
+Q^2\int_0^1x^n\sin(Q^2x)\,\dd x=-\cos Q^2+n\int_0^1x^{n-1}\cos(Q^2x)\,\dd x ,
+\]
+故 $|Q^2\int_0^1x^nR_Q\,\dd x|\le1+n\cdot\frac1n=2$；$n=0$ 时它等于 $1-\cos Q^2\in[0,2]$。于是 $R_Q$ 的每个矩都是 $\order{1/Q^2}$，而且对 $n$ 一致；但 $Q^2\ge\pi/2$ 时 $\sup_x|R_Q|=1$。所以由矩的估计只能得到弱收敛（\cref{lem:appA-weak-convergence}、\cref{cor:dis-weak-xspace}），\cref{thm:pdf-dis-xspace}的余项的逐点大小不受控制（\cref{rem:dis-nonuniform}）。
+% VF-MISC-3; checked for n <= 40, Q^2 in [1, 1e6] (v11 (d)).
+
+(iii) \emph{唯一不等于稳定。}由前 $K$ 个矩重构 $h\in L^2(0,1)$ 时，$\{1,x,\dots,x^{K-1}\}$ 的 Gram 矩阵是 Hilbert 矩阵 $(\frac1{i+j+1})_{0\le i,j<K}$，其谱条件数为 $4.8\times10^5$（$K=5$）、$1.6\times10^{13}$（$K=10$）、$2.5\times10^{28}$（$K=20$），约按 $\ee^{3.5K}$ 增长：矩的微小误差被指数地放大，用有限个带误差的矩直接重构函数是指数病态的问题。实际计算中，先在 $N$ 平面上作解析延拓（\cref{prop:appK-continuation}），再沿竖直围道作 Mellin 反变换。
+% VF-MISC-2 (K = 5, 20); K = 10 writer-computed, 1.6026e13 (v11 (d)).
+
+(iv) \emph{存在性：Hausdorff 矩问题。}实序列 $(\mu_n)_{n\ge0}$ 是 $[0,1]$ 上正 Borel 测度的矩序列，当且仅当它完全单调：$(-1)^k(\Delta^k\mu)_n\ge0$ 对一切 $n,k\ge0$ 成立，$(\Delta\mu)_n=\mu_{n+1}-\mu_n$\cite{Hausdorff1921a,Hausdorff1921b}（必要性来自 $(-1)^k(\Delta^k\mu)_n=\int t^n(1-t)^k\,\dd\mu$）；由 Jordan 分解，它是有限带号测度的矩序列当且仅当它是两个完全单调序列之差。\cref{cor:dis-weak-xspace}的假设 (Φ) 要求存在 $[0,1]$ 上的测度 $\Phi_Q$，其（$n\ge n_0$ 的偶数阶）矩恰为扭度 2 的矩 $\sum_iC^{(n)}_{2,i}A^{(n)}_i$——经代换 $t=x^2$，这是一个 Hausdorff 矩问题。对截断的微扰系数，这个序列不必满足上述条件，所以 (Φ) 是真正的假设，不会自动成立。
+\end{remark}

@@ -1,0 +1,40 @@
+\chapter{Yizhuang Liu 的严格因子化研究}\label{ch:yzliu}
+
+本章讨论 Yizhuang Liu（单独或与合作者）把 TMD 因子化与大动量有效理论（large-momentum effective theory，LaMET）中的若干论证整理为带明确前提的定理级陈述的工作，并逐条给出其地位。结论分属五个层次：（i）两条纯数学引理有完整证明；（ii）显式的定阶结果——本征软函数的两圈结构、准 GPD 单圈匹配核在 $x=\pm\xi$ 附近的结构、重—轻硬核的单圈与两圈内容——在所述的阶上严格（\tagR，$R_{\mathrm{PT}}$）；（iii）“软函数是静态色源对的形状因子”在谱假设下证明完整（\tagR，$R_{\mathrm{cond}}$），内容等级 \tagC；（iv）主体——软函数的欧氏表示、复双曲角解析性、快度发散的线性性、本征软函数、时序无关性、准 TMD 因子化的 Collins 式证明、阈值因子化——都是全阶论证（\tagA），其中三个“公理化”的结果共享瓶颈\cref{asm:yzliu-wightman-pt}；（v）二维可解模型中的结果在模型内严格，作为 QCD 的陈述只是 \tagP，若干推广是猜想（\tagC）。没有一个全阶结果达到 \tagR。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:yzliu-matrix-tree,lem:yzliu-final-state}（数学）；\cref{prop:yzliu-sI-twoloop,prop:yzliu-gpd-oneloop}（\tagR，$R_{\mathrm{PT}}$，限于所述阶），\cref{prop:yzliu-hard-kernel}(b)(c) 与\cref{prop:yzliu-ad-algebra}的两圈内容（\tagR，$R_{\mathrm{PT}}$）；\cref{cor:yzliu-soft-form-factor}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:yzliu-heavy-pair}；内容等级 \tagC）；在所述模型中：\cref{thm:yzliu-gn-convergence}（作为 QCD 的陈述为 \tagP）。\par
+\textbf{给出全阶论证：}\cref{lem:yzliu-partial-exp,prop:yzliu-pinch-ultrasoft,thm:yzliu-soft-hqet}（\tagA）；\cref{thm:yzliu-analyticity,thm:yzliu-time-ordering,thm:yzliu-jet-continuation}（\tagA；瓶颈\cref{asm:yzliu-wightman-pt}）；\cref{prop:yzliu-rapidity-linear,thm:yzliu-intrinsic-soft}（\tagA；瓶颈为快度切片的红外步骤）；\cref{prop:yzliu-qtmd-powercount,prop:yzliu-hard-kernel,prop:yzliu-lfwf,prop:yzliu-meson-ff,prop:yzliu-dy-quasi,prop:yzliu-sivers,thm:yzliu-threshold,prop:yzliu-ad-algebra}（\tagA）。\par
+\textbf{没有证明：}\cref{asm:yzliu-wightman-pt}作为数学命题；普适类的一般陈述（\cref{prop:yzliu-universality-classes}，\tagP，瓶颈\cref{asm:yzliu-lightcone-uniform}）；复时空 Wilson 圈猜想（\cref{conj:yzliu-complex-wilson}，\tagC）；大 $\beta_0$ 之外的重整子归一化与强子层次的阈值渐近（\cref{conj:yzliu-renormalon-norm,conj:yzliu-threshold-hadronic}，\tagC）；GPD 在 $x=\pm\xi$ 处的可计算性（\cref{conj:yzliu-gpd-xi}，\tagC）；$e^+e^-$ 软因子的普适性。
+\end{tcolorbox}
+
+\section{引言：纲领、约定对照与自我评估}\label{sec:yzliu-intro}
+
+TMD 因子化（\cref{thm:tmd-factorization}，全阶论证 [A]）中的软因子（\cref{def:tmd-soft}）是伸向无穷远、近乎类光的 Wilson 线的真空期望，即软辐射的“截面”，看上去本质上是闵氏的，无法直接放到欧氏格点上；LaMET 的准 TMD 定理（\cref{thm:lamet-quasi-tmd}，[A]）把这一困难集中到约化软函数 $S_r$（\cref{def:lamet-reduced-soft}）上。Liu 及其合作者的工作围绕七个主题展开，本章依次讨论：TMD 软物理的欧氏实现（\cref{sec:yzliu-soft}）；CSS 型论证背后的解析结构——复双曲角解析性、快度发散的线性性、本征软函数与普适类、时序定理（\cref{sec:yzliu-analyticity}至\cref{sec:yzliu-time-ordering}）；准 TMD 定理的 Collins 式证明、硬核、光前波函数、介子形状因子、Drell--Yan 与 Sivers 比值（\cref{sec:yzliu-quasi-tmd}与\cref{sec:yzliu-exclusive}）；准 PDF 匹配核的阈值因子化与线性重整子（\cref{sec:yzliu-threshold}与\cref{sec:yzliu-renormalon}）；GPD 在 $x=\pm\xi$ 附近（\cref{sec:yzliu-gpd}）；二维可解模型（\cref{sec:yzliu-models}）；指数衰减定理的推广（\cref{sec:yzliu-decay}）。
+
+\paragraph{自我评估。}Liu 在讲义结尾写道：“all the proofs in the paper, except the ones for the analyticity, follow the typical rigorous standards in the TMD factorization literature”\cite[第~6~节]{Liu:2022nnk}；要把这些“physical proofs”提升为与紫外重整化理论同等水平的数学证明，必须在闵氏空间中研究奇异的 Feynman 积分，发展“a rigorous multi-scale analysis which allows simultaneous decomposition of the longitudinal and transverse phase space”。“TMD 文献的通常标准”正是本书 [A] 的含义（\cref{def:intro-tags}），故本章的分级与作者本人的评价一致；作者自己除外的解析性证明，本书改用 Wightman 函数的路线表述，其瓶颈明确记为\cref{asm:yzliu-wightman-pt}（[A] 级）。
+
+\paragraph{约定。}本章沿用第~22~章引言（\cref{sec:lamet-intro}）的约定词典；Liu 等人文献特有的约定陷阱见\cref{tab:yzliu-conventions}。此外：Liu 的 $n$、$\bar n$ 即本书 $n_A$、$n_B$；其准 TMD 与阈值文献中的 $\lambda=zP^z$（或 $zp^z$）、二维 Gross--Neveu 文献中的 $\lambda=-p\cdot x$ 都是本书 Ioffe 时间的相反数，后者的 $z^2\equiv-x^2$ 是本书的 $-z^2$；Liu 等人的 $L_z\equiv\ln(\zeta_z/\mu^2)$ 与 $l_z$ 分别是本书的 $L_\zeta$ 与 $L_z$。本章记 $b_\perp\equiv b_{\mathrm T}$，以 $a\equiv\alpha_sC_F/(2\pi)$ 为展开参数，$\lambda$ 只表示 Ioffe 时间。他们用 $D=\partial+\ii gA$；本章引用的核与软函数与 $g$ 的符号无关，$g$ 的奇次量注明“换算到本书约定：$g\to-g$”。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+项目 & 本书约定（与 Liu 等人文献的换算） \\
+\midrule
+CS 核与因子 $\frac12$ & Liu 等人的 $K$ 即 $\tilde K$：$2\zeta\partial_\zeta\ln f^{\mathrm{TMD}}=\tilde K$；准 TMD 指数为 $\exp[\frac12\tilde K\ln(\zeta_z/\zeta)]$，比值为 $(\zeta_{z,1}/\zeta_{z,2})^{\tilde K/2}=(P^z_1/P^z_2)^{\tilde K}$（缺少 $\frac12$ 的印刷形式见附录~Q 第~11~条）。 \\
+CS 标度 $\zeta$ & 只通过 CS 方程使用；不转录 $y_n$ 的关系式（Liu 的 $\zeta=2(xP^+)^2\ee^{2y_n}$ 与 Collins 的符号可能不同）。 \\
+硬核的位置 & 采用 $\tilde f\sqrt{S_r}=H\,\ee^{\cdots}f^{\mathrm{TMD}}$（PLB\cite{Ji:2019ewn}、讲义\cite{Liu:2022nnk}）；RMP\cite{JiEtAl2021}式~(209) 的 $H$ 是其倒数。 \\
+重—轻因子 & 单个顶点的 $C^\pm_{HL}$；$H=|H_{HL}|=C^+_{HL}C^-_{HL}$；Ji--Liu--Su\cite{Ji:2023pba}的“$H_{HL}$”指一对顶点之积。 \\
+大角尖点常数 & $\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)=\theta\,\Gamma_{\mathrm{cusp}}(\alpha_s)+\gamma_{HH}(\alpha_s)+\order{\ee^{-\theta}}$，$\gamma_{HH}^{(1)}=-\alpha_sC_F/\pi$；PLB 的 $\Gamma_S=\gamma_{HH}$，讲义与 PRD~105\cite{Ji:2021znw}的 $\Gamma_S=-\gamma_{HH}$，RMP 式~(205)--(206) 的符号自相矛盾（附录~Q 第~13~条）。本章只用 $\gamma_{HH}$。 \\
+$\beta$ 函数与 Borel 变量 & 本书 $\mu^2\frac{\dd\alpha_s}{\dd\mu^2}=-\frac{\beta_0}{4\pi}\alpha_s^2$。(a)~PLB、讲义、RMP、PRD~105：$\frac{\dd\alpha_s}{\dd\ln\mu}=\beta_0^{(a)}\alpha_s^2$，$\beta_0^{(a)}=-\frac{1}{2\pi}(\frac{11}{3}C_A-\frac43N_fT_F)$；(b)~JHEP~2023/24\cite{Ji:2023pba,Liu:2023onm}：$\frac{\dd\alpha_s}{\dd\ln\mu}=-\beta_0^{(b)}\alpha_s^2$，$\beta_0^{(b)}=\frac{11C_A}{6\pi}-\frac{n_f}{3\pi}$。于是 $\beta_0^{(b)}=\frac{\beta_0}{2\pi}=-\beta_0^{(a)}$，$\mu\frac{\dd}{\dd\mu}=2\mu^2\frac{\dd}{\dd\mu^2}$；Liu--Su 的 $u=\beta_0^{(b)}t/2$ 即本书的 $u=\beta_0t/(4\pi)$（\cref{def:power-borel}）。 \\
+双曲角与复 Lorentz 变换 & $\theta(v_1,v_2)$ 及其 $\pm\ii0$ 处方见\cref{def:yzliu-hyperbolic-angle}；联系两种软因子的固有复 Lorentz 变换是 $\Lambda(t,z)=(\ii z,\ii t)$（快度为 $\ii\pi/2$ 的推动）。 \\
+\bottomrule
+\end{tabularx}
+\caption{第~23~章：Liu 等人文献的约定与本书约定的对照（其余约定见\cref{sec:lamet-intro}的约定词典）。}
+\label{tab:yzliu-conventions}
+\end{table}

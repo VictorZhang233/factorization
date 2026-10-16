@@ -1,0 +1,246 @@
+% ===================================================================================
+% c_exclusive_gpd.tex —— 广义部分子分布（GPD）、DVCS 的领头阶系数函数与纵向光子的介子电产生
+% （research/c_exclusive，对应 DERIVATION.md §6–§8；验证脚本 scripts/s6_gpd.py, s7_dvcs.py, s8_meson.py）
+% ===================================================================================
+\section{广义部分子分布、深度虚康普顿散射与硬介子电产生}\label{sec:cex-gpd}
+
+\subsection{GPD 的定义与运动学}
+
+\begin{definition}[夸克 GPD]\label{def:cex-gpd}
+记 $\bar P=\frac12(p+p')$，$\Delta=p'-p$，$t=\Delta^2$，斜度（skewness）$\xi=-\frac{\Delta^+}{2\bar P^+}=\frac{p^+-p'^+}{p^++p'^+}$。定义
+\begin{align}
+F^q&\equiv\frac12\int\frac{\dd z^-}{2\pi}\,\ee^{\ii x\bar P^+z^-}\langle p'|\,\bar q(-\tfrac z2)\gamma^+W[-\tfrac z2,\tfrac z2]q(\tfrac z2)\,|p\rangle\Big|_{z^+=0,\,\bm z_{\mathrm T}=0}\nonumber\\
+&=\frac{1}{2\bar P^+}\Big[H^q\,\bar u(p')\gamma^+u(p)+E^q\,\bar u(p')\frac{\ii\sigma^{+\alpha}\Delta_\alpha}{2M}u(p)\Big],\label{eq:cex-gpd-v}\\
+\tilde F^q&\equiv\frac12\int\frac{\dd z^-}{2\pi}\,\ee^{\ii x\bar P^+z^-}\langle p'|\,\bar q(-\tfrac z2)\gamma^+\gamma_5W[-\tfrac z2,\tfrac z2]q(\tfrac z2)\,|p\rangle\nonumber\\
+&=\frac{1}{2\bar P^+}\Big[\tilde H^q\,\bar u(p')\gamma^+\gamma_5u(p)+\tilde E^q\,\frac{\Delta^+}{2M}\bar u(p')\gamma_5u(p)\Big],\label{eq:cex-gpd-a}
+\end{align}
+$H^q,E^q,\tilde H^q,\tilde E^q$ 是 $(x,\xi,t;\mu)$ 的函数，$x\in[-1,1]$。
+\end{definition}
+
+\begin{remark}[与 Ji 的写法和本书 PDF 约定的关系]\label{rem:cex-gpd-ji}
+Ji 的协变写法 $\int\frac{\dd\lambda}{2\pi}\ee^{\ii\lambda x}\langle p'|\bar\psi(-\frac{\lambda n}2)\gamma^\mu\psi(\frac{\lambda n}2)|p\rangle=H\,\bar u\gamma^\mu u+E\,\bar u\frac{\ii\sigma^{\mu\nu}\Delta_\nu}{2M}u+\cdots$
+（$n\cdot\bar P=1$）与 \cref{eq:cex-gpd-v} 定义的是同一组函数（以 $n_\mu$ 缩并并令 $\lambda=\bar P^+z^-$）。但须注意：Ji 1997 的斜度变量为
+$\xi_{\mathrm{Ji}}=Q^2/(2\bar P\cdot q)$，$\Delta^+=-\xi_{\mathrm{Ji}}\bar P^+$，即 $\xi_{\mathrm{Ji}}=2\xi$，其公式中的极点位于 $x=\pm\xi_{\mathrm{Ji}}/2$。
+令 $p'=p$ 并作平移 $w=-z$，\cref{eq:cex-gpd-v} 即本书的夸克 PDF 定义，故 $F^q(x,0,0)=f_q(x)$。
+\end{remark}
+
+\begin{proposition}[运动学与支撑区域]\tagR\label{prop:cex-gpd-kin}
+在 $\bar P_{\mathrm T}=0$ 的参考系中 $p^+=(1+\xi)\bar P^+$，$p'^+=(1-\xi)\bar P^+$，$\bm p_{\mathrm T}=-\bm p'_{\mathrm T}=-\bm\Delta_{\mathrm T}/2$，且
+\begin{equation}\label{eq:cex-t}
+t=-\frac{4\xi^2M^2+\bm\Delta_{\mathrm T}^2}{1-\xi^2},\qquad t\le t_0=-\frac{4\xi^2M^2}{1-\xi^2}.
+\end{equation}
+在 DVCS 的领头幂次（出射光子 $q'^+=0$）下 $q^+=\Delta^+$，$Q^2=4\xi\bar P^+q^-$，从而 $\xi=x_B/(2-x_B)$。
+$\xi<x<1$ 时两条夸克线都代表夸克（类 DGLAP 区），$-1<x<-\xi$ 时都代表反夸克，$|x|<\xi$ 时为放出一对正反夸克（类 ERBL 区，与 DA 相似）。
+\end{proposition}
+
+\begin{proposition}[前向极限、多项式性与 Ji 求和规则]\tagR\label{prop:cex-poly}
+\begin{enumerate}[label=(\alph*)]
+\item $H^q(x,0,0)=q(x)\theta(x)-\bar q(-x)\theta(-x)$，$\tilde H^q(x,0,0)=\Delta q(x)\theta(x)+\Delta\bar q(-x)\theta(-x)$；$E,\tilde E$ 没有密度解释。
+\item 记 $[n\ \text{奇}]$ 为 $n$ 为奇数时取 1、否则取 0，则
+\begin{equation}\label{eq:cex-poly}
+\begin{gathered}
+\int_{-1}^1\!\dd x\,x^nH^q=\sum_{i\ \text{偶},\,0\le i\le n}(2\xi)^iA^q_{n+1,i}(t)+[n\ \text{奇}]\,(2\xi)^{n+1}C^q_{n+1}(t),\\
+\int_{-1}^1\!\dd x\,x^nE^q=\sum_{i\ \text{偶},\,0\le i\le n}(2\xi)^iB^q_{n+1,i}(t)-[n\ \text{奇}]\,(2\xi)^{n+1}C^q_{n+1}(t).
+\end{gathered}
+\end{equation}
+\item 特别地 $\int H^q=F_1^q(t)$，$\int E^q=F^q_2(t)$，$\int\tilde H^q=G^q_A(t)$，$\int\tilde E^q=G^q_P(t)$；$\int x(H^q+E^q)=A^q(t)+B^q(t)$ 与 $\xi$ 无关，
+夸克的总角动量为 $J^q=\frac12[A^q(0)+B^q(0)]$（Ji 求和规则）。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) 前向时 $\bar u(p,s)\gamma^+u(p,s')=2p^+\delta_{ss'}$、$\bar u(p,s)\gamma^+\gamma_5u(p,s')=2p^+(2\lambda)\delta_{ss'}$（显式 Dirac 旋量验证），
+再用本书的反夸克约定 $f_{\bar q}(\xi)=-f_q(-\xi)$（轴矢情形符号相反）。
+(b) 按 $\bar q(-\frac z2)\Gamma q(\frac z2)=\sum_n\frac{1}{n!}\bar q[z\cdot\overleftrightarrow\partial]^n\Gamma q$ 展开得
+$\int\dd x\,x^nF^q=\frac{1}{2(\bar P^+)^{n+1}}\langle p'|\bar q\gamma^+(\ii\overleftrightarrow D^+)^nq|p\rangle$（$\overleftrightarrow D=\frac12(\overrightarrow D-\overleftarrow D)$）。
+对称无迹的局域算符矩阵元由 Lorentz 协变性、厄米性与时间反演写成 $\bar u\gamma^{\{\mu}u$、$\bar u\ii\sigma^{\{\mu\alpha}\Delta_\alpha u$ 乘以偶数个 $\Delta$ 与 $\bar P$ 的组合，
+外加 $n$ 为奇数时的 $\bar uu\,\Delta^{\{\mu}\Delta^{\mu_1}\cdots\Delta^{\mu_n\}}/M$ 项；与 $n_\mu$ 缩并后 $\Delta^+=-2\xi\bar P^+$ 给出 $\xi$ 的偶次幂。
+最后一项借助 Gordon 恒等式
+$\bar u(p')u(p)=\frac{M}{\bar P^+}\big[\bar u(p')\gamma^+u(p)-\bar u(p')\frac{\ii\sigma^{+\alpha}\Delta_\alpha}{2M}u(p)\big]$
+（显式旋量验证）分到 $H$ 与 $E$ 上，系数相反，即 \cref{eq:cex-poly} 中的 $\pm C^q_{n+1}$。
+(c) $n=0,1$ 的特例；角动量算符用能动张量表示后取前向极限即得 Ji 求和规则（Ji 1997），此处不重复。
+\end{proof}
+
+\begin{example}[双分布模型中的检验]\label{ex:cex-dd}
+取双分布 $F(\beta,\alpha)=h(\beta,\alpha)q(\beta)$，$h=\frac34\frac{(1-|\beta|)^2-\alpha^2}{(1-|\beta|)^3}$，$q(\beta)=(1-\beta)^3$（$\beta>0$），
+$H(x,\xi)=\int\dd\beta\,\dd\alpha\,\delta(x-\beta-\xi\alpha)F(\beta,\alpha)+\theta(|x|<\xi)D(x/\xi)$，$E\supset-\theta(|x|<\xi)D(x/\xi)$，
+$D(z)=(1-z^2)\sum_{n\ \text{奇}}d_nC^{3/2}_n(z)$。得到的 $H(x,\xi)$ 在 $x=\xi$ 处连续、前向极限为 $(1-x)^3$，且
+$\int xH=\frac{1+16d_1\xi^2}{20}$，$\int x^2H=\frac{1+2\xi^2}{60}$，$\int x^3H=\frac{9+18\xi^2+(432d_1+320d_3)\xi^4}{1260}$，……（$n\le6$ 均为次数 $\le n+1$ 的偶多项式）；
+$C_2=\frac14\int_{-1}^1z\,D(z)\,\dd z=d_1/5$。
+\end{example}
+
+\subsection{DVCS 的领头阶振幅}
+
+\begin{figure}[htbp]
+\centering
+\tikzset{cex gpd blob/.pic={
+  \draw[bound state] (-0.6,0) -- (0.9,0); \draw[bound state] (3.1,0) -- (4.6,0);
+  \draw[hadron blob] (2,0) ellipse (1.25 and 0.42);
+  \node[below] at (-0.4,-0.05) {$p$}; \node[below] at (4.4,-0.05) {$p'$};}}
+\begin{tikzpicture}[fd,scale=0.85]
+  \pic {cex gpd blob};
+  \coordinate (V1) at (1.25,1.45); \coordinate (V2) at (2.75,1.45);
+  \draw[quark] (1.25,0.36) -- (V1) node[midway,left]{$(x{+}\xi)\bar P$};
+  \draw[quark] (V1) -- (V2);
+  \draw[quark] (V2) -- (2.75,0.36) node[midway,right]{$(x{-}\xi)\bar P$};
+  \draw[photon] (0.1,2.4) -- (V1); \draw[photon] (V2) -- (3.9,2.4);
+  \node[left] at (0.1,2.4) {$\gamma^*(q)$}; \node[right] at (3.9,2.4) {$\gamma(q')$};
+  \node[vertex] at (V1) {}; \node[vertex] at (V2) {};
+\end{tikzpicture}\hspace{2em}
+\begin{tikzpicture}[fd,scale=0.85]
+  \pic {cex gpd blob};
+  \coordinate (V1) at (1.25,1.45); \coordinate (V2) at (2.75,1.45);
+  \draw[quark] (1.25,0.36) -- (V1); \draw[quark] (V1) -- (V2); \draw[quark] (V2) -- (2.75,0.36);
+  \draw[photon] (0.1,2.4) -- (V2); \draw[photon] (V1) -- (3.9,2.4);
+  \node[left] at (0.1,2.4) {$\gamma^*(q)$}; \node[right] at (3.9,2.4) {$\gamma(q')$};
+  \node[vertex] at (V1) {}; \node[vertex] at (V2) {};
+\end{tikzpicture}
+\caption{DVCS 的两个手提包（handbag）图：$s$ 道（左）与 $u$ 道（右）。下方的团为 GPD 关联函数，夸克线的光锥动量分数为 $x\pm\xi$。}
+\label{fig:cex-dvcs-handbag}
+\end{figure}
+
+定义
+\begin{equation}\label{eq:cex-Tmunu}
+T^{\mu\nu}\equiv\ii\int\dd^4z\,\ee^{\ii q'\cdot z}\langle p'|T\{J^\mu(z)J^\nu(0)\}|p\rangle
+\end{equation}
+（$\nu$ 为入射 $\gamma^*(q)$、$\mu$ 为出射 $\gamma(q')$ 的指标）。它与 Ji 的定义相同，前向时即 DIS 的康普顿振幅，$\Imag T^{\mu\nu}=2\pi W^{\mu\nu}$。
+为同时处理 DVCS 与 DIS，取一般的双虚光子运动学：$\bar q=\frac12(q+q')=(-\xi'\bar P^+,\bar q^-,\bm0_{\mathrm T})$，$\Delta^+=-2\eta\bar P^+$，
+其中 $\xi'=-\bar q^2/(2\bar P\cdot\bar q)$ 为广义 Bjorken 变量，$\eta$ 为斜度；DVCS 时 $q'^2=0\Leftrightarrow\xi'=\eta=\xi$，DIS 时 $\eta=0$、$\xi'=x_B$。
+横向张量取 $g_\perp^{\mu\nu}=g^{\mu\nu}-\bar n^\mu n^\nu-n^\mu\bar n^\nu$、$\epsilon_\perp^{\mu\nu}=\epsilon^{\mu\nu\rho\sigma}\bar n_\rho n_\sigma$（$\epsilon^{12}_\perp=+1$），
+$\bar n$、$n$ 分别沿 $\pm z$，$\bar n\cdot v=v^-$，$n\cdot v=v^+$。
+
+\begin{proposition}[DVCS 的 LO 系数函数]\tagR\label{prop:cex-dvcs}
+在领头扭度与 $\order{\as^0}$，
+\begin{equation}\label{eq:cex-dvcs}
+T^{\mu\nu}=-g_\perp^{\mu\nu}\sum_qe_q^2\int_{-1}^1\!\dd x\;C_V(x,\xi')\,F^q(x,\eta,t)+\ii\epsilon_\perp^{\mu\nu}\sum_qe_q^2\int_{-1}^1\!\dd x\;C_A(x,\xi')\,\tilde F^q(x,\eta,t),
+\end{equation}
+\begin{equation}\label{eq:cex-CVCA}
+\begin{gathered}
+C_V=\frac{1}{\xi'-x-\ii0}-\frac{1}{\xi'+x-\ii0}=-\Big[\frac{1}{x-\xi'+\ii0}+\frac{1}{x+\xi'-\ii0}\Big],\\
+C_A=\frac{1}{\xi'-x-\ii0}+\frac{1}{\xi'+x-\ii0}=-\Big[\frac{1}{x-\xi'+\ii0}-\frac{1}{x+\xi'-\ii0}\Big].
+\end{gathered}
+\end{equation}
+含纵向指标的分量全部为零。
+\end{proposition}
+
+\begin{proof}
+领头扭度的关联函数为 $\langle p'|\bar q_a(-\frac w2)q_b(\frac w2)|p\rangle\to\int\dd x\,\ee^{-\ii x\bar P\cdot w}\frac14[\gamma^-\mathcal H+\gamma_5\gamma^-\tilde{\mathcal H}]_{ba}$（\cref{eq:cex-fierz}），
+$\mathcal H=2\bar P^+F^q$，$\tilde{\mathcal H}=2\bar P^+\tilde F^q$。对 $z$ 积分后
+$T^{\mu\nu}=\ii\sum_qe_q^2\int\dd x\,\Tr\{[\gamma^\mu S(k'+q')\gamma^\nu+\gamma^\nu S(k-q')\gamma^\mu]\frac14[\gamma^-\mathcal H+\gamma_5\gamma^-\tilde{\mathcal H}]\}$，
+$k^+=(x+\eta)\bar P^+$，$k'^+=(x-\eta)\bar P^+$。两个传播子为
+$(k'+q')^2+\ii0=2\bar P^+\bar q^-(x-\xi'+\ii0)$ 与 $(k-q')^2+\ii0=-2\bar P^+\bar q^-(x+\xi'-\ii0)$（$\bar P^+\bar q^->0$），只依赖于 $\xi'$；
+用显式 Dirac 矩阵计算迹即得 \cref{eq:cex-dvcs}，横向以外的分量为零。
+\end{proof}
+
+\begin{remark}[检验、对称性与约定]\label{rem:cex-dvcs}
+\begin{enumerate}[label=(\roman*)]
+\item \emph{DIS 极限}：$\eta=0$、$\xi'=x_B$ 且自旋平均时 $F^q=q$，由 \cref{eq:cex-CVCA} 得 $\Imag T^{11}=\pi\sum_qe_q^2[q(x_B)+\bar q(x_B)]=2\pi F_1$，
+正是本书 DIS 约定下 $F_2=2xF_1=\sum_qe_q^2x(q+\bar q)$ 的部分子模型结果（另以传播子中有限的 $\ii\varepsilon$ 作数值验证）。
+这同时检验了 \cref{eq:cex-dvcs} 的归一化与 $\ii0$ 处方。
+\item \emph{C 宇称}：$C_V(-x)=-C_V(x)$ 只挑出 $H^q(x)-H^q(-x)$（前向为 $q+\bar q$），$C_A(-x)=C_A(x)$ 只挑出 $\tilde H^q(x)+\tilde H^q(-x)$（前向为 $\Delta q+\Delta\bar q$）：
+两个光子交换的 $t$ 道必为 C 偶。写成 $\frac{1}{x-\xi+\ii0}\pm\frac{1}{x+\xi-\ii0}$ 的形式时，\emph{$H,E$ 取加号，$\tilde H,\tilde E$ 取减号}（整体符号依赖于 $T^{\mu\nu}$ 的定义）。
+\item \emph{康普顿形状因子}：$\mathcal H(\xi,t)=\sum_qe_q^2\int\dd x\,C_V(x,\xi)H^q(x,\xi,t)$ 等；
+$\Imag\mathcal H=\pi\sum_qe_q^2\big[H^q(\xi,\xi,t)-H^q(-\xi,\xi,t)\big]$，$\Real\mathcal H$ 为主值积分。领头阶的虚部只探测交叉线 $x=\pm\xi$ 上的 GPD。
+\item \emph{文献}：Ji（PRL 78, 1997）式 (15) 在 $\xi_{\mathrm{Ji}}/2=\xi$ 的换算下与 \cref{eq:cex-dvcs} 相同（矢量部分的符号与归一化完全相同；轴矢部分在 $\epsilon^{0123}=+1$ 时相同），
+但其 arXiv 版本中第二个分母印作 $x+\xi/2+\ii\epsilon$，正确的处方是 $-\ii\epsilon$（由 Feynman 传播子及前向极限的光学定理决定）。
+Vanderhaeghen--Guichon--Guidal（1999）式 (38) 取 $-\ii\epsilon$，其 $H^{\mu\nu}$ 与本书 $T^{\mu\nu}$ 差一个整体负号（他们取 $\varepsilon_{0123}=+1$）。
+\item 领头阶手提包振幅对实光子的电磁规范不变性在 $\order{\Delta_\perp/Q}$ 被破坏，由扭度 3 的贡献恢复。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[DVCS 的因子化]\tagA\label{thm:cex-dvcs}
+在 $Q^2\to\infty$、$x_B$ 与 $t$ 固定的领头幂次，对 $\as$ 的各阶，
+$T^{\mu\nu}=-g_\perp^{\mu\nu}\sum_a\int\dd x\,C_V^a(x,\xi,Q/\mu)F^a(x,\xi,t;\mu)+\ii\epsilon_\perp^{\mu\nu}\sum_a\int\dd x\,C^a_A\tilde F^a+\order{1/Q}$，
+$a$ 遍历夸克与胶子，领头阶系数见 \cref{eq:cex-CVCA}。
+\end{theorem}
+
+\begin{proofsketch}
+Ji--Osborne（1998）在单圈验证了红外发散可全部吸收进 GPD（包括一个光子在壳的情形），并论证了全阶成立；
+Collins--Freund（1999）给出了领头幂次的全阶证明，并指出出射光子的虚度不影响定理。论证的策略与 DIS 相同：领头区域由一个与质子共线的子图
+（以两条共线部分子线连到硬子图）和硬子图组成，共线胶子的纵向分量由 Ward 恒等式组合成 GPD 定义中的 Wilson 线。
+需要单独处理的是 $x=\pm\xi$ 处的“端点/断点”区域，那里一条部分子线的正光锥动量为零（Collins--Freund 的修订版专门改进了这一处理）。
+在 LO 可以直接看到这里没有端点发散：系数函数 \cref{eq:cex-CVCA} 在 $x=\pm\xi$ 只有单极点，与在该处连续的 GPD 卷积后
+给出主值积分加 $\ii\pi\delta$ 项，结果有限。
+\end{proofsketch}
+
+\subsection{纵向光子的硬介子电产生}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.9]
+  \draw[bound state] (-0.6,0) -- (0.85,0); \draw[bound state] (3.15,0) -- (4.6,0);
+  \draw[hadron blob] (2,0) ellipse (1.25 and 0.42);
+  \draw[hadron blob] (2,3.05) ellipse (0.75 and 0.3);
+  \draw[bound state] (2,3.35) -- (2,4.0); \node[right] at (2.05,3.85) {$M(p_M)$};
+  \coordinate (V1) at (1.0,1.25); \coordinate (V2) at (1.55,2.15); \coordinate (V3) at (2.45,2.15);
+  \draw[quark] (1.0,0.38) -- (V1) node[midway,left]{$(x{+}\xi)\bar P$};
+  \draw[quark] (V1) -- (V2);
+  \draw[quark] (V2) -- (1.55,2.78) node[midway,left]{$zp_M$};
+  \draw[quark] (2.45,2.78) -- (V3) node[midway,right]{$\bar zp_M$};
+  \draw[quark] (V3) -- (3.0,0.38) node[midway,right]{$(x{-}\xi)\bar P$};
+  \draw[gluon] (V2) -- (V3);
+  \draw[photon] (-0.4,1.75) -- (V1); \node[left] at (-0.4,1.75) {$\gamma^*_L(q)$};
+  \foreach \p in {(V1),(V2),(V3)} \node[vertex] at \p {};
+\end{tikzpicture}
+\caption{$\gamma^*_LN\to MN'$ 的夸克交换图之一（图 1：光子先被核子中的夸克 $a$ 吸收）。其余三个图中光子连在线 1 的另一侧（图 2）或线 2 的两侧（图 3、4）。
+上方的团为介子 DA，下方的团为 GPD 关联函数。}
+\label{fig:cex-meson}
+\end{figure}
+
+领头幂次的运动学：$\Delta^+=-2\xi\bar P^+$，$q=(-2\xi\bar P^+,q^-,\bm0_{\mathrm T})$，$p_M=q-\Delta=(0,q^-,\bm0_{\mathrm T})$，$Q^2=4\xi\bar P^+q^-$，
+纵向极化矢量 $\varepsilon_L=(q^+,-q^-,\bm0_{\mathrm T})/Q$（$\varepsilon_L^2=1$，$\varepsilon_L\cdot q=0$）。线 1 从核子中的夸克 $a$（$k^+=(x+\xi)\bar P^+$）到介子中的夸克（$zp_M$），
+线 2 从介子中的反夸克（$\bar zp_M$）到返回核子的夸克 $b$（$k'^+=(x-\xi)\bar P^+$）。各图的虚度：图 1 夸克线 $(x-\xi)Q^2/(2\xi)$，图 1、2 的胶子 $\bar z(x-\xi)Q^2/(2\xi)$，
+图 2 夸克线 $-\bar zQ^2$；图 3 夸克线 $-(x+\xi)Q^2/(2\xi)$，图 3、4 的胶子 $-z(x+\xi)Q^2/(2\xi)$，图 4 夸克线 $-zQ^2$。
+
+\begin{proposition}[LO 纵向介子电产生振幅]\tagR\label{prop:cex-meson}
+记 $A^\nu=\langle M(p_M)N'(p')|J^\nu(0)|N(p)\rangle$，$\tilde F^{ba}$、$F^{ba}$ 为相应（味跃迁）的 GPD 关联函数。对赝标介子（以 $\pi$ 为例）与纵向极化矢量介子：
+\begin{align}
+\varepsilon_L\cdot A_\pi&=-\ii\,\frac{C_F}{N_c}\,\frac{4\pi\as f_\pi}{Q}\int_0^1\!\dd z\,\phi_\pi(z)\int_{-1}^1\!\dd x\Big[\frac{e_a}{\bar z\,(x-\xi+\ii0)}+\frac{e_b}{z\,(x+\xi-\ii0)}\Big]\tilde F^{ba}(x,\xi,t),\label{eq:cex-meson-pi}\\
+\varepsilon_L\cdot A_{\rho_L}&=+\frac{C_F}{N_c}\,\frac{4\pi\as f_\rho}{Q}\int_0^1\!\dd z\,\phi_\rho(z)\int_{-1}^1\!\dd x\Big[\frac{e_a}{\bar z\,(x-\xi+\ii0)}+\frac{e_b}{z\,(x+\xi-\ii0)}\Big]F^{ba}(x,\xi,t)\label{eq:cex-meson-rho}
+\end{align}
+（中性矢量介子还有同阶的胶子 GPD 图，此处未计算；两式的相对相位取决于投影算符的相位约定）。赝标介子只与 $\tilde H,\tilde E$ 耦合，纵向矢量介子只与 $H,E$ 耦合；
+横向光子的振幅在领头扭度为零。
+\end{proposition}
+
+\begin{proof}
+用 $M_N=\frac14[\gamma^-\mathcal H+\gamma_5\gamma^-\tilde{\mathcal H}]$、$M_\pi=\frac{\ii f_\pi}4\sla p_M\gamma_5\phi_\pi(z)$、$M_{\rho_L}=\frac{f_\rho}4\sla p_M\phi_\rho(z)$，
+色因子 $C_F/N_c$，费米子重排的整体因子 $-1$，对四个图用显式 Dirac 矩阵求迹。图 1 含 $(x-\xi+\ii0)^{-2}$ 的双极点，被其分子的一个因子 $(x-\xi)$ 抵消；
+图 1 与图 2 的贡献相等，图 3 与图 4 的贡献相等，相加即得上式。宇称选择定则与 $\varepsilon_T\cdot A=0$ 由同一计算直接得到。
+\end{proof}
+
+\begin{remark}[对称性检验与文献对照]\label{rem:cex-meson}
+\begin{enumerate}[label=(\roman*)]
+\item 对称 DA 时 $\int\phi/z=\int\phi/\bar z=3(1+a_2+\cdots)$，核化为 $e_a/(x-\xi+\ii0)+e_b/(x+\xi-\ii0)$。
+对 $\pi^0,\rho^0$（$e_a=e_b$），核 $\frac1{x-\xi}+\frac1{x+\xi}$ 关于 $x$ 为奇函数：$\rho^0$ 挑出 $H(x)-H(-x)$（C 偶交换，$C(\gamma^*)C(\rho^0)=+1$），
+$\pi^0$ 挑出 $\tilde H(x)-\tilde H(-x)$（C 奇交换，$C(\gamma^*)C(\pi^0)=-1$）。这一与约定无关的检验固定了两项的相对符号。
+\item 对 $\gamma^*p\to\pi^+n$：$a=u$、$b=d$，同位旋给出 $\tilde F^{du}\to\tilde H^u-\tilde H^d$（及 $\tilde E$ 中的 $\pi$ 极点）。
+\item \cref{eq:cex-meson-pi} 与 Vanderhaeghen--Guichon--Guidal（1999）式 (48)、(59) 完全一致：色因子 $\frac49=C_F/N_c$、$4\pi\as$、$1/Q$、$\int\dd z\,\Phi(z)/z$
+（他们的 $\Phi_\pi=f_\pi^{(130)}\phi_\pi$）、带电荷的核，以及 $\pi^0$ 振幅的相位 $-\ii$；他们 $\pi^\pm$ 公式中的整体负号来自其带电介子相位约定。
+\item 振幅 $\propto1/Q$，故固定 $x_B$、$t$ 时 $\dd\sigma_L/\dd t\propto1/Q^6$，而 $\sigma_T/\sigma_L=\order{1/Q^2}$。
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[纵向光子的硬介子电产生]\tagA\label{thm:cex-cfs}
+对纵向极化的虚光子，在领头幂次与 $\as$ 的各阶，$\varepsilon_L\cdot A=\sum_{a}\int\dd x\,\dd z\,F^a(x,\xi,t;\mu)\,T_H^a(x,\xi,z;Q,\mu)\,\phi_M(z;\mu)\,[1+\order{1/Q}]$
+（Collins--Frankfurt--Strikman 1997），领头阶硬核见 \cref{eq:cex-meson-pi,eq:cex-meson-rho}。
+\end{theorem}
+
+\begin{proofsketch}
+领头区域包含核子的共线子图、介子的共线子图与硬子图；对纵向光子，介子 DA 的端点区域与软胶子交换都是幂次压低的，
+因而可以沿用 \cref{thm:cex-fpi,thm:cex-dvcs} 的论证。
+\end{proofsketch}
+
+\begin{remark}[横向光子：因子化的破坏]\tagV\label{rem:cex-transverse}
+横向光子产生横向极化矢量介子（$\gamma^*_T\to V_T$）的振幅在领头扭度为零：领头扭度上 $V_T$ 只能通过手征奇的 DA 进入，
+而手征奇（横度）GPD 的贡献对 $\as$ 的各阶都为零（Diehl--Gousset--Pire 1999；Collins--Diehl 2000 给出全阶论证，
+并指出一个声称 NLO 非零的计算遗漏了必要的共线减除）。第一个非零的 $\gamma^*_T\to V_T$ 振幅是扭度 3 的。
+Mankiewicz 与 Piller（2000）在 LO 显式计算了它，其中介子的扭度 3 DA $g^v,g^a$（即 Ball--Braun 记号中的 $g_\perp^{(v)},g_\perp^{(a)}$）
+取 Wandzura--Wilczek 近似，由 $\phi_\parallel$ 决定：
+\begin{enumerate}[label=(\roman*)]
+\item 振幅含积分 $\mathcal I_{1,2}=\int_0^1\frac{\dd\tau}{\tau}(\cdots)$，其被积函数在 $\tau\to0$ 时 $\propto1/\tau$（对数发散），因为 WW 关系给出
+$g^v(0)=\frac12\int_0^1\dd u\,\phi_\parallel(u)/u\neq0$；所以改变 $\phi_\parallel$ 的端点行为\emph{不能}消除这一发散。
+\item 对 GPD 的卷积含双极点 $(\xi\mp x-\ii0)^{-2}$，只有当 GPD 及其一阶导数在 $x=\pm\xi$ 处连续时才有定义；
+对渐近形式的味单态夸克 GPD，相应积分的实部仍然红外发散。
+\end{enumerate}
+因此标准的共线因子化在这里不成立。引入横动量的修正方案（例如 Goloskokov--Kroll）是模型，属于 \tagP。
+\end{remark}

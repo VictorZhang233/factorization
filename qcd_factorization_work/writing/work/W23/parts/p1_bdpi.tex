@@ -1,0 +1,48 @@
+% ---------------------------------------------------------------------
+\section{$B\to D\pi$：领头幂次的全阶因子化}\label{sec:heavy-bdpi}
+
+在“I 类”衰变 $\bar B^0\to D^+\pi^-$ 中（\cref{fig:heavy-bdpi}），弱顶点 $b\to c\,d\bar u$ 直接产生 $\pi^-$，旁观反夸克 $\bar d$ 进入 $D^+$。按色透明性（colour transparency）\cite{Bjorken:1988kk}，快速的 $\pi$ 形成之初是尺度 $\sim1/E_\pi$ 的色单态小偶极子，软胶子分辨不出其中的色荷，振幅近似朴素因子化\cite{Dugan:1990de,Politzer:1991au}；Beneke、Buchalla、Neubert、Sachrajda（BBNS）在两圈显式验证了这一点\cite{BenekeEtAl2000}，Bauer、Pirjol、Stewart（BPS）在软—共线有效理论（SCET）与 HQET 中给出了对 $\as$ 所有阶的论证\cite{BauerPirjolStewart2001}。
+
+%%INSERT fig_bdpi.tex
+
+\begin{example}[朴素因子化与归一化 $N$]\label{ex:heavy-naive}
+$\mathcal H_W=\frac{4G_F}{\sqrt2}V_{cb}V_{ud}^*[C_{\mathbf 0}O_{\mathbf 0}+C_{\mathbf 8}O_{\mathbf 8}]$，其中\cite[式~(2)]{BauerPirjolStewart2001}
+\begin{equation}\label{eq:heavy-O08}
+O_{\mathbf 0}=\big[\bar c\gamma^\mu P_Lb\big]\big[\bar d\gamma_\mu P_Lu\big],\qquad
+O_{\mathbf 8}=\big[\bar c\gamma^\mu P_Lt^ab\big]\big[\bar d\gamma_\mu P_Lt^au\big],\qquad P_L=\tfrac12(1-\gamma_5).
+\end{equation}
+% VF-BQ-6
+在 $\bar B$ 静止系中取无质量的 $\pi^-$ 沿 $+z$，$p_\pi=\sqrt2E_\pi n_A$，$E_\pi=\frac{m_B^2-m_D^2}{2m_B}=2.309$\,GeV（$m_B=5.280$\,GeV，$m_D=1.870$\,GeV\cite{ParticleDataGroup:2024cfk}）。真空插入下，由\cref{def:excl-da}的局域极限 $\langle0|\bar d\gamma^\mu\gamma_5u|\pi^+(p)\rangle=\ii f_\pi p^\mu$、厄米共轭、同位旋与宇称，$\langle\pi^-|\bar d\gamma_\mu P_Lu|0\rangle=-\frac12\langle\pi^-|\bar d\gamma_\mu\gamma_5u|0\rangle=\frac{\ii}{2}f_\pi p_{\pi\mu}$；$\bar B\to D$ 只有矢量流贡献，按 $F_+$、$F_0$ 分解后与 $q=p_\pi$ 收缩，$F_+$ 项因 $(p_B+p_D)\cdot q=m_B^2-m_D^2$ 而消去，剩 $\frac12(m_B^2-m_D^2)F_0(0)$，$F_0(0)=F_+(0)\equiv F^{B\to D}(0)$。于是
+\begin{equation}\label{eq:heavy-naive}
+\langle D^+\pi^-|O_{\mathbf 0}|\bar B^0\rangle\big|_{\rm naive}=\frac{\ii}{2}f_\pi\cdot\frac12(m_B^2-m_D^2)F^{B\to D}(0)=\frac{\ii}{2}m_BE_\pi f_\pi\,F^{B\to D}(0)\equiv N\,F^{B\to D}(0),
+\end{equation}
+与\cite[式~(8)]{BauerPirjolStewart2001}一致；用 $(V-A)\otimes(V-A)$ 算符时 $N$ 大 $4$ 倍，$O_{\mathbf 8}$ 的真空插入 $\propto\Tr t^a=0$。重夸克极限下 $F^{B\to D}(0)=\frac{m_B+m_D}{2\sqrt{m_Bm_D}}\xi(w)$，$\xi$ 为 Isgur--Wise 函数，$w=\frac{m_B^2+m_D^2}{2m_Bm_D}=1.589$（脚本 \texttt{s1\_\allowbreak bdpi.py}）。
+\uses{def:excl-da}
+\end{example}
+
+\paragraph{色透明性。}
+软胶子（$k\sim\Lqcd$）与出射夸克 $p_1=xp_\pi+l$、反夸克 $p_2=\bar xp_\pi-l$ 耦合（$\bar x=1-x$，$|l|\sim\Lqcd$，$p_\pi\cdot l=\order{l^2}$）；色单态 $q\bar q$ 对的两条线给出同一色矩阵而符号相反，展开到 $l$ 的一阶，
+\begin{equation}\label{eq:heavy-dipole}
+J^\mu\propto t^a\Big[\frac{p_1^\mu}{p_1\cdot k}-\frac{p_2^\mu}{p_2\cdot k}\Big]
+=t^a\Big(\frac1x+\frac1{\bar x}\Big)\frac{1}{p_\pi\cdot k}\Big[l^\mu-p_\pi^\mu\,\frac{l\cdot k}{p_\pi\cdot k}\Big]+\order{l^2}.
+\end{equation}
+$l=0$ 时 $J^\mu\equiv0$；余项是守恒的色偶极子（$k_\mu J^\mu=0$），相对单条线为 $\order{\Lqcd/(x\bar xm_b)}$——\emph{端点 $x\bar x\sim\Lqcd/m_b$ 除外}，所以需要端点压低假设（脚本 \texttt{s1\_\allowbreak bdpi.py}）。
+
+\begin{theorem}[$B\to D\pi$ 的全阶因子化 \tagA]\label{thm:heavy-bdpi}
+设 $Q\in\{m_b,m_c,E_\pi\}$ 同阶且远大于 $\Lqcd$（$m_c/m_b$ 固定），$\lambda=\Lqcd/Q$，并设（端点压低假设）介子波函数的端点组态——$\pi$ 中一个价夸克带走几乎全部能量的组态，以及 $B$、$D$ 中旁观者动量 $\gg\Lqcd$ 的组态——被 $\lambda^{a}$（某个 $a>0$）压低。则对 $\bar B^0\to D^+\pi^-$ 与 $B^-\to D^0\pi^-$，在 $\lambda$ 的领头幂次、对 $\as$ 的所有阶，
+\begin{equation}\label{eq:heavy-bdpi}
+\langle D\pi|O|B\rangle=N\,F^{B\to D}(0)\int_0^1\dd x\;T_O(x,\mu)\,\phi_\pi(x,\mu)\,\big[1+\order{\lambda}\big],\qquad N=\frac{\ii}{2}\,m_BE_\pi f_\pi ,
+\end{equation}
+% VF-BQ-6
+其中 $O=O_{\mathbf 0}$ 或 $O_{\mathbf 8}$（\cref{eq:heavy-O08}）；$F^{B\to D}(0)$ 是 $q^2=0$ 处的形状因子（取 $F^{B\to D}(m_\pi^2)$ 只差幂次压低的项）；$\phi_\pi$ 是\cref{def:excl-da}的分布振幅，$x$ 为 $\pi^-$ 中 $d$ 夸克的动量分数；$T_O$ 是可微扰计算的短程系数（依赖于 $\mu$、$m_c/m_b$ 与匹配标度），$T_{O_{\mathbf 0}}=1+\order{\as}$，$T_{O_{\mathbf 8}}=\order{\as}$。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+% errtype: E-S
+\uses{def:excl-da, thm:scet-decoupling, asm:intro-bridge}
+\end{theorem}
+
+\begin{proofsketch}
+按\cite{BauerPirjolStewart2001}进行。(1)~动量 $\gtrsim Q$ 的自由度积出后进入 Wilson 系数；剩下 HQET 重夸克与软夸克、软胶子（$\sim Q\lambda$），$\pi$ 的共线夸克 $\xi$（$\sla n_A\xi=0$）与共线胶子（$(p^+,p^-,p_T)\sim Q(1,\lambda^2,\lambda)$），以及超软胶子（$\sim Q\lambda^2$）。它们穷尽领头区域是 SCET 的前提（\cref{rem:scet-assumptions}；E-S 型陈述）。(2)~共线胶子接到重夸克上使之离壳，积出后求和为沿 $n_B$ 的 Wilson 线 $W$（因 $\sla vh_v=h_v$ 而与速度无关）：$O_{\mathbf 0,\mathbf 8}$ 匹配到 $Q_{\mathbf 0}=[\bar h_{v'}\Gamma_hh_v][\bar\xi\Gamma_\ell\xi]$、$Q_{\mathbf 8}=[\bar h_{v'}\Gamma_h(W^\dagger t^aW)h_v][\bar\xi\Gamma_\ell t^a\xi]$，对色单态 $W^\dagger W=1$；因 $\sla n_A\xi=0$，旁观者不能在 $\order{\lambda^0}$ 变成共线夸克。(3)~超软胶子与重夸克的耦合被 $\lambda$ 压低，与共线场的领头耦合由 BPS 场重定义消去（\cref{thm:scet-decoupling}，[R, $R_{\mathrm{def}}$]）。软胶子在 $\order{\lambda^0}$ 只经 $n_A\cdot A_s$ 与共线粒子耦合，软动量只以 $n_A\cdot k$ 进入共线传播子（$(p_c+k)^2\simeq2p_c^+\,n_A\cdot k$），由 Ward 恒等式提出成沿 $n_A$ 的软 Wilson 线 $S$：对 $Q_{\mathbf 0}$，$S^\dagger S=1$（\cref{eq:heavy-dipole}的全阶形式）；对 $Q_{\mathbf 8}$，软交换的色结构 $M$ 的伴随指标全部缩并，$\Tr[MW^\dagger t^aW]=M\,\Tr t^a=0$\cite[式~(7)]{BauerPirjolStewart2001}。(4)~共线规范不变性把硬修正限制为 $[\bar h_{v'}\Gamma_hh_v][\bar\xi W\,C(\bar{\mathcal P}_+)\Gamma_\ell W^\dagger\xi]$，$\bar{\mathcal P}_+$ 给出夸克与反夸克大动量之差；$\pi$ 的矩阵元是 $\phi_\pi$ 的 Fourier 变换，故得卷积，$T(x,\mu)=C(\mu,2(2x-1)E_\pi)$，树图时回到\cref{eq:heavy-naive}。(5)~端点压低假设使弱湮灭、硬旁观者与旁观者进入 $\pi$ 的拓扑被幂次压低（硬旁观者图 $\sim G_F\as m_b\Lqcd^2$，领头振幅 $\sim G_Fm_b^2\Lqcd$\cite[式~(26)、(28)]{BenekeEtAl2000}）。证明不需要 $\pi$ 由 $q\bar q$ Fock 态主导，也不需要令横动量为零；$T$ 的两圈结果见\cite{Huber:2016xod}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+全阶论证（[A]）。最弱的一步是 SCET 的前提（\cref{rem:scet-assumptions}，其与本书编号假设的对应见该注）：模式穷尽领头区域——强子层次上即\cref{asm:intro-bridge}(Br1)——与零箱减除的自洽；BPS 的模式清单不含 Glauber 模式，其不出现属于该注的前提~(3)（E-S 型陈述）。另一输入是端点压低假设，它是关于强子波函数的非微扰陈述，BPS 明确列为假设，没有证明。BBNS 在两圈显式证明了红外奇异性的相消，并写明“the following does not accomplish an all-order ‘proof’”（以下论证并不构成全阶“证明”）\cite[第~5~节]{BenekeEtAl2000}。没有已知的领头幂次反例。升级途径：对本过程以积分形式证明模式完备，并控制端点组态。

@@ -1,0 +1,31 @@
+% =====================================================================================
+% ch16_jets.tex —— 第 16 章　喷注、事件形状、非全局对数与超领头对数（writer W19）
+% 规格：FINAL_OUTLINE_v2 第 16 章；WRITER_SPEC_v2；LEAD_DECISIONS LA-1…LA-16。
+% 复核脚本与日志：writing/work/W19/s1_sw_jets.py、s1b_sw_thrustaxis.py、s2_thrust_lo.py、s3_ngl.py、s4_sll.py（logs/）。
+% =====================================================================================
+\chapter{喷注、事件形状、非全局对数与超领头对数}\label{ch:jets}
+
+前面各章处理的主要是对末态完全求和的量（如\cref{ch:ee}的总截面）；实验上更常测量末态的\emph{形状}：喷注（jet）的数目、能量的角分布、某个角区域里是否几乎没有辐射。
+本章讨论这样的量在什么意义上可以用微扰论计算（红外安全）、它们的强子化修正、只约束部分相空间的测量带来的非全局对数（NGL），以及强子对撞中初态 Coulomb（Glauber）相位产生的超领头对数（SLL）。按本书的严格性词汇：Sterman--Weinberg 两喷注截面（\cref{prop:jets-sw}）、
+领头阶推力分布（\cref{prop:jets-thrust-lo}）与 $\order{\as^2}$ 的领头非全局对数（\cref{prop:jets-ngl}）是 \tagR（$R_{\mathrm{PT}}$，所述的阶）；
+红外安全喷注截面的逐阶有限性（\cref{cor:jets-ir-finite}）、BMS 方程（\cref{thm:jets-bms}）与喷注过程的有效场论因子化（\cref{thm:jets-ngl-factorization}）是 \tagA；
+\cref{prop:jets-ngl-beyond,prop:jets-sll}是 \tagP；强子化修正的普适性是 \tagC（\cref{conj:jets-hadronization}）。
+因子化破坏的一面属于\cref{ch:break}，前沿结果属于\cref{ch:front}；本章只在正文中指向它们，不用作论证的步骤。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:jets-sw}、\cref{prop:jets-thrust-lo}、\cref{prop:jets-ngl}（\tagR，$R_{\mathrm{PT}}$，各自所述的固定阶）。\par
+\textbf{给出全阶论证：}\cref{cor:jets-ir-finite}（\tagA；瓶颈\cref{thm:ir-leading-regions}）；
+\cref{thm:jets-bms}（\tagA；只在领头对数、大 $N_c$ 下）；
+\cref{thm:jets-ngl-factorization}（\tagA；瓶颈为模式完备性，\cref{asm:intro-bridge}、\cref{asm:appN-envelope}）。\par
+\textbf{没有证明：}强子化修正的普适性（\cref{conj:jets-hadronization}，\tagC）；超出领头对数与有限 $N_c$ 的非全局对数
+（\cref{prop:jets-ngl-beyond}，\tagP）；超领头对数的全阶结构（\cref{prop:jets-sll}，\tagP）与间隙截面的 PDF 因子化（\tagC）。
+\end{tcolorbox}
+
+\paragraph{本章约定。}
+$e^+e^-$ 质心系，$Q=\sqrt s$；部分子能量份额 $x_i=2E_i/Q$，三部分子末态 $x_1+x_2+x_3=2$（$1,2,3$ 依次为 $q$、$\bar q$、$g$），$\theta_{ij}$ 是三动量的夹角；
+Born 截面 $\sigma_0=\frac{4\pi\alpha^2}{3s}N_c\sum_qe_q^2$（VF-EE-1）。% VF-EE-1
+每个公式块标明展开参数。光锥分量 $v^\pm=(v^0\pm v^3)/\sqrt2$。
+$\tau$ 上的加号分布在 $\tau=0$ 处减除：$\int_0^1[g]_+h=\int_0^1g\,[h(\tau)-h(0)]$（不同于\cref{def:prelim-plus}）。
+能量份额 $\epsilon$ 不同于维数正规化的 $\varepsilon$（$D=4-2\varepsilon$）。

@@ -1,0 +1,693 @@
+% =====================================================================================
+% ch15_scet.tex —— 第 15 章 有效场论方法：SCET（writer W18）
+% 来源：FINAL_OUTLINE_v2 Ch15；research/c_scet（DERIVATION.md、tex/c_scet_scet.tex、tex/c_scet_thrust.tex）；
+% 核验脚本：writing/work/W18/w18_s1_lagrangian.py … w18_s5_rapidity_glauber.py（日志在 writing/work/W18/logs/）。
+% 约定：本章 SCET 矢量 n=(1,0,0,1)、nbar=(1,0,0,-1)；D=∂-igA；W[b,a]=P exp(ig∫_a^b dz·A)，离 b 近的点在左。
+% =====================================================================================
+\chapter{有效场论方法：SCET}\label{ch:scet}
+
+软—共线有效理论（soft-collinear effective theory，SCET）\cite{BauerFlemingLuke2000,BauerEtAl2001,BauerStewart2001,BauerPirjolStewart2002,BauerEtAl2002}把第~9~章的全阶因子化证明改写成有效场论的语言：领头区域对应场（\emph{模式}），硬子图对应匹配系数，区域近似对应多极展开后的拉氏量，Ward 恒等式给出的 Wilson 线对应有效理论的规范对称性，Collins 减除对应\emph{零箱}（zero-bin）减除。本章证明（[R]）领头阶共线拉氏量与共线 Wilson 线的树图结果、规范对称性以及作为拉氏量恒等式的超软退耦定理，给出推力分布 $H\,J\otimes J\otimes S$ 的单圈因子与重整化群（RG）一致性；对快度发散方案的等价性、Glauber 算符、推力因子化与领头对数（LL）重求和给出全阶论证（[A]）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:scet-scalings,prop:scet-gauge,thm:scet-decoupling}（\tagR，$R_{\mathrm{def}}$；后两者作为领头阶 SCET 拉氏量的恒等式）；\cref{prop:scet-lagrangian,prop:scet-wilson,prop:scet-scet2,prop:scet-hard-matching,prop:scet-thrust-oneloop}（\tagR，$R_{\mathrm{PT}}$，树图或单圈）。\par
+\textbf{给出全阶论证：}\cref{prop:scet-rapidity-rg,prop:scet-glauber-operators,thm:scet-thrust,prop:scet-ll}（\tagA；作为 QCD 陈述继承模式完备性，即\cref{asm:intro-bridge}(Br1) 与\cref{asm:appN-envelope}）。\par
+\textbf{没有证明：}模式完备性本身（它就是第~4~章的区域分析，\cref{thm:ir-leading-regions}）；强子对撞中 Glauber 贡献的相消（Rothstein--Stewart：单独的相位相消“远不是因子化的证明”）；他们预告的完整 SCET Drell--Yan 证明（据我们截至 2026 年 10 月的 INSPIRE 检索，尚未发表）。
+\end{tcolorbox}
+
+SCET 的全阶陈述依赖三条前提，与图形方法的三处困难一一对应：模式完备对应区域完备与幂次计数（\cref{asm:appN-envelope}），零箱减除的自洽对应减除的组合学（\cref{asm:appN-collins}），Glauber 拉氏量与快度正规子对应 Glauber 区的围道变形（附录~O）；见\cref{rem:scet-assumptions}。因此 SCET 证明并不比 Collins 的图形证明更严格，二者互补。
+
+\paragraph{本章的约定。}
+本章（且只有本章）用 SCET 文献的光锥矢量 $n=(1,0,0,1)$、$\bar n=(1,0,0,-1)$，$n^2=\bar n^2=0$，$n\cdot\bar n=2$，
+\begin{equation}\label{eq:scet-decomp}
+p^\mu=\bar n\cdot p\,\frac{n^\mu}{2}+n\cdot p\,\frac{\bar n^\mu}{2}+p_\perp^\mu,\qquad
+\bar n\cdot p=\sqrt2\,p^+,\quad n\cdot p=\sqrt2\,p^-,\qquad p^2=\bar n\cdot p\,n\cdot p+p_\perp^2 ,
+\end{equation}
+$p_\perp^2=-\bm p_{\mathrm T}^2$。与其余各章的对应是 $n=\sqrt2\,n_A$、$\bar n=\sqrt2\,n_B$：$n$ 共线粒子（$\bar n\cdot p$ 大）沿 $+z$ 运动，即“$A$ 共线”。标度一律写成 $(\bar n\cdot p,\,n\cdot p,\,p_\perp)$；Rothstein--Stewart~\cite{RothsteinStewart2016}等按 $(n\cdot p,\bar n\cdot p,p_\perp)$ 排列，引用时须交换前两项。投影算符 $P_n\equiv\frac{\sla n\bar{\sla n}}{4}$、$P_{\bar n}\equiv\frac{\bar{\sla n}\sla n}{4}$ 满足 $P_n^2=P_n$、$P_n+P_{\bar n}=1$、$P_nP_{\bar n}=0$、$\sla nP_n=0$、$\gamma^0P_n^\dagger\gamma^0=P_{\bar n}$，并与 $\gamma_\perp^\mu$ 对易。协变导数 $D_\mu=\partial_\mu-\ii gA_\mu$ 与 Bauer--Fleming--Pirjol--Stewart（BFPS）\cite{BauerEtAl2001}及 Bauer--Pirjol--Stewart（BPS）\cite{BauerPirjolStewart2002}相同，引用其公式时不必改变 $g$ 的符号。推力的加号分布在 $\tau=0$ 处减除（\cref{sec:scet-rg}）。
+
+% -------------------------------------------------------------------------------------
+\section{模式与幂次计数}\label{sec:scet-modes}
+
+有效场论的第一步是决定保留哪些自由度：第~4~章的钳夹分析给出领头区域，SCET 为每个领头区域引入一个场。
+
+\begin{definition}[模式]\label{def:scet-modes}
+设 $Q$ 为硬标度，$\lambda\ll1$ 为由观测量确定的幂次计数参数（推力：$\lambda=\sqrt\tau$；横动量分布：$\lambda=q_T/Q$）。下表中的动量区域称为 SCET 的\emph{模式}（mode）：
+\begin{center}\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}lccl@{\qquad}lccl@{}}
+\toprule
+模式 & $(\bar n\cdot p,n\cdot p,p_\perp)/Q$ & $p^2$ & 场 & 模式 & $(\bar n\cdot p,n\cdot p,p_\perp)/Q$ & $p^2$ & 场\\
+\midrule
+硬 & $(1,1,1)$ & $Q^2$ & 积出 & 软 & $(\lambda,\lambda,\lambda)$ & $\lambda^2Q^2$ & $q_s$，$A_s$ \\
+$n$ 共线 & $(1,\lambda^2,\lambda)$ & $\lambda^2Q^2$ & $\xi_n$，$A_n$ & 硬共线 & $(1,\lambda,\lambda^{1/2})$ & $\lambda Q^2$ & 积出 \\
+$\bar n$ 共线 & $(\lambda^2,1,\lambda)$ & $\lambda^2Q^2$ & $\xi_{\bar n}$，$A_{\bar n}$ & Glauber $n\bar n$ & $(\lambda^2,\lambda^2,\lambda)$ & $\simeq-\bm p_{\mathrm T}^2$ & 离壳 \\
+超软 & $(\lambda^2,\lambda^2,\lambda^2)$ & $\lambda^4Q^2$ & $q_{us}$，$A_{us}$ & Glauber $ns$；$\bar ns$ & $(\lambda,\lambda^2,\lambda)$；$(\lambda^2,\lambda,\lambda)$ & $\simeq-\bm p_{\mathrm T}^2$ & 离壳 \\
+\bottomrule
+\end{tabular}
+\end{center}
+% VF-SCET-1
+Glauber 模式离壳，不是传播的模式。只含硬、两个共线与超软模式的理论称为 SCET$_{\rm I}$；只含硬、两个共线与软模式的理论称为 SCET$_{\rm II}$。由 $(\bar n\cdot p,n\cdot p)=\sqrt2(p^+,p^-)$，表中的标度与\cref{def:ir-scalings}中 $(k^+,k^-,k_T)$ 的标度逐项相同；Libby--Sterman 意义下的“软”即此处的超软。
+\uses{def:ir-scalings}
+\end{definition}
+
+Rothstein--Stewart 把 Glauber 动量写作 $Q(\lambda^a,\lambda^b,\lambda)$（按 $(n\cdot p,\bar n\cdot p,p_\perp)$ 排列），$a+b>2$，$\{a,b\}=\{2,2\},\{2,1\},\{1,2\}$ 分别称为 $n$–$\bar n$、软–$n$、软–$\bar n$ Glauber\cite[表~1]{RothsteinStewart2016}；交换前两项即上表的 Glauber 各行。
+
+\begin{proposition}[场的标度 \tagR]\label{prop:scet-scalings}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）以 $Q$ 的相应幂次为单位（夸克场 $Q^{3/2}$，胶子场 $Q$），各模式的场按下列方式标度：
+\begin{equation}\label{eq:scet-fieldscaling}
+\xi_n\sim\lambda,\qquad (\bar n\cdot A_n,\,n\cdot A_n,\,A_{n\perp})\sim(1,\lambda^2,\lambda),\qquad
+A_{us}\sim\lambda^2,\quad q_{us}\sim\lambda^3,\qquad A_s\sim\lambda,\quad q_s\sim\lambda^{3/2}.
+\end{equation}
+% VF-SCET-2
+（本命题只涉及部分子场，不涉及强子态。）
+\uses{def:scet-modes,def:prelim-feynman-rules}
+\end{proposition}
+
+\begin{proof}
+场 $\phi$ 的标度定义为使自由两点函数 $\int\frac{\dd^4p}{(2\pi)^4}\ee^{-\ii p\cdot x}\Delta_\phi(p)$ 在该模式的动量区内与 $\phi\phi$ 同阶的幂次，即 $\phi\phi\sim[\dd^4p]\,\Delta_\phi$，$\dd^4p=\frac12\dd(\bar n\cdot p)\,\dd(n\cdot p)\,\dd^2p_\perp$。共线模式 $[\dd^4p]\sim\lambda^4$。共线夸克场 $\xi_n=P_n\psi$ 的传播子是 QCD 传播子的投影：把 $\sla p=\frac{\bar n\cdot p}{2}\sla n+\frac{n\cdot p}{2}\bar{\sla n}+\sla p_\perp$ 代入并用 $P_n\sla nP_{\bar n}=\sla n$、$P_n\bar{\sla n}P_{\bar n}=0$、$P_n\gamma_\perp^\mu P_{\bar n}=0$，
+\begin{equation}\label{eq:scet-xiprop}
+P_n\,\frac{\ii\sla p}{p^2+\ii0}\,P_{\bar n}=\ii\,\frac{\sla n}{2}\,\frac{\bar n\cdot p}{p^2+\ii0}\sim\lambda^{-2}
+\end{equation}
+（对离壳的 $p$ 也精确成立），故 $\xi_n\sim\lambda$。共线胶子的协变规范传播子 $\frac{-\ii}{k^2}[g^{\mu\nu}-(1-\xi_g)\frac{k^\mu k^\nu}{k^2}]$（\cref{def:prelim-feynman-rules}）的第二项给出 $A_n^\mu A_n^\nu\sim k^\mu k^\nu$，即 $A_n^\mu$ 与 $k^\mu$ 逐分量同阶；第一项给出 $\langle\bar n\cdot A_n\,\bar n\cdot A_n\rangle\propto\bar n^2=0$、$\langle n\cdot A_n\,\bar n\cdot A_n\rangle\sim\langle A_{n\perp}A_{n\perp}\rangle\sim\lambda^2$，与之相容。超软模式 $[\dd^4k]\sim\lambda^8$，胶子与夸克传播子分别 $\sim\lambda^{-4}$、$\lambda^{-2}$，故 $A_{us}\sim\lambda^2$、$q_{us}\sim\lambda^3$；软模式 $[\dd^4k]\sim\lambda^4$，传播子 $\sim\lambda^{-2}$、$\lambda^{-1}$，故 $A_s\sim\lambda$、$q_s\sim\lambda^{3/2}$。
+\end{proof}
+
+于是 $\ii D^\mu=\ii\partial^\mu+gA^\mu$ 的每个分量都与相应的动量分量同阶；特别地 $g\,\bar n\cdot A_n\sim\lambda^0$，必须对所有阶求和（\cref{prop:scet-wilson}）。设 $p$ 为在壳的 $n$ 共线动量，由 $2p\cdot k=\bar n\cdot p\,n\cdot k+n\cdot p\,\bar n\cdot k+2p_\perp\cdot k_\perp$ 逐项计数：% w18_s1 (E): all mode combinations checked
+吸收超软动量后 $(p+k)^2=p^2+\bar n\cdot p\,n\cdot k+\order{\lambda^3Q^2}$ 仍是共线的且只含 $n\cdot k$；吸收软动量后 $(p+k)^2\simeq\bar n\cdot p\,n\cdot k\sim\lambda Q^2$ 是硬共线的；与 $\bar n$ 共线动量结合得 $\sim Q^2$；交换 Glauber 动量时两个共线扇区都保持在壳，交换是瞬时的势。共线场所在区域 $(n\cdot x,\bar n\cdot x,x_\perp)\sim(1,\lambda^{-2},\lambda^{-1})/Q$，故
+\begin{equation}\label{eq:scet-multipole}
+k_{us}\cdot x=\tfrac12\,n\cdot k\,\bar n\cdot x\,[\lambda^0]+k_\perp\cdot x_\perp\,[\lambda]+\tfrac12\,\bar n\cdot k\,n\cdot x\,[\lambda^2],\qquad
+A_{us}(x)=A_{us}(x_-)+\order{\lambda},\quad x_-^\mu\equiv\bar n\cdot x\,\frac{n^\mu}{2}:
+\end{equation}
+共线场看到的超软场只依赖于 $\bar n\cdot x$（多极展开）。等价地可用标签动量算符 $\bar{\mathcal P}$、$\mathcal P_\perp$ 表述\cite{BauerEtAl2001,BauerStewart2001}；下面用坐标空间写法\cite{BenekeEtAl2002,Beneke:2002ni}，$\ii\bar n\cdot\partial$、$\ii\partial_\perp$ 作用于共线场时只取出大分量。领头阶共线拉氏量的每一项是 $\order{\lambda^4}$，而共线测度 $\dd^4x\sim\lambda^{-4}$，故作用量为 $\order{\lambda^0}$。
+
+% -------------------------------------------------------------------------------------
+\section{领头阶共线拉氏量与共线 Wilson 线}\label{sec:scet-lagrangian}
+
+令 $\xi_n\equiv P_n\psi$、$\phi_{\bar n}\equiv P_{\bar n}\psi$：$\sla n\,\xi_n=0$，$\bar\xi_n=\bar\psi P_{\bar n}$；对 $n$ 共线夸克，$\phi_{\bar n}$ 是被 $\lambda$ 压低的分量，共线拉氏量就是在树图层次把它积掉的结果。
+
+\begin{proposition}[领头阶共线夸克拉氏量 \tagR]\label{prop:scet-lagrangian}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（树图层次的匹配。）
+(a) 在经典作用量 $\int\bar\psi\,\ii\sla D\,\psi$（\cref{def:prelim-qcd}）中解出 $\phi_{\bar n}$ 的运动方程并代回，精确地得到
+\begin{equation}\label{eq:scet-Lxixi-exact}
+\mathcal L_{\xi\xi}=\bar\xi_n\Big[\ii n\cdot D+\ii\sla D_\perp\,\frac{1}{\ii\bar n\cdot D}\,\ii\sla D_\perp\Big]\frac{\bar{\sla n}}{2}\,\xi_n .
+\end{equation}
+(b) 令 $A=A_n+A_{us}$，超软场按\cref{eq:scet-multipole}多极展开并只保留领头幂次，得
+\begin{equation}\label{eq:scet-L0xi}
+\mathcal L^{(0)}_{\xi\xi}=\bar\xi_n\Big[\ii n\cdot D+\ii\sla D_{\perp c}\,\frac{1}{\ii\bar n\cdot D_c}\,\ii\sla D_{\perp c}\Big]\frac{\bar{\sla n}}{2}\,\xi_n,\qquad
+\begin{aligned}
+&\ii n\cdot D=\ii n\cdot\partial+g\,n\cdot A_n+g\,n\cdot A_{us}(x_-),\\
+&\ii\bar n\cdot D_c=\ii\bar n\cdot\partial+g\,\bar n\cdot A_n,\quad \ii D^\mu_{\perp c}=\ii\partial^\mu_\perp+gA^\mu_{n\perp}.
+\end{aligned}
+\end{equation}
+% VF-SCET-3
+(c) Feynman 规则：共线夸克传播子 $S_\xi(p)=\ii\frac{\sla n}{2}\frac{\bar n\cdot p}{p^2+\ii0}$；超软胶子顶角 $\ii g\,t^a\,n^\mu\frac{\bar{\sla n}}{2}$；共线胶子顶角（夸克 $p\to p'$）
+\begin{equation}\label{eq:scet-collvertex}
+V^\mu=\ii g\,t^a\Big[n^\mu+\frac{\gamma_\perp^\mu\sla p_\perp}{\bar n\cdot p}+\frac{\sla p'_\perp\gamma_\perp^\mu}{\bar n\cdot p'}-\frac{\sla p'_\perp\sla p_\perp}{\bar n\cdot p\,\bar n\cdot p'}\,\bar n^\mu\Big]\frac{\bar{\sla n}}{2},\qquad
+\gamma_\perp^\mu=\gamma^\mu-n^\mu\frac{\bar{\sla n}}{2}-\bar n^\mu\frac{\sla n}{2};
+\end{equation}
+% VF-SCET-4
+并且对任意离壳动量精确成立 $P_n\,S(p')\,(\ii g\gamma^\mu t^a)\,S(p)\,P_{\bar n}=S_\xi(p')\,V^\mu\,S_\xi(p)$，$S(p)=\frac{\ii\sla p}{p^2+\ii0}$。（本命题只涉及部分子场与部分子振幅。）
+\uses{prop:scet-scalings,def:prelim-qcd}
+\end{proposition}
+
+\begin{proof}
+(a) 把 $\sla D=\frac{\sla n}{2}\bar n\cdot D+\frac{\bar{\sla n}}{2}n\cdot D+\sla D_\perp$ 代入，投影算符的性质给出 $P_{\bar n}\sla DP_n=n\cdot D\frac{\bar{\sla n}}{2}P_n$、$P_n\sla DP_{\bar n}=\bar n\cdot D\frac{\sla n}{2}P_{\bar n}$、$P_{\bar n}\sla DP_{\bar n}=\sla D_\perp P_{\bar n}$、$P_n\sla DP_n=\sla D_\perp P_n$；由 $\bar\phi_{\bar n}=\bar\psi P_n$，
+\begin{equation}\label{eq:scet-psiDpsi}
+\bar\psi\,\ii\sla D\,\psi=\bar\xi_n\frac{\bar{\sla n}}{2}\,\ii n\cdot D\,\xi_n+\bar\xi_n\,\ii\sla D_\perp\phi_{\bar n}
++\bar\phi_{\bar n}\,\ii\sla D_\perp\xi_n+\bar\phi_{\bar n}\frac{\sla n}{2}\,\ii\bar n\cdot D\,\phi_{\bar n}.
+\end{equation}
+对 $\bar\phi_{\bar n}$ 变分得 $\frac{\sla n}{2}\ii\bar n\cdot D\,\phi_{\bar n}+\ii\sla D_\perp\xi_n=0$，左乘 $\frac{\bar{\sla n}}{2}$ 并用 $\frac{\bar{\sla n}\sla n}{4}\phi_{\bar n}=\phi_{\bar n}$ 得 $\phi_{\bar n}=-\frac{1}{\ii\bar n\cdot D}\frac{\bar{\sla n}}{2}\,\ii\sla D_\perp\xi_n$。代回后含 $\bar\phi_{\bar n}$ 的两项按运动方程为零，剩下 $\bar\xi_n\frac{\bar{\sla n}}2\ii n\cdot D\,\xi_n-\bar\xi_n\ii\sla D_\perp\frac{1}{\ii\bar n\cdot D}\frac{\bar{\sla n}}{2}\ii\sla D_\perp\xi_n$；把 $\bar{\sla n}$ 越过 $\sla D_\perp$ 移到最右（多一个负号）即得\cref{eq:scet-Lxixi-exact}。这一步没有近似（路径积分中对 $\phi_{\bar n}$ 积分只另给出一个与 $\xi_n$ 无关的行列式）。
+(b) 作用在共线场上时 $\ii n\cdot\partial$、$g\,n\cdot A_n$、$g\,n\cdot A_{us}$ 都是 $\order{\lambda^2}$；$\ii\bar n\cdot\partial$、$g\,\bar n\cdot A_n\sim1$ 而 $g\,\bar n\cdot A_{us}\sim\lambda^2$；$\ii\partial_\perp$、$gA_{n\perp}\sim\lambda$ 而 $gA_{us\perp}\sim\lambda^2$（\cref{prop:scet-scalings}）。去掉被压低的项即得\cref{eq:scet-L0xi}。
+(c) 自由部分在 $P_n$ 子空间上等于 $n\cdot p+\sla p_\perp\sla p_\perp/\bar n\cdot p=p^2/\bar n\cdot p$，而 $S_\xi\,\frac{p^2}{\bar n\cdot p}\frac{\bar{\sla n}}{2}=\ii P_n$，故传播子如上（即\cref{eq:scet-xiprop}）。超软顶角来自 $\bar\xi_n\,g\,n\cdot A_{us}\frac{\bar{\sla n}}2\xi_n$。共线顶角是 $A_{us}=0$ 时的 $\order{g}$ 项：$n^\mu$ 来自 $\ii n\cdot D$，中间两项来自 $\ii\sla D_{\perp c}$ 中的 $gA_{n\perp}$，末项来自 $(\bar n\cdot p+g\bar n\cdot A_n)^{-1}=\frac{1}{\bar n\cdot p}-\frac{1}{\bar n\cdot p'}g\,\bar n\cdot A_n\frac{1}{\bar n\cdot p}+\order{g^2}$。最后，由 (a)，消去 $\phi_{\bar n}$ 后的树图生成泛函等于 QCD 树图生成泛函对 $\xi_n$ 源的限制，而对共线胶子 (b) 没有丢掉任何项，故 $S_\xi V^\mu S_\xi=P_nS(\ii g\gamma^\mu t^a)SP_{\bar n}$ 精确成立（对随机离壳动量逐元素核对，相对差 $<10^{-15}$）。% w18_s1 (D)
+\end{proof}
+
+\paragraph{共线 Wilson 线。}
+由于 $g\,\bar n\cdot A_n\sim\lambda^0$，定义
+\begin{equation}\label{eq:scet-Wn}
+W_n(x)\equiv W[x,x-\infty\bar n]=\mathrm P\exp\Big(\ii g\int_{-\infty}^0\dd s\;\bar n\cdot A_n(x+s\bar n)\Big)
+=\sum_{\rm perms}\exp\Big[-\frac{g}{\bar{\mathcal P}}\,\bar n\cdot A_n\Big]
+\end{equation}
+% VF-SCET-5
+（后一式是 BFPS 的标签形式\cite{BauerEtAl2001}）。由\cref{prop:prelim-wilson-covariance}，$W_n^\dagger W_n=1$，$\bar n\cdot D_cW_n=0$，故 $\frac{1}{\ii\bar n\cdot D_c}=W_n\frac{1}{\ii\bar n\cdot\partial}W_n^\dagger$；在 $U_c(x-\infty\bar n)=1$ 的共线规范变换下 $W_n\to U_c(x)W_n$，故 $\chi_n\equiv W_n^\dagger\xi_n$ 共线规范不变。被吸收的胶子（场 $\propto\epsilon\,\ee^{-\ii k\cdot y}$）给出 $\ii g\,\bar n\cdot\epsilon\,t^a\int_{-\infty}^0\dd s\,\ee^{-\ii s\bar n\cdot k+0s}=-g\,t^a\bar n\cdot\epsilon/(\bar n\cdot k+\ii0)$，产生的出射胶子给出 $+g\,t^a\bar n\cdot\epsilon^*/(\bar n\cdot k-\ii0)$，即\cref{prop:prelim-wilson-rules}中指向过去的线的规则（$n\to\bar n$）。
+
+\begin{proposition}[共线 Wilson 线 \tagR]\label{prop:scet-wilson}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（树图层次。）设 QCD 矢量流 $J^\mu=\bar\psi\gamma^\mu\psi$ 产生一个 $n$ 共线夸克、一个 $\bar n$ 共线反夸克及任意个 $n$ 共线与 $\bar n$ 共线胶子。积掉虚度 $\sim Q^2$ 的离壳线后，其树图矩阵元在 $\lambda$ 的领头幂次等于
+\begin{equation}\label{eq:scet-Jtree}
+J^\mu_{\rm SCET}=\bar\xi_n\,W_n\,\gamma_\perp^\mu\,W_{\bar n}^\dagger\,\xi_{\bar n}=\bar\chi_n\gamma_\perp^\mu\chi_{\bar n}
+\end{equation}
+用 $\mathcal L^{(0)}$ 算出的矩阵元，$W_n$ 由\cref{eq:scet-Wn}给出，单胶子规则为 $-g\,\bar n^\mu t^a/(\bar n\cdot k+\ii0)$。与 BFPS、BPS 相比不需要改变 $g$ 的符号。（本命题只涉及部分子振幅。）
+\uses{prop:scet-lagrangian,def:prelim-wilson,prop:prelim-wilson-covariance,prop:prelim-wilson-rules,lem:prelim-eikonal-identity}
+\end{proposition}
+
+\begin{proof}
+设胶子都是 $n$ 共线的（$\bar n$ 共线胶子同理给出 $W_{\bar n}^\dagger$）。\emph{分解。}任一树图中，从流顶点到外反夸克的线携带 $p_2+K$，$K$ 为若干 $n$ 共线动量之和，$(p_2+K)^2=n\cdot p_2\,\bar n\cdot K[1+\order{\lambda^2}]\sim Q^2$：这些是要积掉的离壳线。接在其上的每个胶子是一棵只含 $n$ 共线线的子树之根；子树、外夸克线及接在 $n$ 共线夸克线上的胶子属于共线扇区，由\cref{prop:scet-lagrangian}精确描述。\emph{领头幂次。}设反夸克线上自外反夸克起依次接了 $r$ 棵子树（流 $\mathcal J_j$，色指标 $a_j$，$K_j$ 为前 $j$ 棵的总动量），反夸克线给出
+\[
+\Gamma^\mu\,\frac{\ii(-\sla p_2-\sla K_r)}{(p_2+K_r)^2+\ii0}\,(\ii g\,\sla{\mathcal J}_r t^{a_r})\cdots\frac{\ii(-\sla p_2-\sla K_1)}{(p_2+K_1)^2+\ii0}\,(\ii g\,\sla{\mathcal J}_1t^{a_1})\,v(p_2).
+\]
+领头幂次下 $-\sla p_2-\sla K_j\to-\frac{n\cdot p_2}{2}\bar{\sla n}$，而 $\sla{\mathcal J}_j$ 中只有 $\frac{\bar n\cdot\mathcal J_j}{2}\sla n$ 存活（$n\cdot\mathcal J_j\sim\lambda^2$、$\mathcal J_{j\perp}\sim\lambda$，且 $\bar{\sla n}^2=0$），每对“传播子 × 顶角”化为 $\frac{g\,\bar n\cdot\mathcal J_j}{4(\bar n\cdot K_j+\ii0)}\bar{\sla n}\sla n\,t^{a_j}$；由 $\bar{\sla n}v(p_2)=\order{\lambda}$ 得 $\bar{\sla n}\sla n\,v=4v+\order{\lambda}$，整条线化为 $\Gamma^\mu v(p_2)\prod_{j=r}^{1}[g\,t^{a_j}\bar n\cdot\mathcal J_j/(\bar n\cdot K_j+\ii0)]$（$j=r$ 在最左），且 $\bar u_n\gamma^\mu v_{\bar n}=\bar u_n\gamma_\perp^\mu v_{\bar n}$。\emph{求和。}对子树的根在线上的 $r!$ 种次序求和。另一方面，\cref{eq:scet-Wn}对 $r$ 个出射胶子在次序 $s_1<\cdots<s_r\le0$ 上的嵌套积分逐层初等可积，$\int_{-\infty}^{s_{j+1}}\dd s_j\,\ee^{\ii s_j\bar n\cdot K_j}=\ee^{\ii s_{j+1}\bar n\cdot K_j}/(\ii\bar n\cdot K_j)$，给出 $(\ii g)^r\prod_j(\ii\bar n\cdot K_j)^{-1}=g^r/\prod_j\bar n\cdot K_j$，色矩阵按 $t^{a_r}\cdots t^{a_1}$ 排列，恰为上式在同一次序下的值；对次序求和即路径有序指数的展开（\cref{prop:prelim-wilson-rules}，交换群极限即\cref{lem:prelim-eikonal-identity}）。QCD 离壳线给出 $\bar n\cdot K_j+\ii0$（伸向未来的线），$W_n$ 给出 $-\ii0$，但共线胶子有 $\bar n\cdot K_j\sim Q\neq0$；$W_n$ 取自 $-\infty$ 是约定，方向依赖只来自 $\bar n\cdot k\to0$，在 SCET 中被零箱减除抵消\cite{RothsteinStewart2016}。于是每个 QCD 树图等于子树接在 $W_n$ 的 $r$ 胶子顶点上的 SCET 图，即\cref{eq:scet-Jtree}。推导只用 $D=\partial-\ii gA$ 与 $W=\mathrm P\exp(+\ii g\int\dd z\cdot A)$，与 BFPS、BPS 的约定相同。
+\end{proof}
+
+%%% BEGIN fig:scet-wilson
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 n/.style={draw=blue!60!black},
+  t2 nb/.style={draw=orange!80!black},
+  t2 us/.style={draw=green!45!black},
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large}]
+  % ======================= (a) origin of the collinear Wilson line W_n =======================
+  \begin{scope}
+    \node[opvertex] (O) at (0,0) {};
+    \coordinate (Q) at (2.2,0.95); \coordinate (Qb) at (2.2,-0.95);
+    \coordinate (G) at ($(O)!0.42!(Qb)$);
+    \draw[quark,t2 n] (O) -- (Q);
+    \draw[quark,t2 nb] (Qb) -- (G); \draw[quark=0.62,t2 nb] (G) -- (O);
+    \draw[gluon,t2 n] (G) -- (2.25,0.22);
+    \node[vertex] at (G) {};
+    \node[t2 lab,anchor=west] at (Q) {$n$ 共线夸克};
+    \node[t2 lab,anchor=west] at (Qb) {$\bar n$ 共线反夸克};
+    \node[t2 lab,anchor=west] at (2.25,0.22) {$n$ 共线胶子};
+    \node[font=\footnotesize,anchor=north east] at ($(O)!0.5!(G)+(0.04,-0.06)$) {$p^2\sim Q^2$};
+    \node[t2 eq] at (5.4,0) {$\Longrightarrow$};
+    \node[font=\footnotesize,align=center] at (5.4,-0.55) {积掉\\离壳模式};
+    \begin{scope}[xshift=6.7cm]
+      \node[opvertex] (O) at (0,0) {};
+      \draw[quark,t2 n] (O) -- (2.2,0.95) coordinate (Q);
+      % the nbar-collinear antiquark and, parallel to it, the eikonal line W_n (along nbar)
+      \draw[quark,t2 nb] ($(O.-67)+(-23.36:2.35)$) -- (O.-67);
+      \draw[wilson=0.72] ($(O.20)+(-23.36:2.0)$) coordinate (W) -- (O.20);
+      \coordinate (Y) at ($(O.20)!0.6!(W)$);
+      \draw[gluon,t2 n] (Y) -- ($(Y)+(1.05,0.52)$) coordinate (Ge);
+      \node[t2 lab,anchor=west] at (Q) {$n$ 共线夸克};
+      \node[t2 lab,anchor=west] at (Ge) {$\bar n\cdot A_n$};
+      \node[t2 lab,anchor=west] at (W) {$W_n$};
+    \end{scope}
+    \node[font=\small] at (4.6,-1.75) {$\bar\xi_n\,\Gamma\,\xi_{\bar n}\;\longrightarrow\;\bar\xi_n W_n\,\Gamma\,W_{\bar n}^\dagger\xi_{\bar n}=\bar\chi_n\,\Gamma\,\chi_{\bar n},\qquad \chi_n\equiv W_n^\dagger\xi_n$};
+    \node[font=\small,anchor=west] at (-0.5,-2.45) {(a)\ 共线 Wilson 线 $W_n$（沿 $\bar n$ 方向，由 $\bar n\cdot A_n$ 构成）的来源};
+  \end{scope}
+  % ======================= (b) ultrasoft decoupling =======================
+  \begin{scope}[yshift=-5.2cm]
+    \node[opvertex] (O) at (0,0) {};
+    \coordinate (Q) at (2.9,1.0);
+    \coordinate (U1) at ($(O)!0.36!(Q)$); \coordinate (U2) at ($(O)!0.7!(Q)$);
+    \draw[quark=0.2,t2 n] (O) -- (U1); \draw[quark,t2 n] (U1) -- (U2); \draw[quark,t2 n] (U2) -- (Q);
+    \draw[gluon,t2 us] (U1) -- ($(U1)+(-0.3,1.1)$);
+    \draw[gluon,t2 us] (U2) -- ($(U2)+(0.05,1.1)$);
+    \foreach \p in {U1,U2} \node[vertex] at (\p) {};
+    \node[t2 lab,anchor=west] at (Q) {$\xi_n$};
+    \node[font=\footnotesize,anchor=west,text=green!35!black] at ($(U2)+(0.12,0.75)$) {$n\cdot A_{us}$};
+    \node[t2 eq] at (4.75,0.45) {$=$};
+    \begin{scope}[xshift=6.1cm]
+      \node[opvertex] (O) at (0,0) {};
+      % the n-collinear quark and, parallel to it, the eikonal line Y_n (along n)
+      \draw[quark,t2 n] (O.-26) -- ++(19.03:3.0) coordinate (Q0);
+      \draw[wilson=0.86] (O.64) -- ++(19.03:2.95) coordinate (W);
+      \coordinate (Y1) at ($(O.64)!0.36!(W)$); \coordinate (Y2) at ($(O.64)!0.68!(W)$);
+      \draw[gluon,t2 us] (Y1) -- ($(Y1)+(-0.3,1.0)$);
+      \draw[gluon,t2 us] (Y2) -- ($(Y2)+(0.05,1.0)$);
+      \node[t2 lab,anchor=north west] at (Q0) {$\xi_n^{(0)}$};
+      \node[t2 lab,anchor=south west] at (W) {$Y_n$};
+    \end{scope}
+    \node[font=\small] at (4.4,-1.0) {$\xi_n=Y_n\,\xi_n^{(0)},\quad A_n=Y_n\,A_n^{(0)}\,Y_n^\dagger$};
+    \node[font=\small,anchor=west] at (-0.5,-1.75) {(b)\ 超软退耦：超软胶子只与沿 $n$ 方向、由 $n\cdot A_{us}$ 构成的 Wilson 线 $Y_n$ 耦合};
+  \end{scope}
+\end{tikzpicture}
+\caption{SCET 中的两类 Wilson 线。(a)~$n$ 共线胶子（蓝色，领头分量 $\bar n\cdot A_n\sim\lambda^0$）附着在 $\bar n$ 共线（或硬）线上时，使该线离壳 $p^2\sim Q^2$；
+把这些离壳模式积掉后，它们附着到从流顶点 $\otimes$ 出发、沿 $\bar n$ 方向（与 $\bar n$ 共线反夸克平行）的共线 Wilson 线 $W_n$（由 $\bar n\cdot A_n$ 构成）上，
+流算符因而只通过规范不变组合 $\chi_n=W_n^\dagger\xi_n$ 出现（树图层次的匹配）。
+(b)~领头阶共线拉氏量中超软胶子（绿色）只通过 $n\cdot A_{us}$ 与 $n$ 共线夸克耦合；场重定义 $\xi_n=Y_n\xi_n^{(0)}$、$A_n=Y_nA_n^{(0)}Y_n^\dagger$
+（$n\cdot D_{us}Y_n=0$）使新场 $\xi_n^{(0)}$、$A_n^{(0)}$ 与超软胶子退耦，超软胶子全部附着在沿 $n$ 方向（与 $n$ 共线夸克平行）的 Wilson 线 $Y_n$ 上。
+$Y_n$ 的端点（$-\infty$ 或 $+\infty$）与 $\ii0$ 规定应依粒子是入射还是出射选取（此处为出射夸克）。Wilson 线上的箭头与被替代的费米子线的费米子数流向一致。}
+\label{fig:scet-wilson}
+\end{figure}
+%%% END fig:scet-wilson
+
+\begin{example}[$W_n$ 的树图匹配]\label{ex:scet-wn-tree}
+取 $\gamma^*\to q(p_1)\bar q(p_2)g(k)$，$k\parallel p_1\parallel n$（\cref{fig:scet-wilson}(a)）。胶子接在夸克上的图由共线顶角精确再现；接在反夸克上的图 $\bar u(p_1)\gamma^\mu\frac{\ii(-\sla p_2-\sla k)}{(p_2+k)^2+\ii0}(\ii g\,t^a\sla\epsilon^*)v(p_2)$ 中 $(p_2+k)^2\simeq n\cdot p_2\,\bar n\cdot k\sim Q^2$，在领头幂次等于 $W_n$ 的单胶子项 $g\,t^a\frac{\bar n\cdot\epsilon^*}{\bar n\cdot k}\bar u(p_1)\gamma_\perp^\mu v(p_2)$。在一个随机运动学点上，二者之差的相对大小在 $\lambda=10^{-1},10^{-2},10^{-3}$ 时为 $4.6\times10^{-2}$、$4.7\times10^{-3}$、$4.8\times10^{-4}$，完整的 QCD 与 SCET 振幅之差为 $9.1\times10^{-3}$、$8.5\times10^{-5}$、$8.5\times10^{-7}$。% w18_s2 (B)
+取 $\epsilon^*\to k$：QCD 两图之和为零；SCET 中共线顶角项 $-g\,t^a\bar u\gamma_\perp^\mu v$ 与 $W_n$ 项 $+g\,t^a\bar u\gamma_\perp^\mu v$ 精确相消——$W_n$ 恢复了共线规范不变性。
+\uses{prop:scet-wilson}
+\end{example}
+
+% -------------------------------------------------------------------------------------
+\section{规范对称性与超软退耦}\label{sec:scet-decoupling}
+
+共线胶子与共线鬼场的领头阶拉氏量是 BPS 的 (24) 式\cite{BauerPirjolStewart2002}，写成坐标空间形式为
+\begin{equation}\label{eq:scet-Lcg}
+\mathcal L^{(0)}_{cg}=\underbrace{\frac{1}{2g^2}\Tr\Big\{\big[\ii\mathcal D^\mu+gA_n^\mu,\ii\mathcal D^\nu+gA_n^\nu\big]\Big\}^2}_{\mathcal L_F}
++\underbrace{\frac1\alpha\Tr\Big\{\big[\ii\mathcal D_\mu,A_n^\mu\big]\Big\}^2}_{\mathcal L_{\rm gf}}
++\underbrace{2\Tr\Big\{\bar c_n\big[\ii\mathcal D_\mu,\big[\ii\mathcal D^\mu+gA_n^\mu,c_n\big]\big]\Big\}}_{\mathcal L_{\rm gh}},
+\end{equation}
+其中 $\ii\mathcal D^\mu\equiv\frac{n^\mu}{2}\,\ii\bar n\cdot\partial+\ii\partial_\perp^\mu+\frac{\bar n^\mu}{2}\,\ii n\cdot D_{us}$，$\ii n\cdot D_{us}\equiv\ii n\cdot\partial+g\,n\cdot A_{us}(x_-)$，$\Tr\,t^at^b=\frac12\delta^{ab}$，$c_n$、$\bar c_n$ 为伴随表示的共线鬼场，$\alpha$ 为规范参数。由 $[\ii D_\mu,\ii D_\nu]=\ii gG_{\mu\nu}$，$\mathcal L_F=-\frac14G^a_{\mu\nu}G^{a\mu\nu}$，$\mathcal L_{\rm gf}=-\frac{1}{2\alpha}(\mathcal D\cdot A_n)^a(\mathcal D\cdot A_n)^a$，$\mathcal L_{\rm gh}=\bar c_n^a(-\mathcal D^\mu D_{\mu}c_n)^a$，$\mathcal D$ 是只含背景场 $A_{us}$ 的伴随协变导数，$D=\mathcal D-\ii g[A_n,\cdot\,]$；$g\to0$、$A_{us}\to0$ 时它们化为通常的 $-\frac14(\partial_\mu A^a_\nu-\partial_\nu A^a_\mu)^2$、$-\frac1{2\alpha}(\partial\cdot A^a)^2$、$-\bar c^a\partial^2c^a$。因此\cref{eq:scet-Lcg}是以 $A_{us}$ 为背景场、$A_n$ 为量子场的背景场规范 QCD 作用量的领头幂次\cite{BauerPirjolStewart2002}。% w18_s3 (g)
+两类规范变换是：\emph{共线}变换 $U_c(x)$（导数与共线动量同阶，在无穷远处趋于 $1$），$\xi_n\to U_c\xi_n$，$A_n\to U_cA_nU_c^\dagger+\frac1gU_c[\ii\mathcal D,U_c^\dagger]$，超软场不变；\emph{超软}变换 $V(x)$（导数 $\sim\lambda^2Q$，作用于共线场时取 $V(x_-)$），$\xi_n\to V\xi_n$，$A_n\to VA_nV^\dagger$，$A_{us}\to VA_{us}V^\dagger+\frac1gV[\ii\partial,V^\dagger]$。二者都使 $\ii\mathcal D+gA_n\to U(\ii\mathcal D+gA_n)U^\dagger$（$U=U_c$ 或 $V$），超软变换还单独使 $\ii\mathcal D\to V\,\ii\mathcal D\,V^\dagger$。
+
+\begin{proposition}[共线与超软规范对称性 \tagR]\label{prop:scet-gauge}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）把\cref{eq:scet-L0xi}与\cref{eq:scet-Lcg}看作场的表达式：
+(a) $\mathcal L^{(0)}_{\xi\xi}$ 与场强项 $\mathcal L_F$ 在共线变换与超软变换下都不变；
+(b) 规范固定项 $\mathcal L_{\rm gf}$ 与鬼场项 $\mathcal L_{\rm gh}$ 各自在超软变换（$c_n,\bar c_n\to Vc_nV^\dagger,V\bar c_nV^\dagger$）下不变，即对超软背景协变；二者都不是共线规范不变的（无论鬼场按伴随表示变换还是不变）；
+(c) 令 BRST 变换作用于量子场，$sA_n=-\ii[\ii\mathcal D+gA_n,c_n]$（即 $sA^a_n=(Dc_n)^a$）、$sc_n^a=-\frac g2f^{abc}c_n^bc_n^c$、$s\bar c_n^a=B^a$、$sB^a=0$，超软场是不变的背景（\cref{def:prelim-brst}），则 $\mathcal L_{\rm gf}+\mathcal L_{\rm gh}$ 是 BRST 正合的，从而它与整个 $\mathcal L^{(0)}_{cg}$ 都是 BRST 不变的；单独的 $\mathcal L_{\rm gf}$ 或 $\mathcal L_{\rm gh}$ 不是。
+（这订正了文献\cite{BauerPirjolStewart2002}在其 (24) 式之后关于鬼场项具有共线规范不变性的表述，见附录~Q（\cref{app:appQ}）第~3~条。）（本命题只涉及有效拉氏量，不涉及强子态。）
+\uses{def:scet-modes,prop:qcd-covariance,lem:prelim-brst-nilpotent,def:prelim-brst}
+\end{proposition}
+
+\begin{proof}
+(a) 两类变换都使 $\ii\mathcal D^\mu+gA_n^\mu$ 按共轭变换（\cref{prop:qcd-covariance}，$\ii\partial$ 换成背景协变的 $\ii\mathcal D$），对易子随之共轭，迹不变，故 $\mathcal L_F$ 不变。$\mathcal L^{(0)}_{\xi\xi}$ 中的 $\ii n\cdot D$、$\ii\bar n\cdot D_c$、$\ii D_{\perp c}$ 正是 $\ii\mathcal D+gA_n$ 的三个分量，$\frac1{\ii\bar n\cdot D_c}\to U\frac1{\ii\bar n\cdot D_c}U^\dagger$，而 $\bar\xi_n\to\bar\xi_nU^\dagger$、$\xi_n\to U\xi_n$，$U$ 与 Dirac 矩阵对易，故不变；对超软变换还用到 $V(x_-)$ 只依赖 $\bar n\cdot x$，$\bar n\cdot\partial V=\partial_\perp V=0$。
+(b) 超软变换下 $[\ii\mathcal D_\mu,A_n^\mu]\to V[\ii\mathcal D_\mu,A_n^\mu]V^\dagger$，鬼场项的双重对易子同样按共轭变换。共线变换下 $A_n$ 获得非齐次项 $\frac1gU_c[\ii\mathcal D,U_c^\dagger]$，$[\ii\mathcal D_\mu,A_n^\mu]$ 随之获得 $\frac1g[\ii\mathcal D_\mu,U_c[\ii\mathcal D^\mu,U_c^\dagger]]\neq0$；鬼场项的外层对易子 $[\ii\mathcal D_\mu,\cdot\,]$ 不是共线协变的，其变分既不因 $c_n\to U_cc_nU_c^\dagger$ 也不因鬼场不变而消失（对随机 su(3) 场，相对变分为 $\order{1}$）。% w18_s3 (b),(c); App Q item 3
+(c) 令 $G^a\equiv(\mathcal D\cdot A_n)^a$，取规范费米子 $\Psi=\bar c_n^a(G^a+\frac\alpha2B^a)$。背景不变而 $G$ 对 $A_n$ 线性，$sG^a=(\mathcal D^\mu D_\mu c_n)^a$，故（$s$ 从左作用，$s(\bar cX)=(s\bar c)X-\bar c\,sX$）$s\Psi=B^aG^a+\frac\alpha2B^aB^a-\bar c_n^a(\mathcal D^\mu D_\mu c_n)^a$；消去 $B^a=-G^a/\alpha$，前两项为 $-\frac1{2\alpha}G^aG^a=\mathcal L_{\rm gf}$，末项即 $\mathcal L_{\rm gh}$。$s^2=0$ 的证明与 QCD 相同（\cref{lem:prelim-brst-nilpotent}；背景不参与 $s$），故 $s(\mathcal L_{\rm gf}+\mathcal L_{\rm gh})=s^2\Psi=0$；$s$ 作用于 $(A_n,\xi_n)$ 是参数 $\propto c_n$ 的无穷小共线规范变换，由 (a)，$s\mathcal L_F=0$。单独看，$s\mathcal L_{\rm gh}=-B^a(\mathcal D^\mu D_\mu c_n)^a$（用 $s(D_\mu c_n)=s^2A_{n\mu}=0$），而 $s(B^aG^a+\frac\alpha2B^aB^a)=+B^a(\mathcal D^\mu D_\mu c_n)^a$：两项只在求和中相消。
+\end{proof}
+
+由此，$\chi_n=W_n^\dagger\xi_n$ 与 $\mathcal B^\mu_{n\perp}\equiv\frac1g[W_n^\dagger\,\ii D^\mu_{\perp c}W_n]$ 是共线规范不变的组元，在超软变换下按 $V(\cdots)$ 与 $V(\cdots)V^\dagger$ 变换。定义超软 Wilson 线（多极展开后的场）
+\begin{equation}\label{eq:scet-Yn}
+Y_n(x)\equiv W[x,x-\infty n]=\mathrm P\exp\Big(\ii g\int_{-\infty}^0\dd s\;n\cdot A_{us}\big((x+sn)_-\big)\Big),\qquad
+Y_n^{(+)}(x)\equiv W[x,x+\infty n];
+\end{equation}
+因为 $(x+sn)_-=(\bar n\cdot x+2s)\frac n2$，$Y_n$ 只依赖于 $\bar n\cdot x$，故 $\bar n\cdot\partial Y_n=\partial_\perp Y_n=0$。
+
+\begin{theorem}[超软退耦（BPS 场重定义） \tagR]\label{thm:scet-decoupling}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $\mathcal L^{(0)}_{\xi\xi}$、$\mathcal L^{(0)}_{cg}$ 如\cref{eq:scet-L0xi,eq:scet-Lcg}。
+(a)（关键恒等式）作为算符，
+\begin{equation}\label{eq:scet-key}
+\ii n\cdot D_{us}\,Y_n=Y_n\,\ii n\cdot\partial,\qquad\text{即}\quad Y_n^\dagger\,\ii n\cdot D_{us}\,Y_n=\ii n\cdot\partial ;
+\end{equation}
+% VF-SCET-6
+对 $Y_n^{(+)}$ 同样成立。
+(b) 作场重定义
+\begin{equation}\label{eq:scet-BPS}
+\xi_n=Y_n\,\xi_n^{(0)},\qquad A_n^\mu=Y_n\,A_n^{(0)\mu}\,Y_n^\dagger,\qquad c_n=Y_n\,c_n^{(0)}\,Y_n^\dagger\quad(\bar c_n\ \text{同样}),
+\end{equation}
+则 $\mathcal L^{(0)}_{\xi\xi}[\xi_n,A_n,n\cdot A_{us}]+\mathcal L^{(0)}_{cg}[A_n,c_n,n\cdot A_{us}]=\mathcal L^{(0)}_{\xi\xi}[\xi^{(0)}_n,A^{(0)}_n,0]+\mathcal L^{(0)}_{cg}[A^{(0)}_n,c^{(0)}_n,0]$，且变换的 Jacobi 行列式为 $1$：在领头幂次新共线场与超软胶子完全不相互作用。
+成立的条件是：(1) 共线鬼场同时被重定义；(2) 共线规范固定项对超软背景协变（用 $\ii\mathcal D$ 而非 $\ii\partial$）；(3) Jacobi 行列式为 $1$；(4) 只在领头幂次；(5) $Y_n$ 由多极展开后的 $n\cdot A_{us}(x_-)$ 构成。（本定理是领头阶 SCET 拉氏量的恒等式，不涉及强子态。）
+\uses{prop:scet-gauge,prop:prelim-wilson-covariance}
+\end{theorem}
+
+\begin{proof}
+(a) 由\cref{prop:prelim-wilson-covariance}，对上端点沿 $n$ 求导得 $n\cdot\partial\,Y_n=\ii g\,n\cdot A_{us}(x_-)Y_n$。于是对任意 $f$，
+$\ii n\cdot D_{us}(Y_nf)=\ii(n\cdot\partial Y_n)f+Y_n\,\ii n\cdot\partial f+g\,n\cdot A_{us}Y_nf=Y_n\,\ii n\cdot\partial f$。$Y_n^{(+)}$ 的上端点也是 $x$，论证不变（对随机 su(3) 背景场数值求解路径有序指数，误差 $\sim10^{-9}$）。% w18_s2 KEY IDENTITY
+(b) $V\equiv Y_n^\dagger$ 只依赖于 $\bar n\cdot x$，是超软规范变换。由\cref{prop:scet-gauge}(a)(b)，$\mathcal L^{(0)}_{\xi\xi}+\mathcal L^{(0)}_{cg}$ 作为 $(\xi_n,A_n,c_n,\bar c_n;n\cdot A_{us})$ 的函数在这种变换下不变；把它作用于宗量 $(Y_n\xi^{(0)}_n,Y_nA^{(0)}_nY_n^\dagger,Y_nc^{(0)}_nY_n^\dagger;n\cdot A_{us})$，共线场变为 $(\xi^{(0)}_n,A^{(0)}_n,c^{(0)}_n)$，超软场变为
+$Y_n^\dagger\,n\cdot A_{us}Y_n+\frac1gY_n^\dagger[\ii n\cdot\partial,Y_n]=Y_n^\dagger\,n\cdot A_{us}Y_n-Y_n^\dagger\,n\cdot A_{us}Y_n=0$（用 (a)）。所以重定义\cref{eq:scet-BPS}是只作用于共线扇区的“$n\cdot A_{us}=0$ 规范”变换，超软场本身不变。（直接验证同样可行：$Y_n^\dagger(\ii\mathcal D^\mu+gA_n^\mu)Y_n=\ii\mathcal D^\mu_{(0)}+gA_n^{(0)\mu}$，$W_n[Y_nA^{(0)}Y_n^\dagger]=Y_nW_n[A^{(0)}]Y_n^\dagger$。）条件 (1)(2) 是\cref{prop:scet-gauge}(b) 的超软不变性所需：用 $\ii\partial$ 的规范固定项或不重定义的鬼场会留下与 $n\cdot A_{us}$ 的耦合；条件 (5) 保证 $Y_n$ 是超软变换并与 $\ii\bar n\cdot\partial$、$\ii\partial_\perp$ 对易。$Y_n$ 幺正、幺模且不依赖于共线场：对费米子是逐点 $\det Y_n=1$ 的转动，对胶子与鬼场是伴随表示中的正交转动，故 Jacobi 行列式为 $1$（条件 (3)）。次领头的超软耦合（含 $A_{us\perp}$、$\bar n\cdot A_{us}$ 或超软夸克）不是 $n\cdot A_{us}$ 的形式，不能只靠 $Y$ 因子吸收\cite{BauerPirjolStewart2002}（条件 (4)）。
+\end{proof}
+
+\paragraph{地位。}作为领头阶 SCET 拉氏量的恒等式，\cref{thm:scet-decoupling}是 [R]（$R_{\mathrm{def}}$），对 $\as$ 的所有阶成立；作为关于 QCD 振幅的陈述，它还需要模式完备、零箱减除正确、Glauber 模式不起作用——这些是 [A] 层次的输入（\cref{rem:scet-assumptions}）。
+
+在重定义之下 $\chi_n=W_n^\dagger\xi_n=Y_n\chi^{(0)}_n$，两喷注流化为
+\begin{equation}\label{eq:scet-JY}
+\bar\chi_n\,\Gamma\,\chi_{\bar n}=\bar\chi^{(0)}_n\,Y_n^\dagger\,\Gamma\,Y_{\bar n}\,\chi^{(0)}_{\bar n},
+\end{equation}
+其在 $|X_nX_{\bar n}X_{us}\rangle$ 与真空之间的矩阵元因子化为 $\langle X_n|\bar\chi^{(0)}_n|0\rangle\,\Gamma\,\langle X_{\bar n}|\chi^{(0)}_{\bar n}|0\rangle\,\langle X_{us}|Y_n^\dagger Y_{\bar n}|0\rangle$（色指标依次缩并）：这是推力因子化中 $H\,J\otimes J\otimes S$ 结构的来源（\cref{fig:scet-wilson}(b)）。
+
+\begin{example}[BPS 场重定义的树图演示]\label{ex:scet-decoupling-tree}
+取一个被吸收的超软胶子 $n\cdot A_{us}=n\cdot\epsilon\,t^a\ee^{-\ii k\cdot x}$，$n\cdot k\neq0$。由\cref{eq:scet-Yn}，$Y_n=1-g\,t^a\frac{n\cdot\epsilon}{n\cdot k+\ii0}\ee^{-\ii k\cdot x}+\order{g^2}$，$\ii n\cdot\partial Y_n=-g\,t^an\cdot\epsilon\,\ee^{-\ii k\cdot x}+\order{g^2}$ 恰与 $g\,n\cdot A_{us}$ 相消，故 $\order{g}$ 的超软耦合消失。振幅层次：一个由流产生的出射 $n$ 共线夸克吸收该胶子，用\cref{prop:scet-lagrangian}的 Feynman 规则得
+\[
+\bar u_n(p)\,\big(\ii g\,t^a\,n\cdot\epsilon\,\tfrac{\bar{\sla n}}{2}\big)\,\ii\frac{\sla n}{2}\frac{\bar n\cdot p}{(p-k)^2+\ii0}\,\Gamma=\bar u_n(p)\,\frac{g\,t^a\,n\cdot\epsilon}{n\cdot k-\ii0}\,\Gamma
+\]
+（$(p-k)^2\simeq-\bar n\cdot p\,n\cdot k$，$\bar u_nP_{\bar n}=\bar u_n$）。重定义之后同一耦合来自流中的 $Y_n^\dagger$，它给出 $g\,t^a n\cdot\epsilon/(n\cdot k+\ii0)$，而指向未来的 $Y_n^{(+)\dagger}=W[x+\infty n,x]$ 给出 $g\,t^an\cdot\epsilon/(n\cdot k-\ii0)$，与 Feynman 规则逐项相同；两者之差 $-2\pi\ii\,\delta(n\cdot k)$ 只在 $n\cdot k=0$ 处有支撑。% w18_s5 (F)
+\uses{thm:scet-decoupling,prop:scet-lagrangian}
+\end{example}
+
+\begin{remark}[$Y_n$ 的方向与 $\ii0$]\label{rem:scet-y-direction}
+拉氏量层次的证明只用到 $n\cdot D_{us}Y=0$，对 $Y_n$ 与 $Y_n^{(+)}$ 同样成立；振幅中的 $\ii0$ 则取决于方向。\cref{ex:scet-decoupling-tree}表明，领头阶 SCET 的 Feynman 规则本身对出射的共线夸克给出指向未来的 $Y$ 线\cite{Chay:2004zn}：方向由匹配外态确定。Rothstein--Stewart 指出，S 矩阵元中超软线的方向由流与入射、出射态的插值场共同决定，对 $n$–$\bar n$ 产生两条线都伸向 $+\infty$\cite[第~10.1~节]{RothsteinStewart2016}，并且“SCET$_{\rm I}$ 中超软 Wilson 线的方向由物理方向决定，因为它们的图没有减除”，而软与共线 Wilson 线的方向依赖被（Glauber）零箱减除抵消\cite[第~4.2~节]{RothsteinStewart2016}。对单圈推力这一差别无关紧要（虚图无标度，实辐射有 $n\cdot k,\bar n\cdot k>0$）；$e^+e^-$、DIS 与 Drell--Yan 的半球软函数直到 $\order{\as^2}$ 都相等，尽管个别振幅的虚部符号不同\cite{Kang:2015moa}。此处 $\lambda^2Q$ 的模式是超软的；超软退耦\emph{不}消去 Glauber 相互作用——重定义之后 Glauber 拉氏量中只出现伴随表示的超软线，$n$ 与 $\bar n$ 扇区仍然耦合\cite[第~5.1~节]{RothsteinStewart2016}（\cref{sec:scet-glauber}）。
+\end{remark}
+
+% -------------------------------------------------------------------------------------
+\section{SCET\texorpdfstring{$_{\rm II}$}{II}、零箱减除与快度发散}\label{sec:scet-scet2}
+
+有效理论中的共线圈积分在圈动量趋于软（或超软）区域时与软圈积分重叠；这正是第~9~章减除法要处理的重复计算。
+
+\begin{definition}[零箱减除]\label{def:scet-zero-bin}
+(a) 设 $I_c(k)$ 是 SCET 共线图的被积函数（$k$ 为共线圈动量或实辐射动量）。其\emph{零箱}（zero-bin）$I_c^{(0)}(k)$ 是把 $k$ 按嵌套在其中的较小区域（软或超软模式）重新计数后 $I_c$ 的领头项；物理的共线贡献定义为 $\tilde I_c=\int(I_c-I_c^{(0)})$，多个嵌套区域时按包含关系逐级减除\cite{ManoharStewart2007}。这是\cref{def:method-subtraction}中 $C_R\Gamma=T_R(\Gamma-\sum_{R'<R}C_{R'}\Gamma)$ 在有效理论中的对应：$T_R$ 是共线近似（SCET 的共线 Feynman 规则），$R'$ 是嵌套于 $R$ 的软区域。
+(b) 红外发散也用维数正规化时，零箱减除与“除以软 Wilson 线矩阵元”的软减除等价，这在夸克形状因子、$x_B\to1$ 的 DIS 与两圈阿贝尔虚修正中被显式检验\cite{IdilbiMehen2007}（两种形式的比较亦见\cite{Lee:2006nr}）；只有当零箱减除在每个共线因子中自洽地实施时，重复计数才被避免。
+(c) 对推力的单圈喷注函数（\cref{sec:scet-rg}），实辐射零箱的被积函数为 $\propto\delta^+(k^2)\,\frac{1}{n\cdot k\,\bar n\cdot k}\,\delta\big(n\cdot k-p^2/\bar n\cdot p\big)$（测量只约束 $n\cdot k$）。在 $\bar n\cdot k\to a\,\bar n\cdot k$、$k_\perp\to\sqrt a\,k_\perp$、$n\cdot k$ 固定之下，$\delta(k^2)$ 给出 $a^{-1}$，$1/\bar n\cdot k$ 给出 $a^{-1}$，测度 $\dd(\bar n\cdot k)\,\dd^{2-2\varepsilon}k_\perp$ 给出 $a^{2-\varepsilon}$，故零箱积分在 $a$ 下是 $-\varepsilon$ 次齐次的，从而无标度，按\cref{lem:prelim-scaleless}为零；虚修正的零箱同样无标度。于是推力的减除后喷注函数等于未减除的喷注函数。% w18_s4 (D); App N prop:appN-thrust-zerobin is the Collins-form counterpart (pointer)
+\uses{def:method-subtraction,lem:prelim-scaleless}
+\end{definition}
+
+在 Collins 减除的语言中，(c) 的对应陈述是\cref{prop:appN-thrust-zerobin}（只依赖于发散链项的取值约定）。
+
+\paragraph{SCET$_{\rm II}$。}
+在横动量分布、$B$ 介子的遍举衰变等问题中，与共线模式 $(1,\lambda^2,\lambda)$ 发生相互作用的是软模式 $(\lambda,\lambda,\lambda)$，二者虚度相同。
+
+\begin{proposition}[SCET$_{\rm II}$ 与软 Wilson 线 \tagR]\label{prop:scet-scet2}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（树图层次。）(a) 共线模式与软模式的虚度都是 $\lambda^2Q^2$；软动量 $k$ 被 $n$ 共线线吸收（或由其发射）后，中间线的虚度为 $(p+k)^2\simeq\bar n\cdot p\,n\cdot k\sim\lambda Q^2$，是硬共线的。(b) 在树图层次积掉这些硬共线线后，软胶子只通过算符中的软 Wilson 线
+\begin{equation}\label{eq:scet-Sn}
+S_n(x)=\mathrm P\exp\Big(\ii g\int_{-\infty}^0\dd s\;n\cdot A_s(x+sn)\Big)
+\end{equation}
+与 $n$ 共线夸克耦合（例如两喷注流化为 $\bar\chi_nS_n^\dagger\,\Gamma\,S_{\bar n}\chi_{\bar n}$），SCET$_{\rm II}$ 的领头阶拉氏量中没有软—共线耦合。(c) 软贡献与共线贡献只在快度上分开，单个 SCET$_{\rm II}$ 积分可以有维数正规化不能正规化的\emph{快度发散}，必须引入快度正规子\cite{Hill:2002vw,BauerEtAl2002}。（本命题只涉及部分子振幅。）
+\uses{def:scet-modes,prop:scet-wilson}
+\end{proposition}
+
+\begin{proof}
+(a) 由 $2p\cdot k=\bar n\cdot p\,n\cdot k+n\cdot p\,\bar n\cdot k+2p_\perp\cdot k_\perp$，三项分别为 $\lambda$、$\lambda^3$、$\lambda^2$（以 $Q^2$ 为单位），而 $k^2\sim\lambda^2$。(b) 这与\cref{prop:scet-wilson}证明的第二、三步相同，只是 $n$ 与 $\bar n$ 互换：对出射的 $n$ 共线夸克，每一对“硬共线传播子 × 顶角”在领头幂次化为 $\bar u(p)\,\ii g\,\sla\epsilon^*t^a\,\frac{\ii\frac{\bar n\cdot p}{2}\sla n}{\bar n\cdot p\,(n\cdot k+\ii0)}=-g\,t^a\frac{n\cdot\epsilon^*}{n\cdot k+\ii0}\,\bar u(p)$（用 $\bar u_n\sla n=0$），$r$ 个胶子按次序求和给出 $S_n^\dagger$ 的展开（对 $n\cdot k\neq0$，$\ii0$ 的取法无关，与\cref{rem:scet-y-direction}相同）。对一个软胶子，精确发射振幅与程函因子 $-n\cdot\epsilon^*/n\cdot k$ 之差（对夸克自旋求和）的相对大小在一个代表性运动学点上为 $0.81$、$0.081$、$0.0081$（$\lambda=10^{-1},10^{-2},10^{-3}$），按 $\lambda$ 的一次方减小。% w18_s5 (H); c_scet quotes 0.78, 0.077, 0.0077 for a single spinor at the same point
+软—共线耦合若出现在拉氏量中，就会把共线粒子推到硬共线虚度，故软胶子只能出现在算符的 $S_n$ 里。(c) 取一个软实辐射，其横动量 $\bm k_{\mathrm T}$ 被测量固定。令 $n\cdot k=k_T\ee^{-y}$、$\bar n\cdot k=k_T\ee^{y}$，
+\begin{equation}\label{eq:scet-rapdiv}
+\int\dd(n\cdot k)\,\dd(\bar n\cdot k)\,\frac{\delta(n\cdot k\,\bar n\cdot k-\bm k_{\mathrm T}^2)}{n\cdot k\,\bar n\cdot k}=\frac{1}{\bm k_{\mathrm T}^2}\int_{-\infty}^{\infty}\dd y ,
+\end{equation}
+在 $y\to\pm\infty$ 处发散；由于横向积分已被测量固定，$D$ 维测度对它不起作用。
+\end{proof}
+
+快度正规子有三类：Collins 的非类光 Wilson 线（\cref{def:tmd-collins}）；Chiu--Jain--Neill--Rothstein（CJNR）的 $\eta$ 正规子与快度重整化群\cite{ChiuEtAl2012a,ChiuEtAl2012b}，在软 Wilson 线的每个顶点插入 $w\,|2k^z/\nu|^{-\eta/2}$、在共线 Wilson 线的每个顶点插入 $w\,|\bar n\cdot k/\nu|^{-\eta}$；Becher--Neubert 的解析正规子与“共线反常”\cite{BecherNeubert2011}。例如在 $\eta$ 正规子下 $|2k^z|=2k_T|\sinh y|$，\cref{eq:scet-rapdiv}中的快度积分变为 $\int\dd y\,|2\sinh y|^{-\eta}=2^{-\eta}\Gamma(\tfrac\eta2)\Gamma(\tfrac12-\tfrac\eta2)/\sqrt\pi=\tfrac2\eta+\order{\eta}$：软辐射在正、负快度两侧都被截断，这是 CJNR 在软线中取 $\eta/2$ 的原因\cite{ChiuEtAl2012a}。% w18_s5 (A2, A3)
+
+\begin{proposition}[快度发散的处理与等价性 \tagA]\label{prop:scet-rapidity-rg}
+对横动量依赖（TMD）的因子化：
+(a) 快度重整化群（CJNR）、共线反常（Becher--Neubert）与 Collins 的非类光 Wilson 线（\cref{def:tmd-collins}）给出等价的 TMD 因子化\cite{Collins:2017oxh}：在每一种方案中，单个共线（束流）函数与软函数依赖于正规子，而进入截面的组合与之无关。
+(b) 支配 $b$ 空间截面在固定 $b_T$ 下 $Q^2$ 依赖的演化核在三种方案中的对应为
+\begin{equation}\label{eq:scet-kernels}
+\tilde K(b_T;\mu)=\tfrac12\,\tilde\gamma_\nu^S(b_T;\mu)=-F_{q\bar q}(b_T^2,\mu)=-2D(b_T;\mu),
+\end{equation}
+其中 $\tilde K$ 是\cref{prop:tmd-evolution}的 Collins--Soper 核；$\tilde\gamma_\nu^S$ 由 $\nu\frac{\dd}{\dd\nu}\tilde S=\tilde\gamma^S_\nu\tilde S$ 定义（CJNR 的 $\eta$ 正规子，夸克 Wilson 线，且 $\tilde\gamma^S_\nu+2\tilde\gamma^B_\nu=0$）；$F_{q\bar q}$ 由 $[\tilde B_{q}\tilde B_{\bar q}]_{Q^2}=(b_T^2Q^2/b_0^2)^{-F_{q\bar q}}B_qB_{\bar q}$ 定义（Becher--Neubert）；$D$ 是 $\delta$ 正规子（Echevarria--Idilbi--Scimemi）归一化中 $\partial\ln\tilde f/\partial\ln Q^2=-D$（$\zeta=Q^2$）的指数\cite{EchevarriaIdilbiScimemi2012}。单圈时四者都等于 $-\frac{\as C_F}{\pi}L_b$，$L_b=\ln(\mu^2b_T^2/b_0^2)$。
+\uses{prop:scet-scet2,def:tmd-collins,prop:tmd-evolution}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 每种方案中束流函数与软函数的快度发散在乘积中相消（CJNR：$\tilde\gamma^S_\nu+2\tilde\gamma^B_\nu=0$\cite{ChiuEtAl2012b}；Becher--Neubert：$Q^2$ 依赖被完整地指数化\cite{BecherNeubert2011}；Collins：\cref{def:tmd-collins}中的平方根组合）。(2) 固定 $b_T$ 时 $b$ 空间截面 $H\tilde f_A\tilde f_B$ 对 $\ln Q^2$ 的导数是物理量：在 Collins 方案中取 $\zeta_A=\zeta_B=Q^2$，它等于 $\partial\ln H/\partial\ln Q^2+\tilde K$（\cref{prop:tmd-evolution}）；在 $\eta$ 方案中 $\tilde f=\tilde B\sqrt{\tilde S}$，$\tilde B$ 只通过 $\nu/\omega$ 依赖于大光锥动量 $\omega$，故 $\partial\ln\tilde f/\partial\ln\omega=-\tilde\gamma^B_\nu=\frac12\tilde\gamma^S_\nu$，而 $\zeta\propto\omega^2$；在另两种方案中乘积分别正比于 $(Q^2)^{-F_{q\bar q}}$ 与 $(Q^2)^{-2D}$。硬函数相同时比较即得\cref{eq:scet-kernels}；RG 一致性给出 $\frac{\dd\tilde K}{\dd\ln\mu}=-2\Gamma_{\rm cusp}$、$\frac{\dd F_{q\bar q}}{\dd\ln\mu}=2\Gamma_{\rm cusp}$、$\frac{\dd D}{\dd\ln\mu}=\Gamma_{\rm cusp}$。(3) 单圈核对：$\tilde K=-\frac{\as C_F}\pi L_b$（第~14~章）；CJNR 的 $p_T$ 空间结果 $\nu\frac{\dd}{\dd\nu}S^{(1)}=\frac{4\as C}{\pi}\mathcal L_0$（$C$ 为 Wilson 线的 Casimir，$\mathcal L_0=\frac1{2\pi}[1/\bm p^2]_+$ 在 $|\bm p|<\mu$ 内减除）\cite{ChiuEtAl2012b}经 $\int\dd^2p\,\ee^{\ii\bm p\cdot\bm b}\mathcal L_0=\int_0^\infty\frac{\dd p}p[J_0(pb)-\theta(\mu-p)]=-\frac12L_b$ 给出 $\tilde\gamma^S_\nu=-\frac{2\as C_F}{\pi}L_b$；$F_{q\bar q}=\frac{C_F\as}\pi L_\perp$（$L_\perp=L_b$）\cite{BecherNeubert2011}；$D=\frac{\as}{4\pi}2C_FL_T$（$L_T=L_b$）\cite{EchevarriaIdilbiScimemi2012}。四者满足\cref{eq:scet-kernels}。% w18_s5 (B, C)
+完整论证见\cite{Collins:2017oxh,ChiuEtAl2012b,BecherNeubert2011,EchevarriaIdilbiScimemi2012}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\cref{prop:scet-rapidity-rg}是全阶论证（[A]）。据文献\cite{Collins:2017oxh}摘要，它推导了 CSS 原始表述、Collins 表述与若干 SCET 表述之间的联系，并以 $\order{\as^2}$、$\order{\as^3}$ 的已知结果核对；没有对所有阶、对非微扰函数同时成立的等价性证明。最弱的一步是 (a) 的“等价”本身：单个束流函数与软函数依赖于正规子，只有组合是物理的——快度发散标志着一个真实的附加因子化变量（$\zeta$ 或 $\nu$），而不是正规子的人为产物；这是方案之间的等价性问题，不涉及幂次误差。每一种方案都以 TMD 因子化（\cref{thm:tmd-factorization}，[A]）为前提，其瓶颈是\cref{asm:appN-tmd}与 Glauber 区（\cref{asm:appO-mixing}）；TMD 算符的多重可重整性在文献中被论证而未被证明\cite[第~13~章]{Collins2011}。升级途径：在一个固定方案中把\cref{asm:appN-tmd}(T3) 证明到所有阶，并给出方案之间的有限重定义。
+
+% -------------------------------------------------------------------------------------
+\section{Glauber 算符及其与光锥序证明的对照}\label{sec:scet-glauber}
+
+标准的 SCET$_{\rm I}$、SCET$_{\rm II}$ 拉氏量里没有 Glauber 模式。Bauer--Lange--Ovanesyan 找到一类旁观者相互作用的例子，在其中为了自洽必须引入 Glauber 胶子\cite{Bauer:2010cc}；Rothstein--Stewart 构造了领头幂次的 Glauber 算符\cite{RothsteinStewart2016}。在图形方法中 Glauber 区是 Drell--Yan 因子化最困难的一步（\cref{prop:method-glauber-deformation}，附录~O）。
+
+\begin{proposition}[Glauber 算符 \tagA]\label{prop:scet-glauber-operators}
+（Rothstein--Stewart\cite{RothsteinStewart2016}。）(a) 存在耦合 $n$、$\bar n$ 与软扇区的领头幂次 Glauber 算符，SCET$_{\rm II}$ 的 Glauber 拉氏量为\cite[式~(5.21)]{RothsteinStewart2016}
+\begin{equation}\label{eq:scet-LG}
+\mathcal L_G^{\rm II(0)}=\ee^{-\ii x\cdot\mathcal P}\sum_{n,\bar n}\sum_{i,j=q,g}\mathcal O_n^{iB}\frac{1}{\mathcal P_\perp^2}\mathcal O_s^{BC}\frac{1}{\mathcal P_\perp^2}\mathcal O_{\bar n}^{jC}
++\ee^{-\ii x\cdot\mathcal P}\sum_n\sum_{i,j=q,g}\mathcal O_n^{iB}\frac{1}{\mathcal P_\perp^2}\mathcal O_s^{j_nB},
+\end{equation}
+% VF-FRO-6 (re-read in the RS source: eq. (5.21))
+其中 $\mathcal O_n^{qB}=\bar\chi_nT^B\frac{\bar{\sla n}}{2}\chi_n$，$\mathcal O_n^{gB}=\frac\ii2f^{BCD}\mathcal B^C_{n\perp\mu}\frac{\bar n}{2}\cdot(\mathcal P+\mathcal P^\dagger)\mathcal B^{D\mu}_{n\perp}$，$\mathcal O_{\bar n}$ 同理（$n\leftrightarrow\bar n$），$\mathcal P$ 为标签动量算符；不含软胶子时 $\mathcal O_s^{BC}=8\pi\as\,\delta^{BC}\mathcal P_\perp^2$，于是 $n$ 与 $\bar n$ 共线夸克之间的交换是瞬时势 $-8\pi\as/\bm q_{\mathrm T}^2$（与 $n\cdot q$、$\bar n\cdot q$ 无关，即在 $x^\pm$ 上局域）；BPS 场重定义之前 $\mathcal L_G^{\rm I(0)}=\mathcal L_G^{\rm II(0)}$。
+(b) 在硬散射中，Glauber 交换“可以引起使因子化失效的修正”；对硬散射算符，软与共线圈图的 Glauber 零箱减除保证结果对软与共线 Wilson 线的方向不敏感。
+(c) 对旁观者—旁观者交换，迭代的 Glauber 交换给出一个相位，当横向动量转移 $\Delta p_\perp$ 的积分不受限制时，它在截面中相消。
+(d) 对活跃—活跃交换，在软 Wilson 线取适当方向时，Glauber 交换图等于软图的 Glauber 零箱\cite[第~10.1~节]{RothsteinStewart2016}。
+（本命题只涉及部分子散射。）
+\uses{def:scet-modes,prop:scet-scet2}
+\end{proposition}
+
+\begin{proofsketch}
+(1) \emph{树图匹配。}$t$ 道单胶子交换的前向散射在领头幂次中，$\bar u_n\gamma^\mu u_n=n^\mu\,\bar u_n\frac{\bar{\sla n}}{2}u_n+\order{\lambda}$（$\bar n$ 共线夸克同理），而 Glauber 动量使 $q^2=-\bm q_{\mathrm T}^2[1+\order{\lambda^2}]$，故
+$\ii\mathcal M=-\ii\frac{8\pi\as}{\bm q_{\mathrm T}^2}\big[\bar u_n\tfrac{\bar{\sla n}}{2}T^Bu_n\big]\big[\bar u_{\bar n}\tfrac{\sla n}{2}T^Bu_{\bar n}\big]+\order{\lambda}$，这正是\cref{eq:scet-LG}第一项在 $\mathcal O_s^{BC}=8\pi\as\delta^{BC}\mathcal P_\perp^2$ 时的矩阵元（数值上相对偏差在 $\lambda=10^{-1},10^{-2},10^{-3}$ 时为 $3.2\times10^{-3}$、$2.8\times10^{-5}$、$2.8\times10^{-7}$）；含软胶子的部分由带一个与两个软胶子的匹配确定，其单胶子 Feynman 规则是 Lipatov 顶角\cite[第~5.1、6~节]{RothsteinStewart2016}。% w18_s5 (D1, D2)
+(2) \emph{幂次计数。}Glauber 算符是领头幂次的，且其形式没有圈修正\cite[第~5.3~节]{RothsteinStewart2016}（此步给出 E-S 型的陈述）。
+(3) \emph{Glauber 圈。}Glauber 圈积分须用快度正规子 $|2k^z|^{-\eta}\nu^\eta$；有了它，交叉箱图为零而箱图给出一个相位（\cref{rem:scet-glauber-dictionary}）\cite[第~5.2~节]{RothsteinStewart2016}。
+(4) \emph{硬匹配。}在单圈与两圈显式计算中，活跃线之间的 Glauber 交换给出全部低能的 $\ii\pi$ 项，并与软图的 Glauber 零箱对应，由此得 (b)、(d)\cite[第~10~节]{RothsteinStewart2016}。
+(5) \emph{旁观者。}对 Glauber 梯形图求和得到相位 $\ee^{\ii\phi(b_\perp)}$，它在 $\Delta p_\perp$ 的积分不受限制时相消，得 (c)\cite[式~(9.1)、(9.18)--(9.19)、(11.12)--(11.13)]{RothsteinStewart2016}；同一机制见\cite[式~(14)]{AybatSterman2009}。完整论证见\cite[第~5、9--11~节]{RothsteinStewart2016}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+算符的构造（(a)）是由匹配与幂次计数得到的全阶论证；(b)--(d) 是在单圈、两圈与梯形图求和中显式得到的，其对所有阶的推广被作者认为“非常可信”而没有证明\cite[第~10~节]{RothsteinStewart2016}。作者明确指出旁观者相位的相消“taken alone it is far from a proof of factorization, even in the abelian case”（单独来看远不是因子化的证明，即使在阿贝尔情形）\cite[第~11.1~节]{RothsteinStewart2016}，而 SCET 中完整的因子化证明需要证明 Glauber 拉氏量对硬散射没有贡献，将“在别处给出”\cite[第~11~节]{RothsteinStewart2016}——据我们截至 2026 年 10 月的 INSPIRE 检索，尚未发表。因此最弱的一步是“$\mathcal L_G$ 的效应在单举截面中相消”，它对应附录~O 的\cref{asm:appO-mixing}(c) 与\cref{asm:appO-deformation}；这是相消问题而不是幂次估计（作为幂次计数，(a) 只给出 E-S 型陈述）。对 $e^+e^-$ 的 $n$–$\bar n$ 产生流只有单圈与两圈的显式证据\cite[第~10~节]{RothsteinStewart2016}。在强子对撞中，Gaunt 发现对强子 $E_T$ 而言 CSS 的相消论证在两个旁观者 Glauber 胶子处失效\cite{Gaunt2014}，Rothstein--Stewart 也认为当测量约束 $\Delta p_\perp$ 时旁观者交换从 $\order{\as^4}$ 起破坏因子化\cite[第~11.1~节]{RothsteinStewart2016}；Schwartz--Yan--Zhu 对纯 Glauber 梯形图与任意红外安全的单标度观测量给出了全阶相消的论证，否定了这些论断中纯 Glauber 的部分，但不适用于多重微分的观测量\cite{Schwartz:2018obd}（第~18、24~章，\cref{prop:front-glauber-bfkl,prop:front-syz}）。升级途径：在有效理论中证明 $\mathcal L_G$ 对单举观测量的贡献相消，即\cref{thm:appO-main}去掉模型限制后的有效理论版本。
+
+\begin{remark}[Glauber SCET 与光锥序证明的对照]\label{rem:scet-glauber-dictionary}
+Rothstein--Stewart 的 Glauber 有效理论与附录~O 的光锥序（LCOPT）证明处理的是同一个动量区域，二者的对应如下（附录~O 的\cref{rem:appO-rs-dictionary}给出同一对照的精确版本）：
+\begin{center}\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}p{0.43\textwidth}p{0.5\textwidth}@{}}
+\toprule
+Glauber SCET\cite{RothsteinStewart2016} & 附录~O 的光锥序证明 \\
+\midrule
+瞬时势 $\mathcal O_n\frac{1}{\mathcal P_\perp^2}\mathcal O_s\frac{1}{\mathcal P_\perp^2}\mathcal O_{\bar n}$ & 等光锥时刻插入与 Glauber 算符 $V_G$（\cref{lem:appO-equal-time,lem:appO-glauber-operator}） \\
+Glauber 的“塌缩”到硬顶点 & 与 $V_H$ 重合的接触项（\cref{rem:appO-contact}） \\
+旁观者相位在 $\Delta p_\perp$ 积分后相消 & 最大时刻配对与族求和、窗口与整函数载子（\cref{def:appO-windows,lem:appO-carrier}） \\
+软与 Glauber 的重叠（Glauber 零箱） & 减除法中的零箱（\cref{def:scet-zero-bin}；附录~N） \\
+Glauber 与软模式的混合 & \cref{asm:appO-mixing} \\
+快度正规子 $|2k^z|^{-\eta}$：交叉箱图为零 & 共同时序，$p_{\rm opp}=0$（\cref{rem:dy-common-ordering}；\cref{lem:appO-glauber-operator}(c)） \\
+\bottomrule
+\end{tabular}
+\end{center}
+最后一行的机制如下。两条共线线交换两个 Glauber 胶子（圈动量 $k$）时，领头幂次的两个分母分别只含 $n\cdot k=k^0-k^z$ 与 $\bar n\cdot k=k^0+k^z$：箱图中二者在复 $k^0$ 平面的零点分居实轴两侧，交叉箱图中位于同侧。正规子 $|2k^z|^{-\eta}$ 只依赖于 $k^z$，因而可以先作 $k^0$ 积分：交叉箱图精确为零，箱图的 $k^z$ 积分只剩一个纯虚的 $\delta$ 函数项（主值部分 $\propto\tan\frac{\pi\eta}{2}\to0$），即一个相位\cite[第~5.2~节]{RothsteinStewart2016}。% w18_s5 (E1-E3)
+在附录~O 的语言中，这正是全部 $s$ 道权重落在非交叉次序上的“共同时序”，它是精确图给出的物理结果，而独立的对称截断给出 $p_{\rm opp}=\frac12$ 的截断假象（\cref{rem:dy-common-ordering}）。
+\end{remark}
+
+% -------------------------------------------------------------------------------------
+\section{推力分布的因子化}\label{sec:scet-thrust}
+
+推力是 SCET$_{\rm I}$ 因子化的原型：观测量红外安全（\cref{def:ir-safe}），末态只有出射的共线粒子，Glauber 区不构成障碍；因子化定理在 SCET 中可写到所有阶（[A]），其单圈成分可独立计算并与全 QCD 比较（[R]，\cref{sec:scet-rg}）。
+
+\paragraph{运动学。}
+推力 $T=\max_{\hat{\bm t}}\sum_i|\bm p_i\cdot\hat{\bm t}|/\sum_i|\bm p_i|$\cite{Farhi1977}，$\tau\equiv1-T$；取质心系，$Q=\sqrt s$。推力轴把末态分为两个半球：$n$ 喷注所在的 R 半球（沿 $+z$）与 $\bar n$ 喷注所在的 L 半球。对无质量粒子 $\sum_i|\bm p_i|=Q$，推力轴平行于一个半球的总动量，故 $|\bm P_R|=|\bm P_L|=TQ/2$；又 $E_L+E_R=Q$ 且 $E_R^2-E_L^2=M_R^2-M_L^2$，即 $E_R-E_L=(M_R^2-M_L^2)/Q$。由 $M^2=E^2-|\bm P|^2$ 得 $M_L^2+M_R^2=E_L^2+E_R^2-\frac{T^2Q^2}{2}=\frac{Q^2}{2}(1-T^2)+\frac{(M_R^2-M_L^2)^2}{2Q^2}$，即\emph{精确}关系
+\begin{equation}\label{eq:scet-thrust-hemi}
+\frac{M_L^2+M_R^2}{Q^2}=\tau-\frac{\tau^2}{2}+\frac{(M_R^2-M_L^2)^2}{2Q^4},\qquad\text{故}\qquad \tau=\frac{M_L^2+M_R^2}{Q^2}+\order{\tau^2};
+\end{equation}
+% VF-SCET-15; checked on random 3- and 4-parton events (w18_s4, 5e-16)
+三个部分子时 $M_L^2+M_R^2=Q^2\tau$ 精确成立。在领头幂次，$M_R^2=(p_n+p_{X_R})^2=p_n^2+\bar n\cdot p_n\,n\cdot p_{X_R}+\cdots=p_n^2+Q\,n\cdot p_{X_R}$（$\bar n\cdot p_n=Q[1+\order{\tau}]$），L 半球同理，于是
+\begin{equation}\label{eq:scet-taudecomp}
+\tau=\frac{p_R^2+p_L^2}{Q^2}+\frac kQ+\order{\tau^2},\qquad k\equiv n\cdot p_{X_R}+\bar n\cdot p_{X_L},
+\end{equation}
+其中 $p_{R}^2$、$p_L^2$ 是两个喷注的共线不变质量，$p_{X_R}$（$p_{X_L}$）是 R（L）半球中超软粒子的总动量。
+
+\paragraph{硬、喷注与软函数。}
+$\sigma_0=\frac{4\pi\alpha^2}{3s}N_c\sum_qe_q^2$ 为 Born 截面。定义：(i) 硬函数 $H(Q^2,\mu)=|C_V(-Q^2-\ii0,\mu)|^2$，$C_V$ 是 QCD 矢量流 $\bar\psi\gamma^\mu\psi\to C_V\,[\bar\chi_n\gamma_\perp^\mu\chi_{\bar n}+(n\leftrightarrow\bar n)]$ 的 $\MSbar$ 匹配系数；(ii) 喷注函数由归一化明确的割定义
+\begin{equation}\label{eq:scet-Jdef}
+\sum_X(2\pi)^D\delta^D(p-p_X)\,\langle0|\chi^{(0)}_n|X\rangle\langle X|\bar\chi^{(0)}_n|0\rangle=2\pi\,\frac{\sla n}{2}\,\bar n\cdot p\;J(p^2,\mu)\;\mathbb 1_{\rm c}
+\end{equation}
+给出（$\mathbb 1_{\rm c}$ 为色单位矩阵，$\MSbar$ 重整化；树图层次 $P_n\sla pP_{\bar n}=\frac{\sla n}2\bar n\cdot p$ 给出 $J^{(0)}=\delta(p^2)$）；(iii) 推力软函数
+\begin{equation}\label{eq:scet-Sdef}
+S_T(k,\mu)=\frac{1}{N_c}\sum_{X}\Trc\Big[\langle0|\bar{\mathrm T}\big(Y_{\bar n}^\dagger Y_n\big)|X\rangle\langle X|\mathrm T\big(Y_n^\dagger Y_{\bar n}\big)|0\rangle\Big]\,
+\delta\big(k-n\cdot p_{X_R}-\bar n\cdot p_{X_L}\big),
+\end{equation}
+树图层次 $S_T^{(0)}=\delta(k)$。
+
+\begin{proposition}[硬匹配系数 \tagR]\label{prop:scet-hard-matching}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈。）记 $a\equiv\frac{C_F\as(\mu)}{4\pi}$。两喷注流的 $\MSbar$ 匹配系数与硬函数为
+\begin{equation}\label{eq:scet-CV}
+C_V(-q^2,\mu)=1+a\big[-L^2+3L-8+\zeta_2\big],\quad L\equiv\ln\frac{-q^2-\ii0}{\mu^2};\qquad
+H(Q^2,\mu)=1+a\Big[-2L_Q^2+6L_Q-16+\frac{7\pi^2}{3}\Big],\quad L_Q\equiv\ln\frac{Q^2}{\mu^2},
+\end{equation}
+% VF-SCET-7, VF-SCET-8
+并满足 $\frac{\dd C_V}{\dd\ln\mu}=[\Gamma_{\rm cusp}L+\gamma^V]C_V$、$\frac{\dd H}{\dd\ln\mu}=[2\Gamma_{\rm cusp}L_Q+2\gamma^H]H$，$\Gamma_0=4C_F$，$\gamma^H_0=\gamma^V_0=-6C_F$（展开约定 $\Gamma_{\rm cusp}=\sum_n(\frac{\as}{4\pi})^{n+1}\Gamma_n$，\cref{def:sudakov-cusp}）。这与\cite[附录~B]{BecherSchwartz2008}一致。（本命题只涉及部分子振幅。）
+\uses{prop:sudakov-oneloop,lem:prelim-scaleless,def:sudakov-cusp}
+\end{proposition}
+
+\begin{proof}
+无质量夸克的单圈裸形状因子精确于 $\varepsilon$（\cref{prop:sudakov-oneloop}；$\MSbar$ 中 $(4\pi\mu_0^2)^\varepsilon\to\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}$）为
+\[
+F^{(1)}=a\Big(\frac{\mu^2}{-q^2-\ii0}\Big)^{\varepsilon}\frac{\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)}\Big[-\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)}\Big]
+=a\Big[-\frac{2}{\varepsilon^2}+\frac{2L-3}{\varepsilon}-L^2+3L-8+\zeta_2+\order{\varepsilon}\Big],
+\]
+% VF-SCET-7 = VF-SUD-1
+其中用了 $\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)/\Gamma(1-2\varepsilon)=1-\frac{\zeta_2}{2}\varepsilon^2+\order{\varepsilon^3}$；所有极点都是红外的。另一方面，在壳 SCET 的单圈图（共线、超软）都无标度，按\cref{lem:prelim-scaleless}为零，故裸的 SCET 矩阵元等于树图，其紫外抵消项恰与 $F$ 的红外极点相同；匹配 $F=C_V\,\langle J_{\rm SCET}\rangle_{\rm ren}$ 于是给出 $C_V=F$ 的有限部分，即\cref{eq:scet-CV}的第一式。由 $\dd L/\dd\ln\mu=-2$，$\frac{\dd}{\dd\ln\mu}a(-L^2+3L)=a(4L-6)=\frac{\as}{4\pi}(\Gamma_0L+\gamma^V_0)$（$\dd a/\dd\ln\mu=\order{\as^2}$）。类时情形 $q^2=Q^2>0$，$L=L_Q-\ii\pi$，$\Real(L_Q-\ii\pi)^2=L_Q^2-\pi^2$，故 $|C_V|^2=1+2a[-L_Q^2+\pi^2+3L_Q-8+\frac{\pi^2}{6}]$，即 $H$ 的表达式，其 RG 方程由同样的求导给出。Becher--Schwartz 写 $H=1+\frac{\as}{4\pi}[-\frac12\Gamma_0L_Q^2-\gamma^H_0L_Q+c^H_1]$，$c^H_1=C_F(-16+\frac{7\pi^2}{3})$，与此相同。
+\end{proof}
+
+\begin{theorem}[推力分布的因子化 \tagA]\label{thm:scet-thrust}
+对 $e^+e^-\to\gamma^*\to$ 强子，在 $\tau=1-T\ll1$ 的领头幂次，
+\begin{equation}\label{eq:scet-thrust-fact}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=H(Q^2,\mu)\int\dd p_L^2\,\dd p_R^2\,\dd k\;J(p_L^2,\mu)\,J(p_R^2,\mu)\,S_T(k,\mu)\;
+\delta\Big(\tau-\frac{p_L^2+p_R^2}{Q^2}-\frac kQ\Big)+\order{\tau^0},
+\end{equation}
+余项相对于 $1/\tau$ 型奇异项压低一个 $\tau$ 的幂次，在 $\tau\to0$ 可积；$H$、$J$、$S_T$ 由\cref{eq:scet-CV,eq:scet-Jdef,eq:scet-Sdef}定义。喷注函数须用归一化明确的定义\cref{eq:scet-Jdef}：\cite[式~(2.6)]{BecherSchwartz2008}的写法 $J=\frac{1}{\bar n\cdot p}\frac1\pi\Imag[\ii\int\dd^4x\,\ee^{-\ii px}\langle0|\mathrm T\{\bar\chi_n(x)\frac{\bar{\sla n}}2\chi_n(0)\}|0\rangle]$ 按字面计算（费米子编时符号、对 Dirac 与色指标求迹）对自由场给出 $-2N_c\,\delta(p^2)$，即隐含因子 $-\frac1{2N_c}\Tr$；等价而归一化明确的定义见\cite[式~(3)、(6)]{Becher:2006qw}。% E24 (convention hazard, Q3): kept in the statement
+\par 非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{thm:scet-decoupling,prop:scet-hard-matching,def:scet-zero-bin,prop:method-glauber-deformation,thm:ir-leading-regions,asm:intro-bridge}
+\end{theorem}
+
+\begin{proofsketch}
+% errtype: E-S
+(1)~\emph{硬匹配。}在 $\order{\lambda^0}$，$\bar\psi\gamma^\mu\psi\to C_V[\bar\chi_n\gamma_\perp^\mu\chi_{\bar n}+(n\leftrightarrow\bar n)]$：算符形式在树图层次由\cref{prop:scet-wilson}给出，共线规范不变性（\cref{prop:scet-gauge}）使它在各阶只以 $\chi_n$、$\chi_{\bar n}$ 出现；$C_V$ 由在壳形状因子确定（\cref{prop:scet-hard-matching}）。(2)~\emph{超软退耦。}由\cref{thm:scet-decoupling}与\cref{eq:scet-JY}，流化为 $C_V\bar\chi^{(0)}_nY_n^\dagger\gamma_\perp^\mu Y_{\bar n}\chi^{(0)}_{\bar n}$，$\mathcal L^{(0)}$ 分解为互不作用的 $n$、$\bar n$、超软三部分，态空间相应地分解为 $|X_n\rangle|X_{\bar n}\rangle|X_{us}\rangle$。(3)~\emph{测量。}由\cref{eq:scet-taudecomp}，领头幂次的 $\tau$ 是三部分之和；共线粒子总在其喷注所在的半球。(4)~\emph{求和。}对末态求和、对色指标缩并：喷注矩阵元正比于 $\mathbb 1_{\rm c}$，色单态流使软矩阵元以 $\frac1{N_c}\Trc$ 出现，轻子张量与 $\gamma_\perp^\mu$ 的迹给出 $\sigma_0$，即得\cref{eq:scet-thrust-fact}。(5)~\emph{零箱。}推力的零箱积分无标度（\cref{def:scet-zero-bin}(c)），减除后的喷注函数等于未减除的，不与 $S_T$ 重复计数。(6)~\emph{Glauber。}所有共线粒子都是出射的，喷注线吸收软动量时的极点位于同一半平面（\cref{lem:coll-final-poles}），围道可以离开 Glauber 区（\cref{prop:method-glauber-deformation}(a)），不需要 Glauber 算符。(7)~\emph{区域。}硬、两个共线与超软模式正是测量 $\tau$ 时 $e^+e^-\to$ 强子的领头区域（\cref{thm:ir-leading-regions}，以 $\lambda^2\sim\tau$ 计数）。完整论证见\cite{Bauer:2003di,Fleming:2007qr,Schwartz:2007ib,Fleming:2007xt,BecherSchwartz2008,Bauer:2008dt}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\cref{thm:scet-thrust}在以硬、两个共线、超软为模式的 SCET 内对所有阶成立（[A]）。最弱的一步是模式完备，即\cref{asm:intro-bridge}(Br1) 与积分形式的幂次计数\cref{asm:appN-envelope}：(7) 只给出 E-S 型的标度陈述，余项 $\order{\tau}$ 不是对所有阶一致的积分界。$e^+e^-$ 中没有 Glauber 钳夹，依据是围道变形论证（\cref{prop:method-glauber-deformation,lem:coll-final-poles}）；Rothstein--Stewart 只可作为一般机制引用：迭代的 Glauber 交换要么给出相位，要么可以吸收进软或共线 Wilson 线的方向，“因而在单举截面中相消”\cite{RothsteinStewart2016}。在 Collins 减除的语言中，推力的减除结构是\cref{prop:appN-thrust}（[R, $R_{\mathrm{cond}}$]），其前提\cref{asm:appN-collins}、\cref{asm:appN-cutsum}、\cref{asm:appN-ward-product}决定了图形路线的 [A]；图形路线中 Ward 恒等式那一步还牵涉第~9~章所命名的缺口（\cref{asm:appN-brst-nonlocal}，[C]），SCET 路线以有效理论的规范对称性代替那一步。当 $Q\tau\sim\Lambda$ 时软函数成为非微扰的形状函数\cite{Korchemsky:1994is,Korchemsky:1999kt,Bauer:2003di}；在尾部，主要的强子化效应是分布的平移 $\propto\Lambda/Q$，作为在事件形状之间普适的陈述它属于 [C]（第~21~章）。文献：\cite{Bauer:2003di,Lee:2006nr,Fleming:2007qr,Schwartz:2007ib,Fleming:2007xt,BecherSchwartz2008,Bauer:2008dt}。升级途径：对 $e^+e^-$ 事件形状把\cref{asm:appN-envelope,asm:appN-collins}在所有阶以积分范数形式证明。
+
+\Cref{fig:dijet-factorization}画出了\cref{eq:scet-thrust-fact}的结构（图中 $s_n$、$s_{\bar n}$ 即 $p_R^2$、$p_L^2$，$S$ 即 $S_T$）。
+
+%%% BEGIN fig:dijet-factorization
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 op/.style={font=\large},
+  t2 hc/.style={hard blob,circle,minimum size=0.6cm,inner sep=0pt}]
+  % ---------------- hard function H = |C|^2 ----------------
+  \node[t2 hc] (C) at (-0.78,0) {$C$};
+  \node[t2 hc] (Cd) at (0.78,0) {$C^*$};
+  \draw[photon] (-1.75,0) -- (C.west);
+  \draw[photon] (Cd.east) -- (1.75,0);
+  \draw[quark=0.3] (C.65) .. controls (-0.35,0.78) and (0.35,0.78) .. (Cd.115);
+  \draw[quark=0.7] (Cd.245) .. controls (0.35,-0.78) and (-0.35,-0.78) .. (C.295);
+  \draw[cut] (0,-0.95) -- (0,0.95);
+  \node[t2 lab] at (0,-1.35) {$H(Q^2,\mu)=|C|^2$};
+  \node[t2 op] at (2.1,0) {$\times$};
+  % ---------------- jet function J_n ----------------
+  \begin{scope}[xshift=3.75cm]
+    \node[jet blob,ellipse,minimum width=1.5cm,minimum height=0.58cm,inner sep=0pt] (J) at (0,0) {};
+    \draw[quark] (-1.25,0) -- (J.west);
+    \draw[quark] (J.east) -- (1.25,0);
+    \draw[cut] (0,-0.62) -- (0,0.62);
+    \node[t2 lab] at (0,-1.35) {$J_n(s_n,\mu)$};
+  \end{scope}
+  \node[t2 op] at (5.4,0) {$\otimes$};
+  % ---------------- jet function J_nbar ----------------
+  \begin{scope}[xshift=7.05cm]
+    \node[jetB blob,ellipse,minimum width=1.5cm,minimum height=0.58cm,inner sep=0pt] (J) at (0,0) {};
+    \draw[quark] (1.25,0) -- (J.east);
+    \draw[quark] (J.west) -- (-1.25,0);
+    \draw[cut] (0,-0.62) -- (0,0.62);
+    \node[t2 lab] at (0,-1.35) {$J_{\bar n}(s_{\bar n},\mu)$};
+  \end{scope}
+  \node[t2 op] at (8.7,0) {$\otimes$};
+  % ---------------- soft function: Wilson lines along n and nbar ----------------
+  \begin{scope}[xshift=10.75cm]
+    \coordinate (L) at (-1.45,0); \coordinate (R) at (1.45,0);
+    \draw[wilson=0.22] (L) .. controls (-1.15,1.4) and (1.15,1.4) .. (R);
+    \draw[wilson=0.78] (R) .. controls (1.15,-1.4) and (-1.15,-1.4) .. (L);
+    \fill (L) circle[radius=1.6pt]; \fill (R) circle[radius=1.6pt];
+    \node[soft blob,circle,minimum size=0.56cm,inner sep=0pt] (S) at (0,0) {};
+    \draw[gluon] (S.140) -- (-0.82,0.85);
+    \draw[gluon] (S.40)  -- ( 0.82,0.85);
+    \draw[gluon] (S.220) -- (-0.82,-0.85);
+    \draw[gluon] (S.320) -- ( 0.82,-0.85);
+    \draw[cut] (0,-1.2) -- (0,1.2);
+    \node[font=\footnotesize,anchor=south east] at (-1.0,0.68) {$Y_n$};
+    \node[font=\footnotesize,anchor=north east] at (-1.0,-0.68) {$Y_{\bar n}$};
+    \node[font=\footnotesize,anchor=south west] at (1.0,0.68) {$Y_n^\dagger$};
+    \node[font=\footnotesize,anchor=north west] at (1.0,-0.68) {$Y_{\bar n}^\dagger$};
+    \node[t2 lab] at (0,-1.55) {$S(k,\mu)$};
+  \end{scope}
+  % ---------------- factorization formula ----------------
+  \node[font=\small] at (5.5,-2.4) {$\displaystyle\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=H(Q^2,\mu)\int\dd s_n\,\dd s_{\bar n}\,\dd k\;
+     J_n(s_n,\mu)\,J_{\bar n}(s_{\bar n},\mu)\,S(k,\mu)\;\delta\Big(\tau-\frac{s_n+s_{\bar n}}{Q^2}-\frac{k}{Q}\Big)$};
+\end{tikzpicture}
+\caption{推力（双喷注）分布在 $\tau=1-T\ll1$ 时的因子化 $H\times J_n\otimes J_{\bar n}\otimes S$ 的图示（每个因子都画成割图，红色虚线为末态切割）。
+硬函数 $H=|C|^2$ 来自把 QCD 流匹配到 SCET 流的 Wilson 系数 $C(Q^2,\mu)$；喷注函数 $J_n$、$J_{\bar n}$（对夸克与反夸克是同一个函数）描述虚度 $s_{n,\bar n}\sim\tau Q^2$ 的共线辐射；
+软函数 $S(k,\mu)$ 是沿 $n$、$\bar n$ 方向的出射（未来指向）Wilson 线 $Y_n$、$Y_{\bar n}$（后者取反基础表示）的真空矩阵元，
+左、右两个顶点分别属于振幅与共轭振幅，软辐射对 $\tau$ 的贡献按半球测量：$k=n\cdot p_{s}^{(n)}+\bar n\cdot p_{s}^{(\bar n)}$（上标表示软粒子所在的半球）。
+式中省略了相对 $\order{\tau}$ 的幂次修正。}
+\label{fig:dijet-factorization}
+\end{figure}
+%%% END fig:dijet-factorization
+
+% -------------------------------------------------------------------------------------
+\section{重整化群一致性与重求和}\label{sec:scet-rg}
+
+\paragraph{星号分布与 Laplace 变换。}
+喷注函数与软函数的分布以 $\mu^2$ 与 $\mu$ 为参考点：
+$\int_0^{\mu^2}\dd p^2\,[\frac{\ln^k(p^2/\mu^2)}{p^2}]_*f(p^2)\equiv\int_0^{\mu^2}\dd p^2\,\frac{\ln^k(p^2/\mu^2)}{p^2}[f(p^2)-f(0)]$，在 $p^2>\mu^2$ 处为普通函数；$[\frac{\ln^k(k/\mu)}{k}]_*$ 同理。由此
+\begin{equation}\label{eq:scet-distid}
+\mu^{2\varepsilon}(p^2)^{-1-\varepsilon}=-\frac{\delta(p^2)}{\varepsilon}+\sum_{k\ge0}\frac{(-\varepsilon)^k}{k!}\Big[\frac{\ln^k(p^2/\mu^2)}{p^2}\Big]_*,\qquad
+\mu^{2\varepsilon}k^{-1-2\varepsilon}=-\frac{\delta(k)}{2\varepsilon}+\sum_{k'\ge0}\frac{(-2\varepsilon)^{k'}}{k'!}\Big[\frac{\ln^{k'}(k/\mu)}{k}\Big]_* .
+\end{equation}
+在 $\tau$ 空间，$[g(\tau)]_+$ 在 $[0,1]$ 上定义为 $\int_0^1\dd\tau\,[g]_+h=\int_0^1\dd\tau\,g(\tau)[h(\tau)-h(0)]$——此处加号分布在 $\tau=0$ 处减除，与\cref{def:prelim-plus}中在 $z=1$ 处减除的加号分布不同。取 Becher--Schwartz 的 Laplace 变换\cite[附录~B]{BecherSchwartz2008}
+\begin{equation}\label{eq:scet-laplace}
+\tilde t(\nu)\equiv\int_0^\infty\dd\tau\,\ee^{-\nu\tau}\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=H(Q^2,\mu)\,\big[\tilde j(L_J,\mu)\big]^2\,\tilde s_T(L_S,\mu),\qquad
+L_J=\ln\frac{sQ^2}{\mu^2},\quad L_S=\ln\frac{sQ}{\mu},\quad s\equiv\frac{1}{\ee^{\gamma_E}\nu},
+\end{equation}
+其中第二个等号由\cref{eq:scet-thrust-fact}的卷积结构得到，$\tilde j$、$\tilde s_T$ 是 $J(p^2)$ 与 $S_T(k)$ 关于 $\ee^{-\nu p^2/Q^2}$、$\ee^{-\nu k/Q}$ 的 Laplace 变换。记 $\ell\equiv\ln(\nu\ee^{\gamma_E})=\ln(1/s)$，则 $L_J=L_Q-\ell$，$L_S=\frac12L_Q-\ell$。反常维度按 $\Gamma_{\rm cusp}=\sum_n(\frac{\as}{4\pi})^{n+1}\Gamma_n$ 展开（$\gamma^{H,J,S}$ 同理），RG 方程的归一化为
+\begin{equation}\label{eq:scet-RGE}
+\frac{\dd\ln H}{\dd\ln\mu}=2\Gamma_{\rm cusp}L_Q+2\gamma^H,\qquad
+\frac{\dd\ln\tilde j}{\dd\ln\mu}=-2\Gamma_{\rm cusp}L_J-2\gamma^J,\qquad
+\frac{\dd\ln\tilde s_T}{\dd\ln\mu}=4\Gamma_{\rm cusp}L_S-2\gamma^S .
+\end{equation}
+
+\begin{proposition}[单圈因子与 RG 一致性 \tagR]\label{prop:scet-thrust-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈，$a=\frac{C_F\as}{4\pi}$。）
+(a) 按\cref{eq:scet-Jdef}，裸喷注函数精确于 $\varepsilon$ 为 $J^{(1)}_{\rm bare}=-\frac{\as C_F}{4\pi}(4\pi\mu_0^2)^\varepsilon\frac{4-\varepsilon}{\varepsilon}\frac{\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}(p^2)^{-1-\varepsilon}$，$\MSbar$ 重整化后
+\begin{equation}\label{eq:scet-J1}
+J(p^2,\mu)=\delta(p^2)+a\Big\{(7-\pi^2)\delta(p^2)-3\Big[\frac1{p^2}\Big]_*+4\Big[\frac{\ln(p^2/\mu^2)}{p^2}\Big]_*\Big\},\qquad
+\tilde j=1+a\Big(2L_J^2-3L_J+7-\frac{2\pi^2}{3}\Big).
+\end{equation}
+% VF-SCET-9
+(b) 按\cref{eq:scet-Sdef}，
+\begin{equation}\label{eq:scet-S1}
+S_T(k,\mu)=\delta(k)+a\Big\{\frac{\pi^2}{3}\delta(k)-16\Big[\frac{\ln(k/\mu)}{k}\Big]_*\Big\},\qquad \tilde s_T=1+a\big(-8L_S^2-\pi^2\big).
+\end{equation}
+% VF-SCET-10
+(c)（RG 一致性）对任意阶的 $\Gamma_{\rm cusp}(\as)$、$\gamma^{H,J,S}(\as)$，\cref{eq:scet-RGE}给出 $\frac{\dd\ln\tilde t}{\dd\ln\mu}=\Gamma_{\rm cusp}(2L_Q-4L_J+4L_S)+2\gamma^H-4\gamma^J-2\gamma^S$，且 $2L_Q-4L_J+4L_S\equiv0$：尖点项恒等相消，$\tilde t$ 与 $\mu$ 无关当且仅当
+\begin{equation}\label{eq:scet-gS}
+\gamma^S=\gamma^H-2\gamma^J
+\end{equation}
+（文献中“$\gamma_H+2\gamma_J+\gamma_S=0$”的写法只对\emph{全部}对数导数成立）。单圈 $\gamma^S_0=0=\gamma^H_0-2\gamma^J_0$；两圈，以\cite[附录~A]{BecherSchwartz2008}的 $\gamma^H_1$、$\gamma^J_1$ 代入，$C_F^2$ 项精确相消，
+$\gamma^S_1=C_FC_A(\frac{808}{27}-\frac{11\pi^2}{9}-28\zeta_3)+C_FT_Fn_f(-\frac{224}{27}+\frac{4\pi^2}{9})$。% VF-SCET-11
+(d)（与 QCD 一致）取 $\mu=Q$，\cref{eq:scet-thrust-fact}在 $\order{\as}$ 再现全 QCD 推力分布的奇异项
+\begin{equation}\label{eq:scet-singular}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=\delta(\tau)+\frac{C_F\as}{2\pi}\Big\{\Big(\frac{\pi^2}{3}-1\Big)\delta(\tau)-3\Big[\frac1\tau\Big]_+-4\Big[\frac{\ln\tau}{\tau}\Big]_+\Big\}+(\text{非奇异项}).
+\end{equation}
+% VF-SCET-12
+（本命题只涉及部分子态。）
+\uses{prop:scet-hard-matching,def:prelim-plus,prop:scet-lagrangian,prop:scet-wilson,def:scet-zero-bin,lem:prelim-scaleless,prop:prelim-wilson-rules,prop:ee-oneloop,cor:ee-R-alphas,def:sudakov-cusp}
+\end{proposition}
+
+\begin{proof}
+(a) 实辐射末态为 $q(k_1)g(k_2)$，$p=k_1+k_2$，$x\equiv\bar n\cdot k_2/\bar n\cdot p$。胶子由共线夸克线发射（\cref{prop:scet-lagrangian}：对共线场在树图层次精确，可用 QCD 顶角与传播子再投影）或由 $W_n$ 发射（\cref{prop:scet-wilson}）：
+$\langle qg|\bar\chi_n|0\rangle=g\,t^a\,\bar u(k_1)\big[-\gamma^\nu\frac{\sla p}{p^2}+\frac{\bar n^\nu}{\bar n\cdot k_2}\big]P_{\bar n}\epsilon^*_\nu$。取 $\epsilon^*\to k_2$，由 $\bar u(k_1)\sla k_2\sla p=\bar u(k_1)p^2$ 得方括号为零（Ward 恒等式），故极化求和可用 $-g_{\nu\nu'}$。把\cref{eq:scet-Jdef}两边乘以 $\bar{\sla n}/2$ 后取 Dirac 迹与色迹，定义式右边给出 $2\pi\cdot2\bar n\cdot p\cdot N_c\,J$；投影子在迹中消去，自旋求和后（$D$ 维迹）
+\[
+-\TrD\Big[\frac{\bar{\sla n}}{2}\,\bar A^\nu\,\sla k_1\,A_\nu\Big]=\frac{4\,\bar n\cdot p}{p^2}\Big[\frac{1+(1-x)^2}{x}-\varepsilon x\Big],\qquad A^\nu\equiv-\gamma^\nu\frac{\sla p}{p^2}+\frac{\bar n^\nu}{\bar n\cdot k_2},
+\]
+方括号是 $D$ 维劈裂函数 $P_{gq}(x)/C_F$，色因子为 $\Trc(t^at^a)=C_FN_c$。$D$ 维两体相空间为 $\int\dd\Phi_2=\frac{1}{8\pi}(\frac{4\pi}{p^2})^\varepsilon\frac{1}{\Gamma(1-\varepsilon)}\int_0^1\dd x\,(x\bar x)^{-\varepsilon}$，$\bar x=1-x$，而
+\[
+\int_0^1\dd x\,(x\bar x)^{-\varepsilon}\Big[\frac{1+\bar x^2}{x}-\varepsilon x\Big]=-\frac{(4-\varepsilon)(1-\varepsilon)}{2\varepsilon(1-2\varepsilon)}\frac{\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)}
+\]
+（化为 Beta 函数之和）。合起来，$J^{(1)}_{\rm bare}=\frac{g_0^2C_F}{\pi p^2}\int\dd\Phi_2[\cdots]$，用 $g_0^2=4\pi\as\mu_0^{2\varepsilon}$、$(1-\varepsilon)\Gamma(1-\varepsilon)=\Gamma(2-\varepsilon)$、$(1-2\varepsilon)\Gamma(1-2\varepsilon)=\Gamma(2-2\varepsilon)$ 即得所述精确式。虚图在维数正规化中无标度（\cref{lem:prelim-scaleless}），零箱亦然（\cref{def:scet-zero-bin}(c)）。$\MSbar$ 中 $J^{(1)}_{\rm bare}=a\,f(\varepsilon)\,\mu^{2\varepsilon}(p^2)^{-1-\varepsilon}$，$f(\varepsilon)=-\ee^{\varepsilon\gamma_E}\frac{4-\varepsilon}{\varepsilon}\frac{\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}=-\frac4\varepsilon-3-(7-\pi^2)\varepsilon+\order{\varepsilon^2}$；乘以\cref{eq:scet-distid}得
+$a\{(\frac4{\varepsilon^2}+\frac3\varepsilon+7-\pi^2)\delta(p^2)-(\frac4\varepsilon+3)[\frac1{p^2}]_*+4[\frac{\ln(p^2/\mu^2)}{p^2}]_*\}$，极点由喷注函数的 $\MSbar$ 重整化吸收，即\cref{eq:scet-J1}。Laplace 变换用 $\int_0^\infty\dd p^2\,\ee^{-p^2/(\ee^{\gamma_E}sQ^2)}[\frac1{p^2}]_*=L_J$、$\int_0^\infty\dd p^2\,\ee^{-p^2/(\ee^{\gamma_E}sQ^2)}[\frac{\ln(p^2/\mu^2)}{p^2}]_*=\frac{L_J^2}{2}+\frac{\pi^2}{12}$。由 $\dd L_J/\dd\ln\mu=-2$，$\frac{\dd}{\dd\ln\mu}a(2L_J^2-3L_J)=a(-8L_J+6)=\frac{\as}{4\pi}(-2\Gamma_0L_J-2\gamma^J_0)$，$\gamma^J_0=-3C_F$。% w18_s4 (B); VF-SCET-9 (BS: c_1^J = C_F(7 - 2pi^2/3))
+(b) 一个实胶子：$Y_n^\dagger Y_{\bar n}$ 的单胶子项（\cref{prop:prelim-wilson-rules}）给出流 $g\,t^a(\frac{\bar n^\mu}{\bar n\cdot k}-\frac{n^\mu}{n\cdot k})$（对 $n\cdot k,\bar n\cdot k>0$ 的实辐射 $\ii0$ 无关，\cref{rem:scet-y-direction}），平方并用 $-g_{\mu\nu}$ 求和得 $|M|^2=\frac{4g_0^2C_F}{n\cdot k\,\bar n\cdot k}$。测度 $\int\frac{\dd^Dk}{(2\pi)^{D-1}}\delta^+(k^2)=\frac{\pi^{1-\varepsilon}}{2(2\pi)^{3-2\varepsilon}\Gamma(1-\varepsilon)}\int\dd(n\cdot k)\,\dd(\bar n\cdot k)\,(n\cdot k\,\bar n\cdot k)^{-\varepsilon}$。R 半球（$n\cdot k<\bar n\cdot k$）测量 $n\cdot k$，L 半球测量 $\bar n\cdot k$，两者贡献相等；R 半球给出 $k^{-1-\varepsilon}\int_k^\infty\dd(\bar n\cdot k)(\bar n\cdot k)^{-1-\varepsilon}=k^{-1-2\varepsilon}/\varepsilon$。于是 $S^{(1)}_{\rm bare}=\frac{\as C_F}{4\pi}\frac{8(4\pi\mu_0^2)^\varepsilon}{\varepsilon\Gamma(1-\varepsilon)}k^{-1-2\varepsilon}$；虚图无标度。$\MSbar$ 中 $\frac{8\ee^{\varepsilon\gamma_E}}{\varepsilon\Gamma(1-\varepsilon)}=\frac8\varepsilon-\frac{2\pi^2}{3}\varepsilon+\order{\varepsilon^2}$，乘以\cref{eq:scet-distid}得 $a\{(-\frac4{\varepsilon^2}+\frac{\pi^2}3)\delta(k)+\frac8\varepsilon[\frac1k]_*-16[\frac{\ln(k/\mu)}{k}]_*\}$，去掉极点即\cref{eq:scet-S1}。Laplace 变换用 $[\frac1k]_*\to L_S$、$[\frac{\ln(k/\mu)}k]_*\to\frac{L_S^2}2+\frac{\pi^2}{12}$；$\frac{\dd}{\dd\ln\mu}(-8aL_S^2)=16aL_S=\frac{\as}{4\pi}\,4\Gamma_0L_S$，故 $\gamma^S_0=0$。% w18_s4 (C); VF-SCET-10 (BS: c_1^S = -C_F pi^2)
+(c) 由 $L_J=L_Q+\ln s$、$L_S=\frac12L_Q+\ln s$，$2L_Q-4L_J+4L_S=0$ 恒成立，其余是\cref{eq:scet-RGE}的线性组合。单圈 $\gamma^H_0-2\gamma^J_0=-6C_F+6C_F=0$，与 (b) 一致；并且 $H^{(1)}+2\tilde j^{(1)}(L_Q-\ell)+\tilde s^{(1)}_T(\frac12L_Q-\ell)=-4\ell^2+6\ell-2$（以 $a$ 为单位）确与 $L_Q$ 无关。两圈：Becher--Schwartz 附录~A 给出\cite{BecherSchwartz2008}
+$\gamma^H_1=C_F^2(-3+4\pi^2-48\zeta_3)+C_FC_A(-\frac{961}{27}-\frac{11\pi^2}{3}+52\zeta_3)+C_FT_Fn_f(\frac{260}{27}+\frac{4\pi^2}{3})$、$\gamma^J_1=C_F^2(-\frac32+2\pi^2-24\zeta_3)+C_FC_A(-\frac{1769}{54}-\frac{11\pi^2}{9}+40\zeta_3)+C_FT_Fn_f(\frac{242}{27}+\frac{4\pi^2}{9})$，故 $\gamma^H_1-2\gamma^J_1$ 中 $C_F^2$ 项精确相消，其余项给出所述 $\gamma^S_1$；这符合非阿贝尔指数化对软函数色结构的要求。两圈尖点 $\Gamma_1=4C_F[(\frac{67}9-\frac{\pi^2}3)C_A-\frac{20}9T_Fn_f]$ 见\cref{def:sudakov-cusp}（该文附录~A 在 $T_Fn_f$ 前多印了一个 $C_F$，见附录~Q 第~1~条）。% w18_s4 (E); values re-read in the BS source
+(d) \emph{SCET 一侧：}取 $\mu=Q$，$\int\dd p^2J(p^2)\delta(\tau-p^2/Q^2)=Q^2J(Q^2\tau)$、$\int\dd k\,S_T(k)\delta(\tau-k/Q)=QS_T(Q\tau)$，星号分布变为 $[0,1]$ 上在 $\tau=0$ 处减除的加号分布；单圈只有一个因子非平凡，故 $\delta(\tau)$ 系数为 $H$、$2J$、$S_T$ 常数之和 $(-16+\frac{7\pi^2}3)+2(7-\pi^2)+\frac{\pi^2}3=-2+\frac{2\pi^2}{3}$，$[\frac1\tau]_+$ 系数为 $2\times(-3)$，$[\frac{\ln\tau}\tau]_+$ 系数为 $2\times4-16=-8$（以 $a$ 为单位），即\cref{eq:scet-singular}。\emph{QCD 一侧：}三部分子末态时 $T=\max_ix_i$，$x_i=2E_i/Q$，实辐射矩阵元的四维形式为 $\frac1{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=\frac{C_F\as}{2\pi}\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$（\cref{prop:ee-oneloop}）。令 $y_i=1-x_i$，$T<1-\tau$ 即 $y_1,y_2>\tau$、$y_1+y_2<1-\tau$；把被积函数写成 $\frac{2}{y_1y_2}-\frac2{y_1}-\frac2{y_2}+\frac{y_1}{y_2}+\frac{y_2}{y_1}$，在这个三角形上逐项积分，
+$\int\frac{1}{y_1y_2}=\ln^2\tau-\frac{\pi^2}6$、$\int\frac1{y_2}=-\ln\tau-1$、$\int\frac{y_1}{y_2}=-\frac12\ln\tau-\frac34$（均差 $\order{\tau\ln^2\tau}$），故 $\sigma(T<1-\tau)/\sigma_0=\frac{C_F\as}{2\pi}[2\ln^2\tau+3\ln\tau+\frac52-\frac{\pi^2}{3}]$。由总截面 $\sigma_{\rm tot}=\sigma_0(1+\frac{3C_F\as}{4\pi})$（\cref{cor:ee-R-alphas}），累积分布
+\[
+R(\tau)\equiv\int_0^\tau\frac{\dd\tau'}{\sigma_0}\frac{\dd\sigma}{\dd\tau'}=\frac{\sigma_{\rm tot}-\sigma(T<1-\tau)}{\sigma_0}=1+\frac{C_F\as}{2\pi}\Big[-2\ln^2\tau-3\ln\tau+\frac{\pi^2}{3}-1\Big]+\order{\tau\ln^2\tau}.
+\]
+% w18_s5 (G); VF-SCET-12 cumulant
+对 $\tau$ 求导，用 $\frac{\dd}{\dd\tau}\ln\tau\to[\frac1\tau]_+$、$\frac{\dd}{\dd\tau}\frac12\ln^2\tau\to[\frac{\ln\tau}\tau]_+$（在 $\tau=0$ 处减除）与 $R(0^+)$ 的常数项 $\to\delta(\tau)$，即得\cref{eq:scet-singular}。两侧一致。
+\end{proof}
+
+\begin{example}[单圈 $H$、$J$、$S_T$ 合成 QCD 奇异项]\label{ex:scet-thrust-oneloop}
+在 Laplace 空间中检验\cref{prop:scet-thrust-oneloop}(d)。由\cref{eq:scet-laplace}、\cref{eq:scet-CV}与 (a)(b)，单圈的 $\tilde t$ 等于 $1+a[(-2L_Q^2+6L_Q-16+\tfrac{7\pi^2}3)+2(2L_J^2-3L_J+7-\tfrac{2\pi^2}{3})+(-8L_S^2-\pi^2)]$；代入 $L_J=L_Q-\ell$、$L_S=\frac12L_Q-\ell$，二次项 $-2L_Q^2+4(L_Q-\ell)^2-8(\frac12L_Q-\ell)^2=-4\ell^2$，一次项 $6\ell$，常数 $-16+14+(\frac73-\frac43-1)\pi^2=-2$，故 $\tilde t=1+a(-4\ell^2+6\ell-2)$，与 $\mu$ 无关。另一方面，由 QCD 的累积分布 $R(\tau)$，$\tilde t(\nu)=\nu\int_0^\infty\dd\tau\,\ee^{-\nu\tau}R(\tau)$；用 $\nu\int_0^\infty\ee^{-\nu\tau}\ln\tau\,\dd\tau=-\ell$、$\nu\int_0^\infty\ee^{-\nu\tau}\ln^2\tau\,\dd\tau=\ell^2+\zeta_2$，得 $\tilde t=1+\frac{C_F\as}{2\pi}[-2(\ell^2+\zeta_2)+3\ell+\frac{\pi^2}{3}-1]=1+2a(-2\ell^2+3\ell-1)$，相同。$\delta(\tau)$ 的系数也可由求和规则 $c_\delta=\frac32-\int_0^1r(\tau)\,\dd\tau$ 数值地得到（$r$ 为 QCD 分布减去其奇异部分，以 $\frac{C_F\as}{2\pi}$ 为单位；$\tau>\frac13$ 时 QCD 分布为零）：$c_\delta=2.28986813369645287\ldots$，与 $\frac{\pi^2}{3}-1$ 一致到 $10^{-20}$。% w18_s4 (F); c_scet: 2.289868133697 (lower precision)
+\uses{prop:scet-thrust-oneloop}
+\end{example}
+
+\begin{proposition}[领头对数指数 \tagA]\label{prop:scet-ll}
+(a) 对 QCD 推力分布，在 LL 精度
+\begin{equation}\label{eq:scet-LL}
+\ln\tilde t_{\rm LL}=\ell\,g_1(\lambda),\qquad g_1(\lambda)=-\frac{C_F}{\pi b\lambda}\Big[(1-2\lambda)\ln(1-2\lambda)-2(1-\lambda)\ln(1-\lambda)\Big],\qquad \lambda=b\,\as(Q)\,\ell,\quad b=\frac{\beta_0}{4\pi},
+\end{equation}
+% VF-SCET-14
+这与 Catani--Trentadue--Turnock--Webber（CTTW）的推力 LL 函数一致\cite{CataniEtAl1993}。
+(b)（作为\cref{thm:scet-thrust}中各因子 RG 方程的 LL 解，\tagR）（$R_{\mathrm{def}}$：由算符定义直接推出。）若 $H$、$\tilde j$、$\tilde s_T$ 满足\cref{eq:scet-RGE}，只保留单圈 $\Gamma_{\rm cusp}=\Gamma_0\frac{\as}{4\pi}$ 与单圈跑动 $\as(\mu')=\as(Q)/[1+b\,\as(Q)\ln(\mu'^2/Q^2)]$，并略去非尖点反常维度与常数，则 $\ln(H\tilde j^2\tilde s_T)$ 在 $\mu=Q$ 处等于\cref{eq:scet-LL}；其展开为 $-\frac{C_F\as}{\pi}\ell^2-\frac{C_Fb}{\pi}\as^2\ell^3-\frac{7C_Fb^2}{6\pi}\as^3\ell^4-\cdots$，首项即单圈的 $-4a\ell^2$。
+\uses{thm:scet-thrust,prop:scet-thrust-oneloop,prop:prelim-beta}
+\end{proposition}
+
+\begin{proof}[(b) 的证明]
+取 $\mu=Q$，$H(Q^2,Q)$ 不含大对数。把 $\tilde j$ 自其自然标度 $\mu_j^2=sQ^2$（$L_J=0$）、$\tilde s_T$ 自 $\mu_s=sQ$（$L_S=0$）演化到 $Q$。令 $t=\ln(\mu'^2/Q^2)$，则 $\dd\ln\mu'=\frac12\dd t$，$L_J=-\ell-t$，$\ln(sQ/\mu')=-\ell-\frac t2$，$\Gamma_{\rm cusp}=\frac{C_F}{\pi}\as(\mu')$，由\cref{eq:scet-RGE}
+\[
+\ln\tilde t_{\rm LL}=2\int_{-\ell}^{0}\frac{\dd t}{2}\big(-2\Gamma\big)(-\ell-t)+\int_{-2\ell}^{0}\frac{\dd t}{2}\,4\Gamma\Big(-\ell-\frac t2\Big)=\frac{C_F\as(Q)}{\pi}\big[2I_J-I_S\big],
+\]
+其中 $I_J=\int_{-\ell}^0\frac{(\ell+t)\,\dd t}{1+b\as t}$，$I_S=\int_{-2\ell}^0\frac{(2\ell+t)\,\dd t}{1+b\as t}$。写 $\ell+t=\frac{1}{b\as}[(1+b\as t)-(1-\lambda)]$ 即得 $I_J=\frac{(1-\lambda)\ln(1-\lambda)+\lambda}{(b\as)^2}$，同理 $I_S=\frac{(1-2\lambda)\ln(1-2\lambda)+2\lambda}{(b\as)^2}$。代入并用 $\frac1{b^2\as}=\frac{\ell}{b\lambda}$ 即得\cref{eq:scet-LL}。展开 $(1-x)\ln(1-x)=-x+\frac{x^2}2+\frac{x^3}6+\frac{x^4}{12}+\cdots$ 得方括号 $=\lambda^2+\lambda^3+\frac76\lambda^4+\cdots$，即所述级数；首项 $-\frac{C_F\as}\pi\ell^2=-4a\ell^2$ 与\cref{ex:scet-thrust-oneloop}的二次项一致。% w18_s4 (H)
+\end{proof}
+
+\paragraph{地位与缺口}
+(b) 是代数结果；(a) 作为关于 QCD 推力分布的陈述，其地位不高于\cref{thm:scet-thrust}（全阶论证，[A]），瓶颈相同（\cref{asm:intro-bridge}(Br1)、\cref{asm:appN-envelope}）。LL 重求和在微扰论中的地位因此是全阶论证，而不是严格证明。Laplace 空间与 $\tau$ 空间累积分布的 LL 函数相同，从 NLL 起才不同；$\lambda\to\frac12$ 处的奇点对应软标度 $\mu_s=Q/(\nu\ee^{\gamma_E})$ 降到 $\Lambda$，微扰重求和在此失效。CTTW 的 $\beta_0=(11C_A-2n_f)/(12\pi)$ 即此处的 $b$；Becher--Schwartz 报告其 RG 结果在 $\order{\as^3}$ 以内的 NLL 对数系数与 CTTW 完全一致\cite{BecherSchwartz2008}。升级途径与\cref{thm:scet-thrust}相同。
+
+% -------------------------------------------------------------------------------------
+\section{SCET 证明的前提与地位}\label{sec:scet-status}
+
+\begin{remark}[SCET 证明的前提]\label{rem:scet-assumptions}
+SCET 中的全阶因子化“证明”（例如\cref{thm:scet-thrust}）依赖以下前提，每一条都须在具体过程中单独论证：
+(1) \emph{模式完备}：所选模式（硬、共线、软或超软，必要时 Glauber）再现 QCD 在给定观测量下的全部领头红外区域。这\emph{就是}第~4~章的区域分析（\cref{thm:ir-leading-regions}）；SCET 本身不能证明它，而在 Minkowski 运动学中区域方法本身也没有一般证明（\cref{prop:ir-regions-minkowski}）。
+(2) \emph{零箱减除的自洽}（\cref{def:scet-zero-bin}）。
+(3) \emph{Glauber 模式相消或不出现}：对只有出射共线粒子的 $e^+e^-$ 过程，Glauber 区不形成钳夹；对强子—强子碰撞，这是证明中最困难的一步（\cref{sec:scet-glauber}）。
+(4) \emph{领头幂次}：退耦与算符基都只在领头幂次成立；在次领头幂次，卷积可以出现端点发散，因子化的形式本身需要修改（第~21~章）。
+前三条与图形方法（第~9~章）的三处困难一一对应：
+\begin{center}\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}lll@{}}
+\toprule
+SCET 的前提 & 图形方法的困难 & 本书中的编号假设 \\
+\midrule
+模式完备 & 区域完备与幂次计数 & \cref{asm:intro-bridge}(Br1)，\cref{asm:appN-envelope} \\
+零箱减除的自洽 & 减除的组合学 & \cref{asm:appN-collins} \\
+Glauber 拉氏量与快度正规子 & Glauber 区的围道变形 & \cref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs} \\
+\bottomrule
+\end{tabular}
+\end{center}
+在这些前提下，图形证明与 SCET 证明的内容相同：二者都以领头区域为出发点，前者用 Ward 恒等式与减除，后者用规范对称性、场重定义与零箱减除；两者的全阶陈述都是 [A]。SCET 证明并不比 Collins 的图形证明更严格，二者互补：SCET 把区域的组合学变成拉氏量的对称性，并把重求和变成 RG 方程的求解；图形方法把每个前提落实到具体的被积函数与围道上。Collins 写道：“I have not been able to penetrate the SCET literature to properly understand its rationale”（我未能深入 SCET 文献以充分理解其逻辑依据）\cite[第~15.9~节]{Collins2011}；上表正是为了在两种语言之间建立逐条的对应。第~24~章把前提 (1) 与 (3) 写成前沿章节使用的编号假设（\cref{asm:front-scet-modes}）。
+\end{remark}
+
+\begin{tcolorbox}[enhanced,breakable,title=常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{“SCET 独立于区域分析证明了因子化。”}不对：SCET 预设了模式的内容——那正是区域分析——还需要零箱减除并须处理 Glauber 模式；它的全阶陈述与图形论证一样是 [A]（\cref{rem:scet-assumptions}）。\par
+\textbf{“区域方法是定理，因此模式的选择不成问题。”}欧氏的大动量、大质量极限有证明\cite{Smirnov:1990rz}；Minkowski 极限没有一般证明（\cref{prop:ir-regions-minkowski}），可能需要解析正规子，且“区域等于 Newton 多面体的下表面”在 Minkowski 运动学中不成立\cite{Gardi:2024axt}（第~24~章）。SCET 的模式须由钳夹分析论证。\par
+\textbf{“零箱减除自动消除了重复计算。”}只有在每个共线因子中都自洽地实施时才如此；它与软减除的等价性是在用维数正规化处理红外发散时于低阶显式验证的（\cref{def:scet-zero-bin}）。
+\end{tcolorbox}
+
+\paragraph{本章小结。}
+在树图层次，积掉 $\phi_{\bar n}$ 与离壳模式是精确的，$W_n$ 由程函因子按次序求和得到；领头阶拉氏量的规范对称性与 BPS 场重定义使超软胶子只出现在算符的 $Y_n$ 中（[R]）。SCET$_{\rm II}$ 的快度发散有三种等价的处理，Glauber 模式由 Rothstein--Stewart 的算符描述而其相消没有完整证明（[A]）。推力分布的因子化是 [A]，其单圈因子、RG 一致性与对全 QCD 奇异项的再现是 [R]，LL 指数作为 QCD 陈述继承 [A]。这些工具在后文的用途：事件形状与喷注（第~16~章）、因子化的破坏（第~18~章）、$B$ 介子衰变与重夸克偶素（第~20~章）、次领头幂次（第~21~章）与前沿进展（第~24~章）。
+

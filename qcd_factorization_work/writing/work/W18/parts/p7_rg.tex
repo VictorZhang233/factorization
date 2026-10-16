@@ -1,0 +1,169 @@
+% -------------------------------------------------------------------------------------
+\section{重整化群一致性与重求和}\label{sec:scet-rg}
+
+因子化定理有两项可以逐阶检验的推论：各因子的 $\mu$ 依赖必须在乘积中相消（内部自洽），而定阶展开必须再现 QCD 的奇异项（外部自洽）。本节在单圈完成这两项检验，并把 RG 方程解到领头对数。
+
+\paragraph{星号分布与 Laplace 变换。}
+喷注函数与软函数的分布以 $\mu^2$ 与 $\mu$ 为参考点：
+\[
+\int_0^{\mu^2}\dd p^2\,\Big[\frac{\ln^k(p^2/\mu^2)}{p^2}\Big]_*f(p^2)\equiv\int_0^{\mu^2}\dd p^2\,\frac{\ln^k(p^2/\mu^2)}{p^2}\big[f(p^2)-f(0)\big],
+\]
+在 $p^2>\mu^2$ 处为普通函数；$[\frac{\ln^k(k/\mu)}{k}]_*$ 同理。由此
+\begin{equation}\label{eq:scet-distid}
+\begin{gathered}
+\mu^{2\varepsilon}(p^2)^{-1-\varepsilon}=-\frac{\delta(p^2)}{\varepsilon}+\sum_{k\ge0}\frac{(-\varepsilon)^k}{k!}\Big[\frac{\ln^k(p^2/\mu^2)}{p^2}\Big]_*,\\
+\mu^{2\varepsilon}k^{-1-2\varepsilon}=-\frac{\delta(k)}{2\varepsilon}+\sum_{k'\ge0}\frac{(-2\varepsilon)^{k'}}{k'!}\Big[\frac{\ln^{k'}(k/\mu)}{k}\Big]_* .
+\end{gathered}
+\end{equation}
+在 $\tau$ 空间，$[g(\tau)]_+$ 在 $[0,1]$ 上定义为 $\int_0^1\dd\tau\,[g]_+h=\int_0^1\dd\tau\,g(\tau)[h(\tau)-h(0)]$——此处加号分布在 $\tau=0$ 处减除，与\cref{def:prelim-plus}中在 $z=1$ 处减除的加号分布不同。取 Becher--Schwartz 的 Laplace 变换\cite[附录~B]{BecherSchwartz2008}
+\begin{equation}\label{eq:scet-laplace}
+\begin{gathered}
+\tilde t(\nu)\equiv\int_0^\infty\dd\tau\,\ee^{-\nu\tau}\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=H(Q^2,\mu)\,\big[\tilde j(L_J,\mu)\big]^2\,\tilde s_T(L_S,\mu),\\
+L_J=\ln\frac{sQ^2}{\mu^2},\qquad L_S=\ln\frac{sQ}{\mu},\qquad s\equiv\frac{1}{\ee^{\gamma_E}\nu},
+\end{gathered}
+\end{equation}
+第二个等号由\cref{eq:scet-thrust-fact}的卷积结构得到，$\tilde j$、$\tilde s_T$ 是 $J(p^2)$、$S_T(k)$ 关于 $\ee^{-\nu p^2/Q^2}$、$\ee^{-\nu k/Q}$ 的 Laplace 变换。记 $\ell\equiv\ln(\nu\ee^{\gamma_E})=\ln(1/s)$，则 $L_J=L_Q-\ell$，$L_S=\frac12L_Q-\ell$。反常维度按 $\Gamma_{\rm cusp}=\sum_n(\frac{\as}{4\pi})^{n+1}\Gamma_n$ 展开（$\gamma^{H,J,S}$ 同理），RG 方程的归一化为
+\begin{equation}\label{eq:scet-RGE}
+\frac{\dd\ln H}{\dd\ln\mu}=2\Gamma_{\rm cusp}L_Q+2\gamma^H,\qquad
+\frac{\dd\ln\tilde j}{\dd\ln\mu}=-2\Gamma_{\rm cusp}L_J-2\gamma^J,\qquad
+\frac{\dd\ln\tilde s_T}{\dd\ln\mu}=4\Gamma_{\rm cusp}L_S-2\gamma^S .
+\end{equation}
+
+\begin{proposition}[单圈因子与 RG 一致性 \tagR]\label{prop:scet-thrust-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈，$a=\frac{C_F\as}{4\pi}$。）
+(a) 按\cref{eq:scet-Jdef}，裸喷注函数精确于 $\varepsilon$ 为 $J^{(1)}_{\rm bare}=-\frac{\as C_F}{4\pi}(4\pi\mu_0^2)^\varepsilon\frac{4-\varepsilon}{\varepsilon}\frac{\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}(p^2)^{-1-\varepsilon}$，$\MSbar$ 重整化后
+\begin{equation}\label{eq:scet-J1}
+\begin{gathered}
+J(p^2,\mu)=\delta(p^2)+a\Big\{(7-\pi^2)\delta(p^2)-3\Big[\frac1{p^2}\Big]_*+4\Big[\frac{\ln(p^2/\mu^2)}{p^2}\Big]_*\Big\},\\
+\tilde j=1+a\Big(2L_J^2-3L_J+7-\frac{2\pi^2}{3}\Big).
+\end{gathered}
+\end{equation}
+% VF-SCET-9
+(b) 按\cref{eq:scet-Sdef}，
+\begin{equation}\label{eq:scet-S1}
+S_T(k,\mu)=\delta(k)+a\Big\{\frac{\pi^2}{3}\delta(k)-16\Big[\frac{\ln(k/\mu)}{k}\Big]_*\Big\},\qquad \tilde s_T=1+a\big(-8L_S^2-\pi^2\big).
+\end{equation}
+% VF-SCET-10
+(c)（RG 一致性）对任意阶的 $\Gamma_{\rm cusp}(\as)$、$\gamma^{H,J,S}(\as)$，\cref{eq:scet-RGE}给出 $\frac{\dd\ln\tilde t}{\dd\ln\mu}=\Gamma_{\rm cusp}(2L_Q-4L_J+4L_S)+2\gamma^H-4\gamma^J-2\gamma^S$，且 $2L_Q-4L_J+4L_S\equiv0$：尖点项恒等相消，$\tilde t$ 与 $\mu$ 无关当且仅当
+\begin{equation}\label{eq:scet-gS}
+\gamma^S=\gamma^H-2\gamma^J
+\end{equation}
+（把 $\gamma$ 理解为\emph{全部}对数导数时，一致性条件是 $\frac{\dd\ln H}{\dd\ln\mu}+2\frac{\dd\ln\tilde j}{\dd\ln\mu}+\frac{\dd\ln\tilde s_T}{\dd\ln\mu}=0$；在\cref{eq:scet-RGE}的归一化下，非尖点部分的关系是\cref{eq:scet-gS}，而不是“$\gamma^H+2\gamma^J+\gamma^S=0$”）。单圈 $\gamma^S_0=0=\gamma^H_0-2\gamma^J_0$；两圈，以\cite[附录~A]{BecherSchwartz2008}的 $\gamma^H_1$、$\gamma^J_1$ 代入，$C_F^2$ 项精确相消，
+$\gamma^S_1=C_FC_A(\frac{808}{27}-\frac{11\pi^2}{9}-28\zeta_3)+C_FT_Fn_f(-\frac{224}{27}+\frac{4\pi^2}{9})$。% VF-SCET-11
+(d)（与 QCD 一致）取 $\mu=Q$，\cref{eq:scet-thrust-fact}在 $\order{\as}$ 再现全 QCD 推力分布的奇异项
+\begin{equation}\label{eq:scet-singular}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=\delta(\tau)+\frac{C_F\as}{2\pi}\Big\{\Big(\frac{\pi^2}{3}-1\Big)\delta(\tau)-3\Big[\frac1\tau\Big]_+-4\Big[\frac{\ln\tau}{\tau}\Big]_+\Big\}+(\text{非奇异项}).
+\end{equation}
+% VF-SCET-12
+（本命题只涉及部分子态。）
+\uses{prop:scet-hard-matching, def:prelim-plus, prop:scet-lagrangian, prop:scet-wilson, def:scet-zero-bin, lem:prelim-scaleless, prop:prelim-wilson-rules, prop:ee-oneloop, cor:ee-R-alphas, def:sudakov-cusp}
+\end{proposition}
+
+\begin{proof}
+\emph{(a) 喷注函数。}实辐射末态为 $q(k_1)g(k_2)$，$p=k_1+k_2$，$x\equiv\bar n\cdot k_2/\bar n\cdot p$。胶子或由共线夸克线发射（\cref{prop:scet-lagrangian}：对共线场在树图层次精确，可用 QCD 顶角与传播子再投影），或由 $W_n$ 发射（\cref{prop:scet-wilson}）：
+\[
+\langle qg|\bar\chi_n|0\rangle=g\,t^a\,\bar u(k_1)\,A^\nu P_{\bar n}\,\epsilon^*_\nu,\qquad A^\nu\equiv-\gamma^\nu\frac{\sla p}{p^2}+\frac{\bar n^\nu}{\bar n\cdot k_2}.
+\]
+取 $\epsilon^*\to k_2$，由 $\bar u(k_1)\sla k_2\sla p=\bar u(k_1)p^2$ 得 $\bar u(k_1)A^\nu k_{2\nu}=0$（Ward 恒等式），故极化求和可用 $-g_{\nu\nu'}$。把\cref{eq:scet-Jdef}两边乘以 $\bar{\sla n}/2$ 后取 Dirac 迹与色迹，右边给出 $2\pi\cdot2\bar n\cdot p\cdot N_c\,J$；左边的色因子为 $\Trc(t^at^a)=C_FN_c$，投影子在迹中消去，自旋求和后（$D$ 维迹）
+\[
+-\TrD\Big[\frac{\bar{\sla n}}{2}\,\bar A^\nu\,\sla k_1\,A_\nu\Big]=\frac{4\,\bar n\cdot p}{p^2}\Big[\frac{1+(1-x)^2}{x}-\varepsilon x\Big],
+\]
+方括号是 $D$ 维劈裂函数 $P_{gq}(x)/C_F$。$D$ 维两体相空间为 $\int\dd\Phi_2=\frac{1}{8\pi}(\frac{4\pi}{p^2})^\varepsilon\frac{1}{\Gamma(1-\varepsilon)}\int_0^1\dd x\,(x\bar x)^{-\varepsilon}$（$\bar x=1-x$），而
+\[
+\int_0^1\dd x\,(x\bar x)^{-\varepsilon}\Big[\frac{1+\bar x^2}{x}-\varepsilon x\Big]=-\frac{(4-\varepsilon)(1-\varepsilon)}{2\varepsilon(1-2\varepsilon)}\frac{\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)}
+\]
+（化为 Beta 函数之和）。合起来，用 $g_0^2=4\pi\as\mu_0^{2\varepsilon}$、$(1-\varepsilon)\Gamma(1-\varepsilon)=\Gamma(2-\varepsilon)$ 与 $(1-2\varepsilon)\Gamma(1-2\varepsilon)=\Gamma(2-2\varepsilon)$，
+\[
+J^{(1)}_{\rm bare}=\frac{g_0^2C_F}{\pi p^2}\int\dd\Phi_2\Big[\frac{1+\bar x^2}{x}-\varepsilon x\Big]
+=-\frac{\as C_F}{4\pi}(4\pi\mu_0^2)^\varepsilon\,\frac{4-\varepsilon}{\varepsilon}\,\frac{\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}\,(p^2)^{-1-\varepsilon}.
+\]
+虚图在维数正规化中无标度（\cref{lem:prelim-scaleless}），零箱亦然（\cref{def:scet-zero-bin}(c)）。$\MSbar$ 中 $J^{(1)}_{\rm bare}=a\,f(\varepsilon)\,\mu^{2\varepsilon}(p^2)^{-1-\varepsilon}$，其中
+\[
+f(\varepsilon)=-\ee^{\varepsilon\gamma_E}\frac{4-\varepsilon}{\varepsilon}\frac{\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}=-\frac4\varepsilon-3-(7-\pi^2)\varepsilon+\order{\varepsilon^2};
+\]
+乘以\cref{eq:scet-distid}的第一式得
+\[
+J^{(1)}_{\rm bare}=a\Big\{\Big(\frac4{\varepsilon^2}+\frac3\varepsilon+7-\pi^2\Big)\delta(p^2)-\Big(\frac4\varepsilon+3\Big)\Big[\frac1{p^2}\Big]_*+4\Big[\frac{\ln(p^2/\mu^2)}{p^2}\Big]_*\Big\}+\order{\varepsilon},
+\]
+极点由喷注函数的 $\MSbar$ 重整化吸收，即\cref{eq:scet-J1}。% w18_s4 (B); VF-SCET-9 (BS: c_1^J = C_F(7 - 2pi^2/3))
+Laplace 变换用
+\[
+\int_0^\infty\dd p^2\,\ee^{-p^2/(\ee^{\gamma_E}sQ^2)}\Big[\frac1{p^2}\Big]_*=L_J,\qquad
+\int_0^\infty\dd p^2\,\ee^{-p^2/(\ee^{\gamma_E}sQ^2)}\Big[\frac{\ln(p^2/\mu^2)}{p^2}\Big]_*=\frac{L_J^2}{2}+\frac{\pi^2}{12};
+\]
+由 $\dd L_J/\dd\ln\mu=-2$，$\frac{\dd}{\dd\ln\mu}a(2L_J^2-3L_J)=a(-8L_J+6)=\frac{\as}{4\pi}(-2\Gamma_0L_J-2\gamma^J_0)$，$\gamma^J_0=-3C_F$。
+
+\emph{(b) 软函数。}一个实胶子：$Y_n^\dagger Y_{\bar n}$ 的单胶子项（\cref{prop:prelim-wilson-rules}）给出流 $g\,t^a(\frac{\bar n^\mu}{\bar n\cdot k}-\frac{n^\mu}{n\cdot k})$（对 $n\cdot k,\bar n\cdot k>0$ 的实辐射，$\pm\ii0$ 的取法无关），平方并用 $-g_{\mu\nu}$ 求和，因 $n^2=\bar n^2=0$ 只剩交叉项，$|M|^2=\frac{4g_0^2C_F}{n\cdot k\,\bar n\cdot k}$。测度为
+\[
+\int\frac{\dd^Dk}{(2\pi)^{D-1}}\delta^+(k^2)=\frac{\pi^{1-\varepsilon}}{2(2\pi)^{3-2\varepsilon}\Gamma(1-\varepsilon)}\int\dd(n\cdot k)\,\dd(\bar n\cdot k)\,(n\cdot k\,\bar n\cdot k)^{-\varepsilon}.
+\]
+R 半球（$n\cdot k<\bar n\cdot k$）测量 $n\cdot k$，L 半球测量 $\bar n\cdot k$，两者贡献相等；R 半球给出 $k^{-1-\varepsilon}\int_k^\infty\dd(\bar n\cdot k)(\bar n\cdot k)^{-1-\varepsilon}=k^{-1-2\varepsilon}/\varepsilon$。于是（虚图无标度）
+\[
+S^{(1)}_{\rm bare}=\frac{\as C_F}{4\pi}\,\frac{8\,(4\pi\mu_0^2)^\varepsilon}{\varepsilon\,\Gamma(1-\varepsilon)}\,k^{-1-2\varepsilon}.
+\]
+$\MSbar$ 中 $\frac{8\ee^{\varepsilon\gamma_E}}{\varepsilon\Gamma(1-\varepsilon)}=\frac8\varepsilon-\frac{2\pi^2}{3}\varepsilon+\order{\varepsilon^2}$，乘以\cref{eq:scet-distid}的第二式得
+\[
+S^{(1)}_{\rm bare}=a\Big\{\Big(-\frac4{\varepsilon^2}+\frac{\pi^2}3\Big)\delta(k)+\frac8\varepsilon\Big[\frac1k\Big]_*-16\Big[\frac{\ln(k/\mu)}{k}\Big]_*\Big\}+\order{\varepsilon},
+\]
+去掉极点即\cref{eq:scet-S1}。% w18_s4 (C); VF-SCET-10 (BS: c_1^S = -C_F pi^2)
+Laplace 变换用 $[\frac1k]_*\to L_S$、$[\frac{\ln(k/\mu)}k]_*\to\frac{L_S^2}2+\frac{\pi^2}{12}$；$\frac{\dd}{\dd\ln\mu}(-8aL_S^2)=16aL_S=\frac{\as}{4\pi}\,4\Gamma_0L_S$，故 $\gamma^S_0=0$。
+
+\emph{(c) RG 一致性。}由 $L_J=L_Q+\ln s$、$L_S=\frac12L_Q+\ln s$，$2L_Q-4L_J+4L_S=0$ 恒成立，其余是\cref{eq:scet-RGE}的线性组合。单圈 $\gamma^H_0-2\gamma^J_0=-6C_F+6C_F=0$，与 (b) 一致。两圈时，Becher--Schwartz 附录~A 给出\cite{BecherSchwartz2008}
+\[
+\begin{aligned}
+\gamma^H_1&=C_F^2(-3+4\pi^2-48\zeta_3)+C_FC_A\Big(-\frac{961}{27}-\frac{11\pi^2}{3}+52\zeta_3\Big)+C_FT_Fn_f\Big(\frac{260}{27}+\frac{4\pi^2}{3}\Big),\\
+\gamma^J_1&=C_F^2\Big(-\frac32+2\pi^2-24\zeta_3\Big)+C_FC_A\Big(-\frac{1769}{54}-\frac{11\pi^2}{9}+40\zeta_3\Big)+C_FT_Fn_f\Big(\frac{242}{27}+\frac{4\pi^2}{9}\Big),
+\end{aligned}
+\]
+故 $\gamma^H_1-2\gamma^J_1$ 中 $C_F^2$ 项精确相消，其余项给出所述 $\gamma^S_1$，符合非阿贝尔指数化对软函数色结构的要求。两圈尖点 $\Gamma_1=4C_F[(\frac{67}9-\frac{\pi^2}3)C_A-\frac{20}9T_Fn_f]$ 见\cref{def:sudakov-cusp}（该文附录~A 在 $T_Fn_f$ 前多印了一个 $C_F$，见附录~Q 第~1~条）。% w18_s4 (E); values re-read in the BS source
+
+\emph{(d) 与 QCD 的比较。}SCET 一侧：取 $\mu=Q$，$\int\dd p^2J(p^2)\delta(\tau-p^2/Q^2)=Q^2J(Q^2\tau)$、$\int\dd k\,S_T(k)\delta(\tau-k/Q)=QS_T(Q\tau)$，星号分布变为 $[0,1]$ 上在 $\tau=0$ 处减除的加号分布；单圈只有一个因子非平凡，故 $\delta(\tau)$ 系数为 $H$、$2J$、$S_T$ 常数之和 $(-16+\frac{7\pi^2}3)+2(7-\pi^2)+\frac{\pi^2}3=-2+\frac{2\pi^2}{3}$，$[\frac1\tau]_+$ 系数为 $2\times(-3)$，$[\frac{\ln\tau}\tau]_+$ 系数为 $2\times4-16=-8$（以 $a$ 为单位），即\cref{eq:scet-singular}。QCD 一侧：三部分子末态时 $T=\max_ix_i$，$x_i=2E_i/Q$，实辐射矩阵元的四维形式为 $\frac1{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=\frac{C_F\as}{2\pi}\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$（\cref{prop:ee-oneloop}）。令 $y_i=1-x_i$，$T<1-\tau$ 即 $y_1,y_2>\tau$、$y_1+y_2<1-\tau$；把被积函数写成 $\frac{2}{y_1y_2}-\frac2{y_1}-\frac2{y_2}+\frac{y_1}{y_2}+\frac{y_2}{y_1}$，在这个三角形上逐项积分，
+\[
+\int\frac{\dd y_1\,\dd y_2}{y_1y_2}=\ln^2\tau-\frac{\pi^2}6,\qquad\int\frac{\dd y_1\,\dd y_2}{y_2}=-\ln\tau-1,\qquad\int\frac{y_1}{y_2}\,\dd y_1\,\dd y_2=-\frac12\ln\tau-\frac34
+\]
+（均差 $\order{\tau\ln^2\tau}$），故 $\sigma(T<1-\tau)/\sigma_0=\frac{C_F\as}{2\pi}[2\ln^2\tau+3\ln\tau+\frac52-\frac{\pi^2}{3}]$。由总截面 $\sigma_{\rm tot}=\sigma_0(1+\frac{3C_F\as}{4\pi})$（\cref{cor:ee-R-alphas}），累积分布
+\[
+R(\tau)\equiv\int_0^\tau\frac{\dd\tau'}{\sigma_0}\frac{\dd\sigma}{\dd\tau'}=\frac{\sigma_{\rm tot}-\sigma(T<1-\tau)}{\sigma_0}=1+\frac{C_F\as}{2\pi}\Big[-2\ln^2\tau-3\ln\tau+\frac{\pi^2}{3}-1\Big]+\order{\tau\ln^2\tau}.
+\]
+% w18_s5 (G); VF-SCET-12 cumulant
+对 $\tau$ 求导，用 $\frac{\dd}{\dd\tau}\ln\tau\to[\frac1\tau]_+$、$\frac{\dd}{\dd\tau}\frac12\ln^2\tau\to[\frac{\ln\tau}\tau]_+$（在 $\tau=0$ 处减除）与 $R(0^+)$ 的常数项 $\to\delta(\tau)$，即得\cref{eq:scet-singular}。两侧一致。
+\end{proof}
+
+\begin{example}[单圈 $H$、$J$、$S_T$ 合成 QCD 奇异项]\label{ex:scet-thrust-oneloop}
+在 Laplace 空间中检验\cref{prop:scet-thrust-oneloop}(d)。由\cref{eq:scet-laplace,eq:scet-CV}以及\cref{prop:scet-thrust-oneloop}(a)(b)，单圈时
+\[
+\tilde t=1+a\Big[\Big(-2L_Q^2+6L_Q-16+\frac{7\pi^2}3\Big)+2\Big(2L_J^2-3L_J+7-\frac{2\pi^2}{3}\Big)+\big(-8L_S^2-\pi^2\big)\Big].
+\]
+代入 $L_J=L_Q-\ell$、$L_S=\frac12L_Q-\ell$：二次项 $-2L_Q^2+4(L_Q-\ell)^2-8(\frac12L_Q-\ell)^2=-4\ell^2$，一次项 $6L_Q-6(L_Q-\ell)=6\ell$，常数 $-16+14+(\frac73-\frac43-1)\pi^2=-2$，故
+\[
+\tilde t=1+a\big(-4\ell^2+6\ell-2\big),
+\]
+与 $\mu$（即与 $L_Q$）无关。另一方面，由 QCD 的累积分布 $R(\tau)$，$\tilde t(\nu)=\nu\int_0^\infty\dd\tau\,\ee^{-\nu\tau}R(\tau)$；用 $\nu\int_0^\infty\ee^{-\nu\tau}\ln\tau\,\dd\tau=-\ell$ 与 $\nu\int_0^\infty\ee^{-\nu\tau}\ln^2\tau\,\dd\tau=\ell^2+\zeta_2$，得 $\tilde t=1+\frac{C_F\as}{2\pi}[-2(\ell^2+\zeta_2)+3\ell+\frac{\pi^2}{3}-1]=1+2a(-2\ell^2+3\ell-1)$，相同。$\delta(\tau)$ 的系数也可由求和规则 $c_\delta=\frac32-\int_0^1r(\tau)\,\dd\tau$ 数值地得到（$r$ 为 QCD 分布减去其奇异部分，以 $\frac{C_F\as}{2\pi}$ 为单位；$\tau>\frac13$ 时 QCD 分布为零）：$c_\delta=2.28986813369645287\ldots$，与 $\frac{\pi^2}{3}-1$ 一致到 $10^{-20}$。% w18_s4 (F); c_scet: 2.289868133697 (lower precision)
+\uses{prop:scet-thrust-oneloop}
+\end{example}
+
+\begin{proposition}[领头对数指数 \tagA]\label{prop:scet-ll}
+(a) 对 QCD 推力分布，在 LL 精度
+\begin{equation}\label{eq:scet-LL}
+\begin{gathered}
+\ln\tilde t_{\rm LL}=\ell\,g_1(\lambda),\qquad g_1(\lambda)=-\frac{C_F}{\pi b\lambda}\Big[(1-2\lambda)\ln(1-2\lambda)-2(1-\lambda)\ln(1-\lambda)\Big],\\
+\lambda=b\,\as(Q)\,\ell,\qquad b=\frac{\beta_0}{4\pi},
+\end{gathered}
+\end{equation}
+% VF-SCET-14
+这与 Catani--Trentadue--Turnock--Webber（CTTW）的推力 LL 函数一致\cite{CataniEtAl1993}。
+(b)（作为\cref{thm:scet-thrust}中各因子 RG 方程的 LL 解，\tagR）（$R_{\mathrm{def}}$：由算符定义直接推出。）若 $H$、$\tilde j$、$\tilde s_T$ 满足\cref{eq:scet-RGE}，只保留单圈 $\Gamma_{\rm cusp}=\Gamma_0\frac{\as}{4\pi}$ 与单圈跑动 $\as(\mu')=\as(Q)/[1+b\,\as(Q)\ln(\mu'^2/Q^2)]$，并略去非尖点反常维度与常数，则 $\ln(H\tilde j^2\tilde s_T)$ 在 $\mu=Q$ 处等于\cref{eq:scet-LL}；其展开为 $-\frac{C_F\as}{\pi}\ell^2-\frac{C_Fb}{\pi}\as^2\ell^3-\frac{7C_Fb^2}{6\pi}\as^3\ell^4-\cdots$，首项即单圈的 $-4a\ell^2$。
+\uses{thm:scet-thrust, prop:scet-thrust-oneloop, prop:prelim-beta}
+\end{proposition}
+
+\begin{proof}[(b) 的证明]
+% errtype: E-S  (part (a), inherited from thm:scet-thrust)
+取 $\mu=Q$，$H(Q^2,Q)$ 不含大对数。把 $\tilde j$ 自其自然标度 $\mu_j^2=sQ^2$（$L_J=0$）、$\tilde s_T$ 自 $\mu_s=sQ$（$L_S=0$）演化到 $Q$。令 $t=\ln(\mu'^2/Q^2)$，则 $\dd\ln\mu'=\frac12\dd t$，$L_J=-\ell-t$，$\ln(sQ/\mu')=-\ell-\frac t2$，$\Gamma_{\rm cusp}=\frac{C_F}{\pi}\as(\mu')$，由\cref{eq:scet-RGE}
+\[
+\ln\tilde t_{\rm LL}=2\int_{-\ell}^{0}\frac{\dd t}{2}\big(-2\Gamma\big)(-\ell-t)+\int_{-2\ell}^{0}\frac{\dd t}{2}\,4\Gamma\Big(-\ell-\frac t2\Big)=\frac{C_F\as(Q)}{\pi}\big[2I_J-I_S\big],
+\]
+其中 $I_J=\int_{-\ell}^0\frac{(\ell+t)\,\dd t}{1+b\as t}$，$I_S=\int_{-2\ell}^0\frac{(2\ell+t)\,\dd t}{1+b\as t}$。写 $\ell+t=\frac{1}{b\as}[(1+b\as t)-(1-\lambda)]$ 即得 $I_J=\frac{(1-\lambda)\ln(1-\lambda)+\lambda}{(b\as)^2}$，同理 $I_S=\frac{(1-2\lambda)\ln(1-2\lambda)+2\lambda}{(b\as)^2}$。代入并用 $\frac1{b^2\as}=\frac{\ell}{b\lambda}$ 即得\cref{eq:scet-LL}。展开 $(1-x)\ln(1-x)=-x+\frac{x^2}2+\frac{x^3}6+\frac{x^4}{12}+\cdots$ 得方括号 $=\lambda^2+\lambda^3+\frac76\lambda^4+\cdots$，即所述级数；首项 $-\frac{C_F\as}\pi\ell^2=-4a\ell^2$ 正是由\cref{prop:scet-thrust-oneloop}(a)(b) 组合出的单圈 $\tilde t$ 的二次项。% w18_s4 (H)
+\end{proof}
+
+\paragraph{地位与缺口}
+(b) 是代数结果；(a) 作为关于 QCD 推力分布的陈述，其地位不高于\cref{thm:scet-thrust}（全阶论证，[A]），瓶颈相同（\cref{asm:intro-bridge}(Br1)、\cref{asm:appN-envelope}）。LL 重求和在微扰论中的地位因此是全阶论证，而不是严格证明。Laplace 空间与 $\tau$ 空间累积分布的 LL 函数相同，从 NLL 起才不同；$\lambda\to\frac12$ 处的奇点对应软标度 $\mu_s=Q/(\nu\ee^{\gamma_E})$ 降到 $\Lambda$，微扰重求和在此失效。CTTW 的 $\beta_0=(11C_A-2n_f)/(12\pi)$ 即此处的 $b$；Becher--Schwartz 报告其 RG 结果在 $\order{\as^3}$ 以内的 NLL 对数系数与 CTTW 完全一致\cite[附录~C]{BecherSchwartz2008}。升级途径与\cref{thm:scet-thrust}相同。

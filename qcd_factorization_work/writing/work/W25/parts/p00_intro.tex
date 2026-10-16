@@ -1,0 +1,45 @@
+\chapter{LaMET 与格点因子化：季向东等人的因子化证明}\label{ch:lamet}
+
+格点 QCD 计算的是欧氏时空中的等时矩阵元，而部分子分布、TMD 与分布振幅是光锥上的量。本章讨论把两者联系起来的两套因子化理论——大动量有效理论（large-momentum effective theory，LaMET）与短距离因子化（short-distance factorization，SDF）——并按本书的分级把它们的内容严格分成三个层次：（i）显式的定阶结果（单圈与两圈匹配核、混合方案核、靶质量修正的闭式），在所述的阶上是严格的（\tagR，$R_{\mathrm{PT}}$）；（ii）部分子态的全阶微扰匹配定理：由编号假设出发的推导是完整的（\tagR，$R_{\mathrm{cond}}$），但这些假设——类空 Wilson 线算符的乘法可重整性与它的短距离算符乘积展开——在文献中只有全阶论证，因而定理的内容等级是 \tagA；（iii）强子层次的陈述：它的非微扰内容被精确地分离进三个编号假设（\cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}），三者都是 \tagC，LaMET 原理本身的非微扰形式也只是猜想（\cref{conj:lamet-principle}）。本章最后讨论格点今天实际使用的 TMD 一侧：准 TMD 因子化定理与由动量比值提取 Collins--Soper 核，二者都是全阶论证（\tagA）。格点结果提供的是强子矩阵元，是对这些定理的证据，而不是对任何截面因子化的检验。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:lamet-support,cor:lamet-entire}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:lamet-oneloop,prop:lamet-tails,prop:lamet-twoloop,prop:lamet-hybrid-kernel}（\tagR，$R_{\mathrm{PT}}$，限于所述阶）；\cref{thm:lamet-coordinate}（\tagR，$R_{\mathrm{cond}}$，前提\cref{prop:lattice-renormalizability}、\cref{asm:lamet-ope}）、\cref{thm:lamet-parton-momentum}（\tagR，$R_{\mathrm{cond}}$，前提\cref{thm:lamet-coordinate}）、\cref{prop:lamet-tmc,prop:lamet-sdf}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:lamet-ope}）；\cref{thm:lamet-hadronic}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}）；\cref{thm:lamet-exp-decay}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:intro-wightman}、\cref{asm:lamet-gap}）；\cref{lem:lamet-lorentzian,lem:lamet-fourier,cor:lamet-endpoint,lem:lamet-strip,prop:lamet-truncation,prop:lamet-slepian}（数学）；\cref{prop:lattice-moments}（\tagR，$R_{\mathrm{OPE}}$）。\par
+\textbf{给出全阶论证：}\cref{prop:lattice-renormalizability,prop:lamet-ad-spacelike}（\tagA；瓶颈\cref{asm:lamet-aux-renorm}）；\cref{thm:lattice-lamet,prop:lamet-gluon-singlet,thm:lamet-quasi-gpd,prop:lamet-scheme-validity}（\tagA；瓶颈\cref{asm:lamet-ope}）；\cref{prop:lamet-cfp}（\tagA；不用\cref{asm:lamet-ope}，瓶颈是光锥规范中只有概要的共线减除）；\cref{thm:lamet-lcs}（\tagA；只用定域流的微扰 OPE，\cref{thm:dis-ope}）；\cref{thm:lamet-quasi-tmd,prop:lattice-cs-kernel,prop:lamet-tmd-ratios}（\tagA；瓶颈\cref{asm:lamet-order-limits}）；\cref{cor:lamet-principle-pt}（\tagA）。\par
+\textbf{没有证明：}LaMET 原理的非微扰形式（\cref{conj:lamet-principle}，\tagC）；强子层次匹配所需的\cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}（\tagC）；QCD 中 Wilson 线关联函数的指数衰减（\cref{conj:lamet-decay-qcd}，\tagC）；比值与 RI/MOM 方案在大 $|z|$ 处的动量空间匹配（\cref{rem:lamet-ratio-large-z}，\tagC）；超出大 $\beta_0$ 模型或单圈的\cref{prop:lamet-lrr,prop:lamet-bvz,prop:lamet-polarized,prop:lamet-other-objects}（\tagP）；GPD 在 $x=\pm\xi$ 的情形（第~23~章）。
+\end{tcolorbox}
+
+\section{引言：欧氏方法与光锥量}\label{sec:lamet-intro}
+
+为什么格点不能直接计算部分子分布？按\cref{def:pdf-quark}，夸克分布是光锥间隔 $w=(0^+,w^-,\mathbf 0_{\mathrm T})$ 上双线性算符的 Fourier 变换，$w^-$ 方向的分离同时包含实时间与空间。格点 QCD 在欧氏时间中计算，能直接得到的是\emph{等时}算符的矩阵元。传统的出路是只算矩：由\cref{thm:pdf-moments-local}，PDF 的矩是定域扭度 2 算符的前向矩阵元，因而在欧氏空间可达（\cref{sec:lattice-moments}）；但格点的超立方对称性使高阶矩与低维算符发生幂次发散的混合，实际只能得到最低的几个矩。
+
+季向东（Xiangdong Ji）在 2013 年提出了另一条路\cite{Ji2013}：取一个以大动量 $P^z$ 运动的强子，计算沿 $z$ 方向的\emph{等时}类空关联函数 $\langle P|\bar\psi(z\hat e_z)\Gamma W[z\hat e_z,0]\psi(0)|P\rangle$，对 $z$ 作 Fourier 变换得到所谓准分布（quasi-PDF）。其物理图像见\cref{fig:quasi-pdf}：在强子静止系中看，等时间隔经过快度为 $y$ 的推动后，端点沿不变双曲线移向光锥；不变长度不变。由此产生一个启发性的图像：准分布与光锥分布的差别只来自紫外区，可以用微扰匹配系数描述，再加上按 $\Lambda_{\mathrm{QCD}}/P^z$ 与 $M/P^z$ 压低的幂次修正。这个图像的精确内容与地位正是本章的主题（\cref{conj:lamet-principle}）。这一想法发展为大动量有效理论\cite{Ji:2014gla,JiEtAl2021}。几乎同时，Radyushkin 指出同一个矩阵元也可以在固定小间隔 $z^2$ 处、对 Ioffe 时间作 Fourier 变换，得到支集在 $[-1,1]$ 上的赝分布（pseudo-PDF）\cite{Radyushkin2017}；Ma 与 Qiu 则把这类可在格点上计算、并与 PDF 有相同共线发散的量统称为“好的格点截面”\cite{Ma:2014jla,MaQiu2018}。这三条路线的数学内容是同一组因子化定理，本章把它们写成带编号假设的精确陈述。
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{2.3cm}X@{}}
+\toprule
+项目 & 本书约定（与文献的换算） \\
+\midrule
+耦合常数 & $D_\mu=\partial_\mu-\ii gA_\mu$，$W[b,a]=P\exp(\ii g\int_a^b\dd z\cdot A)$。Ji 等人的综述\cite{JiEtAl2021}、Liu 等人的工作与 Collins 用 $g\to-g$；文献\cite{IzubuchiEtAl2018}中光锥链与类空链对应相反的协变导数约定（附录~Q 第~10~条），只影响 $g$ 的奇次项。本章引用的单圈、两圈核都是 $g$ 的偶函数；遇到 $g$ 的奇次量时注明“（换算到本书约定：$g\to-g$）”。 \\
+Ioffe 时间 & 类空间隔 $z^\mu=z\hat e_z^\mu$，强子 $P=(P^0,0,0,P^z)$，$\lambda\equiv P\cdot z=-P^zz$，$-z^2=z_3^2>0$。文献\cite{IzubuchiEtAl2018}的 $\zeta=P^zz$、Radyushkin 的 $\nu=-(p\cdot z)$、Ji 等人的 $\tilde\lambda=zP^z$ 都等于 $-\lambda$；匹配核是实的，换算时只有相位 $\ee^{\pm\ii\alpha\lambda}$ 翻转。 \\
+对数 & $L_z=\ln(-z^2\mu^2\ee^{2\gamma_E}/4)$；$\ell_p=\ln(\mu^2/(4p_z^2))$，$p^z=|y|P^z$ 为部分子动量；$L_\zeta=\ln(\zeta_z/\mu^2)=-\ell_p$，$\zeta_z=(2xP^z)^2$；$L_b=\ln(\mu^2b_{\mathrm T}^2/b_0^2)$，$b_0=2\ee^{-\gamma_E}$。Liu 等与 Ji--Liu--Su 把 $L_\zeta$ 记作 $L_z$、把坐标对数记作 $l_z$。 \\
+展开参数 & 所有 LaMET 核用 $a\equiv\alpha_sC_F/(2\pi)$；文献中常见的 $\alpha_s/(4\pi)$ 已换算，同一公式内不混用。 \\
+字母 $\lambda$ & 本章与第~23~章中 $\lambda$ 专指 Ioffe 时间；幂次计数参数写成显式比值 $\Lambda/P^z$、$1/(b_{\mathrm T}P^z)$、$\ee^{-Y}$。 \\
+CS 核 & $2\zeta\partial_\zeta\ln f^{\mathrm{TMD}}=\tilde K$（Liu 等人的 $K$ 即 $\tilde K$）；准 TMD 匹配中的指数为 $\exp[\frac12\tilde K\ln(\zeta_z/\zeta)]$。 \\
+加号分布 & 区域 $D$ 上 $\int_D\dd\xi\,[g]^D_{+(1)}h=\int_D\dd\xi\,g(\xi)[h(\xi)-h(1)]$（\cref{def:prelim-plus}的推广）；动量空间核用三个区域 $[1,\infty]$、$[0,1]$、$[-\infty,0]$，混合方案的修正项是 $\mathbb R$ 上的加号分布。 \\
+\bottomrule
+\end{tabularx}
+\caption{第~22~章的记号约定及与 LaMET 文献的换算。}
+\label{tab:lamet-conventions}
+\end{table}
+
+%%% FIGBLOCK fig:quasi-pdf
+
+\cref{tab:lamet-conventions}汇集了本章的记号约定（$\gamma^0$ 与格点文献中的 $\gamma^t$ 是同一个矩阵）。读者应特别注意 Ioffe 时间的符号与对数 $L_z$、$L_\zeta$ 的区别：前者是坐标空间的对数，后者是动量空间的对数，后者的宗量是\emph{部分子}动量。
+
+\paragraph{三个层次与本章结构。}
+本章的每个结论都标明属于引言首段所说的哪个层次。\cref{sec:lamet-principle}陈述 LaMET 原理并说明它为何只是猜想；\cref{sec:lattice-moments}与\cref{sec:lattice-quasi}给出格点可计算的对象及其严格的支撑性质；\cref{sec:lamet-renorm}讨论类空 Wilson 线算符的重整化，这是整个匹配理论的第一个瓶颈；\cref{sec:lamet-oneloop}给出显式的单圈与两圈核；\cref{sec:lattice-matching}是本章的核心：匹配定理的精确陈述、三条证明路线与依赖结构（\cref{tab:lamet-dependency}）；\cref{sec:lamet-schemes}讨论重整化方案；\cref{sec:lamet-fourier}与\cref{sec:lamet-power}处理 Fourier 步骤与幂次修正，那里强子层次的非微扰假设被逐一分离出来；\cref{sec:lamet-sdf}比较 LaMET 与 SDF；\cref{sec:lamet-offforward}与\cref{sec:lattice-tmd}推广到非前向量与 TMD；\cref{sec:lattice-status}给出状态表、批评与开放问题。

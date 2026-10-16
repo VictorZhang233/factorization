@@ -1,0 +1,288 @@
+% ===================================================================================
+% c_exclusive_da_erbl.tex —— π 介子分布振幅：定义、归一化、Gegenbauer 展开与单圈 ERBL 演化
+% （research/c_exclusive，对应 DERIVATION.md §1–§3；验证脚本 scripts/s1_da.py, s2_erbl_kernel.py, s3_erbl_eigen.py）
+% 约定：本书统一约定之外，另取 \gamma_5=i\gamma^0\gamma^1\gamma^2\gamma^3，\epsilon^{0123}=+1。
+% ===================================================================================
+\section{介子的光锥分布振幅与 ERBL 演化}\label{sec:cex-da}
+
+遍举过程的因子化把振幅（而非截面）写成硬散射核与强子的\emph{分布振幅}（distribution amplitude, DA）的卷积。
+DA 是真空与单个强子态之间的双局域算符矩阵元，两夸克场位于同一条类光直线上，由类光 Wilson 线连接。
+本节给出 $\pi$ 介子 DA 的定义与全部约定，并从费曼图出发完整推导单圈 ERBL 演化核及其本征值。
+
+\subsection{定义与归一化}
+
+除本书的统一约定外，本章取
+\begin{equation}\label{eq:cex-gamma5}
+\gamma_5=\ii\gamma^0\gamma^1\gamma^2\gamma^3,\qquad \epsilon^{0123}=+1\quad\Longrightarrow\quad
+\Tr\big(\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma\gamma_5\big)=-4\ii\,\epsilon^{\mu\nu\rho\sigma}.
+\end{equation}
+沿 $+z$ 方向运动的无质量夸克满足 $\sla k\,u=k^+\gamma^-u=0$。记 $P_u=\tfrac12\gamma^-\gamma^+$、$P_v=\tfrac12\gamma^+\gamma^-$
+（$\gamma^-P_u=0$，$P_v\gamma^-=0$），则对任意 $4\times4$ 矩阵 $M$ 有领头扭度的 Fierz 分解
+\begin{equation}\label{eq:cex-fierz}
+P_u M P_v=\tfrac14\Big[\Tr(\gamma^+M)\,\gamma^-+\Tr(\gamma^+\gamma_5M)\,\gamma_5\gamma^-+\textstyle\sum_{j=1,2}\Tr(\gamma^+\gamma^jM)\,\gamma^-\gamma^j\Big].
+\end{equation}
+本章所有 DA 与 GPD 的投影算符都由此式得到。
+
+\begin{definition}[$\pi$ 介子的领头扭度分布振幅]\label{def:cex-da}
+取类光间隔 $z=(0^+,z^-,\bm 0_{\mathrm T})$，$\pi$ 介子沿 $+z$ 方向运动、动量 $p=(p^+,0,\bm 0_{\mathrm T})$。定义
+\begin{equation}\label{eq:cex-da}
+\langle 0|\,\bar d(z)\,\gamma^+\gamma_5\,W[z,-z]\,u(-z)\,|\pi^+(p)\rangle
+= \ii f_\pi\,p^+\int_0^1\!\dd x\;\ee^{\,\ii(2x-1)p^+z^-}\,\phi_\pi(x;\mu),
+\end{equation}
+其中 $W[z,-z]=P\exp\big(\ii g\int_{-z^-}^{z^-}\dd w^-A^+(0^+,w^-,\bm 0_{\mathrm T})\big)$，右边的双局域算符按 $\MSbar$ 重整化（标度 $\mu$）。
+$x$ 是 $u$ 夸克（位于 $-z$ 的场）携带的光锥动量分数，$\bar x\equiv1-x$ 是 $\bar d$ 的动量分数。
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=1.0]
+  \draw[hadron blob] (0,0) ellipse (0.35 and 0.9);
+  \draw[bound state] (-1.7,0) -- (-0.35,0);
+  \node[above] at (-1.15,0.08) {$\pi^+(p)$};
+  \coordinate (A) at (3.2,0.9); \coordinate (B) at (3.2,-0.9);
+  \draw[quark] (0.3,0.45) .. controls (1.4,0.9) .. (A) node[pos=0.45,above]{$x p$};
+  \draw[quark] (B) .. controls (1.4,-0.9) .. (0.3,-0.45) node[pos=0.55,below]{$\bar x p$};
+  \draw[wilson plain] (A) -- (B);
+  \node[opvertex] at (A) {}; \node[opvertex] at (B) {};
+  \node[right] at (A) {$u(-z)$}; \node[right] at (B) {$\bar d(z)\,\gamma^+\gamma_5$};
+  \node[right] at (3.3,0) {$W[z,-z]$};
+\end{tikzpicture}
+\caption{分布振幅 \cref{eq:cex-da} 的图示：两夸克场位于同一类光直线上的 $-z$ 与 $z$，由类光 Wilson 线（双线）连接；
+$x$ 与 $\bar x$ 为 $u$ 与 $\bar d$ 的光锥动量分数。}
+\label{fig:cex-da-def}
+\end{figure}
+
+\begin{remark}[约定的逐项说明]\label{rem:cex-da-conv}
+\begin{enumerate}[label=(\roman*)]
+\item \emph{规范不变性}：在规范变换下 $\bar d(z)\to\bar d(z)U^\dagger(z)$，$u(-z)\to U(-z)u(-z)$，
+而 $W[z,-z]\to U(z)\,W[z,-z]\,U^\dagger(-z)$，故算符规范不变；在光锥规范 $A^+=0$ 下 $W=1$。
+\item \emph{指数的符号}：自由态 $|u(x_0p)\,\bar d(\bar x_0p)\rangle$ 给出相因子 $\ee^{-\ii x_0p\cdot(-z)}\ee^{-\ii\bar x_0p\cdot z}=\ee^{\ii(2x_0-1)p\cdot z}$，
+即 $\phi=\delta(x-x_0)$；因此 \cref{eq:cex-da} 中 $x$ 确为 $u$ 夸克的动量分数。
+\item \emph{非对称形式与反演}：由平移不变性，
+\begin{equation*}
+\langle0|\bar d(w)\gamma^+\gamma_5W[w,0]u(0)|\pi^+(p)\rangle=\ii f_\pi p^+\int_0^1\dd x\,\ee^{-\ii\bar xp^+w^-}\phi_\pi(x),
+\end{equation*}
+于是
+\begin{equation}\label{eq:cex-da-inv}
+\phi_\pi(x;\mu)=\frac{1}{\ii f_\pi}\int\frac{\dd w^-}{2\pi}\,\ee^{\ii\bar x p^+w^-}\langle0|\bar d(w)\gamma^+\gamma_5W[w,0]u(0)|\pi^+(p)\rangle .
+\end{equation}
+\item \emph{归一化与 $f_\pi$}：令 $z\to0$ 得 $\langle0|\bar d\gamma^\mu\gamma_5u|\pi^+(p)\rangle=\ii f_\pi p^\mu\int_0^1\phi_\pi$；
+取 $\int_0^1\dd x\,\phi_\pi(x;\mu)=1$（轴矢流守恒，不随 $\mu$ 变化）。于是 $f_\pi\approx130\ \mathrm{MeV}$：由
+$\Gamma(\pi\to\mu\nu)=G_F^2|V_{ud}|^2f_\pi^2m_\pi m_\mu^2(1-m_\mu^2/m_\pi^2)^2/(8\pi)$ 的树图公式得 $131.7$ MeV，辐射修正使之降低约 1\%。
+手征微扰论及 Lepage--Brodsky 常用 $F_\pi\equiv f_\pi/\sqrt2\approx92$--$93$ MeV；相应地 Lepage--Brodsky 的 DA 为
+$\phi_{\mathrm{LB}}=\frac{F_\pi}{2\sqrt{N_c}}\phi_\pi$。本书一律用 $f_\pi\approx130$ MeV。选择 $|\pi^+\rangle$ 的相位使 $f_\pi>0$。
+\item \emph{支撑与对称性}：$0\le x\le1$；电荷共轭与同位旋（$G$ 宇称）给出 $\phi_\pi(x)=\phi_\pi(1-x)$。
+\item \emph{投影算符}：在硬散射计算中，入射与出射 $\pi$ 介子的夸克对分别用
+\begin{equation}\label{eq:cex-proj}
+\begin{gathered}
+\langle0|\bar d_\beta u_\alpha|\pi^+(p)\rangle\to\frac{\ii f_\pi}{4}\big(\gamma_5\sla p\big)_{\alpha\beta}\frac{\delta_{ij}}{N_c}\phi_\pi(x),\\
+\langle\pi^+(p)|\bar u_\alpha d_\beta|0\rangle\to\frac{\ii f_\pi^*}{4}\big(\sla p\gamma_5\big)_{\beta\alpha}\frac{\delta_{ij}}{N_c}\phi^*_\pi(y)
+\end{gathered}
+\end{equation}
+代替；可直接验证 $\Tr[\gamma^\mu\gamma_5\cdot\frac{\ii f_\pi}4\gamma_5\sla p]=\ii f_\pi p^\mu$，后一式由前一式取 $\gamma^0(\cdot)^\dagger\gamma^0$ 得到。
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}[矩与局域算符；Gegenbauer 展开]\tagR\label{prop:cex-moments}
+\begin{enumerate}[label=(\alph*)]
+\item 记 $\xi=2x-1$，$\overleftrightarrow D=\overrightarrow D-\overleftarrow D$，则
+$\langle0|\bar d\gamma^+\gamma_5(\ii\overleftrightarrow D^+)^nu|\pi^+(p)\rangle=\ii f_\pi(p^+)^{n+1}\langle\xi^n\rangle$，
+$\langle\xi^n\rangle=\int_0^1\dd x\,(2x-1)^n\phi_\pi(x)$。
+\item $\phi_\pi(x;\mu)=6x\bar x\sum_{n=0}^\infty a_n(\mu)C_n^{3/2}(2x-1)$，$a_0=1$，且
+\begin{equation}\label{eq:cex-an}
+\begin{gathered}
+a_n=\frac{2(2n+3)}{3(n+1)(n+2)}\int_0^1\dd x\,C^{3/2}_n(2x-1)\,\phi_\pi(x),\\
+\int_0^1\dd x\,x\bar x\,C^{3/2}_n(2x-1)\,C^{3/2}_m(2x-1)=\delta_{nm}\frac{(n+1)(n+2)}{4(2n+3)}.
+\end{gathered}
+\end{equation}
+对 $\pi$ 介子只有偶数 $n$。
+\item $\int_0^1\frac{\phi_\pi(x)}{x}\dd x=3\sum_n(-1)^na_n$，$\int_0^1\frac{\phi_\pi(x)}{\bar x}\dd x=3\sum_na_n$；
+$\langle\xi^2\rangle=\frac15\big(1+\frac{12}{7}a_2\big)$，$\langle\xi^4\rangle=\frac{3}{35}+\frac{8}{35}a_2+\frac{8}{77}a_4$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) 将 $\bar d(z)\Gamma u(-z)=\sum_n\frac1{n!}\bar d\,[z\cdot(\overleftarrow\partial-\overrightarrow\partial)]^n\Gamma u$（规范协变地换为 $D$）与
+\cref{eq:cex-da} 右边按 $p^+z^-$ 的幂次逐项比较即得。(b) 正交关系由 $C^{3/2}_n(\xi)=P'_{n+1}(\xi)$ 及 Gegenbauer 多项式的标准正交性
+（权重 $1-\xi^2$）得到；$\int_0^1 6x\bar xC^{3/2}_n(2x-1)\dd x=\delta_{n0}$ 保证 $a_0=1$ 与归一化等价。
+(c) 由 $C^{3/2}_n=P'_{n+1}$ 分部积分（$\xi=2x-1$）：
+$\int_0^16\bar xC^{3/2}_n(2x-1)\dd x=\frac32\int_{-1}^1(1-\xi)P'_{n+1}(\xi)\dd\xi
+=\frac32\big\{[(1-\xi)P_{n+1}(\xi)]_{-1}^{1}+\int_{-1}^1P_{n+1}\dd\xi\big\}=-3P_{n+1}(-1)=3(-1)^n$
+（$n\ge0$ 时 $\int_{-1}^1P_{n+1}\dd\xi=0$），同理 $\int_0^16xC^{3/2}_n(2x-1)\dd x=3P_{n+1}(1)=3$；代入 (b) 的展开即得前两式。
+$\langle\xi^2\rangle$、$\langle\xi^4\rangle$ 由直接积分得到。所有等式均已用 sympy 精确验证（$n\le12$）。
+\end{proof}
+
+例如 Chernyak--Zhitnitsky 的模型 $\phi_{\mathrm{CZ}}=30x\bar x(2x-1)^2=6x\bar x[1+\frac23C^{3/2}_2(2x-1)]$ 对应 $a_2=\frac23$，
+$\int_0^1\phi_{\mathrm{CZ}}/x=5$（渐近形式为 $3$）。
+
+\subsection{单圈 ERBL 演化核：费曼图推导}\label{sec:cex-erbl-derivation}
+
+考虑部分子矩阵元（取 $p^+=1$，外部部分子严格共线、在壳，$k_1=yp$，$k_2=\bar yp$）
+\begin{equation}
+\begin{split}
+\Phi(x;y)&\equiv\int\frac{\dd w^-}{2\pi}\,\ee^{\ii\bar xw^-}\langle0|\bar d(w)\gamma^+\gamma_5W[w,0]u(0)|u(k_1)\bar d(k_2)\rangle\\
+&=\bar v(k_2)\gamma^+\gamma_5u(k_1)\big[\delta(x-y)+\Phi^{(1)}(x;y)+\cdots\big].
+\end{split}
+\end{equation}
+动量分数空间中的算符顶点为：无胶子时 $\Gamma\,\delta(x-k^+)$（$\Gamma=\gamma^+\gamma_5$，$k$ 为进入 $0$ 点顶点的 $u$ 线动量）；
+Wilson 线吸收一个动量为 $\ell$ 的胶子（色 $a$、指标 $\mu$）时为
+\begin{equation}\label{eq:cex-wilson-vertex}
+\frac{g\,t^a\,n^\mu}{\ell^+}\Big[\delta\big(x-k^+-\ell^+\big)-\delta\big(x-k^+\big)\Big]\Gamma,
+\end{equation}
+它来自 $\int_0^1\dd s\,w^-\ee^{\ii(c-s\ell^+)w^-}=\frac{\ii}{\ell^+}\big[\ee^{\ii(c-\ell^+)w^-}-\ee^{\ii cw^-}\big]$，在 $\ell^+=0$ 处正则，无需 $\ii0$ 处方。
+单圈图如 \cref{fig:cex-erbl-graphs} 所示（Feynman 规范）。
+
+\begin{figure}[htbp]
+\centering
+\tikzset{cex op/.pic={
+  \coordinate (T) at (2.6,0.7); \coordinate (Bo) at (2.6,-0.7);
+  \draw[wilson plain] (T) -- (Bo);
+  \node[opvertex] at (T) {}; \node[opvertex] at (Bo) {};}}
+\begin{tikzpicture}[fd,scale=0.85]
+  \pic {cex op};
+  \draw[quark] (0,0.7) -- (1.3,0.7); \draw[quark] (1.3,0.7) -- (T);
+  \draw[quark] (Bo) -- (1.3,-0.7); \draw[quark] (1.3,-0.7) -- (0,-0.7);
+  \draw[gluon] (1.3,0.7) -- (1.3,-0.7);
+  \node[vertex] at (1.3,0.7) {}; \node[vertex] at (1.3,-0.7) {};
+  \node[left] at (0,0.7) {$u(yp)$}; \node[left] at (0,-0.7) {$\bar d(\bar yp)$};
+  \node at (1.3,-1.4) {(a)};
+\end{tikzpicture}\hspace{1.2em}
+\begin{tikzpicture}[fd,scale=0.85]
+  \pic {cex op};
+  \draw[quark] (0,0.7) -- (1.0,0.7); \draw[quark] (1.0,0.7) -- (T);
+  \draw[quark] (Bo) -- (0,-0.7);
+  \draw[gluon] (1.0,0.7) .. controls (1.6,0.0) .. (2.6,0.0);
+  \node[vertex] at (1.0,0.7) {}; \node[vertex] at (2.6,0.0) {};
+  \node[left] at (0,0.7) {$u$}; \node[left] at (0,-0.7) {$\bar d$};
+  \node at (1.3,-1.4) {(b)};
+\end{tikzpicture}\hspace{1.2em}
+\begin{tikzpicture}[fd,scale=0.85]
+  \pic {cex op};
+  \draw[quark] (0,0.7) -- (T);
+  \draw[quark] (Bo) -- (1.0,-0.7); \draw[quark] (1.0,-0.7) -- (0,-0.7);
+  \draw[gluon] (1.0,-0.7) .. controls (1.6,0.0) .. (2.6,0.0);
+  \node[vertex] at (1.0,-0.7) {}; \node[vertex] at (2.6,0.0) {};
+  \node[left] at (0,0.7) {$u$}; \node[left] at (0,-0.7) {$\bar d$};
+  \node at (1.3,-1.4) {(c)};
+\end{tikzpicture}\hspace{1.2em}
+\begin{tikzpicture}[fd,scale=0.85]
+  \pic {cex op};
+  \draw[quark] (0,0.7) -- (0.7,0.7); \draw[quark] (0.7,0.7) -- (1.9,0.7); \draw[quark] (1.9,0.7) -- (T);
+  \draw[quark] (Bo) -- (0,-0.7);
+  \draw[gluon] (0.7,0.7) arc[start angle=180,end angle=0,radius=0.6];
+  \node[vertex] at (0.7,0.7) {}; \node[vertex] at (1.9,0.7) {};
+  \node[left] at (0,0.7) {$u$}; \node[left] at (0,-0.7) {$\bar d$};
+  \node at (1.3,-1.4) {(d)};
+\end{tikzpicture}
+\caption{ERBL 核的单圈图（Feynman 规范）：(a) 夸克与反夸克之间交换胶子；(b)(c) 胶子连接外线与类光 Wilson 线；
+(d) 外线自能（另有 $\bar d$ 线的同类图）。Wilson 线自能 $\propto n^2=0$。}
+\label{fig:cex-erbl-graphs}
+\end{figure}
+
+对每个图先做 $k^-$ 积分（留数），所得的横动量积分都是纯对数 $\int\dd k_T^2/k_T^2$（维数正规化中即 $1/\epsilon_{\mathrm{UV}}-1/\epsilon_{\mathrm{IR}}$），
+记其系数为 $\frac{\as}{2\pi}V_{\text{图}}(x,y)$。
+
+\paragraph{图 (a)。}
+$M_a=\ii g^2C_F\int\frac{\dd^4k}{(2\pi)^4}\delta(x-k^+)\,
+\frac{\bar v\,\gamma^\alpha(\sla p-\sla k)\Gamma\sla k\gamma_\alpha\,u}{[(p-k)^2+\ii0][k^2+\ii0][(k_1-k)^2+\ii0]}$。
+夹在共线旋量之间，$P_v\gamma^\alpha(\sla p-\sla k)\Gamma\sla k\gamma_\alpha P_u=2|\bm k_{\mathrm T}|^2P_v\Gamma P_u$，与 $k^-$ 无关。
+记 $D_1=2xk^--k_T^2$，$D_2=-2\bar xk^--k_T^2$，$D_3=-2(y-x)k^--k_T^2$，闭合围道得
+\begin{equation}
+\int\dd k^-\frac{1}{D_1D_2D_3}=-\frac{\ii\pi}{k_T^4}\Big[\frac xy\,\theta(y-x)+\frac{\bar x}{\bar y}\,\theta(x-y)\Big]\theta(x)\theta(1-x),
+\end{equation}
+于是 $V_a=C_F\big[\frac xy\theta(y-x)+\frac{\bar x}{\bar y}\theta(x-y)\big]$；$x\notin[0,1]$ 时极点位于同侧，贡献为零（支撑性质）。
+
+\paragraph{图 (b)(c)。}
+图 (b) 的分子为 $\gamma^+\gamma_5(\sla k_1-\sla\ell)\gamma^+=2(y-\ell^+)\gamma^+\gamma_5$（精确的矩阵恒等式），且
+$\int\dd\ell^-\big\{[(k_1-\ell)^2+\ii0][\ell^2+\ii0]\big\}^{-1}=\frac{\ii\pi}{y\,\ell_T^2}\theta(\ell^+)\theta(y-\ell^+)$。
+\cref{eq:cex-wilson-vertex} 中的 $-\delta(x-y+\ell^+)$ 项（胶子被 Wilson 线“实”吸收）给出 $C_F\frac{x}{y(y-x)}\theta(y-x)\theta(x)$；
+$+\delta(x-y)$ 项在被积函数层次上恰为前者对 $x$ 积分的负值。因此
+\begin{equation}
+\begin{gathered}
+V_b=C_F\Big[\frac{x}{y(y-x)}\theta(y-x)\Big]_+,\qquad V_c=C_F\Big[\frac{\bar x}{\bar y(x-y)}\theta(x-y)\Big]_+,\\
+[V]_+(x,y)\equiv V(x,y)-\delta(x-y)\!\int_0^1\!\dd t\,V(t,y).
+\end{gathered}
+\end{equation}
+两项各自在 $x\to y$（软胶子，$\ell^+\to0$）处发散，组合成加号分布后有限。
+
+\paragraph{图 (d)。}
+Feynman 规范中 $Z_2-1=-\frac{\as}{4\pi}C_F(\frac1{\epsilon_{\mathrm{UV}}}-\frac1{\epsilon_{\mathrm{IR}}})$，两条外线各贡献 $\frac12$，故 $V_d=-\frac12C_F\delta(x-y)$。
+由于 $\int_0^1\dd x\,V_a(x,y)=\frac y2+\frac{\bar y}2=\frac12$，(a)+(d) 恰是 $V_a$ 的加号分布。独立的检验：局域轴矢流守恒
+要求 $\int_0^1\dd x\,V(x,y)=0$，这\emph{唯一}地确定了 $\delta(x-y)$ 的系数为 $-\frac12C_F$，即 $\delta Z_2=-\as C_F/(4\pi\epsilon)$。
+
+\begin{theorem}[单圈 ERBL 演化]\tagR\label{thm:cex-erbl}
+\begin{enumerate}[label=(\alph*)]
+\item DA 满足
+\begin{equation}\label{eq:cex-erbl}
+\begin{gathered}
+\mu^2\frac{\dd}{\dd\mu^2}\phi_\pi(x;\mu)=\frac{\as(\mu)}{2\pi}\int_0^1\!\dd y\,V_0(x,y)\,\phi_\pi(y;\mu),\\
+V_0(x,y)=C_F\Big[\frac xy\Big(1+\frac1{y-x}\Big)\theta(y-x)+\frac{\bar x}{\bar y}\Big(1+\frac1{x-y}\Big)\theta(x-y)\Big]_+ .
+\end{gathered}
+\end{equation}
+\item $V_0$ 的本征函数为 $x\bar x\,C^{3/2}_n(2x-1)$：
+\begin{equation}\label{eq:cex-eigen}
+\begin{gathered}
+\int_0^1\!\dd y\,V_0(x,y)\,y\bar y\,C_n^{3/2}(2y-1)=v_n\,x\bar x\,C_n^{3/2}(2x-1),\\
+v_n=C_F\Big[-\frac12+\frac{1}{(n+1)(n+2)}-2\sum_{j=2}^{n+1}\frac1j\Big]=\int_0^1\!\dd z\,z^n P_{qq}(z),
+\end{gathered}
+\end{equation}
+其中 $P_{qq}(z)=C_F\big[\frac{1+z^2}{1-z}\big]_+$。
+\item 定义 $\mu\frac{\dd a_n}{\dd\mu}=-\gamma_n\frac{\as}{4\pi}a_n$，则
+\begin{equation}\label{eq:cex-gamman}
+\gamma_n=-4v_n=2C_F\Big[1-\frac{2}{(n+1)(n+2)}+4\sum_{j=2}^{n+1}\frac1j\Big],\qquad
+a_n(\mu)=a_n(\mu_0)\Big[\frac{\as(\mu)}{\as(\mu_0)}\Big]^{\gamma_n/(2\beta_0)} .
+\end{equation}
+特别地 $\gamma_0=0$，$\gamma_2=\frac{25}{3}C_F$（$n_f=3$ 时指数为 $\frac{50}{81}$），且 $\gamma_n>0$（$n\ge1$），故 $\phi_\pi(x;\mu)\to6x(1-x)$（$\mu\to\infty$）。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(a) 由上述四类图相加得到。与重整化的关系如下。双局域算符的重整化是算符层次的关系
+$O^{\mathrm R}(x;\mu)=\int_0^1\dd y\,Z(x,y;\mu,\epsilon)\,O^{\mathrm{bare}}(y)$，其中 $O(x)$ 记 \cref{eq:cex-da-inv} 右边的算符（不含因子 $1/(\ii f_\pi)$）；
+$Z$ 与外态无关，因而可以由部分子矩阵元确定。上面的计算表明单圈时
+\begin{equation*}
+Z(x,y)=\delta(x-y)-\frac{\as}{2\pi}\,\frac{1}{\epsilon}\,V_0(x,y)+\order{\as^2}\qquad(\MSbar),
+\end{equation*}
+再由 $D=4-2\epsilon$ 维中 $\mu^2\dd\as/\dd\mu^2=-\epsilon\as+\order{\as^2}$ 得
+\begin{equation*}
+\mu^2\frac{\dd}{\dd\mu^2}O^{\mathrm R}(x;\mu)=\frac{\as}{2\pi}\int_0^1\dd y\,V_0(x,y)\,O^{\mathrm R}(y;\mu)+\order{\as^2}.
+\end{equation*}
+取它在 $\pi$ 介子态与真空之间的矩阵元即得 \cref{eq:cex-erbl}。
+
+(b) 分三步。\emph{(i) 厄米性}：直接验证 $V_0(x,y)\,y\bar y=V_0(y,x)\,x\bar x$，并且（加号处方计入后）精确地有
+$V_0\otimes(y\bar y\,P)=x\bar x\,(V_0^{\mathsf T}P)$，$(V_0^{\mathsf T}P)(x)\equiv\int_0^1\dd y\,V_0(y,x)[P(y)-P(x)]$。
+\emph{(ii) 三角性}：$\phi$ 的第 $k$ 个矩在演化下只与阶数 $\le k$ 的矩混合（含 $k$ 个 $D^+$ 的局域算符的单圈抵消项只含 $k$ 个 $D^+$ 或 $\partial^+$，
+这是 boost 权重守恒的结果），即 $V_0^{\mathsf T}$ 保持多项式次数，于是 $V_0$ 把 $x\bar x\cdot\mathcal P_k$ 映入自身（$\mathcal P_k$ 为次数 $\le k$ 的多项式）。
+\emph{(iii)} 在内积 $\langle f,g\rangle=\int_0^1\frac{fg}{x\bar x}\dd x$ 下自伴且保持子空间旗 $x\bar x\mathcal P_0\subset x\bar x\mathcal P_1\subset\cdots$ 的算子，
+在与该旗相容的正交基下是对角的；该基即权重为 $x\bar x$ 的正交多项式 $C^{3/2}_n(2x-1)$。本征值 \cref{eq:cex-eigen} 由直接积分得到
+（已对 $n\le10$ 用 sympy 精确核对），它与 $P_{qq}$ 的 Mellin 矩相等。
+
+(c) 由 (b) 与 $\mu^2\frac{\dd\as}{\dd\mu^2}=-\frac{\beta_0}{4\pi}\as^2$ 直接积分。$\gamma_0=0$ 反映轴矢流守恒；$\gamma_n$ 关于 $n$ 单调增，$\gamma_n=8C_F(\ln n+\gamma_E-\frac34)+O(1/n)$。
+\end{proof}
+
+\begin{table}[htbp]
+\centering
+\caption{单圈 Gegenbauer 反常量纲 $\gamma_n$（\cref{eq:cex-gamman} 的归一化）及 $a_n\propto\as^{\gamma_n/(2\beta_0)}$ 中的指数。}
+\label{tab:cex-gamman}
+\begin{tabular}{@{}cccccccc@{}}
+\toprule
+$n$ & 0 & 1 & 2 & 3 & 4 & 6 & 8\\
+\midrule
+$\gamma_n/C_F$ & 0 & $\frac{16}{3}$ & $\frac{25}{3}$ & $\frac{157}{15}$ & $\frac{182}{15}$ & $\frac{1027}{70}$ & $\frac{1045}{63}$\\[2pt]
+$\gamma_n/(2\beta_0)$，$n_f=3$ & 0 & $\frac{32}{81}$ & $\frac{50}{81}$ & $\frac{314}{405}$ & $\frac{364}{405}$ & $\frac{1027}{945}$ & $\frac{2090}{1701}$\\[2pt]
+$\gamma_n/(2\beta_0)$，$n_f=4$ & 0 & $\frac{32}{75}$ & $\frac{2}{3}$ & $\frac{314}{375}$ & $\frac{364}{375}$ & $\frac{1027}{875}$ & $\frac{418}{315}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[与文献的对照及若干说明]\label{rem:cex-erbl-lit}
+\begin{enumerate}[label=(\roman*)]
+\item \cref{eq:cex-erbl} 与 Braun--Korchemsky--Müller 综述的式 (141)--(143) 完全一致；他们写作
+$\gamma^{(0)}_n=C_F[1-\frac2{(n+1)(n+2)}+4\sum_{m=2}^{n+1}\frac1m]=\gamma_n/2$，指数为 $\gamma^{(0)}_n/\beta_0$——与 \cref{eq:cex-gamman} 的指数相同。
+Lepage--Brodsky 的形式 $(\ln Q^2/\Lambda^2)^{-\gamma_n^{\mathrm{LB}}}$ 中 $\gamma_n^{\mathrm{LB}}=\gamma_n/(2\beta_0)$。
+\item ERBL 本征值等于 DGLAP 非单态矩（$N=n+1$）：两者的局域算符相同，非前向矩阵元只是多出了与全导数算符的三角混合，
+其对角元即前向反常量纲。
+\item 渐近形式 $6x\bar x$ 是微扰论的定理；但对给定的非微扰初值 $\phi(x;\mu_0)$，Gegenbauer 级数在端点附近逐点收敛与否是对 $\phi$ 的假设。
+例如 $\phi\propto\sqrt{x\bar x}$ 的 Gegenbauer 系数衰减很慢，截断级数在端点附近不能逐点逼近。
+\end{enumerate}
+\end{remark}

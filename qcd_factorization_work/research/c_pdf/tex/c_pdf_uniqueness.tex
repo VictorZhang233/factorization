@@ -1,0 +1,72 @@
+% ===================================================================================
+% c_pdf_uniqueness.tex  —  由偶数矩唯一确定；Müntz–Szász；N 的解析延拓（Carlson 型定理）
+% （research/c_pdf，对应 DERIVATION.md §7；验证脚本 scripts/s6_uniqueness.py）
+% ===================================================================================
+\section{由偶数矩唯一确定分布与 $N$ 的解析延拓}\label{sec:cpdf-unique}
+
+\begin{lemma}[Hausdorff 唯一性]\tagR\label{lem:cpdf-hausdorff}
+设 $h\in L^1(0,1)$，且对所有 $m\in\mathbb N_0$ 有 $\int_0^1t^mh(t)\,\dd t=0$，则 $h=0$ 几乎处处成立。
+\end{lemma}
+\begin{proof}
+对 $\varphi\in C[0,1]$ 取多项式 $P_j\to\varphi$ 一致收敛（Weierstrass 逼近定理），则
+$|\int\varphi h|=|\int(\varphi-P_j)h|\le\|\varphi-P_j\|_\infty\|h\|_1\to0$。
+用逐点收敛于 $\mathbf 1_{[a,b]}$ 的连续函数 $0\le\varphi_k\le1$ 逼近，由控制收敛定理得 $\int_a^bh=0$（对一切 $a<b$），
+于是 $H(x)=\int_0^xh\equiv0$，由 Lebesgue 微分定理 $h=H'=0$ 几乎处处成立。
+\end{proof}
+
+\begin{theorem}[偶数矩足以确定函数]\tagR\label{thm:cpdf-even}
+设 $g$ 在 $(0,1)$ 上可测，且对某整数 $k_0\ge1$ 有 $x^{2k_0}g\in L^1(0,1)$。若对一切 $k\ge k_0$ 有 $\int_0^1x^{2k}g(x)\,\dd x=0$，则 $g=0$ 几乎处处成立。
+\end{theorem}
+\begin{proof}
+令 $h(t)=\frac12t^{k_0-\frac12}g(\sqrt t)$。作变量替换 $t=x^2$，$\dd t=2x\,\dd x$，得 $\int_0^1|h|\,\dd t=\int_0^1x^{2k_0}|g|\,\dd x<\infty$，
+且 $\int_0^1t^mh(t)\,\dd t=\int_0^1x^{2(m+k_0)}g(x)\,\dd x=0$（$m\ge0$）。由 \cref{lem:cpdf-hausdorff}，$h=0$ 几乎处处成立；
+映射 $t\mapsto\sqrt t$ 及其逆在 $(0,1)$ 上局部 Lipschitz，保持零测集，故 $g=0$ 几乎处处成立。
+\end{proof}
+
+\begin{corollary}\label{cor:cpdf-pdf-unique}
+设 $x^{N_1-1}(q\pm\bar q)\in L^1(0,1)$。则 $a_N=\int_{-1}^1\xi^{N-1}f_q$ 在偶数 $N\ge N_1$ 处的值确定 $q+\bar q$，在奇数 $N\ge N_1$ 处的值确定 $q-\bar q$；
+胶子的偶数矩确定 $g$。偶数矩本身{\heiti 不能}把 $q$ 与 $\bar q$ 分开。
+\end{corollary}
+
+\begin{remark}[唯一性不等于稳定性]
+由有限个矩重构函数是指数病态的问题：$K\times K$ 矩 Gram（Hilbert）矩阵的条件数约为 $\ee^{3.5K}$（$K=20$ 时为 $2.5\times10^{28}$）。
+实际计算中，先在 $N$ 平面上作解析延拓，再沿竖直围道作 Mellin 反变换。另外，\cref{thm:cpdf-even} 不需要 Müntz--Szász 定理。
+作为对照，对互不相同的 $\lambda,\lambda_k>-\frac12$，$L^2(0,1)$ 中的距离有显式公式（Gram 矩阵为 Cauchy 矩阵）：
+$\operatorname{dist}(x^\lambda,\operatorname{span}\{x^{\lambda_k}\}_{k\le K})=(2\lambda+1)^{-1/2}\prod_{k\le K}\frac{|\lambda-\lambda_k|}{\lambda+\lambda_k+1}$，
+当 $\lambda_k\to\infty$ 时它趋于零当且仅当 $\sum1/\lambda_k=\infty$（Müntz 1914，Szász 1916）。
+\end{remark}
+
+\begin{proposition}[领头阶核由偶数矩唯一确定]\tagR\label{prop:cpdf-kernel-unique}
+设 $P=r(x)+a\,[\frac{1}{1-x}]_++b\,\delta(1-x)$，其中 $|r(x)|\le C/x$。若
+$M_P(N)=\int_0^1x^{N-1}r\,\dd x-a[\psi(N)+\gamma_E]+b$ 在一切偶数 $N\ge N_1$ 处为零，则 $a=b=0$ 且 $r=0$ 几乎处处成立。
+\end{proposition}
+\begin{proof}
+沿偶数 $N\to\infty$，$|\int x^{N-1}r|\le C/(N-1)\to0$，而 $\psi(N)=\ln N+\order{1/N}$，故 $0=-a\ln N+(b-a\gamma_E)+o(1)$，依次得 $a=0$、$b=0$。
+其余条件为 $\int_0^1x^{2k}\,[r(x)/x]\,\dd x=0$（$N=2k$）。由于 $x^{2k_0}|r/x|\le Cx^{2k_0-2}$ 可积，由 \cref{thm:cpdf-even} 得 $r=0$。
+\end{proof}
+
+\begin{theorem}[Carlson 1914]\label{thm:cpdf-carlson}
+设 $F$ 在 $\Real z>0$ 内全纯、在 $\Real z\ge0$ 上连续，满足 $|F(z)|\le C\ee^{\tau|z|}$（某 $\tau<\infty$），$|F(\ii y)|\le C\ee^{c|y|}$（某 $c<\pi$），
+且 $F(n)=0$（$n=0,1,2,\dots$），则 $F\equiv0$。常数 $\pi$ 不可改进（反例 $\sin\pi z$）。
+证明见 Titchmarsh《The Theory of Functions》第二版 §5.81，Boas《Entire Functions》定理 9.2.1。
+若零点只在偶数处，对 $F(2z+N_1)$ 应用此定理，允许的型沿 $\Imag N$ 方向减半为 $<\pi/2$；$\sin(\pi N/2)$ 是临界反例。
+\end{theorem}
+
+\begin{proposition}[对矩足够的版本]\tagR\label{prop:cpdf-poly}
+设 $F$ 在 $\Real z>\sigma_0$ 内全纯，且 $|F(z)|\le C(1+|z|)^m$。若 $F$ 在实算术级数 $z_k=z_0+kd$（$d>0$，$z_0+d>\sigma_0$，$k\ge1$）上为零，则 $F\equiv0$。
+\end{proposition}
+\begin{proof}
+平移使 $\sigma_0=0$，令 $H=F/(z+1)^m$。由于 $|z+1|\ge\max(1,|z|)$，$H$ 有界，设界为 $M$。
+令 $w=\frac{z-1}{z+1}$，它把右半平面映为单位圆盘，$\Phi(w)=H\big(\frac{1+w}{1-w}\big)$ 有界全纯，零点
+$w_k=\frac{x_k-1}{x_k+1}$（$x_k=z_k-\sigma_0\to\infty$），且 $x_k>1$ 后 $1-|w_k|=\frac{2}{x_k+1}$，故 $\sum(1-|w_k|)=\infty$。
+若 $\Phi\not\equiv0$，写 $\Phi=w^j\Psi$，$\Psi(0)\ne0$，$|\Psi|\le M$。在 $|w|=r<1$ 上用 Jensen 公式：
+$\log|\Psi(0)|=\sum_{|w_k|<r}\log\frac{|w_k|}{r}+\frac{1}{2\pi}\int_0^{2\pi}\log|\Psi(r\ee^{\ii\theta})|\,\dd\theta\le\sum_{|w_k|<r}\log\frac{|w_k|}{r}+\log M$。
+令 $r\uparrow1$，由单调收敛得 $\sum_k\log\frac{1}{|w_k|}\le\log\frac{M}{|\Psi(0)|}<\infty$；再由 $\log\frac1s\ge1-s$ 得 $\sum(1-|w_k|)<\infty$，矛盾。
+\end{proof}
+
+\begin{corollary}[矩与反常维度的延拓]\label{cor:cpdf-continuation}
+(i) 若 $x^{\sigma_0-1}q\in L^1(0,1)$，则 $M_q(N)=\int_0^1x^{N-1}q$ 在 $\Real N\ge\sigma_0$ 中全纯且有界。因此由偶数 $N$ 出发的延拓唯一。
+(ii) 领头阶核的 Mellin 变换在 $\Real N\ge\sigma_0>1$ 中为 $\order{\ln|N|}$，故由偶数 $N$ 的延拓唯一，例如 $S_1(N)\mapsto\psi(N+1)+\gamma_E$。
+加上 $c\sin(\pi N/2)$ 虽然不改变偶数点的值，但它按 $\ee^{\pi|\Imag N|/2}$ 增长，因而被排除。
+(iii) 由偶数 $N$ 与由奇数 $N$ 出发的延拓一般是{\heiti 不同}的函数（分别对应 $q+\bar q$ 与 $q-\bar q$）。领头阶二者在 $qq$ 道中一致；高阶 $\gamma^+_{\mathrm{ns}}\ne\gamma^-_{\mathrm{ns}}$。
+\end{corollary}

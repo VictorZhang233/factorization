@@ -1,0 +1,213 @@
+%%% BEGIN fig:bfkl-ladder
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 heavy/.style={draw,solid,line width=1.3pt,fd arrow=#1},
+  t3 heavy/.default=0.5,
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ========================= (a) cut gluon ladder =========================
+  \begin{scope}
+    \node[hadron blob,ellipse,minimum width=3.0cm,minimum height=0.9cm,inner sep=0pt] (P) at (0,0) {};
+    \node[hard blob,ellipse,minimum width=2.6cm,minimum height=0.75cm,inner sep=0pt] (H) at (0,3.95) {};
+    \draw[t3 hadron] (-2.9,0) -- (P.west);  \draw[t3 hadron] (P.east) -- (2.9,0);
+    \draw[photon] (-2.45,4.6) -- (H.170);  \draw[photon] (H.10) -- (2.45,4.6);
+    % t-channel gluons (amplitude left, conjugate right)
+    \draw[gluon] (-0.9,0.36) -- (-0.9,0.95);  \draw[gluon] (-0.9,0.95) -- (-0.9,1.7);
+    \draw[gluon] (-0.9,1.7) -- (-0.9,2.85);   \draw[gluon] (-0.9,2.85) -- (-0.9,3.62);
+    \draw[gluon] (0.9,0.36) -- (0.9,0.95);    \draw[gluon] (0.9,0.95) -- (0.9,1.7);
+    \draw[gluon] (0.9,1.7) -- (0.9,2.85);     \draw[gluon] (0.9,2.85) -- (0.9,3.62);
+    % s-channel (real) gluons = rungs, crossing the cut
+    \foreach \y in {0.95,1.7,2.85} {
+      \draw[gluon] (-0.9,\y) -- (0.9,\y);
+      \node[vertex] at (-0.9,\y) {};  \node[vertex] at (0.9,\y) {}; }
+    \node[fill=white,inner sep=1pt,font=\small] at (0.45,2.27) {$\vdots$};
+    \draw[cut] (0,-0.7) -- (0,4.95);
+    \node[hard blob,ellipse,minimum width=2.6cm,minimum height=0.75cm,inner sep=0pt] at (0,3.95) {$H$};
+    \node[hadron blob,ellipse,minimum width=3.0cm,minimum height=0.9cm,inner sep=0pt] at (0,0) {$p$};
+    \node[t3 lab,left=2pt] at (-0.98,0.62) {$k_1$};
+    \node[t3 lab,left=2pt] at (-0.98,1.32) {$k_2$};
+    \node[t3 lab,left=2pt] at (-0.98,3.24) {$k_n$};
+    \node[t3 lab,above left=-1pt] at (-2.45,4.6) {$\gamma^*$};
+    \node[t3 lab] at (0,-1.15) {(a)\ 小 $x$ 胶子梯形图};
+  \end{scope}
+  % ===================== (b) k_T factorization =====================
+  \begin{scope}[xshift=6.9cm]
+    \node[jet blob,ellipse,minimum width=3.0cm,minimum height=0.9cm,inner sep=0pt] (F) at (0,0) {};
+    \coordinate (a) at (-0.9,3.45); \coordinate (ap) at (0.9,3.45);
+    \coordinate (b) at (-0.9,2.25); \coordinate (bp) at (0.9,2.25);
+    \draw[t3 hadron] (-2.9,0) -- (F.west);  \draw[t3 hadron] (F.east) -- (2.9,0);
+    \draw[gluon] (-0.9,0.36) -- (b);  \draw[gluon] (0.9,0.36) -- (bp);
+    \draw[t3 heavy=0.3] (a) -- (ap);  \draw[t3 heavy] (ap) -- (bp);
+    \draw[t3 heavy=0.3] (bp) -- (b);  \draw[t3 heavy] (b) -- (a);
+    \draw[photon] (-2.45,4.25) -- (a);  \draw[photon] (ap) -- (2.45,4.25);
+    \foreach \p in {a,ap,b,bp} \node[vertex] at (\p) {};
+    \draw[cut] (0,-0.7) -- (0,4.75);
+    \node[jet blob,ellipse,minimum width=3.0cm,minimum height=0.9cm,inner sep=0pt] at (0,0) {$\mathcal F(x,\boldsymbol k_{\mathrm T})$};
+    \path[mom={$k$},mom sep=0.27cm] (-0.9,0.4) -- (b);
+    \path[mom={},mom sep=0.27cm] (bp) -- (0.9,0.4);
+    \node[t3 note,anchor=west] at (1.4,1.3) {$k=xP+k_{\mathrm T}$};
+    \node[t3 note,anchor=west] at (1.4,0.9) {$k^2\simeq-\boldsymbol k_{\mathrm T}^2$};
+    \node[t3 lab,above=1pt] at (-0.45,3.45) {$Q$};
+    \node[t3 lab,below=1pt] at (-0.45,2.25) {$\bar Q$};
+    \node[t3 note,anchor=east] at (-1.0,2.85) {离壳 $\hat\sigma$};
+    \node[t3 lab,above left=-1pt] at (-2.45,4.25) {$\gamma^*$};
+    \node[t3 lab] at (0,-1.15) {(b)\ $k_{\mathrm T}$ 因子化};
+  \end{scope}
+\end{tikzpicture}
+\caption{小 $x$ 物理。(a)~割开的胶子梯形图：$t$ 道胶子 $k_1,\dots,k_n$ 自质子 $p$ 向硬过程 $H$ 依次传递，横档（实胶子）穿过割线。在领头对数 $\ln(1/x)$ 近似（BFKL）中，
+各级动量分数强有序，$x_1\gg x_2\gg\cdots\gg x_n$，而横动量 $\boldsymbol k_{i\mathrm T}$ 不必有序，图的求和给出 $\sum_n c_n\big(\alpha_s\ln\frac1x\big)^n$；
+与之对照，DGLAP 的领头对数 $\ln Q^2$ 来自横动量强有序 $k_{1\mathrm T}\ll k_{2\mathrm T}\ll\cdots\ll Q$ 的区域。
+(b)~$k_{\mathrm T}$（高能）因子化：最上一级胶子 $k=xP+k_{\mathrm T}$ 离壳（$k^2\simeq-\boldsymbol k_{\mathrm T}^2$），与离壳硬部分（此处为 $\gamma^*g^*\to Q\bar Q$，粗线为重夸克）相连，
+下方蓝色团为非积分胶子分布 $\mathcal F(x,\boldsymbol k_{\mathrm T})$（包含 (a) 中的梯形求和）；截面形如
+$\sigma\simeq\int\frac{\dd\xi}{\xi}\int\dd^2\boldsymbol k_{\mathrm T}\,\hat\sigma\big(\tfrac{x}{\xi},\boldsymbol k_{\mathrm T};Q\big)\,\mathcal F(\xi,\boldsymbol k_{\mathrm T})$（示意；归一化约定见正文）。
+$k_{\mathrm T}$ 因子化只在 $\ln(1/x)$ 的领头对数精度、对特定过程（如重夸克产生）被确立（[P]）；BFKL 方程本身是微扰论高能极限下的（次）领头对数结果；饱和区的非线性演化属 [C]/[P]。}
+\label{fig:bfkl-ladder}
+\end{figure}
+%%% END fig:bfkl-ladder
+
+%%% BEGIN fig:smallx-dipole
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc shock/.style={fill=orange!22,draw=orange!60!black,line width=0.6pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc ax/.style={lcaxis,gray!60!black},
+  fc dim/.style={draw=gray!60!black,line width=0.5pt,{Stealth[length=3.2pt,width=3pt]}-{Stealth[length=3.2pt,width=3pt]}},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc tiny/.style={font=\scriptsize}]
+  % =====================================================================
+  % (a) gamma* -> q qbar dipole crossing the shock wave
+  % =====================================================================
+  \begin{scope}
+    \fill[fc shock] (-0.12,-1.45) rectangle (0.12,1.45);
+    \draw[photon] (-2.95,0) -- (-2.15,0);
+    \draw[quark] (-2.15,0) -- (-1.6,0.85);
+    \draw[quark] (-1.6,0.85) -- (1.6,0.85);
+    \draw[quark] (1.6,0.85) -- (2.15,0);
+    \draw[quark] (2.15,0) -- (1.6,-0.85);
+    \draw[quark] (1.6,-0.85) -- (-1.6,-0.85);
+    \draw[quark] (-1.6,-0.85) -- (-2.15,0);
+    \draw[photon] (2.15,0) -- (2.95,0);
+    \node[vertex] at (-2.15,0) {};  \node[vertex] at (2.15,0) {};
+    \node[fc lab,anchor=south] at (-2.65,0.08) {$\gamma^*$};
+    \node[fc lab,anchor=south] at (2.65,0.08) {$\gamma^*$};
+    \node[fc note,anchor=south] at (-0.75,0.88) {$q$};
+    \node[fc note,anchor=north] at (-0.75,-0.88) {$\bar q$};
+    \node[fc note,anchor=south west] at (0.12,0.88) {$V_{\boldsymbol x_0}$};
+    \node[fc note,anchor=north west] at (0.12,-0.88) {$V^\dagger_{\boldsymbol x_1}$};
+    \draw[fc dim] (-1.1,0.78) -- (-1.1,-0.78);
+    \node[fc note,anchor=west] at (-1.05,0) {$r$};
+    \node[fc note,anchor=east] at (-1.68,0.88) {$\boldsymbol x_0$};
+    \node[fc note,anchor=east] at (-1.68,-0.88) {$\boldsymbol x_1$};
+    \node[fc note,anchor=south,text=orange!40!black] at (0,1.47) {冲击波（靶）};
+    \draw[fc ax] (-2.9,-1.85) -- (2.9,-1.85) node[right,fc note,text=black] {$x^-$};
+    \draw[gray!60!black,line width=0.5pt] (0,-1.78) -- (0,-1.92);
+    \node[fc tiny,anchor=north] at (0,-1.9) {$0$};
+    \node[fc lab] at (0,-2.65) {(a)\ $q\bar q$偶极子穿过冲击波};
+  \end{scope}
+  % =====================================================================
+  % (b) one step of BK evolution: soft gluon at x_2
+  % =====================================================================
+  \begin{scope}[xshift=6.45cm]
+    \fill[fc shock] (-0.12,-1.45) rectangle (0.12,1.45);
+    \draw[fc soft] (-1.3,0.95) .. controls (-0.95,0.2) and (-0.75,0) .. (-0.45,0) -- (0.45,0)
+        .. controls (0.75,0) and (0.95,-0.2) .. (1.3,-0.95);
+    \draw[quark] (-2.2,0.95) -- (2.2,0.95);
+    \draw[quark] (2.2,-0.95) -- (-2.2,-0.95);
+    \node[vertex] at (-1.3,0.95) {};  \node[vertex] at (1.3,-0.95) {};
+    \node[fc note,anchor=east] at (-2.2,0.95) {$\boldsymbol x_0$};
+    \node[fc note,anchor=east] at (-2.2,-0.95) {$\boldsymbol x_1$};
+    \node[fc note,anchor=south west] at (0.12,0.98) {$V_{\boldsymbol x_0}$};
+    \node[fc note,anchor=north west] at (0.12,-0.98) {$V^\dagger_{\boldsymbol x_1}$};
+    \node[fc note,anchor=south east,text=green!35!black] at (-0.15,0.05) {$\boldsymbol x_2$};
+    \node[fc note,anchor=north west] at (0.15,-0.05) {$U_{\boldsymbol x_2}$};
+    \node[fc note,anchor=south,text=orange!40!black] at (0,1.47) {冲击波（靶）};
+    \draw[fc ax] (-2.2,-1.85) -- (2.3,-1.85) node[right,fc note,text=black] {$x^-$};
+    \draw[gray!60!black,line width=0.5pt] (0,-1.78) -- (0,-1.92);
+    \node[fc tiny,anchor=north] at (0,-1.9) {$0$};
+    \node[fc lab] at (0,-2.65) {(b)\ 软胶子在$\boldsymbol x_2$穿过冲击波};
+  \end{scope}
+  % =====================================================================
+  % (c) transverse plane: the dipole (x0,x1) splits into (x0,x2), (x2,x1)
+  % =====================================================================
+  \begin{scope}[shift={(10.75,0.2)}]
+    \coordinate (X0) at (-0.55,0.95);  \coordinate (X1) at (0.15,-1.0);  \coordinate (X2) at (0.7,0.25);
+    \draw[gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.8pt] (X0) -- (X1);
+    \draw[blue!55!black,line width=0.9pt] (X0) -- (X2) -- (X1);
+    \fill (X0) circle[radius=1.8pt];  \fill (X1) circle[radius=1.8pt];
+    \fill[green!45!black] (X2) circle[radius=1.8pt];
+    \node[fc note,anchor=south east] at (X0) {$\boldsymbol x_0$};
+    \node[fc note,anchor=north east] at (X1) {$\boldsymbol x_1$};
+    \node[fc note,anchor=west,text=green!35!black] at (X2) {$\boldsymbol x_2$};
+    \node[fc tiny,anchor=east] at ($(X0)!0.5!(X1)$) {$x_{01}$};
+    \node[fc tiny,anchor=south west] at ($(X0)!0.5!(X2)$) {$x_{02}$};
+    \node[fc tiny,anchor=north west] at ($(X2)!0.5!(X1)$) {$x_{12}$};
+    \node[fc note] at (0.1,-1.75) {核$\dfrac{x_{01}^2}{x_{02}^2\,x_{12}^2}$};
+    \node[fc lab] at (0.1,-2.85) {(c)\ 横向平面};
+  \end{scope}
+  % =====================================================================
+  % S matrix and BK equation (VF-MISC-4)
+  % =====================================================================
+  \node[fc lab] at (5.0,-3.65) {$S_{01}=\dfrac1{N_c}\Tr\big[V_{\boldsymbol x_0}V^\dagger_{\boldsymbol x_1}\big]$，\quad $N_{01}=1-S_{01}$，\quad $\bar\alpha_s=\dfrac{N_c\alpha_s}{\pi}$};
+  \node[fc lab] at (5.0,-4.7) {$\partial_YN_{01}=\dfrac{\bar\alpha_s}{2\pi}\displaystyle\int\dd^2x_2\,\frac{x_{01}^2}{x_{02}^2x_{12}^2}\big[N_{02}+N_{12}-N_{01}-N_{02}N_{12}\big]$};
+\end{tikzpicture}
+\caption{偶极子图像与 BK 演化（示意；靶强子沿$+z$运动，Lorentz 收缩为位于$x^-=0$的冲击波，偶极子沿$-z$运动，以$x^-$为光锥时间；(a)、(b) 中竖直方向示意横向位置）。
+(a)~虚光子分裂为横向尺寸$r=|\boldsymbol x_0-\boldsymbol x_1|$的$q\bar q$偶极子（箭头为费米子数流向），夸克与反夸克穿过冲击波时分别获得 Wilson 线$V_{\boldsymbol x_0}$、$V^\dagger_{\boldsymbol x_1}$（$V_{\boldsymbol x}=\mathrm P\exp[\ii g\int\dd x^-A^+(x^-,\boldsymbol x)]$），偶极子的$S$矩阵为$S_{01}$。
+(b)~偶极子发射的软胶子（绿色）在横向位置$\boldsymbol x_2$穿过冲击波（伴随表示的$U_{\boldsymbol x_2}$；图中只画出一种附着方式）；(c)~在大$N_c$下它把偶极子$(\boldsymbol x_0,\boldsymbol x_1)$（虚线）分裂为$(\boldsymbol x_0,\boldsymbol x_2)$与$(\boldsymbol x_2,\boldsymbol x_1)$，权重为偶极子核；两个子偶极子同时散射给出 BK 方程的非线性项$-N_{02}N_{12}$（VF-MISC-4，\cref{thm:smallx-bk}）。
+这是 Regge（程函）展开中固定对数精度下的结果，不是 QCD 的领头幂次定理。}
+\label{fig:smallx-dipole}
+\end{figure}
+%%% END fig:smallx-dipole
+
+%%% BEGIN fig:smallx-map
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ax/.style={lcaxis,gray!60!black,line width=0.6pt},
+  fc flow/.style={draw=gray!65!black,line width=1.4pt,-{Stealth[length=7pt,width=6pt]}},
+  fc tag/.style={draw=#1!70!black,fill=#1!10,rounded corners=1.6pt,line width=0.45pt,
+      inner xsep=2.2pt,inner ysep=1.4pt,font=\footnotesize\sffamily},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  % frame: horizontal ln(1/x) in [0,10], vertical ln Q^2 in [0,6.4]  (1 unit = 1 cm)
+  \fill[gray!14] (0,0) rectangle (10,0.75);
+  \node[fc note,text=gray!30!black] at (5.0,0.37) {$Q^2\lesssim\Lambda^2$：非微扰区};
+  % saturated region below the saturation line ln Q_s^2(x)
+  \fill[Plum!10] (3.2,0.75) -- (10,4.15) -- (10,0.75) -- cycle;
+  \draw[Plum!70!black,line width=1.1pt] (3.2,0.75) -- (10,4.15);
+  \node[fc note,text=Plum!60!black,rotate=26.57,anchor=south] at (9.2,3.78) {$\ln Q_s^2(x)$};
+  \node[fc lab,text=Plum!60!black] at (8.4,1.75) {饱和区};
+  \node[fc tag=Plum] at (8.4,1.22) {C 猜想};
+  % DGLAP: evolution in ln Q^2
+  \draw[fc flow] (0.75,1.2) -- (0.75,6.05);
+  \node[fc lab,anchor=west] at (0.95,5.8) {DGLAP：$\ln Q^2$演化};
+  \node[fc tag=OliveGreen,anchor=west] (fcR) at (0.95,5.28) {R 严格};
+  \node[fc note,anchor=west,inner sep=1pt] at ([xshift=2pt]fcR.east) {（微扰论）};
+  % BFKL: evolution in ln(1/x) towards the saturation line; k_T factorization
+  \draw[fc flow] (1.8,2.95) -- (7.3,2.95);
+  \node[fc lab,anchor=south] at (3.3,3.0) {BFKL：$\ln(1/x)$演化};
+  \node[fc tag=RoyalBlue,anchor=north west] (fcA) at (1.85,2.75) {A 全阶论证};
+  \node[fc note,anchor=west,inner sep=1pt] at ([xshift=2pt]fcA.east) {（LL/NLL）};
+  \node[fc note,anchor=north west,inner sep=1pt] (fcKT) at (1.85,2.12) {$k_T$因子化};
+  \node[fc tag=BurntOrange,anchor=west] at ([xshift=3pt]fcKT.east) {P 部分};
+  % double-log overlap
+  \draw[fc flow] (4.05,3.62) -- (5.55,5.12);
+  \node[fc note,anchor=west,align=left] at (5.65,5.62) {DLA：两种领头对数\\的双对数重叠};
+  % BK/JIMWLK near the saturation line
+  \node[fc note,anchor=west] at (6.25,4.68) {BK/JIMWLK（LL，偶极子框架）};
+  \node[fc tag=RoyalBlue,anchor=west] at (6.25,4.2) {A 全阶论证};
+  \draw[gray!60!black,line width=0.45pt,-{Stealth[length=3.5pt,width=3pt]}] (7.35,3.95) -- (7.85,3.25);
+  % axes
+  \draw[fc ax] (0,0) -- (10.45,0) node[right,fc lab,text=black] {$\ln(1/x)$};
+  \draw[fc ax] (0,0) -- (0,6.6) node[above,fc lab,text=black] {$\ln Q^2$};
+  \node[fc note,anchor=north] at (1.0,-0.05) {大$x$};
+  \node[fc note,anchor=north] at (9.0,-0.05) {小$x$};
+\end{tikzpicture}
+\caption{小$x$物理的“地图”（示意）。DGLAP 沿$\ln Q^2$演化（严格 [R]，微扰论中由算符重整化得到）；BFKL 沿$\ln(1/x)$重求和$(\alpha_s\ln\frac1x)^n$（全阶论证 [A]，LL/NLL）；$k_T$因子化只对特定过程在$\ln(1/x)$的领头对数精度下确立（部分 [P]）；
+BK/JIMWLK（全阶论证 [A]，偶极子框架中的 LL，\cref{thm:smallx-bk}）描述向饱和线$\ln Q_s^2(x)$的演化，其下方的饱和区是猜想 [C]（\cref{conj:smallx-saturation}）；两种领头对数在双对数（DLA）区重叠。小$x$结果是 Regge 展开中固定对数精度下的陈述，不是 QCD 的领头幂次定理。}
+\label{fig:smallx-map}
+\end{figure}
+%%% END fig:smallx-map

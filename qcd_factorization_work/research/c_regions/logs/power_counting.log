@@ -1,0 +1,76 @@
+=== P1: massless on-shell vertex, exponent p of (measure x integrand) ===
+   hard (0,0,0)             fitted p = +0.0000   predicted 0
+   coll-1 (0,2,1)           fitted p = +0.0000   predicted 0
+   coll-2 (2,0,1)           fitted p = +0.0000   predicted 0
+   soft (1,1,1)             fitted p = +0.0000   predicted 0
+   ultrasoft (2,2,2)        fitted p = +0.0000   predicted 0
+   Glauber (2,2,1)          fitted p = -0.0000   predicted 0
+   non-leading (0,1,1)      fitted p = +1.0000   predicted 1
+   non-leading (2,2,3)      fitted p = +2.0000   predicted 2
+PASS P1 on-shell vertex: all leading regions log (p=0), contrasting scalings suppressed as predicted
+=== P1b: massless scalar box (lines k, k+p1, k+p1+p2, k-p4), soft corners and collinear edges ===
+   soft corner (line 0 at zero momentum): fitted p = +0.0000 (predicted 0)
+   collinear edge (lines 0,1 || p1): fitted p = -0.0000 (predicted 0)
+PASS P1b massless box: soft corners and collinear edges are logarithmic (p = 0)
+=== P2: off-shell vertex (P^2 = lambda^2 Q^2), scans of collinear and soft scalings ===
+   coll c=0.5: fitted p = -0.0000   predicted +0.0
+   coll c=1.0: fitted p = +0.0000   predicted +0.0
+   coll c=1.5: fitted p = +1.0000   predicted +1.0
+   coll c=2.0: fitted p = +2.0000   predicted +2.0
+   coll c=3.0: fitted p = +4.0000   predicted +4.0
+   soft c=0.5: fitted p = +0.0000   predicted +0.0
+   soft c=1.0: fitted p = +0.0000   predicted +0.0
+   soft c=1.5: fitted p = +0.0003   predicted +0.0
+   soft c=2.0: fitted p = -0.0000   predicted +0.0
+   soft c=3.0: fitted p = +2.0000   predicted +2.0
+PASS P2 off-shell vertex: collinear logs for k_T between P and Q, soft logs for k between P^2/Q and Q
+=== P3: relative error of the eikonal approximation (p1-k)^2 -> -2 p1.k ===
+   soft (1,1,1)       rel.error ~ lambda^1.000 (predicted 1); value at lambda=1e-8: 1.703e-9
+   ultrasoft (2,2,2)  rel.error ~ lambda^2.000 (predicted 2); value at lambda=1e-8: 6.861e-17
+   Glauber (2,2,1)    rel.error ~ lambda^-0.000 (predicted 0); value at lambda=1e-8: 0.2393
+PASS P3 eikonal approximation valid in soft/ultrasoft regions, fails (O(1) error) in the Glauber region
+=== P4: gamma* -> q(p1) qbar(p2) g(k): traces and numerator suppression ===
+   |M|^2 / [(x1^2+x2^2)/((1-x1)(1-x2))] = [8. 8. 8. 8.]
+   (constant = 8.0000000000 for sqrt(s)=1, photon and gluon polarisation sums -g, couplings/colour stripped)
+PASS P4(i) trace reproduces the known x-dependence (x-independent ratio)
+   quark-emission^2 numerator ~ lambda^2.0000; denominator ((p1+k)^2)^2 ~ lambda^4.0000; full |M|^2 ~ lambda^-2.0000
+PASS P4(ii) numerator suppression: numerator ~ lambda^2, |M|^2 ~ lambda^-2 (log after lambda^2 phase space)
+=== P5: Feynman-gauge vertex numerator in the collinear-1 region ===
+PASS P5 light-cone decomposition J.H = J^+H^- + J^-H^+ - J_T.H_T
+   exact light-like axis: J^+H^- ~ lambda^-0.000,  J^-H^+ ~ lambda^inf,  J_T.H_T ~ lambda^inf  (inf = identically 0)
+   |J.H - (J^+/k^+)(k.H)|/|J.H| ~ lambda^2.000   (values [7.66e-05 7.66e-07 7.66e-09 7.66e-11])
+   note: J^- = ubar(p1) gamma^- (...) = 0 exactly; J_T.H_T = 0 in D=4 because sum_{i=1,2} g^i g^j g^i = 0 (O(eps) in D dims)
+PASS P5 collinear region (axis along +): J^+H^- ~ lambda^0 and the other pieces are suppressed by >= the predicted powers
+   tilted axis (theta=0.7 lambda), jet tensor components: |J^+| ~ lambda^0.000, |J_T| ~ lambda^1.000, |J^-| ~ lambda^2.000
+PASS P5 boost argument: jet-tensor components scale as lambda^0 (+), lambda^1 (T), lambda^2 (-)
+   tilted axis, contractions with H: J^+H^- ~ lambda^-0.034, J^-H^+ ~ lambda^inf, J_T.H_T ~ lambda^1.966
+   (H^+ = gamma^mu(...)gamma^+ v(p2) = 0 because p2 is exactly along -, and the O(lambda) part of J_T.H_T
+    cancels by the D=4 identity: the contractions are MORE suppressed than the bound -- consistent)
+PASS P5 tilted axis: contractions obey the bounds (J^-H^+ >= lambda^2, J_T.H_T >= lambda^1)
+=== P6: Glauber region -- trapped vs untrapped k^- contours ===
+   toy, kT=0.1: numeric (-1.84799567858e-7 + 184.799567858j)  residue (0.0 + 184.799567858j)  kT^2*value = (0.0 + 1.8479957j)
+   toy, kT=0.01: numeric (-1.84799567858e-5 + 18479.9567858j)  residue (0.0 + 18479.9567858j)  kT^2*value = (0.0 + 1.8479957j)
+PASS P6 trapped Glauber k^- integral is finite ~ 1/k_T^2, dominated by |k^-| ~ k_T^2/p^+
+   eikonal (k_T^2 dropped) version grows as eps^-1.000 when i0 -> 0 (pinch at k^- = 0)
+PASS P6 in the trapped Glauber region the eikonal approximation is singular (~1/eps): it cannot be used there
+=== P7: omega(R) (Sterman units, lambda_S = lambda^2) from the boost/dimension formula, Feynman gauge ===
+   1-loop vertex, soft gluon between jets               omega = 0     (lambda^0 in SCET units)  expected 0
+   1-loop vertex, coll-1, scalar-pol. gluon into H      omega = 0     (lambda^0 in SCET units)  expected 0
+   same, transverse gluon into H (twist-3 like)         omega = 1/2   (lambda^1 in SCET units)  expected 1/2
+   same, minus-polarized gluon into H                   omega = 1     (lambda^2 in SCET units)  expected 1
+   jet with 3 quark lines into H (twist-4 like)         omega = 1     (lambda^2 in SCET units)  expected 1
+   soft quark exchanged between the two jets            omega = 1     (lambda^2 in SCET units)  expected 1
+   soft gluon from a jet into H                         omega = 1     (lambda^2 in SCET units)  expected 1
+   soft quark from a jet into H                         omega = 2     (lambda^4 in SCET units)  expected 2
+   e+e- cut, 2 quark jets (Born-like)                   omega = 0     (lambda^0 in SCET units)  expected 0
+   e+e- cut, quark jets + n scalar gluons + soft gluons omega = 0     (lambda^0 in SCET units)  expected 0
+   e+e- cut, gluon jet with 2 transverse gluons         omega = 0     (lambda^0 in SCET units)  expected 0
+   gluon jet: 1 transverse + scalar only (super-leading) omega = -1/2  (lambda^-1 in SCET units)  expected -1/2
+   DIS target jet: 1 quark each side + scalar gluons    omega = 0     (lambda^0 in SCET units)  expected 0
+   DY: two incoming jets + soft gluons between them     omega = 0     (lambda^0 in SCET units)  expected 0
+   DY: soft gluon into H                                omega = 1     (lambda^2 in SCET units)  expected 1
+PASS P7 omega(R) table reproduces the standard leading/suppressed classification
+   Sterman eq.(64) lower bounds: 1 soft gluon n_T>=0; 2-gluon ladder n_T>=0; 3g->1g soft web n_T>=0
+PASS P7 Sterman's direct count (TASI'95 eq.64) gives n_T >= 0 with equality for soft-gluon webs, = omega
+
+SUMMARY: 14/14 checks passed

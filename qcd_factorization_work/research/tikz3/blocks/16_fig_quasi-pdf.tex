@@ -1,0 +1,71 @@
+%%% BEGIN fig:quasi-pdf
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 ax/.style={lcaxis,gray!60!black},
+  t3 lc/.style={draw=gray!60,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  t3 band/.style={fill=gray!16,draw=gray!50,line width=0.4pt},
+  t3 qwil/.style={wilson plain,draw=blue!60!black},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 qop/.style={circle,draw=blue!60!black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=7pt,
+      path picture={\draw[blue!60!black,line width=0.6pt] (path picture bounding box.north west)--(path picture bounding box.south east)
+                    (path picture bounding box.south west)--(path picture bounding box.north east);}},
+  t3 hyp/.style={draw=gray!60!black,line width=0.5pt,dash pattern=on 1.2pt off 1.4pt},
+  t3 boost/.style={draw=black!70,line width=0.9pt,-{Stealth[length=7pt,width=6pt]}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % =================== (a) hadron moving with large P^z ===================
+  \begin{scope}
+    \fill[t3 band] (-1.29,-1.3) -- (1.67,2.4) -- (2.17,2.4) -- (-0.79,-1.3) -- cycle;
+    \draw[t3 lc] (-1.35,-1.35) -- (2.35,2.35);  \draw[t3 lc] (1.35,-1.35) -- (-2.35,2.35);
+    \draw[t3 ax] (-2.7,0) -- (2.65,0) node[below left=1pt and -2pt] {$z$};
+    \draw[t3 ax] (0,-1.45) -- (0,2.75) node[left] {$t$};
+    % light-cone operator (along w^+ = 0) and quasi-PDF operator (t = 0)
+    \draw[wilson plain] (0,0) -- (-1.35,1.35);  \path[t3 warrow=0.6] (0,0) -- (-1.35,1.35);
+    \draw[t3 qwil] (0,0) -- (-1.3,0);           \path[t3 warrow=0.62,blue!60!black] (0,0) -- (-1.3,0);
+    \node[opvertex] at (0,0) {};  \node[opvertex] at (-1.35,1.35) {};
+    \node[t3 qop] at (-1.3,0) {};
+    \node[t3 lab,below right=0pt] at (0,0) {$\psi(0)$};
+    \node[t3 lab,above left=0pt] at (-1.35,1.35) {$\bar\psi(w)$};
+    \node[t3 lab,below=2pt,text=blue!50!black] at (-1.3,0) {$\bar\psi(z)$};
+    \node[t3 note,anchor=south] at (-2.25,2.35) {$w^+=0$};
+    \node[t3 note,anchor=south] at (2.3,2.35) {$w^-=0$};
+    \node[t3 note,anchor=east] at (-1.2,-1.05) {强子};
+    \node[t3 lab] at (0,-2.0) {(a)\ 强子以大 $P^z$ 运动};
+  \end{scope}
+  % boost
+  \draw[t3 boost] (2.85,1.0) -- node[t3 note,above=2pt,align=center] {沿 $z$ 方向的\\Lorentz 变换} (4.75,1.0);
+  \node[t3 note] at (3.8,0.62) {$\tanh y=v$};
+  % =================== (b) hadron rest frame ===================
+  \begin{scope}[xshift=8.3cm]
+    \fill[t3 band] (-0.4,-1.3) rectangle (0.4,2.4);
+    \draw[t3 lc] (-1.35,-1.35) -- (2.35,2.35);  \draw[t3 lc] (1.35,-1.35) -- (-2.35,2.35);
+    \draw[t3 ax] (-2.7,0) -- (2.65,0) node[below left=1pt and -2pt] {$z$};
+    \draw[t3 ax] (0,-1.45) -- (0,2.75) node[left] {$t$};
+    % invariant hyperbola z^2 - t^2 = z_0^2 on which the end point of the boosted operator moves
+    \draw[t3 hyp] plot[domain=-0.95:1.74,samples=50] ({-sqrt(1.69+\x*\x)},\x);
+    \draw[gray!60!black,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}]
+      plot[domain=0.3:1.2,samples=20] ({-sqrt(1.69+\x*\x)-0.2},{\x+0.12});
+    \fill[gray!60!black] (-1.3,0) circle[radius=1.6pt];
+    \draw[t3 qwil] (0,0) -- (-2.1667,1.7333);   \path[t3 warrow=0.55,blue!60!black] (0,0) -- (-2.1667,1.7333);
+    \node[opvertex] at (0,0) {};  \node[t3 qop] at (-2.1667,1.7333) {};
+    \node[t3 lab,below right=0pt] at (0,0) {$\psi(0)$};
+    \node[t3 lab,left=2pt,text=blue!50!black] at (-2.1667,1.7333) {$\bar\psi(z)$};
+    \node[t3 note,anchor=east] at (-1.95,0.55) {$P^z$ 增大};
+    \node[t3 note,anchor=north] at (-1.3,-0.08) {$t=0$};
+    \node[t3 note,anchor=south] at (-2.3,2.35) {$w^+=0$};
+    \node[t3 note,anchor=south] at (2.3,2.35) {$w^-=0$};
+    \node[t3 note,anchor=west] at (0.5,-0.85) {强子};
+    \node[t3 lab] at (0,-2.0) {(b)\ 强子静止系};
+  \end{scope}
+\end{tikzpicture}
+\caption{准 PDF 与光锥 PDF 算符的时空图（$z$ 为纵向坐标；阴影带为强子的世界带）。(a) 中黑色双线为光锥 PDF 算符的 Wilson 线 $W[w,0]$，
+$w=(0^+,w^-,0_{\mathrm T})$ 位于光锥 $w^+=0$（即 $t=-z$）上，$f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle$；
+蓝色双线为准 PDF 算符的 Wilson 线 $W[z,0]$，沿 $z$ 轴、在等时面 $t=0$ 上，$\tilde q(x,P^z)=\int\frac{\dd z}{4\pi}\ee^{\ii xP^zz}\langle P|\bar\psi(z)\Gamma W[z,0]\psi(0)|P\rangle$（$\Gamma=\gamma^z$ 或 $\gamma^t$，归一化见正文）。
+(a)~强子以速度 $v$ 沿 $+z$ 运动；(b)~经快度为 $y$（$\tanh y=v$）的 Lorentz 变换转到强子静止系后，等时间隔 $(t,z)=(0,z)$ 变为 $(-z\sinh y,\,z\cosh y)$：
+其端点由 $t=0$ 处（灰点）沿不变双曲线 $z^2-t^2=\text{常数}$（点线）移动，随 $P^z$ 增大而趋向光锥 $w^+=0$，即光锥 PDF 算符的方向；光锥方向本身在变换下不变（只被伸缩）。
+因此大 $P^z$ 下的准 PDF 趋近光锥 PDF，二者之差由微扰匹配系数描述（大动量有效理论，见正文）；此图取 $v=0.8$。}
+\label{fig:quasi-pdf}
+\end{figure}
+%%% END fig:quasi-pdf

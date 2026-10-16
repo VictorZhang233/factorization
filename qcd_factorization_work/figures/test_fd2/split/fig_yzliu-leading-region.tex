@@ -1,0 +1,77 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.95,
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 hadron/.style={bound state,line cap=butt},
+  fd2 dipole/.style={draw=green!40!black,line width=2.2pt,dash pattern=on 5pt off 3pt,line cap=butt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ======================= (a) double-line notation =======================
+  \begin{scope}
+    % staple (space-like): from psi(0) along +z to L, transverse link, back along -z to psibar
+    \draw[wilson=0.5] (1.94,1.75) -- (4.3,1.75);
+    \draw[wilson=0.55] (4.3,1.75) -- (4.3,2.8);
+    \draw[wilson=0.42] (4.3,2.8) -- (0.69,2.8);
+    % soft subgraph S: gluons to the staple and to C
+    \draw[fd2 soft] (2.98,1.07) -- (2.55,1.75);
+    \draw[fd2 soft] (3.55,1.05) -- (4.3,2.25);
+    \draw[fd2 soft] (2.85,0.55) -- (2.4,0.3);
+    \draw[fd2 soft] (3.1,0.3) -- (2.6,0.0);
+    \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] at (3.35,0.68) {$S$};
+    % collinear quark lines (arrows: fermion-number flow) and longitudinal gluons
+    \draw[quark=0.55] (1.68,0.48) -- (1.7,1.47);
+    \draw[quark=0.5] (0.45,2.52) -- (0.55,0.5);
+    \draw[longit] (2.12,0.42) -- (1.88,1.55);   \longitmark{(2.12,0.42)}{(1.88,1.55)}
+    \draw[longit] (-0.02,0.38) -- (0.26,2.58);  \longitmark{(-0.02,0.38)}{(0.26,2.58)}
+    \node[fd2 note,text=blue!55!black] at (2.33,1.05) {$\cdots$};
+    \node[fd2 note,text=blue!55!black] at (-0.27,1.5) {$\cdots$};
+    % collinear subgraph C (hadron P along +z; forward matrix element)
+    \draw[fd2 hadron] (-0.95,-0.75) -- (0.25,-0.2);
+    \draw[fd2 hadron] (2.55,-0.2) -- (3.75,-0.75);
+    \node[jet blob,ellipse,minimum width=2.7cm,minimum height=1.05cm,inner sep=0pt] at (1.4,0.0) {$C$};
+    % hard vertices at the two quark--link junctions
+    \node[hard blob,circle,minimum size=0.54cm,inner sep=0pt] at (1.7,1.75) {\footnotesize$H$};
+    \node[hard blob,circle,minimum size=0.54cm,inner sep=0pt] at (0.45,2.8) {\footnotesize$H$};
+    % labels
+    \node[fd2 note,anchor=north west] at (-0.95,-0.75) {$P$};
+    \node[fd2 note,anchor=north east] at (3.75,-0.75) {$P$};
+    \node[fd2 note,anchor=east] at (1.4,1.78) {$0$};
+    \node[fd2 note,anchor=south] at (0.45,3.08) {$z\hat e_z+\vec b_\perp$};
+    \node[fd2 note,anchor=west] at (4.38,2.27) {$L\to\infty$};
+    \node[fd2 lab] at (1.9,-1.5) {(a)\ 双线记号};
+  \end{scope}
+  % ======================= (b) single-line notation =======================
+  \begin{scope}[xshift=7.15cm]
+    % dipole line H -- S and soft gluons S -- C
+    \draw[fd2 dipole] (1.33,2.3) -- (3.12,2.3);
+    \draw[fd2 soft] (3.35,1.86) -- (2.42,0.3);
+    \draw[fd2 soft] (3.8,1.9) -- (2.66,0.02);
+    \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] at (3.55,2.3) {$S$};
+    % collinear quark lines and longitudinal gluons into H
+    \draw[quark=0.55] (0.75,0.48) -- (0.75,1.97);
+    \draw[quark=0.55] (1.15,1.97) -- (1.2,0.5);
+    \draw[longit] (1.75,0.42) -- (1.34,2.07);   \longitmark{(1.75,0.42)}{(1.34,2.07)}
+    \draw[longit] (0.12,0.4) -- (0.56,2.07);    \longitmark{(0.12,0.4)}{(0.56,2.07)}
+    % C and H
+    \draw[fd2 hadron] (-0.95,-0.75) -- (0.25,-0.2);
+    \draw[fd2 hadron] (2.55,-0.2) -- (3.75,-0.75);
+    \node[jet blob,ellipse,minimum width=2.7cm,minimum height=1.05cm,inner sep=0pt] at (1.4,0.0) {$C$};
+    \node[hard blob,circle,minimum size=0.75cm,inner sep=0pt] at (0.95,2.3) {$H$};
+    \node[fd2 note,anchor=north west] at (-0.95,-0.75) {$P$};
+    \node[fd2 note,anchor=north east] at (3.75,-0.75) {$P$};
+    \node[fd2 note,anchor=south,text=green!30!black] at (2.25,2.82) {偶极线：量纲 $\frac32$、自旋 $0$};
+    \node[fd2 lab] at (1.4,-1.5) {(b)\ 单线记号};
+    % power counting
+    \node[draw=gray!60,rounded corners=2pt,fill=gray!5,inner sep=4pt,align=left,font=\footnotesize,anchor=west] at (4.35,0.95)
+      {$F(H)=-\frac72+2+\frac32=0$\\[3pt]
+       $2$：两条共线夸克线\\[1pt]
+       $\frac32$：一条偶极线\\[3pt]
+       $F(SC)\ge0$};
+  \end{scope}
+\end{tikzpicture}
+\caption{准 TMD 的领头区域（示意；幂次计数参数为 $1/(b_\perp P^z)$）。
+(a)~双线记号：共线子图 $C$（强子动量 $P$ 沿 $+\hat z$，前向矩阵元）、位于两个夸克—规范线连接点 $0$ 与 $z\hat e_z+\vec b_\perp$ 的硬顶点 $H$、类空订书钉（双线，箭头为路径方向：自 $\psi(0)$ 沿 $+\hat z$ 到 $L\to\infty$，经横向连接回到 $\bar\psi$；与\cref{fig:tmd-staple}中的类光订书钉不同）与软子图 $S$；细线箭头为费米子数流向；$C$ 与 $H$ 之间可有任意多条纵向共线胶子（带点的蓝色胶子），$S$ 与 $C$ 之间可有任意多条软胶子（绿色）。
+(b)~单线记号：一对订书钉线合成一条量纲 $\frac32$、自旋 $0$ 的偶极线（粗虚线）。
+幂次计数 $F(H)=0$、$F(SC)\ge0$ 表明没有超领头区域，且硬动量不能在 $0$ 与 $\vec b_\perp$ 之间传递，因而匹配中没有 $x$ 卷积（VF-YZL-8；\cref{prop:yzliu-qtmd-powercount}，全阶论证 [A]）。}
+\label{fig:yzliu-leading-region}
+\end{figure}

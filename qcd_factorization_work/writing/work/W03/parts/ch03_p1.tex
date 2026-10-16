@@ -1,0 +1,145 @@
+% =====================================================================================
+% ch03_prelim.tex —— 第 3 章　因子化的数学与场论工具（writer W03）
+% 约定：WRITER_SPEC_v2 §3；公式来源 VERIFIED_FORMULAS_v2（VF-…，见行内注释）；
+% 独立核算脚本 writing/work/W03/s1–s8（日志 writing/work/W03/logs/；134 项检验全部通过）。
+% =====================================================================================
+\chapter{因子化的数学与场论工具}\label{ch:prelim}
+
+因子化定理断言：高能过程的截面可以写成只依赖于硬标度 $Q$ 的短程系数与只依赖于强子结构的长程矩阵元的卷积，误差为 $Q$ 的负幂次。要把这句话变成可以证明的数学陈述，先要回答几个看似无关的问题：高速运动的强子的哪些动量分量大、哪些小？怎样把不同时空点的夸克场组合成规范不变的算符，高能夸克在软胶子“看来”又是什么？维数正规化中的 $1/\varepsilon$ 为什么有时来自紫外、有时来自红外？单圈计算中的 $(1-z)^{-1-2\varepsilon}$ 应当怎样理解？矩能确定多少 $x$ 空间的信息？截面与前向振幅的虚部是什么关系？本章依次回答这些问题，并与\cref{sec:qcd-quantization}的约定一起固定全书的记号。
+
+除一处以外，本章的陈述或者是纯数学（不带标签），或者是由定义直接推出的严格结论（\tagR，$R_{\mathrm{def}}$），或者是关于 Feynman 图的严格陈述（\tagR，$R_{\mathrm{PT}}$）；例外是\cref{rem:prelim-cutting-dr}：无质量维数正规化中含鬼场的割图规则只有全阶论证（\tagA）。涉及强子态的只有光学定理（\cref{prop:prelim-optical}），其强子版本需要\cref{asm:intro-wightman}。较长的证明在附录~A、B、C、I、J、K。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:prelim-boost}（\tagR，$R_{\mathrm{def}}$）；\cref{prop:prelim-wilson-covariance}、\cref{prop:prelim-wilson-rules}（\tagR，$R_{\mathrm{def}}$；后者的完整证明见附录~B）；\cref{lem:prelim-eikonal-identity}、\cref{lem:prelim-scaleless}、\cref{lem:prelim-plus-expansion}、\cref{lem:prelim-mellin}（数学；后两者的证明见附录~A）；\cref{thm:prelim-cutting-rules}（\tagR，$R_{\mathrm{PT}}$，对有质量或已正规化的图）；\cref{prop:prelim-unitarity}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:prelim-optical}（\tagR，$R_{\mathrm{def}}$；强子态需\cref{asm:intro-wightman}）。\par
+\textbf{给出全阶论证：}\cref{rem:prelim-cutting-dr}（\tagA：无质量维数正规化中含鬼场的割图规则）。\par
+\textbf{没有证明：}带插入的光锥割线位置恒等式与闭时路形式的幺正性（在附录~O 中证明：\cref{lem:appO-cut-position}，数学；\cref{lem:appO-unitarity}，\tagR，$R_{\mathrm{cond}}$）；单个割图并不满足幺正性，只有对全部割线求和才行（\cref{sec:prelim-cuts}末的常见误解）。
+\end{tcolorbox}
+
+% -------------------------------------------------------------------------------------
+\section{光锥坐标、Sudakov 分解与 Lorentz 推动}\label{sec:prelim-lightfront}
+
+质量为 $M$、能量 $E\gg M$ 的强子沿 $+z$ 运动时，$E+P^3\approx2E$，而 $E-P^3=M^2/(E+P^3)\approx M^2/(2E)$，二者相差 $(2E/M)^2$ 倍；与它几乎平行的部分子也有同样的层级。因此天然的坐标是光锥坐标 $v^\pm=(v^0\pm v^3)/\sqrt2$：沿 $z$ 轴的推动只是把 $v^\pm$ 乘以 $\ee^{\pm\eta}$（\cref{lem:prelim-boost}）。后文的幂次计数正建立在这一事实之上。
+
+\begin{definition}[光锥坐标与 Sudakov 分解]\label{def:prelim-lightfront}
+(a) 对四矢量 $v^\mu=(v^0,v^1,v^2,v^3)$ 定义光锥分量 $v^\pm=(v^0\pm v^3)/\sqrt2$ 与横向二维矢量 $\mathbf v_{\mathrm T}=(v^1,v^2)$，记 $v=(v^+,v^-,\mathbf v_{\mathrm T})$。在度规 $(+,-,-,-)$ 下
+\begin{equation}\label{eq:prelim-lc-dot}
+v\cdot w=v^+w^-+v^-w^+-\mathbf v_{\mathrm T}\cdot\mathbf w_{\mathrm T},\qquad v^2=2v^+v^--\mathbf v_{\mathrm T}^2 ,
+\end{equation}
+即 $g^{+-}=g^{-+}=1$，$g^{++}=g^{--}=0$，$v_\pm=v^\mp$；积分测度为 $\dd^4k=\dd k^+\dd k^-\dd^2\mathbf k_{\mathrm T}$（$(k^0,k^3)\mapsto(k^+,k^-)$ 的 Jacobi 行列式的绝对值为 $1$）。% VF-CONV-1
+\par
+(b) 类光矢量 $n_A=(1^+,0^-,\mathbf 0_{\mathrm T})$ 与 $n_B=(0^+,1^-,\mathbf 0_{\mathrm T})$ 满足
+\begin{equation}\label{eq:prelim-nAnB}
+n_A\cdot v=v^-,\qquad n_B\cdot v=v^+,\qquad n_A^2=n_B^2=0,\qquad n_A\cdot n_B=1 .
+\end{equation}
+强子 $A$ 沿 $+z$ 运动，$P_A=(P_A^+,M_A^2/(2P_A^+),\mathbf 0_{\mathrm T})$；强子 $B$ 沿 $-z$ 运动，$P_B=(M_B^2/(2P_B^-),P_B^-,\mathbf 0_{\mathrm T})$。
+\par
+(c) Sudakov 分解：取类光矢量 $p_A=p_A^+n_A$，$p_B=p_B^-n_B$，任一四矢量唯一地写成
+\begin{equation}\label{eq:prelim-sudakov}
+k^\mu=\alpha\,p_A^\mu+\beta\,p_B^\mu+k_{\mathrm T}^\mu,\qquad \alpha=\frac{k^+}{p_A^+},\quad \beta=\frac{k^-}{p_B^-},\quad k_{\mathrm T}^\mu=(0,\mathbf k_{\mathrm T},0),
+\end{equation}
+于是 $k^2=2\alpha\beta\,p_A\cdot p_B-\mathbf k_{\mathrm T}^2$，$p_A\cdot p_B=p_A^+p_B^-$。
+\par
+(d) 快度 $y=\frac12\ln(k^+/k^-)$（$k^\pm>0$）。质量为 $m$ 的在壳粒子有 $k^\pm=m_{\mathrm T}\ee^{\pm y}/\sqrt2$，$m_{\mathrm T}=(m^2+\mathbf k_{\mathrm T}^2)^{1/2}$。
+% uses: none
+\end{definition}
+
+$n_B$ 即 Collins~\cite{Collins2011}的 $w_2$；第~15~章 SCET 的 $n=(1,0,0,1)$、$\bar n=(1,0,0,-1)$ 与 $n_A,n_B$ 的换算见\cref{sec:appA-lightfront}。强子 $A$ 的部分子分布中的 Wilson 线沿 $n_B$，只含 $n_B\cdot A=A^+$（\cref{def:pdf-quark}，第~8~章）；为什么是 $A^+$，由下面的推动引理回答。
+
+\begin{lemma}[推动下的标度 \tagR]\label{lem:prelim-boost}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $\Lambda(\eta)$ 是沿 $+z$ 方向、快度为 $\eta$ 的推动：$v'^0=v^0\cosh\eta+v^3\sinh\eta$，$v'^3=v^0\sinh\eta+v^3\cosh\eta$，$\mathbf v'_{\mathrm T}=\mathbf v_{\mathrm T}$。
+\par
+(a) $v'^\pm=\ee^{\pm\eta}v^\pm$，$\mathbf v'_{\mathrm T}=\mathbf v_{\mathrm T}$，快度平移 $y\to y+\eta$；矢量场的分量 $A^\pm$、$\mathbf A_{\mathrm T}$ 按同样方式变换。
+\par
+(b) 令 $\gamma^\pm=(\gamma^0\pm\gamma^3)/\sqrt2$，$P_+=\frac12\gamma^-\gamma^+$，$P_-=\frac12\gamma^+\gamma^-$。它们是互补的正交投影算符，$P_\pm=\frac12(1\pm\gamma^0\gamma^3)$。在旋量表示中实现 $\Lambda(\eta)$ 的矩阵（$S^{-1}\gamma^\mu S=\Lambda^\mu{}_\nu\gamma^\nu$）为
+\begin{equation}\label{eq:prelim-boost-spinor}
+S(\eta)=\exp\Big(\frac\eta2\gamma^0\gamma^3\Big)=\ee^{\eta/2}P_++\ee^{-\eta/2}P_- .
+\end{equation}
+因此推动后的 Dirac 场 $\psi'(x)=S(\eta)\psi(\Lambda^{-1}x)$ 的“好分量” $P_+\psi$ 与“坏分量” $P_-\psi$ 分别乘以 $\ee^{\eta/2}$ 与 $\ee^{-\eta/2}$：$P_\pm\psi'(\Lambda x)=\ee^{\pm\eta/2}P_\pm\psi(x)$。
+\uses{def:prelim-lightfront}
+\end{lemma}
+
+\begin{proof}
+完整计算见\cref{sec:appA-lightfront}与\cref{sec:appA-dirac}；要点如下。(a) 由 $\cosh\eta\pm\sinh\eta=\ee^{\pm\eta}$ 直接得到。(b) $(\gamma^0\gamma^3)^2=-(\gamma^0)^2(\gamma^3)^2=1$，故 $S(\eta)=\cosh\frac\eta2+\gamma^0\gamma^3\sinh\frac\eta2=\ee^{\eta/2}P_++\ee^{-\eta/2}P_-$；附录~A 证明 $\gamma^+=P_-\gamma^+P_+$、$\gamma^-=P_+\gamma^-P_-$ 且 $\gamma^{1,2}$ 与 $P_\pm$ 对易，由此 $S^{-1}\gamma^\pm S=\ee^{\pm\eta}\gamma^\pm$，$S^{-1}\gamma^{1,2}S=\gamma^{1,2}$；最后 $P_\pm S=\ee^{\pm\eta/2}P_\pm$。
+\end{proof}
+
+\begin{example}[共线动量与好/坏分量的标度]\label{ex:prelim-boost-scaling}
+静止的强子中部分子动量的各光锥分量都是 $m$ 的量级：$k_{\mathrm{rest}}=m\,(a,b,\mathbf c)$，$a,b,|\mathbf c|=O(1)$。推动到 $P^+\sim Q$ 所需的快度满足 $\ee^\eta=Q/m\equiv1/\lambda$，由\cref{lem:prelim-boost}(a)，
+\begin{equation}\label{eq:prelim-collinear-scaling}
+k=\big(\ee^{\eta}ma,\ \ee^{-\eta}mb,\ m\mathbf c\big)=Q\,\big(a,\ \lambda^2b,\ \lambda\mathbf c\big),
+\end{equation}
+正是 $A$-共线标度 $Q(1,\lambda^2,\lambda)$。取 $m=1\,\mathrm{GeV}$、$Q=100\,\mathrm{GeV}$，则 $\lambda=0.01$，$\eta=\ln100\approx4.61$，$(1,1,1)\,\mathrm{GeV}$ 变为 $(100,\,0.01,\,1)\,\mathrm{GeV}$。由\cref{eq:prelim-boost-spinor}，好分量放大 $\lambda^{-1/2}=10$ 倍，坏分量缩小为 $1/10$，二者之比增大 $100$ 倍；沿 $+z$ 运动的无质量夸克只有好分量，因为 $\sla p=p^+\gamma^-$ 与 $\sla pu=0$ 给出 $\gamma^-u=0$，即 $P_-u=0$。胶子场中 $A^+$ 放大 $100$ 倍，$A^-$ 缩小为 $1/100$，$\mathbf A_{\mathrm T}$ 不变：快速强子的胶子场以 $A^+=n_B\cdot A$ 为主。
+\uses{lem:prelim-boost}
+\end{example}
+
+由此，部分子分布中只出现 $A^+$ 的 Wilson 线；在幂次计数中，与共线子图相连、沿 $A^+$ 极化的纵向（K）胶子不带幂次压低，可以任意多地出现在领头幂次中，须由 Ward 恒等式求和成 Wilson 线（\cref{def:ir-scalings}、\cref{prop:ir-power-counting}，第~4~章）。\cref{fig:prelim-lightcone}画出本节的两个事实：推动沿不变双曲线移动点；在对数光锥坐标下，推动是沿反对角线的平移。
+
+%%% BEGIN fig:prelim-lightcone
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lc/.style={draw=gray!60!black,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  fa hyp/.style={draw=black,line width=0.8pt,dash pattern=on 0.8pt off 1.6pt},
+  fa grid/.style={draw=gray!60,line width=0.5pt,dash pattern=on 0.8pt off 1.6pt},
+  fa pt/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=4.2pt},
+  fa boost/.style={draw=red!60!black,line width=0.9pt,-{Stealth[length=5pt,width=4.5pt]}},
+  fa leg/.style={draw=gray!50!black,line width=0.45pt},
+  fa lab/.style={font=\footnotesize},
+  fa wlab/.style={font=\footnotesize,fill=white,inner sep=1pt},
+  fa cap/.style={font=\footnotesize}]
+  % ===================== (a) the (z,t) plane =====================
+  \begin{scope}
+    % world-band of a hadron moving fast along +z (slope dt/dz = 1/v, v = 0.83)
+    \draw[hadron blob,line width=0.5pt] (1.35,-0.45) -- (1.82,-0.45) -- (3.99,2.15) -- (3.52,2.15) -- cycle;
+    \draw[fa leg] (1.9,-0.36) -- (2.35,-0.62);
+    \node[fa lab,anchor=north west,align=left,inner sep=1pt] at (2.3,-0.55) {沿 $+z$ 快速运动\\的强子世界带};
+    % axes and light-cone axes x^pm = (t pm z)/sqrt2
+    \draw[lcaxis] (-2.6,0) -- (4.45,0) node[fa lab,below] {$z$};
+    \draw[lcaxis] (0,-0.7) -- (0,3.0) node[fa lab,left] {$t$};
+    \draw[fa lc,-{Stealth[length=4pt,width=3.4pt]}] (-0.6,-0.6) -- (2.75,2.75) node[fa lab,anchor=south west,inner sep=1pt] {$x^+$};
+    \draw[fa lc,-{Stealth[length=4pt,width=3.4pt]}] (0.6,-0.6) -- (-2.75,2.75) node[fa lab,anchor=south east,inner sep=1pt] {$x^-$};
+    % invariant hyperbola t^2 - z^2 = c and a boost of rapidity eta along it
+    \draw[fa hyp] plot[domain=-1.2:1.2,samples=60,variable=\t] ({1.1*sinh(\t)},{1.1*cosh(\t)});
+    \node[fa lab,anchor=south east,inner sep=1pt] at (-0.2,2.12) {$t^2-z^2=c$};
+    \draw[fa leg] (-0.62,2.12) -- (-0.8,1.4);
+    \draw[fa boost] plot[domain=0.06:0.74,samples=20,variable=\t] ({1.1*sinh(\t)},{1.1*cosh(\t)});
+    \node[fa pt] at (0,1.1) {};
+    \node[fa pt] at (0.977,1.471) {};
+    \node[fa lab,text=red!55!black,anchor=north west] at (0.55,1.12) {推动 $\eta$};
+    \node[fa cap] at (0.9,-1.85) {(a)\ $(z,t)$ 平面};
+  \end{scope}
+  % ===================== (b) the (ln v^+, ln v^-) plane =====================
+  \begin{scope}[xshift=6.9cm]
+    \begin{scope}
+      \clip (0.05,0.05) rectangle (4.3,3.45);
+      % lines of constant v^+ v^-  (anti-diagonals, slope -1)
+      \foreach \c in {1.4,2.6,3.8,5.0,6.2} \draw[fa lc] (\c-3.6,3.6) -- (\c+0.2,-0.2);
+      % lines of constant rapidity y = (1/2) ln(v^+/v^-)  (diagonals, slope +1)
+      \foreach \d in {-2.4,-1.2,0,1.2,2.4} \draw[fa grid] (-0.2,-0.2+\d) -- (4.5,4.5+\d);
+    \end{scope}
+    \draw[lcaxis] (0,0) -- (4.55,0) node[fa lab,below left=1pt and -2pt] {$\ln v^+$};
+    \draw[lcaxis] (0,0) -- (0,3.7) node[fa lab,left] {$\ln v^-$};
+    % the boost: +eta in ln v^+, -eta in ln v^-
+    \draw[fa leg] (1.5,2.3) -- (2.6,2.3) -- (2.6,1.2);
+    \node[fa wlab,anchor=south] at (2.05,2.33) {$+\eta$};
+    \node[fa wlab,anchor=west] at (2.64,1.75) {$-\eta$};
+    \node[fa pt] (P) at (1.5,2.3) {};
+    \node[fa pt] (Q) at (2.6,1.2) {};
+    \draw[fa boost,shorten >=2pt,shorten <=2pt] (P) -- (Q);
+    \node[fa wlab,text=red!55!black,anchor=north east] at (1.95,1.68) {推动 $\eta$};
+    \node[fa wlab,anchor=south east] at (1.44,2.36) {$(\ln v^+,\ln v^-)$};
+    \node[fa wlab,anchor=north] at (2.6,1.1) {$(\ln v^++\eta,\ \ln v^--\eta)$};
+    % legend for the two line families
+    \draw[fa lc] (0.1,-0.75) -- (0.75,-0.75);
+    \node[fa lab,anchor=west] at (0.8,-0.75) {等 $v^+v^-$（反对角线）};
+    \draw[fa grid] (0.1,-1.15) -- (0.75,-1.15);
+    \node[fa lab,anchor=west] at (0.8,-1.15) {等快度 $y=\frac12\ln(v^+/v^-)$（对角线）};
+    \node[fa cap] at (2.2,-1.85) {(b)\ 对数光锥平面};
+  \end{scope}
+\end{tikzpicture}
+\caption{光锥坐标与 Lorentz 推动。(a) $(z,t)$ 平面中的光锥轴 $x^\pm=(t\pm z)/\sqrt2$ 与沿 $+z$ 快速运动的强子世界带；推动沿不变双曲线移动点。
+(b) 对数光锥平面中，快度为 $\eta$ 的推动 $v^\pm\to \ee^{\pm\eta}v^\pm$ 是沿反对角线的平移（$\ln v^+$ 增加 $\eta$，$\ln v^-$ 减少 $\eta$），等 $v^+v^-$ 线为反对角线（虚线），等快度线为对角线（点线）。}
+\label{fig:prelim-lightcone}
+\end{figure}
+%%% END fig:prelim-lightcone

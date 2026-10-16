@@ -1,0 +1,54 @@
+%%% BEGIN fig:coll-sidis
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fb harc/.style={draw=black!75,line width=1.6pt,line cap=round}]
+  \coordinate (HL) at (-1.05,0); \coordinate (HR) at (1.05,0);
+  % hard radiation crossing the cut (needed for P_hT ~ Q)
+  \draw[gluon] (HL) -- (HR);
+  % parton lines: A -> H -> current jet -> H^dagger -> A
+  \draw[quark] (-1.05,-1.63) -- (HL);
+  \draw[quark] (HL) -- (-1.05,1.63);
+  \draw[quark] (1.05,1.63) -- (HR);
+  \draw[quark] (HR) -- (1.05,-1.63);
+  % photons
+  \draw[photon] (-2.45,0.75) -- (HL);
+  \draw[photon] (HR) -- (2.45,0.75);
+  % target hadron A and the PDF; current jet and the FF
+  \draw[fb hadron] (-2.6,-2.0) -- (2.6,-2.0);
+  \draw[jet blob] (0,-2.0) ellipse[x radius=1.6,y radius=0.43];
+  \draw[jetB blob] (0,2.0) ellipse[x radius=1.6,y radius=0.43];
+  \draw[fb harc] (-0.42,2.4) to[out=80,in=180] (0,2.95) to[out=0,in=100] (0.42,2.4);
+  \draw[hard blob] (HL) circle[radius=0.36];
+  \draw[hard blob] (HR) circle[radius=0.36];
+  \draw[cut] (0,-2.75) -- (0,3.3);
+  % labels
+  \node[fb lab] at (HL) {$H$}; \node[fb lab] at (HR) {$H^\dagger$};
+  \node[font=\footnotesize] at (-0.78,-2.0) {$f_{i/A}(\xi)$};
+  \node[font=\footnotesize] at (-0.78,2.0) {$d_{h/j}(\zeta)$};
+  \node[fb lab,anchor=south west] at (0.07,2.98) {$h(p_h)$};
+  \node[fb lab,anchor=east] at (-2.62,-2.0) {$A$}; \node[fb lab,anchor=west] at (2.62,-2.0) {$A$};
+  \node[fb lab,anchor=east] at (-2.47,0.75) {$\gamma^*(q)$};
+  \path[mom={$\xi P_A$},mom pos=0.42,mom sep=0.26cm,mom length=0.5cm] (-1.05,-1.63) -- (HL);
+  \path[mom={$p_h/\zeta$},mom pos=0.6,mom sep=0.26cm,mom length=0.5cm] (HL) -- (-1.05,1.63);
+  \node[fb note,anchor=north,inner sep=1.5pt] at (0.36,-0.15) {$X_H$};
+  % kinematics and the two regimes
+  \node[anchor=west,align=left,font=\footnotesize] (K) at (3.45,1.55) {%
+    $x=\dfrac{Q^2}{2P_A\cdot q}\le\xi$，\quad$z=\dfrac{P_A\cdot p_h}{P_A\cdot q}\le\zeta$\\[6pt]
+    $P_{hT}$：$h$ 相对 $\gamma^*$--靶轴的横动量};
+  \node[anchor=north west,align=left,font=\footnotesize,draw=blue!45!black,fill=blue!4,rounded corners=2pt,
+        line width=0.5pt,inner sep=4pt] (C1) at ($(K.south west)+(0.05,-0.35)$)
+    {$P_{hT}\sim Q$（共线）：\\$\dd\sigma=\sum_{ij}f_{i/A}\otimes\dd\hat\sigma_{ij}\otimes d_{h/j}$（\cref{thm:coll-sidis}）};
+  \node[anchor=north west,align=left,font=\footnotesize,draw=orange!70!black,fill=orange!6,rounded corners=2pt,
+        line width=0.5pt,inner sep=4pt] at ($(C1.south west)+(0,-0.25)$)
+    {$P_{hT}\ll Q$（TMD，\cref{ch:tmd}）：\\横动量依赖的分布与碎裂函数、软因子};
+\end{tikzpicture}
+\caption{半单举 DIS $\ell A\to\ell' hX$ 的共线因子化（割图示意；竖直虚线为末态割线，左侧为振幅）。
+靶 $A$ 的共线子图给出部分子分布 $f_{i/A}(\xi)$（蓝色，沿 $+z$），流出硬部分的部分子 $j$ 碎裂为被观测强子 $h$（粗线穿过割线），给出碎裂函数 $d_{h/j}(\zeta)$（橙色）；
+$P_{hT}\sim Q$ 时 $h$ 的横动量来自硬辐射 $X_H$，截面为 $f\otimes\dd\hat\sigma\otimes d$ 的共线因子化形式；$P_{hT}\ll Q$ 时需要 TMD 因子化，二者在中间区域由 $W+Y$ 衔接（\cref{ch:tmd}）。}
+\label{fig:coll-sidis}
+\end{figure}
+%%% END fig:coll-sidis

@@ -1,0 +1,49 @@
+==============================================================================
+A. Projected squared matrix elements in D = 4 - 2 eps
+quark channel  (-g) projection = 8(1-e)[(1-e)(-t/s-s/t)+2uQ2/(st)+2e] : PASS
+quark channel  (p p) projection = -4(1-e) u                              : PASS
+gluon channel  (-g) projection = 8(1-e)[(1-e)(u/t+t/u)-2sQ2/(tu)-2e]     : PASS
+gluon channel  (p p) projection = 8 s                                    : PASS
+gluon channel: light-cone polarization sum = -g sum                       : PASS
+==============================================================================
+B. Two-body phase space in D dims
+phase space prefactor = (4pi/s)^e/(8 pi Gamma(1-e)) : PASS
+==============================================================================
+C. Exact-in-eps partonic structure functions
+R_2^q exact = VF-DIS-4 : PASS
+R_L^q exact = VF-DIS-4 : PASS
+R_2^g exact = VF-DIS-5 : PASS
+R_L^g exact = VF-DIS-5 : PASS
+==============================================================================
+D. Expansion in distributions, virtual term, poles, MSbar coefficient functions
+R_2^q:  delta coeff = (epsilon**2*(7 - pi**2) + 3*epsilon + 4)/(2*epsilon**2)
+        D_0 coeff   = -3/2 - 2/epsilon ;  D_1 coeff = 2 ;  D_2 coeff = 0
+R_2^q expansion = VF-DIS-4 (delta, D0, D1, reg pole, reg finite): True True True True True
+virtual 2F^(1): -16*epsilon + pi**2*epsilon/4 + 14*epsilon*zeta(3)/3 - 8 + pi**2/6 - 3/epsilon - 2/epsilon**2   (expect -2/e^2 - 3/e - 8 + zeta2 + O(e))
+   check: True
+real+virtual delta coefficient: (epsilon*(-27 - 2*pi**2) - 9)/(6*epsilon)  -> 1/e^2: 0 , 1/e:  
+   1/eps coefficient of delta (real 3/2 + virtual -3) = -3/2 ;  finite delta coefficient = -9/2 - pi**2/3 = -(9/2+pi^2/3)
+   1/eps part = -P_qq/C_F : True
+R_2^g = -(2/e) P_qg/T_F + 2 C_2^g/T_F + O(e): True True
+R_L^q(e=0) = 2*z ;  R_L^g(e=0) = -8*z*(z - 1)
+gluon average over 2 polarizations: shift of 2 C_2^g/T_F = 2*(2*z**2 - 2*z + 1)  (expect 2 P_qg/T_F)
+==============================================================================
+E. Mellin moments vs VF-DIS-8; whole-bracket plus; Adler, Bjorken
+max |x-space moments - VF-DIS-8| over N=1..8 (C2q, whole-bracket C2q, C2g): 5.5101e-40
+   N=1  C2q/CF=0.0  C2g/TF=0.333333333333
+   N=2  C2q/CF=0.166666666667  C2g/TF=-0.25
+   N=3  C2q/CF=1.20833333333  C2g/TF=-0.35
+   N=4  C2q/CF=2.275  C2g/TF=-0.369444444444
+   N=5  C2q/CF=3.27222222222  C2g/TF=-0.365079365079
+   N=6  C2q/CF=4.19126984127  C2g/TF=-0.352579365079
+   N=7  C2q/CF=5.03878968254  C2g/TF=-0.3375
+   N=8  C2q/CF=5.82371031746  C2g/TF=-0.322043650794
+Adler: C^q_{2,1} = 9.183549616e-41 ;  Bjorken: C^q_{1,1} = C^q_{2,1} - C^q_{L,1} = -1.0 (in units of C_F; expect -1)
+==============================================================================
+F. Intermediate algebra printed in ex:disall-nlo and ex:disall-gluon
+quark F_2-projected integrand = 8[(1-e)y^2-2y(z-e(1-z))+1+z^2-e(1-z)^2]/[y(1-z)] + 16(3-2e)z(1-y): True
+(1-z) * int dy [y(1-y)]^-e (...)/(8 I0) = -epsilon/2 - z + 7/2 - z**2/epsilon - 1/epsilon  expect -(1+z^2)/e + (7-2z)/2 - e/2 : True
+Beta-function values: I_1/I_0 = 1/2 ;  I_{-1}/I_0 = 2 - 1/epsilon
+quark F_L-projected integrand = 32*z*(epsilon - 1)*(y - 1)
+gluon: int dy [y(1-y)]^-e (F_2 projection) = -(16/e) I0 (P - 3e + 4e^2 - 2e^3)/(1-e) : True
+gluon F_2-projected integrand (y-dependence) = -8*(-epsilon**2 + 8*epsilon*y**2*z**2 - 8*epsilon*y**2*z + 2*epsilon*y**2 - 8*epsilon*y*z**2 + 8*epsilon*y*z - 2*epsilon*y + 2*epsilon*z**2 - 2*epsilon*z + 2*epsilon - 12*y**2*z**2 + 12*y**2*z - 2*y**2 + 12*y*z**2 - 12*y*z + 2*y - 2*z**2 + 2*z - 1)/(y*(epsilon - 1)*(y - 1))

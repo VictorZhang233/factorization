@@ -1,0 +1,275 @@
+% ---------------------------------------------------------------------
+\section{减除形式体系}\label{sec:method-subtraction}
+
+不同区域的近似在重叠处重复计数（例如软—共线重叠中两种近似都准确）。Collins 的办法是从最小的区域开始，逐级地对“减去较小区域贡献之后的被积函数”作近似\cite[第~10~章]{Collins2011}。
+
+\begin{definition}[减除项]\label{def:method-subtraction}
+设 $\mathcal R$ 是区域集合，$T_R$（$R\in\mathcal R$）是由\cref{def:method-collinear-approx,def:method-soft-approx}的操作组成的近似子，其积分扩展到全部动量范围。从极小区域开始递归地定义
+\begin{equation}\label{eq:method-CR}
+\begin{gathered}
+C_R\Gamma\equiv T_R\Bigl(\Gamma-\sum_{R'<R}C_{R'}\Gamma\Bigr),\\
+X_{R_0}\equiv\Gamma-\sum_{R<R_0}C_R\Gamma\quad(\text{故 }C_{R_0}\Gamma=T_{R_0}X_{R_0}),\qquad r\equiv\Gamma-\sum_{R\in\mathcal R}C_R\Gamma .
+\end{gathered}
+\end{equation}
+\uses{def:method-regions,def:method-collinear-approx,def:method-soft-approx}
+\end{definition}
+
+单圈顶点中（\cref{fig:method-nesting}）$C_S\Gamma=T_S\Gamma$，$C_A\Gamma=T_A(1-T_S)\Gamma$，$C_B\Gamma=T_B(1-T_S)\Gamma$，$C_H\Gamma=T_H(\Gamma-C_S\Gamma-C_A\Gamma-C_B\Gamma)$；减去的 $T_AT_S\Gamma$ 就是零区（zero-bin）项。
+
+\subsection{为什么朴素的归纳不成立}
+
+以下用附录~N 的\cref{sec:appN-examples}的离壳单圈三角图（也是\cref{ex:sudakov-offshell}的对象）：标量三角图，内线无质量，测度 $\mu^{2\varepsilon}\int\dd^Dk/(\ii\pi^{D/2})$，
+\begin{equation}\label{eq:method-tri-kin}
+\begin{gathered}
+p_1=\Bigl(P,-\frac{m^2}{2P},\mathbf 0_T\Bigr),\qquad p_2=\Bigl(\frac{m^2}{2P'},-P',\mathbf 0_T\Bigr),\qquad p_i^2=-m^2,\\
+\tilde Q^2\equiv2PP',\qquad Q^2\equiv-(p_1+p_2)^2=\frac{(\tilde Q^2+m^2)^2}{\tilde Q^2} ;
+\end{gathered}
+\end{equation}
+$D_g=-k^2$，$D_1=-(p_1-k)^2$，$D_2=-(p_2+k)^2$（都带 $-i0$），$\Gamma=1/(D_gD_1D_2)$；并记 $e_1=m^2+2Pk^-$，$h_1=2Pk^-$，$t_1=2Pk^--k^2$，$e_2=m^2+2P'k^+$，$h_2=2P'k^+$，$t_2=2P'k^+-k^2$。
+区域为 $\mathcal R=\{S<C_1,C_2<H\}$（$C_i$：胶子平行于 $p_i$；$S$ 是\cref{def:ir-scalings}意义下的超软区，$k\sim m^2/Q$）。近似子是 $T_S:(D_1,D_2)\mapsto(e_1,e_2)$，$T_H:(D_1,D_2)\mapsto(t_1,t_2)$，
+$T_{C_1}:D_2\mapsto h_2$，$T_{C_2}:D_1\mapsto h_1$，它们也作用于已近似的分母（$T_He_i=h_i$，$T_St_i=h_i$，$T_{C_1}e_2=h_2$，……）。
+它们是\cref{def:method-collinear-approx,def:method-soft-approx}的特例：$T_S$ 让夸克线 1 只看见 $k^-$，$D_1=m^2+2Pk^--(m^2/P)k^+-k^2\mapsto e_1$；$T_{C_1}$ 在硬线 2 中令 $k\to\pi_+(k)$、$m=0$。
+
+\begin{example}[朴素归纳为何失败：离壳单圈三角图 \tagR]\label{ex:method-naive-induction}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈。）在上述设定下：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 单个近似项 $T_{C_2}\Gamma=1/(D_gh_1D_2)$ 在 $C_1$ 中有一个未被正规化的共线钳夹；而减除项
+  \begin{equation}\label{eq:method-CC2}
+  C_{C_2}\Gamma=T_{C_2}(\Gamma-T_S\Gamma)=\frac{m^2}{2PP'}\,\frac1{D_gD_2e_2}-\frac1{h_1D_2e_2}
+  \end{equation}
+  在那里被压低；
+\item $C_S\Gamma$ 在 $C_1$ 中是领头的，因此 $T_{C_1}$ 必须在 $T_S\Gamma$ 上也准确：$(1-T_{C_1})T_S\Gamma=\frac1{D_ge_1}\bigl(\frac1{e_2}-\frac1{h_2}\bigr)$，相对大小为 $O(m^2/(Qk^+))$；
+\item $T_{C_1}\Gamma=1/(D_gD_1h_2)$ 对任何 $\varepsilon$ 都不绝对可积：快度端要求 $\varepsilon<0$，紫外端要求 $\varepsilon>0$。
+\end{enumerate}
+因此关于单个链项的陈述一般是错误的；被压低的只是分组的表达式 $C_R\Gamma$。
+\uses{def:method-subtraction,def:method-power-suppressed,prop:appN-triangle-exact}
+\end{example}
+% VF-REF-18
+
+\begin{proof}
+(a) 在 $C_1$ 中（$k\sim Q(1,\lambda^2,\lambda)$），$D_g$ 的极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 在下半平面，$h_1=2Pk^--i0$ 的极点 $k^-=+i0$ 在上半平面，二者在 $k^-=\mathbf k_T=0$、$k^+\sim Q$ 处钳夹：
+$k^-$ 积分给出 $\propto1/\mathbf k_T^2$，而 $\int\dd^{2-2\varepsilon}k_T/\mathbf k_T^2$ 只在 $\varepsilon<0$ 时收敛——$T_{C_2}$ 去掉了线 1 的质量正规子。另一方面，
+$C_{C_2}\Gamma=\frac1{D_gh_1}\bigl(\frac1{D_2}-\frac1{e_2}\bigr)=\frac{e_2-D_2}{D_gh_1D_2e_2}$，而 $e_2-D_2=(m^2/P')k^--D_g$，代入并用 $h_1=2Pk^-$ 即得\cref{eq:method-CC2}：
+每一项只含两个钳夹极点中的一个，第一项带因子 $m^2$，第二项在 $C_1$ 的 $(k^-,\mathbf k_T)$ 小盒子中只占很小的相空间。
+(b) 在 $C_1$ 中 $D_g\sim e_1\sim\lambda^2Q^2$，$e_2\sim Q^2$，故 $C_S\Gamma=1/(D_ge_1e_2)\sim\lambda^{-4}Q^{-6}$，与 $\Gamma$ 同阶。而
+$(1-T_{C_1})T_S\Gamma=\frac1{D_ge_1}\bigl(\frac1{e_2}-\frac1{h_2}\bigr)=-\frac{m^2}{D_ge_1e_2h_2}$，相对于 $T_S\Gamma$ 为 $-m^2/(2P'k^+)$。
+(c) 取 $k=(a^2\kappa^+,\kappa^-,a\boldsymbol\kappa_T)$，$a\to0$（胶子平行于 $p_2$，即 $h_2$ 的极点 $k^+=+i0$ 与 $D_g$ 的极点钳夹的快度端）：被积函数 $\sim a^{-4}$，测度 $\sim a^{4-2\varepsilon}\dd a/a$，收敛要求 $\varepsilon<0$。
+取 $k=(\kappa^+,a\kappa^-,\sqrt a\boldsymbol\kappa_T)$，$a\to\infty$（紫外方向）：$D_g\sim D_1\sim a$，被积函数 $\sim a^{-2}$，测度 $\sim a^{2-\varepsilon}\dd a/a$，收敛要求 $\varepsilon>0$。
+无标度的 $T_{C_1}T_S\Gamma$ 同样如此；在壳无质量三角图 $T_H\Gamma$ 只在 $\varepsilon<0$ 时收敛。这些闭式与标度都由\cref{prop:appN-triangle-exact}的计算给出，我们用符号计算逐一核对过。% check: w10_triangle.py
+\end{proof}
+
+教训：$T_{R_0}$ 的精度对象是 $X_{R_0}$ 而不是 $\Gamma$（(CS1)）；较大或不可比的区域只能作为整个减除项被压低（(CS2)）；只有减除项与分组组合可积（(CS3) 与\cref{asm:appN-contour}）；
+此外邻域须依赖于 $\lambda$，近似只在变形的围道上成立，扩展积分引起的紫外发散只在和中相消（\cref{cor:method-removing-eps}）。
+
+\subsection{减除条件与组合恒等式}
+
+\begin{definition}[减除条件 (CS1)--(CS3)]\label{def:method-collins-conditions}
+设 $X_{R_0}$ 如\cref{eq:method-CR}，$U_{R_0}$ 与 $\mathfrak S$ 如\cref{def:method-neighbourhoods,def:method-power-suppressed}。对 $R_0\in\mathcal R$：
+\begin{enumerate}[leftmargin=4.4em,labelwidth=4em,itemsep=1pt,topsep=2pt]
+\item[\textbf{(CS1)}$_{R_0}$]（精度）$(1-T_{R_0})X_{R_0}\in\mathfrak S(U_{R_0})$；
+\item[\textbf{(CS2)}$_{R_0}$]（非较小区域的压低）对一切 $R\not\le R_0$（$R>R_0$ 或与 $R_0$ 不可比），$C_R\Gamma\in\mathfrak S(U_{R_0})$；
+\item[\textbf{(CS3)}]（可积性）$\Gamma\in L^1(\Omega)$ 且 $\int_\Omega|\Gamma|\,\dd\mu$ 对 $\varepsilon\in(0,\varepsilon_0]$ 一致有界；对每个 $R$ 与每个 $\varepsilon\in(0,\varepsilon_0]$，$C_R\Gamma\in L^1(\Omega)$。
+\end{enumerate}
+（名称 (CS1)--(CS3) 的选取避免与模板定理的 (H1)--(H5)、标签 [A] 以及 MA 冲突。）
+\uses{def:method-subtraction,def:method-power-suppressed,def:method-neighbourhoods}
+\end{definition}
+
+记 $\downarrow R_0=\{X\in\mathcal R:X<R_0\}$，$\uparrow R_0=\{X\in\mathcal R:X>R_0\}$。一条\emph{链}是全序子集 $c=\{R_1>R_2>\dots>R_j\}$，$|c|=j$，$T_c\equiv T_{R_1}T_{R_2}\cdots T_{R_j}$（最大者在最左，最后作用），$T_\emptyset=1$；
+对 $\mathcal P\subset\mathcal R$ 定义 $\mathcal O_{\mathcal P}\equiv\sum_{\text{链 }c\subset\mathcal P}(-1)^{|c|}T_c$。
+
+\begin{proposition}[减除的链展开]\label{prop:method-chains}
+对任意线性映射 $T_R$：
+\begin{equation}\label{eq:method-chains}
+C_R\Gamma=\sum_{\text{链 }R_1<\dots<R_k<R}(-1)^kT_RT_{R_k}\cdots T_{R_1}\Gamma,\qquad X_{R_0}=\mathcal O_{\downarrow R_0}\Gamma,\qquad r=\mathcal O_{\mathcal R}\Gamma ;
+\end{equation}
+若 $\mathcal P=\{P_1<\dots<P_n\}$ 全序，则 $\mathcal O_{\mathcal P}=(1-T_{P_n})\cdots(1-T_{P_1})$。
+\uses{def:method-subtraction}
+\end{proposition}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}。）沿偏序归纳：$C_R\Gamma=T_R\Gamma-\sum_{R'<R}T_RC_{R'}\Gamma$，代入 $C_{R'}\Gamma$ 的展开；$(R',c')\mapsto\{R\}\cup c'$ 是到“以 $R$ 为最大元、长度 $\ge2$ 的链”的双射，
+且 $-(-1)^{|c'|-1}=(-1)^{|c|-1}$。非空链有唯一最大元，故 $X_{R_0}=\mathcal O_{\downarrow R_0}\Gamma$、$r=\mathcal O_{\mathcal R}\Gamma$；全序时展开乘积即得最后一式。
+\end{proof}
+
+链展开与 Zimmermann 森林公式\cite{Zimmermann1969}的类比须修正：森林是两两嵌套\emph{或不相交}的族，链只对应嵌套的族；不可比的区域即使钳夹集相交也不出现在同一条链中，只通过交 $R\wedge R'$
+相互作用（下面的配对分解），这才是重叠发散的类比。与 BPHZ 一样，严格估计只对分组表达式成立。宽角振幅的红外森林公式见\cite{Ma2020}。
+
+\begin{lemma}[配对分解]\label{lem:method-pairing}
+设 $\mathcal R$ 对逐线交封闭（\cref{def:appN-meet-closed}），固定 $R_0$；记 $\mathcal I'$（$\mathcal I''$）为与 $R_0$ 不可比、且钳夹集与 $\pi_{R_0}$ 相交（不相交）的区域，$R_\wedge\equiv R\wedge R_0$。则逐点地
+\begin{equation}\label{eq:method-pairing}
+r=\mathcal O_{\uparrow R_0}\bigl[(1-T_{R_0})X_{R_0}\bigr]-\sum_{R\in\mathcal I'}\mathcal O_{\uparrow R}\,T_R\bigl[(1-T_{R_\wedge})X_{R_\wedge}\bigr]-\sum_{R\in\mathcal I''}\mathcal O_{\uparrow R}\,T_R\Gamma .
+\end{equation}
+\uses{prop:method-chains,lem:method-meets,def:appN-meet-closed}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}。）在 $r=\sum_c(-1)^{|c|}T_c\Gamma$ 中，元素都与 $R_0$ 可比的链合起来给出第一项；其余的链按其中与 $R_0$ 不可比的最小元 $R^*$ 分组：$R^*$ 以下的元素都 $<R_0$，
+因而由\cref{lem:method-meets}(c) 都 $\le R_\wedge$（$R^*\in\mathcal I''$ 时没有这样的元素），对它们求和得 $(1-T_{R_\wedge})X_{R_\wedge}$，即得后两项。对任意（不对易的）线性映射成立；
+我们在九元偏序集上用随机矩阵数值核对了\cref{eq:method-chains,eq:method-pairing}。% check: w10_poset.py
+\end{proof}
+
+配对分解说明\emph{哪些组合}必须被估计，但没有把问题化为单个近似误差：展开交错和 $\mathcal O_{\uparrow R}$ 会重新产生不可积的项（\cref{ex:disall-ladder}）。
+
+\begin{proposition}[乘积公式]\label{prop:method-product}
+设任意两个区域的钳夹集都相交，$\mathcal R$ 对逐线交封闭，每个 $T_R$ 幂等，并且 (Com) $T_RT_{R'}=T_{R'}T_R$；(Abs) 对不可比的 $R,R'$，$T_RT_{R'}=T_RT_{R\wedge R'}T_{R'}$。则
+\begin{equation}\label{eq:method-product}
+C_R\Gamma=T_R\prod_{R'<R}(1-T_{R'})\,\Gamma,\qquad X_{R_0}=\prod_{R<R_0}(1-T_R)\,\Gamma,\qquad r=\prod_{R\in\mathcal R}(1-T_R)\,\Gamma ,
+\end{equation}
+并且 (CS1)$_{R_0}$ 等价于 $\prod_{R\le R_0}(1-T_R)\Gamma\in\mathfrak S(U_{R_0})$，(CS2)$_{R_0}$ 等价于：对一切 $R\not\le R_0$，$G_{R_0}(R)\equiv T_R\prod_{R'\in\downarrow R\cup\{R_0\}}(1-T_{R'})\Gamma\in\mathfrak S(U_{R_0})$。
+\uses{prop:method-chains,lem:method-meets,lem:method-pairing,def:method-collins-conditions,def:appN-meet-closed}
+\end{proposition}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}；交半格上的 Möbius 函数论证。）由 (Com)(Abs) 与幂等，$T_{\mathcal S}\equiv\prod_{R\in\mathcal S}T_R=T_{\bar{\mathcal S}}$（$\bar{\mathcal S}$ 为交封闭包），于是
+$\prod_{R\in\mathcal P}(1-T_R)=\sum_{\mathcal K}T_{\mathcal K}\sum_{\bar{\mathcal S}=\mathcal K}(-1)^{|\mathcal S|}$；记 $\mathcal M$ 为 $\mathcal K$ 的交不可约元，$\bar{\mathcal S}=\mathcal K$ 当且仅当 $\mathcal M\subset\mathcal S\subset\mathcal K$，
+内层和除非 $\mathcal K=\mathcal M$（即 $\mathcal K$ 是链）否则为零，故 $\prod(1-T_R)=\mathcal O_{\mathcal P}$，再用\cref{prop:method-chains}。对不可比的 $R$，$T_RT_{R_0}=T_RT_{R\wedge R_0}T_{R_0}$ 且
+$T_{R\wedge R_0}(1-T_{R\wedge R_0})=0$，故 $G_{R_0}(R)=C_R\Gamma$；$R>R_0$ 时显然。我们在九元偏序集上用满足 (Abs) 的置零模型核对了这些式子，并验证 (Abs) 被破坏时公式失效。% check: w10_poset.py
+\end{proof}
+
+分组表达式中 $(1-T_{R_0})$ 提供 $U_{R_0}$ 上的小因子；其余 $(1-T_{R'})$ 不提供小量，但在 $T_R$ 去掉红外正规子时阻止新的未正规化钳夹——所以单个链项不可积而 $G_{R_0}(R)$ 可积。
+(Com)(Abs) 对适配走向下的动量替换精确成立，对极化投影可能失效（\cref{rem:method-abs-failure}）。
+
+\subsection{减除定理}
+
+\begin{lemma}[有界的亚纯函数无极点]\label{lem:method-no-pole}
+在 $\varepsilon=0$ 附近亚纯、且在 $(0,\varepsilon_0]$ 上有界的函数在 $\varepsilon=0$ 处没有极点。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+若有 $k\ge1$ 阶极点，则 $\varepsilon^kF(\varepsilon)\to c\neq0$，于是 $\varepsilon\to0^+$ 时 $|F(\varepsilon)|\ge|c|\varepsilon^{-k}/2\to\infty$，与有界矛盾。
+\end{proof}
+
+\begin{corollary}[去掉维数正规化 \tagR]\label{cor:method-removing-eps}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-contour}(b)（及\cref{thm:appN-subtraction}的前提）。
+设 $\int\Gamma$ 在 $\varepsilon=0$ 附近解析，且\cref{thm:appN-subtraction}的假设成立。则 $F(\varepsilon)=\sum_R\int C_R\Gamma$ 在 $\varepsilon=0$ 处没有极点，且 $\bigl|\int\Gamma-F\bigr|_{\varepsilon=0}\le C\lambda^aL^K$。
+其意义是：单个减除项的紫外极点在对区域求和时逐图相消。（本推论只涉及部分子态。）
+% errtype: E-N
+\uses{thm:appN-subtraction,lem:method-no-pole,asm:appN-contour}
+\end{corollary}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}。）由\cref{asm:appN-contour}(b)，$F$ 在 $\varepsilon=0$ 附近亚纯。在 $(0,\varepsilon_0]$ 上，由 (CS3) 积分是线性的，$F=\int\Gamma-\int r$；由\cref{thm:appN-subtraction}，$|\int r|\le C\lambda^aL^K$ 对 $\varepsilon$ 一致，
+而 $\int\Gamma$ 在 $\varepsilon=0$ 附近连续，故 $F$ 在 $(0,\varepsilon_0']$ 上有界，由\cref{lem:method-no-pole}没有极点。于是 $F$ 在 $0$ 处解析，界 $|\int\Gamma-F|\le C\lambda^aL^K$ 在 $\varepsilon\to0^+$ 时保持。
+\end{proof}
+
+单圈离壳三角图中这一相消的显式形式见附录~N 的\cref{prop:appN-triangle-exact}(b)，以及下文\cref{ex:method-sudakov-subtraction}的第 (5) 步：四个减除项各有 $\varepsilon^{-2}$ 与 $\varepsilon^{-1}$ 极点，其和有限。
+
+\begin{theorem}[减除定理 \tagA]\label{thm:method-subtraction}
+对过程的每个领头幂次被积函数 $\Gamma$（一张图，或具有公共走向的一族图），$\Gamma=\sum_{R\in\mathcal R}C_R\Gamma+r$，且 $r\in\mathfrak S(\Omega)$；
+因此 $\int\Gamma=\sum_R\int C_R\Gamma+O(\lambda^aL^K)$，并且每个 $\int C_R\Gamma$ 绝对收敛。（本定理只涉及部分子态。）
+% errtype: E-S
+\uses{def:method-subtraction,def:method-collins-conditions,def:method-power-suppressed,thm:appN-subtraction,lem:method-local-accuracy,prop:method-product,cor:method-removing-eps,asm:appN-collins,asm:appN-uv,asm:appN-contour}
+\end{theorem}
+
+\begin{proofsketch}
+(1) \emph{演绎。}\cref{thm:appN-subtraction}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-contour}(a)）：若对给定的 $\Gamma$，(CS1)$_{R_0}$、(CS2)$_{R_0}$ 对一切 $R_0$ 成立且 (CS3) 成立，则 $r\in\mathfrak S(\Omega)$。
+其证明是初等的：把 $\mathcal R$ 分成 $R<R_0$、$R=R_0$、$R\not\le R_0$ 三部分，在 $U_{R_0}$ 上逐点有
+\begin{equation}\label{eq:method-r-identity}
+r=X_{R_0}-T_{R_0}X_{R_0}-\sum_{R\not\le R_0}C_R\Gamma=(1-T_{R_0})X_{R_0}-\sum_{R\not\le R_0}C_R\Gamma\ \in\mathfrak S(U_{R_0}) ,
+\end{equation}
+再由支配集的有限覆盖得 $r\in\mathfrak S(\Omega)$，由 (CS3) 得积分的线性。全部内容都在 (CS1)(CS2) 之中。
+(2) 极小区域的 (CS1) 由\cref{lem:method-local-accuracy}给出。(3) 在 (Com)(Abs) 之下，其余的 (CS1)(CS2) 化为\cref{prop:method-product}中分组表达式的幂次计数。
+(4) 对一切被积函数的分组估计就是\cref{asm:appN-collins}。(5) 去掉 $\varepsilon$（\cref{cor:method-removing-eps}）；紫外结构，即 $\Gamma$ 在被积函数层次上重整化、因而是单个函数且 $\int|\Gamma|$ 一致有界，是\cref{asm:appN-uv}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}演绎是 \tagR（$R_{\mathrm{cond}}$）；定理的 [A] 就是\cref{asm:appN-collins}的 [A]。Collins\cite[第~10.3、10.8~节]{Collins2011}在该章的严格程度上完整处理了 Sudakov 形状因子，
+但那里的幂次计数是标度陈述；\cref{asm:appN-collins}的条件 (CS1)--(CS3) 以纤维化的积分范数（误差类型 E-N$^\varphi$：负分量用留数精确积掉，在实的正分量与横向分量底空间上估计）
+只对单圈离壳三角图被完整验证（附录~N 的\cref{prop:appN-triangle-cs}；另见\cref{ex:method-sudakov-subtraction}）。
+一般过程是 \tagA。Collins--Soper--Sterman 的综述写道：「“there is as yet in the literature no complete and systematic subtraction procedure in QCD $\ldots$ even in the case of deeply inelastic scattering”」
+\cite[第~10.1~节]{CollinsSoperSterman1989}——即：文献中尚无 QCD 中完整而系统的减除程序，即使对 DIS 也是如此。与 BPHZ 不同，Minkowski 空间的无质量规范理论中没有 Weinberg 定理的类比，
+红外幂次计数需要钳夹面分析、围道变形、嵌套与重叠的区域以及 Glauber 区。单个链项一般不可积（\cref{ex:method-naive-induction}），任何逐项的归纳都不能代替对分组表达式的估计。
+误差类型：本定理断言的是 E-N，文献中存在的是 E-S。解除途径：在 (Com)(Abs) 之下对一切阶证明分组的幂次计数，或推广附录~N 的纤维化方法（\cref{rem:appN-fibered-allorders}）。
+
+\subsection{两个完整的单圈例子}
+
+%%FIG fig:method-sudakov-plane%%
+
+\begin{example}[完整的单圈例子：离壳三角图的 Collins 减除]\label{ex:method-sudakov-subtraction}
+沿用\cref{ex:method-naive-induction}的运动学，以 $\tilde Q$ 为单位（$\tilde Q=1$，于是 $Q^2=(1+m^2)^2$），并记 $\lambda=m/\tilde Q$。下面分六步。
+
+\textbf{(1) 闭式。}每条夸克线上的近似构成四元半格 $\{1,e,t,h\}$（$e\circ t=t\circ e=h$，$h\circ x=h$，$x\circ x=x$），(Com)(Abs) 精确成立，由\cref{prop:method-product}，
+\begin{equation}\label{eq:method-tri-CR}
+\begin{gathered}
+C_S\Gamma=\frac1{D_ge_1e_2},\qquad C_{C_1}\Gamma=\frac1{D_gh_2}\Bigl(\frac1{D_1}-\frac1{e_1}\Bigr),\qquad C_{C_2}\Gamma=\frac1{D_gh_1}\Bigl(\frac1{D_2}-\frac1{e_2}\Bigr),\\
+C_H\Gamma=\frac1{D_g}\Bigl(\frac1{t_1}-\frac1{h_1}\Bigr)\Bigl(\frac1{t_2}-\frac1{h_2}\Bigr)=\frac{D_g}{t_1h_1t_2h_2}
+\end{gathered}
+\end{equation}
+（用 $h_i-t_i=-D_g$），余项 $r=\frac1{D_g}[\Delta_1\Delta_2-\Delta_1'\Delta_2'-\delta_1\delta_2]$，$\Delta_i=\frac1{D_i}-\frac1{h_i}$，$\Delta_i'=\frac1{e_i}-\frac1{h_i}=-\frac{m^2}{e_ih_i}$，$\delta_i=\frac1{t_i}-\frac1{h_i}$。
+
+\textbf{(2) $k^-$ 留数。}固定 $(k^+,\mathbf k_T)$，各 $C_R\Gamma$ 按 $|k^-|^{-2}$ 衰减。对 $0<k^+<P$，$C_{C_1}\Gamma$ 中 $D_g$ 的极点在下半平面、$D_1$ 与 $e_1$ 的在上半平面，
+\begin{equation}\label{eq:method-CC1-res}
+\int\frac{\dd k^-}{2\pi}\,C_{C_1}\Gamma=\frac\ii2\,\frac{m^2k^+/(2PP')}{\bigl[k^+m^2(1-k^+/P)+P\mathbf k_T^2\bigr]\bigl[k^+m^2+P\mathbf k_T^2\bigr]} ,
+\end{equation}
+它在 $k^+\to0$ 时线性地趋于零，而它的两项 $T_{C_1}\Gamma$ 与 $-T_{C_1}T_S\Gamma$ 各自像 $1/k^+$ 那样发散；$k^+>P$ 时只剩 $-T_{C_1}T_S\Gamma$ 的尾巴 $-\frac\ii2[h_2(k^+m^2+P\mathbf k_T^2)]^{-1}$，$k^+<0$ 时为零
+（我们用符号留数核对了这些式子）。% check: w10_extra.py (a)
+于是每个减除项都是 $(k^+,\mathbf k_T)$ 上绝对收敛的积分（$0<\varepsilon<1$）。
+
+\textbf{(3) 各支配集上的小因子}（$\beta_S=\frac19$，$\beta_C=\frac13$，\cref{fig:method-neighbourhoods}）。$U_H$ 上 (CS1) 的对象是 $r=\frac1{D_g}[(\Delta_1-\delta_1)\Delta_2+\delta_1(\Delta_2-\delta_2)-\Delta_1'\Delta_2']$，
+其中 $\Delta_i-\delta_i=(t_i-D_i)/(D_it_i)$（$t_1-D_1=\frac{m^2}Pk^+-m^2$）与 $\Delta_i'$ 相对于 $1/D_i$ 都是 $O(m^2/t_H^2)=O(\lambda^{4/3})$，$\|k\|\to\infty$ 时 $r\sim m^2/\|k\|^6$。
+$U_{C_1}$ 上（$|k^+|\ge\frac12\lambda^{1/9}$，$|k^-|,|\mathbf k_T|\le\lambda^{1/3}$），(CS1) 的对象 $(1-T_{C_1})(1-T_S)\Gamma=\frac1{D_g}[\frac1{D_1}\Delta_2-\frac1{e_1}\Delta_2']$ 中的小因子相对为
+$O(\lambda^{2-1/9}+\lambda^{1/3})$；(CS2) 的对象是\cref{eq:method-CC2}的 $C_{C_2}\Gamma$（在该盒子上为 $O(\lambda^{2/3}L)$，前提是 $k^-$ 围道离开 $0$ 一个 $\lambda$ 的幂次）与 $C_H\Gamma$；$U_{C_2}$ 上的情形与之对称。
+$U_S$ 上 (CS1) 的对象是 $(1-T_S)\Gamma$：在满足\cref{asm:appN-separation}(iii) 的围道上（这里 $v_A(p_1)=m^2/2$），$|e_1|\ge c(P|k^-|+m^2)$，被删去的 $-(m^2/P)k^+-k^2$ 相对 $\le C|k^+|/P\le C\lambda^{1/9}$。
+
+\textbf{(4) 软近似只在变形的围道上成立。}对 $k=(z,\lambda^2/z,\lambda)$（$\lambda^2\ll z\ll1$），$D_g$ 与 $D_1$ 的极点分居实轴两侧，围道只能在其间穿过实轴。若在 $k^-\approx0$ 处穿过，$|e_1|\approx m^2$
+而被删去的 $-k^2\approx\mathbf k_T^2\approx m^2$，误差为 $O(1)$；若在 $\Real k^-\approx\mathbf k_T^2/(4k^+)$ 附近穿过，误差 $\sim z$。例如 $\lambda=10^{-2}$、$z=0.03$ 时两者分别为 $0.958$ 与 $0.036$
+（\cref{fig:method-sudakov-plane}）。% check: w10_glauber.py (5)
+这是“近似只在变形的围道上成立”的最简单实例。
+
+\textbf{(5) 值与极点相消。}
+\begin{equation}\label{eq:method-tri-values}
+\int C_H\Gamma=\frac{1}{\tilde Q^2}\Bigl(\frac{\mu^2}{\tilde Q^2}\Bigr)^{\varepsilon}\mathcal A,\quad
+\int C_{C_1}\Gamma=\int C_{C_2}\Gamma=-\frac{1}{\tilde Q^2}\Bigl(\frac{\mu^2}{m^2}\Bigr)^{\varepsilon}\mathcal A,\quad
+\int C_S\Gamma=\frac{1}{\tilde Q^2}\Bigl(\frac{\mu^2\tilde Q^2}{m^4}\Bigr)^{\varepsilon}\mathcal B,
+\end{equation}
+$\mathcal A=\frac{\Gamma(1+\varepsilon)\Gamma(1-\varepsilon)^2}{\varepsilon^2\Gamma(1-2\varepsilon)}=\ee^{-\gamma_E\varepsilon}(\varepsilon^{-2}-\frac{\zeta_2}2+O(\varepsilon))$，
+$\mathcal B=\frac{\Gamma(1+\varepsilon)^2\Gamma(1-\varepsilon)}{\varepsilon^2}=\ee^{-\gamma_E\varepsilon}(\varepsilon^{-2}+\frac{3\zeta_2}2+O(\varepsilon))$。记 $\ell_Q=\ln\frac{\mu^2}{\tilde Q^2}$，$\ell_m=\ln\frac{\mu^2}{m^2}$：
+$\varepsilon^{-2}$ 的系数 $1-2+1=0$，$\varepsilon^{-1}$ 的系数 $\ell_Q-2\ell_m+(2\ell_m-\ell_Q)=0$，有限部分 $\frac12[\ell_Q^2-2\ell_m^2+(2\ell_m-\ell_Q)^2]+2\zeta_2=(\ell_Q-\ell_m)^2+2\zeta_2$，即
+\begin{equation}\label{eq:method-tri-sum}
+\sum_R\int C_R\Gamma\Big|_{\varepsilon\to0}=\frac1{\tilde Q^2}\Bigl[\ln^2\frac{\tilde Q^2}{m^2}+\frac{\pi^2}3\Bigr],\qquad
+\int r=-\frac{4m^2}{Q^4}+\frac{m^4}{Q^6}\Bigl(L^2-15+\frac{\pi^2}3\Bigr)+O\Bigl(\frac{m^6}{Q^8}L^2\Bigr),
+\end{equation}
+$L=\ln(Q^2/m^2)$。$C_H$ 的极点是红外的、$C_S$ 的是紫外的、$C_{C_i}$ 兼有二者——这就是\cref{cor:method-removing-eps}的逐图相消。余项是完整的 $\lambda^2$ 压低，\emph{在次领头幂次没有对数}：
+精确积分的次领头项 $t(2L^2-4L-4+\frac{2\pi^2}3)$（$t=m^2/Q^2$，\cref{ex:sudakov-offshell}）中的对数由减除项通过 $\tilde Q^2\ne Q^2$ 再现（\cref{prop:appN-triangle-exact}(d)）；
+而一般论证在 $U_S$ 上只保证 $O(\lambda^{1/9})$。
+
+\textbf{(6) 零区与取值约定。}在光锥表示中，零区项 $T_{C_1}T_S\Gamma=1/(D_ge_1h_2)$ 的 $k^-$ 积分只取 $D_g$ 的极点（$k^+>0$；$k^+<0$ 时为零），
+再在 $2-2\varepsilon$ 维中作 $\mathbf k_T$ 积分，得到形式表达式
+\begin{equation}\label{eq:method-zerobin}
+\int T_{C_1}T_S\Gamma=\frac{\Gamma(1+\varepsilon)}{\varepsilon\,\tilde Q^2}\Bigl(\frac{\mu^2}{m^2}\Bigr)^{\varepsilon}\int_0^\infty\frac{\dd\sigma_1}{\sigma_1^{1+\varepsilon}}
+=\frac{\Gamma(1+\varepsilon)}{\varepsilon\,\tilde Q^2}\Bigl(\frac{\mu^2}{m^2}\Bigr)^{\varepsilon}\Bigl(\frac1{\varepsilon_{\rm UV}}-\frac1{\varepsilon_{\rm IR}}\Bigr),\qquad\sigma_1=\frac{k^+}P .
+\end{equation}
+它对任何 $\varepsilon$ 都发散（$\mathbf k_T$ 积分要求 $\varepsilon>0$，$\sigma_1\to0$ 端要求 $\varepsilon<0$），取值约定\cref{asm:appN-values}(V2) 赋予它零；(V1) 在此成立：$T_{C_1}\Gamma$ 的 Feynman 参数表示的延拓恰好等于绝对收敛的 $\int C_{C_1}\Gamma$。% check: w10_zerobin.py
+在参数空间中对 $[0,1]$ 作软展开则会得到 $-1/\varepsilon$（值依赖于表示，\cref{rem:ir-regions-values}）。外线在壳无质量时（纯维数正规化）一切两两重叠都无标度，不留下显式零区项；用截断时它们是必需的（\cref{ex:ir-regions-toy}）。
+
+\textbf{地位。}恒等式、各项的值与余项都是精确的。在 $k^-$ 留数表示中，纤维化形式的 (CS1)--(CS3) 对本例已完整验证，四个减除项的纤维化值与其协变值精确相同（附录~N 的\cref{prop:appN-triangle-cs}(a)(b)）；
+由这些纤维化界推出积分形式的减除定理 $|\int\Gamma-\sum_R\int C_R\Gamma|\le C\lambda^aL^K$（而不必构造变形的四维围道），还需要 $\Gamma$ 本身的纤维化值等于其协变值，\cref{prop:appN-triangle-cs}(c) 把这一步写成以此为前提的蕴涵式。
+\cref{thm:appN-subtraction}形式下、变形四维围道上一致的积分界即使对本例也没有写出。本例在一张图上演示了\cref{asm:appN-collins}，并不对一般的图验证它。
+\uses{thm:method-subtraction,ex:method-naive-induction,prop:appN-triangle-exact,prop:appN-triangle-cs,ex:sudakov-offshell,rem:ir-regions-values}
+\end{example}
+% VF-REF-2, VF-REF-3
+
+%%FIG fig:method-coeff-minus-coll%%
+
+\begin{example}[减除语言中的单圈 DIS]\label{ex:method-dis-oneloop}
+夸克靶上的单圈 DIS（$\gamma^*q$ 道，Feynman 规范，纯维数正规化），区域为靶共线区 $A$ 与硬区 $H$。单圈割图之和为
+\begin{equation}\label{eq:method-dis-gamma1}
+\frac{\hat F_2^{q(1)}}{ze_q^2}=\frac{\as}{2\pi}\Bigl(\frac{\mu^2}{Q^2}\Bigr)^{\varepsilon}\Bigl[-\frac1\varepsilon P_{qq}(z)+C_2^q(z)+O(\varepsilon)\Bigr] :
+\end{equation}
+实辐射给出 $C_F\{\frac2{\varepsilon^2}\delta(1-z)+\frac1\varepsilon[-2\mathcal D_0+1+z+\frac32\delta(1-z)]\}$，虚修正给出 $C_F[-\frac2{\varepsilon^2}-\frac3\varepsilon]\delta(1-z)$，双极点 $2-2=0$，
+单极点之和为 $-P_{qq}=-C_F[2\mathcal D_0-(1+z)+\frac32\delta(1-z)]$，有限部分之和为（$\mathcal D_k=[\ln^k(1-z)/(1-z)]_+$）
+\begin{equation}\label{eq:method-C2q}
+C_2^q=C_F\Bigl[2\mathcal D_1-\frac32\mathcal D_0-(1+z)\ln(1-z)-\frac{1+z^2}{1-z}\ln z+3+2z-\Bigl(\frac92+\frac{\pi^2}3\Bigr)\delta(1-z)\Bigr] .
+\end{equation}
+靶共线近似 $T_A\Gamma^{(1)}$ 是单圈部分子 PDF 的割图乘以领头阶硬部分；在纯维数正规化中这些图无标度，裸的单圈部分子 PDF 为零，$\overline{\rm MS}$ 重整化后只剩抵消项（\cref{prop:pdf-partonic-dr}）：
+\begin{equation}\label{eq:method-dis-CA}
+C_A\Gamma^{(1)}=f^{(1)}_{q/q}\otimes{\rm Born}=-\frac{\as}{2\pi}\frac1\varepsilon P_{qq},\qquad
+C_H\Gamma^{(1)}=\Gamma^{(1)}-C_A\Gamma^{(1)}=\frac{\as}{2\pi}\Bigl[C_2^q+P_{qq}\ln\frac{Q^2}{\mu^2}\Bigr] ;
+\end{equation}
+$\mu=Q$ 时 $C_H\Gamma^{(1)}=\frac{\as}{2\pi}C_2^q$：系数函数\emph{就是}减除后的图。$C_A\Gamma^{(1)}$ 中的 $1/\varepsilon$ 原是紫外抵消项，现在扮演红外极点：部分子 PDF“等于 $\delta(1-x)$”只对裸 PDF 成立，
+重整化的部分子 PDF 由红外极点组成——这一记账若不写明，共线极点在系数函数中的相消就无从理解，也最易出符号错误。\Cref{fig:method-coeff-minus-coll}逐图画出“系数函数 $=$ 割图减去其共线近似”；
+用胶子质量作红外正规子时，同一组 PDF 图正是\cref{prop:pdf-pqq-operator}中由算符定义算出 $P_{qq}$ 的图。（我们用符号计算核对了\cref{eq:method-C2q,eq:method-dis-CA}。）% check: w10_extra.py (c)
+\uses{def:method-subtraction,prop:pdf-partonic-dr,prop:pdf-pqq-operator}
+\end{example}
+% VF-DIS-3, VF-DIS-4, VF-DIS-6, VF-PDF-5
+

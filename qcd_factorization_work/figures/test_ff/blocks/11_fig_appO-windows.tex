@@ -1,0 +1,82 @@
+%%% BEGIN fig:appO-windows
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff ax/.style={lcaxis,gray!60!black},
+  ff th/.style={draw=blue!60!black,line width=0.9pt},
+  ff thp/.style={draw=blue!60!black,line width=0.9pt,dash pattern=on 3pt off 2pt},
+  ff J/.style={draw=black!80,line width=0.85pt},
+  ff car/.style={draw=violet!75!black,line width=0.9pt},
+  ff R/.style={draw=green!40!black,line width=0.7pt,dash pattern=on 3pt off 2pt},
+  ff dim/.style={draw=gray!60!black,line width=0.45pt,{Stealth[length=3pt]}-{Stealth[length=3pt]}},
+  ff vh/.style={draw=gray!60!black,line width=0.6pt,dash pattern=on 2pt off 1.5pt},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff tick/.style={font=\scriptsize,inner sep=1pt}]
+  % ============================================================= (a) windows in k_T^2 (u = log_2(k_T^2/X), x = 0.86 u)
+  \begin{scope}
+    \fill[red!7] (-2.24,0) rectangle (1.72,2.3);
+    \draw[ff ax] (-2.3,0) -- (4.45,0) node[above left=1pt and -2pt] {$\mathbf k_{Tj}^2$（对数）};
+    \draw[ff ax] (-2.3,0) -- (-2.3,2.55);
+    \foreach \y/\t in {0/0,2/1} \node[ff tick,left] at (-2.3,\y) {$\t$};
+    \draw[line width=0.5pt] (-2.3,2) -- ++(0.07,0);
+    \draw[ff th] (-2.24,0.02) -- (0,0.02) -- plot[domain=0:1,samples=25,variable=\t] ({0.86*\t},{0.02+1.98*(3*\t*\t-2*\t*\t*\t)}) -- (4.3,2.0);
+    \draw[ff thp] (-2.24,0.0) -- (0.86,0.0) -- plot[domain=0:1,samples=25,variable=\t] ({0.86*(1+\t)},{1.98*(3*\t*\t-2*\t*\t*\t)}) -- (4.3,1.98);
+    \node[ff lab,text=blue!50!black,anchor=east] at (0.38,1.3) {$\Theta_j$};
+    \node[ff lab,text=blue!50!black,anchor=west] at (1.42,0.72) {$\Theta'_j$};
+    \foreach \x/\t in {0/{X},0.86/{2X},1.72/{4X}} {\draw[line width=0.5pt] (\x,0) -- ++(0,0.07); \node[ff tick,below] at (\x,-0.02) {$\t$};}
+    \node[ff lab,text=red!55!black,align=center] at (-1.1,1.45) {软角区 $K_R$\\（$\prod_u\Theta'_u<1$）};
+    \node[ff lab,align=center] at (3.0,1.45) {窗口核\\（$\Theta_j=\Theta'_j=1$）};
+    \draw[line width=0.6pt,-{Stealth[length=3.5pt]}] (-1.38,-0.62) -- (-1.38,-0.08);
+    \node[ff tick,anchor=north,align=center] at (-1.38,-0.62) {软尺度 $|\mathbf k_T|\sim\lambda^2$};
+    \draw[line width=0.6pt,-{Stealth[length=3.5pt]}] (3.44,-0.62) -- (3.44,-0.08);
+    \node[ff tick,anchor=north,align=center] at (3.44,-0.62) {Glauber：$|\mathbf k_T|\sim\lambda$};
+    \node at (1.05,-1.55) {(a)\ 窗口（$X\equiv4\nu_A\mu_j/\lambda^{a_G}$）};
+  \end{scope}
+  % ============================================================= (b) the jet factor of a spectator insertion vs. the entire carrier
+  \begin{scope}[xshift=9.0cm]
+    \draw[ff ax] (-3.55,0) -- (3.75,0) node[below left=1pt and -2pt] {$k^-$};
+    \draw[line width=0.5pt] (0,0) -- (0,-0.07);
+    \draw[ff R] (-3.45,1.62) -- (3.45,1.42);
+    \node[ff lab,text=green!35!black,anchor=north west] at (-3.45,1.52) {$R(k^-)$（尺度 $\Lambda_j\gg w$）};
+    \draw[ff car] plot[domain=-3:3,samples=121,variable=\k] ({1.15*\k},{0.975*exp(-\k*\k)});
+    \draw[ff J] plot[domain=-3:3,samples=301,variable=\k] ({1.15*\k},{0.1375/(\k*\k+0.0625)});
+    \foreach \x in {-1.15,1.15} \draw[gray!60!black,line width=0.4pt,dash pattern=on 0.8pt off 1.2pt] (\x,0.36) -- (\x,-0.3);
+    \draw[ff dim] (-1.15,-0.3) -- (1.15,-0.3);
+    \node[ff tick,anchor=west] at (1.2,-0.3) {$2w$};
+    \node[ff lab,anchor=east] at (-0.25,2.1) {$J(k^-)$：极点 $\pm\ii\nu_A$，宽 $\sim\nu_A$};
+    \node[ff lab,anchor=west,text=violet!70!black] at (1.25,0.62) {$\bar{\mathcal J}\,\phi(k^-/w)/w$};
+    \node at (0.1,-1.55) {(b)\ 改写：同一 $\int\frac{\dd k^-}{2\pi}$，整函数载体};
+  \end{scope}
+  % ============================================================= (c) light-cone time: spectator vs absorbed active endpoint
+  \begin{scope}[yshift=-4.55cm,xshift=1.05cm]
+    \draw[ff ax] (-3.45,0) -- (3.55,0) node[below left=1pt and -2pt] {$\tau=x^+$};
+    \draw[ff vh] (0,-0.1) -- (0,1.75);
+    \node[ff tick,anchor=north] at (0,-0.05) {$V_H$：$\tau=0$};
+    \draw[ff J] plot[domain=-3:0,samples=60,variable=\t] ({1.1*\t},{1.35*exp(0.45*\t)});
+    \draw[ff J] plot[domain=0:3,samples=60,variable=\t] ({1.1*\t},{1.35*exp(-0.45*\t)});
+    \draw[ff car] plot[domain=-0.6:0.6,samples=81,variable=\t] ({1.1*\t},{1.35*exp(-9*\t*\t)});
+    \node[ff lab,anchor=south west] at (1.35,0.62) {$\mathcal J(\tau)$};
+    \node[ff lab,anchor=west,text=violet!70!black] at (0.42,1.42) {$\mathcal J(0)\,\ee^{-w^2\tau^2/4}$};
+    \node[font=\footnotesize,align=center] at (0.05,-0.95) {旁观者端点（S）：$\mathcal J(0^+)=\mathcal J(0^-)$\\局域化于 $\tau=0$（载体）};
+  \end{scope}
+  \begin{scope}[yshift=-4.55cm,xshift=9.0cm]
+    \draw[ff ax] (-3.45,0) -- (3.55,0) node[below left=1pt and -2pt] {$\tau=x^+$};
+    \draw[ff vh] (0,-0.1) -- (0,1.75);
+    \node[ff tick,anchor=north] at (0,-0.05) {$V_H$：$\tau=0$};
+    \draw[ff J] plot[domain=-3:0,samples=60,variable=\t] ({1.1*\t},{1.35*exp(0.45*\t)});
+    \draw[ff J] (0,0.01) -- (3.3,0.01);
+    \fill[black!80] (0,1.35) circle[radius=1.5pt];
+    \draw[black!80,fill=white,line width=0.6pt] (0,0.01) circle[radius=1.5pt];
+    \node[ff lab,anchor=south east] at (-1.35,0.62) {$\mathcal J(\tau)$};
+    \node[ff lab,anchor=west,align=left] at (0.3,1.0) {$\tau=0$ 处跳跃：局域化会产生\\依赖截断的接触项};
+    \node[font=\footnotesize,align=center] at (0.05,-0.95) {被 $V_H$ 吸收的活动线端点（A）：$\mathcal J(0^+)=0\ne\mathcal J(0^-)$\\不局域化，$k^-$ 只在初态分母中（可上移）};
+  \end{scope}
+  \node at (5.05,-6.25) {(c)\ 光锥时间图像：哪些端点被局域化};
+\end{tikzpicture}
+\caption{窗口与整函数载体（示意；\cref{def:appO-windows}、\cref{lem:appO-carrier}、\cref{def:appO-rewriting}）。
+(a)~窗口只依赖软横动量与喷注的加号、横向分量：$\Theta_j=\vartheta\big(4\nu_A\mu_j/(\lambda^{a_G}\mathbf k_{Tj}^2)\big)$，$\Theta'_j=\vartheta\big(8\nu_A\mu_j/(\lambda^{a_G}\mathbf k_{Tj}^2)\big)$，${\rm supp}\,\Theta'_j\subset\{\Theta_j=1\}$；Glauber 尺度落在窗口核中，真正的软尺度落在软角区 $K_R$，那里不作改写（\cref{asm:appO-deformation} (c)）。
+(b)~旁观者插入的喷注因子（此处取 $J=2\nu_A\mathcal J/[(k^-)^2+\nu_A^2]$ 为例）在 $|k^-|\lesssim\nu_A$ 内有分处实轴两侧的极点；改写把它换成宽度 $w=\lambda^{a_G}|\mathbf k_T|$ 的整函数载体，$\phi(x)=2\sqrt\pi\,\ee^{-x^2}$，二者的 $\int\frac{\dd k^-}{2\pi}$ 相同；外部因子 $R$ 只在 $\Lambda_j\gg w$ 的尺度上变化，故误差是纤维积分的 $O(\lambda_J/\Lambda_j)$（E-F，\cref{lem:appO-equal-time}）；载体在 $|{\rm Im}\,k^-|\le w/2$ 内以 $2\sqrt\pi\,\ee^{1/4}$ 为界，后续形变不改变其积分。
+(c)~旁观者端点的 $\mathcal J(\tau)$ 在 $\tau=0$ 连续，被局域化于 $\tau=0$；被 $V_H$ 吸收的活动线端点只出现在 $\tau<0$，不局域化而保留单侧的初态分母。故直接线一端在载体中、另一端只含初态分母（SA/AS 线）。改写不是逐点近似：单侧改写只在弱等价意义下成立（E-W，\cref{prop:appO-one-sided}）。}
+\label{fig:appO-windows}
+\end{figure}
+%%% END fig:appO-windows

@@ -1,0 +1,80 @@
+% ===================================================================================
+% c_pdf_definitions.tex  —  部分子分布的算符定义、自由场归一化、Wilson 线方向
+% （research/c_pdf，对应 DERIVATION.md §1–§2；验证脚本 scripts/s1_free_field.py）
+% ===================================================================================
+\section{部分子分布的算符定义与自由场归一化}\label{sec:cpdf-def}
+
+本节取光锥矢量 $n^\mu$ 满足 $n\cdot v=v^+$（$n^2=0$，$\sla{n}=\gamma^+$），态的归一化为
+$\langle P'|P\rangle=2P^+(2\pi)^3\delta(P'^+-P^+)\delta^{(2)}(P'_{\mathrm T}-P_{\mathrm T})$，
+从而 $\langle P|T^{\mu\nu}|P\rangle=2P^\mu P^\nu$，$\bar u\gamma^\mu u=2p^\mu$。
+定义中的矩阵元一律取连通部分（扣除真空项），对算符的色指标求和、对靶的色与自旋（极化）求平均。
+
+\begin{definition}[夸克、反夸克与胶子分布]\label{def:cpdf-pdfs}
+记 $w=(0^+,w^-,\bm 0_{\mathrm T})$。强子 $H$（沿 $+z$ 运动）中的夸克分布为
+\begin{equation}\label{eq:cpdf-fq}
+\begin{gathered}
+f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii\xi P^+w^-}\,
+\langle P|\,\bar\psi(w)\gamma^+W[w,0]\,\psi(0)\,|P\rangle_{\mathrm c},\\
+W[w,0]=P\exp\Big(\ii g\int_0^{w^-}\!\dd z^-A^+(0^+,z^-,\bm 0_{\mathrm T})\Big),
+\end{gathered}
+\end{equation}
+反夸克分布为 $f_{\bar q/H}(\xi)\equiv-f_{q/H}(-\xi)$；胶子分布为
+\begin{equation}\label{eq:cpdf-fg}
+\begin{gathered}
+f_{g/H}(\xi)=\sum_{j}\int\frac{\dd w^-}{2\pi\,\xi P^+}\,\ee^{-\ii\xi P^+w^-}\,
+\langle P|\,G^{+j}_a(w)\,W^{(A)}_{ab}[w,0]\,G^{+j}_b(0)\,|P\rangle_{\mathrm c},\\
+W^{(A)}_{ab}[w,0]=2\Tr\big[t^aW[w,0]\,t^bW[0,w]\big],
+\end{gathered}
+\end{equation}
+其中 $j$ 遍历 $D-2$ 个横向分量。三者都需要 $\MSbar$ 重整化（\cref{sec:cpdf-oneloop}）。
+\end{definition}
+
+\begin{remark}[Wilson 线的方向]\label{rem:cpdf-wilson}
+$W[b,a]$ 中离 $b$ 较近的点排在左边，因而 $\frac{\dd}{\dd z}W[z,a]=+\ii g\,A(z)\,W[z,a]$；
+在 $D_\mu=\partial_\mu-\ii gA_\mu$ 的规范变换 $A\to UAU^\dagger-\frac{\ii}{g}(\partial U)U^\dagger$ 下
+$W[b,a]\to U(b)W[b,a]U^\dagger(a)$，于是 \cref{eq:cpdf-fq} 中的双局域算符规范不变。
+反向排序的 Wilson 线不具有这一协变性（数值检验：离散化的 SU(2) 路径有序指数，正确排序的误差按 $N^{-2}$ 收敛，反向排序的误差为 $\order{1}$）。
+两点位于同一条类光直线上，故 $W[w,0]=W[w,\infty n]\,W[\infty n,0]=W[w,-\infty n]\,W[-\infty n,0]$：
+对共线分布而言，Wilson 线伸向未来还是过去无关紧要（TMD 情形则不然）。
+\end{remark}
+
+\begin{proposition}[自由场归一化]\tagR\label{prop:cpdf-free}
+在 $g^0$ 阶，对无质量自由夸克、反夸克与胶子靶（动量 $p=(p^+,0,\bm 0_{\mathrm T})$）有
+\begin{equation}\label{eq:cpdf-free}
+f^{(0)}_{q/q}(\xi)=\delta(1-\xi),\qquad
+f^{(0)}_{q/\bar q}(\xi)=-\delta(1+\xi)\ \Rightarrow\ f^{(0)}_{\bar q/\bar q}(\xi)=\delta(1-\xi),\qquad
+f^{(0)}_{g/g}(\xi)=\delta(1-\xi)-\delta(1+\xi).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+夸克靶：连通矩阵元为 $\bar u_s(p)\gamma^+u_s(p)\,\ee^{\ii p^+w^-}$（色因子 $\sum_i\delta_{ic}\delta_{ic}=1$），
+而对每个螺旋度都有 $\bar u_s\gamma^+u_s=2p^+$，故
+$f^{(0)}_{q/q}=\frac{2p^+}{4\pi}\int\dd w^-\,\ee^{\ii(1-\xi)p^+w^-}=\frac{2p^+}{4\pi}\,2\pi\,\delta\big((1-\xi)p^+\big)=\delta(1-\xi)$；
+因子 $1/(4\pi)$ 恰好抵消 $2p^+$ 与 $2\pi$。
+反夸克靶：$\bar\psi(w)$ 经 $d\,\bar v\,\ee^{-\ii p\cdot w}$ 湮灭、$\psi(0)$ 经 $d^\dagger v$ 产生，正规序 $:\!dd^\dagger\!:=-d^\dagger d$ 给出
+$-\bar v\gamma^+v\,\ee^{-\ii p^+w^-}$，且 $\bar v_s\gamma^+v_s=2p^+$，于是 $f^{(0)}_{q/\bar q}=-\delta(1+\xi)$。
+胶子靶：取 $A^\mu_a\sim\epsilon^\mu_\lambda\delta_{ab}\ee^{-\ii k\cdot x}$，$\epsilon^+=0$，则 $\langle0|G^{+j}_a(0)|k,\lambda,b\rangle=-\ii k^+\epsilon^j_\lambda\delta_{ab}$。
+连通矩阵元含两项（在 $w$ 处产生、在 $0$ 处湮灭，以及相反），对极化平均后为
+$(k^+)^2\big(\ee^{\ii k^+w^-}+\ee^{-\ii k^+w^-}\big)$，故
+$f^{(0)}_{g/g}=\frac{(k^+)^2}{2\pi\xi k^+}\cdot\frac{2\pi}{k^+}\big[\delta(\xi-1)+\delta(\xi+1)\big]=\delta(1-\xi)-\delta(1+\xi)$。
+\end{proof}
+
+\begin{remark}\label{rem:cpdf-conj}
+(1) 若用电荷共轭场 $\psi^c=C\bar\psi^{\tp}$（$C=\ii\gamma^2\gamma^0$）及其 Wilson 线 $W^*$ 直接定义反夸克分布，则由
+$\bar\psi^c(w)\gamma^+W^*[w,0]\psi^c(0)=-\bar\psi(0)\gamma^+W[0,w]\psi(w)+\text{c 数}$
+并作平移 $w\to-w$，恰好得到 $f_{\bar q}(\xi)=-f_q(-\xi)$；两种定义等价。
+(2) 胶子分布是 $\xi$ 的奇函数（一般地 $\xi f_g(\xi)$ 为偶函数），$x>0$ 时 $g(x)=f_g(x)$，并且
+$\int_{-1}^{1}\dd\xi\,\xi^{n-1}f_g(\xi)=[1+(-1)^n]\int_0^1\dd x\,x^{n-1}g(x)$。
+归一化可由动量求和规则核对：$T^{++}_g=G^{+\nu}G_\nu{}^{+}=\sum_jG^{+j}G^{+j}$，而 $\langle k|T^{++}_g|k\rangle=2(k^+)^2$。
+\end{remark}
+
+\begin{remark}[Wilson 线的程函 Feynman 规则]\label{rem:cpdf-eikonal}
+对振幅 $\langle X|W[\infty n,0]\psi(0)|p\rangle$：$W[\infty n,0]$ 发射一个动量为 $l$、色为 $a$、指标为 $\mu$ 的胶子，贡献
+$\ii g\,t^an^\mu\int_0^\infty\dd s\,\ee^{\ii s\,n\cdot l-0s}=-g\,t^an^\mu/(n\cdot l+\ii0)$；
+吸收一个胶子则贡献 $+g\,t^an^\mu/(n\cdot l-\ii0)$。单个实胶子的振幅为
+\begin{equation}\label{eq:cpdf-amp}
+\langle l,a,\epsilon|W[\infty n,0]\psi(0)|p\rangle=-g\,t^a\epsilon^*_\mu\Big[\frac{\sla{k}\gamma^\mu}{k^2}+\frac{n^\mu}{n\cdot l+\ii0}\Big]u(p),\qquad k=p-l .
+\end{equation}
+两项的相对符号由规范不变性确定：由于 $\sla{l}\,u(p)=-\sla{k}\,u(p)$，有 $l_\mu[\cdots]u=\big(\sla{k}\sla{l}/k^2+1\big)u=0$。
+\end{remark}

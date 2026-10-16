@@ -1,0 +1,141 @@
+%%% BEGIN fig:dijet-factorization
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 op/.style={font=\large},
+  t2 hc/.style={hard blob,circle,minimum size=0.6cm,inner sep=0pt}]
+  % ---------------- hard function H = |C|^2 ----------------
+  \node[t2 hc] (C) at (-0.78,0) {$C$};
+  \node[t2 hc] (Cd) at (0.78,0) {$C^*$};
+  \draw[photon] (-1.75,0) -- (C.west);
+  \draw[photon] (Cd.east) -- (1.75,0);
+  \draw[quark=0.3] (C.65) .. controls (-0.35,0.78) and (0.35,0.78) .. (Cd.115);
+  \draw[quark=0.7] (Cd.245) .. controls (0.35,-0.78) and (-0.35,-0.78) .. (C.295);
+  \draw[cut] (0,-0.95) -- (0,0.95);
+  \node[t2 lab] at (0,-1.35) {$H(Q^2,\mu)=|C|^2$};
+  \node[t2 op] at (2.1,0) {$\times$};
+  % ---------------- jet function J_n ----------------
+  \begin{scope}[xshift=3.75cm]
+    \node[jet blob,ellipse,minimum width=1.5cm,minimum height=0.58cm,inner sep=0pt] (J) at (0,0) {};
+    \draw[quark] (-1.25,0) -- (J.west);
+    \draw[quark] (J.east) -- (1.25,0);
+    \draw[cut] (0,-0.62) -- (0,0.62);
+    \node[t2 lab] at (0,-1.35) {$J_n(s_n,\mu)$};
+  \end{scope}
+  \node[t2 op] at (5.4,0) {$\otimes$};
+  % ---------------- jet function J_nbar ----------------
+  \begin{scope}[xshift=7.05cm]
+    \node[jetB blob,ellipse,minimum width=1.5cm,minimum height=0.58cm,inner sep=0pt] (J) at (0,0) {};
+    \draw[quark] (1.25,0) -- (J.east);
+    \draw[quark] (J.west) -- (-1.25,0);
+    \draw[cut] (0,-0.62) -- (0,0.62);
+    \node[t2 lab] at (0,-1.35) {$J_{\bar n}(s_{\bar n},\mu)$};
+  \end{scope}
+  \node[t2 op] at (8.7,0) {$\otimes$};
+  % ---------------- soft function: Wilson lines along n and nbar ----------------
+  \begin{scope}[xshift=10.75cm]
+    \coordinate (L) at (-1.45,0); \coordinate (R) at (1.45,0);
+    \draw[wilson=0.22] (L) .. controls (-1.15,1.4) and (1.15,1.4) .. (R);
+    \draw[wilson=0.78] (R) .. controls (1.15,-1.4) and (-1.15,-1.4) .. (L);
+    \fill (L) circle[radius=1.6pt]; \fill (R) circle[radius=1.6pt];
+    \node[soft blob,circle,minimum size=0.56cm,inner sep=0pt] (S) at (0,0) {};
+    \draw[gluon] (S.140) -- (-0.82,0.85);
+    \draw[gluon] (S.40)  -- ( 0.82,0.85);
+    \draw[gluon] (S.220) -- (-0.82,-0.85);
+    \draw[gluon] (S.320) -- ( 0.82,-0.85);
+    \draw[cut] (0,-1.2) -- (0,1.2);
+    \node[font=\footnotesize,anchor=south east] at (-1.0,0.68) {$Y_n$};
+    \node[font=\footnotesize,anchor=north east] at (-1.0,-0.68) {$Y_{\bar n}$};
+    \node[font=\footnotesize,anchor=south west] at (1.0,0.68) {$Y_n^\dagger$};
+    \node[font=\footnotesize,anchor=north west] at (1.0,-0.68) {$Y_{\bar n}^\dagger$};
+    \node[t2 lab] at (0,-1.55) {$S(k,\mu)$};
+  \end{scope}
+  % ---------------- factorization formula ----------------
+  \node[font=\small] at (5.5,-2.4) {$\displaystyle\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=H(Q^2,\mu)\int\dd s_n\,\dd s_{\bar n}\,\dd k\;
+     J_n(s_n,\mu)\,J_{\bar n}(s_{\bar n},\mu)\,S(k,\mu)\;\delta\Big(\tau-\frac{s_n+s_{\bar n}}{Q^2}-\frac{k}{Q}\Big)$};
+\end{tikzpicture}
+\caption{推力（双喷注）分布在 $\tau=1-T\ll1$ 时的因子化 $H\times J_n\otimes J_{\bar n}\otimes S$ 的图示（每个因子都画成割图，红色虚线为末态切割）。
+硬函数 $H=|C|^2$ 来自把 QCD 流匹配到 SCET 流的 Wilson 系数 $C(Q^2,\mu)$；喷注函数 $J_n$、$J_{\bar n}$（对夸克与反夸克是同一个函数）描述虚度 $s_{n,\bar n}\sim\tau Q^2$ 的共线辐射；
+软函数 $S(k,\mu)$ 是沿 $n$、$\bar n$ 方向的出射（未来指向）Wilson 线 $Y_n$、$Y_{\bar n}$（后者取反基础表示）的真空矩阵元，
+左、右两个顶点分别属于振幅与共轭振幅，软辐射对 $\tau$ 的贡献按半球测量：$k=n\cdot p_{s}^{(n)}+\bar n\cdot p_{s}^{(\bar n)}$（上标表示软粒子所在的半球）。
+式中省略了相对 $\order{\tau}$ 的幂次修正。}
+\label{fig:dijet-factorization}
+\end{figure}
+%%% END fig:dijet-factorization
+
+%%% BEGIN fig:scet-wilson
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 n/.style={draw=blue!60!black},
+  t2 nb/.style={draw=orange!80!black},
+  t2 us/.style={draw=green!45!black},
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large}]
+  % ======================= (a) origin of the collinear Wilson line W_n =======================
+  \begin{scope}
+    \node[opvertex] (O) at (0,0) {};
+    \coordinate (Q) at (2.2,0.95); \coordinate (Qb) at (2.2,-0.95);
+    \coordinate (G) at ($(O)!0.42!(Qb)$);
+    \draw[quark,t2 n] (O) -- (Q);
+    \draw[quark,t2 nb] (Qb) -- (G); \draw[quark=0.62,t2 nb] (G) -- (O);
+    \draw[gluon,t2 n] (G) -- (2.25,0.22);
+    \node[vertex] at (G) {};
+    \node[t2 lab,anchor=west] at (Q) {$n$ 共线夸克};
+    \node[t2 lab,anchor=west] at (Qb) {$\bar n$ 共线反夸克};
+    \node[t2 lab,anchor=west] at (2.25,0.22) {$n$ 共线胶子};
+    \node[font=\footnotesize,anchor=north east] at ($(O)!0.5!(G)+(0.04,-0.06)$) {$p^2\sim Q^2$};
+    \node[t2 eq] at (5.4,0) {$\Longrightarrow$};
+    \node[font=\footnotesize,align=center] at (5.4,-0.55) {积掉\\离壳模式};
+    \begin{scope}[xshift=6.7cm]
+      \node[opvertex] (O) at (0,0) {};
+      \draw[quark,t2 n] (O) -- (2.2,0.95) coordinate (Q);
+      % the nbar-collinear antiquark and, parallel to it, the eikonal line W_n (along nbar)
+      \draw[quark,t2 nb] ($(O.-67)+(-23.36:2.35)$) -- (O.-67);
+      \draw[wilson=0.72] ($(O.20)+(-23.36:2.0)$) coordinate (W) -- (O.20);
+      \coordinate (Y) at ($(O.20)!0.6!(W)$);
+      \draw[gluon,t2 n] (Y) -- ($(Y)+(1.05,0.52)$) coordinate (Ge);
+      \node[t2 lab,anchor=west] at (Q) {$n$ 共线夸克};
+      \node[t2 lab,anchor=west] at (Ge) {$\bar n\cdot A_n$};
+      \node[t2 lab,anchor=west] at (W) {$W_n$};
+    \end{scope}
+    \node[font=\small] at (4.6,-1.75) {$\bar\xi_n\,\Gamma\,\xi_{\bar n}\;\longrightarrow\;\bar\xi_n W_n\,\Gamma\,W_{\bar n}^\dagger\xi_{\bar n}=\bar\chi_n\,\Gamma\,\chi_{\bar n},\qquad \chi_n\equiv W_n^\dagger\xi_n$};
+    \node[font=\small,anchor=west] at (-0.5,-2.45) {(a)\ 共线 Wilson 线 $W_n$（沿 $\bar n$ 方向，由 $\bar n\cdot A_n$ 构成）的来源};
+  \end{scope}
+  % ======================= (b) ultrasoft decoupling =======================
+  \begin{scope}[yshift=-5.2cm]
+    \node[opvertex] (O) at (0,0) {};
+    \coordinate (Q) at (2.9,1.0);
+    \coordinate (U1) at ($(O)!0.36!(Q)$); \coordinate (U2) at ($(O)!0.7!(Q)$);
+    \draw[quark=0.2,t2 n] (O) -- (U1); \draw[quark,t2 n] (U1) -- (U2); \draw[quark,t2 n] (U2) -- (Q);
+    \draw[gluon,t2 us] (U1) -- ($(U1)+(-0.3,1.1)$);
+    \draw[gluon,t2 us] (U2) -- ($(U2)+(0.05,1.1)$);
+    \foreach \p in {U1,U2} \node[vertex] at (\p) {};
+    \node[t2 lab,anchor=west] at (Q) {$\xi_n$};
+    \node[font=\footnotesize,anchor=west,text=green!35!black] at ($(U2)+(0.12,0.75)$) {$n\cdot A_{us}$};
+    \node[t2 eq] at (4.75,0.45) {$=$};
+    \begin{scope}[xshift=6.1cm]
+      \node[opvertex] (O) at (0,0) {};
+      % the n-collinear quark and, parallel to it, the eikonal line Y_n (along n)
+      \draw[quark,t2 n] (O.-26) -- ++(19.03:3.0) coordinate (Q0);
+      \draw[wilson=0.86] (O.64) -- ++(19.03:2.95) coordinate (W);
+      \coordinate (Y1) at ($(O.64)!0.36!(W)$); \coordinate (Y2) at ($(O.64)!0.68!(W)$);
+      \draw[gluon,t2 us] (Y1) -- ($(Y1)+(-0.3,1.0)$);
+      \draw[gluon,t2 us] (Y2) -- ($(Y2)+(0.05,1.0)$);
+      \node[t2 lab,anchor=north west] at (Q0) {$\xi_n^{(0)}$};
+      \node[t2 lab,anchor=south west] at (W) {$Y_n$};
+    \end{scope}
+    \node[font=\small] at (4.4,-1.0) {$\xi_n=Y_n\,\xi_n^{(0)},\quad A_n=Y_n\,A_n^{(0)}\,Y_n^\dagger$};
+    \node[font=\small,anchor=west] at (-0.5,-1.75) {(b)\ 超软退耦：超软胶子只与沿 $n$ 方向、由 $n\cdot A_{us}$ 构成的 Wilson 线 $Y_n$ 耦合};
+  \end{scope}
+\end{tikzpicture}
+\caption{SCET 中的两类 Wilson 线。(a)~$n$ 共线胶子（蓝色，领头分量 $\bar n\cdot A_n\sim\lambda^0$）附着在 $\bar n$ 共线（或硬）线上时，使该线离壳 $p^2\sim Q^2$；
+把这些离壳模式积掉后，它们附着到从流顶点 $\otimes$ 出发、沿 $\bar n$ 方向（与 $\bar n$ 共线反夸克平行）的共线 Wilson 线 $W_n$（由 $\bar n\cdot A_n$ 构成）上，
+流算符因而只通过规范不变组合 $\chi_n=W_n^\dagger\xi_n$ 出现（树图层次的匹配）。
+(b)~领头阶共线拉氏量中超软胶子（绿色）只通过 $n\cdot A_{us}$ 与 $n$ 共线夸克耦合；场重定义 $\xi_n=Y_n\xi_n^{(0)}$、$A_n=Y_nA_n^{(0)}Y_n^\dagger$
+（$n\cdot D_{us}Y_n=0$）使新场 $\xi_n^{(0)}$、$A_n^{(0)}$ 与超软胶子退耦，超软胶子全部附着在沿 $n$ 方向（与 $n$ 共线夸克平行）的 Wilson 线 $Y_n$ 上。
+$Y_n$ 的端点（$-\infty$ 或 $+\infty$）与 $\ii0$ 规定应依粒子是入射还是出射选取（此处为出射夸克）。Wilson 线上的箭头与被替代的费米子线的费米子数流向一致。}
+\label{fig:scet-wilson}
+\end{figure}
+%%% END fig:scet-wilson

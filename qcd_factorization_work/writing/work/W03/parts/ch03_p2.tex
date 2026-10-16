@@ -1,0 +1,262 @@
+% -------------------------------------------------------------------------------------
+\section{Wilson 线}\label{sec:prelim-wilson}
+
+部分子分布（第~8~章）含有位于不同点的场的乘积 $\bar\psi(w)\cdots\psi(0)$；在局域规范变换 $\psi(x)\to U(x)\psi(x)$ 下它变为 $\bar\psi(w)U^\dagger(w)\cdots U(0)\psi(0)$，不是规范不变的，需要一个沿路径的平行移动算符，即 Wilson 线。另一方面，高能夸克吸收软胶子时几乎不改变方向（\cref{fig:soft-eikonal}），在软胶子看来它就是一条沿其速度方向的经典色荷世界线，其与胶子场的耦合也是 Wilson 线。这两重身份在因子化证明中反复出现。
+
+\begin{definition}[Wilson 线]\label{def:prelim-wilson}
+(a) 对分段光滑路径 $z(s)$，$s\in[0,1]$，$z(0)=a$，$z(1)=b$，记 $A_\mu\equiv A^a_\mu t^a$，定义
+\begin{equation}\label{eq:prelim-W}
+\begin{aligned}
+W[b,a]&=P\exp\Big(\ii g\int_a^b\dd z^\mu A^a_\mu(z)\,t^a\Big)\\
+&\equiv\sum_{m=0}^\infty(\ii g)^m\!\!\int\limits_{0<s_1<\dots<s_m<1}\!\!\dd s_1\cdots\dd s_m\;\dot z\cdot A(z(s_m))\cdots\dot z\cdot A(z(s_1)),
+\end{aligned}
+\end{equation}
+即路径上较晚（离 $b$ 较近）的点排在左边。% VF-CONV-9
+\par
+(b) 对指向未来的矢量 $n$（$n^0>0$，类光或类时），半无限直线定义为极限 $W[\infty n,y]=\lim_{L\to\infty}W[y+Ln,y]$、$W[y,-\infty n]=\lim_{L\to\infty}W[y,y-Ln]$，以及 $W[y,\infty n]=W[\infty n,y]^\dagger$、$W[-\infty n,y]=W[y,-\infty n]^\dagger$。极限中采用绝热正规化：半无限线上的每个场乘以 $\ee^{-\epsilon s}$，$s\ge0$ 为 $z=y\pm sn$ 中的仿射参数（到有限端点的距离），最后取 $\epsilon\to0^+$。（绝热参数 $\epsilon$ 与维数正规化的 $\varepsilon$ 无关。）
+\par
+(c) 伴随表示的 Wilson 线 $W^{(A)}_{ab}[b,a]=2\Tr\big[t^aW[b,a]\,t^bW[a,b]\big]$。
+\par
+(d) 胶子场的 Fourier 约定 $A_\mu(x)=\int\frac{\dd^4k}{(2\pi)^4}\ee^{-\ii k\cdot x}\tilde A_\mu(k)$：$k$ 是在连接点流\emph{入} Wilson 线的动量；厄米性给出 $\tilde A(k)^\dagger=\tilde A(-k)$。
+\uses{def:prelim-qcd,def:prelim-lightfront}
+\end{definition}
+
+\begin{proposition}[Wilson 线的规范协变性 \tagR]\label{prop:prelim-wilson-covariance}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设胶子场光滑。
+\par
+(a) $W(s)\equiv W[z(s),a]$ 是初值问题
+\begin{equation}\label{eq:prelim-W-ode}
+\frac{\dd}{\dd s}W(s)=\ii g\,\dot z\cdot A(z(s))\,W(s),\qquad W(0)=1
+\end{equation}
+的唯一解；$W$ 是幺正的，行列式为 $1$。
+\par
+(b) 在\cref{def:prelim-qcd}的规范变换 $A_\mu\to UA_\mu U^{-1}-\frac{\ii}{g}(\partial_\mu U)U^{-1}$ 下，$W[b,a]\to U(b)\,W[b,a]\,U^\dagger(a)$。若把较早的点排在左边（反路径序），则在非阿贝尔情形这一变换律不成立。
+\par
+(c) 组合与折返：对相接的路径 $W[c,b]W[b,a]=W[c,a]$；沿同一路径折返 $W[a,b]W[b,a]=1$。
+\uses{def:prelim-qcd,def:prelim-wilson,prop:qcd-covariance}
+\end{proposition}
+
+\begin{proof}
+(a) 级数\cref{eq:prelim-W}的第 $m$ 项以 $(g\max_s\|\dot z\cdot A\|)^m/m!$ 为界（单纯形的体积为 $1/m!$），故绝对收敛，逐项求导即得\cref{eq:prelim-W-ode}；线性方程的解唯一（Picard--Lindelöf）。$A$ 厄米给出 $\frac{\dd}{\dd s}(W^\dagger W)=0$，$\Tr t^a=0$ 给出 $\frac{\dd}{\dd s}\det W=\Tr(\ii g\,\dot z\cdot A)\det W=0$。
+
+(b) 令 $V(s)=U(z(s))\,W(s)\,U^\dagger(a)$，则 $V(0)=1$，且
+\[
+\frac{\dd V}{\dd s}=\Big[\frac{\dd U}{\dd s}U^{-1}+\ii g\,U\,\dot z\cdot A\,U^{-1}\Big]V
+=\ii g\,\dot z\cdot\Big[UAU^{-1}-\frac{\ii}{g}(\partial U)U^{-1}\Big]V=\ii g\,\dot z\cdot A'\,V ,
+\]
+其中用了 $\dot z^\mu\partial_\mu U=\dd U/\dd s$；$V$ 解变换后的场 $A'$ 的初值问题，由唯一性 $V=W'$。
+
+(c) $W[c,b]W[b,a]$ 与 $W[c,a]$ 在第二段路径上满足同一方程、在 $b$ 处初值相同，故相等。对折返路径 $\tilde z(t)=z(1-t)$，$R(t)\equiv W(1-t)W(1)^{-1}$ 满足 $\dd R/\dd t=\ii g\,\dot{\tilde z}\cdot A(\tilde z(t))R$，$R(0)=1$，故 $R(t)=W[\tilde z(t),b]$，取 $t=1$ 得 $W[a,b]=W[b,a]^{-1}$。
+\end{proof}
+
+(b) 中关于反路径序的断言可由无穷小变换 $U=1+\ii\theta$（$\delta A_\mu=\ii[\theta,A_\mu]+\frac1g\partial_\mu\theta$）看出：对\cref{eq:prelim-W-ode}作变分，路径序给出 $\delta W=\ii[\theta(b)W-W\theta(a)]$，对易子项恰好相消；反路径序（较早的点在左，$\dd V/\dd s=\ii g\,V\,\dot z\cdot A$）则给出 $\delta V=\ii[V\theta(b)-\theta(a)V]+2g\int_0^1\dd s\,V(0,s)[\dot z\cdot A,\theta]V(s,1)$（$V(s_1,s_2)$ 为 $[s_1,s_2]$ 段上的反路径序指数，$\theta$ 取在 $z(s)$ 处），末项一般不为零。反路径序指数 $\bar P\exp(\ii g\int_a^b\dd z\cdot A)$ 恰是约定 $D=\partial+\ii gA$（Collins~\cite{Collins2011}的约定，其 Wilson 线为 $P\exp(-\ii g\int\dd z\cdot A)$）下沿反向路径（由 $b$ 到 $a$）的 Wilson 线，在那个约定下按 $U(a)\cdots U^\dagger(b)$ 变换；引用 Collins 的公式时令 $g\to-g$。在随机的 SU(2)、SU(3) 背景场中对离散化路径序指数的数值检验确认了 (b)、(c) 以及伴随线等于以 $(T^c)_{ab}=-\ii f^{cab}$ 为生成元的路径序指数。
+
+\begin{proposition}[半无限直 Wilson 线的动量空间 Feynman 规则 \tagR]\label{prop:prelim-wilson-rules}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设直路径由起点指向终点的切矢量为 $v$，一端在无穷远，场按\cref{def:prelim-wilson}(d) 展开并带绝热因子。含 $m$ 个胶子（Lorentz 指标 $\mu_j$、色指标 $a_j$、流入动量 $k_j$）的项由下列“统一规则”给出：
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item 每个连接点一个顶点因子 $\ii g\,t^{a}v^{\mu}$；
+\item 除伸向无穷远的一段外，每一段一个程函传播子 $\ii/(v\cdot\ell+\ii0)$，$\ell$ 是沿路径取向流动的动量，由各连接点的动量守恒与“伸向无穷远的一段 $\ell=0$”确定（连到有限端点的一段把流入的总动量带到有限端点）；
+\item 色矩阵按路径次序排列，靠近终点者在左；
+\item 在有限绝热参数下，某一段的 $\ii0$ 等于 $\ii\epsilon$ 乘以该段与无穷远端之间的连接点数。
+\end{enumerate}
+对指向未来的 $n$ 与 $\int[\dd k]_m\equiv\int\prod_{j=1}^m\dd^4k_j/(2\pi)^4$，$\tilde A\equiv\tilde A^at^a$，胶子按路径次序编号：% VF-WL-1
+\begin{align}
+W^{(m)}[0,-\infty n]&=\int[\dd k]_m\,\big[\ii g\,n\cdot\tilde A(k_m)\big]\cdots\big[\ii g\,n\cdot\tilde A(k_1)\big]\prod_{j=1}^m\frac{\ii}{n\cdot(k_1+\dots+k_j)+\ii0},\label{eq:prelim-past}\\
+W^{(m)}[\infty n,0]&=\int[\dd k]_m\,\big[\ii g\,n\cdot\tilde A(k_m)\big]\cdots\big[\ii g\,n\cdot\tilde A(k_1)\big]\prod_{j=1}^m\frac{-\ii}{n\cdot(k_j+\dots+k_m)-\ii0},\label{eq:prelim-future}
+\end{align}
+在\cref{eq:prelim-past}中 $k_1$ 最靠近 $-\infty$，在\cref{eq:prelim-future}中 $k_1$ 最靠近 $0$。取向相反的 $W[-\infty n,0]$ 与 $W[0,\infty n]$ 的规则由上两式取厄米共轭得到（顶点变为 $-\ii g\,t^an^\mu$，传播子取复共轭，并把 $k_j$ 换成 $-k_j$），也可以直接用 (i)--(iv) 读出（此时 $v=-n$）；割图中割线右侧（共轭振幅）的 Wilson 线同样使用复共轭的规则。特别地，单胶子项为
+\begin{equation}\label{eq:prelim-one-gluon}
+W^{(1)}[\infty n,0]=g\,t^a\,\frac{n\cdot\tilde A^a(k)}{n\cdot k-\ii0},\qquad W^{(1)}[-\infty n,0]=g\,t^a\,\frac{n\cdot\tilde A^a(k)}{n\cdot k+\ii0},
+\end{equation}
+二者之差（同一端点处“指向未来减指向过去”）为 $2\pi\ii\,g\,t^a\,n\cdot\tilde A^a(k)\,\delta(n\cdot k)$。
+\uses{def:prelim-wilson,def:prelim-feynman-rules,prop:appB-rules}
+\end{proposition}
+
+\begin{proof}
+完整证明见附录~B（\cref{prop:appB-rules}）；要点如下。$W[0,-\infty n]$ 的第 $m$ 项中代入 Fourier 展开与绝热因子 $\ee^{\epsilon\lambda_j}$，参数积分为 $\int_{-\infty<\lambda_1<\dots<\lambda_m<0}\prod_j\dd\lambda_j\,\ee^{-\ii\lambda_j(n\cdot k_j+\ii\epsilon)}$。先积 $\lambda_1$ 得 $\frac{\ii}{n\cdot k_1+\ii\epsilon}\ee^{-\ii\lambda_2(n\cdot k_1+\ii\epsilon)}$，它与第二个场的相因子合并；归纳地得到 $\prod_j\ii/[n\cdot(k_1+\dots+k_j)+\ii j\epsilon]$，色矩阵 $t^{a_m}\cdots t^{a_1}$ 的次序即路径次序：这就是\cref{eq:prelim-past}与 (iv)。对 $W[\infty n,0]$，区域为 $0<\lambda_1<\dots<\lambda_m<\infty$，阻尼 $\ee^{-\epsilon\lambda_j}$，先积 $\lambda_m$ 即得\cref{eq:prelim-future}。取向相反的线由厄米共轭与 $\tilde A(k)^\dagger=\tilde A(-k)$ 得到；最后 $\frac1{x-\ii0}-\frac1{x+\ii0}=2\pi\ii\,\delta(x)$。
+\end{proof}
+
+\cref{fig:prelim-wilson-rules}把\cref{eq:prelim-past,eq:prelim-future}画成图。规则在 $n\to\alpha n$（$\alpha>0$）下不变，但 $\alpha<0$ 时 $\ii0$ 反号，所以 $n$ 必须沿部分子的物理运动方向；“$+\ii0$ 配沿取向流动的动量”正是被替代的 Feynman 传播子的程函极限（\cref{ex:prelim-eikonal-two}）。
+
+%%% BEGIN fig:prelim-wilson-rules
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa end/.style={circle,draw,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5.5pt},
+  fa idx/.style={font=\footnotesize,inner sep=1.5pt},
+  fa prop/.style={font=\small,inner sep=2pt},
+  fa cap/.style={font=\footnotesize}]
+  % ===================== (a) past-pointing line W[0,-infinity n] =====================
+  \begin{scope}
+    \draw[wilson=0.06] (0,0) -- (12.3,0);
+    \node[fa idx,left] at (-0.05,0) {$-\infty n$};
+    \node[fa end] at (12.3,0) {};
+    \node[fa idx,right] at (12.4,0) {$0$};
+    \foreach \x/\j in {1.5/1,5.1/2,8.7/3} {
+      \draw[gluon] (\x,1.35) node[fa idx,above]{$\mu_\j,a_\j$} -- (\x,0);
+      \path[mom={$k_\j$},mom sep=0.3cm] (\x,1.35) -- (\x,0.12);
+      \node[vertex] at (\x,0) {};
+    }
+    \node[fa prop,below] at (0.75,-0.18) {$\ell=0$};
+    \node[fa idx,anchor=south east] at (1.38,0.13) {$\ii g\,t^{a_1}n^{\mu_1}$};
+    \node[fa prop,below] at (3.3,-0.1) {$\dfrac{\ii}{n\cdot k_1+\ii0}$};
+    \node[fa prop,below] at (6.9,-0.1) {$\dfrac{\ii}{n\cdot(k_1+k_2)+\ii0}$};
+    \node[fa prop,below] at (10.5,-0.1) {$\dfrac{\ii}{n\cdot(k_1+k_2+k_3)+\ii0}$};
+    \node[fa cap] at (6.15,-1.55) {(a)\ 过去指向的 $W[0,-\infty n]$：$k_1$ 最靠近 $-\infty$，颜色因子 $t^{a_3}t^{a_2}t^{a_1}$};
+  \end{scope}
+  % ===================== (b) future-pointing line W[infinity n,0] =====================
+  \begin{scope}[yshift=-4.1cm]
+    \draw[wilson=0.94] (0,0) -- (12.3,0);
+    \node[fa end] at (0,0) {};
+    \node[fa idx,left] at (-0.1,0) {$0$};
+    \node[fa idx,right] at (12.35,0) {$+\infty n$};
+    \foreach \x/\j in {3.6/1,7.2/2,10.8/3} {
+      \draw[gluon] (\x,1.35) node[fa idx,above]{$\mu_\j,a_\j$} -- (\x,0);
+      \path[mom={$k_\j$},mom sep=0.3cm] (\x,1.35) -- (\x,0.12);
+      \node[vertex] at (\x,0) {};
+    }
+    \node[fa idx,anchor=south east] at (3.48,0.13) {$\ii g\,t^{a_1}n^{\mu_1}$};
+    \node[fa prop,below] at (1.8,-0.1) {$\dfrac{-\ii}{n\cdot(k_1+k_2+k_3)-\ii0}$};
+    \node[fa prop,below] at (5.4,-0.1) {$\dfrac{-\ii}{n\cdot(k_2+k_3)-\ii0}$};
+    \node[fa prop,below] at (9.0,-0.1) {$\dfrac{-\ii}{n\cdot k_3-\ii0}$};
+    \node[fa prop,below] at (11.55,-0.18) {$\ell=0$};
+    \node[fa cap] at (6.15,-1.55) {(b)\ 未来指向的 $W[\infty n,0]$：$k_1$ 最靠近 $0$，颜色因子 $t^{a_3}t^{a_2}t^{a_1}$};
+  \end{scope}
+\end{tikzpicture}
+\caption{半无限 Wilson 线的动量空间规则（$k$ 流入 Wilson 线；颜色矩阵按路径排序，靠近终点者在左）：(a) 过去指向，(b) 未来指向；双线上的箭头为路径取向，空心圆为有限端点 $0$。
+统一规则（VF-WL-1）：每个顶点 $\ii g\,t^{a_j}n^{\mu_j}$（图中只标出第一个）；有限端点与顶点之间、相邻顶点之间的每一段给一个程函传播子 $\ii/(n\cdot\ell+\ii0)$，
+$\ell$ 为沿路径取向流动的动量，伸向无穷远的一段 $\ell=0$、不给传播子。于是 (a) 中第 $j$ 个顶点之后的一段 $\ell=k_1+\dots+k_j$；
+(b) 中第 $j$ 个顶点之前的一段 $\ell=-(k_j+\dots+k_3)$，传播子即 $-\ii/(n\cdot(k_j+\dots+k_3)-\ii0)$。}
+\label{fig:prelim-wilson-rules}
+\end{figure}
+%%% END fig:prelim-wilson-rules
+
+对连接次序求和时，若颜色矩阵彼此对易（阿贝尔情形或颜色对称化的部分），嵌套的程函分母合成单胶子因子之积：
+
+\begin{lemma}[程函恒等式]\label{lem:prelim-eikonal-identity}
+设复数 $a_1,\dots,a_m$ 的一切部分和 $a_{i_1}+\dots+a_{i_r}$（$\{i_1,\dots,i_r\}$ 取遍 $\{1,\dots,m\}$ 的非空子集）都不为零，则
+\begin{equation}\label{eq:prelim-eikonal}
+\sum_{\pi\in S_m}\prod_{j=1}^m\frac1{a_{\pi(1)}+\dots+a_{\pi(j)}}=\prod_{j=1}^m\frac1{a_j} .
+\end{equation}
+特别地，取 $a_j=n\cdot k_j+\ii\epsilon$（$\epsilon>0$），左边第 $j$ 个分母为 $n\cdot(k_{\pi(1)}+\dots+k_{\pi(j)})+\ii j\epsilon$：带绝热正规化的阿贝尔程函恒等式在有限 $\epsilon$ 下严格成立。若在每个分母上都加同一个 $+\ii\epsilon$，则恒等式在有限 $\epsilon$ 下不成立，只在 $\epsilon\to0$ 时作为分布成立。% VF-WL-2
+\uses{lem:appB-shuffle}
+\end{lemma}
+
+\begin{proof}
+（单纯形分解）若一切 $\Imag a_j>0$，则 $\prod_j\ii/a_j=\prod_j\int_{-\infty}^0\dd\lambda_j\,\ee^{-\ii\lambda_ja_j}$；$(-\infty,0]^m$ 除零测集外是 $m!$ 个单纯形 $\{\lambda_{\pi(1)}<\dots<\lambda_{\pi(m)}\}$ 的不交并，与\cref{eq:prelim-past}的推导相同的逐次积分表明，每个单纯形贡献 $\prod_j\ii/(a_{\pi(1)}+\dots+a_{\pi(j)})$。两边是有理函数，在开集上相等，故处处相等（物理上：阿贝尔 Wilson 线是普通指数，$W^{(m)}=(W^{(1)})^m/m!$）。
+
+（归纳）按 $\pi(m)=l$ 把置换分组：末因子 $1/(a_1+\dots+a_m)$ 公共，其余因子对 $\{1,\dots,m\}\setminus\{l\}$ 的置换求和，由归纳假设等于 $\prod_{j\ne l}1/a_j$；于是左边 $=\frac1{a_1+\dots+a_m}\sum_l\prod_{j\ne l}\frac1{a_j}=\prod_j\frac1{a_j}$。
+
+取 $a_j=n\cdot k_j+\ii\epsilon$ 时部分和的虚部为 $r\epsilon>0$。若每个分母都加 $+\ii\epsilon$（$a_j=n\cdot k_j$ 实），则 $m=2$ 时
+\[
+\sum_{\pi\in S_2}\prod_{j=1}^2\frac{\ii}{a_{\pi(1)}+\dots+a_{\pi(j)}+\ii\epsilon}-\prod_{j=1}^2\frac{\ii}{a_j+\ii\epsilon}=\frac{-\ii\epsilon}{(a_1+\ii\epsilon)(a_2+\ii\epsilon)(a_1+a_2+\ii\epsilon)}\ne0 ;
+\]
+它与检验函数 $[(1+a_1^2)(1+a_2^2)]^{-1}$ 的积分为 $\pi^2\epsilon/[(1+\epsilon)^2(2+\epsilon)]$，只在 $\epsilon\to0$ 时为零。洗牌形式见\cref{lem:appB-shuffle}。
+\end{proof}
+
+阿贝尔程函恒等式本身是经典的。统一的 $+\ii\epsilon$ 相当于只对离无穷远端最远的连接点加阻尼，并不是 Wilson 线算符的正规化；算符层次的指数阻尼给出累积分母（第 $j$ 个分母带 $j$ 倍正规化参数）并保持指数化，统一替换则破坏指数化，见 Echevarria、Scimemi 与 Vladimirov~\cite[式~(5)--(6) 及其后的讨论]{Echevarria:2015byo}。非阿贝尔情形中颜色按路径排序，\cref{eq:prelim-eikonal}只适用于颜色对称化的部分；反对称部分由对易子 $[t^b,t^a]=\ii f^{bac}t^c$ 组成，即携带总动量的伴随“网”。例如两个胶子（颜色矩阵 $T_j\equiv t^{a_j}$；$E(r,s)$ 为先连接 $r$、后连接 $s$ 的程函传播子之积，$E(j)$ 为单胶子因子）时，$W^{(2)}$ 中的相应项为 $T_2T_1E(1,2)+T_1T_2E(2,1)$，$\frac12(W^{(1)})^2$ 中为 $\frac12\{T_1,T_2\}E(1)E(2)$；用\cref{eq:prelim-eikonal}把 $E(1)E(2)$ 写成 $E(1,2)+E(2,1)$，二者之差为 $\frac12[T_2,T_1]\,[E(1,2)-E(2,1)]$，只含对易子。% VF-WL-3
+以网表述的全阶非阿贝尔指数化是全阶论证（\cref{prop:appB-webs}；Gatheral~\cite{Gatheral1983}，Frenkel 与 Taylor~\cite{FrenkelTaylor1984}）。
+
+%%% BEGIN fig:soft-eikonal
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 soft/.style={draw=green!45!black},
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large},
+  t2 hc/.style={hard blob,circle,minimum size=0.84cm,inner sep=0pt}]
+  % ======================= (a) outgoing quark =======================
+  \node[t2 hc] (H) at (0,0) {$H$};
+  \coordinate (X) at (1.95,0);
+  \draw[quark] (H.east) -- (X);
+  \draw[quark] (X) -- (3.35,0);
+  \draw[gluon,t2 soft] (2.6,1.3) -- (X);
+  \node[vertex] at (X) {};
+  \path[mom'={$p-k$}] (H.east) -- (X);
+  \path[mom'={$p$}] (X) -- (3.35,0);
+  \path[mom'={$k$},mom sep=0.3cm] (2.6,1.3) -- (X);
+  \node[t2 eq] at (4.15,0) {$\approx$};
+  \begin{scope}[xshift=5.4cm]
+    \node[t2 hc] (H) at (0,0) {$H$};
+    \draw[quark] (H.340) -- ($(H.340)+(3.0,0)$) coordinate (Eq);
+    \draw[wilson=0.82] (H.20) -- ($(H.20)+(3.0,0)$) coordinate (Ew);
+    \coordinate (Y) at ($(H.20)!0.55!(Ew)$);
+    \draw[gluon,t2 soft] ($(Y)+(0.65,1.16)$) -- (Y);
+    \path[mom'={$p$},mom pos=0.75] (H.340) -- (Eq);
+    \node[t2 lab,anchor=south] at ($(H.20)!0.25!(Ew)+(0,0.1)$) {$W_n[\infty,0]$};
+  \end{scope}
+  \node[font=\small] at (1.45,-1.15) {$\bar u(p)\,(\ii g\,t^a\gamma^\mu)\,\dfrac{\ii(\sla p-\sla k)}{(p-k)^2+\ii0}$};
+  \node[font=\small] at (7.0,-1.15) {$\bar u(p)\,\dfrac{g\,t^a\,n^\mu}{n\cdot k-\ii0}$};
+  \node[font=\small,anchor=west] at (-0.6,-2.0) {(a)\ 出射夸克：未来指向的 Wilson 线（$n\propto p$）};
+  % ======================= (b) incoming quark =======================
+  \begin{scope}[yshift=-4.1cm]
+    \node[t2 hc] (H) at (3.35,0) {$H$};
+    \coordinate (X) at (1.4,0);
+    \draw[quark] (0,0) -- (X);
+    \draw[quark] (X) -- (H.west);
+    \draw[gluon,t2 soft] (0.75,1.3) -- (X);
+    \node[vertex] at (X) {};
+    \path[mom'={$p$}] (0,0) -- (X);
+    \path[mom'={$p+k$}] (X) -- (H.west);
+    \path[mom={$k$},mom sep=0.3cm] (0.75,1.3) -- (X);
+    \node[t2 eq] at (4.15,0) {$\approx$};
+    \begin{scope}[xshift=5.4cm]
+      \node[t2 hc] (H) at (3.35,0) {$H$};
+      \draw[quark] ($(H.200)-(3.0,0)$) coordinate (Sq) -- (H.200);
+      \draw[wilson=0.25] ($(H.160)-(3.0,0)$) coordinate (Sw) -- (H.160);
+      \coordinate (Y) at ($(Sw)!0.45!(H.160)$);
+      \draw[gluon,t2 soft] ($(Y)+(-0.65,1.16)$) -- (Y);
+      \path[mom'={$p$},mom pos=0.3] (Sq) -- (H.200);
+      \node[t2 lab,anchor=south] at ($(Y)!0.55!(H.160)+(0,0.1)$) {$W_n[0,-\infty]$};
+    \end{scope}
+    \node[font=\small] at (1.7,-1.15) {$\dfrac{\ii(\sla p+\sla k)}{(p+k)^2+\ii0}\,(\ii g\,t^a\gamma^\mu)\,u(p)$};
+    \node[font=\small] at (7.0,-1.15) {$-\dfrac{g\,t^a\,n^\mu}{n\cdot k+\ii0}\,u(p)$};
+    \node[font=\small,anchor=west] at (-0.6,-2.0) {(b)\ 入射夸克：过去指向的 Wilson 线（$n\propto p$）};
+  \end{scope}
+\end{tikzpicture}
+\caption{软胶子的程函（eikonal）近似。软胶子（绿色，动量 $k$ 流入夸克线，色指标 $a$、Lorentz 指标 $\mu$）附着在高能无质量夸克线（动量 $p$）上。
+当 $k$ 的各分量都远小于 $p$ 的大分量、且不在 Glauber 区时，分子 $\bar u(p)\gamma^\mu(\sla p-\sla k)\to2p^\mu\bar u(p)$、分母 $(p-k)^2+\ii0\to-2p\cdot k+\ii0$，
+结果只依赖于 $p$ 的方向 $n$（对 $n$ 的标度不变），正是沿 $n$ 方向的 Wilson 线的单胶子 Feynman 规则：
+(a)~出射夸克对应未来指向的 $W_n[\infty,0]$，传播子为 $-\ii/(n\cdot k-\ii0)$；(b)~入射夸克对应过去指向的 $W_n[0,-\infty]$，传播子为 $\ii/(n\cdot k+\ii0)$
+（顶点因子均为 $\ii g\,t^a n^\mu$）。Wilson 线上的箭头与被替代的夸克线的费米子数流向一致。}
+\label{fig:soft-eikonal}
+\end{figure}
+%%% END fig:soft-eikonal
+
+\begin{example}[$m=2$ 的程函恒等式与入射夸克传播子的程函极限]\label{ex:prelim-eikonal-two}
+(a) $m=2$ 时\cref{eq:prelim-eikonal}即 $\frac1{a_1(a_1+a_2)}+\frac1{a_2(a_1+a_2)}=\frac{a_1+a_2}{a_1a_2(a_1+a_2)}=\frac1{a_1a_2}$；带绝热正规化时，$\frac{\ii}{a_1+\ii\epsilon}\frac{\ii}{a_1+a_2+2\ii\epsilon}+\frac{\ii}{a_2+\ii\epsilon}\frac{\ii}{a_1+a_2+2\ii\epsilon}$ 的分子之和 $(a_1+\ii\epsilon)+(a_2+\ii\epsilon)$ 恰好约去 $a_1+a_2+2\ii\epsilon$，得 $\frac{\ii}{a_1+\ii\epsilon}\frac{\ii}{a_2+\ii\epsilon}$。
+\par
+(b) 一个动量为 $p$（$p^2=0$）的入射夸克吸收一个软胶子（动量 $k$ 流入夸克线，色 $a$，指标 $\mu$；$k$ 的各分量都远小于 $p$ 的大分量，且不在 Glauber 区）。由 $\sla pu(p)=0$，$(\sla p+\sla k)\gamma^\mu u(p)=2p^\mu u(p)+\sla k\gamma^\mu u(p)$，$(p+k)^2=2p\cdot k+k^2$。略去相对为 $O(k)$ 的 $\sla k\gamma^\mu$ 与相对于 $p\cdot k$ 的 $k^2$，
+\begin{equation}\label{eq:prelim-eikonal-in}
+S(p+k)\,\ii g\gamma^\mu t^a\,u(p)=\frac{\ii(\sla p+\sla k)}{(p+k)^2+\ii0}\,\ii g\gamma^\mu t^a\,u(p)\simeq-g\,t^a\,\frac{p^\mu}{p\cdot k+\ii0}\,u(p). % VF-WL-5
+\end{equation}
+它与过去指向的 Wilson 线 $W[0,-\infty n]$（$n\propto p$）的单胶子规则 $(\ii g\,t^an^\mu)\,\ii/(n\cdot k+\ii0)=-g\,t^an^\mu/(n\cdot k+\ii0)$ 完全相同（规则在 $n\to\alpha n$，$\alpha>0$ 下不变）。同样，出射夸克给出 $\bar u(p)\,\ii g\gamma^\mu t^a S(p-k)\simeq+g\,t^a\,p^\mu\bar u(p)/(p\cdot k-\ii0)$，即未来指向的 $W[\infty n,0]$ 的规则 $(\ii g\,t^an^\mu)(-\ii)/(n\cdot k-\ii0)$。$\ii0$ 的符号就是被替代的传播子 $(p\pm k)^2+\ii0$ 的符号。
+\par
+(c) 两个软胶子依次（先 $k_1$ 后 $k_2$）被吸收时，重复 (b) 两次得\cref{eq:prelim-past}中这一次序的项 $\frac{-g\,p^{\mu_2}}{p\cdot(k_1+k_2)+\ii0}\frac{-g\,p^{\mu_1}}{p\cdot k_1+\ii0}t^{a_2}t^{a_1}u(p)$；对两种次序求和，颜色对易时由 (a) 得到单胶子因子之积，QCD 中则得到路径序的 $W^{(2)}$。
+\uses{lem:prelim-eikonal-identity,prop:prelim-wilson-rules}
+\end{example}
+
+\cref{fig:soft-eikonal}画出\cref{ex:prelim-eikonal-two}(b) 的两种情形；图中的 $n$ 是夸克动量 $p$ 的方向（不是本书的 $n_A,n_B$），图注所说的 Glauber 区见\cref{def:ir-glauber}（第~4~章）。程函近似略去了 $k^2$ 与 $\sla k\gamma^\mu$，要求 $|k^2|\ll|p\cdot k|$：对软标度 $k\sim\lambda Q$（各分量同阶），相对误差是 $O(\lambda)$；在 Glauber 区（$|k^+k^-|\ll\mathbf k_{\mathrm T}^2$），对沿 $+z$ 的 $p$ 有 $2p\cdot k\approx2p^+k^-$，而 $|k^2|\approx\mathbf k_{\mathrm T}^2$ 可以与之同阶，近似失效。
+
+
+\begin{example}[有限类光线段的单胶子项]\label{ex:prelim-wilson-segment}
+取 $w=(0^+,w^-,\mathbf 0_{\mathrm T})=w^-n_B$ 与沿 $n_B$ 的直线段 $z(s)=s\,n_B$，$0\le s\le w^-$。由于 $\dd z\cdot A=\dd s\,n_B\cdot A=\dd s\,A^+$，
+\[
+W[w,0]=P\exp\Big(\ii g\int_0^{w^-}\dd s\,A^{a+}(s\,n_B)\,t^a\Big).
+\]
+代入 Fourier 展开并用 $k\cdot n_B=k^+$，单胶子项为
+\begin{equation}\label{eq:prelim-segment}
+W^{(1)}[w,0]=\ii g\,t^a\!\int\!\frac{\dd^4k}{(2\pi)^4}\,\tilde A^{a+}(k)\int_0^{w^-}\!\dd s\,\ee^{-\ii sk^+}=g\,t^a\!\int\!\frac{\dd^4k}{(2\pi)^4}\,\tilde A^{a+}(k)\,\frac{1-\ee^{-\ii k^+w^-}}{k^+}.
+\end{equation}
+(i) $k^+\to0$ 时 $(1-\ee^{-\ii k^+w^-})/k^+\to\ii w^-$：极点是可去的，不需要 $\ii0$。
+(ii)(iii) 令 $w^-\to\pm\infty$ 并带阻尼 $\ee^{\mp\epsilon s}$：$\int_0^{\pm\infty}\dd s\,\ee^{-\ii sk^+\mp\epsilon s}=-\ii/(k^+\mp\ii\epsilon)$，于是 $W^{(1)}\to g\,t^a\tilde A^{a+}(k)/(k^+\mp\ii0)$，分别是\cref{eq:prelim-one-gluon}中 $W^{(1)}[\pm\infty n_B,0]$ 的规则。
+(iv) 经由 $+\infty$ 分解：$W^{(1)}[w,\infty n_B]=-g\,t^a\ee^{-\ii k^+w^-}\tilde A^{a+}/(k^+-\ii0)$（共轭规则加端点相因子），与 (ii) 相加得 $g\,t^a\tilde A^{a+}(1-\ee^{-\ii k^+w^-})/(k^+-\ii0)$，因分子在 $k^+=0$ 处为零而等于\cref{eq:prelim-segment}；经由 $-\infty$ 同理。所以对同一条类光线上的两点，伸向未来还是过去无关紧要：
+\[
+W[w,0]=W[w,\infty n_B]\,W[\infty n_B,0]=W[w,-\infty n_B]\,W[-\infty n_B,0].
+\]
+\uses{def:prelim-wilson,prop:prelim-wilson-rules}
+\end{example}
+
+\cref{eq:prelim-segment}是夸克部分子分布（\cref{def:pdf-quark}，第~8~章）中 Wilson 线的单胶子项，附录~F 的伸缩求和例子也从它出发；对横动量依赖的分布，两端点不在同一条类光线上，取向就不再无关（第~14~章）。
+
+类光 Wilson 线还有两种在后文至关重要的发散。其一，两条直 Wilson 线在一点相交（“尖点”）时有紫外的尖点发散，其反常维度在类光极限下随两线之间的快度线性增长~\cite{Polyakov1980,BrandtNeriSato1981,KorchemskyRadyushkin1987}，这是 Sudakov 双对数的来源（\cref{def:sudakov-cusp}，第~5~章）。其二，类光线在 Feynman 规范中没有自能（正比于 $n^2=0$），但程函传播子使 $\int\dd k^+/k^+$ 在 $k^+\to0$ 处发散，维数正规化控制不了这一端点：在对横动量积分的共线分布中，实辐射在纵向动量分数 $\xi\to1$ 处的同一发散与之相消，二者合成加号分布（第~8~章）；在固定横动量的分布中，虚修正只在 $\mathbf k_{\mathrm T}=0$ 处有贡献，相消不再发生，发散成为快度发散，需要快度正规子与软因子（第~14~章）。

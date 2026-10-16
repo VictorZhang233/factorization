@@ -1,0 +1,20 @@
+% =====================================================================
+%  ch04_ir.tex —— 第 4 章 费曼积分的红外结构：钳夹、幂次计数与红外安全
+%  writer W04；规格：FINAL_OUTLINE_v2 第 4 章、WRITER_SPEC_v2、LEAD_DECISIONS。
+%  核对脚本与日志：writing/work/W04/（w04_landau.py、w04_power.py 及 logs/）。
+% =====================================================================
+\chapter{费曼积分的红外结构：钳夹、幂次计数与红外安全}\label{ch:ir}
+
+本章研究因子化的一切图形证明共同的几何与分析基础：在圈动量空间的哪些地方，一个费曼积分会对长程物理（小虚度（virtuality）、软动量）敏感，这种敏感性有多强，它又如何在可观测量中相消或被吸收。在维数正规化的重整化微扰论中，Landau 条件的两种形式、Coleman--Norton 定理的代数形式、约化图的超表观红外发散度（一个标度陈述）、单圈 Glauber 区的钳夹判据、QED 的 Bloch--Nordsieck 定理与欧氏极限下的区域方法有完整证明（\tagR，$R_{\mathrm{PT}}$；前四者的证明在\cref{app:appD}与\cref{app:appE}）。钳夹面与约化图的对应、超领头构型的相消、领头区域定理、KLN 定理与红外安全量的有限性只有全阶论证（\tagA），共同的瓶颈是从标度陈述到嵌套区域上积分界的过渡。Landau 条件的充分性与闵氏运动学中的区域方法没有证明，有色初态的非阿贝尔 Bloch--Nordsieck 抵消则不成立。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{thm:ir-landau-alpha}、\cref{thm:ir-landau-momentum}（\tagR，$R_{\mathrm{PT}}$，必要性；证明在\cref{app:appD}）；\cref{prop:ir-coleman-norton}（\tagR，$R_{\mathrm{PT}}$，代数形式）；\cref{prop:ir-power-counting}（\tagR，$R_{\mathrm{PT}}$，超表观度，E-S；证明在\cref{app:appE}）；\cref{prop:ir-glauber-trapping}（\tagR，$R_{\mathrm{PT}}$，单圈）；\cref{thm:ir-bn-qed}（\tagR，$R_{\mathrm{PT}}$）；\cref{thm:ir-regions-euclid}（\tagR，$R_{\mathrm{PT}}$）。\par
+\textbf{给出全阶论证：}\cref{prop:ir-pinch-classification}、\cref{prop:ir-super-leading}、\cref{thm:ir-leading-regions}、\cref{thm:ir-kln}、\cref{thm:ir-safe-finite}（\tagA；瓶颈：嵌套区域与积分形式的幂次计数，其精确形式为\cref{asm:appN-envelope}、\cref{asm:appN-separation}）。\par
+\textbf{没有证明：}Landau 条件的充分性与整体围道形变（\cref{rem:ir-landau-status}，\tagA；完整证明只见于第~24~章讨论的预印本结果\cref{thm:front-collins-pinch}）；闵氏极限下的区域方法（\cref{prop:ir-regions-minkowski}，\tagP；“区域 $=$ Newton 多面体的下表面”在三圈有反例）；有色初态的非阿贝尔 Bloch--Nordsieck 抵消——它不成立（\cref{prop:ir-bn-failure}，\tagV）。
+\end{tcolorbox}
+
+为什么需要这样一章？全部内线有质量、外动量取欧氏值时，被积函数处处光滑，积分是外动量的解析函数，对长程物理毫不敏感。强相互作用中最重要的情形恰恰相反：夸克与胶子（近似）无质量，过程发生在闵氏运动学中，传播子 $\ii/(q_j^2-m_j^2+\ii0)$ 在质壳上的奇点并不总能被积分围道绕开。被围道“夹住”的奇点——钳夹（pinch）——正是红外发散、共线发散与大对数的来源；钳夹出现在何处，决定了因子化公式中出现哪些因子：硬部分、喷注（共线）因子与软因子。本章依次回答四个问题：围道在哪里被夹住（Landau 方程的参数形式与动量形式，二者回答的问题不同，\cref{sec:ir-landau}）；这些位置有什么物理意义（Coleman--Norton 图像与无质量 QCD 的约化图，\cref{sec:ir-coleman-norton}与\cref{sec:ir-pinch}）；钳夹面附近的贡献有多大（幂次计数，以及程函（eikonal）近似失效的 Glauber 区，\cref{sec:ir-power}与\cref{sec:ir-glauber}）；单个割图的发散在可观测量中如何相消（\cref{sec:ir-cancellation}）。最后讨论区域方法（\cref{sec:ir-regions}）：它是有力的计算工具，但在闵氏运动学中没有一般证明。
+
+本章沿用\cref{def:prelim-feynman-rules}的 Feynman 规则、\cref{def:qcd-dimreg}的维数正规化（$D=4-2\varepsilon$）与\cref{def:prelim-lightfront}的光锥坐标：$v^\pm=(v^0\pm v^3)/\sqrt2$，$v\cdot w=v^+w^-+v^-w^+-\mathbf v_T\cdot\mathbf w_T$，强子（喷注）$A$ 沿 $+z$、$B$ 沿 $-z$ 方向运动，$n_A=(1^+,0^-,\mathbf 0_T)$，$n_B=(0^+,1^-,\mathbf 0_T)$。动量写作 $k=(k^+,k^-,\mathbf k_T)$，$k_T\equiv|\mathbf k_T|$，故 $k^2=2k^+k^--k_T^2$。

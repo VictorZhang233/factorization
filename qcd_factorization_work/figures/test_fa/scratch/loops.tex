@@ -1,0 +1,55 @@
+\input{preamble_fact.tex}
+\pagestyle{empty}
+\begin{document}
+\begin{tikzpicture}[fd]
+  % variant 1: full circle gluon loop=2, r=0.7
+  \begin{scope}
+    \draw[gluon] (-1.7,0) -- (-0.7,0); \draw[gluon] (0.7,0) -- (1.7,0);
+    \draw[gluon loop=2] (0,0) circle[radius=0.7];
+    \foreach \x in {-0.7,0.7} \node[vertex] at (\x,0) {};
+    \node at (0,-1.3) {v1};
+  \end{scope}
+  % variant 2: two open arcs
+  \begin{scope}[xshift=4cm]
+    \draw[gluon] (-1.7,0) -- (-0.7,0); \draw[gluon] (0.7,0) -- (1.7,0);
+    \draw[gluon] (-0.7,0) arc[start angle=180,end angle=0,radius=0.7];
+    \draw[gluon] (0.7,0) arc[start angle=0,end angle=-180,radius=0.7];
+    \foreach \x in {-0.7,0.7} \node[vertex] at (\x,0) {};
+    \node at (0,-1.3) {v2};
+  \end{scope}
+  % variant 3: two open arcs from left vertex
+  \begin{scope}[xshift=8cm]
+    \draw[gluon] (-1.7,0) -- (-0.7,0); \draw[gluon] (1.7,0) -- (0.7,0);
+    \draw[gluon] (-0.7,0) arc[start angle=180,end angle=0,radius=0.7];
+    \draw[gluon] (-0.7,0) arc[start angle=180,end angle=360,radius=0.7];
+    \foreach \x in {-0.7,0.7} \node[vertex] at (\x,0) {};
+    \node at (0,-1.3) {v3};
+  \end{scope}
+  % tadpole variants
+  \begin{scope}[xshift=12cm]
+    \draw[gluon] (-1.6,0) -- (0,0); \draw[gluon] (1.6,0) -- (0,0);
+    \draw[gluon] (0,0) .. controls (-1.2,1.5) and (1.2,1.5) .. (0,0);
+    \node[vertex] at (0,0) {};
+    \node at (0,-1.3) {t1};
+  \end{scope}
+  \begin{scope}[yshift=-3cm]
+    \draw[gluon] (-1.6,0) -- (0,0); \draw[gluon] (1.6,0) -- (0,0);
+    \draw[gluon loop=1] (0,0) arc[start angle=-90,end angle=270,radius=0.5];
+    \node[vertex] at (0,0) {};
+    \node at (0,-1.3) {t2};
+  \end{scope}
+  \begin{scope}[xshift=4cm,yshift=-3cm]
+    \draw[gluon] (-1.6,0) -- (0,0); \draw[gluon] (1.6,0) -- (0,0);
+    \draw[gluon] (0,0) arc[start angle=-90,end angle=90,radius=0.5];
+    \draw[gluon] (0,0) arc[start angle=270,end angle=90,radius=0.5];
+    \node[vertex] at (0,0) {};
+    \node at (0,-1.3) {t3};
+  \end{scope}
+  \begin{scope}[xshift=8cm,yshift=-3cm]
+    \draw[gluon] (-1.6,0) -- (-0.08,0); \draw[gluon] (1.6,0) -- (0.08,0);
+    \draw[gluon] (0,0.05) .. controls (-0.9,0.2) and (-0.8,1.25) .. (0,1.25) .. controls (0.8,1.25) and (0.9,0.2) .. (0,0.05);
+    \node[vertex] at (0,0) {};
+    \node at (0,-1.3) {t4};
+  \end{scope}
+\end{tikzpicture}
+\end{document}

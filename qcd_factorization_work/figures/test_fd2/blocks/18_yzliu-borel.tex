@@ -1,0 +1,51 @@
+%%% BEGIN fig:yzliu-borel
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=2.05cm,y=1cm,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 tick/.style={draw=gray!60!black,line width=0.45pt},
+  fd2 pole/.pic={\draw[line width=1.1pt,line cap=round] (-0.045,-0.09)--(0.045,0.09) (-0.045,0.09)--(0.045,-0.09);},
+  fd2 contour/.style={draw=blue!60!black,line width=0.9pt,postaction={decorate,decoration={markings,
+      mark=at position 0.62 with {\arrow{Stealth[length=5pt,width=4.2pt]}}}}},
+  fd2 pointer/.style={draw=#1,line width=0.45pt,-{Stealth[length=3.5pt,width=3pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  \foreach \panel/\xs in {a/0,b/3.75} {
+  \begin{scope}[xshift=\xs*2.05cm]
+    \draw[fd2 ax] (-0.45,0) -- (2.55,0) node[right] {$\Real u$};
+    \draw[fd2 ax] (0,-0.8) -- (0,1.25) node[left] {$\Imag u$};
+    \foreach \u/\t in {0.5/{\frac12},1/{1},1.5/{\frac32},2/{2}} {
+      \draw[fd2 tick] (\u,-0.06) -- (\u,0.06);
+      \node[font=\scriptsize,anchor=north,inner sep=1.5pt] at (\u,-0.5) {$\t$};}
+    \node[font=\scriptsize,anchor=north east,inner sep=1.5pt] at (0,0) {$0$};
+    \draw[fd2 contour] (0,0) .. controls (0.1,0.2) and (0.2,0.26) .. (0.32,0.26) -- (2.35,0.26);
+    \if b\panel
+      \draw[fd2 contour] (0,0) .. controls (0.1,-0.2) and (0.2,-0.26) .. (0.32,-0.26) -- (2.35,-0.26);
+      \node[font=\footnotesize,text=blue!50!black,anchor=west,inner sep=1.5pt] at (2.35,0.3) {$C_+$};
+      \node[font=\footnotesize,text=blue!50!black,anchor=west,inner sep=1.5pt] at (2.35,-0.3) {$C_-$};
+    \fi
+  \end{scope}}
+  % ---------------- (a) real part (modulus): regular at u = 1/2 ----------------
+  \draw[line width=0.9pt,fill=white,draw=gray!50!black] (0.5,0) circle[radius=0.075cm*1.6];
+  \draw[fd2 pointer=gray!55!black] (0.95,0.83) -- (0.56,0.12);
+  \node[fd2 note,anchor=west,align=left,text=gray!35!black] at (0.97,0.83) {$u=\frac12$ 处正则（无线性重整化子）};
+  \node[fd2 lab,align=center] at (1.05,-1.95) {(a)\ 核的实部};
+  % ---------------- (b) imaginary part (phase A): simple pole at u = 1/2 ----------------
+  \begin{scope}[xshift=3.75*2.05cm]
+    \pic[red!70!black] at (0.5,0) {fd2 pole};
+    \draw[fd2 pointer=red!60!black] (0.95,0.83) -- (0.55,0.12);
+    \node[fd2 note,anchor=west,align=left,text=red!50!black] at (0.97,0.83) {单极点 $\propto\dfrac{\mathrm{sgn}(z)}{u-\frac12}$};
+    \node[fd2 note,anchor=north,align=center,text=blue!45!black] at (1.2,-0.95) {$C_+$ 与 $C_-$ 之差 $\propto\Lambda/p^z$（线性幂次）};
+    \node[fd2 lab,align=center] at (1.05,-1.95) {(b)\ 核的虚部（相位 $A$）};
+  \end{scope}
+  % ---------------- formulas ----------------
+  \node[fd2 lab,align=center] at (2.92,-3.25) {$\Imag B(u)\to\dfrac{\mu}{p^z}\,\dfrac{C_F\ee^{5/6}}{2\pi}\,\dfrac{\mathrm{sgn}(z)}{u-\frac12}$\\[6pt]
+    $A_{\mathrm{asym}}=-2\dfrac{\mu}{p^z}\displaystyle\sum_n r_n\alpha_s^{n+1}$，\quad $r_n=N_m\Big(\dfrac{\beta_0}{2\pi}\Big)^{\!n}n!$，\quad $N_m=\dfrac{C_F\ee^{5/6}}{\pi}\simeq0.977$};
+\end{tikzpicture}
+\caption{大 $\beta_0$（泡链）近似下重—轻 Sudakov 核的 Borel 平面（$u=\beta_0t/(4\pi)$，约定同\cref{def:power-borel}；只画出 $u=\frac12$ 附近，其余奇点未画出）。
+线性红外重整化子位于 $u=\frac12$，只出现在核的虚部即相位 $A$ 中 (b)，使沿正实轴的 Borel 积分产生正比于 $\Lambda/p^z$ 的不确定性（绕极点上方 $C_+$ 或下方 $C_-$）；核的实部在该处正则 (a)；轻—轻 Sudakov 核没有这一奇点。
+它与次领头幂次阈值软算符（及含维数 1 的 Wilson 线尖点算符的软因子）的紫外重整化子相消（VF-YZL-11；\cref{prop:yzliu-linear-renormalon}，部分 [P]）。
+归一化 $N_m$ 与极点质量、Wilson 线线性重整化子相同；它在大 $\beta_0$ 之外的普适性是猜想（\cref{conj:yzliu-renormalon-norm}，[C]）。}
+\label{fig:yzliu-borel}
+\end{figure}
+%%% END fig:yzliu-borel

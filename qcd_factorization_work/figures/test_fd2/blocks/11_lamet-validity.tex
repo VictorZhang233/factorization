@@ -1,0 +1,39 @@
+%%% BEGIN fig:lamet-validity
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{semilogyaxis}[width=0.8\textwidth,height=6.4cm,xmin=0,xmax=1,ymin=5e-3,ymax=2,
+  axis lines=left,axis line style={gray!60!black},clip=false,
+  xlabel={$x$},ylabel={相对幂次修正（示意）},
+  xtick={0,0.2,0.5,0.8,1},
+  xticklabels={$0$,$x_0$,$0.5$,$1-x_0$,$1$},
+  extra x ticks={0.1,0.9},extra x tick labels={$\frac{\Lambda}{P^z}$,$1-\frac{\Lambda}{P^z}$},
+  extra x tick style={tick label style={yshift=-9pt}},
+  ytick={0.01,0.1,1},yticklabels={$10^{-2}$,$10^{-1}$,$1$},
+  tick label style={font=\scriptsize},label style={font=\small},
+  legend style={font=\scriptsize,draw=gray!40,fill=white,at={(0.5,0.97)},anchor=north},
+  legend cell align=left]
+  % excluded end-point strips (Lambda/P^z = 0.1 in this sketch)
+  \fill[gray!22] (axis cs:0,5e-3) rectangle (axis cs:0.1,2);
+  \fill[gray!22] (axis cs:0.9,5e-3) rectangle (axis cs:1,2);
+  \draw[gray!60!black,line width=0.4pt,dash pattern=on 2pt off 2pt] (axis cs:0,1) -- (axis cs:1,1);
+  \addplot[blue!60!black,line width=1.1pt,domain=0.0708:0.9,samples=120] {0.01/x^2};
+  \addlegendentry{$\Lambda^2/(x^2P_z^2)$}
+  \addplot[red!65!black,line width=1.1pt,dashed,domain=0.1:0.9293,samples=120] {0.01/(1-x)^2};
+  \addlegendentry{$\Lambda^2/((1-x)^2P_z^2)$（$\delta=0$）}
+  \addplot[red!65!black,line width=1.3pt,dotted,domain=0.1:0.995,samples=160] {0.01/(1-x)};
+  \addlegendentry{$\Lambda^2/((1-x)P_z^2)$（$\delta=1$）}
+  \node[font=\scriptsize,align=center,rotate=90] at (axis cs:0.05,0.06) {$xP^z\lesssim\Lambda$：不适用};
+  \node[font=\scriptsize,align=center,rotate=90] at (axis cs:0.95,0.022) {$(1-x)P^z\lesssim\Lambda$};
+  % fixed-order domain and its extension by threshold resummation
+  \draw[gray!50!black,line width=0.5pt] (axis cs:0.2,2.6) -- (axis cs:0.2,3.0) -- (axis cs:0.8,3.0) -- (axis cs:0.8,2.6);
+  \node[font=\scriptsize,anchor=south] at (axis cs:0.5,3.0) {固定阶匹配一致成立：$[x_0,1-x_0]$，$x_0P^z\gg\Lambda$};
+  \draw[red!55!black,line width=0.7pt,-{Stealth[length=4.5pt,width=3.8pt]}] (axis cs:0.8,2.75) -- (axis cs:0.9,2.75);
+  \node[font=\scriptsize,text=red!50!black,anchor=south west,align=left] at (axis cs:0.82,3.05) {阈值重求和：大 $x$ 边界推到\\$(1-x)P^z\gg\Lambda$};
+\end{semilogyaxis}
+\end{tikzpicture}
+\caption{LaMET 预言的适用范围（示意，图中取 $\Lambda/P^z=0.1$）。端点区要求硬标度 $2xP^z$ 与旁观者动量 $(1-x)P^z$ 都远大于 $\Lambda$（灰色带不适用）。相对幂次修正在小 $x$ 处按 $\Lambda^2/(x^2P_z^2)$ 增大；在大 $x$ 处，两种计数规则 $\Lambda^2/((1-x)^{2-\delta}P_z^2)$（$\delta=0$ 虚线，$\delta=1$ 点线）对应扭度 4 分布 $\rho_4/q\sim(1-x)^\delta$ 的不同端点行为（\cref{cor:lamet-endpoint}，VF-LAM-12），$\delta$ 在 QCD 中未知。
+固定阶匹配只在 $[x_0,1-x_0]$ 上一致成立；阈值重求和（\cref{thm:yzliu-threshold}）把大 $x$ 边界推到 $(1-x)P^z\gg\Lambda$（\cref{rem:lamet-domain}）。}
+\label{fig:lamet-validity}
+\end{figure}
+%%% END fig:lamet-validity

@@ -1,0 +1,49 @@
+%%% BEGIN fig:pion-ff
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \foreach \panel/\ys/\xv/\xg in {a/0/-0.9/0.9, b/-4.35/0.9/-0.9} {
+  \begin{scope}[yshift=\ys cm]
+    \node[jet blob,ellipse,minimum width=0.7cm,minimum height=2.0cm,inner sep=0pt] (L) at (-3.0,0) {};
+    \node[jetB blob,ellipse,minimum width=0.7cm,minimum height=2.0cm,inner sep=0pt] (R) at (3.0,0) {};
+    \coordinate (Lq) at (-2.769,0.75);  \coordinate (Rq) at (2.769,0.75);
+    \coordinate (Lb) at (-2.769,-0.75); \coordinate (Rb) at (2.769,-0.75);
+    \coordinate (V) at (\xv,0.75); \coordinate (G1) at (\xg,0.75); \coordinate (G2) at (\xg,-0.75);
+    \coordinate (Qs) at ($(V)+(-0.9,1.25)$);
+    \draw[t3 hadron] (-4.3,0) -- (L.west);  \draw[t3 hadron] (R.east) -- (4.3,0);
+    \draw[gluon] (G1) -- (G2);
+    \draw[photon] (Qs) -- (V);
+    % quark line (fermion number left -> right)
+    \ifdim \xv pt<\xg pt
+      \draw[quark] (Lq) -- (V); \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (Rq);
+    \else
+      \draw[quark] (Lq) -- (G1); \draw[quark] (G1) -- (V); \draw[quark] (V) -- (Rq);
+    \fi
+    % antiquark line (fermion number right -> left, momentum left -> right)
+    \draw[quark] (Rb) -- (G2);  \draw[quark] (G2) -- (Lb);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \node[t3 lab,above left=-1pt] at (Qs) {$\gamma^*(q)$};
+    \path[mom={},mom sep=0.22cm,mom length=0.45cm] (Qs) -- (V);
+    \path[mom={$\pi(P)$},mom sep=0.26cm,mom length=0.5cm] (-4.3,0) -- (L.west);
+    \path[mom={$\pi(P')$},mom sep=0.26cm,mom length=0.5cm] (R.east) -- (4.3,0);
+    \path[mom={$xP$},mom sep=0.22cm,mom length=0.5cm] (Lq) -- ($(Lq)+(1.87,0)$);
+    \path[mom={$yP'$},mom sep=0.22cm,mom length=0.5cm] ($(Rq)+(-1.87,0)$) -- (Rq);
+    \path[mom'={$(1-x)P$},mom sep=0.22cm,mom length=0.5cm] (Lb) -- (G2);
+    \path[mom'={$(1-y)P'$},mom sep=0.22cm,mom length=0.5cm] (G2) -- (Rb);
+    \node[t3 lab,below=1pt] at (L.south) {$\phi(x)$};
+    \node[t3 lab,below=1pt] at (R.south) {$\phi^*(y)$};
+    \node[t3 lab,anchor=west] at (4.75,0) {(\panel)};
+  \end{scope}}
+\end{tikzpicture}
+\caption{$\pi$ 介子电磁形状因子的领头阶硬散射图（$F_\pi(Q^2)$ 由 $\langle\pi(P')|j^\mu|\pi(P)\rangle=(P+P')^\mu F_\pi(Q^2)$ 定义，$Q^2=-q^2$）。
+入射 $\pi$ 介子以分布振幅 $\phi(x)$ 分裂为共线的夸克（$xP$）与反夸克（$(1-x)P$），出射 $\pi$ 介子由 $yP'$ 与 $(1-y)P'$ 组成（$\phi^*(y)$）；
+蓝、橙两色分别表示与 $P$、$P'$ 共线的子图。为使反夸克转向 $P'$ 方向，必须交换一个硬胶子：(a)~光子先于胶子作用于夸克，内夸克线 $(xP+q)^2=-(1-x)Q^2$；
+(b)~胶子先于光子，内夸克线 $(yP'-q)^2=-(1-y)Q^2$；两图中胶子虚度均为 $-(1-x)(1-y)Q^2$（$m_\pi\to0$，$2P\cdot P'=Q^2$）。
+领头阶共有 4 个图，另两个是光子作用于反夸克的对应图。反夸克线上的箭头（费米子数）与其动量方向相反。
+结果为 $F_\pi(Q^2)=\int_0^1\!\dd x\,\dd y\,\phi^*(y)\,T_H(x,y,Q^2)\,\phi(x)$；当不与光子相连的反夸克的动量分数 $1-x$ 或 $1-y\to0$ 时，内线虚度趋于零，这就是端点区域。}
+\label{fig:pion-ff}
+\end{figure}
+%%% END fig:pion-ff

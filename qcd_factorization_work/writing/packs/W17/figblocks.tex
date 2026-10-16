@@ -1,0 +1,249 @@
+%%% BEGIN fig:sidis-dy-links
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ======================= (a) SIDIS: final-state interaction =======================
+  \begin{scope}
+    \node[hadron blob,ellipse,minimum width=1.7cm,minimum height=0.95cm,inner sep=0pt] (A) at (0,0) {};
+    \coordinate (V) at (0.3,1.95); \coordinate (G) at (2.15,1.95); \coordinate (Gp) at (2.15,0);
+    \draw[t3 hadron] (-2.1,0) -- (A.west);
+    \draw[plain] (A.east) -- (3.6,0);
+    \draw[gluon] (Gp) -- (G);
+    \draw[quark] (0.3,0.44) -- (V);
+    \draw[photon] (-1.55,2.85) -- (V);
+    \draw[quark] (V) -- (G);  \draw[quark] (G) -- (3.6,1.95);
+    \foreach \p in {V,G,Gp} \node[vertex] at (\p) {};
+    \node[t3 lab] at (A) {$A$};
+    \node[t3 lab,above left=-1pt] at (-1.55,2.85) {$\gamma^*(q)$};
+    \path[mom'={},mom sep=0.24cm] (-1.55,2.85) -- (V);
+    \path[mom={$k$},mom sep=0.24cm] (0.3,0.44) -- (V);
+    \path[mom={$p-\ell$},mom sep=0.24cm] (V) -- (G);
+    \path[mom={$p$},mom sep=0.24cm] (G) -- (3.6,1.95);
+    \path[mom'={$\ell$},mom sep=0.26cm] (Gp) -- (G);
+    \path[mom'={$P$},mom sep=0.26cm] (-2.1,0) -- (-0.95,0);
+    \node[t3 lab,right] at (3.6,0) {$X$};
+    \node[t3 note,right] at (3.6,1.95) {$p\parallel n$};
+    % eikonal approximation and the resulting Wilson line
+    \node[t3 lab] at (1.0,-1.2) {$\dfrac{1}{(p-\ell)^2+\ii0}\simeq\dfrac{-1}{2p^-(\ell^+-\ii0)}$};
+    \draw[gluon] (1.6,-3.05) -- (1.6,-2.35);
+    \draw[wilson plain] (0.2,-2.35) -- (3.0,-2.35);
+    \path[t3 warrow=0.8] (0.2,-2.35) -- (3.0,-2.35);
+    \node[vertex] at (1.6,-2.35) {};  \node[opvertex] at (0.2,-2.35) {};
+    \node[t3 lab,left=2pt] at (0.2,-2.35) {$0$};
+    \node[t3 lab,right=1pt] at (3.0,-2.35) {$+\infty n$};
+    \node[t3 note,right=1pt] at (1.6,-2.95) {$\ell$};
+    \node[t3 lab] at (1.0,-3.5) {$W[\infty n,0]$：未来指向};
+    \node[t3 lab] at (1.0,-4.2) {(a)\ SIDIS：末态相互作用};
+  \end{scope}
+  % ======================= (b) Drell--Yan: initial-state interaction =======================
+  \begin{scope}[xshift=7.6cm]
+    \node[hadron blob,ellipse,minimum width=1.7cm,minimum height=0.95cm,inner sep=0pt] (A) at (0,0) {};
+    \node[jetB blob,ellipse,minimum width=0.8cm,minimum height=0.62cm,inner sep=0pt] (B) at (3.3,1.95) {};
+    \coordinate (V) at (0.3,1.95); \coordinate (G) at (2.15,1.95); \coordinate (Gp) at (2.15,0);
+    \draw[t3 hadron] (-2.1,0) -- (A.west);
+    \draw[t3 hadron] (4.45,1.95) -- (B.east);
+    \draw[plain] (A.east) -- (3.6,0);
+    \draw[plain] (B.north east) -- ++(0.45,0.5);
+    \draw[gluon] (Gp) -- (G);
+    \draw[quark] (0.3,0.44) -- (V);
+    \draw[photon] (V) -- (-1.55,2.85);
+    \draw[quark] (V) -- (G);  \draw[quark] (G) -- (B.west);
+    \foreach \p in {V,G,Gp} \node[vertex] at (\p) {};
+    \node[t3 lab] at (A) {$A$};  \node[t3 lab] at (B) {$B$};
+    \node[t3 lab,above left=-1pt] at (-1.55,2.85) {$\gamma^*(q)$};
+    \path[mom={},mom sep=0.24cm] (V) -- (-1.55,2.85);
+    \path[mom={$k$},mom sep=0.24cm] (0.3,0.44) -- (V);
+    \path[mom'={$p+\ell$},mom sep=0.24cm] (G) -- (V);
+    \path[mom'={$p$},mom sep=0.24cm,mom length=0.45cm] (B.west) -- (G);
+    \path[mom'={$\ell$},mom sep=0.26cm] (Gp) -- (G);
+    \path[mom'={$P_A$},mom sep=0.26cm] (-2.1,0) -- (-0.95,0);
+    \path[mom={$P_B$},mom sep=0.26cm,mom length=0.45cm] (4.45,1.95) -- (3.72,1.95);
+    \node[t3 lab,right] at (3.6,0) {$X_A$};
+    \node[t3 note,right=-1pt] at ($(B.north east)+(0.45,0.5)$) {$X_B$};
+    % eikonal approximation and the resulting Wilson line
+    \node[t3 lab] at (1.0,-1.2) {$\dfrac{1}{(p+\ell)^2+\ii0}\simeq\dfrac{1}{2p^-(\ell^++\ii0)}$};
+    \draw[gluon] (1.6,-3.05) -- (1.6,-2.35);
+    \draw[wilson plain] (3.0,-2.35) -- (0.2,-2.35);
+    \path[t3 warrow=0.8] (3.0,-2.35) -- (0.2,-2.35);
+    \node[vertex] at (1.6,-2.35) {};  \node[opvertex] at (3.0,-2.35) {};
+    \node[t3 lab,right=2pt] at (3.0,-2.35) {$0$};
+    \node[t3 lab,left=1pt] at (0.2,-2.35) {$-\infty n$};
+    \node[t3 note,right=1pt] at (1.6,-2.95) {$\ell$};
+    \node[t3 lab] at (1.6,-3.5) {$W[-\infty n,0]$：过去指向};
+    \node[t3 lab] at (1.3,-4.2) {(b)\ Drell--Yan：初态相互作用};
+  \end{scope}
+\end{tikzpicture}
+\caption{单胶子交换如何决定 TMD 中 Wilson 线的方向。$n$ 为满足 $n\cdot v=v^+$ 的光型矢量，$\ell$ 为由强子 $A$ 的残余流入本征（eikonal）线的胶子动量，$n\cdot\ell=\ell^+$。
+(a)~SIDIS：被击出的夸克（末态，$p\parallel n$）与靶残余 $X$ 交换胶子（末态相互作用）；在本征近似下夸克传播子化为 $-1/[2p^-(\ell^+-\ii0)]$，
+与未来指向的 $W[\infty n,0]$ 的单胶子 Feynman 规则 $g\,t^a n^\mu/(n\cdot\ell-\ii0)$ 一致。
+(b)~Drell--Yan：强子 $B$ 的入射反夸克（$p\parallel n$）在湮灭之前与 $A$ 的残余 $X_A$ 交换胶子（初态相互作用）；传播子化为 $1/[2p^-(\ell^++\ii0)]$，
+对应过去指向的 $W[-\infty n,0]$，其单胶子规则为 $g\,t^a n^\mu/(n\cdot\ell+\ii0)$。两图拓扑相同，夸克线上的箭头均为费米子数流向：(b) 中反夸克的费米子数由湮灭顶点指向 $B$，其动量则流入顶点。
+两种本征因子之差 $\frac{1}{\ell^+-\ii0}-\frac{1}{\ell^++\ii0}=2\pi\ii\,\delta(\ell^+)$ 为 Glauber（Coulomb）相位项：它在对 $\boldsymbol k_{\mathrm T}$ 积分的共线 PDF 中相消，
+在 TMD 中则保留下来，使 Sivers 函数在两过程中反号，$f_{1T}^{\perp q}\big|_{\mathrm{SIDIS}}=-f_{1T}^{\perp q}\big|_{\mathrm{DY}}$（参见\cref{fig:tmd-staple}）。}
+\label{fig:sidis-dy-links}
+\end{figure}
+%%% END fig:sidis-dy-links
+
+%%% BEGIN fig:tmd-dy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \node[jet blob,ellipse,minimum width=5.0cm,minimum height=1.1cm,inner sep=0pt] (A) at (0,-2.3) {};
+  \node[jetB blob,ellipse,minimum width=5.0cm,minimum height=1.1cm,inner sep=0pt] (B) at (0,2.3) {};
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] (S) at (0,0) {};
+  % hadrons (both enter on the amplitude side, leave on the conjugate side)
+  \draw[t3 hadron] (-4.8,-2.3) -- (A.west);  \draw[t3 hadron] (A.east) -- (4.8,-2.3);
+  \draw[t3 hadron] (-4.8, 2.3) -- (B.west);  \draw[t3 hadron] (B.east) -- (4.8, 2.3);
+  % active partons: quark from A, antiquark from B (fermion arrow H -> B)
+  \draw[quark] (A.162) -- (H.262);
+  \draw[quark] (Hd.278) -- (A.18);
+  \draw[quark] (H.98) -- (B.198);
+  \draw[quark] (B.342) -- (Hd.82);
+  % current insertions
+  \draw[photon] (H.west) -- (-4.35,0);
+  \draw[photon] (Hd.east) -- (4.35,0);
+  % soft gluons, on both sides of the cut
+  % (explicit border points: angle anchors of a wide ellipse lie near its centre)
+  \draw[gluon] (S.235) -- (-1.05,-1.79);  \draw[gluon] (S.305) -- (1.05,-1.79);
+  \draw[gluon] (S.125) -- (-1.05, 1.79);  \draw[gluon] (S.55)  -- (1.05, 1.79);
+  \draw[cut] (0,-3.15) -- (0,3.15);
+  % labels
+  \node[t3 lab] at (-1.15,-2.3) {$A$};  \node[t3 lab] at (-1.15,2.3) {$B$};
+  \node[t3 lab] at (H) {$H$};  \node[t3 lab] at (Hd) {$H^\dagger$};
+  \node[t3 lab] at (-0.5,0.0) [left] {$S$};
+  \node[t3 lab,above=1pt] at (-4.0,0.08) {$\gamma^*(q)$};
+  \node[t3 lab,above=1pt] at ( 4.0,0.08) {$\gamma^*(q)$};
+  \path[mom'={$k_A$},mom sep=0.26cm] (A.162) -- (H.262);
+  \path[mom={$k_B$},mom sep=0.26cm] (B.198) -- (H.98);
+  \node[t3 lab,below=1pt] at (-4.25,-2.35) {$P_A$};  \node[t3 lab,above=1pt] at (-4.25,2.35) {$P_B$};
+  \node[t3 note,anchor=west] at (0.52,0.13) {$k_S\sim q_{\mathrm T}$};
+  \node[t3 note,anchor=west] at (0.52,-0.27) {$\Rightarrow\tilde S(b_{\mathrm T})$};
+  \node[t3 note,anchor=north] at (0,-2.95) {$k_A\sim(Q,\,q_{\mathrm T}^2/Q,\,q_{\mathrm T})\ \Rightarrow\ \tilde f_{q/A}(x_A,b_{\mathrm T};\mu,\zeta_A)$};
+  \node[t3 note,anchor=south] at (0,2.95) {$k_B\sim(q_{\mathrm T}^2/Q,\,Q,\,q_{\mathrm T})\ \Rightarrow\ \tilde f_{\bar q/B}(x_B,b_{\mathrm T};\mu,\zeta_B)$};
+  \node[t3 note,anchor=north] at (-3.85,-0.12) {$H(Q;\mu)$};
+\end{tikzpicture}
+\caption{小 $q_{\mathrm T}$（$q_{\mathrm T}\ll Q$，可低至 $\Lambda$ 量级）Drell--Yan 过程的约化割图与 TMD 因子化的结构。竖直虚线为末态割线，两个强子都自左（振幅）入射、向右（共轭振幅）出射。
+$A$、$B$ 为分别与两强子共线的子图（各含穿过割线的强子残余），动量按 $(k^+,k^-,\boldsymbol k_{\mathrm T})$ 的标度如图所示；软子图 $S$ 的所有分量都是 $q_{\mathrm T}$ 量级（软区，而非超软区），
+以胶子与 $A$、$B$ 相连；$H$、$H^\dagger$ 为虚度 $\sim Q^2$ 的硬子图，经电流插入与 $\gamma^*$ 相连。来自 $B$ 的反夸克的费米子数箭头由 $H$ 指向 $B$，其动量 $k_B$ 则流入 $H$。
+对各区域作近似、用 Ward 恒等式把纵向极化胶子收入 Wilson 线并扣除共线区与软区的重叠之后，横向动量守恒 $\boldsymbol q_{\mathrm T}=\boldsymbol k_{A\mathrm T}+\boldsymbol k_{B\mathrm T}+\boldsymbol k_{S\mathrm T}$ 使三个因子在动量空间中作卷积、在 $b_{\mathrm T}$ 空间中相乘；把软因子 $\tilde S(b_{\mathrm T})$ 按定义分配进两个 TMD（见正文）后，得
+$\frac{\dd\sigma}{\dd Q^2\,\dd y\,\dd^2\boldsymbol q_{\mathrm T}}=\sigma_0\sum_q e_q^2\,H(Q;\mu)\int\frac{\dd^2\boldsymbol b_{\mathrm T}}{(2\pi)^2}\,\ee^{\ii\boldsymbol q_{\mathrm T}\cdot\boldsymbol b_{\mathrm T}}\,
+\tilde f_{q/A}(x_A,b_{\mathrm T};\mu,\zeta_A)\,\tilde f_{\bar q/B}(x_B,b_{\mathrm T};\mu,\zeta_B)+(q\leftrightarrow\bar q)+Y$，$\zeta_A\zeta_B=Q^4$，$Y$ 为与 $q_{\mathrm T}\sim Q$ 的固定阶结果相衔接的修正项。
+Glauber 区的贡献对此单举观测量相消，未画出。}
+\label{fig:tmd-dy}
+\end{figure}
+%%% END fig:tmd-dy
+
+%%% BEGIN fig:tmd-soft-factor
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \coordinate (V) at (-3.9,0);  \coordinate (Vp) at (3.9,0);
+  \coordinate (T) at (0,1.8);   \coordinate (Bm) at (0,-1.8);
+  % gluons (drawn first, the Wilson lines and vertices on top)
+  \coordinate (g1a) at ($(V)!0.42!(T)$);  \coordinate (g1b) at ($(V)!0.42!(Bm)$);  % virtual
+  \coordinate (g2a) at ($(V)!0.76!(T)$); \coordinate (g2b) at ($(Vp)!0.76!(Bm)$); % real, crosses the cut
+  \draw[gluon] (g1a) -- (g1b);
+  \draw[gluon] (g2a) -- (g2b);
+  % Wilson lines: n_A (upper), n_B (lower); amplitude left of the cut, conjugate right
+  \draw[wilson plain] (V) -- (T) -- (Vp);
+  \draw[wilson plain] (V) -- (Bm) -- (Vp);
+  \path[t3 warrow=0.24] (V) -- (T);   \path[t3 warrow=0.5] (T) -- (Vp);
+  \path[t3 warrow=0.5] (Vp) -- (Bm);  \path[t3 warrow=0.8] (Bm) -- (V);
+  \draw[cut] (0,-2.3) -- (0,2.3);
+  \foreach \p in {V,Vp,g1a,g1b,g2a,g2b} \node[vertex] at (\p) {};
+  % labels
+  \node[t3 lab,left=2pt] at (V) {$0$};
+  \node[t3 lab,right=2pt] at (Vp) {$b_{\mathrm T}$};
+  \node[t3 lab,above left=0pt] at ($(V)!0.62!(T)$) {$n_A$};
+  \node[t3 lab,above right=0pt] at ($(Vp)!0.62!(T)$) {$n_A$};
+  \node[t3 lab,below left=0pt] at ($(V)!0.62!(Bm)$) {$n_B$};
+  \node[t3 lab,below right=0pt] at ($(Vp)!0.62!(Bm)$) {$n_B$};
+  \path[mom={$\ell$},mom pos=0.68,mom sep=0.27cm] (g2a) -- (g2b);
+  \node[t3 note] at (-2.1,-2.15) {振幅};
+  \node[t3 note] at (2.1,-2.15) {共轭振幅};
+\end{tikzpicture}
+\caption{TMD 软因子 $\tilde S(b_{\mathrm T})$ 的割图表示。两条 Wilson 线（双线）分别沿 $n_A$、$n_B$ 方向，代替两个沿相反方向运动的硬部分子：
+在振幅中自同一点 $0$ 出发，在共轭振幅中自横向位置 $b_{\mathrm T}$ 出发；两侧的 Wilson 线在割线处（无穷远）相接，构成闭合的色迹 $\frac1{N_c}\mathrm{Tr}_{\mathrm c}$。
+软胶子可在割线同一侧交换（虚修正，如图中左侧的胶子），也可穿过割线（实发射）；横向动量为 $\ell_{\mathrm T}$ 的实胶子给出相因子 $\ee^{\ii\ell_{\mathrm T}\cdot b_{\mathrm T}}$。
+箭头为路径方向，即色（费米子数）流向。图中两条线都按未来指向画出，对应两个出射部分子（$e^+e^-\to h_1h_2X$）；对 Drell--Yan 两条线都是过去指向（两个入射部分子），
+对 SIDIS 则各有一条——胶子的连接方式与图示相同。对光型的 $n_A$、$n_B$，固定 $\ell_{\mathrm T}$ 时胶子快度的积分发散（快度发散），需要快度正规化（见正文）。}
+\label{fig:tmd-soft-factor}
+\end{figure}
+%%% END fig:tmd-soft-factor
+
+%%% BEGIN fig:tmd-staple
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 ax/.style={lcaxis,gray!60!black},
+  t3 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ---------------- (a) SIDIS: future-pointing staple ----------------
+  \begin{scope}
+    \coordinate (O) at (0,0);     \coordinate (w) at (1.5,1.5);
+    \coordinate (C1) at (4.3,0);  \coordinate (C2) at (4.3,1.5);
+    \draw[t3 ax] (-0.7,0) -- (5.3,0) node[below left=2pt and -4pt] {$w^-$};
+    \draw[t3 ax] (0,-0.6) -- (0,2.4) node[left] {$w_{\mathrm T}$};
+    \draw[t3 dim] (1.5,0.05) -- node[t3 lab,right=1pt] {$b_{\mathrm T}$} (1.5,1.36);
+    \draw[wilson plain] (O) -- (C1) -- (C2) -- (w);
+    \path[t3 warrow=0.6] (O) -- (C1);
+    \path[t3 warrow=0.5] (C1) -- (C2);
+    \path[t3 warrow=0.45] (C2) -- (w);
+    \node[opvertex] at (O) {}; \node[opvertex] at (w) {};
+    \node[t3 lab,below right=1pt] at (O) {$\psi(0)$};
+    \node[t3 lab,above left=1pt and -3pt] at (w) {$\bar\psi(w)$};
+    \node[t3 note,below=3pt] at (2.95,0) {$W[\infty n,0]$};
+    \node[t3 note,above=3pt] at (3.05,1.5) {$W[w,w+\infty n]$};
+    \node[t3 note,right=3pt] at (4.3,0.75) {$W_{\mathrm T}$};
+    \node[t3 note,below=3pt] at (4.3,0) {$+\infty$};
+    \node[t3 lab] at (2.3,-1.25) {(a)\ SIDIS：未来指向};
+  \end{scope}
+  % ---------------- (b) Drell--Yan: past-pointing staple ----------------
+  \begin{scope}[xshift=10.9cm]
+    \coordinate (O) at (0,0);      \coordinate (w) at (1.5,1.5);
+    \coordinate (C1) at (-3.4,0);  \coordinate (C2) at (-3.4,1.5);
+    \draw[t3 ax] (-4.3,0) -- (2.6,0) node[below left=2pt and -4pt] {$w^-$};
+    \draw[t3 ax] (0,-0.6) -- (0,2.4) node[left] {$w_{\mathrm T}$};
+    \draw[t3 dim] (1.5,0.05) -- node[t3 lab,right=1pt] {$b_{\mathrm T}$} (1.5,1.36);
+    \draw[wilson plain] (O) -- (C1) -- (C2) -- (w);
+    \path[t3 warrow=0.6] (O) -- (C1);
+    \path[t3 warrow=0.5] (C1) -- (C2);
+    \path[t3 warrow=0.3] (C2) -- (w);
+    \node[opvertex] at (O) {}; \node[opvertex] at (w) {};
+    \node[t3 lab,below right=1pt] at (O) {$\psi(0)$};
+    \node[t3 lab,above=2pt] at (w) {$\bar\psi(w)$};
+    \node[t3 note,below=3pt] at (-1.75,0) {$W[-\infty n,0]$};
+    \node[t3 note,above=3pt] at (-1.75,1.5) {$W[w,w-\infty n]$};
+    \node[t3 note,left=3pt] at (-3.4,0.75) {$W_{\mathrm T}$};
+    \node[t3 note,below=3pt] at (-3.4,0) {$-\infty$};
+    \node[t3 lab] at (-0.9,-1.25) {(b)\ Drell--Yan：过去指向};
+  \end{scope}
+\end{tikzpicture}
+\caption{TMD 夸克分布算符中的“订书钉”形 Wilson 线，画在 $(w^-,w_{\mathrm T})$ 平面内（$w^+=0$）。未减除的 TMD 关联函数为
+$\tilde f^{\,\mathrm{unsub}}_{q/H}(x,b_{\mathrm T})=\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii xP^+w^-}\langle P|\,\bar\psi(w)\gamma^+\,W_{\sqsupset}[w,0]\,\psi(0)\,|P\rangle$，
+$w=(0^+,w^-,b_{\mathrm T})$（颜色求和、自旋平均），$n$ 为满足 $n\cdot v=v^+$ 的光型矢量。
+(a)~SIDIS：$W_{\sqsupset}[w,0]=W[w,w+\infty n]\,W_{\mathrm T}\,W[\infty n,0]$，路径由 $0$ 沿 $n$ 走到 $w^-=+\infty$，
+经该处的横向连接 $W_{\mathrm T}=W[w+\infty n,\infty n]$，再沿 $-n$ 回到 $w$；它来自被击出夸克与靶残余之间的末态相互作用。
+(b)~Drell--Yan：路径改经 $w^-=-\infty$，$W_{\sqsupset}[w,0]=W[w,w-\infty n]\,W_{\mathrm T}\,W[-\infty n,0]$；它来自强子 $B$ 的入射反夸克与强子 $A$ 残余之间的初态相互作用（见\cref{fig:sidis-dy-links}）。
+双线为 Wilson 线，箭头为路径方向（$W[b,a]$ 由 $a$ 指向 $b$），与被本征化部分子的费米子数（色）流向一致：(a) 中为出射夸克，(b) 中为入射反夸克（其费米子数箭头逆着动量，指向过去）。
+在共变规范中无穷远处的横向连接可以略去，在光锥规范中则不可缺少。$b_{\mathrm T}=0$ 时两种路径都化为共线 PDF 中的直线 $W[w,0]$（往返部分相消）；对光型的 $n$，算符含快度发散（见正文）。}
+\label{fig:tmd-staple}
+\end{figure}
+%%% END fig:tmd-staple

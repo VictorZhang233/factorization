@@ -1,0 +1,189 @@
+% -------------------------------------------------------------------------------------
+\section{规范原理：从 QED 到 SU($N$)}\label{sec:qcd-gauge}
+
+先看最简单的情形。自由 Dirac 场的拉氏量 $\bar\psi(\ii\sla\partial-m)\psi$ 在整体相位变换 $\psi\to\ee^{\ii\alpha}\psi$ 下不变。若要求 $\alpha=\alpha(x)$ 随时空点变化，导数作用在相位上，拉氏量多出 $-(\partial_\mu\alpha)\bar\psi\gamma^\mu\psi$，不再不变。补救的办法是引入矢量场 $A_\mu$ 与协变导数
+\[
+D_\mu=\partial_\mu-\ii gA_\mu,\qquad A_\mu\to A_\mu+\frac1g\partial_\mu\alpha ,
+\]
+这时 $D_\mu\psi\to\ee^{\ii\alpha}D_\mu\psi$，$\bar\psi(\ii\sla D-m)\psi$ 在局域变换下不变。场强 $F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu=\frac{\ii}{g}[D_\mu,D_\nu]$ 本身不变，于是 $-\frac14F_{\mu\nu}F^{\mu\nu}+\bar\psi(\ii\sla D-m)\psi$ 是局域 U(1) 不变的拉氏量，QED 是 $g$ 取为费米子电荷的情形。这就是规范原理：要求整体对称性在每个时空点上可以独立地进行，迫使我们引入规范场，并由协变导数唯一地确定物质与规范场的耦合。
+
+Yang 与 Mills\cite{Yang:1954ek}把同一构造推广到非阿贝尔群。设 $\psi$ 有 $N$ 个颜色分量，在局域变换 $\psi\to U(x)\psi$ 下变换，$U(x)\in\mathrm{SU}(N)$。导数项被破坏的方式同前，补救的办法是引入取值于 $\mathrm{SU}(N)$ 的 Lie 代数的矢量场 $A_\mu=A^a_\mu t^a$。为此先固定群论的约定。
+
+\begin{definition}[规范群 SU($N$) 及其表示]\label{def:qcd-gauge-group}
+规范群为 $\mathrm{SU}(N)$，$N\ge2$，物理情形 $N=N_c=3$。基础表示的生成元 $t^a$（$a=1,\dots,N^2-1$）是 Hermite、无迹的 $N\times N$ 矩阵，满足 % VF-QCD-1
+\begin{equation}\label{eq:qcd-generators}
+[t^a,t^b]=\ii f^{abc}t^c,\qquad \Tr(t^at^b)=T_F\,\delta^{ab},\quad T_F=\tfrac12,\qquad \{t^a,t^b\}=\tfrac1N\delta^{ab}\mathbb 1+d^{abc}t^c,
+\end{equation}
+其中结构常数 $f^{abc}=-2\ii\Tr([t^a,t^b]t^c)$ 实且全反对称，$d^{abc}=2\Tr(\{t^a,t^b\}t^c)$ 实且全对称。伴随表示的生成元取为 $(F^a)_{bc}=-\ii f^{abc}$。二次 Casimir 算子为
+\begin{equation}\label{eq:qcd-casimirs}
+t^at^a=C_F\mathbb 1,\quad C_F=\frac{N^2-1}{2N};\qquad f^{acd}f^{bcd}=C_A\delta^{ab},\quad C_A=N .
+\end{equation}
+对 $\mathrm{SU}(3)$ 取 $t^a=\lambda^a/2$（$\lambda^a$ 为 Gell-Mann 矩阵），$C_F=\frac43$，$C_A=3$。QCD 含 $n_f$ 味夸克，每一味都处于基础表示；胶子处于伴随表示。基础表示的色指标记作 $i,j,k,l$，伴随表示的色指标记作 $a,b,c,d,e$。
+% uses: none
+\end{definition}
+
+\cref{eq:qcd-generators}中 $f^{abc}$ 的实性来自 $t^a$ 的 Hermite 性（$([t^a,t^b])^\dagger=-[t^a,t^b]$），全反对称性来自迹的循环性；反对易子的形式来自下面\cref{lem:qcd-colour-identities}(i) 的完备性。后文反复用到的色代数恒等式如下。
+
+\begin{lemma}[色代数恒等式]\label{lem:qcd-colour-identities}
+在\cref{def:qcd-gauge-group}的约定下：
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item（Fierz 恒等式）$t^a_{ij}t^a_{kl}=\frac12\big(\delta_{il}\delta_{kj}-\frac1N\delta_{ij}\delta_{kl}\big)$；
+\item $t^at^a=C_F\mathbb 1$，$f^{acd}f^{bcd}=C_A\delta^{ab}$；
+\item $t^bt^at^b=\big(C_F-\frac{C_A}2\big)t^a=-\frac1{2N}t^a$；
+\item $\Tr(t^at^bt^c)=\frac14\big(d^{abc}+\ii f^{abc}\big)$；
+\item（Jacobi 恒等式）$f^{abe}f^{ecd}+f^{bce}f^{ead}+f^{cae}f^{ebd}=0$，等价地 $[F^a,F^b]=\ii f^{abc}F^c$；
+\item $\ii f^{abc}t^bt^c=-\frac{C_A}2t^a$。
+\end{enumerate}
+\uses{def:qcd-gauge-group}
+\end{lemma}
+
+\begin{proof}
+(i) 在 $N\times N$ 复矩阵空间上取内积 $\langle X,Y\rangle=\Tr(X^\dagger Y)$，则 $\{\mathbb 1/\sqrt N,\sqrt2\,t^a\}$ 是正交归一基（$\Tr t^a=0$，$\Tr(t^at^b)=\frac12\delta^{ab}$，基的个数 $1+(N^2-1)=N^2$），故任意 $X$ 满足 $X=\frac1N\Tr(X)\mathbb 1+2\Tr(t^aX)\,t^a$，即
+\[
+X_{il}=\frac1N\delta_{il}X_{kk}+2\,t^a_{il}\,t^a_{jk}X_{kj}.
+\]
+$X$ 任意，比较两边 $X_{kj}$ 的系数得 $\delta_{ik}\delta_{jl}=\frac1N\delta_{il}\delta_{jk}+2t^a_{il}t^a_{jk}$；把指标 $(l,j,k)$ 改记为 $(j,k,l)$ 即得 (i)。
+
+(ii) 在 (i) 中令 $j=k$ 并求和：$t^a_{ij}t^a_{jl}=\frac12(N-\frac1N)\delta_{il}=C_F\delta_{il}$。第二式见 (iii) 之后。
+
+(iii) 由 (i)，$(t^bt^at^b)_{il}=t^b_{ij}t^b_{kl}t^a_{jk}=\frac12\delta_{il}\Tr t^a-\frac1{2N}t^a_{il}=-\frac1{2N}t^a_{il}$；又 $C_F-\frac N2=-\frac1{2N}$。
+
+\emph{(ii) 的第二式。}由 $f^{abc}=-2\ii\Tr([t^a,t^b]t^c)$ 得 $f^{acd}f^{bcd}=-4\sum_d\Tr(Xt^d)\Tr(Yt^d)$，$X=[t^a,t^c]$，$Y=[t^b,t^c]$（对 $c$ 求和）。由 (i)，对任意矩阵 $X,Y$ 有 $\sum_d\Tr(Xt^d)\Tr(Yt^d)=\frac12[\Tr(XY)-\frac1N\Tr X\Tr Y]$，而对易子无迹，故 $f^{acd}f^{bcd}=-2\Tr([t^a,t^c][t^b,t^c])$。展开四项并用 (ii) 的第一式与 (iii)：
+\[
+\Tr\big([t^a,t^c][t^b,t^c]\big)=\Big(-\frac1{2N}-C_F-C_F-\frac1{2N}\Big)\Tr(t^at^b)=-\frac N2\,\delta^{ab},
+\]
+于是 $f^{acd}f^{bcd}=N\delta^{ab}=C_A\delta^{ab}$。
+
+(iv) $\Tr(t^at^bt^c)=\frac12\Tr(\{t^a,t^b\}t^c)+\frac12\Tr([t^a,t^b]t^c)=\frac14d^{abc}+\frac12\ii f^{abd}\Tr(t^dt^c)=\frac14(d^{abc}+\ii f^{abc})$。
+
+(v) 矩阵乘法的结合律给出 $[[t^a,t^b],t^c]+[[t^b,t^c],t^a]+[[t^c,t^a],t^b]=0$。由\cref{eq:qcd-generators}，第一项等于 $\ii f^{abe}[t^e,t^c]=-f^{abe}f^{ecd}t^d$，其余两项类似；$t^d$ 线性无关，于是得到 Jacobi 恒等式。把其中的指标 $(a,b,c,d)$ 换成 $(a,b,d,e)$ 并用全反对称性改写，得 $f^{abg}f^{gde}=f^{bdg}f^{age}-f^{adg}f^{bge}$；左边是 $\ii f^{abc}(F^c)_{de}$，右边是 $([F^a,F^b])_{de}=(-\ii)^2(f^{adg}f^{bge}-f^{bdg}f^{age})$，这就是 $[F^a,F^b]=\ii f^{abc}F^c$。
+
+(vi) $\ii f^{abc}t^bt^c=\frac{\ii}2f^{abc}[t^b,t^c]=-\frac12f^{abc}f^{bcd}t^d=-\frac12C_A\,t^a$，最后一步用了 (ii) 与全反对称性 $f^{abc}f^{bcd}=f^{abc}f^{dbc}$。
+\end{proof}
+
+这些恒等式对 $\mathrm{SU}(2)$、$\mathrm{SU}(3)$、$\mathrm{SU}(4)$ 的显式生成元逐个指标作了数值核对。% writing/work/W02/s1_colour_brst.py (45/45 PASS)
+下面的例子把它们用于后文的单圈图。
+
+\begin{example}[单圈图的色因子与双线记号]\label{ex:qcd-colour-algebra}
+(a) \emph{夸克自能。}夸克线发射又吸收一个胶子，色因子为 $t^at^a=C_F\mathbb 1$（SU(3) 中 $\frac43$）。
+
+(b) \emph{胶子自能。}夸克圈给出 $n_f\Tr(t^at^b)=T_Fn_f\delta^{ab}$；胶子圈给出 $f^{acd}f^{bcd}=C_A\delta^{ab}$；鬼场圈（\cref{sec:qcd-quantization}）的两个顶点给出 $f^{cad}f^{dbc}=-C_A\delta^{ab}$，这个负号与闭合鬼圈的因子 $-1$ 及顶点动量一起决定鬼场圈的整体符号（\cref{ex:qcd-gluon-self-energy}）。
+
+(c) \emph{夸克--胶子顶点的单圈修正。}内线胶子连接两条夸克腿的“阿贝尔型”图给出 $t^bt^at^b=(C_F-\frac{C_A}2)t^a=-\frac1{2N}t^a$（SU(3) 中 $-\frac16t^a$）；两个内线胶子经三胶子顶点汇合的“非阿贝尔”图给出 $f^{abc}t^bt^c=\frac{\ii C_A}2t^a$（由 (vi)），其中的因子 $\ii$ 与三胶子顶点的实系数相配，使两图有相同的 Dirac 结构 $\gamma^\mu t^a$。
+
+(d) \emph{双线记号与 $1/N$ 展开。}由 Fierz 恒等式，对胶子颜色求和相当于把两条夸克线的色指标重新连接（$\delta_{il}\delta_{kj}$），再减去 $\frac1N$ 倍不重新连接的项（$\delta_{ij}\delta_{kl}$）：胶子在色空间中近似是一对方向相反的色线（\cref{fig:qcd-colour-flow}）。每个闭合色线圈给出因子 $\delta_{ii}=N$；例如 (a) 的色因子在双线记号中读作 $\frac12(N-\frac1N)$。在 $N\to\infty$、$g^2N$ 固定的 't~Hooft 极限中，能画在平面上的图占主导：(c) 中阿贝尔型图的色因子 $-\frac1{2N}$ 相对于非阿贝尔图的 $\frac N2$ 只是 $-1/N^2$。
+\uses{lem:qcd-colour-identities}
+\end{example}
+
+%%% BEGIN fig:qcd-colour-flow
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa cl/.style={draw,line width=0.8pt,rounded corners=4pt,fd arrow=#1},
+  fa cl/.default=0.5,
+  fa idx/.style={font=\footnotesize,inner sep=1.5pt},
+  fa eq/.style={font=\normalsize},
+  fa cap/.style={font=\footnotesize}]
+  % ===================== (a) gluon = colour--anticolour pair =====================
+  \begin{scope}
+    \draw[gluon] (0,0) -- (1.8,0);
+    \node[fa idx,below] at (0.9,-0.18) {$a$};
+    \node[fa eq] at (2.35,0) {$\leftrightarrow$};
+    \draw[fa cl] (2.9,0.13) -- (4.7,0.13);
+    \draw[fa cl] (4.7,-0.13) -- (2.9,-0.13);
+    \node[fa cap,align=center] at (2.35,-1.05) {(a)\ 胶子 $\approx$ 一对方向相反的色线\\（双线记号；$-\tfrac1N$ 项见 (b)）};
+  \end{scope}
+  % ===================== (b) Fierz identity =====================
+  \begin{scope}[xshift=6.5cm]
+    % t^a_{ij} t^a_{kl}: upper quark line j -> i, lower quark line l -> k
+    \draw[quark=0.25] (0,0.5) node[fa idx,left]{$j$} -- (1.6,0.5) node[fa idx,right]{$i$};
+    \draw[quark=0.25] (1.6,-0.5) node[fa idx,right]{$l$} -- (0,-0.5) node[fa idx,left]{$k$};
+    \draw[gluon] (0.8,0.5) -- (0.8,-0.5);
+    \node[fa idx,right] at (0.95,0) {$a$};
+    \foreach \y in {0.5,-0.5} \node[vertex] at (0.8,\y) {};
+    \node[fa eq] at (2.35,0) {$=\ \dfrac12$};
+    % rerouted colour lines: j -> k and l -> i
+    \begin{scope}[xshift=3.3cm]
+      \draw[fa cl] (0,0.5) node[fa idx,left]{$j$} -- (0.62,0.5) -- (0.62,-0.5) -- (0,-0.5) node[fa idx,left]{$k$};
+      \draw[fa cl] (1.6,-0.5) node[fa idx,right]{$l$} -- (0.98,-0.5) -- (0.98,0.5) -- (1.6,0.5) node[fa idx,right]{$i$};
+    \end{scope}
+    \node[fa eq] at (5.75,0) {$-\ \dfrac{1}{2N}$};
+    \begin{scope}[xshift=6.75cm]
+      \draw[fa cl] (0,0.5) node[fa idx,left]{$j$} -- (1.6,0.5) node[fa idx,right]{$i$};
+      \draw[fa cl] (1.6,-0.5) node[fa idx,right]{$l$} -- (0,-0.5) node[fa idx,left]{$k$};
+    \end{scope}
+    \node[font=\small] at (4.2,-1.1) {$t^a_{ij}\,t^a_{kl}=\tfrac12\big(\delta_{il}\delta_{kj}-\tfrac1N\,\delta_{ij}\delta_{kl}\big)$};
+    \node[fa cap] at (4.2,-1.65) {(b)\ Fierz 恒等式};
+  \end{scope}
+  % ===================== (c) C_F from the Fierz identity, and C_A =====================
+  \begin{scope}[yshift=-3.35cm,xshift=1.0cm]
+    % quark self-energy colour factor
+    \draw[quark=0.15] (0,0) -- (2.0,0);
+    \draw[gluon] (0.5,0) .. controls (0.6,0.78) and (1.4,0.78) .. (1.5,0);
+    \foreach \x in {0.5,1.5} \node[vertex] at (\x,0) {};
+    \node[fa eq] at (2.6,0.05) {$=\ \dfrac12$};
+    \begin{scope}[xshift=3.2cm]
+      \draw[fa cl] (0,0) -- (2.0,0);
+      \draw[fa cl=0.25] (1.0,0.45) circle[radius=0.28];
+      \node[fa idx] at (1.0,0.45) {$N$};
+    \end{scope}
+    \node[fa eq] at (5.95,0.05) {$-\ \dfrac{1}{2N}$};
+    \draw[fa cl] (6.75,0) -- (8.75,0);
+    \node[fa eq] at (9.4,0.05) {$=\ C_F$};
+    \draw[quark] (10.0,0) -- (12.0,0);
+    \node[font=\small] at (6.0,-0.75) {$t^at^a=\tfrac12\big(N-\tfrac1N\big)\mathbb 1=C_F\,\mathbb 1$，\quad $C_F=\dfrac{N^2-1}{2N}$};
+    % gluon self-energy colour factor
+    \begin{scope}[yshift=-2.0cm,xshift=1.25cm]
+      \draw[gluon] (0,0) -- (0.85,0);
+      \draw[gluon] (0.85,0) arc[start angle=180,end angle=0,radius=0.5];
+      \draw[gluon] (1.85,0) arc[start angle=0,end angle=-180,radius=0.5];
+      \draw[gluon] (1.85,0) -- (2.7,0);
+      \foreach \x in {0.85,1.85} \node[vertex] at (\x,0) {};
+      \node[fa idx,below] at (0,-0.15) {$a$};
+      \node[fa idx,below] at (2.7,-0.15) {$b$};
+      \node[fa eq] at (3.4,0) {$=\ C_A$};
+      \draw[gluon] (4.05,0) -- (6.0,0);
+      \node[fa idx,below] at (4.05,-0.15) {$a$};
+      \node[fa idx,below] at (6.0,-0.15) {$b$};
+      \node[font=\small,anchor=west] at (6.5,0) {$f^{acd}f^{bcd}=C_A\,\delta^{ab}$，\quad $C_A=N$};
+    \end{scope}
+    \node[fa cap] at (6.0,-3.0) {(c)\ 色因子 $C_F$（夸克自能）与 $C_A$（胶子圈）};
+  \end{scope}
+\end{tikzpicture}
+\caption{色流（双线）记号与 Fierz 恒等式；$C_F=\frac{N^2-1}{2N}$ 与 $C_A=N$ 的图示（VF-QCD-1）。单线箭头表示色指标的流向（夸克线即其费米子数流向），
+闭合色线圈给出因子 $\delta_{ii}=N$；(c) 的第一行即用 (b) 把夸克自能的色因子 $t^at^a$ 化为 $C_F$。}
+\label{fig:qcd-colour-flow}
+\end{figure}
+%%% END fig:qcd-colour-flow
+
+有了这些约定，非阿贝尔规范场的基本对象可以写下来了。关键的一步是：协变导数 $D_\mu$ 作为算子在规范变换下按 $D_\mu\to UD_\mu U^{-1}$ 变换，场强则是 $D_\mu$ 的对易子。
+
+\begin{proposition}[协变导数与场强的规范协变性 \tagR]\label{prop:qcd-covariance}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $A_\mu=A^a_\mu t^a$，$D_\mu=\partial_\mu-\ii gA_\mu$，$G_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu-\ii g[A_\mu,A_\nu]$，$U(x)\in\mathrm{SU}(N)$ 光滑。% VF-QCD-2
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item 在 $\psi\to U\psi$，$A_\mu\to UA_\mu U^{-1}-\frac{\ii}g(\partial_\mu U)U^{-1}$ 之下，$D_\mu\psi\to UD_\mu\psi$，$G_{\mu\nu}\to UG_{\mu\nu}U^{-1}$；
+\item $[D_\mu,D_\nu]=-\ii gG_{\mu\nu}$，且 $G_{\mu\nu}=G^a_{\mu\nu}t^a$，$G^a_{\mu\nu}=\partial_\mu A^a_\nu-\partial_\nu A^a_\mu+gf^{abc}A^b_\mu A^c_\nu$；
+\item 对无穷小变换 $U=\mathbb 1+\ii\theta^at^a$：$\delta\psi=\ii\theta^at^a\psi$，$\delta A^a_\mu=\frac1g(D_\mu\theta)^a$，其中伴随协变导数为 $(D_\mu X)^a=\partial_\mu X^a+gf^{abc}A^b_\mu X^c$；
+\item（Bianchi 恒等式）$[D_\lambda,G_{\mu\nu}]+[D_\mu,G_{\nu\lambda}]+[D_\nu,G_{\lambda\mu}]=0$。
+\end{enumerate}
+（本命题是关于经典场的算符恒等式，不涉及强子态。）
+\uses{def:qcd-gauge-group, lem:qcd-colour-identities}
+\end{proposition}
+
+\begin{proof}
+(a) 由 $\partial_\mu(UU^{-1})=0$ 得 $U\partial_\mu U^{-1}=-(\partial_\mu U)U^{-1}$。把 $D'_\mu=\partial_\mu-\ii gA'_\mu$ 作用于任意的 $\chi$：
+\[
+UD_\mu(U^{-1}\chi)=U\partial_\mu(U^{-1}\chi)-\ii gUA_\mu U^{-1}\chi=\partial_\mu\chi-(\partial_\mu U)U^{-1}\chi-\ii gUA_\mu U^{-1}\chi=D'_\mu\chi ,
+\]
+即作为算子 $D'_\mu=UD_\mu U^{-1}$；取 $\chi=U\psi$ 得 $D'_\mu(U\psi)=UD_\mu\psi$。由 (b)，$G'_{\mu\nu}=\frac{\ii}g[D'_\mu,D'_\nu]=U\,\frac{\ii}g[D_\mu,D_\nu]\,U^{-1}=UG_{\mu\nu}U^{-1}$。
+
+(b) 作用于任意 $\psi$，$[D_\mu,D_\nu]\psi=-\ii g(\partial_\mu A_\nu-\partial_\nu A_\mu)\psi+(-\ii g)^2[A_\mu,A_\nu]\psi=-\ii gG_{\mu\nu}\psi$（含 $\partial\psi$ 的项相消）。分量形式来自 $-\ii g[A_\mu,A_\nu]=-\ii gA^b_\mu A^c_\nu\,\ii f^{bca}t^a=gf^{abc}A^b_\mu A^c_\nu t^a$。
+
+(c) 把 $U=\mathbb 1+\ii\theta$（$\theta=\theta^at^a$）代入 (a) 并保留一阶：$\delta A_\mu=\ii[\theta,A_\mu]+\frac1g\partial_\mu\theta$。由 $\ii[\theta,A_\mu]=\ii\theta^bA^c_\mu\,\ii f^{bca}t^a=-f^{abc}\theta^bA^c_\mu t^a=f^{abc}A^b_\mu\theta^ct^a$，得 $\delta A^a_\mu=\frac1g(\partial_\mu\theta^a+gf^{abc}A^b_\mu\theta^c)$。
+
+(d) 算子的 Jacobi 恒等式 $[D_\lambda,[D_\mu,D_\nu]]+[D_\mu,[D_\nu,D_\lambda]]+[D_\nu,[D_\lambda,D_\mu]]=0$ 与 (b) 给出 $-\ii g$ 乘以 (d) 的左边为零。
+\end{proof}
+
+(a) 中有限变换下的协变性、(b) 的分量形式、(d) 的 Bianchi 恒等式都对 $\mathrm{SU}(2)$ 的多项式场作了符号验证。% writing/work/W02/s2_lagrangian.py
+注意 (c) 中 $\theta^a$ 为实数；后文 BRST 变换中，参数将换成 Grassmann 奇的鬼场（\cref{sec:prelim-brst}）。
+

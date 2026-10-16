@@ -1,0 +1,143 @@
+% =====================================================================================
+% appA_lightfront.tex —— 附录 A　光锥坐标、Dirac 代数、加号分布与 Mellin 变换（writer W03）
+% 约定：WRITER_SPEC_v2 §3；核算脚本 writing/work/W03/s1_lightfront_boost.py（推动、投影、Fierz）、
+% s5_distributions.py（加号分布、展开、Mellin 表、弱收敛）、s7_misc.py。
+% =====================================================================================
+\chapter{光锥坐标、Dirac 代数、加号分布与 Mellin 变换}\label{app:appA}
+
+本附录证明第~3~章的\cref{lem:prelim-boost}、\cref{lem:prelim-plus-expansion}与\cref{lem:prelim-mellin}，给出共线 Fierz 分解，并规定加号分布所作用的检验函数类以及第~7~章所用的弱收敛陈述。记号同\cref{sec:prelim-lightfront}与\cref{sec:prelim-distributions}。
+
+% -------------------------------------------------------------------------------------
+\section{光锥分量与推动}\label{sec:appA-lightfront}
+
+光锥分量下度规的非零分量为 $g_{+-}=g_{-+}=g^{+-}=g^{-+}=1$、$g_{jj}=g^{jj}=-1$（$j=1,2$），故 $v_\pm=v^\mp$；$(k^0,k^3)\mapsto(k^+,k^-)$ 的矩阵 $\frac1{\sqrt2}\big(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\big)$ 的行列式绝对值为 $1$，所以 $\dd^4k=\dd k^+\dd k^-\dd^2\mathbf k_{\mathrm T}$。
+
+\paragraph{\cref{lem:prelim-boost}的证明}
+(a) $v'^\pm=\frac1{\sqrt2}(\cosh\eta\pm\sinh\eta)(v^0\pm v^3)=\ee^{\pm\eta}v^\pm$，横向分量不变，故 $y\to y+\eta$；矢量场同理。(b) 由\cref{sec:appA-dirac}，$(\gamma^0\gamma^3)^2=1$，$P_\pm=\frac12(1\pm\gamma^0\gamma^3)$，且
+\begin{equation}\label{eq:appA-gpm-proj}
+\gamma^+=P_-\gamma^+P_+,\qquad \gamma^-=P_+\gamma^-P_-,\qquad [\gamma^j,P_\pm]=0\ (j=1,2).
+\end{equation}
+于是 $S=\exp(\frac\eta2\gamma^0\gamma^3)=\ee^{\eta/2}P_++\ee^{-\eta/2}P_-$，$S^{-1}=\ee^{-\eta/2}P_++\ee^{\eta/2}P_-$，从而 $S^{-1}\gamma^+S=S^{-1}P_-\gamma^+P_+S=\ee^{\eta}\gamma^+$，$S^{-1}\gamma^-S=\ee^{-\eta}\gamma^-$，$S^{-1}\gamma^jS=\gamma^j$。按 (a)，这正是 $S^{-1}\gamma^\mu S=\Lambda^\mu{}_\nu\gamma^\nu$ 的光锥分量形式，所以 $\psi'(x)=S\psi(\Lambda^{-1}x)$ 是推动的旋量表示；最后 $P_\pm S=\ee^{\pm\eta/2}P_\pm$。\qed
+
+由 $\gamma^0\gamma^+=\frac1{\sqrt2}(1+\gamma^0\gamma^3)=\sqrt2P_+$ 还得到 $\bar\psi\gamma^+\psi=\sqrt2|P_+\psi|^2\ge0$：部分子分布中的“加”分量流只由好分量组成。
+
+\paragraph{与其他约定的换算}
+第~15~章的 SCET 类光矢量 $n=(1,0,0,1)$、$\bar n=(1,0,0,-1)$（$n\cdot\bar n=2$）满足 $n=\sqrt2n_A$，$\bar n=\sqrt2n_B$，$\bar n\cdot p=\sqrt2p^+$，$n\cdot p=\sqrt2p^-$，$p^\mu=\frac{\bar n\cdot p}2n^\mu+\frac{n\cdot p}2\bar n^\mu+p_\perp^\mu$。SCET 的 $n$ 沿 $+z$；而有些文献（特别是硬遍举过程的文献）把满足 $n\cdot v=v^+$ 的矢量记作 $n$（即本书的 $n_B$，沿 $-z$）、另一条记作 $\bar n$（即 $n_A$）。本书第~19~章一律写 $n_A,n_B$。
+
+% -------------------------------------------------------------------------------------
+\section{Dirac 代数：$\gamma^\pm$ 与投影算符}\label{sec:appA-dirac}
+
+令 $\gamma^\pm=(\gamma^0\pm\gamma^3)/\sqrt2$。由 $\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}$，$(\gamma^\pm)^2=\frac12[(\gamma^0)^2+(\gamma^3)^2]=0$，$\{\gamma^+,\gamma^-\}=2$，$\{\gamma^\pm,\gamma^j\}=0$；标准表示中 $(\gamma^\pm)^\dagger=\gamma^\mp=\gamma^0\gamma^\pm\gamma^0$。$P_+=\frac12\gamma^-\gamma^+$ 与 $P_-=\frac12\gamma^+\gamma^-$ 满足 $P_++P_-=\frac12\{\gamma^-,\gamma^+\}=1$，$P_+^2=\frac14\gamma^-(2-\gamma^-\gamma^+)\gamma^+=P_+$（$P_-$ 同理），$P_+P_-=\frac14\gamma^-(\gamma^+)^2\gamma^-=0$；展开 $\gamma^-\gamma^+=\frac12(\gamma^0-\gamma^3)(\gamma^0+\gamma^3)=1+\gamma^0\gamma^3$ 得 $P_\pm=\frac12(1\pm\gamma^0\gamma^3)$，厄米、迹为 $2$。由 $(\gamma^+)^2=0$，$P_+\gamma^+=0=\gamma^+P_-$，故 $\gamma^+=(P_++P_-)\gamma^+(P_++P_-)=P_-\gamma^+P_+$；同理 $\gamma^-=P_+\gamma^-P_-$。$\gamma^j$ 与 $\gamma_5$ 都与 $\gamma^0\gamma^3$ 对易，因而与 $P_\pm$ 对易。这就是\cref{eq:appA-gpm-proj}。
+
+\begin{lemma}[共线 Fierz 分解]\label{lem:appA-fierz}
+对任意 $4\times4$ 矩阵 $M$，
+\begin{equation}\label{eq:appA-fierz}
+P_+MP_-=\frac14\Big[\Tr(\gamma^+M)\,\gamma^-+\Tr(\gamma^+\gamma_5M)\,\gamma_5\gamma^-+\sum_{j=1,2}\Tr(\gamma^+\gamma^jM)\,\gamma^-\gamma^j\Big]. % VF-EXC-13
+\end{equation}
+% uses: none
+\end{lemma}
+
+\begin{proof}
+$P_\pm$ 的秩为 $2$，故 $V\equiv\{P_+XP_-\}$ 是 $4$ 维空间。由\cref{eq:appA-gpm-proj}与 $[\gamma_5,P_\pm]=[\gamma^j,P_\pm]=0$，$X_1=\gamma^-$、$X_2=\gamma_5\gamma^-$、$X_{2+j}=\gamma^-\gamma^j$ 都在 $V$ 中。令 $\Gamma_1=\gamma^+$、$\Gamma_2=\gamma^+\gamma_5$、$\Gamma_{2+j}=\gamma^+\gamma^j$，则 $\Tr(\Gamma_iX_k)=4\delta_{ik}$：$\Tr(\gamma^+\gamma^-)=4$，$\Tr(\gamma^+\gamma_5\gamma_5\gamma^-)=4$，$\Tr(\gamma^+\gamma^j\gamma^-\gamma^k)=-\Tr(\gamma^+\gamma^-\gamma^j\gamma^k)=4\delta^{jk}$，其余的迹含奇数个 $\gamma$ 或为 $\gamma_5$ 乘两个 $\gamma$，为零。所以 $\{X_k\}$ 是 $V$ 的基，$P_+MP_-=\sum_kc_kX_k$，$c_k=\frac14\Tr(\Gamma_kP_+MP_-)$；又 $\Gamma_k=P_-\Gamma_kP_+$，故 $\Tr(\Gamma_kP_+MP_-)=\Tr(\Gamma_kM)$。
+\end{proof}
+
+\cref{eq:appA-fierz}是部分子分布、分布振幅与广义部分子分布的领头扭度投影：领头幂次只出现 $P_+MP_-$ 这一块，即 $\gamma^+$、$\gamma^+\gamma_5$、$\gamma^+\gamma^j$ 三种结构（非极化、螺旋度、横度）。
+
+% -------------------------------------------------------------------------------------
+\section{加号分布：检验函数类、乘积约定与展开}\label{sec:appA-plus}
+
+\begin{definition}[检验函数类与弱收敛]\label{def:appA-test-functions}
+(a) 对 $\eta>0$，$\mathcal T_\eta$ 是 $[0,1]$ 上满足 $|g(z)-g(1)|\le C(1-z)^\eta$ 的连续函数 $g$ 的空间。每个 $\mathcal D_k$ 以及乘积约定下的每个乘积 $g\,\mathcal D_k$（$g\in\mathcal T_\eta$）都是 $\mathcal T_\eta$ 上的线性泛函；加号分布定义为这个类上的泛函，而不是 $C^\infty_c$ 上的泛函。
+\par
+(b) 结构函数作为测度：$\mu_Q=F_2(x,Q^2)\,\dd x$ 是 $[0,1]$ 上有限的正 Borel 测度，包括 $x=1$ 处的弹性点质量。
+\par
+(c) $[0,1]$ 上的有限带号 Borel 测度族 $\nu_Q$ \emph{弱收敛}于 $\nu$，指对每个 $\phi\in C([0,1])$ 有 $\int\phi\,\dd\nu_Q\to\int\phi\,\dd\nu$。
+\uses{def:prelim-plus}
+\end{definition}
+
+(a) 中的选择是必要的：$C^\infty_c((0,1))$ 中的函数在 $z=1$ 附近为零，在其上 $[g]_+$ 与 $g$ 无法区分、$\delta(1-z)$ 为零，端点的物理内容全部丢失；而只在 $z=1$ 处连续又不够，例如 $h(z)=1/\ln\frac{\ee}{1-z}$ 连续且 $h(1)=0$，但 $\int_0^1h/(1-z)=\infty$。对 $h\in\mathcal T_\eta$，代换 $1-z=\ee^{-s}$ 给出
+\begin{equation}\label{eq:appA-Dk-bound}
+\big|\langle\mathcal D_k,h\rangle\big|=\Big|\int_0^\infty\dd s\,(-s)^k\big[h(1-\ee^{-s})-h(1)\big]\Big|\le C\int_0^\infty\dd s\,s^k\ee^{-\eta s}=\frac{C\,k!}{\eta^{k+1}},
+\end{equation}
+对 $h=(1-z)^\eta$ 等号成立：$\langle\mathcal D_k,(1-z)^\eta\rangle=(-1)^kk!/\eta^{k+1}$。
+
+\begin{lemma}[乘积约定下的恒等式]\label{lem:appA-plus-product}
+对 $g,h\in\mathcal T_\eta$，由 $\langle g\mathcal D_k,h\rangle\equiv\langle\mathcal D_k,gh\rangle$ 定义的乘积满足
+\begin{equation}\label{eq:appA-product}
+g(z)\,\mathcal D_k=g(1)\,\mathcal D_k+\frac{g(z)-g(1)}{1-z}\ln^k(1-z),
+\end{equation}
+右端第二项是可积函数；与整体加号分布之差为 $g\,\mathcal D_k-\big[\frac{g\ln^k(1-z)}{1-z}\big]_+=c_k[g]\,\delta(1-z)$，$c_k[g]=\int_0^1\frac{g-g(1)}{1-z}\ln^k(1-z)\,\dd z$。
+\uses{def:prelim-plus,def:appA-test-functions}
+\end{lemma}
+
+\begin{proof}
+$|gh-g(1)h(1)|\le|g||h-h(1)|+|h(1)||g-g(1)|\le C'(1-z)^\eta$，故 $gh\in\mathcal T_\eta$，$\langle\mathcal D_k,gh\rangle$ 有定义。把 $gh-g(1)h(1)=g(1)[h-h(1)]+[g-g(1)]h$ 代入 $\langle\mathcal D_k,gh\rangle$：第一项给出 $g(1)\langle\mathcal D_k,h\rangle$，第二项的被积函数以 $C(1-z)^{\eta-1}|\ln(1-z)|^k\sup|h|$ 为界，可积，这就是\cref{eq:appA-product}。两种写法作用于 $h$ 相减，差为 $h(1)\,c_k[g]$。
+\end{proof}
+
+例如 $c_1[1+z^2]=-\int_0^1(1+z)\ln(1-z)\,\dd z=\frac74$，所以 Drell--Yan 中的 $4C_F(1+z^2)\mathcal D_1$ 若误作整体加号分布，$\delta(1-z)$ 的系数差 $7C_F$。% VF-DY-12
+
+\paragraph{\cref{lem:prelim-plus-expansion}的证明}
+令 $t=-a\varepsilon\in(0,\eta)$。因为 $h$ 连续而 $(1-z)^{-1+t}$ 可积，左端有定义；把 $h$ 写成 $h(1)+[h-h(1)]$，并把 $(1-z)^t=\sum_kt^k\ln^k(1-z)/k!$ 代入第二部分：
+\[
+\int_0^1(1-z)^{-1+t}h\,\dd z=\frac{h(1)}t+\int_0^1\sum_{k=0}^\infty\frac{t^k\ln^k(1-z)}{k!}\,\frac{h(z)-h(1)}{1-z}\,\dd z .
+\]
+被积级数的绝对值之和被 $C(1-z)^{\eta-|t|-1}$ 控制，$|t|<\eta$ 时可积，故可逐项积分，得 $\frac{h(1)}t+\sum_k\frac{t^k}{k!}\langle\mathcal D_k,h\rangle$；代回 $t=-a\varepsilon$ 即\cref{lem:prelim-plus-expansion}中的展开式。由\cref{eq:appA-Dk-bound}，第 $k$ 项以 $C|t|^k/\eta^{k+1}$ 为界，截断到 $k=K$ 的余项为 $O(|t|^{K+1})$。\qed
+
+（数值核对：对光滑检验函数取 $60$ 项，$a\varepsilon=-0.1,-0.3,-0.6$；对 $h=z^{N-1}$，左端为 $B(N,t)$，$B(N,t)-1/t$ 的 Taylor 系数恰为 $\langle\mathcal D_k,z^{N-1}\rangle/k!$，最近的奇点在 $t=-1$，与 $\eta=1$ 一致。）
+
+\begin{lemma}[由偶数矩得到弱收敛]\label{lem:appA-weak-convergence}
+设 $\nu_Q$ 是 $[0,1]$ 上的有限带号 Borel 测度，$\sup_Q|\nu_Q|([0,1])\le M<\infty$，整数 $k_0\ge0$。若对一切 $k\ge k_0$ 有 $\int x^{2k}\,\dd\nu_Q\to0$，则对每个 $\phi\in C([0,1])$ 有 $\int x^{2k_0}\phi\,\dd\nu_Q\to0$。对固定的、关于 $x^2$ 的多项式 $\phi$，收敛速率即所涉有限个矩的速率；但不存在对 $\phi\in C([0,1])$（$\sup|\phi|\le1$）一致的速率。
+\uses{def:appA-test-functions}
+\end{lemma}
+
+\begin{proof}
+令 $\dd\mu_Q=x^{2k_0}\dd\nu_Q$，则 $|\mu_Q|([0,1])\le M$，$\int x^{2j}\dd\mu_Q\to0$（$j\ge0$）。给定 $\phi\in C([0,1])$ 与 $\delta>0$：$\psi(t)=\phi(\sqrt t)$ 在 $[0,1]$ 上连续，由 Weierstrass 定理有多项式 $p$ 使 $\sup|\psi-p|<\delta$，即 $\sup_x|\phi(x)-p(x^2)|<\delta$。于是 $|\int\phi\,\dd\mu_Q|\le M\delta+\sum_jc_j|\int x^{2j}\dd\mu_Q|$，右端有限和趋于零，故 $\limsup_Q|\int\phi\,\dd\mu_Q|\le M\delta$，$\delta$ 任意。若 $\phi$ 本身是 $x^2$ 的多项式，取 $p(x^2)=\phi$ 即得速率。没有一致速率：$\dd\nu_Q=\sin(Q^2x)\,\dd x$ 的每个矩都是 $O(1/Q^2)$（分部积分），而 $\sup_{|\phi|\le1}|\int\phi\,\dd\nu_Q|=\int_0^1|\sin(Q^2x)|\dd x\to2/\pi$。
+\end{proof}
+
+此引理用于\cref{cor:dis-weak-xspace}（第~7~章）：那里 $\nu_Q$ 是结构函数测度与 twist-2 测度之差，矩的 $O(1/Q^2)$ 只给出弱收敛（另见\cref{rem:appK-counterexamples}）。
+
+\paragraph{事件形状的分布}
+第~15、16~章的分布在 $\tau=0$（或 $p^2=0$、$k=0$）处减除：$\int_0^1[g]_+h=\int_0^1g\,(h-h(0))$；星分布 $\int_0^{\mu^2}\dd p^2\big[\frac{\ln^k(p^2/\mu^2)}{p^2}\big]_*f=\int_0^{\mu^2}\dd p^2\frac{\ln^k(p^2/\mu^2)}{p^2}[f(p^2)-f(0)]$，展开为 $\mu^{2\varepsilon}(p^2)^{-1-\varepsilon}=-\frac{\delta(p^2)}{\varepsilon}+\sum_k\frac{(-\varepsilon)^k}{k!}\big[\frac{\ln^k(p^2/\mu^2)}{p^2}\big]_*$。% VF-CONV-20
+它们从不与本节的 $[\cdot]_+$ 在同一公式中混用。
+
+% -------------------------------------------------------------------------------------
+\section{Mellin 变换}\label{sec:appA-mellin}
+
+\begin{lemma}[Mellin 变换表]\label{lem:appA-mellin-table}
+(a) 对整数 $N\ge1$，$\langle\mathcal D_0,z^{N-1}\rangle=-S_1(N-1)$，$\langle\mathcal D_1,z^{N-1}\rangle=\frac12[S_1^2+S_2](N-1)$；以 $S_1(N)=\psi(N+1)+\gamma_E$、$S_2(N)=\zeta_2-\psi'(N+1)$ 延拓后，它们在 $\Real N>0$ 上等于 $\int_0^1z^{N-1}\mathcal D_{0,1}$，$N\to\infty$ 时为 $-\ln\bar N+O(1/N)$ 与 $\frac12(\ln^2\bar N+\zeta_2)+O(\ln N/N)$，$\ln\bar N=\ln N+\gamma_E$。% VF-CONV-8, VF-THR-2
+\par
+(b) 领头阶分裂函数 $P_{qq}=C_F\big[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\big]$，$P_{qg}=T_F[z^2+(1-z)^2]$，$P_{gq}=C_F\frac{1+(1-z)^2}z$，$P_{gg}=2C_A\big[\frac z{(1-z)_+}+\frac{1-z}z+z(1-z)\big]+\frac{\beta_0}2\delta(1-z)$（$\beta_0=\frac{11}3C_A-\frac43T_Fn_f$）的 Mellin 变换 $\gamma_{ij}(N)=\int_0^1z^{N-1}P_{ij}$ 为 % VF-PDF-7, VF-PDF-8
+\begin{gather*}
+\gamma_{qq}=C_F\Big[\frac32+\frac1{N(N+1)}-2S_1(N)\Big],\qquad \gamma_{qg}=T_F\frac{N^2+N+2}{N(N+1)(N+2)},\\
+\gamma_{gq}=C_F\frac{N^2+N+2}{(N-1)N(N+1)},\qquad
+\gamma_{gg}=2C_A\Big[\frac1{N(N-1)}+\frac1{(N+1)(N+2)}-S_1(N)\Big]+\frac{\beta_0}2 .
+\end{gather*}
+\par
+(c) 单位为 $\frac{\as}{2\pi}$、$\mu=Q$ 的 DIS 系数函数 $C_2^q=C_F\big[2\mathcal D_1-\frac32\mathcal D_0-(1+z)\ln(1-z)-\frac{1+z^2}{1-z}\ln z+3+2z-(\frac92+\frac{\pi^2}3)\delta(1-z)\big]$ 与 $C_2^g=T_F\big[(z^2+(1-z)^2)\ln\frac{1-z}z-8z^2+8z-1\big]$ 的矩为（$S_k\equiv S_k(N)$）% VF-DIS-7, VF-DIS-8
+\begin{gather*}
+C^q_{2,N}=C_F\Big[S_1^2-S_2+\frac32S_1-\frac{S_1}{N(N+1)}+\frac3{2N}+\frac2{N+1}+\frac1{N^2}-\frac92\Big],\\
+C^g_{2,N}=T_F\Big[-\frac{N^2+N+2}{N(N+1)(N+2)}S_1+\frac1{N^2}-\frac1N+\frac6{(N+1)(N+2)}\Big].
+\end{gather*}
+\uses{def:prelim-mellin,def:prelim-plus}
+\end{lemma}
+
+\begin{proof}
+所需的初等变换为（$N\ge1$）
+\begin{gather*}
+\int_0^1\frac{z^{N-1}-1}{1-z}\dd z=-S_1(N-1),\qquad \int_0^1z^{N-1}\ln(1-z)\,\dd z=-\frac{S_1(N)}N,\\
+\int_0^1z^{N-1}\ln z\,\dd z=-\frac1{N^2},\qquad \int_0^1z^{N-1}\frac{\ln z}{1-z}\dd z=-\sum_{j\ge0}\frac1{(N+j)^2}=-\big[\zeta_2-S_2(N-1)\big];
+\end{gather*}
+第一式由 $(z^{N-1}-1)/(1-z)=-\sum_{j=0}^{N-2}z^j$，第二式由 $\ln(1-z)=-\sum_{m\ge1}z^m/m$ 与 $\sum_m\frac1{m(N+m)}=\frac{S_1(N)}N$，第四式把 $1/(1-z)$ 展成几何级数。
+(a) 第一式即 $\langle\mathcal D_0,z^{N-1}\rangle$。由第二式，
+\[
+\langle\mathcal D_1,z^{N-1}\rangle=-\sum_{j=0}^{N-2}\int_0^1z^j\ln(1-z)\,\dd z=\sum_{m=1}^{N-1}\frac{S_1(m)}m=\frac12\big[S_1^2+S_2\big](N-1),
+\]
+最后一步用 $(\sum_{i\le n}a_i)^2=2\sum_{m\le n}a_m\sum_{i\le m}a_i-\sum_{i\le n}a_i^2$（$a_i=1/i$）。对 $\Real N>0$，$\int_0^1\frac{z^{N-1}-1}{1-z}=-[\psi(N)+\gamma_E]$ 是 Gauss 的积分表示；两端都在 $\Real N>0$ 上全纯且多项式有界，延拓唯一（附录~K）。大 $N$ 极限来自 $\psi(N)=\ln N-\frac1{2N}+O(N^{-2})$、$\psi'(N)=\frac1N+O(N^{-2})$。
+(b) 由乘积约定，$\langle(1+z^2)\mathcal D_0,z^{N-1}\rangle=-S_1(N-1)-S_1(N+1)=-2S_1(N)+\frac1{N(N+1)}$，加上 $\frac32$ 得 $\gamma_{qq}$；$\langle z\mathcal D_0,z^{N-1}\rangle=-S_1(N)$；其余为有理函数的积分，例如 $\int_0^1z^{N-1}[z^2+(1-z)^2]=\frac2{N+2}-\frac2{N+1}+\frac1N$。
+(c) 逐项代入初等变换，用 $S_k(N-1)=S_k(N)-N^{-k}$、$S_k(N+1)=S_k(N)+(N+1)^{-k}$ 整理；对 $C_2^q$，$\mathcal D_1$ 项的 $+S_2(N-1)$ 与 $\ln z/(1-z)$ 项的 $-S_2(N-1)$ 相消，$2\zeta_2$ 与 $\delta$ 项中的 $\frac{\pi^2}3$ 相消。
+\end{proof}
+
+检验：$\gamma_{qq}(1)=0$（夸克数守恒），$\gamma_{qq}(2)+\gamma_{gq}(2)=0$、$2n_f\gamma_{qg}(2)+\gamma_{gg}(2)=0$（动量守恒）；$C^q_{2,N}/C_F$ 在 $N=1,\dots,4$ 时为 $0,\frac16,\frac{29}{24},\frac{91}{40}$，$C^g_{2,N}/T_F$ 为 $\frac13,-\frac14,-\frac7{20},-\frac{133}{360}$。对 $N=1,\dots,8$ 我们把 (b)、(c) 的闭式与 $x$ 空间表达式的直接积分作了精确比较。
+
+\paragraph{\cref{lem:prelim-mellin}的证明}
+(a) 对可积函数，在 $\int_0^1\dd x\,h(x)\int_x^1\frac{\dd\xi}\xi f(\xi)g(x/\xi)$ 中代换 $y=x/\xi$ 得 $\langle f\otimes g,h\rangle=\int_0^1\!\dd\xi\int_0^1\!\dd y\,f(\xi)g(y)h(\xi y)$；对分布，这就是定义 $\langle f(\xi),\langle g(y),h(\xi y)\rangle\rangle$，它对光滑的 $h$ 有定义（$y\mapsto h(\xi y)$ 光滑，内层配对作为 $\xi$ 的函数在 $\xi=1$ 处 Hölder 连续）。取 $h(x)=x^{N-1}$，$h(\xi y)=\xi^{N-1}y^{N-1}$，二重配对分解为 $\tilde f(N)\tilde g(N)$。(b) 即\cref{lem:appA-mellin-table}(a)。\qed

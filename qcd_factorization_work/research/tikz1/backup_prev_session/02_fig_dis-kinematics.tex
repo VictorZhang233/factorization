@@ -1,0 +1,35 @@
+%%% BEGIN fig:dis-kinematics
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \coordinate (V) at (0,1.75);
+  \coordinate (B) at (0,0);
+  \draw[quark] (-2.4,2.6) -- (V);
+  \draw[quark] (V) -- (2.4,2.6);
+  \draw[photon] (V) -- (0,0.5);
+  \draw[t1 hadron] (-2.4,0) -- (B);
+  \foreach \a in {24,8,-8,-24} \draw[plain] (B) -- ++(\a:2.3);
+  \draw[hadron blob] (B) circle[radius=0.5];
+  \node[vertex] at (V) {};
+  % momenta
+  \path[mom={$\ell$}] (-2.4,2.6) -- (V);
+  \path[mom={$\ell'$}] (V) -- (2.4,2.6);
+  \path[mom={$q$}] (V) -- (0,0.5);
+  \path[mom={$P$},mom sep=0.3cm] (-2.4,0) -- (-0.5,0);
+  % particle labels (lepton momenta are labelled by the momentum arrows)
+  \node[left,inner sep=5pt] at (0,1.12) {$\gamma^*$};
+  \node[left] at (-2.4,0) {$A$};
+  \node[right] at (2.45,0) {$X$};
+  % invariants
+  \node[right,align=left,font=\small] at (3.4,1.2)
+    {$q=\ell-\ell',\qquad Q^2=-q^2>0$\\[3pt]
+     $x=\dfrac{Q^2}{2P\cdot q},\qquad y=\dfrac{P\cdot q}{P\cdot\ell}$\\[8pt]
+     $W^2=(P+q)^2=M^2+\dfrac{1-x}{x}\,Q^2$};
+\end{tikzpicture}
+\caption{深度非弹性散射 $\ell+A(P)\to\ell'+X$ 的运动学（单光子交换）。轻子放出类空虚光子 $\gamma^*(q)$，
+被强子 $A$ 吸收；$X$ 为不被观测的强子末态，$W$ 为其不变质量，$M$ 为强子质量。Bjorken 极限为
+$Q^2\to\infty$、$x$ 固定。}
+\label{fig:dis-kinematics}
+\end{figure}
+%%% END fig:dis-kinematics

@@ -1,0 +1,204 @@
+%%% BEGIN fig:diffraction
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 ax/.style={lcaxis,gray!60!black},
+  t3 bar/.style={draw=black!80,line width=1.1pt,line cap=butt},
+  t3 rbar/.style={draw=red!70!black,line width=1.1pt,line cap=butt},
+  t3 gap/.style={fill=gray!14,draw=none},
+  t3 singlet/.style={fill=yellow!35,draw=none,rounded corners=2pt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ============================ (a) diffractive DIS ============================
+  \begin{scope}
+    \node[hadron blob,ellipse,minimum width=1.4cm,minimum height=0.8cm,inner sep=0pt] (D) at (-0.6,0) {};
+    \node[hadron blob,ellipse,minimum width=0.64cm,minimum height=1.2cm,inner sep=0pt] (X) at (2.1,1.55) {};
+    \coordinate (E) at (0.1,3.1); \coordinate (V) at (0.3,1.75);
+    % colour-singlet exchange (shaded) : active quark + remnant
+    \fill[t3 singlet] (-0.98,0.42) -- (-0.05,0.40) -- (1.0,0.82) -- (0.62,1.6) -- (0.12,1.95) -- cycle;
+    \draw[t3 hadron] (-2.4,0) -- (D.west);  \draw[t3 hadron] (D.east) -- (3.15,0);
+    \draw[quark] (-2.0,3.1) -- (E);  \draw[quark] (E) -- (2.5,3.65);
+    \draw[photon] (E) -- (V);
+    \draw[quark] (-0.72,0.38) -- (V);
+    \draw[quark] (V) -- (X.150);
+    \draw[plain] (-0.3,0.39) -- (X.215);
+    \foreach \a/\e in {25/{(2.95,2.05)},0/{(3.0,1.55)},-25/{(2.95,1.05)}} \draw[plain] (X.\a) -- \e;
+    \node[vertex] at (E) {}; \node[vertex] at (V) {};
+    \node[t3 lab,left] at (-2.0,3.1) {$e$};  \node[t3 lab,right] at (2.5,3.65) {$e'$};
+    \node[t3 lab,right=1pt] at ($(E)!0.5!(V)$) {$\gamma^*$};
+    \node[t3 lab] at (X) {$X$};
+    \node[t3 lab,left] at (-2.4,0) {$p$};  \node[t3 lab,right] at (3.15,0) {$p'$};
+    \node[t3 note] at (-0.6,-0.62) {$f^{D}_{i/p}(\beta,x_{\mathbb P},t)$};
+    \node[t3 note,align=center,anchor=east] at (-0.55,1.45) {色单态\\交换};
+    % rapidity distribution of the final state
+    \fill[t3 gap] (0.7,-1.95) rectangle (2.55,-1.35);
+    \draw[t3 ax] (-2.3,-1.95) -- (3.4,-1.95) node[below left=1pt and -2pt] {$\eta$};
+    \foreach \x/\h in {-2.0/0.30,-1.75/0.42,-1.5/0.25,-1.25/0.5,-1.0/0.36,-0.75/0.55,-0.5/0.3,-0.25/0.45,0.0/0.33,0.25/0.4,0.48/0.24}
+      \draw[t3 bar] (\x,-1.95) -- ++(0,\h);
+    \draw[t3 bar,line width=1.8pt] (2.9,-1.95) -- ++(0,0.62);
+    \node[t3 note] at (-0.75,-2.25) {$X$};  \node[t3 note] at (2.9,-2.25) {$p'$};
+    \node[t3 note] at (1.62,-1.65) {快度间隙};
+    \node[t3 lab] at (0.4,-2.85) {(a)\ 衍射 DIS：$\gamma^*p\to X\,p'$};
+  \end{scope}
+  % ======================= (b) hadron--hadron hard diffraction =======================
+  \begin{scope}[xshift=7.4cm]
+    \node[hadron blob,ellipse,minimum width=1.4cm,minimum height=0.8cm,inner sep=0pt] (D) at (-0.6,0) {};
+    \node[hadron blob,ellipse,minimum width=1.4cm,minimum height=0.8cm,inner sep=0pt] (B) at (-0.6,3.1) {};
+    \node[hadron blob,ellipse,minimum width=0.64cm,minimum height=1.2cm,inner sep=0pt] (X) at (2.1,1.55) {};
+    \node[hard blob,circle,minimum size=0.5cm,inner sep=0pt] (H) at (0.35,1.75) {};
+    \fill[t3 singlet] (-0.98,0.42) -- (-0.05,0.40) -- (1.0,0.82) -- (0.5,1.45) -- (0.08,1.62) -- cycle;
+    \draw[t3 hadron] (-2.4,0) -- (D.west);  \draw[t3 hadron] (D.east) -- (3.6,0);
+    \draw[t3 hadron] (-2.4,3.1) -- (B.west);  \draw[plain] (B.east) -- (3.6,3.1);
+    \draw[glauber] (3.25,3.1) -- (3.25,0);
+    \draw[quark] (-0.72,0.38) -- (H.235);
+    \draw[quark] (-0.45,2.72) -- (H.115);
+    \draw[plain] (-0.3,0.39) -- (X.215);
+    \draw[plain] (H.20) -- (X.140);  \draw[plain] (H.345) -- (X.180);
+    \foreach \a/\e in {25/{(2.85,2.05)},0/{(2.9,1.55)},-25/{(2.85,1.05)}} \draw[plain] (X.\a) -- \e;
+    \node[vertex] at (3.25,3.1) {}; \node[vertex] at (3.25,0) {};
+    \node[t3 lab] at (X) {$X$};
+    \node[t3 lab,left] at (-2.4,0) {$\bar p$};  \node[t3 lab,right] at (3.6,0) {$\bar p'$};
+    \node[t3 lab,left] at (-2.4,3.1) {$p$};
+    \node[t3 note,align=center] at (1.35,2.65) {两个喷注};
+    \node[t3 note,align=left,anchor=west] at (3.35,1.55) {旁观者\\相互作用};
+    % rapidity distribution: the gap is filled
+    \fill[t3 gap] (0.7,-1.95) rectangle (2.55,-1.35);
+    \draw[t3 ax] (-2.3,-1.95) -- (3.4,-1.95) node[below left=1pt and -2pt] {$\eta$};
+    \foreach \x/\h in {-2.0/0.30,-1.75/0.42,-1.5/0.25,-1.25/0.36,-1.0/0.62,-0.75/0.3,-0.5/0.45,-0.25/0.66,0.0/0.33,0.25/0.4,0.48/0.24}
+      \draw[t3 bar] (\x,-1.95) -- ++(0,\h);
+    \foreach \x/\h in {0.85/0.22,1.15/0.3,1.45/0.2,1.8/0.27,2.1/0.18,2.4/0.24}
+      \draw[t3 rbar] (\x,-1.95) -- ++(0,\h);
+    \draw[t3 bar,line width=1.8pt,dash pattern=on 2pt off 1.5pt] (2.9,-1.95) -- ++(0,0.62);
+    \node[t3 note] at (-0.75,-2.25) {$X$};  \node[t3 note] at (2.9,-2.25) {$\bar p'$};
+    \node[t3 note,text=red!70!black] at (1.62,-1.15) {间隙被填充};
+    \node[t3 lab] at (0.4,-2.85) {(b)\ 强子--强子硬衍射};
+  \end{scope}
+\end{tikzpicture}
+\caption{衍射过程中的因子化。(a)~衍射 DIS（$e p\to e\,X\,p'$）：靶质子保持完整（$p'$ 被探测到），与强子末态 $X$ 之间有一个没有粒子的快度间隙：质子与 $X$ 之间交换的是一个色单态体系（黄色阴影：进入硬散射的活动部分子及其色伴随者），二者之间没有色流。
+运动学变量 $x_{\mathbb P}=\frac{(P-P')\cdot q}{P\cdot q}$、$\beta=\frac{x}{x_{\mathbb P}}$、$t=(P-P')^2$（下标 $\mathbb P$ 只是传统记号，不涉及任何 Pomeron 模型）。
+截面因子化为硬部分与衍射 PDF $f^{D}_{i/p}(\beta,x_{\mathbb P},t;\mu)$ 的卷积，后者是末态中含被探测质子 $p'$ 的 PDF 算符矩阵元；入射强子只有一个，证明与 DIS 相同（Collins 1998，全阶论证 [A]）。
+(b)~强子--强子硬衍射（如 $p\bar p\to\bar p'+\text{两喷注}+X$）：两个入射强子的旁观者之间的软/Glauber 相互作用（暗红色）可以打碎 $\bar p'$ 或在间隙中产生粒子（红色），
+于是用 (a) 中提取的衍射 PDF 所作的因子化预言不成立（间隙存活问题）；CDF 在 Tevatron 测得的衍射双喷注截面比这种预言低约一个数量级（[V]）。下方为末态粒子在快度 $\eta$ 上分布的示意。}
+\label{fig:diffraction}
+\end{figure}
+%%% END fig:diffraction
+
+%%% BEGIN fig:dps
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \node[jet blob,ellipse,minimum width=3.6cm,minimum height=1.0cm,inner sep=0pt] (A) at (0,-2.05) {$A$};
+  \node[jetB blob,ellipse,minimum width=3.6cm,minimum height=1.0cm,inner sep=0pt] (B) at (0,2.05) {$B$};
+  \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H1) at (-1.75,0) {$H_1$};
+  \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H2) at (1.75,0) {$H_2$};
+  \coordinate (a1) at (-1.0,-1.634); \coordinate (a2) at (1.0,-1.634);
+  \coordinate (b1) at (-1.0,1.634);  \coordinate (b2) at (1.0,1.634);
+  \draw[t3 hadron] (-3.6,-2.05) -- (A.west);  \draw[t3 hadron] (A.east) -- (3.6,-2.05);
+  \draw[t3 hadron] (-3.6, 2.05) -- (B.west);  \draw[t3 hadron] (B.east) -- (3.6, 2.05);
+  % two quarks from A, two antiquarks from B (fermion arrows H -> B)
+  \draw[quark] (a1) -- (H1.290);  \draw[quark] (a2) -- (H2.250);
+  \draw[quark] (H1.70) -- (b1);   \draw[quark] (H2.110) -- (b2);
+  % the two hard final states
+  \draw[photon] (H1.west) -- (-3.35,0);  \draw[photon] (H2.east) -- (3.35,0);
+  \draw[t3 dim] (H1.east) -- node[t3 lab,above=1pt] {$\boldsymbol y$} (H2.west);
+  % labels
+  \path[mom={$x_1P_A$},mom sep=0.26cm,mom length=0.45cm] (a1) -- (H1.290);
+  \path[mom'={$x_2P_A$},mom sep=0.26cm,mom length=0.45cm] (a2) -- (H2.250);
+  \path[mom'={$\bar x_1P_B$},mom sep=0.26cm,mom length=0.45cm] (b1) -- (H1.70);
+  \path[mom={$\bar x_2P_B$},mom sep=0.26cm,mom length=0.45cm] (b2) -- (H2.110);
+  \node[t3 lab,above=1pt] at (-2.95,0.06) {$\gamma^*_1$};
+  \node[t3 lab,above=1pt] at (2.95,0.06) {$\gamma^*_2$};
+  \node[t3 lab,below=1pt] at (-3.2,-2.1) {$P_A$};  \node[t3 lab,above=1pt] at (-3.2,2.1) {$P_B$};
+  \node[t3 note,anchor=north] at (0,-2.6) {$F_{a_1a_2/A}(x_1,x_2,\boldsymbol y)$};
+  \node[t3 note,anchor=south] at (0,2.6) {$F_{b_1b_2/B}(\bar x_1,\bar x_2,\boldsymbol y)$};
+\end{tikzpicture}
+\caption{双部分子散射（DPS）的示意（振幅层次，以双 Drell--Yan 过程为例）。每个强子各提供两个部分子，参与两个硬散射 $H_1$、$H_2$，二者在横向平面上相距 $\boldsymbol y$；
+来自 $B$ 的反夸克的费米子数箭头由硬散射指向 $B$。截面的因子化形式为 $\dd\sigma_{\mathrm{DPS}}=\frac1C\sum\int\dd^2\boldsymbol y\,F_{a_1a_2/A}\,F_{b_1b_2/B}\,\dd\hat\sigma_{a_1b_1}\,\dd\hat\sigma_{a_2b_2}$
+（对部分子种类求和，$F$ 的自变量如图），其中 $F$ 为双部分子分布，依赖于两部分子的动量分数及其横向间距 $\boldsymbol y$；$C$ 为对称因子（两个硬过程相同时 $C=2$，否则 $C=1$）。
+对双 Drell--Yan，旁观者之间 Glauber 交换的相消已有全阶论证（[A]）；而色关联、$1\to2$ 微扰劈裂（小 $\boldsymbol y$ 处 $F\propto1/\boldsymbol y^2$）以及与单部分子散射之间的重复计数等问题，使完整框架仍只具 [P] 地位。}
+\label{fig:dps}
+\end{figure}
+%%% END fig:dps
+
+%%% BEGIN fig:violation-cq
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 cl/.style={draw=#1,line width=0.85pt,line cap=round,rounded corners=3pt},
+  t3 carr/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=2.4pt]{Stealth[length=4.8pt,width=4.2pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ============ (a) the graph: Glauber gluon between the h1 spectator and the parton -> H2 ============
+  \begin{scope}
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h1) at (-2.3,-1.15) {};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h2) at (-2.3,1.15) {};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H) at (0,0) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D1) at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D2) at (2.3,-1.1) {};
+    \coordinate (s1a) at (h1.335); \coordinate (s1b) at (3.5,-2.1);
+    \coordinate (qa) at (H.325);   \coordinate (qb) at (D2.155);
+    \coordinate (G1) at (intersection of s1a--s1b and 1.45,0--1.45,-3);
+    \coordinate (G2) at (intersection of qa--qb and 1.45,0--1.45,-3);
+    \draw[t3 hadron] (-3.5,-1.15) -- (h1.west);  \draw[t3 hadron] (-3.5,1.15) -- (h2.west);
+    \draw[t3 hadron] (D1.20) -- (3.5,1.4);        \draw[t3 hadron] (D2.340) -- (3.5,-1.4);
+    \draw[plain] (s1a) -- (s1b);                  \draw[plain] (h2.25) -- (3.5,2.1);
+    \draw[glauber] (G1) -- (G2);
+    \draw[quark] (h1.40) -- (H.215);  \draw[quark] (h2.320) -- (H.145);
+    \draw[quark] (H.35) -- (D1.205);  \draw[quark=0.32] (qa) -- (qb);
+    \node[vertex] at (G1) {};  \node[vertex] at (G2) {};
+    \node[t3 lab] at (h1) {$h_1$};  \node[t3 lab] at (h2) {$h_2$};  \node[t3 lab] at (H) {$H$};
+    \node[t3 lab,right] at (3.5,1.4) {$H_1$};  \node[t3 lab,right] at (3.5,-1.4) {$H_2$};
+    \node[t3 note,right] at (3.5,-2.1) {$X_1$};  \node[t3 note,right] at (3.5,2.1) {$X_2$};
+    \path[mom'={$\ell$},mom sep=0.25cm,mom length=0.45cm] (G1) -- (G2);
+    \node[t3 lab] at (0,-2.75) {(a)};
+  \end{scope}
+  % ============ (b) leading-N_c colour flow (colour-singlet hard exchange) ============
+  \begin{scope}[xshift=7.55cm]
+    \coordinate (h1c) at (-2.3,-1.15); \coordinate (h2c) at (-2.3,1.15);
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h1) at (h1c) {};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h2) at (h2c) {};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H) at (0,0) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D1) at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D2) at (2.3,-1.1) {};
+    \coordinate (s1a) at (h1.335); \coordinate (s1b) at (3.5,-2.1);
+    \coordinate (qa) at (H.325);   \coordinate (qb) at (D2.155);
+    \coordinate (L1t) at (intersection of qa--qb and 1.38,0--1.38,-3);
+    \coordinate (L1b) at (intersection of s1a--s1b and 1.38,0--1.38,-3);
+    \coordinate (L2t) at (intersection of qa--qb and 1.52,0--1.52,-3);
+    \coordinate (L2b) at (intersection of s1a--s1b and 1.52,0--1.52,-3);
+    % colour line 1 (blue): s2 -> h2 -> q2 -> H -> q2' -> gluon -> s1 -> h1 -> q1 -> H -> q1' -> H1
+    \draw[t3 cl=blue!70!black,t3 carr=0.5] (3.5,2.1) -- (h2.25);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (h2.320) -- (H.145);
+    \draw[t3 cl=blue!70!black,t3 carr=0.1,t3 carr=0.31,t3 carr=0.7] (qa) -- (L1t) -- (L1b) -- (s1a);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (h1.40) -- (H.215);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (H.35) -- (D1.205);
+    % colour line 2 (red): s1 (outgoing end) -> gluon -> q2' -> H2
+    \draw[t3 cl=red!75!black,t3 carr=0.3,t3 carr=0.65,t3 carr=0.93] (s1b) -- (L2b) -- (L2t) -- (qb);
+    % blobs on top of the colour lines
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] at (h1c) {$h_1$};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] at (h2c) {$h_2$};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] at (0,0) {$H$};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] at (2.3,-1.1) {};
+    \node[t3 lab,right=1pt] at (D1.east) {$H_1$};  \node[t3 lab,right=1pt] at (D2.east) {$H_2$};
+    \node[t3 note,right] at (3.5,-2.1) {$X_1$};  \node[t3 note,right] at (3.5,2.1) {$X_2$};
+    \node[t3 lab] at (0.3,-2.75) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{TMD 因子化破坏的 Collins--Qiu 机制：$h_1+h_2\to H_1+H_2+X$，$H_1$、$H_2$ 在横向近乎背对背，测量其横动量失衡 $\boldsymbol q_{\mathrm T}=\boldsymbol p_{H_1\mathrm T}+\boldsymbol p_{H_2\mathrm T}$。
+(a)~在硬散射 $H$ 之外，$h_1$ 的旁观者 $X_1$ 与碎裂为 $H_2$ 的出射部分子交换一个 Glauber 胶子（暗红色，动量 $\ell$）。若 TMD 因子化成立，$h_1$ 的旁观者的这类相互作用必须能被吸收进 $h_1$ 的 TMD 的 Wilson 线；
+但这个胶子的色矩阵作用在出射部分子上，即作用在 $H_2$ 的碎裂因子的色空间中。Collins 与 Qiu（2007）对横向极化 $h_1$ 的 Sivers 型单自旋不对称明确算出：
+这类末态交换，连同与 $h_2$ 入射部分子的初态交换和与碎裂为 $H_1$ 的部分子的末态交换，所给出的 Glauber 相位项既不同于 SIDIS 型（未来指向）也不同于 Drell--Yan 型（过去指向）Wilson 线所给出的，即标准 TMD 因子化不成立；
+Rogers 与 Mulders（2010）在非极化截面的双胶子交换中证明，允许过程依赖 Wilson 线的“推广 TMD 因子化”同样不成立（严格性标签 [V]）。
+(b)~同一图在大 $N_c$ 下的色流（双线记号，以色单态硬交换为例；强子为夸克加反三重态旁观者的色单态；箭头为色流方向）：胶子交换把两条色线重新连接，
+使 $h_1$ 的残余与 $H_2$ 的碎裂部分子落在同一条色线上（红），而 $H_1$ 经 $h_1$、硬散射与 $h_2$ 的残余相连（蓝）——色结构不再分解为各因子各自的色迹之积。}
+\label{fig:violation-cq}
+\end{figure}
+%%% END fig:violation-cq

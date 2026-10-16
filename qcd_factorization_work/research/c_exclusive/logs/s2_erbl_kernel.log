@@ -1,0 +1,31 @@
+=== 1. Wilson-line one-gluon vertex in momentum-fraction space ===
+PASS  int_0^1 ds w^- e^{i(c - s l^+) w^-} = (i/l^+)[e^{i(c-l^+)w^-} - e^{i c w^-}]
+   => one-gluon vertex: (g t^a n^mu / l^+) [delta(x - (k^+ + l^+)) - delta(x - k^+)] Gamma  (p^+=1),
+      k = quark momentum entering the vertex at 0, l = gluon momentum absorbed by the Wilson line.
+=== 2. Dirac numerators between collinear projectors ===
+PASS  (a) Pv [g^a (p-k)sl g+ g5 ksl g_a] Pu = 2 |k_T|^2 Pv g+ g5 Pu   (no k^- dependence)
+PASS  (b) g+ g5 (k1-l)sl g+ = 2 (k1-l)^+ g+ g5   (matrix identity, no l^-, l_T dependence)
+PASS  (c) g+ (k2-l)sl g+ g5 = 2 (k2-l)^+ g+ g5
+=== 3. k^- integrals by residues (exact) and numerically at finite i0 ===
+PASS  (a) int dk^- 1/(D1 D2 D3) = -i pi [x/y th(y-x) + xbar/ybar th(x-y)] th(x) th(1-x) / kT^4  (exact residues)
+PASS  (a) same, direct numerical integration along the real axis with i0 -> i*1e-3
+PASS  (b),(c) int dl^- 1/(Dq Dg) = i pi th(l^+) th(y_parton - l^+)/(y_parton lT^2)  (exact residues)
+PASS  (b),(c) same, numerically
+=== 4. assemble: coefficient of (alpha_s/2pi) int dk_T^2/k_T^2 ===
+PASS  (a) region x<y: V_a = C_F x/y
+PASS  (b) real part, 0<x<y: V_b = C_F x/(y (y-x))
+PASS  (c) real part, y<x<1: V_c = C_F (1-x)/((1-y)(x-y))
+PASS  (b) virtual integrand (per dl^+) = - V_b^real(x = y - l^+, y): virtual = -delta(x-y) int_0^y dx V_b^real(x,y)
+PASS  (c) virtual integrand (per dl^+) = - V_c^real(x = y + l^+, y): virtual = -delta(x-y) int_y^1 dx V_c^real(x,y)
+   (b),(c) virtual parts = -delta(x-y) x [x-integral of the real parts]  => plus distributions
+=== 5. self-energy term and vector-current conservation ===
+PASS  int_0^1 dx [x/y th(y-x) + xbar/ybar th(x-y)] = 1/2
+   => with the external-leg factor (Z_2 - 1) delta(x-y) = -(alpha_s/4pi) C_F (1/eps_UV - 1/eps_IR) delta(x-y)
+      [Feynman gauge] = -(1/2) C_F delta(x-y) in units of (alpha_s/2pi) L, the sum of all graphs is
+      V = C_F [ x/y (1 + 1/(y-x)) th(y-x) + xbar/ybar (1 + 1/(x-y)) th(x-y) ]_+
+PASS  int dx V(x,y) = 0 (axial-current conservation) fixes the external-leg delta coefficient to -1/2 C_F, i.e. delta Z_2 = -alpha_s C_F/(4 pi eps) (Feynman gauge, standard)
+=== 6. hermiticity w.r.t. the weight x(1-x) ===
+PASS  V(x,y) y(1-y) = V(y,x) x(1-x)   (x<y; the case x>y follows by x->1-x, y->1-y)
+PASS  symmetry V(1-x,1-y) = V(x,y)
+----------------------------------------------------------------------
+s2_erbl_kernel: 17/17 PASS

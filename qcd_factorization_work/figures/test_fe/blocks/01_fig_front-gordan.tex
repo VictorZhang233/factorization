@@ -1,0 +1,76 @@
+%%% BEGIN fig:front-gordan
+\begin{figure}[htbp]
+\centering
+% Data: (a) D1=(2,0), D2=(1,2) (ex:front-gordan-2d), D3=(2.6,1.6) on the far side of the
+% line D1D2; min-norm point of conv{D_j}: w=(8/5,4/5), |w|^2=16/5=D1.w=D2.w, D3.w=5.44;
+% good cone {v: D_j.v>0} = directions between -26.57 deg (perp. to D2) and 90 deg (perp. to D1).
+% (b) D3=(-1,-1): 1*D1+2*D2+4*D3=0 (closed polygon drawn at scale 0.4).
+\begin{tikzpicture}[fd,
+  fe vec/.style={draw,line width=0.9pt,-{Stealth[length=6pt,width=4.6pt]}},
+  fe hull/.style={draw=gray!65,fill=gray!22,line width=0.6pt,line join=round},
+  fe cone/.style={fill=green!9,draw=none},
+  fe ray/.style={draw=green!45!black,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  fe wpt/.style={circle,fill=red!65!black,draw=none,inner sep=0pt,minimum size=4.6pt},
+  fe lam/.style={draw=blue!60!black,line width=0.9pt,-{Stealth[length=6pt,width=4.6pt]}},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) good direction =======================
+  \begin{scope}
+    \fill[fe cone] (0,0) -- (-26.565:2.95) arc[start angle=-26.565,end angle=90,radius=2.95] -- cycle;
+    \draw[fe ray] (0,0) -- (90:2.95);
+    \draw[fe ray] (0,0) -- (-26.565:2.95);
+    \draw[lcaxis,gray!55] (-1.15,0) -- (3.35,0);
+    \draw[lcaxis,gray!55] (0,-1.75) -- (0,3.3);
+    % supporting line v.w = |w|^2 through D1, D2
+    \draw[gray!60!black,densely dotted,line width=0.6pt] ($(2,0)!-0.45!(1,2)$) -- ($(2,0)!1.32!(1,2)$);
+    \draw[fe hull] (2,0) -- (1,2) -- (2.6,1.6) -- cycle;
+    \draw[fe vec] (0,0) -- (2,0);
+    \draw[fe vec] (0,0) -- (1,2);
+    \draw[fe vec] (0,0) -- (2.6,1.6);
+    \draw[red!65!black,line width=0.7pt,dash pattern=on 2.5pt off 1.8pt] (0,0) -- (1.6,0.8);
+    % right-angle mark at w on the D1 side (face direction (1,-2)/sqrt5, normal (2,1)/sqrt5),
+    % away from the arrow D3 which passes just above w
+    \draw[red!65!black,line width=0.5pt] ($(1.6,0.8)+(0.0894,-0.1789)$) -- ++(-0.1789,-0.0894) -- ++(-0.0894,0.1789);
+    \node[fe wpt] at (1.6,0.8) {};
+    \node[anchor=north east,inner sep=1.5pt] at (2.02,-0.03) {$D_1$};
+    \node[anchor=east,inner sep=2pt] at (0.98,2.05) {$D_2$};
+    \node[anchor=west,inner sep=2pt] at (2.62,1.62) {$D_3$};
+    \node[inner sep=1pt,text=red!60!black] at (1.27,0.42) {$w$};
+    \node[fill=white,fill opacity=0.85,text opacity=1,inner sep=1pt] at (0,0) {};
+    \node[anchor=north east,inner sep=1.5pt] at (0,0) {$0$};
+    \node[fe lab,text=green!35!black,anchor=south,align=center] at (1.5,2.82) {好方向锥 $\{v:D_j\cdot v>0\}$};
+    \node[fe lab,text=gray!40!black,anchor=north west] at (2.38,-0.62) {$v\cdot w=|w|^2$};
+    \node at (1.05,-2.25) {(a)\ $D_j\cdot w\ge|w|^2$：好方向};
+  \end{scope}
+  % ======================= (b) Landau point =======================
+  \begin{scope}[xshift=7.1cm]
+    \draw[lcaxis,gray!55] (-1.75,0) -- (2.75,0);
+    \draw[lcaxis,gray!55] (0,-1.75) -- (0,3.3);
+    \draw[fe hull] (2,0) -- (1,2) -- (-1,-1) -- cycle;
+    \draw[fe vec] (0,0) -- (2,0);
+    \draw[fe vec] (0,0) -- (1,2);
+    \draw[fe vec] (0,0) -- (-1,-1);
+    \node[circle,fill=black,draw=none,inner sep=0pt,minimum size=3.6pt] at (0,0) {};
+    \node[anchor=north west,inner sep=1.5pt] at (1.98,-0.03) {$D_1$};
+    \node[anchor=east,inner sep=2pt] at (0.98,2.05) {$D_2$};
+    \node[anchor=north east,inner sep=1.5pt] at (-1,-1) {$D_3$};
+    \node[anchor=south east,inner sep=1.5pt] at (-0.05,0.05) {$0$};
+    % closed polygon of the weighted vectors (scale 0.4)
+    \begin{scope}[shift={(2.85,0.55)},scale=0.4]
+      \draw[fe lam] (0,0) -- (2,0);
+      \draw[fe lam] (2,0) -- (4,4);
+      \draw[fe lam] (4,4) -- (0,0);
+      \node[fe lab,anchor=north,inner sep=2pt] at (1,0) {$\lambda_1D_1$};
+      \node[fe lab,anchor=west,inner sep=2pt] at (3,2) {$\lambda_2D_2$};
+      \node[fe lab,anchor=south east,inner sep=1pt] at (2,2.05) {$\lambda_3D_3$};
+    \end{scope}
+    \node[fe lab,align=center,anchor=north] at (3.6,-0.35) {$\lambda=(1,2,4)$\\[1pt]$\sum_j\lambda_jD_j=0$};
+    \node at (1.25,-2.25) {(b)\ Landau 点：无好方向};
+  \end{scope}
+\end{tikzpicture}
+\caption{Gordan 二择一定理（1873）\cite{Gordan1873}：对有限个对偶矢量 $D_j$，要么存在好方向 $v$（$D_j\cdot v>0$，可取凸包中范数最小的点 $w$，并有 $D_j\cdot w\ge|w|^2$），要么存在 Landau 点（$\lambda_j\ge0$ 不全为零、$\sum_j\lambda_jD_j=0$），二者恰有其一。
+(a)~$D_1=(2,0)$、$D_2=(1,2)$ 与 $D_3$ 的凸包（灰）不含原点，最小范数点 $w=(\frac85,\frac45)$ 落在面 $D_1D_2$ 上（$D_1\cdot w=D_2\cdot w=|w|^2$），位于好方向锥（绿）之内；
+(b)~换成 $D_3=(-1,-1)$ 后凸包含原点，$1\cdot D_1+2\cdot D_2+4\cdot D_3=0$（蓝色闭合折线），不存在好方向。
+在 Collins\cite{Collins:2020euz}（2020，预印本）的符号条件下，积分围道在 $w_S$ 被钳住当且仅当存在 Landau 点（VF-FRO-1，VF-FRO-2）。}
+\label{fig:front-gordan}
+\end{figure}
+%%% END fig:front-gordan

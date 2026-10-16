@@ -1,0 +1,79 @@
+%%% BEGIN fig:appE-boost
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff ax/.style={lcaxis,gray!60!black},
+  ff grid/.style={draw=gray!40,line width=0.4pt,dash pattern=on 1pt off 2pt},
+  ff virt/.style={draw=black!55,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  ff diag/.style={draw=gray!70,line width=0.55pt,dash pattern=on 0.8pt off 1.6pt},
+  ff boost/.style={draw=black!75,line width=0.8pt,-{Stealth[length=5pt,width=4.2pt]}},
+  ff pt/.style={circle,draw,line width=0.7pt,inner sep=0pt,minimum size=6.4pt},
+  ff lab/.style={font=\footnotesize,inner sep=1.5pt},
+  ff tick/.style={font=\scriptsize},
+  ff note/.style={font=\footnotesize,align=left}]
+  % ================================================================ (a) boost in the logarithmic light-cone plane
+  \begin{scope}[x=1.25cm,y=1.25cm]
+    % coordinates: u = ln(k^+/Q)/ln(1/lambda), v = ln(k^-/Q)/ln(1/lambda)
+    \foreach \u in {-3,-2,-1,0} \draw[ff grid] (\u,-2.55) -- (\u,0.45);
+    \foreach \v in {-2,-1,0} \draw[ff grid] (-3.55,\v) -- (0.45,\v);
+    \draw[ff ax] (-3.6,-2.6) -- (0.65,-2.6) node[below=2pt] {$\ln k^+$};
+    \draw[ff ax] (-3.6,-2.6) -- (-3.6,0.65) node[left] {$\ln k^-$};
+    \foreach \u/\t in {-3/{\lambda^3Q},-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (\u,-2.6) -- ++(0,0.06); \node[ff tick,below] at (\u,-2.6) {$\t$};}
+    \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (-3.6,\v) -- ++(0.06,0); \node[ff tick,left] at (-3.6,\v) {$\t$};}
+    % k^+ = k^- (dotted) and constant virtuality k^+k^- (dashed anti-diagonals)
+    \draw[ff diag] (-1.85,-1.85) -- (0.45,0.45);
+    \draw[ff virt] (0.12,-2.12) -- (-1.55,-0.45);
+    \draw[ff virt] (-1.88,-2.12) -- (-3.55,-0.45);
+    % points before (filled) and after (open) the boost
+    \node[ff pt,fill=blue!55!black,draw=blue!55!black] (CA) at (0,-2) {};
+    \node[ff pt,fill=green!50!black,draw=green!50!black] (US) at (-2,-2) {};
+    \node[ff pt,fill=white,draw=blue!55!black] (CA2) at (-1,-1) {};
+    \node[ff pt,fill=white,draw=green!50!black] (US2) at (-3,-1) {};
+    \draw[ff boost] (CA) -- (CA2);
+    \draw[ff boost] (US) -- (US2);
+    \node[ff lab,anchor=west,text=blue!45!black,align=left] at (0.08,-2.0) {$A$ 共线\\$Q(1,\lambda^2,\lambda)$};
+    \node[ff lab,anchor=west,text=blue!45!black] at (-0.8,-0.9) {$\lambda Q(1,1,1)$，静止系};
+    \node[ff lab,anchor=north,text=green!35!black] at (-2.0,-2.07) {超软\ $Q(\lambda^2,\lambda^2,\lambda^2)$};
+    \node[ff lab,anchor=west,text=green!35!black] at (-2.86,-0.86) {$Q(\lambda^3,\lambda,\lambda^2)$};
+    \node[ff lab,anchor=north west,align=left] at (-3.5,0.42) {推动：$k^\pm\to\lambda^{\pm1}k^\pm$};
+    \node at (-1.55,-3.76) {(a)\ 推动 $=$ 沿反对角线的平移};
+  \end{scope}
+  % ================================================================ (b) dimension in the rest frame, boost weights back
+  \begin{scope}[xshift=3.65cm,yshift=0.05cm]
+    % rest frame: isotropic jet, all momentum components ~ lambda Q
+    \foreach \a in {25,80,145,205,260,320}
+      \draw[plain,line width=0.7pt] (\a:0.45) -- (\a:0.85);
+    \draw[jet blob] (0,0) circle[radius=0.45];
+    \node[font=\small] at (0,0) {$J$};
+    \node[ff lab,align=center] at (0,-1.32) {静止系：各分量 $\sim\lambda Q$\\$J\sim\lambda^{\dim J}$};
+    % boost back
+    \draw[ff boost] (1.05,0) -- node[ff lab,above=1pt] {推回} node[ff lab,below=1pt] {$v^\pm\to\lambda^{\mp1}v^\pm$} (2.72,0);
+    % original frame: jet along +z, one external quark p_1, the index nu contracted with H
+    \draw[gluon] (4.55,-0.05) -- (5.55,-0.62);
+    \draw[quark] (4.6,0.08) -- (5.85,0.52);
+    \draw[jet blob] (3.75,0.0) ellipse (0.92 and 0.27);
+    \node[font=\small] at (3.6,0.0) {$J$};
+    \draw[hard blob] (5.8,-0.74) circle[radius=0.26];
+    \node[font=\footnotesize] at (5.8,-0.74) {$H$};
+    \node[ff lab,anchor=south west] at (5.8,0.5) {$p_1$};
+    \node[ff lab,anchor=north east] at (5.05,-0.42) {$\nu$};
+    \node[ff lab] at (3.9,-1.32) {原参考系（沿 $+z$）};
+    % boost weights and the example
+    \node[ff note,anchor=north west] at (-0.9,-1.88) {%
+      推回时的权重：上指标 $+$：$\lambda^{-1}$，$-$：$\lambda$，横向：$1$；\\
+      好（坏）旋量分量：$\lambda^{-1/2}$（$\lambda^{1/2}$）。\\[3pt]
+      例：$J^\nu=\bar u(p_1)\gamma^\nu(\sla p_1-\sla k)$，$\dim J=\frac32$，\\
+      $\bar u(p_1)$ 为好分量：$J^+\sim\lambda^{\frac32-1-\frac12}=1$，\\
+      $J_T\sim\lambda^{\frac32-\frac12}=\lambda$，\ $J^-\sim\lambda^{\frac32+1-\frac12}=\lambda^2$。};
+    \node at (2.75,-4.75) {(b)\ 静止系中量纲计数，推回时加权};
+  \end{scope}
+\end{tikzpicture}
+\caption{推动与量纲给出幂次（示意；$(k^+,k^-,k_T)\sim(\lambda^a,\lambda^b,\lambda^c)Q$，坐标轴以 $\ln(1/\lambda)$ 为单位）。
+(a)~快度 $y=\ln\lambda$ 的推动 $k^\pm\to\lambda^{\pm1}k^\pm$ 是沿反对角线的平移，保持虚度（虚线：$k^+k^-\sim\lambda^2Q^2$ 与 $\lambda^4Q^2$；点线：$k^+=k^-$）：$A$ 共线标度 $Q(1,\lambda^2,\lambda)$ 变为各向同性的 $\lambda Q(1,1,1)$（喷注静止系），超软动量 $Q(\lambda^2,\lambda^2,\lambda^2)$ 变为 $Q(\lambda^3,\lambda,\lambda^2)$，喷注在领头幂次只经其 $-$ 分量（$\sim\lambda Q$）感受它。
+(b)~在静止系中喷注子图是单一尺度 $\lambda Q$ 的协变函数，按量纲 $J\sim\lambda^{\dim J}$；推回原参考系时每个外指标与外旋量乘以其推动权重。
+加上 $J$--$H$ 圈的测度 $\lambda^{4(b+f-1)}$ 与软连接的权重，对各喷注与软子图求和即得\cref{prop:appE-degree} 的超表观红外发散度（VF-REG-8）；这是标度陈述（E-S），化为积分界见\cref{rem:appE-actual-bound}。}
+\label{fig:appE-boost}
+\end{figure}
+%%% END fig:appE-boost

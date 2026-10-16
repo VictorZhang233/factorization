@@ -1,0 +1,1713 @@
+%%% =====================================================================
+%%% figset_D.tex  --  TikZ figures, set D of the QCD factorization monograph
+%%%   (FIGURES_INDEX_v2 §2: Ch20 heavy, Ch21 power, Ch22 lamet, Ch25 summary;
+%%%    §4.2: Ch22 lamet; §4.3: Ch23 yzliu; required and optional figures).
+%%% (figures/test_fd2; figure agent figD; local style prefix "fd2")
+%%%
+%%% Contents (20 figures; in the file they follow the section order of their
+%%%   owner chapters; owner chapter in brackets)
+%%%   required: fig:heavy-bdpi, fig:heavy-qcdf [Ch20]; fig:power-borel-plane [Ch21];
+%%%     fig:lamet-ioffe, fig:lamet-lattice-geometries, fig:lamet-oneloop,
+%%%     fig:lattice-matching, fig:lamet-hybrid [Ch22];
+%%%     fig:yzliu-soft-hqet, fig:yzliu-theta-strip, fig:yzliu-complex-lorentz,
+%%%     fig:yzliu-leading-region, fig:yzliu-threshold [Ch23];
+%%%     fig:summary-status-map, fig:summary-hypotheses [Ch25];
+%%%   optional: fig:lamet-dependency, fig:lamet-fourier, fig:lamet-validity [Ch22];
+%%%     fig:yzliu-single-line, fig:yzliu-borel [Ch23].
+%%% The two Ch25 figures are generated from the data of spec_v2/FINAL_OUTLINE_v2
+%%%   (master-table rows and tags; incidence data of tab:summary-assumptions,
+%%%   bottleneck column) by figures/test_fd2/gen/gen_status_map.py and
+%%%   gen_hypotheses.py; rerun them if the outline changes, and check them
+%%%   against the generated App P data at integration.
+%%%
+%%% Requirements: common/preamble_fact.tex (ctexbook, XeLaTeX), which loads tikz
+%%%   with decorations.pathmorphing, decorations.markings, arrows.meta, calc,
+%%%   positioning, shapes.geometric, patterns, backgrounds, fit, and pgfplots
+%%%   (compat=1.17), and contains the style blocks STYLES / STYLES-EXT; plus the
+%%%   preamble macros \ii \dd \ee \tp \MSbar \cref \tagR ... \tagV.  No package or
+%%%   library is loaded here.  Every extra style is declared in the options of
+%%%   its tikzpicture (hence local to that picture) and carries the prefix "fd2".
+%%% Each figure is delimited by  %%% BEGIN <label>  /  %%% END <label>.
+%%%
+%%% Drawing conventions used throughout this set
+%%%   * solid line with arrow = quark; the arrow is the fermion-number flow
+%%%     (for an antiquark it points against the momentum); thick solid line =
+%%%     heavy quark / static colour source;
+%%%   * thin separate arrow with label (styles mom/mom') = momentum flow;
+%%%   * double line with arrow = Wilson line; the arrow is the path orientation
+%%%     of W[b,a] (from a to b), i.e. the colour flow;
+%%%   * blob colours as in STYLES-EXT: grey = hard, blue = collinear (first
+%%%     direction), orange = collinear (second direction), green = soft,
+%%%     light grey = hadron / non-perturbative;
+%%%   * tag colours of the rigour levels as in the preamble macros \tagR ...:
+%%%     OliveGreen [R], RoyalBlue [A], BurntOrange [P], Plum [C], BrickRed [V].
+%%% Cross references to statements, tables and sections of the chapters are
+%%% made with \cref (resolved in the book; dummy targets in the test document).
+%%% =====================================================================
+
+%%% BEGIN fig:heavy-bdpi
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 heavy/.style={draw,solid,line width=1.3pt,fd arrow=#1},
+  fd2 heavy/.default=0.5,
+  fd2 meson/.style={bound state,line cap=butt},
+  fd2 weak/.style={rectangle,fill=black,draw=none,inner sep=0pt,minimum size=5.6pt},
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 cross/.pic={\draw[red!75!black,line width=1.1pt,line cap=round] (-0.12,-0.12)--(0.12,0.12) (-0.12,0.12)--(0.12,-0.12);},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  \coordinate (W) at (0,0.45);
+  \coordinate (dq) at (1.449,2.820);   % end of the d line (inside the pion blob)
+  \coordinate (uq) at (1.851,2.558);   % end of the u-bar line (inside the pion blob)
+  % ---- mesons (double lines) ----
+  \draw[fd2 meson] (-5.15,0) -- (-3.9,0);
+  \draw[fd2 meson] (3.9,0) -- (5.15,0);
+  \draw[fd2 meson] (2.36,3.78) -- (2.84,4.51);
+  % ---- soft gluons from the B-D system to the pion pair (decouple) ----
+  \coordinate (sd) at ($(W)!0.42!(dq)$);
+  \coordinate (su) at ($(W)!0.36!(uq)$);
+  \draw[fd2 soft] (-3.42,0.72) -- (sd);
+  \draw[fd2 soft] (3.42,0.72) -- (su);
+  \pic at ($(-3.42,0.72)!0.5!(sd)$) {fd2 cross};
+  \pic at ($(3.42,0.72)!0.5!(su)$) {fd2 cross};
+  % ---- quark lines (arrows = fermion-number flow) ----
+  \draw[fd2 heavy=0.55] (-3.4,0.45) -- (W);
+  \draw[fd2 heavy=0.55] (W) -- (3.4,0.45);
+  \draw[quark] (3.4,-0.45) -- (-3.4,-0.45);
+  \draw[quark=0.72] (W) -- (dq);
+  \draw[quark=0.6] (uq) -- (W);
+  % ---- blobs on top ----
+  \node[hadron blob,ellipse,minimum width=0.8cm,minimum height=1.8cm,inner sep=0pt] at (-3.6,0) {};
+  \node[hadron blob,ellipse,minimum width=0.8cm,minimum height=1.8cm,inner sep=0pt] at (3.6,0) {};
+  \node[jet blob,ellipse,minimum width=1.6cm,minimum height=0.72cm,inner sep=0pt,rotate=57] at (1.95,3.15) {};
+  \node[fd2 weak] at (W) {};
+  % ---- labels ----
+  \node[fd2 lab,left] at (-5.15,0) {$\bar B^0$};
+  \node[fd2 lab,right] at (5.15,0) {$D^+$};
+  \node[fd2 lab,anchor=south west] at (2.78,4.45) {$\pi^-(p)$};
+  \node[fd2 lab] at (-1.9,0.2) {$b$};
+  \node[fd2 lab] at (1.9,0.2) {$c$};
+  \node[fd2 lab] at (-1.9,-0.72) {$\bar d$};
+  \path[mom={$xp$},mom sep=0.25cm,mom length=0.5cm,mom pos=0.8] (W) -- (dq);
+  \path[mom'={$(1-x)p$},mom sep=0.25cm,mom length=0.5cm,mom pos=0.84] (W) -- (uq);
+  \node[fd2 lab,anchor=east] at (1.28,3.42) {$\phi_\pi(x)$};
+  \node[fd2 note,anchor=north west] at (0.14,0.36) {$T(x,\mu)$};
+  \node[fd2 note,anchor=south west,align=left] at (3.7,0.98) {软胶子在领头幂次\\退耦（色透明性）};
+  % ---- the soft B -> D transition ----
+  \draw[fd2 bracket] (-4.02,-1.05) -- (-4.02,-1.15) -- (4.02,-1.15) -- (4.02,-1.05);
+  \node[fd2 note,below=1pt] at (0,-1.15) {软的 $B\to D$ 跃迁（含旁观者）：形状因子 $F^{B\to D}(0)$};
+  \node[fd2 lab] at (0,-2.2) {$\langle D^+\pi^-|O_{\mathbf 0}|\bar B^0\rangle=N\,F^{B\to D}(0)\displaystyle\int_0^1\!\dd x\,T(x,\mu)\,\phi_\pi(x,\mu)\,\big[1+\order{\Lambda/m_b}\big]$};
+\end{tikzpicture}
+\caption{$\bar B^0\to D^+\pi^-$ 的因子化（\cref{thm:heavy-bdpi}，全阶论证 [A]）。黑方块为弱作用四夸克算符 $O_{\mathbf 0}=[\bar c\gamma^\mu P_Lb][\bar d\gamma_\mu P_Lu]$ 的顶点，粗线为重夸克 $b$、$c$，双线为介子；细线上的箭头为费米子数流向（反夸克 $\bar d$、$\bar u$ 的箭头逆着动量）。
+旁观者 $\bar d$ 自 $\bar B^0$ 进入 $D^+$，这一软的跃迁由形状因子 $F^{B\to D}(0)$ 描述；发射的 $\pi^-$ 由弱顶点直接产生的共线 $d\bar u$ 对构成（蓝色团，分布振幅 $\phi_\pi(x)$，$x$ 为 $d$ 夸克的动量分数），它是快速运动的色单态小偶极子：
+软胶子与 $d$、$\bar u$ 的程函耦合在领头幂次相消（打叉的绿色胶子，色透明性），硬胶子交换归入短程系数 $T(x,\mu)$。
+$N=\frac{\ii}{2}m_BE_\pi f_\pi$；修正被 $\Lambda/m_b$、$\Lambda/m_c$、$\Lambda/E_\pi$ 压低（VF-BQ-6）；$B^-\to D^0\pi^-$ 同理。证明还用到分布振幅端点压低的假设（见正文）。}
+\label{fig:heavy-bdpi}
+\end{figure}
+%%% END fig:heavy-bdpi
+
+%%% BEGIN fig:heavy-qcdf
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 heavy/.style={draw,solid,line width=1.3pt,fd arrow=#1},
+  fd2 heavy/.default=0.5,
+  fd2 meson/.style={bound state,line cap=butt},
+  fd2 weak/.style={rectangle,fill=black,draw=none,inner sep=0pt,minimum size=5.6pt},
+  fd2 halo/.style={preaction={draw=white,line width=3.4pt}},
+  fd2 endpoint/.style={draw=red!80!black,line width=3.2pt,opacity=0.45,line cap=butt},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ------------- common skeleton: B (left), M1 (right), M2 (emitted, top) -------------
+  \foreach \panel/\xs in {a/0, b/8.0} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (W) at (-0.5,0.42);
+    \coordinate (q2) at (0.352,2.160);   % quark of M2 (inside the blob)
+    \coordinate (a2) at (0.698,1.960);   % antiquark of M2 (inside the blob)
+    \draw[fd2 meson] (-3.3,0) -- (-2.75,0);
+    \draw[fd2 meson] (2.75,0) -- (3.3,0);
+    \draw[fd2 meson] (1.08,3.03) -- (1.43,3.64);
+    \if a\panel
+      % hard gluon of a vertex correction: M2 antiquark -- light quark q
+      \coordinate (g1) at (1.2,0.42);  \coordinate (g2) at ($(W)!0.58!(a2)$);
+      \draw[gluon] (g1) -- (g2);
+      \draw[fd2 heavy=0.5] (-2.3,0.42) -- (W);
+      \draw[quark=0.78] (W) -- (2.3,0.42);
+      \draw[quark] (2.3,-0.42) -- (-2.3,-0.42);
+      \node[vertex] at (g1) {};  \node[vertex] at (g2) {};
+    \else
+      % hard-collinear gluon from the spectator to the emitted pair
+      \coordinate (g1) at (0.85,-0.42);  \coordinate (g2) at ($(W)!0.52!(q2)$);
+      \draw[fd2 endpoint] (0.9,-0.42) -- (2.2,-0.42);
+      \draw[gluon] (g1) -- (g2);
+      \draw[fd2 heavy=0.5] (-2.3,0.42) -- (W);
+      \draw[quark=0.8,fd2 halo] (W) -- (2.3,0.42);
+      \draw[quark=0.55] (2.3,-0.42) -- (g1);
+      \draw[quark=0.45] (g1) -- (-2.3,-0.42);
+      \node[vertex] at (g1) {};  \node[vertex] at (g2) {};
+    \fi
+    \draw[quark=0.33] (W) -- (q2);
+    \draw[quark=0.6] (a2) -- (W);
+    \node[hadron blob,ellipse,minimum width=0.66cm,minimum height=1.56cm,inner sep=0pt] at (-2.45,0) {};
+    \node[jetB blob,ellipse,minimum width=0.66cm,minimum height=1.56cm,inner sep=0pt] at (2.45,0) {};
+    \node[jet blob,ellipse,minimum width=1.35cm,minimum height=0.62cm,inner sep=0pt,rotate=60] at (0.75,2.45) {};
+    \node[fd2 weak] at (W) {};
+    \node[fd2 lab,left] at (-3.3,0) {$\bar B$};
+    \node[fd2 lab,right] at (3.3,0) {$M_1$};
+    \node[fd2 lab,anchor=south west] at (1.36,3.55) {$M_2$};
+    \node[fd2 lab] at (-1.45,0.66) {$b$};
+    \node[fd2 lab] at (1.5,0.66) {$q$};
+    \node[fd2 lab,anchor=east] at (0.3,2.72) {$\phi_{M_2}(x)$};
+  \end{scope}}
+  % ------------- panel (a): labels -------------
+  \node[fd2 lab] at (-1.45,-0.66) {$\bar q_s$};
+  \node[fd2 note,anchor=west] at (1.05,1.25) {$T^{\rm I}$：硬胶子};
+  \draw[fd2 bracket] (-2.82,-1.0) -- (-2.82,-1.1) -- (2.82,-1.1) -- (2.82,-1.0);
+  \node[fd2 note,below=1pt] at (0,-1.1) {软的 $B\to M_1$ 跃迁：$F^{B\to M_1}(0)$};
+  \node[fd2 lab,align=center] at (0,-2.3) {(a)\ 顶点项\\[2pt]$F^{B\to M_1}(0)\displaystyle\int\!\dd x\,T^{\rm I}(x)\,\phi_{M_2}(x)$};
+  % ------------- panel (b): labels -------------
+  \begin{scope}[xshift=8.0cm]
+    \path[mom={$\xi p_B$},mom sep=0.2cm,mom length=0.5cm,mom pos=0.4] (-2.2,-0.42) -- (0.85,-0.42);
+    \path[mom={$\bar y\,p_1$},mom sep=0.2cm,mom length=0.45cm,mom pos=0.52] (0.85,-0.42) -- (2.2,-0.42);
+    \node[fd2 note,anchor=south east] at (-0.12,1.06) {$T^{\rm II}$};
+    \node[fd2 note,anchor=west] at (0.56,1.02) {$k^2\sim m_b\Lambda$};
+    \node[fd2 note] at (-2.45,-1.1) {$\phi_B(\xi)$};
+    \node[fd2 note] at (2.6,-1.12) {$\phi_{M_1}(y)$};
+    \node[fd2 note,text=red!70!black] at (1.05,-0.74) {端点区 $\bar y\to0$};
+    \node[fd2 lab,align=center] at (0,-2.3) {(b)\ 硬旁观者散射\\[2pt]$\displaystyle\int\!\dd\xi\,\dd x\,\dd y\,T^{\rm II}(\xi,x,y)\,\phi_B(\xi)\,\phi_{M_1}(y)\,\phi_{M_2}(x)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{无粲两体衰变 $\bar B\to M_1M_2$ 的 QCD 因子化（BBNS；\cref{prop:heavy-qcdf-lp}，部分 [P]），各只画一个代表图。黑方块为弱作用四夸克算符的顶点，粗线为 $b$ 夸克，箭头为费米子数流向；
+$M_2$（蓝）为由弱顶点发射的介子，$M_1$（橙）为接收旁观反夸克 $\bar q_s$ 的介子。(a)~形状因子项：硬胶子连接发射对与 $b\to q$ 线（顶点修正），软的跃迁由 $F^{B\to M_1}(0)$ 描述。
+(b)~硬旁观者散射：旁观者（动量 $\xi p_B$，$\xi\sim\Lambda/m_b$）放出一个硬共线胶子（虚度 $\sim m_b\Lambda$），以动量分数 $\bar y=1-y$ 进入 $M_1$。
+红色标出端点区 $\bar y\to0$（旁观反夸克以趋于零的动量分数进入 $M_1$）：扭度 3 的硬旁观者项在此对数发散，$X_H=\int_0^1\frac{\dd y}{1-y}\Phi_p(y)$；弱湮灭项（未画出）有同类端点发散 $X_A=\int_0^1\frac{\dd y}{y}$（VF-BQ-3）。
+这些幂次修正的标准共线因子化不成立（\cref{prop:heavy-qcdf-endpoint}，[V]），$X_{A,H}$ 的参数化只是模型。}
+\label{fig:heavy-qcdf}
+\end{figure}
+%%% END fig:heavy-qcdf
+
+%%% BEGIN fig:power-borel-plane
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1.3cm,y=1cm,
+  fd2 pole/.pic={\draw[line width=1.05pt,line cap=round] (-0.09,-0.09)--(0.09,0.09) (-0.09,0.09)--(0.09,-0.09);},
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 contour/.style={draw=#1,line width=1.0pt,postaction={decorate,decoration={markings,
+      mark=at position 0.5 with {\arrow{Stealth[length=5.5pt,width=4.6pt]}}}}},
+  fd2 pointer/.style={draw=#1,line width=0.45pt,-{Stealth[length=3.5pt,width=3pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % axes
+  \draw[fd2 ax] (-3.75,0) -- (6.05,0) node[right] {$\Real u$};
+  \draw[fd2 ax] (0,-0.75) -- (0,1.75) node[left] {$\Imag u$};
+  \foreach \u in {-3,-2,-1,1,2,3,4,5} \draw[gray!60!black,line width=0.4pt] (\u,-0.05) -- (\u,0.05);
+  \foreach \u in {-3,-2,-1,1,2,3,4,5} \node[fd2 note] at (\u,-0.5) {$\u$};
+  \node[fd2 note,anchor=north east] at (-0.03,-0.04) {$0$};
+  % Borel integration paths above and below the positive axis
+  \draw[fd2 contour=blue!60!black] (0,0) .. controls (0.3,0.22) and (0.55,0.24) .. (0.9,0.24) -- (5.5,0.24);
+  \draw[fd2 contour=blue!60!black] (0,0) .. controls (0.3,-0.22) and (0.55,-0.24) .. (0.9,-0.24) -- (5.5,-0.24);
+  \node[fd2 lab,text=blue!50!black,anchor=west] at (5.5,0.28) {$C_+$};
+  \node[fd2 lab,text=blue!50!black,anchor=west] at (5.5,-0.28) {$C_-$};
+  % IR renormalons (u = 2,3,...), UV renormalons (u = -1,-2,...), no pole at u = 1
+  \foreach \u in {2,3,4,5} \pic[red!70!black] at (\u,0) {fd2 pole};
+  \foreach \u in {-1,-2,-3} \pic[gray!55!black] at (\u,0) {fd2 pole};
+  \draw[line width=0.9pt,fill=white] (1,0) circle[radius=0.085];
+  % annotations
+  \node[fd2 note,text=red!60!black] at (3.5,0.72) {红外重整化子：$u=2,3,\dots$};
+  \node[fd2 note,align=center,text=gray!40!black] at (-1.95,0.82) {紫外重整化子：$u=-1,-2,\dots$\\（符号交错，不在积分路径上）};
+  \draw[fd2 pointer=gray!60!black] (0.78,-1.02) -- (0.97,-0.12);
+  \node[fd2 note,anchor=north east] at (0.95,-0.98) {无 $u=1$ 极点：不存在量纲为 2 的规范不变算符};
+  \draw[fd2 pointer=red!60!black] (2.12,-1.0) -- (2.02,-0.12);
+  \node[fd2 note,align=left,anchor=north west,text=red!50!black] at (1.75,-0.96) {$u=2$：沿 $C_+$ 与 $C_-$ 积分之差 $\propto(\Lambda^2/Q^2)^2$，\\对应 OPE 中的凝聚项 $\langle\frac{\alpha_s}{\pi}G^2\rangle/Q^4$};
+  \node[fd2 lab] at (1.15,-2.7) {$D(Q^2)=\displaystyle\int_0^\infty\!\dd t\,\ee^{-t/\alpha_s(Q)}B[D](t)$，\quad $u=\dfrac{\beta_0t}{4\pi}$，\quad $\ee^{-t/\alpha_s(Q)}=\Big(\dfrac{\Lambda^2}{Q^2}\Big)^{u}$};
+\end{tikzpicture}
+\caption{大 $\beta_0$（泡链）近似下 Adler 函数 $D(Q^2)$ 的 Borel 平面（\cref{prop:power-adler-large-beta0}，部分 [P]；Borel 变换按\cref{def:power-borel}：$R=\sum_nr_n\alpha_s^{n+1}$，$B[R](t)=\sum_nr_nt^n/n!$，$u=\beta_0t/(4\pi)$，单圈跑动下 $\ee^{-t/\alpha_s(Q)}=(\Lambda^2/Q^2)^u$）。
+红外重整化子极点位于正实轴 $u=2,3,\dots$（红叉），使沿正实轴的 Borel 积分不确定：绕到极点上方（$C_+$）或下方（$C_-$）的两种积分之差在 $u=u_0$ 处正比于 $(\Lambda^2/Q^2)^{u_0}$。
+$u=1$ 处没有极点（空心圆），这与不存在量纲为 2 的规范不变算符相一致；$u=2$ 的极点与 OPE 中的胶子凝聚项 $\langle\frac{\alpha_s}{\pi}G^2\rangle/Q^4$ 相对应。紫外重整化子位于 $u=-1,-2,\dots$（灰叉）。
+只有大 $\beta_0$ 极限中的这一结构是确立的；红外重整化子与高扭度之间的一般对应是猜想（\cref{conj:power-renormalon-ht}，[C]）。}
+\label{fig:power-borel-plane}
+\end{figure}
+%%% END fig:power-borel-plane
+
+%%% BEGIN fig:lamet-ioffe
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.8\textwidth,height=6.4cm,xmin=0,xmax=16.6,ymin=0,ymax=1.25,
+  axis lines=left,axis line style={gray!60!black},clip=false,
+  xlabel={Ioffe 时间 $\lambda=P\cdot z$},ylabel={$|z|/\mathrm{fm}$},
+  xtick={0,2,...,16},ytick={0,0.2,...,1.2},
+  yticklabel style={/pgf/number format/fixed,/pgf/number format/fixed zerofill,/pgf/number format/precision=1},
+  tick label style={font=\scriptsize},label style={font=\small},
+  every axis x label/.style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  every axis y label/.style={at={(axis description cs:-0.075,0.5)},rotate=90,anchor=south}]
+  % lattice data region (schematic) and short-distance band
+  \fill[gray!9] (axis cs:0,0) rectangle (axis cs:15,1.0);
+  \draw[gray!50,line width=0.4pt,dash pattern=on 3pt off 2pt] (axis cs:0,1.0) -- (axis cs:15,1.0) -- (axis cs:15,0);
+  \fill[blue!11] (axis cs:0,0) rectangle (axis cs:16.6,0.3);
+  % pseudo-distributions: fixed z^2
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.1) -- (axis cs:16.6,0.1);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.2) -- (axis cs:16.6,0.2);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.3) -- (axis cs:16.6,0.3);
+  % quasi-distributions: fixed P^z, |z| = 0.1973 lambda/(P^z/GeV) fm
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:6.335,samples=2] {0.1973*x/1};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:12.67,samples=2] {0.1973*x/2};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:16.6,samples=2] {0.1973*x/3};
+  % light-cone ITD on the lambda axis
+  \draw[blue!55!black,line width=2.2pt,line cap=butt] (axis cs:0,0) -- (axis cs:16.6,0);
+  % labels
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:6.335,1.25) {$P^z=1$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:12.67,1.25) {$P^z=2$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=west] at (axis cs:16.6,1.092) {$P^z=3$ GeV};
+  \node[font=\footnotesize,text=red!50!black,align=left,anchor=west,inner sep=1.2pt] at (axis cs:0.6,1.135) {准分布：固定 $P^z$\\[-1pt]（射线 $|z|=|\lambda|/P^z$）};
+  \draw[red!55!black,line width=0.55pt,-{Stealth[length=4.5pt,width=3.8pt]}] (axis cs:6.9,0.97) to[bend left=14] node[pos=0.55,above right=-1pt,font=\footnotesize] {$P^z\to\infty$} (axis cs:13.4,0.6);
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.3) {$|z|=0.3$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.2) {$|z|=0.2$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.1) {$|z|=0.1$ fm};
+  \node[font=\footnotesize,anchor=west,align=left] at (axis cs:16.6,0.52) {赝分布：\\[-1pt]固定 $z^2$};
+  \node[font=\footnotesize,text=blue!45!black,anchor=north west,align=left] at (axis cs:16.6,-0.02) {光锥 ITD $I(\lambda)$\\[-1pt]（$z^2=0$）};
+  \node[font=\footnotesize,fill=blue!11,inner sep=1.5pt] at (axis cs:9.6,0.15) {短距离因子化（SDF）};
+  \node[font=\footnotesize,text=gray!45!black,anchor=south east] at (axis cs:14.85,0.33) {格点数据区（示意）};
+\end{axis}
+\end{tikzpicture}
+\caption{Ioffe 时间 $\lambda=P\cdot z$（$=-P^zz$，等时类空间隔 $z^\mu=z\hat e_z^\mu$）与间隔 $|z|$ 平面上的三种表示（图中只画 $\lambda\ge0$；$\hbar c=0.1973$ GeV\,fm）。光锥 ITD $I(\lambda)=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x)$ 位于 $z^2=0$（粗线）；
+固定 $z^2$ 的水平线（点线）给出赝分布：对 $\lambda$ 作 Fourier 变换，支集为 $[-1,1]$；固定 $P^z$ 的射线 $|z|=|\lambda|/P^z$（虚线，$P^z=1,2,3$ GeV）给出准分布：$z$ 与 $\lambda$ 同时变化，$P^z$ 增大时射线趋向光锥轴。
+短距离因子化只用阴影带（$|z|\lesssim0.3$ fm）内的数据，准分布的 Fourier 变换则需要整条射线（长距离部分见正文）；灰色矩形示意格点数据所及的范围。}
+\label{fig:lamet-ioffe}
+\end{figure}
+%%% END fig:lamet-ioffe
+
+%%% BEGIN fig:lamet-lattice-geometries
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 grid/.style={draw=gray!30,line width=0.3pt},
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 site/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=5pt},
+  fd2 osite/.style={circle,draw=black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5pt},
+  fd2 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lab/.style={font=\small,fill=white,inner sep=1pt},
+  fd2 note/.style={font=\footnotesize,fill=white,inner sep=1pt}]
+  % ======================= (a) quasi-PDF operator =======================
+  \begin{scope}
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.4,1.8);
+    \draw[wilson plain] (0,0) -- (1.8,0);
+    \path[fd2 warrow=0.56] (0,0) -- (1.8,0);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (1.8,0) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=north] at (1.8,-0.12) {$\bar\psi(z\hat e_z)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$z$} (1.8,0.36);
+    \draw[fd2 dim] (2.1,1.32) -- node[fd2 note,above=1pt] {$a$} (2.4,1.32);
+    \draw[fd2 ax] (-0.45,1.05) -- (0.2,1.05) node[fd2 note,right=0pt] {$\hat z$};
+    \draw[fd2 ax] (-0.45,1.05) -- (-0.45,1.62) node[fd2 note,right=1pt] {$\vec b_\perp$};
+    \node[font=\small] at (0.9,-1.15) {$\bar\psi(z\hat e_z)\,\Gamma\,W[z\hat e_z,0]\,\psi(0)$};
+    \node[font=\small] at (0.9,-1.75) {(a)\ 准 PDF：直 Wilson 线};
+  \end{scope}
+  % ======================= (b) quasi-TMD operator: space-like staple =======================
+  \begin{scope}[xshift=4.4cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.7,1.8);
+    \draw[wilson plain] (0,0) -- (2.1,0) -- (2.1,1.2) -- (0.9,1.2);
+    \path[fd2 warrow=0.52] (0,0) -- (2.1,0);
+    \path[fd2 warrow=0.55] (2.1,0) -- (2.1,1.2);
+    \path[fd2 warrow=0.6] (2.1,1.2) -- (0.9,1.2);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (0.9,1.2) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=south] at (0.75,1.33) {$\bar\psi(z\hat e_z+\vec b_\perp)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$L$} (2.1,0.36);
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \draw[red!60!black,line width=0.6pt,-{Stealth[length=4.5pt,width=3.8pt]}] (2.25,0.6) -- (2.85,0.6) node[font=\footnotesize,text=red!55!black,right=1pt] {$L\to\infty$};
+    \node[font=\small] at (1.05,-1.15) {$\bar\psi(z\hat e_z+\vec b_\perp)\,\Gamma\,\mathcal W_z\,\psi(0)$};
+    \node[font=\small] at (1.05,-1.75) {(b)\ 准 TMD：类空订书钉};
+  \end{scope}
+  % ======================= (c) rectangular Wilson loop =======================
+  \begin{scope}[xshift=9.45cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (4.8,1.8);
+    \draw[wilson plain] (0,0) rectangle (4.2,1.2);
+    \path[fd2 warrow=0.5] (0,0) -- (4.2,0);
+    \path[fd2 warrow=0.55] (4.2,0) -- (4.2,1.2);
+    \path[fd2 warrow=0.5] (4.2,1.2) -- (0,1.2);
+    \path[fd2 warrow=0.55] (0,1.2) -- (0,0);
+    \draw[fd2 dim] (0,-0.36) -- (4.2,-0.36);
+    \node[fd2 note] at (2.1,-0.36) {$2L$};
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \node[font=\small,fill=white,inner sep=1.2pt] at (2.1,0.6) {$Z_E(2L,b_\perp)$};
+    \node[font=\small] at (2.1,-1.15) {$\frac1{N_c}\Tr\langle0|W_\perp\,\mathcal W_z(\vec b_\perp;2L)|0\rangle$};
+    \node[font=\small] at (2.1,-1.75) {(c)\ 矩形 Wilson 圈};
+  \end{scope}
+\end{tikzpicture}
+\caption{格点上的算符几何（等时面 $t=0$，晶格间距 $a$；实心点为 $\psi$、空心点为 $\bar\psi$ 所在格点，双线为规范链，箭头为路径方向，即 $W[b,a]$ 由 $a$ 指向 $b$）：
+(a)~准 PDF 算符的直 Wilson 线 $W[z\hat e_z,0]$；(b)~准 TMD 算符的订书钉形 Wilson 线 $\mathcal W_z$：自 $\psi$ 沿 $+\hat z$ 走长度 $L$，经横向连接（间隔 $b_\perp$），再沿 $-\hat z$ 回到 $\bar\psi$（图示为 DY 型；SIDIS 型沿 $-\hat z$）；
+(c)~矩形 Wilson 圈 $Z_E(2L,b_\perp)$，$\sqrt{Z_E}$ 除去订书钉的线性发散、尖点发散与捏点奇点，使 $L\to\infty$ 的极限存在。手征对称性不严格的格点费米子还引起同维混合 $\Gamma\to\Gamma'$（见正文）。
+注意：这里的订书钉是类空的，与\cref{fig:tmd-staple}中 Collins TMD 的类光订书钉不同。}
+\label{fig:lamet-lattice-geometries}
+\end{figure}
+%%% END fig:lamet-lattice-geometries
+
+%%% BEGIN fig:lamet-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 light/.style={draw=gray!60},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs/\wpos/\ttl in {a/0/0.5/{(a)\ 顶点}, b/3.1/0.32/{(b)\ 帆}, c/6.2/0.68/{(c)\ 帆（镜像）}, d/9.3/0.5/{(d)\ Wilson 线自能}, e/12.4/0.5/{(e)\ 外线自能}} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (O1) at (-0.85,0);   \coordinate (O2) at (0.85,0);
+    \coordinate (I) at (-1.35,-1.35); \coordinate (F) at (1.35,-1.35);
+    \coordinate (i1) at ($(I)!0.5!(O1)$); \coordinate (f1) at ($(O2)!0.5!(F)$);
+    \if a\panel \draw[gluon] (i1) -- (f1); \fi
+    \if b\panel \draw[gluon] (i1) to[bend right=28] (0.32,0); \fi
+    \if c\panel \draw[gluon] (-0.32,0) to[bend right=28] (f1); \fi
+    \if d\panel \draw[gluon] (-0.48,0) arc[start angle=180,end angle=360,radius=0.48]; \fi
+    \if e\panel
+      \draw[gluon,fd2 light] ($(I)!0.22!(O1)$) to[bend left=80] ($(I)!0.78!(O1)$);
+    \fi
+    \draw[wilson=\wpos] (O1) -- (O2);
+    \if e\panel
+      \draw[quark=0.88,fd2 light] (I) -- (O1);
+    \else
+      \draw[quark=0.3] (I) -- (O1);
+    \fi
+    \draw[quark=0.7] (O2) -- (F);
+    \if a\panel \node[vertex] at (i1) {}; \node[vertex] at (f1) {}; \fi
+    \if b\panel \node[vertex] at (i1) {}; \node[vertex] at (0.32,0) {}; \fi
+    \if c\panel \node[vertex] at (-0.32,0) {}; \node[vertex] at (f1) {}; \fi
+    \if d\panel \node[vertex] at (-0.48,0) {}; \node[vertex] at (0.48,0) {}; \fi
+    \if e\panel
+      \node[vertex,fill=gray!60] at ($(I)!0.22!(O1)$) {}; \node[vertex,fill=gray!60] at ($(I)!0.78!(O1)$) {};
+    \fi
+    \node[opvertex] at (O1) {};  \node[opvertex] at (O2) {};
+    \node[fd2 note,above=2pt] at (O1) {$0$};
+    \node[fd2 note,above=1pt] at (O2) {$z\hat e_z$};
+    \node[fd2 lab] at (0,-1.78) {\ttl};
+  \end{scope}}
+  % external momenta (same in all panels)
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.24] (-1.35,-1.35) -- (-0.85,0);
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.76] (0.85,0) -- (1.35,-1.35);
+  % unphysical-region contributions (xi > 1), VF-LAM-7
+  \node[fd2 lab] at (0,-2.62) {$a\displaystyle\int_0^1\!\dd y\,\frac{1-y}{|\xi-y|}$};
+  \draw[fd2 bracket] (1.75,-2.08) -- (1.75,-2.16) -- (7.75,-2.16) -- (7.75,-2.08);
+  \node[fd2 lab] at (4.65,-2.62) {(b)+(c)：$\dfrac{a}{1-\xi}\displaystyle\int_0^1\!\dd y\,\frac{\xi+y}{|\xi-y|}$};
+  \node[fd2 lab] at (9.3,-2.62) {$-\dfrac{a}{|1-\xi|}$};
+  \node[fd2 note,text=gray!45!black] at (12.4,-2.62) {（只出现在 $\delta(1-\xi)$ 中）};
+\end{tikzpicture}
+\caption{准 PDF 的单圈图（Feynman 规范，在壳无质量夸克 $p=(p^z,0,0,p^z)$，$\Gamma=\gamma^0$；入射与出射夸克动量同为 $p$，前向矩阵元，无割线）。双线为等时、沿 $\hat z$ 的类空 Wilson 线 $W[z\hat e_z,0]$（箭头为路径方向），$\otimes$ 为算符端点 $\psi(0)$、$\bar\psi(z\hat e_z)$：
+(a)~顶点图，(b)(c)~“帆”图，(d)~Wilson 线自能，(e)~外线自能。图下为非物理区 $\xi>1$ 中各图的贡献（$y$ 为 Feynman 参数，$a=\frac{\alpha_sC_F}{2\pi}$），在 $d=4$ 中都有限，其和为
+$\tilde q^{(1)}=a\big[\frac{1+\xi^2}{1-\xi}\ln\frac{\xi}{\xi-1}+1\big]$（VF-LAM-7，与\cite{IzubuchiEtAl2018}附录 B 一致）；维数正规化中 Wilson 线自能没有线性发散。}
+\label{fig:lamet-oneloop}
+\end{figure}
+%%% END fig:lamet-oneloop
+
+%%% BEGIN fig:lattice-matching
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 qty/.style={draw=black!70,fill=white,rounded corners=2pt,line width=0.6pt,
+      minimum width=4.3cm,minimum height=0.95cm,align=center,font=\small},
+  fd2 frame/.style={draw=#1!60!black,fill=#1!4,rounded corners=4pt,line width=0.6pt},
+  fd2 match/.style={draw=black!80,line width=1.0pt,{Stealth[length=7pt,width=6pt]}-{Stealth[length=7pt,width=6pt]}},
+  fd2 ft/.style={draw=gray!55!black,line width=0.6pt,{Stealth[length=4.5pt,width=3.8pt]}-{Stealth[length=4.5pt,width=3.8pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % column frames
+  \draw[fd2 frame=gray] (-7.45,-2.85) rectangle (-1.85,2.45);
+  \draw[fd2 frame=blue] (1.85,-2.85) rectangle (7.45,2.45);
+  \node[fd2 lab,font=\small\bfseries] at (-4.6,2.12) {格点：等时（欧氏）矩阵元};
+  \node[fd2 lab,font=\small\bfseries] at (4.6,2.12) {光锥分布（$\MSbar$）};
+  % quantities
+  \node[fd2 qty] (q)  at (-4.6,1.05)  {准 PDF $\tilde q_\Gamma(x,P^z)$\\[-1pt]{\footnotesize 固定 $P^z$}};
+  \node[fd2 qty] (h)  at (-4.6,-1.05) {准 ITD $\tilde h(\lambda,z^2)$\\[-1pt]{\footnotesize $\propto\langle P|\bar\psi(z\hat e_z)\Gamma W[z\hat e_z,0]\psi(0)|P\rangle_R$}};
+  \node[fd2 qty] (f)  at (4.6,1.05)   {光锥 PDF $f(y,\mu)$\\[-1pt]{\footnotesize 支集 $[-1,1]$}};
+  \node[fd2 qty] (I)  at (4.6,-1.05)  {光锥 ITD $I(\lambda,\mu)$\\[-1pt]{\footnotesize $\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x,\mu)$}};
+  \draw[fd2 ft] (q) -- node[fd2 note,right=2pt,align=left] {Fourier：沿射线\\$z=-\lambda/P^z$} (h);
+  \draw[fd2 ft] (f) -- node[fd2 note,left=2pt] {Fourier} (I);
+  \node[fd2 note,align=center,text=gray!30!black] at (-4.65,-2.2) {非微扰重整化（除去线性发散 $\ee^{-\delta m|z|}$）\\[-1pt]与方案选择，见\cref{fig:lamet-hybrid}};
+  % matching arrows
+  \draw[fd2 match] (q.east) -- node[fd2 lab,above=2pt] {LaMET 匹配} node[fd2 lab,below=1pt] {$C\big(\frac xy,\frac{\mu}{|y|P^z}\big)$} (f.west);
+  \draw[fd2 match] (h.east) -- node[fd2 lab,above=2pt] {SDF 匹配} node[fd2 lab,below=1pt] {$\mathcal C(\alpha,-z^2\mu^2)$} (I.west);
+  % formulas
+  \node[fd2 lab] at (0,-3.55) {LaMET：$\tilde q(x,P^z)=\displaystyle\int_{-1}^{1}\frac{\dd y}{|y|}\,C\Big(\frac xy,\frac{\mu}{|y|P^z}\Big)f(y,\mu)+\order{\frac{\Lambda^2}{x^2P_z^2},\frac{\Lambda^2}{(1-x)^{2-\delta}P_z^2}}$};
+  \node[fd2 lab] at (0,-4.65) {SDF：$\tilde h(\lambda,z^2)=\displaystyle\int_{-1}^{1}\!\dd\alpha\,\mathcal C(\alpha,-z^2\mu^2)\,I(\alpha\lambda,\mu)+\order{z^2\Lambda^2}$\quad（$|z|\lesssim0.2$--$0.3$ fm）};
+  % status footer
+  \node[draw=gray!60,fill=gray!5,rounded corners=2pt,inner sep=4pt,font=\small] at (0,-5.6)
+    {微扰匹配：全阶论证\hspace{0.25em}{\color{RoyalBlue!80!black}\textbf{[A]}}；强子层次：依赖编号假设\hspace{0.25em}{\color{Plum!80!black}\textbf{[C]}}};
+\end{tikzpicture}
+\caption{LaMET 与短距离因子化（SDF）的结构。格点可计算的等时关联函数（左）经微扰匹配与光锥 PDF（右）相联系：准 PDF 与准 ITD 是同一矩阵元的两种 Fourier 表示，LaMET 在固定 $P^z$ 下作动量空间匹配，匹配核的宗量是部分子动量 $|y|P^z$（而非强子动量 $P^z$）；
+SDF 在固定 $z^2$ 的短距离处作坐标空间匹配（VF-LAM-6）。误差为幂次修正：动量空间中在两端点分别按 $\Lambda^2/(x^2P_z^2)$ 与 $\Lambda^2/((1-x)^{2-\delta}P_z^2)$ 增大（$\delta$ 由扭度 4 分布的端点行为决定）。
+部分子态的匹配定理是全阶论证（\cref{thm:lattice-lamet}），强子层次的陈述依赖于编号假设 \cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}（\cref{thm:lamet-hadronic}）。}
+\label{fig:lattice-matching}
+\end{figure}
+%%% END fig:lattice-matching
+
+%%% BEGIN fig:lamet-dependency
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 node/.style={rectangle,rounded corners=1.5pt,draw=black!65,line width=0.5pt,font=\tiny\ttfamily,
+      inner sep=1.5pt,minimum height=0.62cm,minimum width=2.05cm,align=center},
+  fd2 R/.style={fd2 node,fill=OliveGreen!15,draw=OliveGreen!65!black},
+  fd2 A/.style={fd2 node,fill=RoyalBlue!15,draw=RoyalBlue!65!black},
+  fd2 math/.style={fd2 node,fill=white},
+  fd2 cond/.style={fd2 node,fill=OliveGreen!15,draw=OliveGreen!65!black,dash pattern=on 2.2pt off 1.4pt},
+  fd2 asm/.style={fd2 node,draw=orange!65!black,fill=orange!8,dash pattern=on 2.2pt off 1.4pt},
+  fd2 asmC/.style={fd2 node,draw=red!60!black,fill=red!9,dash pattern=on 2.2pt off 1.4pt,line width=0.7pt},
+  fd2 grade/.style={font=\tiny\sffamily\bfseries,text=#1!75!black,inner sep=0.6pt,anchor=north east},
+  fd2 use/.style={draw=gray!60,line width=0.5pt,-{Stealth[length=3.4pt,width=2.8pt]}},
+  fd2 prem/.style={draw=orange!65!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt,-{Stealth[length=3.6pt,width=3pt]}},
+  fd2 neck/.style={draw=red!60!black,line width=1.3pt,-{Stealth[length=4.5pt,width=4pt]}}]
+  % ---------------- nodes (layers left to right) ----------------
+  \node[fd2 asm]  (aux) at (0,2.0)     {lamet-aux-renorm};
+  \node[fd2 R]    (sup) at (0,-1.0)    {lamet-support};
+  \node[fd2 A]    (ren) at (2.3,2.0)   {lattice-\\renormalizability};
+  \node[fd2 R]    (ent) at (2.3,-1.0)  {lamet-entire};
+  \node[fd2 A]    (cfp) at (4.6,3.2)   {lamet-cfp};
+  \node[fd2 asm]  (ope) at (4.6,2.0)   {lamet-ope};
+  \node[fd2 asmC] (tw4) at (4.6,-0.6)  {lamet-twist4};
+  \node[fd2 math] (fou) at (4.6,-1.7)  {lamet-fourier};
+  \node[fd2 A]    (lcs) at (4.6,-2.8)  {lamet-lcs};
+  \node[fd2 cond] (coo) at (6.9,1.0)   {lamet-coordinate};
+  \node[fd2 cond] (pmo) at (9.2,2.0)   {lamet-parton-\\momentum};
+  \node[fd2 cond] (tmc) at (9.2,0.95)  {lamet-tmc};
+  \node[fd2 asmC] (lgz) at (9.2,-0.6)  {lamet-large-z};
+  \node[fd2 A]    (lat) at (11.5,2.6)  {lattice-lamet};
+  \node[fd2 asmC] (uni) at (11.5,0.75) {lamet-uniform};
+  \node[fd2 cond] (had) at (13.8,1.0)  {lamet-hadronic};
+  % grade letters: tags of the assumptions, content grades of the R_cond theorems
+  \foreach \n/\g/\c in {aux/A/RoyalBlue,ope/A/RoyalBlue,tw4/C/Plum,lgz/C/Plum,uni/C/Plum,
+                        coo/A/RoyalBlue,pmo/A/RoyalBlue,tmc/A/RoyalBlue,had/C/Plum}
+    \node[fd2 grade=\c] at ($(\n.north east)+(-0.03,-0.02)$) {\g};
+  % ---------------- edges (transitive reduction; premise -> dependent) ----------------
+  \begin{scope}[on background layer]
+    \draw[fd2 neck] (aux) -- (ren);
+    \draw[fd2 use] (ren) -- (ope);
+    \draw[fd2 use] (ren.north east) -- (cfp.west);
+    \draw[fd2 use] (sup) -- (ent);
+    \draw[fd2 use] (ent.north east) .. controls (3.4,0.15) and (5.1,0.45) .. (coo.south west);
+    \draw[fd2 use] (ent.east) -- (tw4.west);
+    \draw[fd2 use] (ent.east) -- (fou.west);
+    \draw[fd2 use] (ent.south east) -- (lcs.west);
+    \draw[fd2 prem] (ope.south east) -- (coo.north west);
+    \draw[fd2 prem] (ope) -- (pmo);
+    \draw[fd2 prem] (ope.east) .. controls (6.6,1.85) and (7.9,1.62) .. (tmc.north west);
+    \draw[fd2 use] (coo.north east) -- (pmo.south west);
+    \draw[fd2 use] (coo) -- (tmc);
+    \draw[fd2 use] (coo.south east) -- (lgz.north west);
+    \draw[fd2 use] (tw4) -- (lgz);
+    \draw[fd2 use] (pmo.east) -- (lat.south west);
+    \draw[fd2 use] (cfp.east) -- (lat.north west);
+    \draw[fd2 use] (tmc.east) -- (uni.west);
+    \draw[fd2 use] (lat.south east) -- (had.north);
+    \draw[fd2 prem] (uni) -- (had.west);
+    \draw[fd2 prem] (lgz.east) -- (had.south west);
+    \draw[fd2 prem] (tw4.south east) .. controls (7.6,-1.45) and (12.6,-1.35) .. (had.south);
+    \draw[fd2 use] (fou.east) .. controls (8.6,-2.05) and (13.9,-1.95) .. (had.south east);
+  \end{scope}
+  % ---------------- legend ----------------
+  \begin{scope}[shift={(0.2,-3.85)}]
+    \node[fd2 R,minimum width=0.5cm,minimum height=0.3cm] at (-0.9,0) {};    \node[font=\scriptsize,anchor=west] at (-0.6,0) {[R]};
+    \node[fd2 A,minimum width=0.5cm,minimum height=0.3cm] at (0.3,0) {};     \node[font=\scriptsize,anchor=west] at (0.6,0) {[A]};
+    \node[fd2 math,minimum width=0.5cm,minimum height=0.3cm] at (1.5,0) {};  \node[font=\scriptsize,anchor=west] at (1.8,0) {纯数学};
+    \node[fd2 cond,minimum width=0.5cm,minimum height=0.3cm] at (3.3,0) {};  \node[font=\scriptsize,anchor=west] at (3.6,0) {$R_{\mathrm{cond}}$（角标：内容等级）};
+    \node[fd2 asm,minimum width=0.5cm,minimum height=0.3cm] at (7.6,0) {};   \node[font=\scriptsize,anchor=west] at (7.9,0) {[A] 级假设};
+    \node[fd2 asmC,minimum width=0.5cm,minimum height=0.3cm] at (9.85,0) {}; \node[font=\scriptsize,anchor=west] at (10.15,0) {[C] 级假设（强子层次的前提）};
+    \draw[fd2 use] (-1.2,-0.55) -- (-0.6,-0.55);   \node[font=\scriptsize,anchor=west] at (-0.5,-0.55) {\texttt{\string\uses} 依赖};
+    \draw[fd2 prem] (2.1,-0.55) -- (2.7,-0.55);    \node[font=\scriptsize,anchor=west] at (2.8,-0.55) {假设作为 $R_{\mathrm{cond}}$ 定理的前提};
+    \draw[fd2 neck] (7.6,-0.55) -- (8.2,-0.55);    \node[font=\scriptsize,anchor=west] at (8.3,-0.55) {[A] 陈述的瓶颈假设};
+  \end{scope}
+\end{tikzpicture}
+\caption{LaMET 匹配定理的依赖结构（\cref{tab:lamet-dependency} 的图示）。节点为去掉类型前缀的规范标签，箭头由前提指向依赖者，只画传递约化后的边（可由其他路径推出的依赖从略，假设到条件定理的前提边一律保留）；
+填充色为严格性标签（绿 [R]、蓝 [A]，白色为纯数学引理），绿色虚线框为 $R_{\mathrm{cond}}$ 条件定理，右上角字母为其内容等级；橙色与红色虚线框分别为 [A] 级与 [C] 级编号假设。
+第~7、8~章的前提（\cref{thm:dis-ope,thm:pdf-moments-local,thm:pdf-dglap}）未画出。
+部分子态的链 \cref{thm:lamet-coordinate}$\,\to\,$\cref{thm:lamet-parton-momentum}$\,\to\,$\cref{thm:lattice-lamet} 只依赖 [A] 级输入；强子层次的陈述 \cref{thm:lamet-hadronic} 另需三个 [C] 级假设（红色节点），其内容等级因而为 [C]。}
+\label{fig:lamet-dependency}
+\end{figure}
+%%% END fig:lamet-dependency
+
+%%% BEGIN fig:lamet-hybrid
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 ratio/.style={draw=red!65!black,line width=1.1pt},
+  fd2 hyb/.style={draw=blue!60!black,line width=1.6pt},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % x(z) = 10 z  (|z| in fm);  y = 2.4 (f - 0.4),  f(z) = 1 + 0.25 ln(z/0.2) + 0.5 max(0,z-0.45)^2  (schematic)
+  % ======================= (a) the two |z| intervals =======================
+  \begin{scope}[yshift=5.1cm]
+    \fill[blue!12] (0,0) rectangle (2.5,0.62);
+    \fill[orange!14] (2.5,0) rectangle (12,0.62);
+    \draw[gray!60!black,line width=0.5pt] (0,0) rectangle (12,0.62);
+    \node[fd2 lab] at (1.25,0.31) {比值方案};
+    \node[fd2 lab] at (7.25,0.31) {Wilson 线质量减除：$\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$};
+    \node[fd2 note,anchor=south] at (1.25,0.7) {$\tilde h(\lambda,z^2)/\tilde h(0,z^2)$};
+    \node[fd2 note,anchor=south] at (7.25,0.7) {$Z_{\rm hyb}=\ee^{\delta m z_S}/\tilde h(0,z_S^2)$ 由 $z_S$ 处的连续性确定};
+    \draw[fd2 ax] (0,-0.02) -- (12.7,-0.02) node[right,font=\small] {$|z|$};
+    \foreach \t/\l in {0/0,12/1.2\,\mathrm{fm}} {\draw[gray!60!black,line width=0.45pt] (\t,-0.1) -- (\t,0.06); \node[fd2 note,below=2pt] at (\t,-0.06) {$\l$};}
+    \draw[gray!60!black,line width=0.45pt] (2.5,-0.1) -- (2.5,0.06);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.3) -- (3.0,-0.3);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.36) -- (2.0,-0.24) (3.0,-0.36) -- (3.0,-0.24);
+    \node[fd2 note,anchor=west] at (3.08,-0.31) {$z_S\approx0.2$--$0.3$ fm};
+    \node[fd2 lab] at (-1.25,0.31) {(a)};
+  \end{scope}
+  % ======================= (b) conversion factor to MS-bar (schematic) =======================
+  \fill[gray!14] (4.5,0) rectangle (12,4.0);
+  \node[fd2 note,align=center,text=gray!35!black] at (9.6,0.38) {非微扰区：$\alpha_s(1/|z|)$ 不再小};
+  \draw[gray!65!black,line width=0.5pt,dash pattern=on 3pt off 2pt] (2.5,0) -- (2.5,5.1);
+  \draw[fd2 ratio] plot[domain=0.03:0.45,samples=60,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))});
+  \draw[fd2 ratio,dash pattern=on 4pt off 2pt] plot[domain=0.45:1.2,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2)+0.5*(\x-0.45)^2)});
+  \draw[fd2 hyb] plot[domain=0.03:0.25,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))}) -- (12,{2.4*(0.6+0.25*ln(1.25))});
+  \fill[black] (2.5,{2.4*(0.6+0.25*ln(1.25))}) circle[radius=1.8pt];
+  \draw[fd2 ax] (0,0) -- (12.7,0) node[right,font=\small] {$|z|/\mathrm{fm}$};
+  \draw[fd2 ax] (0,0) -- (0,4.25);
+  \node[fd2 note,rotate=90,anchor=south] at (-0.12,2.1) {到 $\MSbar$ 的换算因子（示意）};
+  \foreach \t/\l in {0/0,2/0.2,4/0.4,6/0.6,8/0.8,10/1.0,12/1.2} {\draw[gray!60!black,line width=0.45pt] (\t,-0.06) -- (\t,0.06); \node[font=\scriptsize,below=2pt] at (\t,-0.04) {$\l$};}
+  \node[fd2 note,text=red!55!black,anchor=south east] at (11.6,3.25) {比值方案、RI/MOM：依赖 $\ln(z^2\mu^2)$};
+  \node[fd2 note,text=blue!50!black,anchor=north west] at (4.65,1.42) {混合方案：$|z|>z_S$ 时保持在 $z_S$ 处的值（处处微扰）};
+  \node[fd2 lab] at (-1.25,2.1) {(b)};
+\end{tikzpicture}
+\caption{混合重整化方案（示意）。(a)~$|z|\le z_S$ 用比值方案，紫外发散（包括 Wilson 线的线性发散）在比值中相消；$|z|>z_S$ 只减去 Wilson 线的线性发散与对数因子（$\delta m$ 的符号约定同 \cref{prop:lattice-renormalizability}：$O^R=Z_j^{-2}\ee^{-\delta m|z|}O^B$）。
+(b)~到 $\MSbar$ 的换算因子：混合方案中它等于 $z_S$ 处的值，在所有 $|z|$ 上都是微扰的，因此动量空间匹配成立；比值方案与 RI/MOM 方案的换算因子依赖于 $\ln(z^2\mu^2)$，在大 $|z|$ 处含 $\alpha_s(1/|z|)$（灰色区），动量空间匹配没有依据（\cref{rem:lamet-ratio-large-z}）。
+单圈混合核满足 $\int\dd\xi\,C_{\rm hyb}=1$（\cref{prop:lamet-hybrid-kernel}，VF-LAM-10）。}
+\label{fig:lamet-hybrid}
+\end{figure}
+%%% END fig:lamet-hybrid
+
+%%% BEGIN fig:lamet-fourier
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{semilogyaxis}[name=main,width=0.67\textwidth,height=6.6cm,xmin=0,xmax=20,ymin=4e-3,ymax=1.6,
+  log origin=infty,axis lines=left,axis line style={gray!60!black},
+  xlabel={Ioffe 时间 $\lambda$},ylabel={$|\tilde h(\lambda,-\lambda^2/P_z^2)|/A$},
+  xtick={0,5,10,15,20},
+  tick label style={font=\scriptsize},label style={font=\small}]
+  % data window lambda <= lambda_L = z_L P^z = 10.14
+  \fill[blue!9] (axis cs:0,4e-3) rectangle (axis cs:10.14,1.6);
+  \draw[blue!55!black,line width=0.6pt,dash pattern=on 3pt off 2pt] (axis cs:10.14,4e-3) -- (axis cs:10.14,1.6);
+  % truncated tail
+  \addplot[draw=none,pattern=north east lines,pattern color=red!60!black,domain=10.14:20,samples=60] {exp(-0.25*x)} \closedcycle;
+  % the bound |h| <= A exp(-m lambda/P^z), m = 0.5 GeV, P^z = 2 GeV
+  \addplot[black,line width=1.1pt,domain=0:20,samples=120] {exp(-0.25*x)};
+  \node[font=\footnotesize,anchor=south west] at (axis cs:2.0,0.64) {$A\,\ee^{-m\lambda/P^z}$};
+  \node[font=\footnotesize,text=blue!45!black,align=center] at (axis cs:5.0,0.02) {数据窗 $|\lambda|\le\lambda_L$\\$\lambda_L=z_LP^z\approx10.1$\\（$z_L=1$ fm）};
+  \node[font=\footnotesize,text=red!55!black,align=center] at (axis cs:15.2,0.42) {截断的尾部（斜线）：\\误差 $\le\dfrac{AP^z}{\pi m}\,\ee^{-mz_L}$\\$\ee^{-mz_L}=0.079$};
+  \draw[red!55!black,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}] (axis cs:14.6,0.115) -- (axis cs:13.4,0.016);
+\end{semilogyaxis}
+% ---------------- inset: analyticity strip in the complex x plane ----------------
+\begin{scope}[shift={($(main.outer east)+(2.05,0.35)$)},fd]
+  \fill[white] (-1.85,-0.95) rectangle (2.1,1.05);
+  \draw[gray!55,line width=0.4pt,rounded corners=2pt] (-1.85,-0.95) rectangle (2.1,1.05);
+  \fill[orange!20] (-1.6,-0.32) rectangle (1.6,0.32);
+  \draw[orange!60!black,line width=0.5pt,dash pattern=on 2.5pt off 1.5pt] (-1.6,0.32) -- (1.6,0.32) (-1.6,-0.32) -- (1.6,-0.32);
+  \draw[lcaxis,gray!60!black] (-1.7,0) -- (1.75,0) node[right,font=\scriptsize] {$\Real x$};
+  \draw[lcaxis,gray!60!black] (0,-0.5) -- (0,0.88) node[right,font=\scriptsize] {$\Imag x$};
+  \foreach \t/\l in {-1/-1,1/1} {\draw[gray!60!black,line width=0.4pt] (\t,-0.05) -- (\t,0.05); \node[font=\scriptsize,fill=orange!20,inner sep=0.5pt] at (\t,-0.17) {$\l$};}
+  \node[font=\scriptsize,anchor=west] at (0.05,0.5) {$\Imag x=m/P^z$};
+  \node[font=\scriptsize,align=center] at (0.12,-0.7) {$\tilde q(x,P^z)$ 在带内全纯};
+\end{scope}
+\end{tikzpicture}
+\caption{Fourier 步骤的截断误差与解析带（示意，数值取自 VF-LAM-17）。若准 ITD 沿射线满足 $|\tilde h(\lambda,-\lambda^2/P_z^2)|\le A\,\ee^{-m|\lambda|/P^z}$（指数衰减假设），则准 PDF 在带形 $|\Imag x|<m/P^z$ 中全纯（内插图，\cref{lem:lamet-strip}），在有限 $P^z$ 下没有端点奇异性；
+只用数据窗 $|\lambda|\le\lambda_L=z_LP^z$（蓝色；图中 $m=0.5$ GeV，$P^z=2$ GeV）作 Fourier 变换时，截去的尾部（斜线）引起的误差不超过 $\frac{AP^z}{\pi m}\ee^{-mz_L}$（\cref{prop:lamet-truncation}）。对 $m=0.5$ GeV、$z_L=1$ fm，$\ee^{-mz_L}=0.079$：对现有的 $z_L$ 这一压低并不是参数上小的。QCD 中这种衰减本身是猜想（\cref{conj:lamet-decay-qcd}）。}
+\label{fig:lamet-fourier}
+\end{figure}
+%%% END fig:lamet-fourier
+
+%%% BEGIN fig:lamet-validity
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{semilogyaxis}[width=0.8\textwidth,height=6.4cm,xmin=0,xmax=1,ymin=5e-3,ymax=2,
+  axis lines=left,axis line style={gray!60!black},clip=false,
+  xlabel={$x$},ylabel={相对幂次修正（示意）},
+  xtick={0,0.2,0.5,0.8,1},
+  xticklabels={$0$,$x_0$,$0.5$,$1-x_0$,$1$},
+  extra x ticks={0.1,0.9},extra x tick labels={$\frac{\Lambda}{P^z}$,$1-\frac{\Lambda}{P^z}$},
+  extra x tick style={tick label style={yshift=-9pt}},
+  ytick={0.01,0.1,1},yticklabels={$10^{-2}$,$10^{-1}$,$1$},
+  tick label style={font=\scriptsize},label style={font=\small},
+  legend style={font=\scriptsize,draw=gray!40,fill=white,at={(0.5,0.97)},anchor=north},
+  legend cell align=left]
+  % excluded end-point strips (Lambda/P^z = 0.1 in this sketch)
+  \fill[gray!22] (axis cs:0,5e-3) rectangle (axis cs:0.1,2);
+  \fill[gray!22] (axis cs:0.9,5e-3) rectangle (axis cs:1,2);
+  \draw[gray!60!black,line width=0.4pt,dash pattern=on 2pt off 2pt] (axis cs:0,1) -- (axis cs:1,1);
+  \addplot[blue!60!black,line width=1.1pt,domain=0.0708:0.9,samples=120] {0.01/x^2};
+  \addlegendentry{$\Lambda^2/(x^2P_z^2)$}
+  \addplot[red!65!black,line width=1.1pt,dashed,domain=0.1:0.9293,samples=120] {0.01/(1-x)^2};
+  \addlegendentry{$\Lambda^2/((1-x)^2P_z^2)$（$\delta=0$）}
+  \addplot[red!65!black,line width=1.3pt,dotted,domain=0.1:0.995,samples=160] {0.01/(1-x)};
+  \addlegendentry{$\Lambda^2/((1-x)P_z^2)$（$\delta=1$）}
+  \node[font=\scriptsize,align=center,rotate=90] at (axis cs:0.05,0.06) {$xP^z\lesssim\Lambda$：不适用};
+  \node[font=\scriptsize,align=center,rotate=90] at (axis cs:0.95,0.022) {$(1-x)P^z\lesssim\Lambda$};
+  % fixed-order domain and its extension by threshold resummation
+  \draw[gray!50!black,line width=0.5pt] (axis cs:0.2,2.6) -- (axis cs:0.2,3.0) -- (axis cs:0.8,3.0) -- (axis cs:0.8,2.6);
+  \node[font=\scriptsize,anchor=south] at (axis cs:0.5,3.0) {固定阶匹配一致成立：$[x_0,1-x_0]$，$x_0P^z\gg\Lambda$};
+  \draw[red!55!black,line width=0.7pt,-{Stealth[length=4.5pt,width=3.8pt]}] (axis cs:0.8,2.75) -- (axis cs:0.9,2.75);
+  \node[font=\scriptsize,text=red!50!black,anchor=south west,align=left] at (axis cs:0.82,3.05) {阈值重求和：大 $x$ 边界推到\\$(1-x)P^z\gg\Lambda$};
+\end{semilogyaxis}
+\end{tikzpicture}
+\caption{LaMET 预言的适用范围（示意，图中取 $\Lambda/P^z=0.1$）。端点区要求硬标度 $2xP^z$ 与旁观者动量 $(1-x)P^z$ 都远大于 $\Lambda$（灰色带不适用）。相对幂次修正在小 $x$ 处按 $\Lambda^2/(x^2P_z^2)$ 增大；在大 $x$ 处，两种计数规则 $\Lambda^2/((1-x)^{2-\delta}P_z^2)$（$\delta=0$ 虚线，$\delta=1$ 点线）对应扭度 4 分布 $\rho_4/q\sim(1-x)^\delta$ 的不同端点行为（\cref{cor:lamet-endpoint}，VF-LAM-12），$\delta$ 在 QCD 中未知。
+固定阶匹配只在 $[x_0,1-x_0]$ 上一致成立；阈值重求和（\cref{thm:yzliu-threshold}）把大 $x$ 边界推到 $(1-x)P^z\gg\Lambda$（\cref{rem:lamet-domain}）。}
+\label{fig:lamet-validity}
+\end{figure}
+%%% END fig:lamet-validity
+
+%%% BEGIN fig:yzliu-soft-hqet
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lc/.style={draw=gray!55,line width=0.5pt,dash pattern=on 1.2pt off 1.6pt},
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 heavy/.style={draw,solid,line width=1.4pt,fd arrow=#1},
+  fd2 heavy/.default=0.5,
+  fd2 sheet/.style={fill=gray!13,draw=none},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % geometry: beta = 0.55, t = t' = 1.85; perspective b_perp vector B = (1.7,0.55)
+  \foreach \panel/\xs in {a/0, b/7.6} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (O) at (0,0);          \coordinate (OB) at (1.7,0.55);
+    \coordinate (P) at (-1.0175,-1.85); \coordinate (PB) at (0.6825,-1.3);
+    \coordinate (F) at (-1.0175,1.85);  \coordinate (FB) at (0.6825,2.4);
+    % axes and light cone (b_perp = 0)
+    \draw[fd2 lc] (-1.75,-1.75) -- (1.75,1.75);  \draw[fd2 lc] (-1.75,1.75) -- (1.75,-1.75);
+    \draw[fd2 ax] (-1.75,0) -- (2.75,0) node[below left=1pt and -3pt,font=\footnotesize] {$z$};
+    \draw[fd2 ax] (0,-2.25) -- (0,2.95) node[left,font=\footnotesize] {$t$};
+    \draw[gray!60!black,line width=0.5pt,dash pattern=on 3pt off 2pt,-{Stealth[length=4pt,width=3.4pt]}] (O) -- (2.45,0.79) node[right,font=\footnotesize] {$\vec b_\perp$};
+    \if a\panel
+      % two staple-shaped Wilson lines: past (v) and future (v'), closed at -t and t'
+      \draw[wilson plain] (OB) -- (PB) -- (P) -- (O) -- (F) -- (FB) -- cycle;
+      \path[fd2 warrow=0.55] (P) -- (O);    \path[fd2 warrow=0.6] (O) -- (F);
+      \path[fd2 warrow=0.55] (FB) -- (OB);  \path[fd2 warrow=0.6] (OB) -- (PB);
+      \path[fd2 warrow=0.55] (F) -- (FB);   \path[fd2 warrow=0.55] (PB) -- (P);
+      \node[opvertex] at (O) {};  \node[opvertex] at (OB) {};
+      \node[fd2 lab,anchor=east] at (-0.6,-1.0) {$v$};
+      \node[fd2 lab,anchor=east] at (-0.6,1.0) {$v'$};
+      \node[fd2 note,anchor=north east] at ($(P)+(0.02,-0.04)$) {$-t$};
+      \node[fd2 note,anchor=south east] at ($(F)+(0.02,0.04)$) {$t'$};
+      \node[fd2 note,anchor=north west] at (0.05,-0.02) {$0$};
+      \node[fd2 lab,align=center] at (0.45,-3.1) {$S=\displaystyle\lim_{t,t'\to\infty}\frac{W(t,t',b_\perp,Y,Y')}{\sqrt{Z(2t,b_\perp,Y)\,Z(2t',b_\perp,Y')}}$};
+      \node[fd2 note,align=left,anchor=west] at (1.95,1.75) {时序乘积 $\mathcal T$};
+      \node[fd2 lab] at (0.45,-4.2) {(a)\ 订书钉形 Wilson 回路};
+    \else
+      % HQET picture: static colour sources Q (at 0) and Qbar (at b_perp)
+      \fill[fd2 sheet] (P) -- (O) -- (F) -- (FB) -- (OB) -- (PB) -- cycle;
+      \draw[fd2 heavy=0.55] (P) -- (O);    \draw[fd2 heavy=0.55] (O) -- (F);
+      \draw[fd2 heavy=0.5] (FB) -- (OB);   \draw[fd2 heavy=0.55] (OB) -- (PB);
+      \draw[gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt] (O) -- (OB);
+      \node[opvertex] at (O) {};  \node[opvertex] at (OB) {};
+      \node[fd2 lab,anchor=east] at (-0.6,-1.0) {$v$};
+      \node[fd2 lab,anchor=east] at (-0.6,1.0) {$v'$};
+      \node[fd2 note,anchor=east] at (-1.05,-1.9) {$Q$};
+      \node[fd2 note,anchor=west] at (0.72,-1.38) {$\bar Q$};
+      \node[fd2 note,anchor=south,inner sep=1pt] at (0.62,0.44) {$J$（$t=0$）};
+      \node[fd2 lab,anchor=north] at (-0.15,-2.15) {$|Q\bar Q,\vec b_\perp\rangle_v$};
+      \node[fd2 lab,anchor=west] at (0.8,2.6) {${}_{v'}\langle Q\bar Q,\vec b_\perp|$};
+      \node[draw=gray!55,fill=gray!4,rounded corners=2pt,font=\footnotesize,align=left,anchor=north west,inner sep=3pt] at (1.75,-0.55)
+        {欧氏表示：\\$\ii\tilde v\cdot D_E=D_\tau-\ii\beta D_z$\\（$\tau$：欧氏时间）};
+      \node[fd2 lab] at (0.45,-4.2) {(b)\ HQET 形状因子};
+    \fi
+  \end{scope}}
+  \node[fd2 lab,align=center] at (8.05,-3.1) {$S={}_{v'}\langle Q\bar Q,\vec b_\perp|\,J\,|Q\bar Q,\vec b_\perp\rangle_v$};
+\end{tikzpicture}
+\caption{离光锥 TMD 软函数作为快速色源对的形状因子（$v=\gamma(1,\beta,\mathbf 0_\perp)$、$v'=\gamma'(1,-\beta',\mathbf 0_\perp)$，$\beta=\tanh Y$、$\beta'=\tanh Y'$，坐标 $(t,z,\vec b_\perp)$，$\vec b_\perp$ 方向按透视画出）。
+(a)~两个订书钉形 Wilson 回路（$t<0$ 沿 $v$，$t>0$ 沿 $v'$，在 $-t$ 与 $t'$ 处由横向连接闭合）的时序真空期望，除以 $\sqrt{ZZ}$（$Z$ 为矩形回路）后取 $t,t'\to\infty$；箭头为路径方向：$0$ 处沿世界线指向未来（色源 $Q$），$\vec b_\perp$ 处指向过去（$\bar Q$）。
+(b)~等价的 HQET 图像：间隔 $b_\perp$ 的色单态静态 $Q\bar Q$ 对以速度 $v$ 运动，在 $t=0$ 被等时的流 $J$ 踢到 $v'$，软函数是 ${}_{v'}\langle Q\bar Q,\vec b_\perp|J|Q\bar Q,\vec b_\perp\rangle_v$，因而有欧氏表示（\cref{thm:yzliu-soft-hqet}，全阶论证 [A]；非微扰的形状因子形式另需\cref{asm:yzliu-heavy-pair}）。
+大快度下 $\ln S=(Y+Y')\tilde K+\mathcal D+\order{\ee^{-(Y+Y')}}$，本征软函数 $S_I=\ee^{-\mathcal D}$（VF-YZL-2）。}
+\label{fig:yzliu-soft-hqet}
+\end{figure}
+%%% END fig:yzliu-soft-hqet
+
+%%% BEGIN fig:yzliu-single-line
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 dipole/.style={draw=black!80,line width=2.4pt,dash pattern=on 6pt off 2.5pt,line cap=butt},
+  fd2 web/.style={gluon,draw=orange!70!black},
+  fd2 vtx/.style={gluon,draw=blue!60!black},
+  fd2 big/.style={font=\large},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize},
+  fd2 staple/.pic={
+    \draw[wilson plain] (0,0) -- (2.4,0) -- (2.4,0.8) -- (0.45,0.8);
+    \path[fd2 warrow=0.55] (0,0) -- (2.4,0);  \path[fd2 warrow=0.6] (2.4,0.8) -- (0.45,0.8);
+    \draw[quark=0.55] (-0.5,-0.42) -- (0,0);  \draw[quark=0.6] (0.45,0.8) -- (-0.05,1.22);
+    \node[opvertex] at (0,0) {};  \node[opvertex] at (0.45,0.8) {};}]
+  % ======================= (a) single-line notation =======================
+  \pic at (0,0) {fd2 staple};
+  \node[fd2 note,anchor=north] at (1.2,-0.08) {$L$};
+  \node[fd2 note,anchor=west] at (2.45,0.4) {$b_\perp$};
+  \node[fd2 big] at (3.65,0.4) {$\equiv$};
+  \draw[quark=0.55] (4.2,-0.02) -- (4.7,0.4);  \draw[quark=0.6] (4.7,0.4) -- (4.2,0.82);
+  \draw[fd2 dipole] (4.7,0.4) -- (7.4,0.4);
+  \draw[black!80,line width=1.0pt] (7.4,0.2) -- (7.4,0.6);
+  \node[opvertex,minimum size=8pt] at (4.7,0.4) {};
+  \node[fd2 note,anchor=south] at (6.2,0.58) {偶极线：量纲 $\frac32$、自旋 $0$};
+  \node[fd2 note,anchor=north] at (6.5,0.2) {（一对订书钉腿合成一条线）};
+  \node[fd2 lab] at (3.65,-1.0) {(a)\ 单线记号：订书钉的两条腿在 $\hat z$ 方向的演化合成一个色单态偶极子};
+  % ======================= (b) dipole 2PI decomposition =======================
+  \begin{scope}[yshift=-3.3cm]
+    % left: full correlator with a self-interaction web and an operator--link vertex
+    \draw[fd2 web] (1.6,0) -- (1.6,0.8);
+    \draw[fd2 vtx] (-0.3,-0.25) to[bend right=40] (0.75,0);
+    \pic at (0,0) {fd2 staple};
+    \node[vertex] at (1.6,0) {}; \node[vertex] at (1.6,0.8) {}; \node[vertex] at (0.75,0) {};
+    \node[fd2 big] at (3.2,0.4) {$=$};
+    % exponentiated webs
+    \node[fd2 big] at (3.95,0.4) {$\exp\Big\{$};
+    \begin{scope}[xshift=4.6cm]
+      \draw[fd2 web] (1.2,0) -- (1.2,0.8);
+      \draw[wilson plain] (0,0) -- (2.4,0) -- (2.4,0.8) -- (0,0.8);
+      \node[vertex] at (1.2,0) {}; \node[vertex] at (1.2,0.8) {};
+    \end{scope}
+    \node[fd2 lab,anchor=west] at (7.1,0.4) {$+\,\cdots\Big\}$};
+    \node[fd2 big] at (8.75,0.4) {$\times$};
+    % operator--link 2PI vertex part
+    \begin{scope}[xshift=9.75cm]
+      \draw[fd2 vtx] (-0.3,-0.25) to[bend right=40] (0.75,0);
+      \pic at (0,0) {fd2 staple};
+      \node[vertex] at (0.75,0) {};
+    \end{scope}
+    \node[fd2 note,text=orange!60!black] at (5.8,-0.42) {自相互作用 web：$\ee^{\Phi(\mathcal W_z)}=\langle0|\mathcal W_z|0\rangle$};
+    \node[fd2 note,text=blue!50!black] at (10.95,-0.75) {算符—规范线 2PI 顶点};
+    \node[fd2 lab,align=center] at (5.6,-1.65) {$\ee^{\Phi(\mathcal W_z)}\sim\ee^{-LE(b_\perp)}$，\quad $\sqrt{Z_E(2L,b_\perp)}\sim\ee^{-LE(b_\perp)}$，\quad $E=2\delta m+V(b_\perp)$};
+    \node[fd2 lab] at (5.6,-2.45) {(b)\ 偶极子 2PI 分解：除以 $\sqrt{Z_E}$ 后自相互作用 web 相消，$L\to\infty$ 的极限存在};
+  \end{scope}
+\end{tikzpicture}
+\caption{单线记号与偶极子 2PI 分解（示意；双线为类空 Wilson 线，箭头为路径方向，$\otimes$ 为夸克场端点）。(a)~准 TMD 的订书钉形 Wilson 线的两条腿沿 $\hat z$ 平行演化，可看作一个色单态“偶极子”，在单线记号中画成一条量纲 $\frac32$、自旋 $0$ 的线（用于\cref{prop:yzliu-qtmd-powercount}的幂次计数）。
+(b)~部分指数化引理（\cref{lem:yzliu-partial-exp}）：关联函数等于规范线真空期望值 $\ee^{\Phi(\mathcal W_z)}$（其 web 的指数，橙色胶子为一例）乘以算符—规范线两粒子不可约顶点之和（蓝色胶子为一例）；$\ee^{\Phi(\mathcal W_z)}$ 与 $\sqrt{Z_E}$ 都按 $\ee^{-LE(b_\perp)}$ 依赖于 $L$，在比值中相消（\cref{prop:yzliu-pinch-ultrasoft}）。}
+\label{fig:yzliu-single-line}
+\end{figure}
+%%% END fig:yzliu-single-line
+
+%%% BEGIN fig:yzliu-theta-strip
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1cm,y=0.75cm,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 tick/.style={draw=gray!60!black,line width=0.45pt},
+  fd2 pt/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=5.4pt},
+  fd2 lab/.style={font=\footnotesize,align=left,anchor=west,inner sep=1.5pt},
+  fd2 val/.style={font=\footnotesize,anchor=east,inner sep=1.5pt},
+  fd2 note/.style={font=\footnotesize}]
+  \def\Yo{3.0}
+  % ---- the strip |Im theta| <= pi and its boundary lines ----
+  \fill[blue!7] (0,-3.1416) rectangle (11.4,3.1416);
+  \draw[blue!50!black,line width=0.75pt] (0,3.1416) -- (11.4,3.1416);
+  \draw[blue!50!black,line width=0.75pt] (0,-3.1416) -- (11.4,-3.1416);
+  \node[fd2 note,text=blue!45!black,anchor=south east] at (11.4,3.1416) {$\Imag\theta=\pi$};
+  \node[fd2 note,text=blue!45!black,anchor=north east] at (11.4,-3.1416) {$\Imag\theta=-\pi$};
+  \node[fd2 note,text=blue!45!black,align=center] at (9.35,1.62) {$S(\theta)$ 在 $|\Imag\theta|<\pi$ 中全纯，\\连续到边界};
+  % ---- axes ----
+  \draw[fd2 ax] (-0.7,0) -- (11.85,0) node[right] {$\Real\theta$};
+  \draw[fd2 ax] (0,-4.05) -- (0,4.15) node[left] {$\Imag\theta$};
+  \foreach \y/\t in {3.1416/{\pi},1.5708/{\frac{\pi}{2}},-1.5708/{-\frac{\pi}{2}},-3.1416/{-\pi}} {
+    \draw[fd2 tick] (-0.07,\y) -- (0.07,\y);
+    \node[font=\scriptsize,anchor=east,inner sep=1pt] at (-0.1,\y) {$\t$};}
+  \node[font=\scriptsize,anchor=north east,inner sep=1.5pt] at (0,0) {$0$};
+  % ---- the line Re theta = Y_0 ----
+  \draw[gray!60,line width=0.5pt,dash pattern=on 3pt off 2pt] (\Yo,-3.85) -- (\Yo,3.85);
+  \draw[fd2 tick] (\Yo,-0.07) -- (\Yo,0.07);
+  \node[font=\scriptsize,anchor=north,inner sep=1.5pt] at (\Yo,-3.85) {$\Real\theta=Y_0$};
+  % ---- the six configurations (VF-YZL-4) ----
+  \foreach \y in {3.1416,1.5708,0,-1.5708,-3.1416} \node[fd2 pt] at (\Yo,\y) {};
+  \node[fd2 val] at (\Yo-0.12,3.1416+0.32) {$Y_0+\ii\pi$};
+  \node[fd2 val] at (\Yo-0.12,1.5708+0.32) {$Y_0+\frac{\ii\pi}{2}$};
+  \node[fd2 val,fill=blue!7] at (\Yo-0.12,0.36) {$Y_0$};
+  \node[fd2 val] at (\Yo-0.12,-1.5708+0.32) {$Y_0-\frac{\ii\pi}{2}$};
+  \node[fd2 val] at (\Yo-0.12,-3.1416+0.32) {$Y_0-\ii\pi$};
+  \node[fd2 lab] at (\Yo+0.15,3.1416+0.36) {类空/类空，过去/未来};
+  \node[fd2 lab] at (\Yo+0.15,1.5708+0.36) {类时/类空，过去/未来};
+  \node[fd2 lab] at (\Yo+0.15,0.62) {类空/类空，过去/过去（Collins 的 DY 软因子 $S_{\mathrm{DY}}$）};
+  \node[fd2 lab] at (\Yo+0.15,-0.42) {类时/类时，过去/未来（形状因子 $S_{\mathrm{FF}}$）};
+  \node[fd2 lab] at (\Yo+0.15,-1.5708+0.36) {类时/类空，过去/过去};
+  \node[fd2 lab] at (\Yo+0.15,-3.1416+0.36) {类时/类时，过去/过去};
+  % ---- light-cone limit ----
+  \draw[red!60!black,line width=0.8pt,-{Stealth[length=5.5pt,width=4.6pt]}] (7.3,-2.05) -- (10.9,-2.05);
+  \node[fd2 note,text=red!55!black,align=center,anchor=south] at (9.1,-2.0) {$Y\to\infty$：光锥极限};
+  \node[fd2 note,text=red!55!black,align=center,anchor=north] at (9.1,-2.12) {（假设对 $\Imag\theta$ 一致）};
+\end{tikzpicture}
+\caption{离光锥软函数对双曲角的解析性。单一时序的减除软函数只通过双曲角 $\theta(v_1,v_2)$（$\cosh\theta=v_1\cdot v_2/\sqrt{v_1^2v_2^2}$，$\pm\ii0$ 处方见正文）依赖于两个方向，是带形 $-\pi\le\Imag\theta\le\pi$（阴影，$\Real\theta\ge0$）上同一函数 $S(\theta)$ 的取值；
+在固定的 $\Real\theta=Y_0$ 上标出两个方向为类空/类时、过去/未来指向的六种组合所对应的 $\theta$（VF-YZL-4），其中 $\theta=Y_0$ 一点同时代表 Collins 的类空 DY 软因子与类时形状因子软函数，
+由此在微扰论各阶 $S_{\mathrm{DY}}=S_{\mathrm{FF}}$（\cref{thm:yzliu-analyticity}，全阶论证 [A]；前提为维数正规化微扰论中的 Wightman 结构，\cref{asm:yzliu-wightman-pt}）。
+光锥极限 $Y\to\infty$ 能否越过整个带形延拓，取决于该极限对 $\Imag\theta$ 的一致性；它只在 $\Imag\theta\in\{0,\pm\frac{\pi}{2},\pm\pi\}$ 处得到微扰验证（\cref{asm:yzliu-lightcone-uniform}，部分 [P]）。}
+\label{fig:yzliu-theta-strip}
+\end{figure}
+%%% END fig:yzliu-theta-strip
+
+%%% BEGIN fig:yzliu-complex-lorentz
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=1.08,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lc/.style={draw=gray!55,line width=0.5pt,dash pattern=on 3pt off 2pt},
+  fd2 wl/.style={wilson=#1},
+  fd2 wlc/.style={draw=violet!70!black,solid,double,double distance=1.6pt,line width=0.55pt,
+      postaction={decorate,solid,decoration={markings,mark=at position #1 with
+      {\arrow[xshift=3.2pt,line width=0.6pt,violet!70!black]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 vtx/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=4pt},
+  fd2 vtxc/.style={circle,fill=violet!70!black,draw=none,inner sep=0pt,minimum size=4pt},
+  fd2 shift/.style={draw=#1,line width=0.6pt,-{Stealth[length=4pt,width=3.4pt]}},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ===================== left: S, DY shape, exponential regulator =====================
+  \begin{scope}
+    \draw[fd2 ax] (-2.15,1.0) -- (-1.55,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (-2.15,1.0) -- (-2.15,1.6) node[above=-1pt,fd2 note] {$t$};
+    \draw[fd2 lc] (-1.85,-1.85) -- (1.25,1.25);
+    \draw[fd2 lc] (1.85,-1.85) -- (-1.25,1.25);
+    % amplitude T[W^dag_nbar(0) W_n(0)]: past-pointing lines meeting at 0
+    \draw[fd2 wl=0.55] (-1.5,-1.5) -- (0,0);
+    \draw[fd2 wl=0.72] (0,0) -- (1.5,-1.5);
+    \node[fd2 vtx] at (0,0) {};
+    % conjugate amplitude Tbar[W^dag_n W_nbar] at b - i nu e_t (drawn displaced)
+    \draw[fd2 wlc=0.55] (1.5,-2.65) -- (0,-1.15);
+    \draw[fd2 wlc=0.55] (0,-1.15) -- (-1.5,-2.65);
+    \node[fd2 vtxc] at (0,-1.15) {};
+    \draw[fd2 shift=violet!60!black,dotted,line width=0.8pt] (0,-0.1) -- (0,-1.04);
+    \node[font=\scriptsize,text=violet!55!black,anchor=west,inner sep=1pt] at (0.04,-0.9) {$-\ii\nu e_t$};
+    % labels
+    \node[fd2 note,anchor=west] at (0.1,0.02) {$0$};
+    \node[fd2 note,anchor=north east] at (-1.42,-1.45) {$n$};
+    \node[fd2 note,anchor=north west] at (1.42,-1.45) {$\bar n$};
+    \node[fd2 note,anchor=south] at (0,0.14) {$T[W_{\bar n}^\dagger W_n](0)$};
+    \node[fd2 note,anchor=north,align=center,text=violet!55!black] at (0,-2.75) {$\bar T[W_n^\dagger W_{\bar n}](\vec b_\perp-\ii\nu e_t)$\\[1pt]（虚时间位移）};
+    \node[fd2 lab,align=center] at (0,-4.2) {$S$：DY 形软因子（指数正规子）};
+  \end{scope}
+  % ===================== right: S_t, single time ordering, space-like form factor =====================
+  \begin{scope}[xshift=9.6cm]
+    \draw[fd2 ax] (0.55,1.0) -- (1.15,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (0.55,1.0) -- (0.55,1.6) node[above=-1pt,fd2 note] {$t$};
+    \draw[fd2 lc] (-1.85,-1.85) -- (1.0,1.0);
+    \draw[fd2 lc] (1.0,-1.0) -- (-1.85,1.85);
+    % pair at 0: incoming along n (past), outgoing along nbar (future)
+    \draw[fd2 wl=0.55] (-1.5,-1.5) -- (0,0);
+    \draw[fd2 wl=0.6] (0,0) -- (-1.5,1.5);
+    \node[fd2 vtx] at (0,0) {};
+    % pair at b - nu e_z (real space-like shift)
+    \draw[fd2 wlc=0.5] (-2.7,1.5) -- (-1.2,0);
+    \draw[fd2 wlc=0.55] (-1.2,0) -- (-2.7,-1.5);
+    \node[fd2 vtxc] at (-1.2,0) {};
+    \draw[fd2 shift=violet!60!black] (-0.1,0) -- (-1.1,0);
+    \node[font=\scriptsize,text=violet!55!black,anchor=south,inner sep=1pt] at (-0.68,0.05) {$-\nu e_z$};
+    % labels
+    \node[fd2 note,anchor=west] at (0.1,0) {$0$};
+    \node[fd2 note,anchor=north west] at (-1.42,-1.45) {$n$};
+    \node[fd2 note,anchor=south west] at (-1.42,1.45) {$\bar n$};
+    \node[fd2 note,anchor=north,align=center,text=violet!55!black] at (-2.0,-1.62) {$\vec b_\perp-\nu e_z$\\[1pt]（实的类空位移）};
+    \node[fd2 note,anchor=south,align=center] at (-1.2,1.95) {$T[W_n^\dagger W_{\bar n+}^\dagger\,W_{\bar n+}W_n]$（单一时序）};
+    \node[fd2 lab,align=center] at (-1.1,-4.2) {$S_t$：单一时序的类空形状因子};
+  \end{scope}
+  % ===================== the complex Lorentz transformation =====================
+  \draw[line width=1.5pt,{Stealth[length=8pt,width=8pt]}-{Stealth[length=8pt,width=8pt]}] (2.25,0.05) -- (6.3,0.05);
+  \node[fd2 lab,anchor=south] at (4.27,0.22) {$\Lambda(t,z)=(\ii z,\ii t)$};
+  \node[fd2 note,anchor=north,align=left] at (4.27,-0.2) {$\Lambda(-\ii\lambda n)=\lambda n$\\[1pt]$\Lambda(-\ii\lambda\bar n)=-\lambda\bar n$\\[1pt]$\Lambda(-\nu e_z)=-\ii\nu e_t$};
+  % ===================== invariant lengths =====================
+  \node[fd2 lab] at (4.3,-5.0) {$x^2_{B,ij}=-\nu^2-b_\perp^2-\sqrt2\,\ii\nu\big(\lambda^L_i-\lambda^R_j\big)$：实部 $\le-b_\perp^2-\nu^2<0$，阈下、无割线};
+\end{tikzpicture}
+\caption{时序无关性的解析延拓图像（$(z,t)$ 平面示意；双线为类光 Wilson 线，箭头为路径方向；$n$、$\bar n$ 分别沿 $+z$、$-z$，即本书 $n_A$、$n_B$ 的方向；横向间隔 $\vec b_\perp$ 垂直于纸面）。
+左：指数正规子下的 DY 形软因子 $S$——振幅中的 $T[W_{\bar n}^\dagger W_n](0)$ 与共轭振幅中位于 $\vec b_\perp-\ii\nu e_t$ 的 $\bar T[W_n^\dagger W_{\bar n}]$（紫色，虚时间位移画成竖直错开）；
+右：单一时序的类空形状因子 $S_t$——位于 $0$ 与 $\vec b_\perp-\nu e_z$ 的一对类光色源，沿 $n$ 入射、沿 $\bar n$ 出射。
+二者由复 Lorentz 变换 $\Lambda(t,z)=(\ii z,\ii t)$（快度为 $\ii\pi/2$ 的推动）相联系，所有不变间隔的实部都为负（阈下表示，例如图下的 $x^2_{B,ij}$）。
+在维数正规化中胶子 Wightman 函数满足谱条件与局域对易性的假设下（\cref{asm:yzliu-wightman-pt}；复 Lorentz 协变性来自 Bargmann--Hall--Wightman 定理），微扰论各阶 $S=S_t$（\cref{thm:yzliu-time-ordering}，全阶论证 [A]；VF-YZL-12）。}
+\label{fig:yzliu-complex-lorentz}
+\end{figure}
+%%% END fig:yzliu-complex-lorentz
+
+%%% BEGIN fig:yzliu-leading-region
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.95,
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 hadron/.style={bound state,line cap=butt},
+  fd2 dipole/.style={draw=green!40!black,line width=2.2pt,dash pattern=on 5pt off 3pt,line cap=butt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ======================= (a) double-line notation =======================
+  \begin{scope}
+    % staple (space-like): from psi(0) along +z to L, transverse link, back along -z to psibar
+    \draw[wilson=0.5] (1.94,1.75) -- (4.3,1.75);
+    \draw[wilson=0.55] (4.3,1.75) -- (4.3,2.8);
+    \draw[wilson=0.42] (4.3,2.8) -- (0.69,2.8);
+    % soft subgraph S: gluons to the staple and to C
+    \draw[fd2 soft] (2.98,1.07) -- (2.55,1.75);
+    \draw[fd2 soft] (3.55,1.05) -- (4.3,2.25);
+    \draw[fd2 soft] (2.85,0.55) -- (2.4,0.3);
+    \draw[fd2 soft] (3.1,0.3) -- (2.6,0.0);
+    \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] at (3.35,0.68) {$S$};
+    % collinear quark lines (arrows: fermion-number flow) and longitudinal gluons
+    \draw[quark=0.55] (1.68,0.48) -- (1.7,1.47);
+    \draw[quark=0.5] (0.45,2.52) -- (0.55,0.5);
+    \draw[longit] (2.12,0.42) -- (1.88,1.55);   \longitmark{(2.12,0.42)}{(1.88,1.55)}
+    \draw[longit] (-0.02,0.38) -- (0.26,2.58);  \longitmark{(-0.02,0.38)}{(0.26,2.58)}
+    \node[fd2 note,text=blue!55!black] at (2.33,1.05) {$\cdots$};
+    \node[fd2 note,text=blue!55!black] at (-0.27,1.5) {$\cdots$};
+    % collinear subgraph C (hadron P along +z; forward matrix element)
+    \draw[fd2 hadron] (-0.95,-0.75) -- (0.25,-0.2);
+    \draw[fd2 hadron] (2.55,-0.2) -- (3.75,-0.75);
+    \node[jet blob,ellipse,minimum width=2.7cm,minimum height=1.05cm,inner sep=0pt] at (1.4,0.0) {$C$};
+    % hard vertices at the two quark--link junctions
+    \node[hard blob,circle,minimum size=0.54cm,inner sep=0pt] at (1.7,1.75) {\footnotesize$H$};
+    \node[hard blob,circle,minimum size=0.54cm,inner sep=0pt] at (0.45,2.8) {\footnotesize$H$};
+    % labels
+    \node[fd2 note,anchor=north west] at (-0.95,-0.75) {$P$};
+    \node[fd2 note,anchor=north east] at (3.75,-0.75) {$P$};
+    \node[fd2 note,anchor=east] at (1.4,1.78) {$0$};
+    \node[fd2 note,anchor=south] at (0.45,3.08) {$z\hat e_z+\vec b_\perp$};
+    \node[fd2 note,anchor=west] at (4.38,2.27) {$L\to\infty$};
+    \node[fd2 lab] at (1.9,-1.5) {(a)\ 双线记号};
+  \end{scope}
+  % ======================= (b) single-line notation =======================
+  \begin{scope}[xshift=7.15cm]
+    % dipole line H -- S and soft gluons S -- C
+    \draw[fd2 dipole] (1.33,2.3) -- (3.12,2.3);
+    \draw[fd2 soft] (3.35,1.86) -- (2.42,0.3);
+    \draw[fd2 soft] (3.8,1.9) -- (2.66,0.02);
+    \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] at (3.55,2.3) {$S$};
+    % collinear quark lines and longitudinal gluons into H
+    \draw[quark=0.55] (0.75,0.48) -- (0.75,1.97);
+    \draw[quark=0.55] (1.15,1.97) -- (1.2,0.5);
+    \draw[longit] (1.75,0.42) -- (1.34,2.07);   \longitmark{(1.75,0.42)}{(1.34,2.07)}
+    \draw[longit] (0.12,0.4) -- (0.56,2.07);    \longitmark{(0.12,0.4)}{(0.56,2.07)}
+    % C and H
+    \draw[fd2 hadron] (-0.95,-0.75) -- (0.25,-0.2);
+    \draw[fd2 hadron] (2.55,-0.2) -- (3.75,-0.75);
+    \node[jet blob,ellipse,minimum width=2.7cm,minimum height=1.05cm,inner sep=0pt] at (1.4,0.0) {$C$};
+    \node[hard blob,circle,minimum size=0.75cm,inner sep=0pt] at (0.95,2.3) {$H$};
+    \node[fd2 note,anchor=north west] at (-0.95,-0.75) {$P$};
+    \node[fd2 note,anchor=north east] at (3.75,-0.75) {$P$};
+    \node[fd2 note,anchor=south,text=green!30!black] at (2.25,2.82) {偶极线：量纲 $\frac32$、自旋 $0$};
+    \node[fd2 lab] at (1.4,-1.5) {(b)\ 单线记号};
+    % power counting
+    \node[draw=gray!60,rounded corners=2pt,fill=gray!5,inner sep=4pt,align=left,font=\footnotesize,anchor=west] at (4.35,0.95)
+      {$F(H)=-\frac72+2+\frac32=0$\\[3pt]
+       $2$：两条共线夸克线\\[1pt]
+       $\frac32$：一条偶极线\\[3pt]
+       $F(SC)\ge0$};
+  \end{scope}
+\end{tikzpicture}
+\caption{准 TMD 的领头区域（示意；幂次计数参数为 $1/(b_\perp P^z)$）。
+(a)~双线记号：共线子图 $C$（强子动量 $P$ 沿 $+\hat z$，前向矩阵元）、位于两个夸克—规范线连接点 $0$ 与 $z\hat e_z+\vec b_\perp$ 的硬顶点 $H$、类空订书钉（双线，箭头为路径方向：自 $\psi(0)$ 沿 $+\hat z$ 到 $L\to\infty$，经横向连接回到 $\bar\psi$；与\cref{fig:tmd-staple}中的类光订书钉不同）与软子图 $S$；细线箭头为费米子数流向；$C$ 与 $H$ 之间可有任意多条纵向共线胶子（带点的蓝色胶子），$S$ 与 $C$ 之间可有任意多条软胶子（绿色）。
+(b)~单线记号：一对订书钉线合成一条量纲 $\frac32$、自旋 $0$ 的偶极线（粗虚线）。
+幂次计数 $F(H)=0$、$F(SC)\ge0$ 表明没有超领头区域，且硬动量不能在 $0$ 与 $\vec b_\perp$ 之间传递，因而匹配中没有 $x$ 卷积（VF-YZL-8；\cref{prop:yzliu-qtmd-powercount}，全阶论证 [A]）。}
+\label{fig:yzliu-leading-region}
+\end{figure}
+%%% END fig:yzliu-leading-region
+
+%%% BEGIN fig:yzliu-threshold
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 hadron/.style={bound state,line cap=butt},
+  fd2 hv/.style={hard blob,circle,minimum size=0.42cm,inner sep=0pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ======================= (a) DIS at x -> 1 =======================
+  \begin{scope}
+    % remnant and soft radiation between jet and remnant
+    \draw[draw=gray!60!black,line width=0.8pt] (1.45,-0.28) -- (4.85,-0.98);
+    \draw[fd2 soft] (3.98,1.12) -- (3.82,-0.76);
+    \draw[fd2 soft] (4.55,1.46) -- (4.5,-0.9);
+    % struck quark, photon, outgoing jet
+    \draw[quark=0.5] (1.5,0.1) -- (2.95,0.38);
+    \draw[photon] (2.45,1.75) -- (2.95,0.38);
+    \draw[quark=0.6] (2.95,0.38) -- (3.6,1.06);
+    \node[jetB blob,ellipse,minimum width=1.75cm,minimum height=0.5cm,inner sep=0pt,rotate=40] at (4.12,1.55) {};
+    \node[fd2 hv] at (2.95,0.38) {};
+    % target
+    \draw[fd2 hadron] (-0.75,0) -- (0.3,0);
+    \node[hadron blob,ellipse,minimum width=1.3cm,minimum height=0.85cm,inner sep=0pt] at (0.9,0) {$f$};
+    % labels
+    \node[fd2 note,anchor=south] at (-0.25,0.05) {$P$};
+    \node[fd2 note,anchor=north] at (2.15,0.12) {$xP$};
+    \node[fd2 note,anchor=east] at (2.45,1.6) {$q$};
+    \node[fd2 note,anchor=north west] at (3.02,0.3) {$H$};
+    \node[fd2 note,anchor=south west] at (4.6,2.02) {窄喷注 $J$};
+    \node[fd2 note,anchor=north,text=green!30!black] at (4.15,-1.08) {软辐射 $S$};
+    \node[fd2 note,anchor=north east,text=gray!35!black] at (2.6,-0.55) {残余 $(1-x)P$};
+    \node[fd2 note,align=center] at (2.05,-1.95) {$H$：$Q^2$；\ $J$：$p_J^2\sim(1-x)Q^2$；\ $S$：能量 $\sim(1-x)Q$};
+    \node[fd2 lab] at (2.05,-2.6) {(a)\ $x\to1$ 的 DIS};
+  \end{scope}
+  % ======================= (b) quasi-PDF kernel at xi -> 1 =======================
+  \begin{scope}[xshift=9.25cm]
+    \draw[fd2 ax] (-2.3,1.0) -- (-1.7,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (-2.3,1.0) -- (-2.3,1.6) node[above=-1pt,fd2 note] {$t$};
+    % space-like jet function: link + semi-hard gluons (dashed box)
+    \draw[region] (-0.95,-1.05) rectangle (3.95,1.05);
+    \draw[fd2 soft] (-0.62,-0.62) .. controls (-0.05,-0.82) and (0.85,-0.62) .. (1.15,0);
+    \draw[fd2 soft] (1.85,0) .. controls (2.15,0.62) and (3.0,0.82) .. (3.62,0.62);
+    \draw[wilson=0.42] (0,0) -- (3.0,0);
+    % collinear quark: in along n at 0, out along n at z
+    \draw[quark=0.55] (-1.35,-1.35) -- (0,0);
+    \draw[quark=0.5] (3.0,0) -- (4.35,1.35);
+    \node[fd2 hv] at (0,0) {};
+    \node[fd2 hv] at (3.0,0) {};
+    % labels
+    \node[fd2 note,anchor=south east] at (-1.02,-1.0) {$p$};
+    \node[fd2 note,anchor=east] at (-0.25,0.02) {$H$};
+    \node[fd2 note,anchor=north west] at (3.1,-0.1) {$H$};
+    \node[fd2 note,anchor=south] at (0.0,0.22) {$0$};
+    \node[fd2 note,anchor=south] at (3.0,0.2) {$z$};
+    \node[fd2 note,anchor=north] at (2.35,-0.14) {$W[z\hat e_z,0]$};
+    \node[fd2 note,anchor=south west,text=gray!35!black] at (-0.95,1.07) {虚线框：类空喷注函数 $\tilde J$};
+    \node[fd2 note,align=center] at (1.5,-1.95) {$H$：硬，$\zeta_z=4p_z^2$；\ 绿色：半硬胶子，$|1-\xi|\,p^z$};
+    \node[fd2 lab] at (1.5,-2.6) {(b)\ $\xi\to1$ 的准 PDF 匹配核};
+  \end{scope}
+  % ======================= threshold factorization =======================
+  \node[fd2 lab] at (6.85,-3.55) {$C\Big(\xi,\dfrac{p^z}{\mu}\Big)\Big|_{\xi\to1}=H\Big(\dfrac{4p_z^2}{\mu^2}\Big)\,p^z\,J_f\Big(\dfrac{(1-\xi)p^z}{\mu},\dfrac{4p_z^2}{\mu^2}\Big)\big[1+\order{1-\xi}\big]$，\quad $J_f=\tilde J\,\ee^{\ii\,\mathrm{sgn}(z)A}$};
+\end{tikzpicture}
+\caption{阈值因子化的时空图像（示意）。
+(a)~$x\to1$ 的 DIS：被击出的夸克在硬顶点 $H$ 吸收虚光子后形成窄喷注 $J$，喷注与靶残余之间只有软辐射 $S$。
+(b)~$\xi\to1$ 的准 PDF 匹配核（$\Gamma=\gamma^0$，$\MSbar$，非单态）：共线夸克（动量 $p$，沿类光方向；细线箭头为费米子数流向）在类空 Wilson 线 $W[z\hat e_z,0]$（双线，箭头为路径方向）的两个连接点处发生硬相互作用（灰色顶点 $H$，标度 $\zeta_z=4p_z^2$），并与静态规范线交换半硬胶子（绿色，标度 $|1-\xi|p^z$）；虚线框内的部分组成类空喷注函数 $\tilde J$，乘上相位因子后为 $J_f$。
+$H$ 与准 TMD 因子化中的硬核相同（\cref{thm:yzliu-threshold}，全阶论证 [A]；VF-LAM-14，VF-YZL-9）。
+这一因子化形式在单圈精确成立；精确的两圈核在阈值极限下与它的全部 41 个奇异项相容（其中两个常数由比较定出）。}
+\label{fig:yzliu-threshold}
+\end{figure}
+%%% END fig:yzliu-threshold
+
+%%% BEGIN fig:yzliu-borel
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=2.05cm,y=1cm,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 tick/.style={draw=gray!60!black,line width=0.45pt},
+  fd2 pole/.pic={\draw[line width=1.1pt,line cap=round] (-0.045,-0.09)--(0.045,0.09) (-0.045,0.09)--(0.045,-0.09);},
+  fd2 contour/.style={draw=blue!60!black,line width=0.9pt,postaction={decorate,decoration={markings,
+      mark=at position 0.62 with {\arrow{Stealth[length=5pt,width=4.2pt]}}}}},
+  fd2 pointer/.style={draw=#1,line width=0.45pt,-{Stealth[length=3.5pt,width=3pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  \foreach \panel/\xs in {a/0,b/3.75} {
+  \begin{scope}[xshift=\xs*2.05cm]
+    \draw[fd2 ax] (-0.45,0) -- (2.55,0) node[right] {$\Real u$};
+    \draw[fd2 ax] (0,-0.8) -- (0,1.25) node[left] {$\Imag u$};
+    \foreach \u/\t in {0.5/{\frac12},1/{1},1.5/{\frac32},2/{2}} {
+      \draw[fd2 tick] (\u,-0.06) -- (\u,0.06);
+      \node[font=\scriptsize,anchor=north,inner sep=1.5pt] at (\u,-0.5) {$\t$};}
+    \node[font=\scriptsize,anchor=north east,inner sep=1.5pt] at (0,0) {$0$};
+    \draw[fd2 contour] (0,0) .. controls (0.1,0.2) and (0.2,0.26) .. (0.32,0.26) -- (2.35,0.26);
+    \if b\panel
+      \draw[fd2 contour] (0,0) .. controls (0.1,-0.2) and (0.2,-0.26) .. (0.32,-0.26) -- (2.35,-0.26);
+      \node[font=\footnotesize,text=blue!50!black,anchor=west,inner sep=1.5pt] at (2.35,0.3) {$C_+$};
+      \node[font=\footnotesize,text=blue!50!black,anchor=west,inner sep=1.5pt] at (2.35,-0.3) {$C_-$};
+    \fi
+  \end{scope}}
+  % ---------------- (a) real part (modulus): regular at u = 1/2 ----------------
+  \draw[line width=0.9pt,fill=white,draw=gray!50!black] (0.5,0) circle[radius=0.075cm*1.6];
+  \draw[fd2 pointer=gray!55!black] (0.95,0.83) -- (0.56,0.12);
+  \node[fd2 note,anchor=west,align=left,text=gray!35!black] at (0.97,0.83) {$u=\frac12$ 处正则（无线性重整化子）};
+  \node[fd2 lab,align=center] at (1.05,-1.95) {(a)\ 核的实部};
+  % ---------------- (b) imaginary part (phase A): simple pole at u = 1/2 ----------------
+  \begin{scope}[xshift=3.75*2.05cm]
+    \pic[red!70!black] at (0.5,0) {fd2 pole};
+    \draw[fd2 pointer=red!60!black] (0.95,0.83) -- (0.55,0.12);
+    \node[fd2 note,anchor=west,align=left,text=red!50!black] at (0.97,0.83) {单极点 $\propto\dfrac{\mathrm{sgn}(z)}{u-\frac12}$};
+    \node[fd2 note,anchor=north,align=center,text=blue!45!black] at (1.2,-0.95) {$C_+$ 与 $C_-$ 之差 $\propto\Lambda/p^z$（线性幂次）};
+    \node[fd2 lab,align=center] at (1.05,-1.95) {(b)\ 核的虚部（相位 $A$）};
+  \end{scope}
+  % ---------------- formulas ----------------
+  \node[fd2 lab,align=center] at (2.92,-3.25) {$\Imag B(u)\to\dfrac{\mu}{p^z}\,\dfrac{C_F\ee^{5/6}}{2\pi}\,\dfrac{\mathrm{sgn}(z)}{u-\frac12}$\\[6pt]
+    $A_{\mathrm{asym}}=-2\dfrac{\mu}{p^z}\displaystyle\sum_n r_n\alpha_s^{n+1}$，\quad $r_n=N_m\Big(\dfrac{\beta_0}{2\pi}\Big)^{\!n}n!$，\quad $N_m=\dfrac{C_F\ee^{5/6}}{\pi}\simeq0.977$};
+\end{tikzpicture}
+\caption{大 $\beta_0$（泡链）近似下重—轻 Sudakov 核的 Borel 平面（$u=\beta_0t/(4\pi)$，约定同\cref{def:power-borel}；只画出 $u=\frac12$ 附近，其余奇点未画出）。
+线性红外重整化子位于 $u=\frac12$，只出现在核的虚部即相位 $A$ 中 (b)，使沿正实轴的 Borel 积分产生正比于 $\Lambda/p^z$ 的不确定性（绕极点上方 $C_+$ 或下方 $C_-$）；核的实部在该处正则 (a)；轻—轻 Sudakov 核没有这一奇点。
+它与次领头幂次阈值软算符（及含维数 1 的 Wilson 线尖点算符的软因子）的紫外重整化子相消（VF-YZL-11；\cref{prop:yzliu-linear-renormalon}，部分 [P]）。
+归一化 $N_m$ 与极点质量、Wilson 线线性重整化子相同；它在大 $\beta_0$ 之外的普适性是猜想（\cref{conj:yzliu-renormalon-norm}，[C]）。}
+\label{fig:yzliu-borel}
+\end{figure}
+%%% END fig:yzliu-borel
+
+%%% BEGIN fig:summary-status-map
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1cm,y=1cm,
+  fd2 dot/.style={circle,fill=#1,draw=#1!70!black,line width=0.4pt,inner sep=0pt,minimum size=0.176cm},
+  fd2 hol/.style={circle,fill=white,draw=#1,line width=0.85pt,inner sep=0pt,minimum size=0.166cm},
+  fd2 row/.style={font=\footnotesize,anchor=west,inner sep=0pt},
+  fd2 ids/.style={font=\tiny,anchor=west,inner sep=0pt,text=gray!45!black},
+  fd2 fn/.style={font=\tiny,anchor=west,inner sep=0.5pt}]
+  \fill[gray!7] (0,-1.440) rectangle (15.950,-0.720);
+  \fill[gray!7] (0,-2.880) rectangle (15.950,-2.160);
+  \fill[gray!7] (0,-4.320) rectangle (15.950,-3.600);
+  \fill[gray!7] (0,-5.760) rectangle (15.950,-5.040);
+  \fill[gray!7] (0,-7.200) rectangle (15.950,-6.480);
+  \fill[gray!7] (0,-8.640) rectangle (15.950,-7.920);
+  \fill[gray!7] (0,-10.080) rectangle (15.950,-9.360);
+  \fill[gray!7] (0,-11.520) rectangle (15.950,-10.800);
+  \fill[gray!7] (0,-12.960) rectangle (15.950,-12.240);
+  \fill[gray!7] (0,-14.400) rectangle (15.950,-13.680);
+  \node[inner sep=0pt] at (5.690,0.420) {\tagR};
+  \node[inner sep=0pt] at (7.970,0.420) {\tagA};
+  \node[inner sep=0pt] at (10.250,0.420) {\tagP};
+  \node[inner sep=0pt] at (12.530,0.420) {\tagC};
+  \node[inner sep=0pt] at (14.810,0.420) {\tagV};
+  \node[font=\footnotesize\bfseries,anchor=west,inner sep=0pt] at (0,0.420) {过程类};
+  \draw[gray!60,line width=0.6pt] (0,0.000) -- (15.950,0.000);
+  \draw[gray!55,line width=0.6pt] (0,-5.040) -- (15.950,-5.040);
+  \draw[gray!55,line width=0.6pt] (0,-9.360) -- (15.950,-9.360);
+  \draw[gray!55,line width=0.6pt] (0,-12.240) -- (15.950,-12.240);
+  \draw[gray!60,line width=0.6pt] (0,-14.400) -- (15.950,-14.400);
+  \draw[gray!35,line width=0.4pt] (4.550,0.000) -- (4.550,-14.400);
+  \draw[gray!35,line width=0.4pt] (6.830,0.000) -- (6.830,-14.400);
+  \draw[gray!35,line width=0.4pt] (9.110,0.000) -- (9.110,-14.400);
+  \draw[gray!35,line width=0.4pt] (11.390,0.000) -- (11.390,-14.400);
+  \draw[gray!35,line width=0.4pt] (13.670,0.000) -- (13.670,-14.400);
+  \draw[gray!35,line width=0.4pt] (15.950,0.000) -- (15.950,-14.400);
+  \node[fd2 row] at (0.06,-0.250) {$e^+e^-$ 总截面};
+  \node[fd2 ids] at (0.06,-0.560) {II.1--7};
+  \node[fd2 dot=OliveGreen] at (4.720,-0.360) {};  % II.1
+  \node[fd2 dot=OliveGreen] at (4.942,-0.360) {};  % II.2
+  \node[fd2 dot=OliveGreen] at (5.164,-0.360) {};  % II.4
+  \node[fd2 dot=RoyalBlue] at (7.000,-0.360) {};  % II.3
+  \node[fd2 dot=RoyalBlue] at (7.222,-0.360) {};  % II.5
+  \node[fd2 dot=Plum] at (11.560,-0.360) {};  % II.6
+  \node[fd2 dot=Plum] at (11.782,-0.360) {};  % II.7
+  \node[fd2 row] at (0.06,-0.970) {DIS 矩、OPE 与极化求和规则};
+  \node[fd2 ids] at (0.06,-1.280) {II.8--15,\,17--19,\,28,\,29；III.21--24};
+  \node[fd2 dot=OliveGreen] at (4.720,-1.080) {};  % II.17
+  \node[fd2 dot=OliveGreen] at (4.942,-1.080) {};  % II.18
+  \node[fd2 dot=OliveGreen] at (5.164,-1.080) {};  % II.28
+  \node[fd2 dot=OliveGreen] at (5.386,-1.080) {};  % III.21
+  \node[fd2 hol=OliveGreen] at (5.668,-1.080) {};  % II.12
+  \node[fd2 hol=OliveGreen] at (5.890,-1.080) {};  % II.13
+  \node[fd2 hol=OliveGreen] at (6.112,-1.080) {};  % II.14
+  \node[fd2 hol=OliveGreen] at (6.334,-1.080) {};  % II.15
+  \node[fd2 fn] at (6.452,-0.990) {(a)};
+  \node[fd2 dot=RoyalBlue] at (7.000,-1.080) {};  % II.8
+  \node[fd2 dot=RoyalBlue] at (7.222,-1.080) {};  % II.9
+  \node[fd2 dot=RoyalBlue] at (7.444,-1.080) {};  % II.10
+  \node[fd2 dot=RoyalBlue] at (7.666,-1.080) {};  % II.11
+  \node[fd2 dot=RoyalBlue] at (7.888,-1.080) {};  % II.19
+  \node[fd2 hol=RoyalBlue] at (8.170,-1.080) {};  % II.29
+  \node[fd2 dot=Plum] at (11.560,-1.080) {};  % III.23
+  \node[fd2 dot=BrickRed] at (13.840,-1.080) {};  % III.22
+  \node[fd2 dot=BrickRed] at (14.062,-1.080) {};  % III.24
+  \node[fd2 row] at (0.06,-1.690) {DIS $x$ 空间};
+  \node[fd2 ids] at (0.06,-2.000) {II.16,\,25；III.10--15；VII.30};
+  \node[fd2 dot=OliveGreen] at (4.720,-1.800) {};  % II.25
+  \node[fd2 dot=OliveGreen] at (4.942,-1.800) {};  % III.14
+  \node[fd2 hol=OliveGreen] at (5.224,-1.800) {};  % II.16
+  \node[fd2 fn] at (5.342,-1.710) {(a)};
+  \node[fd2 dot=RoyalBlue] at (7.000,-1.800) {};  % III.13
+  \node[fd2 dot=RoyalBlue] at (7.222,-1.800) {};  % III.15
+  \node[fd2 dot=RoyalBlue] at (7.444,-1.800) {};  % VII.30
+  \node[fd2 hol=RoyalBlue] at (7.726,-1.800) {};  % III.10
+  \node[fd2 hol=RoyalBlue] at (7.948,-1.800) {};  % III.11
+  \node[fd2 hol=Plum] at (11.560,-1.800) {};  % III.12
+  \node[fd2 fn] at (11.678,-1.710) {(c)};
+  \node[fd2 row] at (0.06,-2.410) {SIA、SIDIS 与光生};
+  \node[fd2 ids] at (0.06,-2.720) {III.16--19};
+  \node[fd2 dot=RoyalBlue] at (7.000,-2.520) {};  % III.16
+  \node[fd2 dot=RoyalBlue] at (7.222,-2.520) {};  % III.17
+  \node[fd2 dot=RoyalBlue] at (7.444,-2.520) {};  % III.18
+  \node[fd2 dot=Plum] at (11.560,-2.520) {};  % III.19
+  \node[fd2 row] at (0.06,-3.130) {DY 与色单态末态};
+  \node[fd2 ids] at (0.06,-3.440) {III.25--30,\,33,\,34};
+  \node[fd2 dot=OliveGreen] at (4.720,-3.240) {};  % III.27
+  \node[fd2 dot=RoyalBlue] at (7.000,-3.240) {};  % III.26
+  \node[fd2 dot=RoyalBlue] at (7.222,-3.240) {};  % III.29
+  \node[fd2 dot=RoyalBlue] at (7.444,-3.240) {};  % III.30
+  \node[fd2 dot=RoyalBlue] at (7.666,-3.240) {};  % III.33
+  \node[fd2 hol=RoyalBlue] at (7.948,-3.240) {};  % III.25
+  \node[fd2 dot=BurntOrange] at (9.280,-3.240) {};  % III.28
+  \node[fd2 dot=BrickRed] at (13.840,-3.240) {};  % III.34
+  \node[fd2 row] at (0.06,-3.850) {$pp\to$ 喷注/强子（有色末态）};
+  \node[fd2 ids] at (0.06,-4.160) {III.31,\,32；IV.24--26};
+  \node[fd2 dot=Plum] at (11.560,-3.960) {};  % III.31
+  \node[fd2 dot=Plum] at (11.782,-3.960) {};  % III.32
+  \node[fd2 dot=Plum] at (12.004,-3.960) {};  % IV.25
+  \node[fd2 dot=BrickRed] at (13.840,-3.960) {};  % IV.24
+  \node[fd2 dot=BrickRed] at (14.062,-3.960) {};  % IV.26
+  \node[fd2 row] at (0.06,-4.570) {阈值重新因子化};
+  \node[fd2 ids] at (0.06,-4.880) {III.35--37};
+  \node[fd2 dot=RoyalBlue] at (7.000,-4.680) {};  % III.35
+  \node[fd2 dot=RoyalBlue] at (7.222,-4.680) {};  % III.36
+  \node[fd2 dot=BurntOrange] at (9.280,-4.680) {};  % III.37
+  \node[fd2 row] at (0.06,-5.290) {TMD：DY、SIDIS、$e^+e^-$};
+  \node[fd2 ids] at (0.06,-5.600) {IV.1--9；VII.48};
+  \node[fd2 dot=OliveGreen] at (4.720,-5.400) {};  % IV.2
+  \node[fd2 dot=OliveGreen] at (4.942,-5.400) {};  % IV.6
+  \node[fd2 dot=RoyalBlue] at (7.000,-5.400) {};  % IV.3
+  \node[fd2 dot=RoyalBlue] at (7.222,-5.400) {};  % IV.4
+  \node[fd2 dot=RoyalBlue] at (7.444,-5.400) {};  % IV.5
+  \node[fd2 dot=RoyalBlue] at (7.666,-5.400) {};  % IV.7
+  \node[fd2 dot=RoyalBlue] at (7.888,-5.400) {};  % IV.8
+  \node[fd2 hol=RoyalBlue] at (8.170,-5.400) {};  % IV.1
+  \node[fd2 dot=BurntOrange] at (9.280,-5.400) {};  % IV.9
+  \node[fd2 dot=Plum] at (11.560,-5.400) {};  % VII.48
+  \node[fd2 row] at (0.06,-6.010) {TMD：$h_1h_2\to H_1H_2X$};
+  \node[fd2 ids] at (0.06,-6.320) {IV.22,\,23};
+  \node[fd2 hol=RoyalBlue] at (7.000,-6.120) {};  % IV.22
+  \node[fd2 dot=BrickRed] at (13.840,-6.120) {};  % IV.23
+  \node[fd2 row] at (0.06,-6.730) {SCET、事件形状与喷注};
+  \node[fd2 ids] at (0.06,-7.040) {IV.10--17；VII.23--25};
+  \node[fd2 dot=OliveGreen] at (4.720,-6.840) {};  % IV.10
+  \node[fd2 dot=RoyalBlue] at (7.000,-6.840) {};  % IV.11
+  \node[fd2 dot=RoyalBlue] at (7.222,-6.840) {};  % IV.12
+  \node[fd2 dot=RoyalBlue] at (7.444,-6.840) {};  % IV.13
+  \node[fd2 dot=RoyalBlue] at (7.666,-6.840) {};  % IV.15
+  \node[fd2 dot=RoyalBlue] at (7.888,-6.840) {};  % VII.23
+  \node[fd2 dot=BurntOrange] at (9.280,-6.840) {};  % IV.14
+  \node[fd2 dot=BurntOrange] at (9.502,-6.840) {};  % IV.16
+  \node[fd2 dot=BurntOrange] at (9.724,-6.840) {};  % VII.24
+  \node[fd2 dot=Plum] at (11.560,-6.840) {};  % IV.17
+  \node[fd2 dot=BrickRed] at (13.840,-6.840) {};  % VII.25
+  \node[fd2 row] at (0.06,-7.450) {小 $x$};
+  \node[fd2 ids] at (0.06,-7.760) {IV.18--21；VII.31};
+  \node[fd2 dot=RoyalBlue] at (7.000,-7.560) {};  % IV.18
+  \node[fd2 dot=RoyalBlue] at (7.222,-7.560) {};  % IV.20
+  \node[fd2 dot=BurntOrange] at (9.280,-7.560) {};  % IV.19
+  \node[fd2 dot=Plum] at (11.560,-7.560) {};  % IV.21
+  \node[fd2 dot=BrickRed] at (13.840,-7.560) {};  % VII.31
+  \node[fd2 row] at (0.06,-8.170) {衍射};
+  \node[fd2 ids] at (0.06,-8.480) {III.20；IV.28,\,29};
+  \node[fd2 dot=RoyalBlue] at (7.000,-8.280) {};  % IV.28
+  \node[fd2 dot=BrickRed] at (13.840,-8.280) {};  % III.20
+  \node[fd2 dot=BrickRed] at (14.062,-8.280) {};  % IV.29
+  \node[fd2 row] at (0.06,-8.890) {双部分子散射与多重相互作用};
+  \node[fd2 ids] at (0.06,-9.200) {IV.27,\,30--32；VII.22,\,46};
+  \node[fd2 dot=RoyalBlue] at (7.000,-9.000) {};  % IV.30
+  \node[fd2 dot=RoyalBlue] at (7.222,-9.000) {};  % VII.22
+  \node[fd2 dot=Plum] at (11.560,-9.000) {};  % IV.31
+  \node[fd2 dot=Plum] at (11.782,-9.000) {};  % IV.32
+  \node[fd2 dot=Plum] at (12.004,-9.000) {};  % VII.46
+  \node[fd2 dot=BrickRed] at (13.840,-9.000) {};  % IV.27
+  \node[fd2 row] at (0.06,-9.610) {硬遍举过程};
+  \node[fd2 ids] at (0.06,-9.920) {V.1--8};
+  \node[fd2 dot=RoyalBlue] at (7.000,-9.720) {};  % V.2
+  \node[fd2 dot=RoyalBlue] at (7.222,-9.720) {};  % V.3
+  \node[fd2 dot=RoyalBlue] at (7.444,-9.720) {};  % V.5
+  \node[fd2 dot=RoyalBlue] at (7.666,-9.720) {};  % V.6
+  \node[fd2 hol=RoyalBlue] at (7.948,-9.720) {};  % V.1
+  \node[fd2 dot=BurntOrange] at (9.280,-9.720) {};  % V.4
+  \node[fd2 dot=BurntOrange] at (9.502,-9.720) {};  % V.8
+  \node[fd2 dot=BrickRed] at (13.840,-9.720) {};  % V.7
+  \node[fd2 row] at (0.06,-10.330) {$B$ 介子衰变};
+  \node[fd2 ids] at (0.06,-10.640) {V.9--13};
+  \node[fd2 dot=RoyalBlue] at (7.000,-10.440) {};  % V.9
+  \node[fd2 dot=RoyalBlue] at (7.222,-10.440) {};  % V.10
+  \node[fd2 dot=RoyalBlue] at (7.444,-10.440) {};  % V.13
+  \node[fd2 dot=BurntOrange] at (9.280,-10.440) {};  % V.11
+  \node[fd2 dot=BrickRed] at (13.840,-10.440) {};  % V.12
+  \node[fd2 row] at (0.06,-11.050) {重夸克偶素（NRQCD）};
+  \node[fd2 ids] at (0.06,-11.360) {V.14--16};
+  \node[fd2 dot=RoyalBlue] at (7.000,-11.160) {};  % V.14
+  \node[fd2 dot=RoyalBlue] at (7.222,-11.160) {};  % V.16
+  \node[fd2 dot=Plum] at (11.560,-11.160) {};  % V.15
+  \node[fd2 row] at (0.06,-11.770) {幂次修正、NLP 与重整化子};
+  \node[fd2 ids] at (0.06,-12.080) {V.17--24,\,26；VII.26,\,47};
+  \node[fd2 dot=OliveGreen] at (4.720,-11.880) {};  % V.21
+  \node[fd2 dot=RoyalBlue] at (7.000,-11.880) {};  % V.17
+  \node[fd2 dot=RoyalBlue] at (7.222,-11.880) {};  % VII.26
+  \node[fd2 dot=BurntOrange] at (9.280,-11.880) {};  % V.18
+  \node[fd2 dot=BurntOrange] at (9.502,-11.880) {};  % V.20
+  \node[fd2 dot=BurntOrange] at (9.724,-11.880) {};  % V.22
+  \node[fd2 dot=BurntOrange] at (9.946,-11.880) {};  % V.23
+  \node[fd2 dot=BurntOrange] at (10.168,-11.880) {};  % V.26
+  \node[fd2 dot=Plum] at (11.560,-11.880) {};  % V.19
+  \node[fd2 dot=Plum] at (11.782,-11.880) {};  % V.24
+  \node[fd2 dot=Plum] at (12.004,-11.880) {};  % VII.47
+  \node[fd2 row] at (0.06,-12.490) {格点与 LaMET（共线）};
+  \node[fd2 ids] at (0.06,-12.800) {VII.1--9,\,16,\,17,\,33--38,\,40--42};
+  \node[fd2 dot=OliveGreen] at (4.720,-12.600) {};  % VII.1
+  \node[fd2 dot=OliveGreen] at (4.942,-12.600) {};  % VII.6
+  \node[fd2 dot=OliveGreen] at (5.164,-12.600) {};  % VII.7
+  \node[fd2 dot=RoyalBlue] at (7.000,-12.600) {};  % VII.2
+  \node[fd2 dot=RoyalBlue] at (7.222,-12.600) {};  % VII.3
+  \node[fd2 dot=RoyalBlue] at (7.444,-12.600) {};  % VII.16
+  \node[fd2 dot=RoyalBlue] at (7.666,-12.600) {};  % VII.34
+  \node[fd2 dot=RoyalBlue] at (7.888,-12.600) {};  % VII.35
+  \node[fd2 dot=RoyalBlue] at (8.110,-12.600) {};  % VII.38
+  \node[fd2 hol=RoyalBlue] at (8.392,-12.600) {};  % VII.5
+  \node[fd2 hol=RoyalBlue] at (8.614,-12.600) {};  % VII.33
+  \node[fd2 dot=BurntOrange] at (9.280,-12.600) {};  % VII.17
+  \node[fd2 dot=Plum] at (11.560,-12.600) {};  % VII.4
+  \node[fd2 dot=Plum] at (11.782,-12.600) {};  % VII.36
+  \node[fd2 dot=Plum] at (12.004,-12.600) {};  % VII.40
+  \node[fd2 dot=Plum] at (12.226,-12.600) {};  % VII.41
+  \node[fd2 dot=Plum] at (12.448,-12.600) {};  % VII.42
+  \node[fd2 hol=Plum] at (12.730,-12.600) {};  % VII.8
+  \node[fd2 hol=Plum] at (12.952,-12.600) {};  % VII.9
+  \node[fd2 fn] at (13.070,-12.510) {(b)};
+  \node[fd2 dot=BrickRed] at (13.840,-12.600) {};  % VII.37
+  \node[fd2 row] at (0.06,-13.210) {准 TMD 与软函数};
+  \node[fd2 ids] at (0.06,-13.520) {VII.10--15,\,39};
+  \node[fd2 dot=RoyalBlue] at (7.000,-13.320) {};  % VII.10
+  \node[fd2 dot=RoyalBlue] at (7.222,-13.320) {};  % VII.11
+  \node[fd2 dot=RoyalBlue] at (7.444,-13.320) {};  % VII.12
+  \node[fd2 dot=RoyalBlue] at (7.666,-13.320) {};  % VII.13
+  \node[fd2 dot=RoyalBlue] at (7.888,-13.320) {};  % VII.14
+  \node[fd2 dot=RoyalBlue] at (8.110,-13.320) {};  % VII.15
+  \node[fd2 dot=Plum] at (11.560,-13.320) {};  % VII.39
+  \node[fd2 row] at (0.06,-13.930) {Landau 理论、区域与 OPE};
+  \node[fd2 ids] at (0.06,-14.240) {I.10--12,\,22,\,23；V.25；VII.18--21,\,43--45};
+  \node[fd2 dot=OliveGreen] at (4.720,-14.040) {};  % I.10
+  \node[fd2 dot=OliveGreen] at (4.942,-14.040) {};  % I.11
+  \node[fd2 dot=OliveGreen] at (5.164,-14.040) {};  % I.12
+  \node[fd2 dot=OliveGreen] at (5.386,-14.040) {};  % I.22
+  \node[fd2 dot=OliveGreen] at (5.608,-14.040) {};  % V.25
+  \node[fd2 dot=RoyalBlue] at (7.000,-14.040) {};  % VII.18
+  \node[fd2 hol=RoyalBlue] at (7.282,-14.040) {};  % VII.19
+  \node[fd2 dot=BurntOrange] at (9.280,-14.040) {};  % I.23
+  \node[fd2 dot=Plum] at (11.560,-14.040) {};  % VII.20
+  \node[fd2 dot=Plum] at (11.782,-14.040) {};  % VII.45
+  \node[fd2 dot=BrickRed] at (13.840,-14.040) {};  % VII.21
+  \node[fd2 dot=BrickRed] at (14.062,-14.040) {};  % VII.43
+  \node[fd2 dot=BrickRed] at (14.284,-14.040) {};  % VII.44
+  \node[fd2 dot=gray,anchor=center] at (0.15,-14.820) {};
+  \node[font=\footnotesize,anchor=west,inner sep=0pt] at (0.32,-14.820) {表~\ref{tab:summary-master} 中的一条陈述，画在其规范标签所在列（$R_{\mathrm{PT}}$、$R_{\mathrm{def}}$、$R_{\mathrm{OPE}}$ 均在 [R] 列）；颜色同标签};
+  \node[fd2 hol=darkgray,anchor=center] at (0.15,-15.240) {};
+  \node[font=\footnotesize,anchor=west,inner sep=0pt] at (0.32,-15.240) {条件定理 $[\mathrm R,R_{\mathrm{cond}}]$，画在其内容等级所在列（全局假设 \texttt{asm:intro-*} 不降低内容等级）};
+  \node[font=\footnotesize,anchor=north west,inner sep=0pt,align=left,text width=15.85cm] at (0.06,-15.590) {[A] 列中的空心圆：部分子层次的条件定理，前提为 [A] 级技术假设（\texttt{asm:appM-*}、\texttt{asm:appN-*}、\texttt{asm:appO-*}、\cref{asm:lamet-ope}）或 [A] 级定理。(a)~前提只含全局非微扰假设，II.14、II.15 的瓶颈为 \cref{asm:intro-np-ope,asm:intro-growth}；\ (b)~强子层次，瓶颈为 [C] 级假设：VII.8 为 \cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}，VII.9 为 \cref{asm:lamet-gap}；\ (c)~部分子层次的正规子路线，内容等级经由 \cref{asm:appN-ir-regulator} 为 [C]。};
+\end{tikzpicture}
+\caption{各类过程中因子化陈述的地位一览（与表~\ref{tab:summary-master} 一致）。每个圆点代表该表的一行：实心圆画在其规范标签所在的列，空心圆为条件定理 $[\mathrm R,R_{\mathrm{cond}}]$，画在其内容等级所在的列，[C] 列的空心圆是内容等级为 [C] 的条件定理（VII.8、VII.9 为强子层次的陈述），图下注明其瓶颈假设；左栏小字为归入该类的表行编号。基础、方法与部分子分布性质的陈述（区块 I 的大部分、II.20--II.24、II.26、II.27、III.1--III.9、III.38）以及 VII.27--VII.29、VII.32 不属于某一过程类，未画出。同一过程类往往同时含有不同等级的陈述：标签属于陈述，而不属于过程。}
+\label{fig:summary-status-map}
+\end{figure}
+%%% END fig:summary-status-map
+
+%%% BEGIN fig:summary-hypotheses
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1cm,y=1cm,
+  fd2 asm/.style={draw=orange!65!black,dashed,fill=orange!8,rounded corners=1.5pt,line width=0.5pt,minimum height=0.34cm,inner sep=1.5pt,font=\tiny\ttfamily,anchor=center},
+  fd2 thm/.style={draw=#1!65!black,fill=#1!15,rounded corners=1.5pt,line width=0.5pt,minimum height=0.34cm,inner sep=1.5pt,font=\tiny\ttfamily,anchor=center},
+  fd2 rcond/.style={fd2 thm=OliveGreen,dashed},
+  fd2 tag/.style={font=\tiny\sffamily\bfseries,text=#1!75!black,inner sep=0.5pt},
+  fd2 head/.style={font=\scriptsize\bfseries,inner sep=1pt},
+  fd2 e/.style={draw=gray!60,line width=0.35pt,-{Stealth[length=2.6pt,width=2.2pt]}},
+  fd2 b/.style={draw=red!60!black,line width=1.0pt,opacity=0.75,-{Stealth[length=3.4pt,width=3pt]}}]
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (-0.120,-6.304) rectangle (3.120,-0.174);
+  \node[fd2 head] at (1.500,-0.394) {减除法（附录~N）};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (-0.120,-12.809) rectangle (3.120,-9.689);
+  \node[fd2 head] at (1.500,-9.909) {全局非微扰假设};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (-0.120,-14.719) rectangle (3.120,-12.889);
+  \node[fd2 head] at (1.500,-13.109) {OPE（附录~M）};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (12.630,-5.870) rectangle (15.870,-3.180);
+  \node[fd2 head] at (14.250,-3.400) {Glauber（附录~O）};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (12.630,-10.360) rectangle (15.870,-5.950);
+  \node[fd2 head] at (14.250,-6.170) {LaMET（第~22~章）};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (12.630,-12.270) rectangle (15.870,-10.440);
+  \node[fd2 head] at (14.250,-10.660) {Liu（第~23~章）};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (12.630,-13.750) rectangle (15.870,-12.350);
+  \node[fd2 head] at (14.250,-12.570) {其他前沿（第~24~章）};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (5.955,-4.210) rectangle (9.945,0.200);
+  \node[fd2 head] at (7.950,-0.020) {共线因子化};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (5.955,-6.730) rectangle (9.945,-4.470);
+  \node[fd2 head] at (7.950,-4.690) {Glauber 区与 DY 型过程};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (5.955,-12.260) rectangle (9.945,-6.990);
+  \node[fd2 head] at (7.950,-7.210) {前沿};
+  \draw[gray!45,line width=0.4pt,rounded corners=3pt,fill=gray!3] (5.955,-13.920) rectangle (9.945,-12.520);
+  \node[fd2 head] at (7.950,-12.740) {OPE 与非微扰矩};
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-0.930) .. (6.055,-0.930);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-1.360) .. (6.055,-1.360);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-1.790) .. (6.055,-1.790);
+  \draw[fd2 e] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-1.790) .. (6.055,-1.790);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 e] (3.030,-4.314) .. controls (4.930,-4.314) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-1.734) .. controls (4.930,-1.734) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-2.594) .. controls (4.930,-2.594) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-1.304) .. controls (4.930,-1.304) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-2.164) .. controls (4.930,-2.164) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-3.024) .. controls (4.930,-3.024) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-5.604) .. controls (4.930,-5.604) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-3.454) .. controls (4.930,-3.454) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-6.034) .. controls (4.930,-6.034) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-0.874) .. controls (4.930,-0.874) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 e] (3.030,-2.164) .. controls (4.930,-2.164) and (4.155,-3.940) .. (6.055,-3.940);
+  \draw[fd2 e] (3.030,-4.314) .. controls (4.930,-4.314) and (4.155,-3.940) .. (6.055,-3.940);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-5.170) .. (6.055,-5.170);
+  \draw[fd2 e] (12.720,-4.740) .. controls (10.820,-4.740) and (11.745,-5.600) .. (9.845,-5.600);
+  \draw[fd2 e] (12.720,-5.170) .. controls (10.820,-5.170) and (11.745,-5.600) .. (9.845,-5.600);
+  \draw[fd2 e] (3.030,-1.734) .. controls (4.930,-1.734) and (4.155,-5.600) .. (6.055,-5.600);
+  \draw[fd2 e] (3.030,-2.594) .. controls (4.930,-2.594) and (4.155,-5.600) .. (6.055,-5.600);
+  \draw[fd2 e] (3.030,-3.024) .. controls (4.930,-3.024) and (4.155,-5.600) .. (6.055,-5.600);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-6.030) .. (6.055,-6.030);
+  \draw[fd2 e] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-6.460) .. (6.055,-6.460);
+  \draw[fd2 e] (3.030,-10.819) .. controls (4.930,-10.819) and (4.155,-8.980) .. (6.055,-8.980);
+  \draw[fd2 e] (12.720,-9.660) .. controls (10.820,-9.660) and (11.745,-9.410) .. (9.845,-9.410);
+  \draw[fd2 e] (3.030,-10.819) .. controls (4.930,-10.819) and (4.155,-13.650) .. (6.055,-13.650);
+  \draw[fd2 e] (3.030,-11.249) .. controls (4.930,-11.249) and (4.155,-13.650) .. (6.055,-13.650);
+  \draw[fd2 e] (3.030,-12.109) .. controls (4.930,-12.109) and (4.155,-13.650) .. (6.055,-13.650);
+  \draw[fd2 b] (3.030,-10.389) .. controls (4.930,-10.389) and (4.155,-0.500) .. (6.055,-0.500);
+  \draw[fd2 b] (3.030,-1.734) .. controls (4.930,-1.734) and (4.155,-0.500) .. (6.055,-0.500);
+  \draw[fd2 b] (3.030,-0.874) .. controls (4.930,-0.874) and (4.155,-1.790) .. (6.055,-1.790);
+  \draw[fd2 b] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 b] (3.030,-1.734) .. controls (4.930,-1.734) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 b] (3.030,-2.594) .. controls (4.930,-2.594) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 b] (3.030,-5.604) .. controls (4.930,-5.604) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 b] (3.030,-3.024) .. controls (4.930,-3.024) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 b] (3.030,-1.304) .. controls (4.930,-1.304) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 b] (3.030,-2.164) .. controls (4.930,-2.164) and (4.155,-2.220) .. (6.055,-2.220);
+  \draw[fd2 b] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 b] (3.030,-1.734) .. controls (4.930,-1.734) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 b] (3.030,-2.594) .. controls (4.930,-2.594) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 b] (3.030,-5.604) .. controls (4.930,-5.604) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 b] (3.030,-3.024) .. controls (4.930,-3.024) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 b] (3.030,-1.304) .. controls (4.930,-1.304) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 b] (3.030,-2.164) .. controls (4.930,-2.164) and (4.155,-2.650) .. (6.055,-2.650);
+  \draw[fd2 b] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 b] (3.030,-1.734) .. controls (4.930,-1.734) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 b] (3.030,-2.594) .. controls (4.930,-2.594) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 b] (3.030,-5.604) .. controls (4.930,-5.604) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 b] (3.030,-3.024) .. controls (4.930,-3.024) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 b] (3.030,-1.304) .. controls (4.930,-1.304) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 b] (3.030,-2.164) .. controls (4.930,-2.164) and (4.155,-3.080) .. (6.055,-3.080);
+  \draw[fd2 b] (3.030,-3.884) .. controls (4.930,-3.884) and (4.155,-3.510) .. (6.055,-3.510);
+  \draw[fd2 b] (3.030,-5.174) .. controls (4.930,-5.174) and (4.155,-3.940) .. (6.055,-3.940);
+  \draw[fd2 b] (3.030,-6.034) .. controls (4.930,-6.034) and (4.155,-5.170) .. (6.055,-5.170);
+  \draw[fd2 b] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-5.170) .. (6.055,-5.170);
+  \draw[fd2 b] (12.720,-4.310) .. controls (10.820,-4.310) and (11.745,-5.170) .. (9.845,-5.170);
+  \draw[fd2 b] (12.720,-3.880) .. controls (10.820,-3.880) and (11.745,-5.170) .. (9.845,-5.170);
+  \draw[fd2 b] (12.720,-3.880) .. controls (10.820,-3.880) and (11.745,-5.600) .. (9.845,-5.600);
+  \draw[fd2 b] (12.720,-5.600) .. controls (10.820,-5.600) and (11.745,-5.600) .. (9.845,-5.600);
+  \draw[fd2 b] (12.720,-4.310) .. controls (10.820,-4.310) and (11.745,-5.600) .. (9.845,-5.600);
+  \draw[fd2 b] (12.720,-3.880) .. controls (10.820,-3.880) and (11.745,-6.030) .. (9.845,-6.030);
+  \draw[fd2 b] (12.720,-5.600) .. controls (10.820,-5.600) and (11.745,-6.030) .. (9.845,-6.030);
+  \draw[fd2 b] (12.720,-4.310) .. controls (10.820,-4.310) and (11.745,-6.030) .. (9.845,-6.030);
+  \draw[fd2 b] (12.720,-4.740) .. controls (10.820,-4.740) and (11.745,-6.030) .. (9.845,-6.030);
+  \draw[fd2 b] (12.720,-5.170) .. controls (10.820,-5.170) and (11.745,-6.030) .. (9.845,-6.030);
+  \draw[fd2 b] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-6.030) .. (6.055,-6.030);
+  \draw[fd2 b] (3.030,-5.604) .. controls (4.930,-5.604) and (4.155,-6.030) .. (6.055,-6.030);
+  \draw[fd2 b] (12.720,-3.880) .. controls (10.820,-3.880) and (11.745,-6.460) .. (9.845,-6.460);
+  \draw[fd2 b] (12.720,-5.600) .. controls (10.820,-5.600) and (11.745,-6.460) .. (9.845,-6.460);
+  \draw[fd2 b] (12.720,-4.310) .. controls (10.820,-4.310) and (11.745,-6.460) .. (9.845,-6.460);
+  \draw[fd2 b] (12.720,-4.740) .. controls (10.820,-4.740) and (11.745,-6.460) .. (9.845,-6.460);
+  \draw[fd2 b] (12.720,-5.170) .. controls (10.820,-5.170) and (11.745,-6.460) .. (9.845,-6.460);
+  \draw[fd2 b] (3.030,-4.744) .. controls (4.930,-4.744) and (4.155,-6.460) .. (6.055,-6.460);
+  \draw[fd2 b] (3.030,-5.604) .. controls (4.930,-5.604) and (4.155,-6.460) .. (6.055,-6.460);
+  \draw[fd2 b] (12.720,-7.080) .. controls (10.820,-7.080) and (11.745,-7.690) .. (9.845,-7.690);
+  \draw[fd2 b] (12.720,-6.650) .. controls (10.820,-6.650) and (11.745,-7.690) .. (9.845,-7.690);
+  \draw[fd2 b] (12.720,-7.080) .. controls (10.820,-7.080) and (11.745,-8.120) .. (9.845,-8.120);
+  \draw[fd2 b] (12.720,-6.650) .. controls (10.820,-6.650) and (11.745,-8.120) .. (9.845,-8.120);
+  \draw[fd2 b] (12.720,-7.510) .. controls (10.820,-7.510) and (11.745,-8.550) .. (9.845,-8.550);
+  \draw[fd2 b] (12.720,-7.940) .. controls (10.820,-7.940) and (11.745,-8.550) .. (9.845,-8.550);
+  \draw[fd2 b] (12.720,-8.370) .. controls (10.820,-8.370) and (11.745,-8.550) .. (9.845,-8.550);
+  \draw[fd2 b] (12.720,-8.800) .. controls (10.820,-8.800) and (11.745,-8.980) .. (9.845,-8.980);
+  \draw[fd2 b] (12.720,-9.230) .. controls (10.820,-9.230) and (11.745,-9.410) .. (9.845,-9.410);
+  \draw[fd2 b] (12.720,-10.090) .. controls (10.820,-10.090) and (11.745,-9.410) .. (9.845,-9.410);
+  \draw[fd2 b] (12.720,-11.140) .. controls (10.820,-11.140) and (11.745,-9.840) .. (9.845,-9.840);
+  \draw[fd2 b] (12.720,-11.570) .. controls (10.820,-11.570) and (11.745,-10.270) .. (9.845,-10.270);
+  \draw[fd2 b] (12.720,-11.570) .. controls (10.820,-11.570) and (11.745,-10.700) .. (9.845,-10.700);
+  \draw[fd2 b] (12.720,-12.000) .. controls (10.820,-12.000) and (11.745,-11.130) .. (9.845,-11.130);
+  \draw[fd2 b] (12.720,-13.050) .. controls (10.820,-13.050) and (11.745,-11.560) .. (9.845,-11.560);
+  \draw[fd2 b] (12.720,-13.480) .. controls (10.820,-13.480) and (11.745,-11.990) .. (9.845,-11.990);
+  \draw[fd2 b] (3.030,-13.589) .. controls (4.930,-13.589) and (4.155,-13.220) .. (6.055,-13.220);
+  \draw[fd2 b] (3.030,-14.019) .. controls (4.930,-14.019) and (4.155,-13.220) .. (6.055,-13.220);
+  \draw[fd2 b] (3.030,-14.449) .. controls (4.930,-14.449) and (4.155,-13.220) .. (6.055,-13.220);
+  \draw[fd2 b] (3.030,-11.679) .. controls (4.930,-11.679) and (4.155,-13.650) .. (6.055,-13.650);
+  \draw[fd2 b] (3.030,-12.539) .. controls (4.930,-12.539) and (4.155,-13.650) .. (6.055,-13.650);
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-0.874) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-0.874) {appN-endpoint};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-0.874) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-1.304) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-1.304) {appN-uv};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-1.304) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-1.734) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-1.734) {appN-envelope};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-1.734) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-2.164) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-2.164) {appN-multren};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-2.164) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-2.594) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-2.594) {appN-separation};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-2.594) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-3.024) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-3.024) {appN-ward-product};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-3.024) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-3.454) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-3.454) {appN-values};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-3.884) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-3.884) {appN-brst-nonlocal};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-3.884) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-4.314) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-4.314) {appN-contour};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-4.314) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-4.744) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-4.744) {appN-collins};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-4.744) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-5.174) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-5.174) {appN-ir-regulator};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-5.174) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-5.604) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-5.604) {appN-cutsum};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-5.604) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-6.034) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-6.034) {appN-tmd};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-6.034) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-10.389) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-10.389) {intro-bridge};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-10.389) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-10.819) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-10.819) {intro-wightman};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-10.819) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-11.249) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-11.249) {intro-composite};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-11.249) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-11.679) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-11.679) {intro-np-ope};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-11.679) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-12.109) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-12.109) {intro-af-coeff};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-12.109) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-12.539) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-12.539) {intro-growth};
+  \node[fd2 tag=Plum,anchor=east] at (2.950,-12.539) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-13.589) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-13.589) {appM-remainder};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-13.589) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-14.019) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-14.019) {appM-brst-ope};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-14.019) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (1.500,-14.449) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (0.070,-14.449) {appM-forward};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (2.950,-14.449) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-3.880) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-3.880) {appO-mixing};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-3.880) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-4.310) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-4.310) {appO-rewritten-cs};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-4.310) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-4.740) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-4.740) {appO-lcopt};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-4.740) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-5.170) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-5.170) {appO-envelope};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-5.170) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-5.600) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-5.600) {appO-deformation};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-5.600) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-6.650) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-6.650) {lamet-aux-renorm};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-6.650) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-7.080) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-7.080) {lamet-ope};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-7.080) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-7.510) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-7.510) {lamet-uniform};
+  \node[fd2 tag=Plum,anchor=east] at (15.700,-7.510) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-7.940) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-7.940) {lamet-twist4};
+  \node[fd2 tag=Plum,anchor=east] at (15.700,-7.940) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-8.370) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-8.370) {lamet-large-z};
+  \node[fd2 tag=Plum,anchor=east] at (15.700,-8.370) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-8.800) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-8.800) {lamet-gap};
+  \node[fd2 tag=Plum,anchor=east] at (15.700,-8.800) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-9.230) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-9.230) {lamet-staple};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-9.230) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-9.660) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-9.660) {lamet-soft-rapidity};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-9.660) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-10.090) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-10.090) {lamet-order-limits};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-10.090) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-11.140) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-11.140) {yzliu-heavy-pair};
+  \node[fd2 tag=Plum,anchor=east] at (15.700,-11.140) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-11.570) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-11.570) {yzliu-wightman-pt};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-11.570) {A};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-12.000) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-12.000) {yzliu-lightcone-uniform};
+  \node[fd2 tag=BurntOrange,anchor=east] at (15.700,-12.000) {P};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-13.050) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-13.050) {front-mor-complete};
+  \node[fd2 tag=Plum,anchor=east] at (15.700,-13.050) {C};
+  \node[fd2 asm,minimum width=3.00cm] at (14.250,-13.480) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (12.820,-13.480) {front-scet-modes};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (15.700,-13.480) {A};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-0.500) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-0.500) {scet-thrust};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-0.930) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-0.930) {heavy-bdpi};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-1.360) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-1.360) {excl-dvcs};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-1.790) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-1.790) {excl-pion-ff};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-2.220) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-2.220) {disall-factorization};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-2.650) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-2.650) {coll-sia};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-3.080) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-3.080) {break-ddis};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-3.510) {};
+  \node[fd2 tag=Plum,anchor=east] at (9.775,-3.510) {C};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-3.510) {appN-structure};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-3.940) {};
+  \node[fd2 tag=Plum,anchor=east] at (9.775,-3.940) {C};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-3.940) {disall-renorm-compat};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-5.170) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-5.170) {tmd-factorization};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-5.600) {};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (9.775,-5.600) {A};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-5.600) {appO-main};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-6.030) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-6.030) {dy-factorization};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-6.460) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-6.460) {break-double-dy};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-7.690) {};
+  \node[fd2 tag=RoyalBlue,anchor=east] at (9.775,-7.690) {A};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-7.690) {lamet-coordinate};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-8.120) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-8.120) {lattice-lamet};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-8.550) {};
+  \node[fd2 tag=Plum,anchor=east] at (9.775,-8.550) {C};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-8.550) {lamet-hadronic};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-8.980) {};
+  \node[fd2 tag=Plum,anchor=east] at (9.775,-8.980) {C};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-8.980) {lamet-exp-decay};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-9.410) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-9.410) {lamet-quasi-tmd};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-9.840) {};
+  \node[fd2 tag=Plum,anchor=east] at (9.775,-9.840) {C};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-9.840) {{\color{gray!50!black}cor:}yzliu-soft-form-factor};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-10.270) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-10.270) {yzliu-analyticity};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-10.700) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-10.700) {yzliu-time-ordering};
+  \node[fd2 thm=BurntOrange,minimum width=3.75cm] at (7.950,-11.130) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-11.130) {{\color{gray!50!black}prop:}yzliu-universality-classes};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-11.560) {};
+  \node[fd2 tag=Plum,anchor=east] at (9.775,-11.560) {C};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-11.560) {{\color{gray!50!black}prop:}front-commuting};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-11.990) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-11.990) {front-hgg};
+  \node[fd2 thm=RoyalBlue,minimum width=3.75cm] at (7.950,-13.220) {};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-13.220) {dis-ope};
+  \node[fd2 rcond,minimum width=3.75cm] at (7.950,-13.650) {};
+  \node[fd2 tag=OliveGreen,anchor=east] at (9.775,-13.650) {R};
+  \node[font=\tiny\ttfamily,anchor=west,inner sep=0pt] at (6.145,-13.650) {dis-moments-np};
+  \node[fd2 asm,minimum width=0.9cm,font=\tiny] at (0.5,-15.199) {asm};
+  \node[font=\scriptsize,anchor=west] at (1.0,-15.199) {编号假设（右端字母为其标签）};
+  \node[fd2 thm=RoyalBlue,minimum width=0.75cm,font=\tiny] at (5.45,-15.199) {[A]};
+  \node[fd2 thm=BurntOrange,minimum width=0.75cm,font=\tiny] at (6.3,-15.199) {[P]};
+  \node[font=\scriptsize,anchor=west] at (6.75,-15.199) {定理（填色为其标签）};
+  \node[fd2 rcond,minimum width=1.1cm,font=\tiny] at (10.25,-15.199) {$R_{\mathrm{cond}}$};
+  \node[font=\scriptsize,anchor=west] at (10.85,-15.199) {条件定理（右端字母为内容等级）};
+  \draw[fd2 e] (0.05,-15.649) -- (0.95,-15.649);
+  \node[font=\scriptsize,anchor=west] at (1.0,-15.649) {直接依赖（\texttt{\string\uses} 或前提句）};
+  \draw[fd2 b] (5.1,-15.649) -- (6.0,-15.649);
+  \node[font=\scriptsize,anchor=west] at (6.05,-15.649) {瓶颈假设（可经由所用陈述进入）};
+\end{tikzpicture}
+\caption{主要全阶论证与条件定理所依赖的编号假设（节点为去掉类型前缀的规范标签；箭头由假设指向使用它的定理）。细灰线为直接依赖（假设出现在该定理的 \texttt{\string\uses} 列表或前提句中，即表~\ref{tab:summary-assumptions} 中的 $\checkmark$）；粗红线为该定理的瓶颈假设（总表~\ref{tab:summary-master} 的瓶颈栏；条件定理取前提中等级最低者），它们也可能经由所用的陈述进入；不是瓶颈的间接依赖从略，完整的依赖闭包由 \texttt{\string\uses} 数据生成，见附录~P（\cref{fig:appP-dependency}）。全局假设 \texttt{asm:intro-*} 不降低普通陈述的等级；\texttt{appN-brst-nonlocal} 是具名缺口，只作为 \texttt{thm:appN-structure} 的前提。}
+\label{fig:summary-hypotheses}
+\end{figure}
+%%% END fig:summary-hypotheses

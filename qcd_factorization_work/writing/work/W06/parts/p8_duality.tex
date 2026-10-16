@@ -1,0 +1,38 @@
+% ---------------------------------------------------------------------
+\section{类时区：抹平与对偶}\label{sec:ee-duality}
+
+实验的 $R(s)$ 在 $\rho$、$\omega$、$\phi$、$J/\psi$ 等共振处剧烈变化，而微扰的 $R(s)$ 是 $\ln s$ 的光滑多项式，两者在共振附近不能逐点相等。Poggio、Quinn 与 Weinberg 提出比较在宽度 $\Delta$ 上抹平的 $R$\cite{PoggioQuinnWeinberg1976}。抹平本身是恒等式（\cref{prop:ee-smearing}），用微扰论计算抹平量则是猜想（\cref{conj:ee-duality}）。
+
+\begin{proposition}[Poggio--Quinn--Weinberg 抹平恒等式 \tagR]\label{prop:ee-smearing}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）在\cref{prop:ee-analytic}(b) 的条件下，对实的 $s$ 与 $\Delta>0$，
+\begin{equation}\label{eq:ee-smearing}
+\bar R(s,\Delta)\equiv\frac\Delta\pi\int_0^\infty\!\dd s'\,\frac{R(s')}{(s'-s)^2+\Delta^2}=\frac{12\pi}{2\ii}\big[\Pi(s+\ii\Delta)-\Pi(s-\ii\Delta)\big].
+\end{equation}
+% VF-EE-14
+非微扰地位：\cref{asm:intro-wightman}（MA0）。
+\uses{prop:ee-analytic,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+\cref{eq:ee-once}的核可写为 $\frac{z+\mu^2}{(s'-z)(s'+\mu^2)}=\frac1{s'-z}-\frac1{s'+\mu^2}$，故对 $z\notin[s_0,\infty)$（积分绝对收敛）
+\[
+\Pi(z)-\Pi(-\mu^2)=\frac1\pi\int\dd s'\,\Imag\Pi(s')\Big[\frac1{s'-z}-\frac1{s'+\mu^2}\Big].
+\]
+取 $z=s+\ii\Delta$ 与 $z^*$ 相减，$\Pi(z)-\Pi(z^*)=\frac1\pi\int\dd s'\,\Imag\Pi(s')\frac{z-z^*}{(s'-z)(s'-z^*)}=\frac{2\ii\Delta}\pi\int\dd s'\,\frac{\Imag\Pi(s')}{(s'-s)^2+\Delta^2}$；乘以 $12\pi/(2\ii)$ 并用 $R=12\pi\Imag\Pi$ 即得。
+\end{proof}
+例如领头阶无质量微扰论中 $R=R_0\theta(s')$、$\Pi_0=\frac{R_0}{12\pi^2}(\frac53-\ln\frac{-q^2}{\mu^2})$；对 $s>0$，两边都等于 $R_0[1-\frac1\pi\arctan\frac\Delta s]$，$\Delta\to0$ 时趋于 $R_0$。右边只需要 $\Pi$ 在离开实轴距离 $\Delta$ 的点上的值（\cref{fig:ee-pi-plane}）。
+
+\begin{conjecture}[夸克—强子对偶 \tagC]\label{conj:ee-duality}
+(a)~（全局对偶）当 $\Delta\sim s$ 时，$\bar R(s,\Delta)=\bar R_{\rm PT}(s,\Delta)+\order{\Lambda^4/\Delta^2}$，其中 $\bar R_{\rm PT}$ 是把微扰的 $\Pi$ 代入\cref{eq:ee-smearing}右边所得，$\order{\Lambda^4/\Delta^2}$ 是量纲为 $4$ 的凝聚项给出的修正（$\Lambda^4$ 代表凝聚的大小）；这依赖于非微扰 OPE 在复点 $s\pm\ii\Delta$ 处成立（\cref{rem:ee-complex-ope}）。
+(b)~（局域对偶）逐点的 $R(s)=R_{\rm PT}(s)+(\text{幂次修正})$ 不受 OPE 控制：在 $1/Q^2$ 展开中不可见的项（例如随 $s$ 振荡的项）对欧氏量的贡献是指数压低的，却可以在类时轴上逐点出现。
+\uses{prop:ee-smearing,conj:ee-np-ope,rem:ee-complex-ope}
+\end{conjecture}
+
+\paragraph{地位与缺口}两部分都是猜想（\tagC）。(a) 的输入是\cref{conj:ee-np-ope}与 OPE 在复平面上成立的额外假设（\cref{rem:ee-complex-ope}）；对 $\Delta\sim s$，宗量离开割线 $\order{s}$，这一假设看似温和，但没有证明。(b) 更强：对偶破坏项按定义不出现在 OPE 中，既不能由 OPE 推出，也不能由 OPE 排除。基于瞬子的模型给出按幂次衰减的振荡项，基于共振的模型给出另一种形式；这些只是示例\cite{Shifman2000}。实验与微扰论在抹平量上的一致是相容性的证据，不是证明。证明 (a) 需要 $\Pi$ 在复平面上的非微扰控制；局域对偶关系到一切逐点使用微扰论的类时量（例如后文\cref{thm:heavy-inclusive-b}（\tagA）的地位讨论）。
+
+\begin{remark}[常见误解]\label{rem:ee-misconceptions}
+(1)~“微扰的 $R(s)$ 在 $s$ 上逐点成立”：不对。\cref{thm:ee-R-finite}是关于微扰系数的陈述；与强子 $R(s)$ 的比较只对欧氏量（\cref{prop:ee-adler-dispersion}）或抹平量（\cref{prop:ee-smearing}）有意义，局域对偶是猜想（\cref{conj:ee-duality}(b)）。
+(2)~“$\order{\as^2}$ 有正比于 $(\sum_qe_q)^2$ 的单态项”：不对，两胶子交换的单态贡献由 Furry 定理消失，单态项自 $\order{\as^3}$ 起（\cref{cor:ee-R-alphas}(iv)）。
+(3)~“$R$ 的有限性来自维数正规化”或“需要 $D$ 维割图规则”：维数正规化只正规化红外发散，各割图单独发散（\cref{ex:ee-quark-spectrum}）；\cref{thm:ee-R-finite}只用欧氏有限性与解析延拓，割图规则只用于\cref{cor:ee-cuts}（\tagA）。
+\end{remark}
+
+\paragraph{本章小结}本章在最简单的过程中把四个逻辑层次彼此分开。(i)~微扰论：$R(s)$ 的微扰展开每一阶红外有限，且是 $\ln(s/\mu^2)$ 的多项式（\cref{thm:ee-R-finite}，\tagR）；证明只需要欧氏有限性、单标度结构与重整化群，$\order{\as}$ 的系数由割图与欧氏两圈两种独立计算在任意 $\varepsilon$ 下逐项核对；与 $D$ 维部分子割图之和的等同只有全阶论证（\cref{cor:ee-cuts}，\tagA）。(ii)~解析性：谱表示、一次减除的确切条件、围道公式与抹平恒等式都是 Wightman 结构之下由定义推出的结论（\tagR，$R_{\mathrm{def}}$）。(iii)~OPE：微扰 OPE 是全阶论证（\tagA），凝聚的非微扰意义是猜想（\tagC）。(iv)~对偶：抹平量的可计算性与局域对偶都是猜想（\tagC）。这一分层贯穿全书。在 DIS 中（\cref{sec:dis-ope}），欧氏 OPE 只覆盖长度 $\order{M/Q}$ 的一段，强子的矩还需要正定性与色散关系；而一旦初态带色、或末态只被部分测量，“欧氏有限性加平凡的解析延拓”这条捷径就不复存在，必须直接面对闵氏空间中的钳夹（\cref{sec:ir-pinch}）与全阶因子化的一般方法（后文\cref{thm:method-template}，\tagA）。

@@ -1,0 +1,77 @@
+% ---------------------------------------------------------------------
+\section{运动学、强子张量与结构函数}\label{sec:dis-kinematics}
+
+在电磁耦合的最低阶，DIS 振幅是轻子流、光子传播子与强子流矩阵元的乘积；强相互作用的全部效应都包含在后者之中，而且这一分离在 QCD 中是精确的（只用到 $\alpha$ 的最低阶）。截面中出现的是强子流矩阵元的“平方”对末态的求和，由完备性它化为一个强子态中两个流的乘积，这就是强子张量。
+
+\begin{definition}[DIS 运动学与强子张量]\label{def:dis-kinematics}
+考虑 $\ell(\ell)+A(P)\to\ell'(\ell')+X$，单光子交换，$q=\ell-\ell'$，$P^2=M^2$。定义
+\begin{equation}\label{eq:dis-invariants}
+Q^2=-q^2>0,\qquad \nu=P\cdot q,\qquad x=\frac{Q^2}{2P\cdot q},\qquad y=\frac{P\cdot q}{P\cdot\ell},\qquad \omega=\frac1x=\frac{2P\cdot q}{Q^2},
+\end{equation}
+末态不变质量 $W^2=(P+q)^2=M^2+Q^2(1-x)/x$。电磁流 $j^\mu=\sum_qe_q\bar q\gamma^\mu q$。对靶自旋平均、态归一化为 $\langle P'|P\rangle=(2\pi)^32E\,\delta^3(\vec P'-\vec P)$ 时，强子张量与结构函数 $F_{1,2}(x,Q^2)$ 由
+\begin{equation}\label{eq:dis-W}
+W^{\mu\nu}=\frac1{4\pi}\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[j^\mu(z),j^\nu(0)]|P\rangle
+=\Big(-g^{\mu\nu}+\frac{q^\mu q^\nu}{q^2}\Big)F_1+\frac{\tilde P^\mu\tilde P^\nu}{P\cdot q}\,F_2,\qquad \tilde P=P-\frac{P\cdot q}{q^2}\,q
+\end{equation}
+定义（\cref{prop:dis-W-structure}说明这一分解是一般的）。纵向结构函数为% VF-CONV-13
+
+\begin{equation}\label{eq:dis-FL}
+F_L=\Big(1+\frac{4M^2x^2}{Q^2}\Big)F_2-2xF_1\ \xrightarrow{\ M\to0\ }\ F_2-2xF_1 .
+\end{equation}
+对非极化、无质量的轻子，截面为
+\begin{equation}\label{eq:dis-xsec}
+\frac{\dd^2\sigma}{\dd x\,\dd Q^2}=\frac{4\pi\alpha^2}{xQ^4}\Big[xy^2F_1+\Big(1-y-\frac{x^2y^2M^2}{Q^2}\Big)F_2\Big]
+\ \xrightarrow{\ M\to0\ }\ \frac{2\pi\alpha^2}{xQ^4}\Big[\big(1+(1-y)^2\big)F_2-y^2F_L\Big].
+\end{equation}
+Bjorken 极限指 $Q^2\to\infty$、$x$ 固定。
+% uses: none
+\end{definition}
+
+运动学见\cref{fig:dis-kinematics}。$W^{\mu\nu}$ 前的因子 $1/(4\pi)$ 是使部分子模型给出 $F_2=\sum_qe_q^2x(q+\bar q)$ 的归一化（\cref{ex:dis-free-quark}给出自由夸克的 $F_2=e_q^2\delta(1-x)$）。
+
+\paragraph{截面公式的推导。}这一推导只用到 QED 的最低阶，我们写出全部步骤（符号与因子由脚本 \texttt{s1\_kinematics.py} 核对）。振幅为 $\mathcal M=\frac{e^2}{q^2}\,\bar u(\ell')\gamma_\mu u(\ell)\,\langle X|j^\mu(0)|P\rangle$。轻子自旋平均给出
+\[
+L_{\mu\nu}=\tfrac12\TrD[\sla\ell'\gamma_\mu\sla\ell\gamma_\nu]=2\big(\ell_\mu\ell'_\nu+\ell'_\mu\ell_\nu-g_{\mu\nu}\,\ell\cdot\ell'\big),
+\]
+对末态求和并用\cref{prop:dis-W-structure}证明中的完备性公式 $\sum_X(2\pi)^4\delta^4(P+q-p_X)\langle P|j^\mu|X\rangle\langle X|j^\nu|P\rangle=4\pi W^{\mu\nu}$，再乘以通量因子 $1/(4P\cdot\ell)$ 与轻子相空间 $\dd^3\ell'/[(2\pi)^32E']$，得
+\[
+\dd\sigma=\frac{e^4}{4P\cdot\ell\,Q^4}\,L_{\mu\nu}\,4\pi W^{\mu\nu}\,\frac{\dd^3\ell'}{(2\pi)^32E'}=\frac{\alpha^2}{P\cdot\ell\,E'\,Q^4}\,L_{\mu\nu}W^{\mu\nu}\,\dd^3\ell' .
+\]
+由 $\ell^2=\ell'^2=0$ 有 $\ell\cdot\ell'=Q^2/2$，$\ell\cdot q=-Q^2/2$，$\ell'\cdot q=Q^2/2$，故 $L_{\mu\nu}q^\nu=0$（轻子流守恒），$L_{\mu\nu}g^{\mu\nu}=-2Q^2$，$L_{\mu\nu}P^\mu P^\nu=4(P\cdot\ell)(P\cdot\ell')-M^2Q^2$；用 $P\cdot\ell=P\cdot q/y$、$P\cdot\ell'=P\cdot q\,(1-y)/y$ 与 $P\cdot q=Q^2/(2x)$，
+\[
+L_{\mu\nu}W^{\mu\nu}=2Q^2F_1+\Big[\frac{2Q^2(1-y)}{xy^2}-2xM^2\Big]F_2 .
+\]
+在靶静止系中 $P\cdot\ell=ME$，对方位角积分后 $\dd^3\ell'=2\pi E'^2\dd E'\,\dd\cos\theta$；变量 $(E',\cos\theta)\mapsto(Q^2,\nu)$，$Q^2=2EE'(1-\cos\theta)$，$\nu=M(E-E')$ 的 Jacobi 行列式绝对值为 $2EE'M$，再在固定 $Q^2$ 下换到 $x$：$\dd\nu=\frac{Q^2}{2x^2}\dd x$。合起来 $\dd\sigma/\dd x\,\dd Q^2=\frac{\pi\alpha^2}{2M^2E^2Q^2x^2}L_{\mu\nu}W^{\mu\nu}$；代入 $M^2E^2=Q^4/(4x^2y^2)$ 即得\cref{eq:dis-xsec}的第一式。用 $2xF_1=F_2-F_L$（$M\to0$）把 $xy^2F_1$ 换成 $\frac{y^2}2(F_2-F_L)$，得第二式。
+
+%%INSERT fig:dis-kinematics
+
+\begin{proposition}[强子张量的一般结构 \tagR]\label{prop:dis-W-structure}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）对自旋平均的靶：
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item $q_\mu W^{\mu\nu}=0=W^{\mu\nu}q_\nu$；
+\item 由 $g^{\mu\nu}$、$P$、$q$ 构成并满足 (i)、宇称不变与厄米性的最一般二阶张量就是\cref{eq:dis-W}右端的两项，$F_1$、$F_2$ 是实函数；
+\item 对任意复矢量 $a_\mu$，$a_\mu W^{\mu\nu}a^*_\nu\ge0$。取横向极化 $\epsilon_T$（$\epsilon_T\cdot P=\epsilon_T\cdot q=0$，$\epsilon_T^2=-1$）与纵向极化 $\epsilon_L=\tilde P/\sqrt{\tilde P^2}$，有
+\begin{equation}\label{eq:dis-positivity}
+\epsilon_{T\mu}W^{\mu\nu}\epsilon_{T\nu}=F_1\ge0,\qquad 2x\,\epsilon_{L\mu}W^{\mu\nu}\epsilon_{L\nu}=F_L\ge0,\qquad \Big(1+\frac{4M^2x^2}{Q^2}\Big)F_2=F_L+2xF_1\ge0 ;
+\end{equation}
+\item $x>1$ 时 $W^{\mu\nu}=0$；$x=1$ 处只有靶本身作为中间态（弹性散射）贡献。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}（MA0：态的完备性、谱条件与宇称）。
+\uses{def:dis-kinematics,asm:intro-wightman}
+\end{proposition}
+
+\begin{proof}
+(i) 由流守恒 $\partial_\mu j^\mu=0$：$q_\mu\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[j^\mu(z),j^\nu(0)]|P\rangle=\ii\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[\partial_\mu j^\mu(z),j^\nu(0)]|P\rangle=0$（对易子的矩阵元是缓增分布，分部积分无边界项）。对第二个指标，先用平移不变性 $\langle P|[j^\mu(z),j^\nu(0)]|P\rangle=\langle P|[j^\mu(0),j^\nu(-z)]|P\rangle$，再同样分部积分。
+
+(ii) 由 $g$、$P$、$q$ 构成的二阶张量（不用 $\epsilon$ 张量）是 $Ag^{\mu\nu}+BP^\mu P^\nu+Cq^\mu q^\nu+D(P^\mu q^\nu+q^\mu P^\nu)+E(P^\mu q^\nu-q^\mu P^\nu)$。$q_\mu W^{\mu\nu}=0$ 中 $P^\nu$ 与 $q^\nu$ 的系数给出 $BP\cdot q+(D-E)q^2=0$ 与 $A+Cq^2+(D+E)P\cdot q=0$；$W^{\mu\nu}q_\nu=0$ 给出把 $E$ 换成 $-E$ 的同样两式。四式联立得 $E=0$、$D=-BP\cdot q/q^2$、$A=B(P\cdot q)^2/q^2-Cq^2$，剩下的两个自由参数正好重组为\cref{eq:dis-W}的两项。唯一的另一个结构 $\epsilon^{\mu\nu\rho\sigma}P_\rho q_\sigma$ 是赝张量：电磁流是矢量流，宇称不变且靶非极化时它的系数为零（对弱流它给出 $F_3$）。流的厄米性给出 $(W^{\mu\nu})^*=W^{\nu\mu}$，故对称部分的系数为实数。
+
+(iii) 在 $P\cdot q>0$ 时插入完备态。对易子的第二项 $\int\ee^{\ii q\cdot z}\langle P|j^\nu(0)j^\mu(z)|P\rangle$ 只含 $p_X=P-q$ 的态，而 $(P-q)^2=M^2-Q^2(1+x)/x<M^2$；靶的超选择扇区中没有这样的态（\cref{asm:intro-wightman}(W2)），故它为零。剩下
+\begin{equation}\label{eq:dis-W-completeness}
+W^{\mu\nu}=\frac1{4\pi}\sum_X(2\pi)^4\delta^4(P+q-p_X)\,\langle P|j^\mu(0)|X\rangle\langle X|j^\nu(0)|P\rangle .
+\end{equation}
+记 $J^\nu_X=\langle X|j^\nu(0)|P\rangle$，由流的厄米性 $\langle P|j^\mu|X\rangle=(J^\mu_X)^*$，于是 $a_\mu W^{\mu\nu}a^*_\nu=\frac1{4\pi}\sum_X(2\pi)^4\delta^4(\cdots)\,|a^*_\nu J^\nu_X|^2\ge0$。对 $\epsilon_T$：$\epsilon_T\cdot(-g+qq/q^2)\cdot\epsilon_T=-\epsilon_T^2=1$，$\epsilon_T\cdot\tilde P=0$，得第一式。对 $\epsilon_L$：$\tilde P\cdot q=0$，$\tilde P^2=M^2+(P\cdot q)^2/Q^2>0$，故 $\epsilon_L\cdot W\cdot\epsilon_L=-F_1+\tilde P^2F_2/(P\cdot q)$；用 $P\cdot q=Q^2/(2x)$，$\tilde P^2/(P\cdot q)=\frac1{2x}\big(1+\frac{4M^2x^2}{Q^2}\big)$，于是 $2x\,\epsilon_L\cdot W\cdot\epsilon_L=(1+\frac{4M^2x^2}{Q^2})F_2-2xF_1=F_L$。第三式即\cref{eq:dis-FL}。
+
+(iv) 由\cref{eq:dis-W-completeness}，只有 $p_X=P+q$ 的态贡献；谱条件要求 $p_X^2=W^2=M^2+Q^2(1-x)/x\ge M^2$，即 $x\le1$，且 $x=1$ 时 $W^2=M^2$，只有靶本身（单粒子态）可以作为中间态。
+\end{proof}
+
+正性 (iii) 是强子路线的关键输入（\cref{thm:dis-fixed-n}）。对部分子靶，在固定阶的微扰论中结构函数一般不是正的（它们含加号分布与 $\delta(1-x)$，且有 $\overline{\rm MS}$ 减除），所以正性论证只属于非微扰层次。

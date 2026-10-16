@@ -1,0 +1,76 @@
+% =====================================================================================================
+% appB_wilson.tex —— 附录 B  Wilson 线：Feynman 规则、程函恒等式与尖点（writer W05）
+% 源：FINAL_OUTLINE_v2 App B；research/c_wilson（DERIVATION.md §2--§3）；VF-WL-1/3/4/13，VF-CONV-23，VF-SCET-16；
+%     验证脚本 writing/work/W05/s4_wilson.py、s5_cusp.py（日志 logs/）。
+% =====================================================================================================
+\chapter{Wilson 线：Feynman 规则、程函恒等式与尖点}\label{app:appB}
+
+本附录给出正文中关于 Wilson 线的若干结论的证明：第~3~章\cref{prop:prelim-wilson-covariance}（规范协变性，\cref{sec:appB-definition}）、
+\cref{prop:prelim-wilson-rules}（动量空间 Feynman 规则，由\cref{prop:appB-rules}给出，\tagR，$R_{\mathrm{def}}$）、\cref{lem:prelim-eikonal-identity}（程函恒等式，由\cref{lem:appB-shuffle}给出），
+半无限 Wilson 线的 Ward 恒等式（供附录~F 使用），非阿贝尔指数化的全阶论证（\cref{prop:appB-webs}，\tagA），以及第~5~章所用的单圈 cusp 反常维度（\cref{prop:appB-cusp-oneloop}，\tagR，$R_{\mathrm{PT}}$）。
+
+% -----------------------------------------------------------------------------------------------------
+\section{定义与约定}\label{sec:appB-definition}
+
+沿路径 $z(s)$（$s\in[0,1]$，$z(0)=a$，$z(1)=b$）的 Wilson 线（\cref{def:prelim-wilson}）为
+\begin{equation}\label{eq:appB-W}
+\begin{aligned}
+W[b,a]&=P\exp\Big(\ii g\int_a^b\dd z^\mu A^a_\mu(z)\,t^a\Big)\\
+&=\sum_{m=0}^\infty(\ii g)^m\!\!\int\limits_{0<s_1<\dots<s_m<1}\!\!\dd s_1\cdots\dd s_m\;
+\dot z\cdot A(z(s_m))\cdots\dot z\cdot A(z(s_1)),
+\end{aligned}
+\end{equation}
+$A\equiv A^at^a$，离 $b$ 近的点在左。等价地，$W(s)\equiv W[z(s),a]$ 是 $\frac{\dd}{\dd s}W(s)=\ii g\,\dot z\cdot A(z(s))\,W(s)$、$W(0)=1$ 的唯一解（级数逐项满足该方程，且对有界 $A$ 绝对收敛）。
+
+\emph{\cref{prop:prelim-wilson-covariance}的证明。}(i) 复合与回溯：$W[c,b]W[b,a]$ 与 $W[c,a]$ 满足同一方程与同一初值，故相等；取 $c=a$ 得 $W[a,b]W[b,a]=1$。
+对厄米的 $A$，$W[b,a]^\dagger$ 满足反向路径的方程，故 $W[b,a]^\dagger=W[a,b]=W[b,a]^{-1}$。(ii) 规范协变性：在 $D_\mu=\partial_\mu-\ii gA_\mu$ 的规范变换
+$A\to A'=UAU^{-1}-\frac{\ii}g(\partial U)U^{-1}$ 下，令 $V(s)=U(z(s))\,W(s)\,U^{-1}(a)$，则
+\[
+\frac{\dd V}{\dd s}=\Big[\frac{\dd U}{\dd s}U^{-1}+\ii g\,U\dot z\cdot A\,U^{-1}\Big]V=\ii g\,\dot z\cdot A'\,V,\qquad V(0)=1,
+\]
+故 $V=W'$，即 $W[b,a]\to U(b)\,W[b,a]\,U^{-1}(a)$。若把非齐次项的符号取反，这一推导失败（脚本 \texttt{s4\_wilson.py} 在 SU(3) 背景场中数值验证了这两点）。
+伴随 Wilson 线由 $W[b,a]\,t^b\,W[b,a]^{-1}=t^a\,W^{(A)}_{ab}[b,a]$ 定义，即 $W^{(A)}_{ab}=2\Tr[t^aW[b,a]t^bW[a,b]]$。
+
+\emph{约定。}(C1) $A(x)=\int\frac{\dd^4k}{(2\pi)^4}\ee^{-\ii k\cdot x}\tilde A(k)$：$k$ 是在连接点\emph{流入} Wilson 线的动量。(C2) 方向矢量 $n$ 指向未来（$n^0>0$），半无限直线记作
+$W[\infty n,y]=\lim_{L\to\infty}W[y+Ln,y]$、$W[y,-\infty n]$ 等；端点 $y\ne0$ 时以下规则再乘 $\ee^{-\ii y\cdot K_{\rm tot}}$。(C3) \emph{绝热正规子}：半无限线上的场乘以 $\ee^{-\epsilon s}$，
+$s\ge0$ 为到有限端点的仿射距离，最后取 $\epsilon\to0^+$。
+\emph{符号警告：}Collins 的协变导数为 $D=\partial+\ii g_0tA$\cite[式~(2.2)]{Collins2011}，故 $g_{\rm Collins}=-g$；他的 Wilson 线写作 $P\exp(-\ii g_0\int n\cdot A)$\cite[式~(13.40)]{Collins2011}，
+作为算符与我们的 $W$ 相同，但凡由他的书抄录的、含 $g$ 奇次幂的表达式都要换号；他的图~7.10 与式~(11.4)--(11.6) 应按作者勘误表使用（附录~Q 第~19~条）。
+
+% -----------------------------------------------------------------------------------------------------
+\section{动量空间 Feynman 规则}\label{sec:appB-rules}
+
+本节给出第~3~章\cref{prop:prelim-wilson-rules}的证明。
+
+\begin{proposition}[Wilson 线的 Feynman 规则 \tagR]\label{prop:appB-rules}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）按 (C1)--(C3)，直半无限 Wilson 线中连接 $m$ 个胶子（动量 $k_j$ 流入、指标 $\mu_j$、色 $a_j$；记 $n\cdot\tilde A_j\equiv n^{\mu_j}\tilde A^{a_j}_{\mu_j}(k_j)t^{a_j}$，按所写次序相乘）的项为
+\begin{align}
+W^{(m)}[0,-\infty n]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{\ii}{n\cdot(k_1+\dots+k_j)+\ii j\epsilon},\label{eq:appB-past}\\
+W^{(m)}[\infty n,0]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{-\ii}{n\cdot(k_j+\dots+k_m)-\ii(m-j+1)\epsilon},\label{eq:appB-future}\\
+W^{(m)}[-\infty n,0]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(-\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{\ii}{n\cdot(k_j+\dots+k_m)+\ii(m-j+1)\epsilon},\label{eq:appB-pastc}\\
+W^{(m)}[0,\infty n]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(-\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{-\ii}{n\cdot(k_1+\dots+k_j)-\ii j\epsilon},\label{eq:appB-futc}
+\end{align}
+% VF-WL-1
+其中胶子按路径次序编号：式~\eqref{eq:appB-past} 中 $k_1$ 最靠近 $-\infty$，式~\eqref{eq:appB-future} 与 \eqref{eq:appB-pastc} 中 $k_1$ 最靠近 $0$，式~\eqref{eq:appB-futc} 中 $k_1$ 最靠近 $+\infty$。
+等价地（普适规则）：每个连接点一个顶点 $\ii g\,t^av^\mu$（$v$ 为沿取向的切矢量），除伸向无穷远的一段外每段一个程函传播子 $\ii/(v\cdot\ell+\ii0)$（$\ell$ 为沿取向流动的动量，伸向无穷远的一段 $\ell=0$），
+色矩阵按路径次序；有限 $\epsilon$ 下某段的 $\ii0$ 等于 $\ii\epsilon$ 乘以该段与无穷远端之间的连接点数。特别地，单胶子项为
+\begin{equation}\label{eq:appB-onegluon}
+\begin{gathered}
+W[\infty n,0]\ni\frac{g\,t^an^\mu\tilde A^a_\mu(k)}{n\cdot k-\ii0},\qquad W[-\infty n,0]\ni\frac{g\,t^an^\mu\tilde A^a_\mu(k)}{n\cdot k+\ii0},\\
+\text{两者之差}=2\pi\ii\,g\,t^an^\mu\tilde A^a_\mu(k)\,\delta(n\cdot k).
+\end{gathered}
+\end{equation}
+\uses{def:prelim-wilson}
+\end{proposition}
+
+\begin{proof}
+以 $W[0,-\infty n]=P\exp(\ii g\int_{-\infty}^0\dd\lambda\,n\cdot A(\lambda n))$ 为例。代入 (C1) 并乘以绝热因子 $\ee^{\epsilon\lambda_j}$，$m$ 阶项的参数积分为
+$\int_{-\infty<\lambda_1<\dots<\lambda_m<0}\prod_j\dd\lambda_j\,\ee^{-\ii\lambda_j(n\cdot k_j+\ii\epsilon)}$。先积 $\lambda_1$：
+$\int_{-\infty}^{\lambda_2}\dd\lambda_1\,\ee^{-\ii\lambda_1(n\cdot k_1+\ii\epsilon)}=\frac{\ii}{n\cdot k_1+\ii\epsilon}\,\ee^{-\ii\lambda_2(n\cdot k_1+\ii\epsilon)}$，它与第二个场的相因子合并为
+$\ee^{-\ii\lambda_2(n\cdot(k_1+k_2)+2\ii\epsilon)}$；对 $j$ 归纳，第 $j$ 次积分给出 $\ii/[n\cdot(k_1+\dots+k_j)+\ii j\epsilon]$，最后 $\lambda_m$ 积到 $0$，相因子为 $1$。色矩阵的次序就是式~\eqref{eq:appB-W} 的路径次序。
+$W[\infty n,0]$ 的积分区域为 $0<\lambda_1<\dots<\lambda_m<\infty$，阻尼为 $\ee^{-\epsilon\lambda_j}$，先积 $\lambda_m$（从 $\lambda_{m-1}$ 到 $\infty$），归纳给出 $\prod_j(-\ii)/[n\cdot(k_j+\dots+k_m)-\ii(m-j+1)\epsilon]$。
+$W[-\infty n,0]$ 与 $W[0,\infty n]$ 的取向为 $-n$（$\dd z=-n\,\dd\lambda'$），每个顶点多一个负号，动量仍从无穷远端累加，得式~\eqref{eq:appB-pastc}、\eqref{eq:appB-futc}。
+普适规则只是这四式的改写：例如对 $W[\infty n,0]$，第 $j$ 个胶子之前那一段沿取向的动量为 $\ell=-(k_j+\dots+k_m)$，$\ii/(n\cdot\ell+\ii0)=-\ii/(n\cdot(k_j+\dots+k_m)-\ii0)$。
+式~\eqref{eq:appB-onegluon} 是 $m=1$ 的情形，差由 $\frac1{x-\ii0}-\frac1{x+\ii0}=2\pi\ii\delta(x)$ 给出；也可直接看出：两者之差的一阶项是 $\ii g\int_{-\infty}^{\infty}\dd\lambda\,n\cdot A(\lambda n)$，其 Fourier 变换为 $2\pi\ii g\,\delta(n\cdot k)\,n\cdot\tilde A$。
+脚本 \texttt{s4\_wilson.py} 对四种线的 $m\le3$ 作了符号验证，并把式~\eqref{eq:appB-W} 作为常微分方程在 SU(3) 平面波背景中数值求解，$g^1$ 至 $g^4$ 的系数与规则相符（残差按 $g^5$ 标度）。
+\end{proof}

@@ -1,0 +1,361 @@
+% !TEX program = xelatex
+% 编译：xelatex qcd_factorization.tex（运行三次以生成目录与交叉引用）
+% 字体：fontset=fandol 随 TeX Live 发行，可在任何平台编译；
+%       在 macOS 上可改为 fontset=macnew 以获得更好的中文字体效果。
+\documentclass[UTF8,a4paper,11pt,oneside,openany,fontset=fandol]{ctexbook}
+
+\usepackage[margin=2.5cm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+% \mathbb 1：amssymb 的 msbm 字体没有数字 1，改用 dsfont 的 \mathds{1}；\mathbb{C}、\mathbb{R} 等不变
+\usepackage{dsfont}
+\let\amsmathbb\mathbb
+\renewcommand{\mathbb}[1]{\ifx1#1\mathds{1}\else\amsmathbb{#1}\fi}
+\usepackage{slashed}
+\usepackage{booktabs,array,multirow,tabularx}
+\usepackage{enumitem}
+\usepackage{caption,subcaption}
+\captionsetup{labelsep=quad}     % 图表标题 “图 5　……”：编号后空一字，不用西文冒号
+\usepackage[section]{placeins}   % 浮动体不越过 \section 边界
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing,decorations.markings,arrows.meta,calc,positioning,shapes.geometric,patterns,backgrounds,fit}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage[most]{tcolorbox}
+\usepackage{etoolbox}            % \patchcmd、\appto（tcolorbox 亦载入，此处显式声明）
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,
+            urlcolor=blue!60!black,bookmarksnumbered=true]{hyperref}
+\usepackage[nameinlink]{cleveref}
+\usepackage[nottoc]{tocbibind}   % 参考文献进入目录与 PDF 书签
+
+% ---------------- 定理类环境 ----------------
+% 定理、引理、命题、推论的正文：汉字用楷体，西文保持直立。plain 样式的 \itshape
+% 会把对称性名称 “C 宇称/C 偶/C 奇” 中的正体 C 排成斜体，与电荷共轭矩阵 $C$
+% 无法区分；上下间距与标题字体同 plain。
+% 三种样式的标题都按中文习惯排：附注用全角括号（……），标题后不加西文句点而空一字；
+% cdefinition、cremark 的字体与上下间距分别同 amsthm 的 definition、remark 样式。
+\newtheoremstyle{cplain}{\topsep}{\topsep}{\kaishu}{0pt}{\bfseries}{}{1em}%
+  {\thmname{#1}\thmnumber{ \textup{#2}}\thmnote{\normalfont（#3）}}
+\newtheoremstyle{cdefinition}{\topsep}{\topsep}{\normalfont}{0pt}{\bfseries}{}{1em}%
+  {\thmname{#1}\thmnumber{ \textup{#2}}\thmnote{\normalfont（#3）}}
+\newtheoremstyle{cremark}{\glueexpr\topsep/2\relax}{\glueexpr\topsep/2\relax}%
+  {\normalfont}{0pt}{\itshape}{}{1em}%
+  {\thmname{#1}\thmnumber{ \textup{#2}}\thmnote{\normalfont（#3）}}
+\theoremstyle{cplain}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{conjecture}[theorem]{猜想}
+\theoremstyle{cdefinition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\theoremstyle{cremark}
+\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+% 证明的标题同样不加句点：amsthm 原定义中的 \@addpunct{.} 改为 0.5em，连同 \labelsep 共空一字
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\itshape #1\hspace{0.5em}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\makeatother
+
+\tcolorboxenvironment{theorem}{enhanced,breakable,colback=blue!3!white,
+  colframe=blue!45!black,boxrule=0.6pt,arc=2pt,left=5pt,right=5pt,top=3pt,bottom=3pt}
+
+\crefname{theorem}{定理}{定理}
+\crefname{lemma}{引理}{引理}
+\crefname{proposition}{命题}{命题}
+\crefname{corollary}{推论}{推论}
+\crefname{conjecture}{猜想}{猜想}
+\crefname{definition}{定义}{定义}
+\crefname{example}{例}{例}
+\crefname{remark}{注}{注}
+\crefname{equation}{式}{式}
+\creflabelformat{equation}{#2(#1)#3}
+\crefname{figure}{图}{图}
+\crefname{table}{表}{表}
+\crefformat{chapter}{#2第~#1~章#3}
+\crefformat{section}{#2第~#1~节#3}
+\crefformat{subsection}{#2第~#1~小节#3}
+\crefformat{appendix}{#2附录~#1#3}
+\crefformat{subappendix}{#2附录~#1#3}
+\Crefformat{chapter}{#2第~#1~章#3}
+\Crefformat{section}{#2第~#1~节#3}
+\Crefformat{subsection}{#2第~#1~小节#3}
+\Crefformat{appendix}{#2附录~#1#3}
+\Crefformat{subappendix}{#2附录~#1#3}
+% 多目标引用的中文连接词
+\newcommand{\crefpairconjunction}{与}
+\newcommand{\crefmiddleconjunction}{、}
+\newcommand{\creflastconjunction}{与}
+\newcommand{\crefpairgroupconjunction}{与}
+\newcommand{\crefmiddlegroupconjunction}{、}
+\newcommand{\creflastgroupconjunction}{与}
+\newcommand{\crefrangeconjunction}{至}
+
+% \cref 后紧跟汉字时补中西文间距：xeCJK 不能越过超链接的边界自动插入 \CJKecglue
+% （源文件中 \cref 与汉字之间不留空格），此处手工补上。
+% 最后一组引用若为 section/subsection 类型（“第 n 节/小节”，以汉字结尾）则不补。
+\ExplSyntaxOn
+\NewCommandCopy \__fact_cref_orig:w \cref
+\tl_new:N \l__fact_cref_type_tl
+\seq_new:N \l__fact_cref_types_seq
+% 标签 #1 的 cleveref 类型，取自 \r@#1@cref = {[类型][..][..]..}{..}；标签未定义时为空
+\cs_new:Npn \__fact_cref_type:n #1
+  {
+    \cs_if_exist:cT { r@ #1 @cref }
+      { \exp_last_unbraced:Nv \__fact_cref_type_aux:w { r@ #1 @cref } \q_stop }
+  }
+\cs_new:Npn \__fact_cref_type_aux:w #1#2 \q_stop
+  { \__fact_cref_type_auxii:w #1 [] \q_stop }
+\cs_new:Npn \__fact_cref_type_auxii:w #1 [#2] #3 \q_stop
+  { \tl_if_empty:nT {#1} {#2} }
+% 输出中最后一组引用的类型（cleveref 默认按各类型首次出现的次序分组输出）
+\cs_new_protected:Npn \__fact_cref_last_type:n #1
+  {
+    \seq_clear:N \l__fact_cref_types_seq
+    \clist_map_inline:nn {#1}
+      {
+        \tl_set:Nx \l__fact_cref_type_tl { \__fact_cref_type:n {##1} }
+        \seq_if_in:NVF \l__fact_cref_types_seq \l__fact_cref_type_tl
+          { \seq_put_right:NV \l__fact_cref_types_seq \l__fact_cref_type_tl }
+      }
+    \seq_get_right:NNF \l__fact_cref_types_seq \l__fact_cref_type_tl
+      { \tl_clear:N \l__fact_cref_type_tl }
+  }
+% 下一记号若为 CJK 统一汉字（U+3400--U+9FFF），在其前插入 \CJKecglue
+\cs_new_protected:Npn \__fact_cref_ecglue:N #1
+  {
+    \bool_lazy_all:nTF
+      {
+        { \token_if_letter_p:N #1 }
+        { ! \token_if_cs_p:N #1 }
+        { \int_compare_p:nNn { `#1 } > { "33FF } }
+        { \int_compare_p:nNn { `#1 } < { "A000 } }
+      }
+      { \CJKecglue #1 }
+      { #1 }
+  }
+\RenewDocumentCommand \cref { s m }
+  {
+    \IfBooleanTF {#1}
+      { \__fact_cref_orig:w * {#2} }
+      { \__fact_cref_orig:w {#2} }
+    \__fact_cref_last_type:n {#2}
+    \str_case:VnF \l__fact_cref_type_tl
+      { { chapter } { } { section } { } { subsection } { } }
+      { \peek_N_type:TF { \__fact_cref_ecglue:N } { } }
+  }
+\ExplSyntaxOff
+
+\numberwithin{equation}{chapter}
+
+% 标题中的数学式随标题加粗（含目录中节一级条目）
+\ctexset{chapter/number=\arabic{chapter}}   % 章号用阿拉伯数字：“第 5 章”、式 (5.3)
+\ctexset{chapter/format+=\boldmath,section/format+=\boldmath,subsection/format+=\boldmath,paragraph/format+=\boldmath}
+\makeatletter
+\patchcmd{\l@section}{\bfseries}{\bfseries\boldmath}{}%
+  {\@latex@warning@no@line{\string\l@section\space not patched: math in TOC section entries stays non-bold}}
+\makeatother
+
+% 目录行距略紧并单独成页（正文从新页开始）
+\let\factorigtableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{%
+  \begingroup\linespread{1.1}\selectfont\factorigtableofcontents\endgroup\clearpage}
+
+% 参考文献条目间距略紧。\parsep 须在列表参数中设定（\list 随即把它赋给 \parskip），
+% 故写入 thebibliography 在列表参数中执行的 \@openbib@code，而不追加在 \thebibliography 之后
+\makeatletter
+\appto\@openbib@code{\setlength{\itemsep}{1pt plus 1pt}\setlength{\parsep}{0pt}}
+\makeatother
+
+% 页眉：节标题不转为大写（避免 “DIRAC”“FURRY” 之类）；页眉一律用直立体（含目录、
+% 参考文献页）：headings 样式原以 \slshape 排页眉，而 FandolSong 没有倾斜体，汉字会
+% 退成楷体，西文则倾斜
+\makeatletter
+\renewcommand{\chaptermark}[1]{\markright{\ifnum\c@secnumdepth>\m@ne\CTEXthechapter\quad\fi #1}}
+\renewcommand{\sectionmark}[1]{}
+\def\@oddhead{{\upshape\rightmark}\hfil\thepage}
+\makeatother
+
+% ---------------- 记号宏 ----------------
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+\DeclareMathOperator{\Disc}{Disc}
+\newcommand{\TrD}{\operatorname{Tr}_{\mathrm{D}}}   % Dirac 迹
+\newcommand{\Trc}{\operatorname{Tr}_{\mathrm{c}}}   % 色迹
+\newcommand{\sla}[1]{\slashed{#1}}                  % Feynman slash
+\newcommand{\dd}{\mathrm{d}}                         % 微分符号
+\newcommand{\tp}{\mathsf{T}}                         % 转置
+\newcommand{\ii}{\mathrm{i}}                        % 虚数单位（正体）
+\newcommand{\ee}{\mathrm{e}}                        % 自然对数底（正体）
+\newcommand{\MSbar}{\overline{\mathrm{MS}}}         % MS-bar 方案
+\newcommand{\order}[1]{\mathcal{O}\!\left(#1\right)}% 量级
+\newcommand{\Lqcd}{\Lambda_{\mathrm{QCD}}}
+\newcommand{\as}{\alpha_s}
+\newcommand{\pT}{p_{\mathrm{T}}}
+\newcommand{\kT}{k_{\mathrm{T}}}
+\newcommand{\bT}{b_{\mathrm{T}}}
+\newcommand{\qT}{q_{\mathrm{T}}}
+
+% ---------------- 严格性标签 ----------------
+% [R] 严格  [A] 全阶论证  [P] 部分  [C] 猜想  [V] 破坏
+\newtcbox{\facttagbox}[1][gray]{on line,arc=2pt,boxsep=0pt,left=2.2pt,right=2.2pt,top=1.2pt,bottom=1.2pt,
+  boxrule=0.45pt,colback=#1!10!white,colframe=#1!70!black,fontupper=\footnotesize\sffamily\upshape}
+\newcommand{\tagR}{\facttagbox[OliveGreen]{R\,严格}}
+\newcommand{\tagA}{\facttagbox[RoyalBlue]{A\,全阶论证}}
+\newcommand{\tagP}{\facttagbox[BurntOrange]{P\,部分}}
+\newcommand{\tagC}{\facttagbox[Plum]{C\,猜想}}
+\newcommand{\tagV}{\facttagbox[BrickRed]{V\,破坏}}
+% 只给出证明要点（对 [A]/[P] 结论）时使用
+\newenvironment{proofsketch}[1][证明概要]{\begin{proof}[#1]}{\end{proof}}
+
+% ---------------- TikZ 费曼图样式（纯 TikZ，不依赖 tikz-feynman） ----------------
+%%% BEGIN STYLES
+% =====================================================================
+%  Plain-TikZ Feynman-diagram styles (no tikz-feynman).
+%  Load in the preamble, after \usepackage{tikz}:
+%    \usetikzlibrary{decorations.pathmorphing,decorations.markings,arrows.meta,calc,positioning}
+%  Contents of this block (all low-level names start with \fd):
+%   (i)  helper registers/macros and three decorations
+%          "fd gluon"      coil for open paths,
+%          "fd gluon loop" coil for closed paths (full circles),
+%          "fd photon"     sine wave;
+%        they rescale the nominal segment length so that an integer
+%        number of coils / half-waves fits the path exactly (no straight
+%        left-overs, evenly spaced coils, also on arcs);
+%   (ii) a single \tikzset with the user-level styles:
+%          fd             picture style (line width, caps, label font)
+%          quark[=pos]    solid line, centred Stealth arrow at pos (default 0.5)
+%          gluon          coiled line;   gluon loop[=m]: closed coil, number
+%                         of coils a multiple of m (use for full circles)
+%          photon         wavy line
+%          ghost[=pos]    dotted line with centred arrow
+%          mom={..}, mom'={..}   momentum arrow parallel to a path, on its
+%                         left / right:  \path[mom={$p$}] (A) -- (B);
+%                         keys: mom pos, mom length, mom sep
+%          vertex         vertex dot (node style):  \node[vertex] at (A) {};
+%          blob           grey filled region:  \draw[blob] (c) circle[radius=5mm];
+%          bound state    double line (e.g. a bound state)
+% =====================================================================
+\newdimen\fdAA \newdimen\fdTW \newdimen\fdHW
+\def\fdloopmult{1}
+\def\fdpt#1#2#3{\pgfqpoint{\dimexpr#1\fdAA+#3\fdTW\relax}{#2\pgfdecorationsegmentamplitude}}
+\def\fdcoilfull{%
+  \pgfpathcurveto{\fdpt{0}{0.555}{1}}{\fdpt{0.445}{1}{2}}{\fdpt{1}{1}{3}}%
+  \pgfpathcurveto{\fdpt{1.555}{1}{4}}{\fdpt{2}{0.555}{5}}{\fdpt{2}{0}{6}}%
+  \pgfpathcurveto{\fdpt{2}{-0.555}{7}}{\fdpt{1.555}{-1}{8}}{\fdpt{1}{-1}{9}}%
+  \pgfpathcurveto{\fdpt{0.445}{-1}{10}}{\fdpt{0}{-0.555}{11}}{\fdpt{0}{0}{12}}}
+\def\fdcoilhalf{%
+  \pgfpathcurveto{\fdpt{0}{0.555}{1}}{\fdpt{0.445}{1}{2}}{\fdpt{1}{1}{3}}%
+  \pgfpathcurveto{\fdpt{1.555}{1}{4}}{\fdpt{2}{0.555}{5}}{\fdpt{2}{0}{6}}}
+\def\fdcoilopeninit{%
+  \fdAA=\pgfdecorationsegmentaspect\pgfdecorationsegmentamplitude\relax
+  \pgfmathsetmacro\fdN{max(1,round((\pgfdecoratedpathlength-2*\fdAA)/\pgfdecorationsegmentlength-0.5))}%
+  \pgfmathsetlength\pgfdecorationsegmentlength{(\pgfdecoratedpathlength-2*\fdAA-0.3pt)/(\fdN+0.5)}%
+  \fdTW=0.0833333\pgfdecorationsegmentlength\relax}%
+\def\fdcoilclosedinit{%
+  \fdAA=\pgfdecorationsegmentaspect\pgfdecorationsegmentamplitude\relax
+  \pgfmathsetmacro\fdN{\fdloopmult*max(1,round(\pgfdecoratedpathlength/(\fdloopmult*\pgfdecorationsegmentlength)))}%
+  \pgfmathsetlength\pgfdecorationsegmentlength{(\pgfdecoratedpathlength-0.1pt)/\fdN}%
+  \fdTW=0.0833333\pgfdecorationsegmentlength\relax}%
+\def\fdphotoninit{%
+  \pgfmathsetmacro\fdN{max(1,round(2*\pgfdecoratedpathlength/\pgfdecorationsegmentlength))}%
+  \pgfmathsetlength\fdHW{(\pgfdecoratedpathlength-0.1pt)/\fdN}}%
+\pgfdeclaredecoration{fd gluon}{init}{%
+  \state{init}[width=+0pt,next state=coil,persistent precomputation=\fdcoilopeninit]{}%
+  \state{coil}[switch if less than=1.5\pgfdecorationsegmentlength+2\fdAA to last,
+               width=+\pgfdecorationsegmentlength]{\fdcoilfull}%
+  \state{last}[width=+\dimexpr.5\pgfdecorationsegmentlength+2\fdAA\relax,next state=final]{\fdcoilhalf}%
+  \state{final}{\pgfpathlineto{\pgfpointdecoratedpathlast}}}
+\pgfdeclaredecoration{fd gluon loop}{init}{%
+  \state{init}[width=+0pt,next state=coil,persistent precomputation=\fdcoilclosedinit]{}%
+  \state{coil}[switch if less than=+\pgfdecorationsegmentlength to final,
+               width=+\pgfdecorationsegmentlength]{\fdcoilfull}%
+  \state{final}{\pgfpathlineto{\pgfpointdecoratedpathlast}}}
+\pgfdeclaredecoration{fd photon}{init}{%
+  \state{init}[width=+0pt,next state=up,persistent precomputation=\fdphotoninit]{}%
+  \state{up}[switch if less than=+\fdHW to final,width=+\fdHW,next state=down]{%
+    \pgfpathsine{\pgfqpoint{.5\fdHW}{\pgfdecorationsegmentamplitude}}%
+    \pgfpathcosine{\pgfqpoint{.5\fdHW}{-\pgfdecorationsegmentamplitude}}}%
+  \state{down}[switch if less than=+\fdHW to final,width=+\fdHW,next state=up]{%
+    \pgfpathsine{\pgfqpoint{.5\fdHW}{-\pgfdecorationsegmentamplitude}}%
+    \pgfpathcosine{\pgfqpoint{.5\fdHW}{\pgfdecorationsegmentamplitude}}}%
+  \state{final}{\pgfpathlineto{\pgfpointdecoratedpathlast}}}
+\tikzset{
+  /pgf/decoration/coil multiple/.store in=\fdloopmult,
+  fd/.style={line width=0.8pt,line cap=round,line join=round,font=\small},
+  fd arrow/.style={postaction={decorate,solid,line width=0.8pt,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=2.9pt]{Stealth[length=5.5pt,width=4.5pt]}}}}},
+  quark/.style={draw,solid,line width=0.8pt,fd arrow=#1},
+  quark/.default=0.5,
+  plain/.style={draw,solid,line width=0.8pt},
+  gluon/.style={draw,solid,line width=0.75pt,decorate,
+      decoration={fd gluon,amplitude=3.2pt,segment length=4.6pt,aspect=0.7}},
+  gluon loop/.style={draw,solid,line width=0.75pt,decorate,
+      decoration={fd gluon loop,amplitude=3.2pt,segment length=4.6pt,aspect=0.7,coil multiple=#1}},
+  gluon loop/.default=1,
+  photon/.style={draw,solid,line width=0.8pt,decorate,
+      decoration={fd photon,amplitude=2pt,segment length=6.6pt}},
+  ghost/.style={draw,line width=1.3pt,line cap=round,dash pattern=on 0pt off 2.6pt,fd arrow=#1},
+  ghost/.default=0.5,
+  mom pos/.store in=\fdmompos,mom pos=0.5,
+  mom length/.store in=\fdmomlen,mom length=0.55cm,
+  mom sep/.store in=\fdmomsep,mom sep=0.25cm,
+  mom arrow/.style={draw,solid,line width=0.5pt,-{Stealth[length=3.8pt,width=3.2pt]}},
+  mom/.style={decorate,decoration={markings,mark=at position \fdmompos with {%
+      \draw[mom arrow] (-0.5*\fdmomlen,\fdmomsep) -- node[auto,inner sep=1.5pt]{#1} (0.5*\fdmomlen,\fdmomsep);}}},
+  mom'/.style={decorate,decoration={markings,mark=at position \fdmompos with {%
+      \draw[mom arrow] (-0.5*\fdmomlen,-\fdmomsep) -- node[auto,swap,inner sep=1.5pt]{#1} (0.5*\fdmomlen,-\fdmomsep);}}},
+  vertex/.style={circle,fill,draw=none,inner sep=0pt,minimum size=3.8pt},
+  blob/.style={draw,solid,fill=gray!30,line width=0.8pt},
+  bound state/.style={draw,solid,double,double distance=1.6pt,line width=0.6pt},
+}
+%%% END STYLES
+
+%%% BEGIN STYLES-EXT
+% =====================================================================
+%  Extension of the plain-TikZ Feynman-diagram library (fd_styles.tex)
+%  for the factorization monograph.  Requires fd_styles.tex loaded first.
+%  Extra libraries: shapes.geometric, patterns, backgrounds, fit.
+%  New user-level styles:
+%    wilson[=pos]   Wilson (eikonal) line: double line with centred arrow
+%    wilson plain   Wilson line without arrow
+%    cut            final-state cut: dashed red vertical line
+%    hard blob      hard subgraph (grey);   jet blob (A side, blue);
+%    jetB blob      collinear subgraph of hadron B (orange);
+%    soft blob      soft subgraph (green);  hadron blob (target, light grey)
+%    glauber        Glauber gluon (dark-red coil)
+%    opvertex       operator insertion vertex (circled cross), node style
+%    scalar         dashed line (e.g. scalar/longitudinal polarization)
+%    longit         gluon carrying k^mu (scalar) polarization: blue coil;
+%                   optionally mark it with \longitmark{(A)}{(B)} (dot at midpoint)
+%    lcaxis         thin arrow for light-cone / spacetime axes
+%    region         dashed rounded rectangle marking a momentum region
+% Colours are kept light so that the figures print well in greyscale.
+% =====================================================================
+\tikzset{
+  wilson/.style={draw,solid,double,double distance=1.6pt,line width=0.55pt,fd arrow=#1},
+  wilson/.default=0.5,
+  wilson plain/.style={draw,solid,double,double distance=1.6pt,line width=0.55pt},
+  cut/.style={draw,dashed,red!70!black,line width=0.9pt,dash pattern=on 4pt off 2.5pt},
+  hard blob/.style={draw,solid,fill=gray!35,line width=0.8pt},
+  jet blob/.style={draw,solid,fill=blue!12,line width=0.8pt},
+  jetB blob/.style={draw,solid,fill=orange!18,line width=0.8pt},
+  soft blob/.style={draw,solid,fill=green!15,line width=0.8pt},
+  hadron blob/.style={draw,solid,fill=gray!15,line width=0.8pt},
+  glauber/.style={draw,solid,line width=0.75pt,color=red!60!black,decorate,
+      decoration={fd gluon,amplitude=3.2pt,segment length=4.6pt,aspect=0.7}},
+  opvertex/.style={circle,draw,solid,fill=white,line width=0.8pt,inner sep=0pt,minimum size=7pt,
+      path picture={\draw[line width=0.6pt] (path picture bounding box.north west)--(path picture bounding box.south east)
+                    (path picture bounding box.south west)--(path picture bounding box.north east);}},
+  scalar/.style={draw,solid,line width=0.8pt,dash pattern=on 3pt off 2pt},
+  longit/.style={draw,solid,line width=0.75pt,color=blue!60!black,decorate,
+      decoration={fd gluon,amplitude=3.2pt,segment length=4.6pt,aspect=0.7}},
+  lcaxis/.style={draw,solid,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}},
+  region/.style={draw,dashed,rounded corners=3pt,line width=0.6pt,gray!70!black},
+}
+\newcommand{\longitmark}[2]{\fill[blue!60!black] ($#1!0.5!#2$) circle[radius=1.7pt];}
+%%% END STYLES-EXT
+

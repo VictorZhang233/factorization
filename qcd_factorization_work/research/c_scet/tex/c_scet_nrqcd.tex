@@ -1,0 +1,257 @@
+% =====================================================================================
+% c_scet_nrqcd.tex —— 重夸克偶素：NRQCD 拉氏量、速度幂次计数、衰变因子化（BBL）、电磁衰变的领头阶与
+%                    O(αs) 系数、产生的因子化猜想及 NNLO 检验（第 15 章；research/c_scet，DERIVATION.md §4）
+% 验证脚本：scripts/s3_nrqcd.py（22 项），全部通过。BBL 1995（hep-ph/9407339）的引文均已在 arXiv 源文件中重新查对：
+%   协变导数 D^mu = d^mu + i g A^mu（第 II.B 节）、附录 A 的 Im f_ee、Im f_gamma gamma 及其 O(αs) 修正与出处。
+% 记号：m ≡ m_Q（重夸克极点质量；BBL 记作 M），M_H ≈ 2m 为偶素质量，ψ(0) = R(0)/sqrt(4π)。
+% =====================================================================================
+
+\section{重夸克偶素：NRQCD 因子化}\label{sec:nrqcd}
+
+重夸克偶素中有三个标度：重夸克质量 $m$（硬）、相对动量 $mv$（软）、结合能 $mv^2$（超软），$v^2\approx0.3$（$c\bar c$）、$0.1$（$b\bar b$）
+\cite{BodwinBraatenLepage1995}。非相对论 QCD（NRQCD）把标度 $m$ 积出~\cite{CaswellLepage1986,BodwinBraatenLepage1995}，得到按 $v$ 与 $\as(m)$
+双重展开的有效理论。与 SCET 相比，这里的展开参数是 $v$，红外结构由结合态动力学决定；结论是：衰变的因子化有标准的全阶论证（\tagA），
+而产生的因子化至今仍是猜想（\tagC），其 NNLO 检验恰恰显示出需要用 Wilson 线把算符“规范补全”。
+
+\subsection{NRQCD 拉氏量与速度幂次计数}
+
+\begin{definition}[NRQCD 拉氏量]\label{def:nrqcd}
+\begin{equation}\label{eq:nrqcd-L}
+\mathcal L_{\rm NRQCD}=\mathcal L_{\rm light}+\psi^\dagger\Big(\ii D_t+\frac{\bm D^2}{2m}\Big)\psi+\chi^\dagger\Big(\ii D_t-\frac{\bm D^2}{2m}\Big)\chi
++\delta\mathcal L_{\rm bilinear}+\delta\mathcal L_{\rm 4f},
+\end{equation}
+其中 $\psi$（$\chi$）是湮灭重夸克（产生重反夸克）的二分量 Pauli 旋量场；按本书约定 $D^\mu=\partial^\mu-\ii gA^\mu$，
+$D_t=\partial_t-\ii gA^0$，$\bm D=\bm\nabla+\ii g\bm A$。$\delta\mathcal L_{\rm bilinear}$ 是相对 $\order{v^2}$ 的双线性修正
+（$\bm D^4/8m^3$、Darwin 项、自旋–轨道项、Fermi 项 $\psi^\dagger\frac{c_F}{2m}\bm\sigma\cdot g\bm B\psi$），系数 $=1+\order{\as}$；
+$\delta\mathcal L_{\rm 4f}=\sum_n\frac{f_n}{m^{d_n-4}}\mathcal O_n$ 为四费米子算符，其系数的虚部描述 $Q\bar Q$ 湮灭。
+\end{definition}
+
+\begin{remark}[与 BBL 约定的换算]\label{rem:nrqcd-convention}
+BBL 用 $D^\mu=\partial^\mu+\ii gA^\mu$（其第 II.B 节），即本书约定下 $A\to-A$。协变导数\emph{算符}本身相同，故只含 $D$ 的算符（包括四费米子算符与
+$P$ 波算符中的 $\overleftrightarrow{\bm D}$）不变；但 BBL 的 $E^i=G^{0i}$、$B^i=\frac12\epsilon^{ijk}G^{jk}$ 由 $[D_\mu,D_\nu]=+\ii gG_{\mu\nu}^{\rm BBL}$
+定义，而本书 $[D_\mu,D_\nu]=-\ii gF_{\mu\nu}$，故 $G^{\rm BBL}=-F$。若用 $F$ 按同样公式定义 $\bm E$、$\bm B$，BBL 的 $\delta\mathcal L_{\rm bilinear}$ 中
+线性于 $\bm E$、$\bm B$ 的三项（Darwin、自旋–轨道、Fermi）须改变符号。建议书中直接用 $D$ 的对易子写出这些项。
+\end{remark}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lll@{}}
+\toprule
+量 & 标度 & 理由 \\
+\midrule
+$\psi,\ \chi$ & $(mv)^{3/2}$ & $\int\dd^3x\,\psi^\dagger\psi\simeq1$，束缚态体积 $\sim(mv)^{-3}$ \\
+$\bm D$ & $mv$ & 相对动量 \\
+$D_t$ & $mv^2$ & Schr\"odinger 方程 $\ii D_t\psi=-\frac{\bm D^2}{2m}\psi$ \\
+$\as(mv)$ & $v$ & Coulomb 束缚 \\
+$g\bm E$ & $m^2v^3$ & Gauss 定律 $\bm D\cdot g\bm E=g^2\psi^\dagger T^a\psi\,T^a$ \\
+$g\bm B$ & $m^2v^4$ & Amp\`ere 定律 $\bm D\times g\bm B=D_t\,g\bm E+g^2\bm j$，$\bm j\sim\psi^\dagger\bm D\psi/m$ \\
+\bottomrule
+\end{tabular}
+\caption{NRQCD 的速度标度规则（\cite{BodwinBraatenLepage1995} 第 II.C 节，\cite{LepageEtAl1992}；此处按量纲分析重新推导，\texttt{s3\_\allowbreak nrqcd.py} A 部分）。
+这些规则是以 Coulomb 型动力学 $\as(mv)\sim v$ 为前提的启发式估计。}
+\label{tab:nrqcd-velocity}
+\end{table}
+
+由 \cref{tab:nrqcd-velocity}，$\delta\mathcal L_{\rm bilinear}$ 中各项相对领头项都是 $\order{v^2}$。四费米子算符的矩阵元给出的衰变宽度：
+$S$ 波色单态 $\sim|\psi(0)|^2/m^2\sim mv^3$；$P$ 波色单态（量纲 8）$\sim(mv)^5/m^4=mv^5$；$\chi_J$ 中的色八重态 $^3S_1$ 分量
+$\sim v^2(mv)^3/m^2=mv^5$。后两者同阶——这正是 $P$ 波衰变中色八重态贡献不可缺少的原因（\cref{ex:nrqcd-pwave}）。
+
+\subsection{衰变的因子化}
+
+BBL 的四费米子算符（色单态与色八重态）如
+$\mathcal O_1(^1S_0)=\psi^\dagger\chi\,\chi^\dagger\psi$，$\mathcal O_1(^3S_1)=\psi^\dagger\bm\sigma\chi\cdot\chi^\dagger\bm\sigma\psi$，
+$\mathcal O_8(^1S_0)=\psi^\dagger T^a\chi\,\chi^\dagger T^a\psi$，$\mathcal O_8(^3S_1)=\psi^\dagger\bm\sigma T^a\chi\cdot\chi^\dagger\bm\sigma T^a\psi$，
+$\mathcal O_1(^1P_1)=\psi^\dagger(-\frac{\ii}{2}\overleftrightarrow{\bm D})\chi\cdot\chi^\dagger(-\frac{\ii}{2}\overleftrightarrow{\bm D})\psi$ 等；
+电磁算符为 $\mathcal O^{\rm EM}_1(^1S_0)=\psi^\dagger\chi\,|0\rangle\langle0|\,\chi^\dagger\psi$、
+$\mathcal O^{\rm EM}_1(^3S_1)=\psi^\dagger\bm\sigma\chi\,|0\rangle\cdot\langle0|\,\chi^\dagger\bm\sigma\psi$。
+
+\begin{theorem}[NRQCD 衰变因子化（Bodwin--Braaten--Lepage）]\tagA\label{thm:nrqcd-decay}
+对重夸克偶素 $H$，
+\begin{equation}\label{eq:nrqcd-decay}
+\begin{gathered}
+\Gamma(H\to\text{轻强子})=\sum_n\frac{2\Imag f_n(\Lambda)}{m^{d_n-4}}\,\langle H|\mathcal O_n(\Lambda)|H\rangle,\\
+\Gamma(H\to\text{EM})=\sum_n\frac{2\Imag f_{{\rm EM},n}(\Lambda)}{m^{d_n-4}}\,\langle H|\mathcal O^{\rm EM}_n(\Lambda)|H\rangle,
+\end{gathered}
+\end{equation}
+其中 $d_n$ 为算符量纲，$\Lambda$ 为 NRQCD 的因子化标度，态取非相对论归一化 $\langle H(\bm P')|H(\bm P)\rangle=(2\pi)^3\delta^3(\bm P-\bm P')$；
+求和按 $v$ 的幂次截断，系数 $\Imag f_n$ 按 $\as(m)$ 展开。
+\end{theorem}
+
+\begin{proofsketch}
+(1) 由光学定理，衰变宽度是 $H$ 的前向振幅中 $Q\bar Q\to$ 轻粒子 $\to Q\bar Q$ 部分的虚部；湮灭发生在距离 $\sim1/m$ 处，在 NRQCD 中由
+四费米子算符的反厄米部分表示（\cite{BodwinBraatenLepage1995} 第 II.E–II.G 节）。(2) 系数由匹配在壳 $Q\bar Q$ 散射振幅确定（\cref{prop:nrqcd-matching}），
+与偶素态无关。(3) 对轻强子末态求和时，长程的软胶子贡献按 KLN 型的相消消去，未相消的部分恰好是 NRQCD 算符矩阵元的一部分。
+完整论证见 \cite{BodwinBraatenLepage1995} 第 II、V 节；$P$ 波的一致性在 \cite{BodwinBraatenLepage1992} 中首次给出。
+状态为 \tagA：全阶微扰论证文献公认，部分细节只以概要形式存在。
+\end{proofsketch}
+
+\begin{proposition}[匹配系数]\tagR\label{prop:nrqcd-matching}
+（在 (PT) 中。）短程系数 $f_n$ 由在壳 $Q\bar Q\to Q\bar Q$（或 $Q\bar Q\to$ 末态）振幅在 QCD 与 NRQCD 中的匹配逐阶确定；它们不依赖于红外正规化。
+\end{proposition}
+
+\begin{example}[$P$ 波衰变的红外对数]\label{ex:nrqcd-pwave}
+在只含色单态的旧方法中，$\chi_{cJ}\to$ 轻强子的 NLO 宽度含有结合能的对数（红外发散）~\cite{BarbieriGattoKogerler1976}。在 NRQCD 中，
+$\chi_J$ 的色八重态 $^3S_1$ 矩阵元与 $P$ 波色单态矩阵元同为 $\order{mv^5}$，这一对数被吸收进色八重态矩阵元；BBL 的表述是
+“Logarithms of the binding energy encountered in previous perturbative calculations of P-wave decays are factored into a phenomenological parameter that is
+related to the probability for the heavy quark--antiquark pair to be in a color-octet S-wave state”~\cite{BodwinBraatenLepage1992}。
+\end{example}
+
+\subsection{电磁衰变：领头阶与 \texorpdfstring{$\order{\as}$}{O(as)} 系数}
+
+\begin{proposition}[电磁衰变的领头阶]\tagR\label{prop:nrqcd-EM-LO}
+对 $S$ 波偶素（$M_H=2m$，色单态，$\psi(0)=R(0)/\sqrt{4\pi}$），领头阶
+\begin{equation}\label{eq:nrqcd-ee}
+\Gamma(^3S_1\to e^+e^-)=\frac{16\pi N_c}{3}\,\frac{e_Q^2\alpha^2|\psi(0)|^2}{M_H^2}=\frac{4N_c}{3}\,\frac{e_Q^2\alpha^2|R(0)|^2}{M_H^2},
+\end{equation}
+\begin{equation}\label{eq:nrqcd-gg}
+\Gamma(^1S_0\to\gamma\gamma)=16\pi N_c\,\frac{e_Q^4\alpha^2|\psi(0)|^2}{M_H^2}=4N_c\,\frac{e_Q^4\alpha^2|R(0)|^2}{M_H^2}.
+\end{equation}
+$N_c=3$ 时 \cref{eq:nrqcd-ee} 化为含色因子的 Van Royen--Weisskopf 形式
+$16\pi e_Q^2\alpha^2|\psi(0)|^2/M_H^2$~\cite{VanRoyenWeisskopf1967}，\cref{eq:nrqcd-gg} 化为 $12e_Q^4\alpha^2|R(0)|^2/M_H^2=3e_Q^4\alpha^2|R(0)|^2/m^2$。真空饱和下
+$\langle0|\chi^\dagger\bm\sigma\psi|V(\bm\varepsilon)\rangle=\sqrt{2N_c}\,\psi(0)\,\bm\varepsilon$，
+$\langle\mathcal O_1\rangle_H=2N_c|\psi(0)|^2=\frac{N_c}{2\pi}|R(0)|^2$；与 \cref{eq:nrqcd-decay} 比较得
+\begin{equation}\label{eq:nrqcd-Imf}
+\Imag f_{ee}(^3S_1)=\frac{\pi e_Q^2\alpha^2}{3},\qquad \Imag f_{\gamma\gamma}(^1S_0)=\pi e_Q^4\alpha^2,
+\end{equation}
+与 \cite{BodwinBraatenLepage1995} 附录 A 一致。
+\end{proposition}
+
+\begin{proof}
+入射 $Q(p)\bar Q(\bar p)$ 在阈值 $p=\bar p=(m,\bm0)$ 处的自旋投影（相对论旋量归一化 $\bar uu=2m$）为
+$\sum_{s,\bar s}\langle\frac12s\,\frac12\bar s|SS_z\rangle\,u(p,s)\bar v(\bar p,\bar s)=\frac{1}{2\sqrt2\,m}(\sla p+m)\,\Gamma_S\,(\sla{\bar p}-m)$，
+$\Gamma_S=\gamma_5$（自旋单态）或 $\sla\varepsilon$（自旋三重态）；它们满足 $\Tr[\bar\Pi\Pi]=-4m^2$，单态与三重态正交，且确为 $u\bar v$ 的线性组合
+（数值核对）。束缚态振幅为 $\mathcal M(H\to f)=\frac{\sqrt{2M_H}}{2m}\sqrt{N_c}\,\psi(0)\,\Tr[\Gamma_f\Pi]$（色单态波函数 $\delta_{ij}/\sqrt{N_c}$
+给出 $\sqrt{N_c}$）。对 $e^+e^-$ 末态，$\Gamma_f$ 为经单光子的矢量流；对 $\gamma\gamma$ 末态，$\Gamma_f$ 为两个 Compton 型图之和，末态全同光子给出因子 $\frac12$。
+对末态相空间作数值积分，与 \cref{eq:nrqcd-ee,eq:nrqcd-gg} 之比为 $1.000000000000$（\texttt{s3\_\allowbreak nrqcd.py}，B 部分）。选择定则：自旋单态不与矢量流耦合
+（$C$ 宇称），自旋三重态不衰变为两个光子（Landau--Yang、$C$ 宇称），二者都在数值上得到确认。QED 极限 $N_c=e_Q=1$：
+$16\pi\alpha^2|\psi(0)|^2/M^2=\alpha^5m/2$（仲正电子素，$|\psi(0)|^2=(m\alpha)^3/8\pi$）。$\Imag f$ 由 $\Gamma=2\Imag f\,\langle\mathcal O_1\rangle/m^2$ 读出，
+其中 BBL 的“$M$”是\emph{重夸克}质量 $m$，而不是偶素质量。
+\end{proof}
+
+由自旋对称性 $\langle\mathcal O_1(^1S_0)\rangle_{\eta}=\langle\mathcal O_1(^3S_1)\rangle_{\psi}+\order{v^2}$，领头阶比值
+$\Gamma(\eta_c\to\gamma\gamma)/\Gamma(J/\psi\to e^+e^-)=3e_Q^2=\frac43$（粲夸克）。
+
+\begin{proposition}[矢量流的一圈匹配]\tagR\label{prop:nrqcd-cv}
+（一圈。）矢量流 $\bar Q\gamma^iQ$ 在阈值处匹配到 $c_v\,\chi^\dagger\sigma^i\psi$（加 h.c.），
+\begin{equation}\label{eq:nrqcd-cv}
+\begin{gathered}
+c_v=1-2C_F\frac{\as}{\pi}+\order{\as^2},\\
+\Gamma(V\to e^+e^-)=\Gamma_{\rm LO}\,|c_v|^2=\Gamma_{\rm LO}\Big(1-4C_F\frac{\as}{\pi}\Big)=\Gamma_{\rm LO}\Big(1-\frac{16\as}{3\pi}\Big)\quad(N_c=3).
+\end{gathered}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+在阈值 $p_1=p_2=p$、$p^2=m^2$ 处计算硬区域（Feynman 规范，维数正规化同时正规化紫外与红外；势区与软区在严格阈值处无标度，Coulomb 的 $\pi^2/v$ 项
+属于 NRQCD 一侧）。用投影 $(\sla p-m)\sla\varepsilon^*(\sla p+m)$ 取出 $\gamma^i$ 结构，顶角修正为
+$\frac{\as C_F}{4\pi}\big(\frac{3}{\varepsilon}-4+3\ln\frac{\mu^2}{m^2}\big)$（其极点是混合的：$\frac{1}{\varepsilon_{\rm UV}}+\frac{2}{\varepsilon_{\rm IR}}$）；
+在壳波函数重整化 $\delta Z_2^{\rm OS}=-\frac{\as C_F}{4\pi}\big(\frac{3}{\varepsilon}+4+3\ln\frac{\mu^2}{m^2}\big)$（两条外线各 $\frac12\delta Z_2$）。二者之和
+$c_v-1=\frac{\as C_F}{4\pi}(-8)$ 有限、与 $\mu$ 无关（一圈无反常维数）。$\Gamma\propto|c_v|^2$ 给出 $1-4C_F\as/\pi$，$C_F=\frac43$ 时为 $1-\frac{16\as}{3\pi}$。
+与 BBL 附录 A 的 $\Imag f_{ee}(^3S_1)=\frac{\pi e_Q^2\alpha^2}{3}\big[1-4C_F\frac{\as}{\pi}\big]$ 一致，BBL 引用 \cite{BarbieriEtAl1975,Celmaster1979}。
+（\texttt{s3\_\allowbreak nrqcd.py}，C 部分：$D$ 维迹、Feynman 参数积分与 Beta 函数均为符号运算。）
+\end{proof}
+
+\begin{remark}[$\eta_c\to\gamma\gamma$ 的 $\order{\as}$ 系数]
+未在此重新推导：BBL 附录 A 给出 $\Imag f_{\gamma\gamma}(^1S_0)=\pi e_Q^4\alpha^2\big[1+(\frac{\pi^2}{4}-5)C_F\frac{\as}{\pi}\big]
+=\pi e_Q^4\alpha^2\big[1-\frac{(20-\pi^2)\as}{3\pi}\big]$（$C_F=\frac43$），引用 \cite{BarbieriEtAl1979}。其 QED 类比是仲正电子素的
+Harris--Brown 修正因子 $1-(5-\frac{\pi^2}{4})\frac{\alpha}{\pi}$~\cite{HarrisBrown1957}（此为凭记忆的对应，文献条目已在 INSPIRE 核对）。
+对粲偶素，$\order{\as}$ 修正很大（例如 $\as=0.25$ 时 $16\as/3\pi\approx0.42$），微扰级数的收敛性是实际应用中的主要问题。
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.47\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \draw[hadron blob] (-2.3,0) ellipse[x radius=0.3cm,y radius=0.7cm]; \node[font=\scriptsize] at (-2.3,0) {$H$};
+  \draw[hadron blob] (2.3,0) ellipse[x radius=0.3cm,y radius=0.7cm]; \node[font=\scriptsize] at (2.3,0) {$H$};
+  \coordinate (a) at (-0.9,0.45); \coordinate (b) at (-0.9,-0.45);
+  \coordinate (c) at (0.9,0.45); \coordinate (d) at (0.9,-0.45);
+  \draw[quark] (-2.05,0.45) -- (a); \draw[quark] (b) -- (-2.05,-0.45);
+  \draw[quark] (c) -- (2.05,0.45); \draw[quark] (2.05,-0.45) -- (d);
+  \draw[quark] (a) -- (b); \draw[quark] (d) -- (c);
+  \draw[gluon] (a) -- (c); \draw[gluon] (b) -- (d);
+  \draw[cut] (0,1.05) -- (0,-1.05);
+  \node[above,font=\scriptsize] at (0,1.05) {轻粒子};
+\end{tikzpicture}
+\caption{QCD：前向 $Q\bar Q\to Q\bar Q$ 振幅的割（虚部）}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.47\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \draw[hadron blob] (-2.0,0) ellipse[x radius=0.3cm,y radius=0.7cm]; \node[font=\scriptsize] at (-2.0,0) {$H$};
+  \draw[hadron blob] (2.0,0) ellipse[x radius=0.3cm,y radius=0.7cm]; \node[font=\scriptsize] at (2.0,0) {$H$};
+  \coordinate (V) at (0,0);
+  \draw[quark] (-1.75,0.45) to[out=0,in=150] (V); \draw[quark] (V) to[out=-150,in=0] (-1.75,-0.45);
+  \draw[quark] (V) to[out=30,in=180] (1.75,0.45); \draw[quark] (1.75,-0.45) to[out=180,in=-30] (V);
+  \fill[black] (V) circle[radius=3.2pt];
+  \node[above,font=\scriptsize] at (0,0.62) {$\frac{2\Imag f_n}{m^{d_n-4}}\mathcal O_n$};
+\end{tikzpicture}
+\caption{NRQCD：四费米子算符的矩阵元}
+\end{subfigure}
+\caption{NRQCD 衰变因子化（\cref{thm:nrqcd-decay}）：距离 $\sim1/m$ 处的湮灭（左）在 NRQCD 中由四费米子算符表示（右），其系数的虚部由匹配确定。}
+\label{fig:nrqcd-decay}
+\end{figure}
+
+\subsection{产生：NRQCD 因子化猜想}
+
+\begin{conjecture}[NRQCD 产生因子化（BBL）]\tagC\label{conj:nrqcd-production}
+\begin{equation}\label{eq:nrqcd-prod}
+\sigma(H+X)=\sum_n\frac{F_n(\Lambda)}{m^{d_n-4}}\,\langle0|\mathcal O^H_n(\Lambda)|0\rangle,\qquad
+\mathcal O^H_n=\chi^\dagger\mathcal K_n\psi\,\Big(\sum_X\sum_{m_J}|H+X\rangle\langle H+X|\Big)\,\psi^\dagger\mathcal K'_n\chi,
+\end{equation}
+其中 $F_n$ 是可微扰计算的短程截面（产生 $Q\bar Q[n]$），$\langle\mathcal O^H_n\rangle$ 是长程的产生矩阵元（\cite{BodwinBraatenLepage1995} 第 VI.A 节）。
+\end{conjecture}
+
+BBL 的论证依赖于软胶子的 KLN 型相消：接到喷注上的软胶子相消；“if both ends of a soft gluon attach to a heavy $Q$ or $\bar Q$ line, then there is no KLN
+cancellation. However, this contribution is part of the matrix element”~\cite{BodwinBraatenLepage1995}。困难在于连接 $Q\bar Q$ 对与其他有色粒子的软胶子。
+Nayak--Qiu--Sterman 在大 $p_T$ 碎裂中分析了 NNLO 的红外极点：他们发现“uncanceled infrared poles at NNLO that are not matched by conventional NRQCD
+matrix elements”，并证明“gauge invariance and factorization require that conventional NRQCD production operators be modified to include non-Abelian phases or
+Wilson lines. With appropriately modified operators, factorization is restored at NNLO”，同时指出更高阶可能需要 NRQCD 速度展开之外的非局域算符
+\cite{NayakQiuSterman2005a,NayakQiuSterman2005b}；对同一拓扑，他们进一步证明红外奇异性“are consistent with NRQCD factorization to all orders in the heavy quark
+relative velocity $v$”，所需的正是“gauge-completed matrix elements”~\cite{NayakQiuSterman2006}。因此：产生因子化为 \tagC，带规范补全算符的 NNLO 检验为 \tagP。
+唯象上（例如极化）存在长期的张力，本书不作裁断；综述见 \cite{BrambillaEtAl2011}。
+
+\begin{proposition}[大 $p_T$ 偶素产生的微扰 QCD 因子化]\label{prop:quarkonium-fragmentation}
+Kang--Qiu--Sterman 给出了大 $p_T$ 重夸克偶素产生的微扰 QCD 因子化形式，包括 $m_Q^2/p_T^2$ 展开中的领头幂次（单部分子碎裂）与次领头幂次
+（双部分子碎裂）贡献，并在 NRQCD 中估计碎裂函数~\cite{KangQiuSterman2012}。状态：微扰 QCD 部分 \tagA；碎裂函数本身的 NRQCD 因子化继承
+\cref{conj:nrqcd-production}，为 \tagC。
+\end{proposition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=1.0]
+  % fragmenting gluon creates QQbar in octet; soft gluons between QQbar and the eikonal line of the rest
+  \coordinate (F) at (-2.2,0);
+  \draw[gluon] (-3.6,0) -- (F);
+  \node[left,font=\scriptsize] at (-3.6,0) {$g^*$};
+  \draw[quark] (F) to[out=35,in=180] (0.8,0.75);
+  \draw[quark] (0.8,-0.75) to[out=180,in=-35] (F);
+  \draw[hadron blob] (1.15,0) ellipse[x radius=0.38cm,y radius=0.95cm]; \node[font=\scriptsize] at (1.15,0) {$H$};
+  \draw[wilson=0.55] (F) -- (-0.4,-1.65);
+  \node[below,font=\scriptsize] at (-0.2,-1.65) {Wilson 线（规范补全）};
+  \draw[gluon] (-0.5,0.62) to[out=-90,in=60] (-0.95,-1.05);
+  \draw[gluon] (0.15,-0.7) to[out=-120,in=20] (-0.75,-1.27);
+  \node[font=\scriptsize,align=left,anchor=west] at (1.65,0.2) {软胶子连接 $Q\bar Q$ 对\\[-1pt]与其余有色线：NNLO 极点};
+\end{tikzpicture}
+\caption{Nayak--Qiu--Sterman 的 NNLO 拓扑（示意）：连接色八重态 $Q\bar Q$ 对与其余有色线（这里用程函 Wilson 线表示）的软胶子产生的红外极点，
+只有在产生算符被 Wilson 线规范补全后才被矩阵元吸收~\cite{NayakQiuSterman2005a,NayakQiuSterman2006}。}
+\label{fig:nqs-nnlo}
+\end{figure}
+
+\paragraph{本章状态小结。}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.42\linewidth} l >{\raggedright\arraybackslash}X@{}}
+\toprule
+陈述 & 状态 & 依据 \\
+\midrule
+\cref{thm:nrqcd-decay}（衰变因子化） & \tagA & BBL 1995；$P$ 波一致性 BBL 1992 \\
+\cref{prop:nrqcd-matching}（匹配系数） & \tagR\ 于 (PT) & 在壳匹配 \\
+\cref{prop:nrqcd-EM-LO}、\cref{prop:nrqcd-cv}（LO 宽度、$c_v$） & \tagR & 本节独立推导，与 BBL 附录 A 一致 \\
+\cref{conj:nrqcd-production}（产生因子化） & \tagC & BBL 1995 \\
+规范补全算符的 NNLO 检验 & \tagP & NQS 2005–2006 \\
+\cref{prop:quarkonium-fragmentation}（大 $p_T$） & \tagA\,/\,\tagC & 微扰 QCD 部分 / NRQCD 碎裂函数 \\
+\bottomrule
+\end{tabularx}
+\end{center}

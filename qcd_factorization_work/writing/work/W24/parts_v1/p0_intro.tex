@@ -1,0 +1,39 @@
+%% =====================================================================
+%% 第 21 章  幂次修正、次领头幂次、重整化子与非微扰地位
+%% (WRITER_SPEC_v2 §1.1: key power, file ch21_power.tex; writer W24)
+%% =====================================================================
+\chapter{幂次修正、次领头幂次、重整化子与非微扰地位}\label{ch:power}
+
+前面各章的因子化定理都是一个渐近展开的领头项：物理量写成硬系数与部分子分布（或碎裂函数、软因子）的卷积，再加上一个“被幂次压低”的余项。本章讨论这个余项本身——它的结构、它在什么意义下可以被控制，以及最根本的问题：“精确到幂次修正”这句话在 QCD 中究竟有什么含义。我们将看到，领头幂次之外的图景在严格性上远不如领头幂次整齐。DIS 矩的扭度 4 修正有以 OPE 为前提的严格算符结构（\cref{prop:dis-twist4}，\tagR，$R_{\mathrm{OPE}}$），但其 $x$ 空间形式只有全阶论证（\tagA）；单自旋不对称的扭度 3 共线因子化只在有限阶和特定过程中得到验证（\tagP），强子—强子碰撞中的相应陈述是猜想（\tagC）；次领头幂次（next-to-leading power，NLP）的因子化因端点发散而只能逐个过程地重建（\tagP）；幂次修正的定义本身又与微扰级数的阶乘发散（重整化子，renormalon）纠缠在一起，二者之间一般的一一对应是猜想（\tagC）。另一方面，本章也给出几个可以完整证明的陈述：树图层次的次软定理（\tagR，$R_{\mathrm{PT}}$）、OPE 算符基的重排自由（\tagR，$R_{\mathrm{def}}$）、微扰 $\varphi^4_4$ 中 OPE 在有限距离上的收敛（\tagR，$R_{\mathrm{PT}}$，证明见文献），以及在大 $\beta_0$ 极限和二维大 $N_c$ 模型中可以完整计算的结果（作为 QCD 的陈述是 \tagP）。全章的最后一节回答：本书所有的因子化定理，作为关于强子的陈述，究竟处于什么地位。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:power-next-to-soft}（\tagR，$R_{\mathrm{PT}}$，树图层次）；\cref{prop:power-rearrangement}（\tagR，$R_{\mathrm{def}}$）；\cref{thm:power-ope-convergence}（\tagR，$R_{\mathrm{PT}}$，有质量欧氏 $\varphi^4_4$ 的每一阶；完整证明在文献中）；\cref{prop:power-adler-large-beta0}、\cref{prop:power-thooft-model}（\tagP：分别在大 $\beta_0$ 极限与二维大 $N_c$ 模型中完整证明）。\par
+\textbf{给出全阶论证：}\cref{prop:power-dis-twist4-x}（\tagA，$x$ 空间；瓶颈：次领头幂次的区域分析只给出 E-S 型陈述，领头扭度部分继承\cref{thm:disall-factorization}的瓶颈，如 \cref{asm:appN-collins}）。\par
+\textbf{没有证明：}一般的次领头幂次因子化（\cref{prop:power-nlp-endpoint}，\tagP）；强子—强子单自旋不对称的扭度 3 因子化（\cref{conj:power-twist3-pp}，\tagC）；红外重整化子与高扭度的一般对应（\cref{conj:power-renormalon-ht}，\tagC）；QCD 作为四维量子场论的构造与非微扰 OPE（\cref{rem:power-np-status}，\cref{asm:intro-wightman}、\cref{asm:intro-np-ope}）。
+\end{tcolorbox}
+
+\paragraph{本章的路线。}
+\cref{sec:power-twist4}从 DIS 矩的扭度展开出发，说明怎样把它改写为 $x$ 空间中的多部分子关联，并用一个 Mellin 变换的例子说明扭度展开在 $x\to1$ 处为什么不均匀。\cref{sec:power-twist3}讨论扭度 3 与横向单自旋不对称（single-spin asymmetry，SSA），其核心是“软胶子极点”机制：所需的相位来自程函传播子的 $\pm\ii0$，其符号与 Sivers 函数的过程依赖性是同一件事。\cref{sec:power-nlp}给出树图层次次软定理（Low--Burnett--Kroll）的完整证明，然后说明为什么次领头幂次的因子化一般会出现端点发散。\cref{sec:power-ope-basis}证明 OPE 算符基的重排自由，并据此澄清“扭度 2 系数”在相对 $O(\Lambda^2/Q^2)$ 以外的含义，以及“实用 OPE”中两个猜想性的成分。\cref{sec:power-renormalons}定义 Borel 变换与重整化子，在大 $\beta_0$ 极限下完整分析 Adler 函数的 Borel 平面，并总结其他过程与可解模型中的结果。\cref{sec:power-np}给出本书全部定理的非微扰地位，并介绍三个真正非微扰的“实验室”：微扰 $\varphi^4_4$ 中 OPE 的收敛、二维大 $N_c$ 的 't Hooft 模型以及格点证据。
+
+本章沿用全书的约定（度规 $(+,-,-,-)$，光锥分量 $v^\pm=(v^0\pm v^3)/\sqrt2$，$D_\mu=\partial_\mu-\ii gA_\mu^at^a$，$\overline{\mathrm{MS}}$ 方案，$\mu^2\dd\as/\dd\mu^2=-\frac{\beta_0}{4\pi}\as^2+\dots$，$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$）。$\Lambda$ 总表示 $\Lambda_{\MSbar}$（\cref{def:qcd-lambda}）或与之同量级的强子标度，$Q$ 是硬标度。凡引用其他约定的文献，换算都在正文中说明。
+
+\begin{tcolorbox}[enhanced,breakable,title=常见误解（本章）,fonttitle=\bfseries,
+  colback=yellow!3!white,colframe=orange!60!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\begin{enumerate}[label=(\arabic*),leftmargin=1.6em,itemsep=2pt,topsep=1pt]
+\item % M10
+\textbf{“幂次修正总是 $O(\Lambda^2/Q^2)$。”}事件形状的平均值有 $O(\Lambda/Q)$ 修正\cite{DokshitzerWebber1995}，锥形喷注截面的非微扰修正按 $1/(Q\delta)$ 变化（$\delta$ 为锥的角度参数）\cite{Korchemsky:1994is}；扭度 3 的自旋不对称是 $O(M/Q)$（\cref{sec:power-twist3}）；在大 $x$ 处扭度展开的实际参数是 $\Lambda^2/[Q^2(1-x)]$（\cref{ex:power-twist4-largex}），在核靶中还有 $A^{1/3}$ 增强（\cref{prop:disall-nuclear}）。即使是 Drell--Yan 的“$1/Q^2$”，作为一般定理也只是猜想（见下一条）。
+\item % critic C11
+\textbf{“余项是 $O(\Lambda^2/Q^2)$，因为第一个高扭度算符的量纲高 2。”}这是 OPE 的陈述：对单举 DIS 与 $e^+e^-$ 的矩，它在非微扰 OPE 的前提下成立（\cref{prop:dis-twist4}，\cref{asm:intro-np-ope}）；对 Drell--Yan 这类没有 OPE 的过程，扭度 4 的广义因子化只有全阶论证（\cref{thm:dy-higher-twist}，\tagA），而“不存在 $\Lambda/Q$ 项”只有重整化子分析的证据（\cref{prop:power-renormalon-examples}），不是证明。
+\item % M22
+\textbf{“领头幂次的因子化可以直接推广到次领头幂次。”}在次领头幂次，朴素的卷积一般在端点处发散，必须逐个过程地重新因子化（\cref{prop:power-nlp-endpoint}）；对 Drell--Yan，更高幂次（$m^4/s^2$）的因子化已知失效（\cref{prop:dy-twist6-failure}，\tagV）。
+\item % critic O20
+\textbf{“重整化子与高扭度矩阵元一一对应，这是已证明的。”}这一对应只在大 $\beta_0$（泡链）近似和二维 $O(N)$ $\sigma$ 模型的大 $N$ 展开中确立（\cref{prop:power-adler-large-beta0}、\cref{prop:power-renormalon-examples}，\tagP），一般情形是\cref{conj:power-renormalon-ht}（\tagC）。
+\item % M28
+\textbf{“[R] 意味着对真实世界 QCD 的数学证明。”}QCD 尚未作为四维量子场论被构造；本书的 [R] 总带有限定语，如“在重整化微扰论中对红外正规化的部分子态严格”（\cref{def:intro-tags}，\cref{rem:power-np-status}）。
+\item % critic O21
+\textbf{“强子层次的因子化有非微扰的证明（或至少有非微扰的检验）。”}没有非微扰证明。真正非微扰的“实验室”只有三个：微扰 $\varphi^4_4$ 中 OPE 在有限距离上的收敛（\cref{thm:power-ope-convergence}）、二维大 $N_c$ 的 't Hooft 模型（\cref{prop:power-thooft-model}）以及格点计算提供的证据（\tagP；格点只提供矩阵元，不检验强子截面的因子化）。
+\end{enumerate}
+\end{tcolorbox}

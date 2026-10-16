@@ -1,0 +1,52 @@
+PASS minus integral (one gluon, amplitude side) A=0.9, eps=0.3   [(-0.455303283129 + 1.36590984939j) vs residue (-0.455303283129 + 1.36590984939j)]
+PASS minus integral (one gluon, amplitude side) A=0.9, eps=0.02   [(-0.0337095224429 + 1.51692850993j) vs residue (-0.0337095224429 + 1.51692850993j)]
+PASS eps->0 limit: 2 pi i/(2 p^+ A) = (0.0 + 1.51767761043j)   [algebra: P u1 - A -> -A/x]
+PASS minus integral (one gluon, amplitude side) A=2.7, eps=0.3   [(-0.0555247906255 + 0.499723115629j) vs residue (-0.0555247906255 + 0.499723115629j)]
+PASS minus integral (one gluon, amplitude side) A=2.7, eps=0.02   [(-0.00374714651977 + 0.505864780169j) vs residue (-0.00374714651977 + 0.505864780169j)]
+PASS eps->0 limit: 2 pi i/(2 p^+ A) = (0.0 + 0.50589253681j)   [algebra: P u1 - A -> -A/x]
+PASS symbolic: residue -> 2 pi i/(2 p^+ A), independent of x   [I*pi/(A*p)]
+PASS prefactor of eq.(10) first line reduces to x(1-x)/(256 pi^7) with integrand prod_j 1/((l_j^2+m_g^2)((k-l_j)^2+m_q^2))   [x*(1 - x)/(256*pi**7)]
+   => I_1 = N * F(k_T)^2; the printed 2nd line of eq.(10) has an extra prod_j (k_T^2+m_q^2) (dimension M^0 instead of M^-4 for the integral).
+PASS same-side inner integral over l1^- (two orderings) = -2 pi i/P, c1=0.299999999999999988897769753748, c2=-0.699999999999999955591079014994   [(1.80796215e-7 - 2.168110848j) vs (0.0 - 2.168110872j)]
+PASS same-side inner integral over l1^- (two orderings) = -2 pi i/P, c1=-1.10000000000000008881784197001, c2=0.200000000000000011102230246252   [(-8.354444487e-7 - 2.168110777j) vs (0.0 - 2.168110872j)]
+PASS same-side outer integral = exact residue at eps=0.1   [(-0.01871109383 + 0.5051995333j) vs (-0.01871109383 + 0.5051995333j)]
+PASS same-side outer integral = exact residue at eps=0.01   [(-0.001873650361 + 0.5058855974j) vs (-0.001873650361 + 0.5058855974j)]
+PASS eps->0 of the outer residue: 2 pi i/(2p^+ A12) = (0.0 + 0.5058925368j)   [P v_b + c12 -> -A12/x (algebra in the comments of DERIVATION check)]
+PASS symbolic: same-side outer residue -> 2 pi i/(2 p^+ A12) (m_q=1)   [I*pi/(A12*p)]
+PASS conjugate tree propagator k^2-m^2 = -(k_T^2+m_q^2)/(1-x) (source of 1/(k_T^2+m_q^2) in eq.(11))
+PASS F(k): closed form = Feynman parameter = b space, k=0.0   [5.80689624081, 5.80689624081, 5.80689624081]
+PASS F(k): closed form = Feynman parameter = b space, k=0.8   [4.90103117469, 4.90103117469, 4.90103117469]
+PASS F(k): closed form = Feynman parameter = b space, k=3.0   [1.85890533326, 1.85890533326, 1.85890533326]
+PASS G(k): Feynman-parameter = b space = direct convolution, k=0.0   [54.72870771, 54.72870771, 54.72870771]
+PASS G(k): Feynman-parameter = b space = direct convolution, k=0.8   [51.18374887, 51.18374887, 51.18374887]
+PASS scipy G_fast(0.0) = mpmath G_feyn   [54.7287077109]
+PASS scipy G_fast(0.8) = mpmath G_feyn   [51.1837488651]
+/Users/hao-cheng/Library/Python/3.9/lib/python/site-packages/scipy/integrate/_quadpack_py.py:1272: IntegrationWarning: The maximum number of subdivisions (50) has been achieved.
+  If increasing the limit yields no improvement it is advised to analyze 
+  the integrand in order to determine the difficulties.  If the position of a 
+  local difficulty can be determined (singularity, discontinuity) one will 
+  probably gain from splitting up the interval and calling the integrator 
+  on the subranges.  Perhaps a special-purpose integrator should be used.
+  quad_r = quad(f, low, high, args=args, full_output=self.full_output,
+/Users/hao-cheng/Desktop/theorem proof/qcd_factorization_work/verify/claims/batch_N13_s1_scripts/n16_collins07.py:131: IntegrationWarning: The algorithm does not converge.  Roundoff error is detected
+  in the extrapolation table.  It is assumed that the requested tolerance
+  cannot be achieved, and that the returned result (if full_output = 1) is 
+  the best which can be obtained.
+  + si.quad(lambda k: k*G_fast(k)/(k*k + 1.0), 20, np.inf, epsabs=1e-12, epsrel=1e-11, limit=200)[0])
+PASS int d^2k F^2 = (2pi)^3 int db b K0(mg b)^2 K0(mq b)^2   [493.15414931913 vs 493.15414931913]
+PASS int d^2k G/(k^2+mq^2) = same b-space value  =>  int d^2k (I1+I2) = 0   [493.1541492 vs 493.1541493]
+   printed-eq.(10) integrand k (k^2+m_q^2)^2 F^2 at k=10,100,1000 (grows => int d^2k diverges): ['11080.5', '387191.0', '8.31025e+6']
+PASS int dmu = 1/m_q^2   [1.0]
+PASS F(0) = int dmu 2pi K0(m_g b)   [5.80689624080961 vs 5.80689624080961]
+PASS G(0) = int dmu [2pi K0(m_g b)]^2   [54.7287077109 vs 54.7287077109]
+PASS Cauchy-Schwarz: F(0)^2 < G(0)/m_q^2 (strict)   [F0^2=33.72004395, G0/mq^2=54.72870771]
+PASS F(0)^2 - G(0)/m_q^2 < 0 for 8 mass pairs spanning m_g/m_q = 0.01 ... 60   [max relative value = -0.0372893]
+PASS (I1+I2)/N at k_T=0   [-21.0087 vs claimed -21.0]
+PASS (I1+I2)/N at k_T=0.3   [-17.7267 vs claimed -17.7]
+PASS (I1+I2)/N at k_T=0.8   [-7.1895 vs claimed -7.19]
+PASS (I1+I2)/N at k_T=1.5   [-0.700828 vs claimed -0.7]
+PASS (I1+I2)/N at k_T=3   [0.376796 vs claimed 0.38]
+PASS (I1+I2)/N at k_T=6   [0.0890293 vs claimed 0.089]
+
+SUMMARY: 35/35 PASS
+exit 0

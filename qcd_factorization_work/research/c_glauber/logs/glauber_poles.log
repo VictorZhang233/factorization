@@ -1,0 +1,43 @@
+
+=== P1: pole half-planes, one-gluon exchange, k flows from the B-side line Y into the A-side line X ===
+kinematics: Q=100, m=5.0; Glauber k=(0.1,-0.075,4,-2.5)
+  X=sA  Y=sB  | k^- poles: [('s_A seg', 'UHP'), ('a', 'LHP')] trapped=True  | k^+ poles: [('s_B seg', 'LHP'), ('b', 'UHP')] trapped=True  | Glauber pinch=True
+  X=sA  Y=b   | k^- poles: [('s_A seg', 'UHP'), ('a', 'LHP')] trapped=True  | k^+ poles: [('b seg', 'UHP')]                 trapped=False | Glauber pinch=False
+  X=a   Y=sB  | k^- poles: [('a seg', 'LHP')]                 trapped=False | k^+ poles: [('s_B seg', 'LHP'), ('b', 'UHP')] trapped=True  | Glauber pinch=False
+  X=a   Y=b   | k^- poles: [('a seg', 'LHP')]                 trapped=False | k^+ poles: [('b seg', 'UHP')]                 trapped=False | Glauber pinch=False
+PASS  P1a DY spectator-spectator: k^- AND k^+ trapped (Glauber pinch)
+PASS  P1b DY s_A-spectator / B-active: k^- trapped, k^+ NOT trapped (deform k^+ -> A-collinear, past-pointing W in f_A)
+PASS  P1c DY A-active / s_B-spectator: k^+ trapped, k^- NOT trapped (mirror)
+PASS  P1d DY active-active (vertex): neither variable trapped by collinear lines
+PASS  P1e CSS(166): A-spectator pole in UHP, A-active pole in LHP, |Re k^-| ~ m^2/Q (Glauber scale)   [Re poles = 0.00573, 0.661 ; m^2/Q=0.25]
+PASS  P1f DIS FSI (target spectator - current jet): k^- trapped by target lines, k^+ has only the jet (final-state) pole -> deformable; cf. Collins 1998 Sec. III B   [k^- poles ['UHP', 'LHP'], jet k^+ pole LHP]
+PASS  P1g e+e- (all collinear lines are final-state lines): all J1 poles in k^- on one side, all J2 poles in k^+ on the other -> no trapping   [J1 k^- poles ['UHP', 'UHP'] ; J2 k^+ poles ['LHP', 'LHP']]
+
+=== P2: two-pole residue formula (exact) ===
+PASS  P2 int dx/2pi [(-a x+c1+i0)(b x+c2+i0)]^-1 = -i/(b c1 + a c2): sets the final-state line on shell   [-I/(a*c2 + b*c1)]
+PASS  P2n numerical (eps=1e-3)   [num=(-0.0025074314157550862+1.1235898316383008j) exact=(-0.002524920969973639+1.1235898316382695j)]
+
+=== P3: blueprint E7.24 and past-vs-future eikonal lines ===
+PASS  P3a E7.24: k^- integral vanishes for k^+>0   [0]
+PASS  P3b E7.24: k^- integral = -2 pi i/(kT^2 k^+) for k^+<0   [4*I*pi/(3*kT2)]
+PASS  P3c E7.24 numerical (k^+=-1.5, kT^2=1, eps=2e-3) vs exact finite-eps residue; eps->0 limit -2 pi i/(kT^2 k^+)   [num=-0.02791+4.18856i  exact(eps)=-0.02792+4.18856i  limit=+4.18879i]
+   past - future on test fn: -5.7369162419950825j ; -2 pi i phi(0) = -5.742398995069405j
+PASS  P3d 1/(k+i0) - 1/(k-i0) = -2 pi i delta(k)  (Glauber/Coulomb term)
+
+=== P4: DIS final-state interaction can be deformed (numerical, exact propagators) ===
+   l^-=+0.125: real axis=(-7.253610539824044e-07+0.0009672013201261347j)  down-dip=(-7.253610465823244e-07+0.0009672013201107258j)  up-dip=(1.9999986130855125e-08+8.208982538865373e-15j)  (up-down)/(2 pi i ResJ)=(-1.0000000000000093+3.704565950133887e-17j)
+PASS  P4a l^-=+0.125: contour pushed into the LHP (two depths) reproduces the real-axis value   [|diff|/|2 pi Res_J| = 1.8e-11]
+PASS  P4b l^-=+0.125: the only nearby singularity is the final-state jet pole, in the UHP (up-dip differs by -2 pi i Res)
+PASS  P4e l^-=+0.125: on the deformed contour the eikonal jet line 1/(-2p_c^- l^+ + i0) [future-pointing] is accurate (rel.err < lam)   [rel err=5.77e-04]
+   l^-=-0.125: real axis=(-1.9999978778476476e-08+7.202561637226838e-15j)  down-dip=(-1.9999986045115062e-08-8.19982103050787e-15j)  up-dip=(7.217861825305913e-07-0.0009660859662407527j)  (up-down)/(2 pi i ResJ)=(-1.000000000000009-6.982724303130352e-17j)
+PASS  P4a l^-=-0.125: contour pushed into the LHP (two depths) reproduces the real-axis value   [|diff|/|2 pi Res_J| = 1.8e-11]
+PASS  P4b l^-=-0.125: the only nearby singularity is the final-state jet pole, in the UHP (up-dip differs by -2 pi i Res)
+PASS  P4e l^-=-0.125: on the deformed contour the eikonal jet line 1/(-2p_c^- l^+ + i0) [future-pointing] is accurate (rel.err < lam)   [rel err=3.97e-05]
+PASS  P4d DY spectator-spectator: numerical real-axis k^+ integral equals residue of the b (initial-state) pole   [num=(9.738755797002402e-07-0.00017965182522792884j) res=(9.73875577996766e-07-0.00017965182522293682j)]
+   DY s-s: real axis=(9.738755797002402e-07-0.00017965182522792884j)  down-dip=(-1.3836033111040017e-10+8.999026315361022e-08j)  up-dip=(5.0032118611943385e-18+8.045026288792739e-19j)
+PASS  P4c DY spectator-spectator k^+: neither deformation reproduces the real-axis value (contour trapped at k^+ ~ m^2/Q)
+
+=== P5: power counting of the spectator-spectator Glauber exchange (Collins 2011 Sec.5.6.2) ===
+PASS  P5 extra Glauber gluon is leading power: measure x denominators x numerator ~ Q^0 lambda^0   [scaling factor = 1]
+
+SUMMARY: 22/22 PASS

@@ -1,0 +1,99 @@
+\begin{figure}[htbp]
+\centering
+% Data: the \uses lists of FINAL_OUTLINE_v2 (Ch7 statements, App M, ASSUMPTIONS.md entries):
+%  disp  prop:dis-dispersion-np [R,R_cond]  <- W                       (asm only in the node set)
+%  eseg  lem:dis-euclid-segment [R,R_def]   <- (def:dis-compton only)
+%  oseg  lem:dis-ope-segment [R,R_cond]     <- eseg, O
+%  fixn  thm:dis-fixed-n [R,R_cond]         <- oseg, disp, O, W
+%  lowm  prop:dis-low-moments [R,R_def]     <- (def:dis-compton only)
+%  mnp   thm:dis-moments-np [R,R_cond]      <- fixn, disp, lowm, W, C, O, F, G
+%  weak  cor:dis-weak-xspace [R,R_cond]     <- mnp, W, C, O, F
+%  oeuc  prop:dis-ope-euclid [A] (by D3)    <- asm:appM-remainder (plain premise, not R_cond and not
+%                                              the bottleneck: drawn as an ordinary uses edge)
+%  ogi   prop:dis-ope-gi [A]                <- oeuc, asm:appM-brst-ope (bottleneck)
+%  ofw   prop:dis-ope-forward [A]           <- oeuc, ogi, asm:appM-forward (bottleneck)
+%  mom   thm:dis-moments [R,R_OPE]          <- ofw, thm:dis-ope(=oeuc,ogi,ofw), fixn, disp, mnp, W, C, O, F, G
+%  asm:  C <- W;  O <- W, C;  F <- O;  G <- W.
+%  W,C,O,F,G = asm:intro-wightman, -composite, -np-ope, -af-coeff, -growth (global, [C]).
+\begin{tikzpicture}[
+  fe node/.style={rounded corners=1pt,line width=0.6pt,font=\scriptsize,inner xsep=3pt,inner ysep=2.2pt,minimum height=0.5cm,align=center},
+  fe asm/.style={fe node,draw=orange!65!black,dash pattern=on 2.5pt off 1.5pt,fill=orange!8},
+  fe R/.style={fe node,draw=OliveGreen!75!black,fill=OliveGreen!15},
+  fe Rc/.style={fe R,dash pattern=on 2.5pt off 1.5pt},
+  fe A/.style={fe node,draw=RoyalBlue!75!black,fill=RoyalBlue!15},
+  fe use/.style={draw=gray!55!black,line width=0.6pt,-{Stealth[length=4.2pt,width=3.4pt]},shorten >=0.5pt},
+  fe bottle/.style={draw=red!60!black,line width=1.5pt,-{Stealth[length=5.5pt,width=4.6pt]}}]
+  \newcommand{\fegl}[1]{\\[-0.5pt]{\color{orange!70!black}\tiny\sffamily\bfseries #1}}
+  \newcommand{\fest}{\vphantom{Ag}}% uniform height of the first text line
+  % ---------------- assumptions (top row) ----------------
+  \node[fe asm] (G) at (0.8,0)  {\fest growth\fegl{G}};
+  \node[fe asm] (W) at (2.7,0)  {\fest wightman\fegl{W}};
+  \node[fe asm] (C) at (4.6,0)  {\fest composite\fegl{C}};
+  \node[fe asm] (O) at (6.5,0)  {\fest np-ope\fegl{O}};
+  \node[fe asm] (F) at (8.4,0)  {\fest af-coeff\fegl{F}};
+  \node[fe asm] (Rm) at (10.5,0) {\fest remainder};
+  \node[fe asm] (Bo) at (12.5,0) {\fest brst-ope};
+  \node[fe asm] (Fw) at (14.5,0) {\fest forward};
+  \node[font=\footnotesize,anchor=south] at (4.6,0.95) {全局非微扰假设（\texttt{asm:intro-}$\ast$，[C]）};
+  \node[font=\footnotesize,anchor=south] at (12.5,0.95) {App M 技术假设（\texttt{asm:appM-}$\ast$，[A]）};
+  \draw[fe use] (W) -- (G);
+  \draw[fe use] (W) -- (C);
+  \draw[fe use] (C) -- (O);
+  \draw[fe use] (O) -- (F);
+  \draw[fe use] (W.north) .. controls (3.4,0.85) and (5.8,0.85) .. (O.north);
+  % ---------------- hadronic (non-perturbative) route ----------------
+  \node[fe R]  (eseg) at (1.2,-1.9) {euclid-segment};
+  \node[fe Rc] (oseg) at (1.2,-3.4) {ope-segment\fegl{O}};
+  \node[fe R]  (lowm) at (1.2,-4.9) {low-moments};
+  \node[fe Rc] (disp) at (6.4,-1.9) {dispersion-np\fegl{W}};
+  \node[fe Rc] (fixn) at (3.8,-3.4) {fixed-n\fegl{W\,O}};
+  \node[fe Rc] (mnp)  at (3.8,-4.9) {moments-np\fegl{W\,C\,O\,F\,G}};
+  \node[fe Rc] (weak) at (1.8,-6.4) {weak-xspace\fegl{W\,C\,O\,F}};
+  \node[fe R]  (mom)  at (6.4,-6.4) {moments\fegl{W\,C\,O\,F\,G}};
+  % ---------------- perturbative route: the three sub-statements of thm:dis-ope ----------------
+  \node[fe A] (oeuc) at (10.5,-2.6) {ope-euclid};
+  \node[fe A] (ogi)  at (12.5,-2.6) {ope-gi};
+  \node[fe A] (ofw)  at (14.5,-2.6) {ope-forward};
+  \begin{scope}[on background layer]
+    \draw[RoyalBlue!60!black,line width=0.6pt,rounded corners=3pt,fill=RoyalBlue!4] (9.55,-2.05) rectangle (15.4,-3.85);
+  \end{scope}
+  \node[font=\scriptsize,text=RoyalBlue!50!black,anchor=south east,inner sep=2pt] (gl) at (15.4,-3.85) {thm:dis-ope};
+  % edges
+  \draw[fe use] (eseg) -- (oseg);
+  \draw[fe use] (oseg) -- (fixn);
+  \draw[fe use] (disp) -- (fixn);
+  \draw[fe use] (disp) -- (mnp);
+  \draw[fe use] (fixn) -- (mnp);
+  \draw[fe use] (lowm) -- (mnp);
+  \draw[fe use] (mnp) -- (weak);
+  \draw[fe use] (mnp) -- (mom);
+  \draw[fe use] (fixn) -- (mom);
+  \draw[fe use] (disp) -- (mom);
+  \draw[fe use] (oeuc) -- (ogi);
+  \draw[fe use] (ogi) -- (ofw);
+  \draw[fe use] (oeuc.south) .. controls (11.2,-3.65) and (13.8,-3.65) .. (ofw.south);
+  \draw[fe use] (9.55,-3.6) -- (mom);
+  \draw[fe use] (Rm) -- (oeuc);
+  \draw[fe bottle] (Bo) -- (ogi);
+  \draw[fe bottle] (Fw) -- (ofw);
+  % ---------------- legend ----------------
+  \begin{scope}[shift={(9.7,-4.75)}]
+    \node[fe R,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (0,0) {};
+    \node[font=\scriptsize,anchor=west] at (0.32,0) {R 严格};
+    \node[fe A,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (1.8,0) {};
+    \node[font=\scriptsize,anchor=west] at (2.12,0) {A 全阶论证};
+    \node[fe Rc,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (4.1,0) {};
+    \node[font=\scriptsize,anchor=west] at (4.42,0) {$R_{\mathrm{cond}}$};
+    \node[fe asm,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (0,-0.5) {};
+    \node[font=\scriptsize,anchor=west] at (0.32,-0.5) {编号假设};
+    \node[font=\scriptsize,anchor=west] at (1.75,-0.5) {{\color{orange!70!black}\sffamily\bfseries W\,C\,O\,F\,G}：所用全局假设};
+    \draw[fe use] (-0.3,-1.0) -- (0.3,-1.0);
+    \node[font=\scriptsize,anchor=west] at (0.32,-1.0) {依赖};
+    \draw[fe bottle] (1.25,-1.0) -- (1.85,-1.0);
+    \node[font=\scriptsize,anchor=west] at (1.87,-1.0) {瓶颈：[A] 地位即该假设的地位};
+  \end{scope}
+\end{tikzpicture}
+\caption{DIS 矩定理对编号假设的依赖（据各陈述所列的“依赖”绘制；节点只写标签去掉前缀 \texttt{prop:dis-}、\texttt{asm:intro-} 等后的部分）：\cref{thm:dis-moments} 的微扰部分只依赖 OPE 的三个子陈述（蓝框，即 \cref{thm:dis-ope}），它们在编号假设中只用到 App M 的三个技术假设，其中 \cref{asm:appM-brst-ope}、\cref{asm:appM-forward} 是相应 [A] 陈述的瓶颈（粗红线）；非微扰的固定 $n$ 定理（\cref{thm:dis-fixed-n}）依赖 Wightman 公理（W）与非微扰 OPE（O），$n<n_0$ 的矩（\cref{thm:dis-moments-np}）还依赖增长条件（G）。
+框色为严格性标签，虚线框为 $R_{\mathrm{cond}}$ 条件定理，橙色虚线框为编号假设；节点第二行的橙色字母标出该陈述直接使用的全局假设（W、C、O、F、G 对应上排五个全局假设），其余依赖画为由前提指向陈述的箭头。}
+\label{fig:appM-dependency}
+\end{figure}

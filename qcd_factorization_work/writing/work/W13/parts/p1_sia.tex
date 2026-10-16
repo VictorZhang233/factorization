@@ -1,0 +1,285 @@
+
+% =====================================================================
+\section{$e^+e^-\to hX$ 与碎裂函数}\label{sec:coll-sia}
+
+在 $e^+e^-$ 湮灭中测量一个强子 $h$ 的能量份额，是碎裂函数（\cref{def:pdf-ff}）出现的最简单场合。部分子图像是：虚光子产生一对高能夸克与反夸克，它们各自（经过辐射）碎裂成强子喷注，
+$h$ 携带其“母部分子”能量的一个份额，截面应是“产生部分子的硬截面 $\otimes$ 碎裂函数”。与 DIS 相比，困难在于末态不再被完全求和：割线必须穿过 $h$，
+所以不能像\cref{thm:ee-R-finite}那样直接用光学定理把截面写成一个不被钳夹的前向振幅。下面的三个陈述正是为克服这一点而设的：
+\cref{lem:coll-final-poles}说明全部为末态的喷注不产生 Glauber 钳夹，\cref{lem:coll-unobserved-jet}说明不含 $h$ 的喷注与软辐射在对其末态求和后相消，\cref{thm:coll-sia}把这些组装成因子化定理。
+
+\subsection{运动学与结构函数}
+
+\begin{definition}[单举湮灭的运动学]\label{def:coll-sia}
+考虑 $e^-(l_1)+e^+(l_2)\to\gamma^*(q)\to h(p_h)+X$，$q=l_1+l_2$，$s=q^2>0$，轻子质量略去，只计单光子交换；$\theta$ 是质心系中 $\bm p_h$ 与电子束方向的夹角。定义
+\begin{equation}\label{eq:coll-z}
+z\equiv\frac{2p_h\cdot q}{q^2}\qquad(\text{质心系中 }z=2E_h/\sqrt s\text{，无质量强子时 }0<z\le1),
+\end{equation}
+强子张量
+\begin{equation}\label{eq:coll-Wsia}
+W^{\mu\nu}(q,p_h)\equiv\frac1{4\pi}\sum_X\int\dd^4y\,\ee^{\ii q\cdot y}\langle0|j^\mu(y)|h(p_h)X,\mathrm{out}\rangle\langle h(p_h)X,\mathrm{out}|j^\nu(0)|0\rangle
+=\Big(-g^{\mu\nu}+\frac{q^\mu q^\nu}{q^2}\Big)F_1+\frac{\tilde p_h^\mu\tilde p_h^\nu}{p_h\cdot q}F_2 ,
+\end{equation}
+$\tilde p_h\equiv p_h-\frac{p_h\cdot q}{q^2}q$（流守恒、宇称不变，$h$ 无自旋或已对其自旋求和），横向与纵向投影
+\begin{equation}\label{eq:coll-WTL}
+W_T\equiv F_1,\qquad W_L\equiv F_1+\frac z2F_2=\frac{4}{z^2s}\,p_{h\mu}p_{h\nu}W^{\mu\nu},
+\end{equation}
+以及横向与纵向截面
+\begin{equation}\label{eq:coll-sigTL}
+\frac{\dd\sigma_T}{\dd z}\equiv\frac{4\pi\alpha^2}{3s}\,zF_1,\qquad \frac{\dd\sigma_L}{\dd z}\equiv\frac{\pi\alpha^2}{3s}\big(2zF_1+z^2F_2\big)=\frac{2\pi\alpha^2}{3s}\,zW_L .
+\end{equation}
+\uses{def:pdf-ff}
+\end{definition}
+
+$W_T$ 是 $W^{\mu\nu}$ 在与 $\bm p_h$ 垂直的单位极化矢量上的投影，$W_L$ 是在 $\epsilon_L=(0,\hat{\bm p}_h)$ 上的投影：它们分别对应虚光子相对于 $h$ 方向的螺旋度 $\pm1$ 与 $0$。
+\cref{eq:coll-WTL}中的第二个等式对任意维数成立，同样 $-g_{\mu\nu}W^{\mu\nu}=(D-2)W_T+W_L$；这两个投影就是计算系数函数时所用的投影算符。截面由轻子张量 $L_{\mu\nu}=l_{1\mu}l_{2\nu}+l_{2\mu}l_{1\nu}-g_{\mu\nu}l_1\cdot l_2$ 给出：
+$E_h\,\dd\sigma/\dd^3p_h=\frac{2\alpha^2}{s^3}L_{\mu\nu}W^{\mu\nu}$\cite[式~(12.6)]{Collins2011}。在质心系中直接计算，
+\begin{equation}\label{eq:coll-LW}
+L_{\mu\nu}W^{\mu\nu}=\frac s2\Big[(1+\cos^2\theta)\,W_T+\sin^2\theta\,W_L\Big],
+\end{equation}
+而 $\dd^3p_h/E_h=\frac s4\,z\,\dd z\,\dd\Omega$，于是
+\begin{equation}\label{eq:coll-angular}
+\frac{\dd\sigma}{\dd z\,\dd\cos\theta}=\frac{\pi\alpha^2z}{2s}\Big[(1+\cos^2\theta)W_T+\sin^2\theta\,W_L\Big]
+=\frac38(1+\cos^2\theta)\frac{\dd\sigma_T}{\dd z}+\frac34\sin^2\theta\,\frac{\dd\sigma_L}{\dd z},
+\end{equation}
+% VF-MISC-5
+两个角权重在 $\cos\theta\in[-1,1]$ 上的积分都等于 $1$，故 $\dd\sigma/\dd z=\dd\sigma_T/\dd z+\dd\sigma_L/\dd z$（这一结构分析源于 Drell、Levy 与 Yan，我们的归一化同\cite[第~12.1~节]{Collins2011}；\cref{eq:coll-LW,eq:coll-angular}由我们用符号计算重新核对）。% check: s1, s9
+再定义 $\sigma_P\equiv\frac12\sum_h\int_0^1\dd z\,z\,\frac{\dd\sigma^h_P}{\dd z}$（$P=T,L$），则由能量守恒——每个事件中全部强子的能量之和为 $\sqrt s$——严格地有 $\sigma_T+\sigma_L=\sigma_{\rm tot}$，
+即“能量求和规则” $\sum_h\int_0^1\dd z\,z\,\dd\sigma^h/\dd z=2\sigma_{\rm tot}$（这是非微扰的恒等式，不依赖于因子化）。
+
+\subsection{末态极点的半平面引理}
+
+\cref{fig:coll-sia}画出了领头区域的结构。被观测的喷注 $J_1$ 与未观测的喷注 $J_2$ 都是从硬顶点出发、穿过末态割线的共线子图，软子图 $S$ 以软胶子与它们相连。
+要用软近似与 Ward 恒等式把软胶子化成 Wilson 线，必须先把软动量的积分围道移出 Glauber 区（\cref{def:ir-glauber}）；这在 Drell--Yan 中是全书最困难的一步，而在 $e^+e^-$ 中却很简单，原因就是下面的引理。
+
+%%% BEGIN fig:coll-sia
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!75,line width=1.6pt,line cap=round}]
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[jet blob,ellipse,minimum width=3.2cm,minimum height=0.85cm,inner sep=0pt] (J1) at (0,1.65) {};
+  \node[jetB blob,ellipse,minimum width=3.2cm,minimum height=0.85cm,inner sep=0pt] (J2) at (0,-1.65) {};
+  \node[soft blob,circle,minimum size=0.8cm,inner sep=0pt] (S) at (0,0) {};
+  % observed hadron h: final-state line of J_1 crossing the cut
+  \draw[fb hadron] (-0.42,2.02) to[out=80,in=180] (0,2.62) to[out=0,in=100] (0.42,2.02);
+  % photons (gamma* from e+e- annihilation)
+  \draw[photon] (-4.3,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (4.3,0);
+  \path[mom={$q$},mom sep=0.28cm] (-4.3,0) -- (H.west);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.east) -- (4.3,0);
+  % fermion line: H -> J_1 -> H^dagger -> J_2 -> H
+  \draw[quark] (H.62) -- (J1.192);
+  \draw[quark] (J1.348) -- (Hd.118);
+  \draw[quark] (Hd.242) -- (J2.12);
+  \draw[quark] (J2.168) -- (H.298);
+  \path[mom={$k$},mom sep=0.28cm,mom length=0.45cm] (H.62) -- (J1.192);
+  % soft gluons, on both sides of the cut
+  \draw[gluon] (S.135) -- (-0.62,1.27);
+  \draw[gluon] (S.45)  -- ( 0.62,1.27);
+  \draw[gluon] (S.225) -- (-0.62,-1.27);
+  \draw[gluon] (S.315) -- ( 0.62,-1.27);
+  % cut
+  \draw[cut] (0,3.05) -- (0,-2.45);
+  % labels
+  \node[fb lab] at (-0.95,1.65) {$J_1$};
+  \node[fb lab] at (-0.95,-1.65) {$J_2$};
+  \node[fb lab] at (-0.64,0) {$S$};
+  \node[fb lab] at (H) {$H$};
+  \node[fb lab] at (Hd) {$H^\dagger$};
+  \node[fb lab,anchor=south west] at (0.08,2.66) {$h(p_h)$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south east] at (-0.05,2.95) {末态割线};
+  \draw[blue!50!black,line width=0.4pt] (-1.45,1.98) -- (-2.05,2.45);
+  \node[fb note,text=blue!50!black,anchor=south east,align=right] at (-2.0,2.4) {碎裂函数\\$d_{h/q}(z/y)$};
+  \node[fb note,anchor=west,align=left] at (1.75,-1.75) {未观测的喷注 $J_2$ 与软辐射 $S$：\\对其末态求和，幺正性相消};
+\end{tikzpicture}
+\caption{$e^+e^-\to\gamma^*\to hX$ 的领头区域（约化割图；竖直虚线为末态割线，左侧为振幅、右侧为共轭振幅）。
+硬子图 $H$、$H^\dagger$ 产生两个喷注：被观测强子 $h$（动量 $p_h$，$z=2p_h\cdot q/q^2$，粗线穿过割线）所在的喷注 $J_1$ 给出碎裂函数 $d_{h/q}(z/y)$，$y$ 为碎裂部分子（动量 $k$）的相应份额；
+未观测的喷注 $J_2$ 与软子图 $S$ 也穿过割线，它们在对末态的割线求和中由幺正性相消（\cref{lem:coll-unobserved-jet}），软因子为 $1$；全部共线线都是出射的，Glauber 区没有钳夹（\cref{lem:coll-final-poles}）。}
+\label{fig:coll-sia}
+\end{figure}
+%%% END fig:coll-sia
+
+设 $J$ 沿 $+z$ 方向运动（其线有大的正分量 $l^+$），采用附录~O 的光锥序表示（\cref{def:appO-lcopt}）：光锥时间 $\tau_v=x_v^+$，线的能量是负分量 $l^-$，质壳能量 $E(l)\equiv(\mathbf l_T^2+m_l^2-\ii0)/(2l^+)$，
+每条内线按 $l^+>0$ 定向；$q_v^-$ 是在顶点 $v$ 处从外部流入 $J$ 的负分量；对与定向相容的排序 $\pi$（每条线的起点先于终点），第 $i$ 个中间态 $S_i^\pi$ 的“注入能量”为 $Q_i^\pi=\sum_{j\le i}q^-_{\pi(j)}$，
+能量分母为 $D_i^\pi=Q_i^\pi-\sum_{l\in S_i^\pi}E(l)$。\cref{lem:appO-lcopt}（\tagR，$R_{\mathrm{PT}}$）说明：在有限的 $\ii0\to\ii\eta_0$ 下，对全部内线负分量的积分精确地等于对相容排序求和的乘积 $\prod_i\ii/D_i^\pi$。
+
+\begin{lemma}[全部为末态的共线子图的极点在同一半平面 \tagR]\label{lem:coll-final-poles}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（本引理只涉及 Feynman 积分。）设 $J$ 是一个连通的共线子图，其外共线线全部是末态线（$e^+e^-\to hX$ 中的任一喷注；SIDIS 的流喷注），把硬子图收缩为一个顶点 $V_H$，
+并取 $J$ 沿 $+z$ 方向的光锥坐标。设在割线左侧（振幅一侧）$J$ 的外线是：在 $V_H$ 处由硬子图注入的活动线；在割线处离开 $J$ 的末态线（质壳动量 $p_c$ 固定，$p_c^+>0$）；在顶点 $v_j\ne V_H$ 流入 $J$ 的软动量 $k_j$（$j=1,\dots,s$）。
+设所考虑的点上每条内线满足 $|l^+|>\sum_j|k_j^+|$。则在\cref{lem:appO-lcopt}的光锥序表示（简化分子，有限 $\eta_0$）中，对每个相容排序 $\pi$：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item $\pi(1)=V_H$，即全部中间态都在硬顶点之后；
+\item 每个能量分母都有形式
+\begin{equation}\label{eq:coll-Dfinal}
+D_i^\pi=A_i^\pi-\sum_{j\in F_i^\pi}k_j^-+\ii\eta_i^\pi,\qquad A_i^\pi=\sum_{c\in C_{>i}^\pi}E(p_c)-\sum_{l\in S_i^\pi}\Real E(l)\in\mathbb R,\qquad \eta_i^\pi=\sum_{l\in S_i^\pi}\frac{\eta_0}{2l^+}>0,
+\end{equation}
+其中 $F_i^\pi$ 是在第 $i$ 个中间态之后才注入的软动量的集合，$C_{>i}^\pi$ 是在第 $i$ 个中间态之后才离开的末态线的集合；$A_i^\pi$ 与一切软负分量无关；
+\item 因此，作为任一 $k_j^-$ 的函数（其余变量取实值），每个依赖于 $k_j^-$ 的能量分母的零点都在上半平面；若 $k_j$ 是从 $J$ 流\emph{出}的动量，则零点在下半平面——半平面由 $k_j$ 的方向决定。
+对任意 $\kappa_j\ge0$，同时作 $k_j^-\to k_j^--\ii\kappa_j$（流入的 $k_j$）后 $\Imag D_i^\pi=\sum_{j\in F_i^\pi}\kappa_j+\eta_i^\pi>0$，围道不越过任何零点。
+\end{enumerate}
+割线的 $\delta$ 函数与因子 $N_l/(2l^+)$ 都不含软负分量。割线右侧的子图是同类振幅的复共轭，其分母为 $(D_i^\pi)^*$，零点在相反的半平面。
+\uses{lem:appO-lcopt,def:appO-lcopt,def:coll-sia}
+\end{lemma}
+
+\begin{proof}
+(a) 设 $v_1=\pi(1)$ 是排序中的第一个顶点。由于相容排序要求每条线的起点先于终点，没有内线终止于 $v_1$，而 $J$ 连通且至少有两个顶点，故至少有一条内线从 $v_1$ 出发。
+于是由正分量守恒，在 $v_1$ 处从外部流入的正分量为 $q^+_{v_1}=\sum_{t(l)=v_1}l^+\ge\min_l l^+>\sum_j|k_j^+|$。另一方面，若 $v_1$ 是插入顶点，$q^+_{v_1}=\sum_{j:\,v_j=v_1}k_j^+-\sum_{c\text{ 在 }v_1}p_c^+\le\sum_j|k_j^+|$；
+若 $v_1$ 是只发出末态线的顶点或纯内部顶点，$q^+_{v_1}\le0$。两者都与上式矛盾，所以 $v_1=V_H$。（若 $V_H$ 本身有内线终止于它，则不存在相容排序，相应的项为零，结论平凡成立。）
+
+(b) \cref{lem:appO-lcopt}(b) 的表示含整体因子 $2\pi\delta(\sum_vq_v^-)$，所以在其支撑上 $Q_i^\pi=\sum_{j\le i}q^-_{\pi(j)}=-\sum_{j>i}q^-_{\pi(j)}$。由 (a)，第 $i$ 个态之后的顶点中没有 $V_H$；
+这些顶点的外部注入只有三类：插入顶点注入 $k_j^-$，末态线离开处注入 $-E(p_c)$（末态线在质壳上，$p_c^-=E(p_c)$ 为实数），纯内部顶点注入 $0$。因此
+\[
+Q_i^\pi=\sum_{c\in C_{>i}^\pi}E(p_c)-\sum_{j\in F_i^\pi}k_j^- ,
+\]
+代入 $D_i^\pi=Q_i^\pi-\sum_{l\in S_i^\pi}E(l)$，并用 $\Imag[-E(l)]=+\eta_0/(2l^+)$（$l^+>0$），即得\cref{eq:coll-Dfinal}。$E(l)$ 只依赖于 $l^+$、$\mathbf l_T$ 与质量，所以 $A_i^\pi$ 与软负分量无关。
+
+(c) 由\cref{eq:coll-Dfinal}，$D_i^\pi=0$ 等价于 $\sum_{j\in F_i^\pi}k_j^-=A_i^\pi+\ii\eta_i^\pi$；固定其余 $k_{j'}^-$ 为实数，$k_j^-$ 的零点虚部为 $+\eta_i^\pi>0$。把 $k_j$ 换成 $-k_j$ 即得流出的情形。
+形变后 $\Imag D_i^\pi=\sum_{j\in F_i^\pi}\kappa_j+\eta_i^\pi$，与 $\Real k_j^-$ 无关地为正。最后两句：末态线的 $\delta(p_c^2-m_c^2)$ 只含固定的 $p_c$；简化分子与 $1/(2l^+)$ 不含任何负分量；共轭振幅的 Feynman 规则是振幅的复共轭。
+\end{proof}
+
+引理把“末态线”这一线的属性换成了光锥序中间态的属性：一个能量分母是否依赖于 $k_j^-$、依赖的符号如何，取决于 $k_j$ 是在该中间态之前还是之后注入。
+对全部为末态的喷注，一切中间态都在硬顶点之后，所以只出现一种符号。Drell--Yan 中强子 $A$ 的子图同时含硬顶点之前（初态）与之后（末态，旁观者）的中间态，两种符号都会出现，这正是 Glauber 钳夹的来源；
+这一推广是\cref{lem:dy-poles-orientation}（第~12~章）与附录~O 的\cref{lem:appO-orientation}的内容，这里只是其最简单的情形。我们在 50 个随机构型上数值核对了：协变传播子与光锥序分母的 $k^-$ 零点都在上半平面，形变 $k^-\to k^--\ii\kappa$ 不越过任何零点。% check: s8
+
+\paragraph{推论：$e^+e^-$ 中软动量的同时形变。}
+设软动量 $k$ 在振幅一侧由沿 $-z$ 方向的喷注 $J_2$ 流入沿 $+z$ 方向的喷注 $J_1$。由\cref{lem:coll-final-poles}，$J_1$ 的能量分母的 $k^-$ 零点在上半平面；对 $J_2$ 用以 $x^-$ 为时间、$l^+$ 为能量的光锥序表示，
+流入 $J_2$ 的是 $-k$，故其 $(-k)^+$ 零点在上半平面，即 $k^+$ 零点在下半平面。于是形变
+\begin{equation}\label{eq:coll-deform}
+k\ \to\ k+\ii\kappa\,(n_A-n_B)=k-\ii\kappa\,e_G,\qquad\text{即}\quad k^+\to k^++\ii\kappa,\quad k^-\to k^--\ii\kappa\quad(\kappa\ge0)
+\end{equation}
+同时避开两个喷注的全部极点\cite[式~(12.48)、(12.49)]{Collins2011}。软线自身的分母变为 $(k-\ii\kappa e_G)^2=k^2+2\kappa^2-2\ii\kappa(k^+-k^-)$（\cref{prop:method-glauber-deformation}中 $t\sigma f=-\kappa$ 的情形）：
+在 Glauber 区 $|k^+k^-|\ll\mathbf k_T^2$ 中只要 $\kappa\le|\mathbf k_T|/2$，其实部 $2k^+k^--\mathbf k_T^2+2\kappa^2<0$ 不为零，形变不越过软线的极点；而在 $\kappa=|\mathbf k_T|/2$ 处 $|k^++\ii\kappa|\,|k^--\ii\kappa|\ge\kappa^2=\mathbf k_T^2/4$，
+动量已离开 $G_\delta=\{|k^+k^-|\le\delta\mathbf k_T^2\}$（$\delta\le\frac18$）。% check: s8 (B)
+与\cref{rem:method-two-component}中 Drell--Yan 振幅一侧沿 $+e_G$ 的形变相比，这里方向相反：末态线对应未来指向的 Wilson 线，其程函传播子 $-\ii/(n_A\cdot k-\ii0)$（\cref{prop:prelim-wilson-rules}）的极点在 $n_A\cdot k=k^-$ 的上半平面。
+关键在于两个分量可以\emph{同时}朝相互协调的方向移动——单独移动一个分量不能离开 $G_\delta$（\cref{prop:method-glauber-deformation}(b)）。
+
+\subsection{未观测喷注与软辐射；领头区域}
+
+\begin{lemma}[未观测喷注与软辐射的幺正性相消 \tagA]\label{lem:coll-unobserved-jet}
+在 $e^+e^-\to hX$ 的一个领头区域中，设 $J_\alpha$（$\alpha\ge2$）是不含 $h$ 的共线子图，$S$ 是软子图。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 对 $J_\alpha$ 末态的一切割线位置求和，所得割图之和等于未割的前向喷注函数与其复共轭之差（割位置恒等式；物理幺正性保证鬼场与非物理极化的割线组合相消）；
+\item 在这两个未割项中，作为 $J_\alpha$ 从硬子图获得的总负分量（在 $J_\alpha$ 自己的光锥坐标中）的函数，能量分母的零点全在实轴同一侧；对 $q$ 作光滑平均后积分围道可以移到与零点相距 $\order{\sqrt s}$ 处，
+$J_\alpha$ 不再处于共线钳夹面附近，于是在领头幂次并入硬子图；
+\item 软近似与 Ward 恒等式把 $S$ 化为沿各喷注方向的未来指向 Wilson 线的真空矩阵元之后，对其末态的无约束求和给出 $1$。
+\end{enumerate}
+因此在领头幂次，只有含 $h$ 的共线子图是真正的长距离因子。（本引理只涉及部分子态。）
+% errtype: E-S
+\uses{prop:method-fsi,prop:prelim-unitarity,lem:method-soft-unitarity,asm:appN-cutsum}
+\end{lemma}
+
+\begin{proofsketch}
+(1) \emph{切割的公共表示。}对 $J_\alpha$ 用它自己的光锥序（或时序）微扰论：未被切割的线的负分量用留数积掉，被切割的线用 $\delta$ 函数积掉，剩下的正分量与横向分量作为各个割图共同的积分变量——这是\cref{asm:appN-cutsum}的 (CU1)，
+在它之下割位置求和是被积函数之间的恒等式。(2) \emph{割位置恒等式。}在\cref{prop:method-fsi}的证明中，对 $N$ 个能量分母链的割位置求和给出 $\ii\prod_f(a_f+\ii\epsilon)^{-1}-\ii\prod_f(a_f-\ii\epsilon)^{-1}$；
+这就是 (a)，其中物理态的完备性由\cref{prop:prelim-unitarity}（\tagR，$R_{\mathrm{PT}}$）保证。(3) \emph{围道移动。}每个未割项中的分母都具有 $E-E_a\pm\ii\epsilon$ 的形式，$E$ 是注入 $J_\alpha$ 的总能量，零点在同一侧。
+对强子张量先用缓变的检验函数 $f(q)$ 平均\cite[式~(12.11)]{Collins2011}，就可以让 $J_\alpha$ 的总动量经硬子图从光子顶点流出，而不必经另一个喷注的末态流回；于是 $E$ 的围道可以推到 $|E-E_a|\sim\sqrt s$，
+$J_\alpha$ 远离质壳，成为硬子图的一部分，与更小区域的重叠由减除项扣除\cite[第~12.7~节]{Collins2011}。这一步给出的是标度陈述（E-S）。
+(4) \emph{软辐射。}切割被锚定在 $h$ 上，这使得未因子化的软胶子不能直接用割位置求和处理：相消所需的某些项相当于把割线移到不含 $h$ 的位置；KLN 定理也不够，因为对“软”而非“红外”的胶子，从喷注内线发出的辐射是领头的\cite[第~12.5.2、12.5.3~节]{Collins2011}。
+正确的次序是先因子化：软近似与 Ward 恒等式把软胶子移到沿各喷注方向、从硬顶点出发的未来指向 Wilson 线上，此后软末态不受观测量约束，由\cref{lem:method-soft-unitarity}（\tagR，$R_{\mathrm{def}}$）其贡献为 $1$。
+(5) \emph{规范理论中的补充。}从硬子图提取 K 胶子后，$J_\alpha$ 带有 Wilson 线，圈动量可以经 Wilson 线流过割线，(2) 的朴素形式不再直接适用；Collins 先对 $J_\alpha$ 的横动量积分，使被割的 Wilson 线等效于 $2\pi\delta(k'\cdot\tilde w_\alpha)$，
+再用硬因子对喷注方向的光滑依赖完成论证\cite[第~12.8.7~节]{Collins2011}。完整论证见\cite[第~12.7、12.8~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+这是 E-S 型论证。最弱的一步是 (1)：割图求和后的公共表示及其在被测变量存在时的性质，即\cref{asm:appN-cutsum}（\tagA）；经由\cref{prop:method-fsi}（全阶论证，[A]）还依赖于光锥序表示的适用性\cref{asm:appO-lcopt}。
+规范理论中 (5) 的论证是间接的：Collins 在完成这一步后写道「“A more direct proof would be desirable.”」\cite[第~12.8.7~节]{Collins2011}，即希望有更直接的证明。升级途径：对带 Wilson 线的未观测喷注给出被积函数层次的割图恒等式，并在积分范数下控制其余项。
+
+\begin{proposition}[SIA 的领头区域 \tagA]\label{prop:coll-sia-regions}
+对红外正规化的部分子态，在微扰论的每一阶，$e^+e^-\to hX$ 的领头区域由以下子图组成：振幅与共轭振幅中各含一个电磁顶点的硬子图 $H$、$H^\dagger$；含 $h$ 的共线子图 $J_1$；任意个其他共线子图 $J_2,\dots,J_N$（$N\ge2$）；
+只以胶子附着于共线子图的软子图 $S$（可以没有）。每个 $J_\alpha$ 以一条物理部分子线加任意多条纵向极化（K）胶子连接 $H$（及 $H^\dagger$）；Glauber 区不被钳夹（\cref{lem:coll-final-poles}）；
+对割线求和后 $J_2,\dots,J_N$ 并入硬子图，软因子为 $1$（\cref{lem:coll-unobserved-jet}）。（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{thm:ir-leading-regions,lem:coll-final-poles,lem:coll-unobserved-jet}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 由\cref{thm:ir-leading-regions}（全阶论证，[A]），每个割图的领头区域具有上述一般形式，所有共线子图都从硬顶点出发并穿过末态割线，软线不附着于硬子图。
+(2) 纯胶子引发的喷注（$\gamma^*\to gg$ 被电荷共轭禁止，最少要三个共线群）在全部外胶子都是 K 胶子时逐图是超领头的；对硬子图的全部图求和后由 Ward 恒等式相消，剩下的组合成定义碎裂函数的算符及其 Wilson 线\cite[第~12.5.1~节]{Collins2011}。
+(3) 由\cref{lem:coll-final-poles}，每个喷注的极点都在同一侧，按\cref{eq:coll-deform}同时形变两个分量即可离开 Glauber 区，那里软近似成立；在 $e^+e^-$ 中这一步不需要附录~O 那样的改写。
+(4) 由\cref{lem:coll-unobserved-jet}，$J_2,\dots,J_N$ 与 $S$ 在对割线求和后分别并入硬子图与给出因子 $1$。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+标度陈述（E-S）：没有 Minkowski 空间中与 Weinberg 定理相当的结果，嵌套区域与超领头项的相消只在对图求和后成立。其积分形式是\cref{asm:appN-envelope}与\cref{asm:appN-separation}，割图版本依赖于\cref{asm:appN-cutsum}（均为 \tagA）。
+文献中领头区域的分析见\cite[第~12.5~节]{Collins2011}；历史上第一个接近完整的单举湮灭证明在类时轴规范中进行\cite{CollinsSterman1981}，但轴规范的非物理奇点一般会阻碍出 Glauber 区的形变，所以一般而可靠的证明应在 Feynman 规范中进行\cite[第~12.6~节]{Collins2011}。
+
+\subsection{因子化定理}
+
+\begin{theorem}[$e^+e^-\to hX$ 的因子化 \tagA]\label{thm:coll-sia}
+对固定的 $0<z<1$，当 $s\to\infty$ 时，对 $P\in\{T,L\}$（因而对二者之和）
+\begin{equation}\label{eq:coll-sia-fact}
+\frac{\dd\sigma^h_P}{\dd z}=\sum_i\int_z^1\frac{\dd y}{y}\,\frac{\dd\hat\sigma_{P,i}}{\dd y}\Big(y,\frac{s}{\mu^2},\as(\mu)\Big)\,d_{h/i}\Big(\frac zy;\mu\Big)+R_P(z,s),
+\end{equation}
+其中 $i$ 遍历夸克、反夸克与胶子，$d_{h/i}$ 是\cref{def:pdf-ff}定义的 $\MSbar$ 碎裂函数，$\dd\hat\sigma_{P,i}/\dd y$ 是产生能量份额为 $y=2k\cdot q/q^2$ 的部分子 $i$ 的 $\MSbar$ 减除部分子截面，可以用部分子外态计算。
+余项 $R_P$ 是幂次压低的；其幂次在一般情形下没有被证明（[C]）。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+% errtype: E-S
+\uses{thm:method-template,prop:coll-sia-regions,lem:coll-final-poles,lem:coll-unobserved-jet,def:pdf-ff,rem:pdf-ff-multren,asm:appN-multren,asm:intro-bridge,lem:method-ward-multi,prop:method-collinear-wilson,prop:method-soft-wilson,lem:method-soft-unitarity,thm:method-subtraction,prop:pdf-partonic-dr,prop:pdf-timelike-dglap,asm:appN-envelope,asm:appN-separation,asm:appN-cutsum,asm:appN-ward-product,asm:appN-collins,asm:appN-values,asm:appN-uv}
+\end{theorem}
+
+\begin{proofsketch}
+逐条验证\cref{thm:method-template}（全阶论证，[A]）的假设；固定 $\as$ 的阶，部分子外态带红外正规子。
+(1) (H1)：领头区域即\cref{prop:coll-sia-regions}；其积分形式为\cref{asm:appN-envelope,asm:appN-separation}。
+(2) (H2)：在 $J_1$ 与 $H$ 的界面上作共线近似，K 胶子由多胶子 Ward 恒等式（\cref{lem:method-ward-multi}，[A]；精确形式\cref{asm:appN-ward-product}）与\cref{prop:method-collinear-wilson}移到一条 Wilson 线上。
+对沿 $+z$ 方向的 $J_1$，K 胶子附着在末态线上，Wilson 线沿 $n_B$ 指向未来：振幅中为 $W[\infty n_B,w]$，共轭振幅中为 $W[0,\infty n_B]$——恰是\cref{def:pdf-ff}中的方向。
+(3) (H3)：由\cref{lem:coll-final-poles}及其推论\cref{eq:coll-deform}，在离开 Glauber 区的围道上软近似成立，软胶子由\cref{prop:method-soft-wilson}化为沿各喷注方向的 Wilson 线；$e^+e^-$ 中没有 Glauber 钳夹。
+(4) (H4)：由\cref{lem:coll-unobserved-jet}，未观测喷注并入硬子图；软因子的 Wilson 线都位于同一点、对软末态无约束求和，由\cref{lem:method-soft-unitarity}等于 $1$。
+(5) (H5)：由减除定理\cref{thm:method-subtraction}（瓶颈\cref{asm:appN-collins}，以及\cref{asm:appN-values,asm:appN-uv}），减除项是裸碎裂函数的矩阵元；碎裂函数的 Mellin 矩不是定域算符的矩阵元（\cref{rem:pdf-ff-multren}），
+其乘法可重整性必须作为独立输入，即\cref{asm:appN-multren}(Z1) 对碎裂函数的情形，此后它们按类时 DGLAP 演化（\cref{prop:pdf-timelike-dglap}，[A]）。
+(6) 于是由\cref{thm:method-template}，截面是硬因子与 $J_1$ 的算符矩阵元的卷积。固定 $J_1$ 的大分量 $k^+$、对 $k^-$ 与 $\mathbf k_T$ 积分，就得到\cref{def:pdf-ff}的碎裂函数（强子系中 $\bm p_{h,\mathrm T}=0$，前置因子 $z^{1-2\varepsilon}$ 对应于 Collins 公式中的 $1/z^{n-2}$\cite[式~(12.13)]{Collins2011}）；
+硬因子与 $h$ 无关，可以取被观测“强子”为在壳无质量部分子、在纯维数正规化中计算（\cref{prop:pdf-partonic-dr}），这时 $C=\hat\sigma\otimes(d^{\text{部分子}})^{-1}$，单圈即“未减除的部分子截面减去单圈部分子碎裂函数”\cite[式~(12.82)]{Collins2011}。
+把 Collins 的不变截面形式 $E_h\dd\sigma/\dd^3p_h=\sum_j\int\frac{\dd\zeta}{\zeta^2}\,E_k\dd\hat\sigma_j/\dd^3k\;d_{h/j}(\zeta)$ 换成能量份额并令 $\zeta=z/y$，即得\cref{eq:coll-sia-fact}；对 $W^{\mu\nu}$ 的 $T$、$L$ 投影分别成立，因为投影算符只作用在硬因子上。
+(7) 强子：\cref{asm:intro-bridge}的 (Br1) 断言没有新的领头区域，(Br2) 断言全部 $\Lambda$ 敏感性都在碎裂函数中，(Br3) 把余项读作渐近陈述。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+本定理是全阶论证（[A]）。瓶颈：\cref{asm:appN-collins}（积分范数下的减除条件）、\cref{asm:appN-envelope,asm:appN-separation}（幂次计数的积分形式）、\cref{asm:appN-cutsum}（割图求和的公共表示）、
+\cref{asm:appN-ward-product}（多胶子 Ward 恒等式）、\cref{asm:appN-uv}，以及碎裂函数特有的独立输入\cref{asm:appN-multren}(Z1)（对 PDF 它是定理，对碎裂函数不是，\cref{rem:pdf-ff-multren}）；强子层次是\cref{asm:intro-bridge}（\tagC）。
+文献给出的是标度陈述（E-S）。该论证中被明确假定的一步是非定域算符的 BRST 分类\cite[第~11.3.2~节]{Collins2011}，即具名缺口\cref{asm:appN-brst-nonlocal}（[C]），它经由\cref{lem:method-ward-multi}与\cref{thm:method-template}进入，只是点名，不是本定理的前提。
+非微扰方面还有两点值得指出。其一，碎裂函数定义中的末态 $|hX,\mathrm{out}\rangle$ 带色（产生它的场带色），在禁闭理论中这显然不是物理态；Collins 指出「“A full resolution of the issue has not appeared in the literature.”」\cite[第~12.8.9~节]{Collins2011}，即这一问题尚无完整解决。
+其二，Gupta 与 Quinn 构造了一个所有夸克都很重的“模型宇宙”，其中存在不被 $Q^2$ 的幂次压低的非微扰效应\cite{Gupta:1981ve}；按 Collins 的讨论，这意味着因子化的成立依赖于关于非微扰物理的（多半是隐含的）假设\cite[第~12.12~节]{Collins2011}——在本书中即\cref{asm:intro-bridge}。
+关于幂次：在幂次修正由紫外区主导的假设下，Beneke、Braun 与 Magnea 的重整化子分析表明，横向与纵向截面各自有 $1/Q$ 修正，而在总截面中相消\cite{BenekeBraunMagnea1997}；这是证据而非证明，余项的幂次本身是 [C]。
+早期的全阶论证见\cite{CollinsSoper1982a}（算符定义）与\cite{Mueller1978}（割顶点）；Feynman 规范下的完整论证见\cite[第~12.5--12.8~节]{Collins2011}。
+
+\begin{remark}[系数函数与检验]\label{rem:coll-sia-nlo}
+把\cref{eq:coll-sia-fact}写成 $\frac{\dd\sigma^h_P}{\dd z}=\sigma_{\mu\mu}N_c\sum_qe_q^2\int_z^1\frac{\dd y}y\big[C^P_q(y)\big(d_{h/q}+d_{h/\bar q}\big)(\tfrac zy)+C^P_g(y)\,d_{h/g}(\tfrac zy)\big]$，则在 $\MSbar$ 中（$\mathcal D_k=[\ln^k(1-y)/(1-y)]_+$，乘积约定见\cref{def:prelim-plus}）
+\begin{equation}\label{eq:coll-CT}
+\begin{aligned}
+C^T_q&=\delta(1-y)+\frac{\as}{2\pi}C_F\Big[(1+y^2)\mathcal D_1-\frac32\mathcal D_0+2\frac{1+y^2}{1-y}\ln y+\frac32(1-y)+\Big(\frac{2\pi^2}3-\frac92\Big)\delta(1-y)\Big]+\frac{\as}{2\pi}P_{qq}(y)\ln\frac{s}{\mu^2},\\
+C^T_g&=\frac{\as}{2\pi}\,2C_F\Big[\frac{1+(1-y)^2}{y}\big(\ln(1-y)+2\ln y\big)-\frac{2(1-y)}y\Big]+\frac{\as}{2\pi}\,2P_{gq}(y)\ln\frac{s}{\mu^2},\\
+C^L_q&=\frac{\as}{2\pi}\,C_F,\qquad C^L_g=\frac{\as}{2\pi}\,\frac{4C_F(1-y)}y ,
+\end{aligned}
+\end{equation}
+$C^L$ 在此阶与 $\mu$ 无关。我们由 $\gamma^*\to q\bar qg$ 的 $D$ 维矩阵元（\cref{prop:ee-oneloop}所用的同一矩阵元）、在被观测部分子的强子系相空间中积分并减去 $\MSbar$ 部分子碎裂函数得到这些结果：
+夸克谱的 $1/\varepsilon^2$ 在实、虚之和中相消，$1/\varepsilon$ 的系数是 $-P_{qq}$（\cref{ex:ee-quark-spectrum}），胶子谱的是 $-2P_{gq}$（夸克与反夸克各辐射一次），纵向投影有限。% check: s3
+它们与 Rijken 与 van Neerven 给出的 $\order{\as}$ 项一致\cite[附录~A，式~(A3)、(A10)、(A11)]{RijkenVanNeerven1997}（他们的归一化中胶子项同样只乘一次 $d_{h/g}$）；单圈结果最早由 Baier 与 Fey\cite{BaierFey1979}以及 Altarelli 等\cite{AltarelliEtAl1979}算出（见\cite[第~12.11~节]{Collins2011}），
+二阶结果见\cite{RijkenVanNeerven1996,RijkenVanNeerven1997}，唯象讨论见\cite{NasonWebber1994}。三项检验：
+(i) \emph{能量求和规则。}以 $\as/(2\pi)\cdot C_F$ 为单位，$\int_0^1y\,C^T_q=\frac{16}3$，$\int_0^1y\,C^L_q=\frac12$，$\int_0^1y\,C^T_g=-\frac{32}3$，$\int_0^1y\,C^L_g=2$；由碎裂函数的动量求和规则，
+$2\sigma_T/\sigma_0=2+\frac{\as}{2\pi}C_F\big(2\cdot\frac{16}3-\frac{32}3\big)=2$，$2\sigma_L/\sigma_0=\frac{\as}{2\pi}C_F\big(2\cdot\frac12+2\big)$，即
+\begin{equation}\label{eq:coll-sigmaL}
+\sigma_T=\sigma_0+\order{\as^2},\qquad \sigma_L=\frac{3C_F}4\frac{\as}\pi\,\sigma_0+\order{\as^2}=\frac{\as}\pi\sigma_0+\order{\as^2},
+\end{equation}
+二者之和正是\cref{cor:ee-R-alphas}的 $R=R_0(1+\as/\pi)$——$\order{\as}$ 的修正全部是纵向的。
+(ii) \emph{与 DIS 的比较。}$C^T_q$ 中 $\delta(1-y)$ 的系数 $\frac{2\pi^2}3-\frac92$ 比 DIS 的 $C_2^q$（\cref{prop:disall-nlo}）的 $-(\frac92+\frac{\pi^2}3)$ 大 $\pi^2$，这恰是类时与类空形状因子之差（$(-q^2-\ii0)^{-\varepsilon}$ 的相位）；% VF-SUD-2, VF-DIS-7
+$\ln y$ 项的差别来自相空间：SIA 中被观测部分子的相空间因子 $y^{1-2\varepsilon}(1-y)^{-\varepsilon}$ 乘以极点 $-P/\varepsilon$ 给出 $+2P\ln y$，DIS 中 $(\mu^2/\hat s)^\varepsilon$、$\hat s=Q^2(1-x)/x$ 给出 $-P\ln x$。
+所以类时系数函数不能由类空系数函数作朴素的替换得到；两者的解析延拓关系与次领头阶类时核的差别见\cite{CurciFurmanskiPetronzio1980}。
+(iii) \emph{标度依赖。}$\ln(s/\mu^2)$ 的系数恰为 $P_{qq}$ 与 $2P_{gq}$，与碎裂函数的类时 DGLAP 演化（\cref{prop:pdf-timelike-dglap}，领头阶核与类空的相同\cite{GribovLipatov1972b}）相消，正如\cref{prop:method-scale-scheme}所要求的。
+\end{remark}
+
+\begin{example}[领头阶 $e^+e^-\to hX$]\label{ex:coll-sia-lo}
+领头阶只有 $\gamma^*\to q(k)\bar q$ 一个部分子过程。把被观测“强子”取为夸克本身，部分子强子张量为
+$C^{\mu\nu}_q=e_q^2N_c\,\delta(1-y)\big[-g^{\mu\nu}-\frac2s(2k^\mu k^\nu-q^\mu k^\nu-k^\mu q^\nu)\big]$\cite[式~(12.26)]{Collins2011}，即 $\hat F_1=e_q^2N_c\delta(1-y)$、$\hat F_2=-2e_q^2N_c\delta(1-y)$；
+对夸克与反夸克卷积（$\delta(z/\zeta-1)=z\,\delta(\zeta-z)$）得 $F_1=\frac{N_c}z\sum_qe_q^2(d_{h/q}+d_{h/\bar q})(z)$，$F_2=-\frac{2N_c}{z^2}\sum_qe_q^2(d_{h/q}+d_{h/\bar q})(z)$。代入\cref{eq:coll-sigTL}，
+\begin{equation}\label{eq:coll-sia-lo}
+\frac{\dd\sigma^h_L}{\dd z}=0,\qquad \frac{\dd\sigma^h}{\dd z}=\frac{\dd\sigma^h_T}{\dd z}=\frac{4\pi\alpha^2}{3s}N_c\sum_qe_q^2\big[d_{h/q}(z)+d_{h/\bar q}(z)\big],
+\end{equation}
+% VF-MISC-5
+即 Callan--Gross 关系的类时类比 $F_2=-2F_1/z$（螺旋度守恒：无质量夸克对不能由纵向光子产生），角分布 $\frac38(1+\cos^2\theta)$ 与 $e^+e^-\to q\bar q$ 的相同。由动量求和规则 $\sum_h\int_0^1\dd z\,z\,d_{h/i}=1$，
+$\sum_h\int_0^1\dd z\,z\,\frac{\dd\sigma^h}{\dd z}=\frac{4\pi\alpha^2}{3s}N_c\sum_qe_q^2\cdot2=2\sigma_0$，这是能量求和规则在领头阶的形式。
+\emph{数值。}取 $n_f=5$，$R_0=N_c\sum_qe_q^2=\frac{11}3$；在 $\sqrt s=20\,\mathrm{GeV}$ 处 $\as=0.1533$（两圈精确解，\cref{def:prelim-msbar}的约定）% VF-QCD-7
+，由\cref{eq:coll-sigmaL}得 $\sigma_L/\sigma_0=\as/\pi=0.0488$、$\sigma_L/\sigma_{\rm tot}=0.0465$，能量求和规则的右边为 $2\sigma_0(1+\as/\pi)=2.098\,\sigma_0$——它既检验了\cref{rem:coll-sia-nlo}中的系数函数，也说明纵向截面是测量 $\as$ 的一个干净的量。% check: s9
+\uses{thm:coll-sia,def:coll-sia}
+\end{example}

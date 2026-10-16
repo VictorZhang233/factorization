@@ -1,0 +1,60 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 heavy/.style={draw,solid,line width=1.3pt,fd arrow=#1},
+  fd2 heavy/.default=0.5,
+  fd2 meson/.style={bound state,line cap=butt},
+  fd2 weak/.style={rectangle,fill=black,draw=none,inner sep=0pt,minimum size=5.6pt},
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 cross/.pic={\draw[red!75!black,line width=1.1pt,line cap=round] (-0.12,-0.12)--(0.12,0.12) (-0.12,0.12)--(0.12,-0.12);},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  \coordinate (W) at (0,0.45);
+  \coordinate (dq) at (1.449,2.820);   % end of the d line (inside the pion blob)
+  \coordinate (uq) at (1.851,2.558);   % end of the u-bar line (inside the pion blob)
+  % ---- mesons (double lines) ----
+  \draw[fd2 meson] (-5.15,0) -- (-3.9,0);
+  \draw[fd2 meson] (3.9,0) -- (5.15,0);
+  \draw[fd2 meson] (2.36,3.78) -- (2.84,4.51);
+  % ---- soft gluons from the B-D system to the pion pair (decouple) ----
+  \coordinate (sd) at ($(W)!0.42!(dq)$);
+  \coordinate (su) at ($(W)!0.36!(uq)$);
+  \draw[fd2 soft] (-3.42,0.72) -- (sd);
+  \draw[fd2 soft] (3.42,0.72) -- (su);
+  \pic at ($(-3.42,0.72)!0.5!(sd)$) {fd2 cross};
+  \pic at ($(3.42,0.72)!0.5!(su)$) {fd2 cross};
+  % ---- quark lines (arrows = fermion-number flow) ----
+  \draw[fd2 heavy=0.55] (-3.4,0.45) -- (W);
+  \draw[fd2 heavy=0.55] (W) -- (3.4,0.45);
+  \draw[quark] (3.4,-0.45) -- (-3.4,-0.45);
+  \draw[quark=0.72] (W) -- (dq);
+  \draw[quark=0.6] (uq) -- (W);
+  % ---- blobs on top ----
+  \node[hadron blob,ellipse,minimum width=0.8cm,minimum height=1.8cm,inner sep=0pt] at (-3.6,0) {};
+  \node[hadron blob,ellipse,minimum width=0.8cm,minimum height=1.8cm,inner sep=0pt] at (3.6,0) {};
+  \node[jet blob,ellipse,minimum width=1.6cm,minimum height=0.72cm,inner sep=0pt,rotate=57] at (1.95,3.15) {};
+  \node[fd2 weak] at (W) {};
+  % ---- labels ----
+  \node[fd2 lab,left] at (-5.15,0) {$\bar B^0$};
+  \node[fd2 lab,right] at (5.15,0) {$D^+$};
+  \node[fd2 lab,anchor=south west] at (2.78,4.45) {$\pi^-(p)$};
+  \node[fd2 lab] at (-1.9,0.2) {$b$};
+  \node[fd2 lab] at (1.9,0.2) {$c$};
+  \node[fd2 lab] at (-1.9,-0.72) {$\bar d$};
+  \path[mom={$xp$},mom sep=0.25cm,mom length=0.5cm,mom pos=0.8] (W) -- (dq);
+  \path[mom'={$(1-x)p$},mom sep=0.25cm,mom length=0.5cm,mom pos=0.84] (W) -- (uq);
+  \node[fd2 lab,anchor=east] at (1.28,3.42) {$\phi_\pi(x)$};
+  \node[fd2 note,anchor=north west] at (0.14,0.36) {$T(x,\mu)$};
+  \node[fd2 note,anchor=south west,align=left] at (3.7,0.98) {软胶子在领头幂次\\退耦（色透明性）};
+  % ---- the soft B -> D transition ----
+  \draw[fd2 bracket] (-4.02,-1.05) -- (-4.02,-1.15) -- (4.02,-1.15) -- (4.02,-1.05);
+  \node[fd2 note,below=1pt] at (0,-1.15) {软的 $B\to D$ 跃迁（含旁观者）：形状因子 $F^{B\to D}(0)$};
+  \node[fd2 lab] at (0,-2.2) {$\langle D^+\pi^-|O_{\mathbf 0}|\bar B^0\rangle=N\,F^{B\to D}(0)\displaystyle\int_0^1\!\dd x\,T(x,\mu)\,\phi_\pi(x,\mu)\,\big[1+\order{\Lambda/m_b}\big]$};
+\end{tikzpicture}
+\caption{$\bar B^0\to D^+\pi^-$ 的因子化（\cref{thm:heavy-bdpi}，全阶论证 [A]）。黑方块为弱作用四夸克算符 $O_{\mathbf 0}=[\bar c\gamma^\mu P_Lb][\bar d\gamma_\mu P_Lu]$ 的顶点，粗线为重夸克 $b$、$c$，双线为介子；细线上的箭头为费米子数流向（反夸克 $\bar d$、$\bar u$ 的箭头逆着动量）。
+旁观者 $\bar d$ 自 $\bar B^0$ 进入 $D^+$，这一软的跃迁由形状因子 $F^{B\to D}(0)$ 描述；发射的 $\pi^-$ 由弱顶点直接产生的共线 $d\bar u$ 对构成（蓝色团，分布振幅 $\phi_\pi(x)$，$x$ 为 $d$ 夸克的动量分数），它是快速运动的色单态小偶极子：
+软胶子与 $d$、$\bar u$ 的程函耦合在领头幂次相消（打叉的绿色胶子，色透明性），硬胶子交换归入短程系数 $T(x,\mu)$。
+$N=\frac{\ii}{2}m_BE_\pi f_\pi$；修正被 $\Lambda/m_b$、$\Lambda/m_c$、$\Lambda/E_\pi$ 压低（VF-BQ-6）；$B^-\to D^0\pi^-$ 同理。证明还用到分布振幅端点压低的假设（见正文）。}
+\label{fig:heavy-bdpi}
+\end{figure}

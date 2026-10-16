@@ -1,0 +1,40 @@
+%%% BEGIN fig:ee-pi-plane
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lab/.style={font=\footnotesize},
+  fa contour/.style={draw=blue!65!black,line width=1.1pt,postaction={decorate,decoration={markings,
+      mark=at position 0.13 with {\arrow{Stealth[length=6pt,width=5pt]}},
+      mark=at position 0.5 with {\arrow{Stealth[length=6pt,width=5pt]}},
+      mark=at position 0.87 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  fa cutline/.style={draw=black,line width=1.0pt,decorate,decoration={zigzag,amplitude=1.7pt,segment length=4.6pt}},
+  fa sm/.style={circle,draw=red!65!black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5.5pt}]
+  \draw[lcaxis] (-4.0,0) -- (4.7,0) node[fa lab,anchor=west] {$\Real q^2$};
+  \draw[lcaxis] (0,-3.15) -- (0,3.3) node[fa lab,left] {$\Imag q^2$};
+  \draw[fa cutline] (0,0) -- (4.35,0);
+  % contour of the contour formula: |q^2| = s, counter-clockwise from s+i0 to s-i0
+  \draw[fa contour] (2.5:2.3) arc[start angle=2.5,end angle=357.5,radius=2.3];
+  \node[fa lab,anchor=south west,inner sep=1.5pt] at (2.32,0.08) {$s+\ii0$};
+  \node[fa lab,anchor=north west,inner sep=1.5pt] at (2.32,-0.08) {$s-\ii0$};
+  \node[fa lab,text=blue!55!black,anchor=south east] at (135:2.38) {$|q^2|=s$};
+  % smearing points s pm i Delta
+  \draw[red!65!black,line width=0.5pt,dash pattern=on 1.5pt off 1.5pt] (2.3,-1.2) -- (2.3,1.2);
+  \node[fa sm] at (2.3,1.2) {};
+  \node[fa sm] at (2.3,-1.2) {};
+  \node[fa lab,text=red!55!black,anchor=west] at (2.42,1.2) {$s+\ii\Delta$};
+  \node[fa lab,text=red!55!black,anchor=west] at (2.42,-1.2) {$s-\ii\Delta$};
+  % Euclidean point
+  \fill (-1.3,0) circle[radius=2.2pt];
+  \node[fa lab,anchor=north] at (-1.3,-0.08) {$-Q^2$};
+  \node[fa lab,align=center,anchor=south] at (-1.3,0.18) {PT 可靠\\（欧氏区）};
+  % cut and resonance region
+  \draw[gray!60!black,line width=0.45pt] (3.9,0.1) -- (3.9,0.6);
+  \node[fa lab,anchor=south,inner sep=1.5pt] at (3.9,0.6) {割线 $[0,\infty)$};
+  \draw[gray!60!black,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}] (0.82,-0.6) -- (0.36,-0.1);
+  \node[fa lab,anchor=north west,align=left,inner sep=1pt] at (0.72,-0.56) {共振区\\（小 $s$）};
+\end{tikzpicture}
+\caption{流关联函数 $\Pi(q^2)$ 的解析结构：割线 $[0,\infty)$、欧氏点 $-Q^2$、围道公式 $R(s)=\frac1{2\pi}\int_{-\pi}^{\pi}\dd\theta\,D(s\ee^{\ii\theta})$ 的积分路径 $|q^2|=s$
+（$D$ 的宗量 $Q^2=-q^2$ 走遍该圆周，在 $q^2$ 平面中即自 $s+\ii0$ 逆时针到 $s-\ii0$）以及抹平所用的点 $s\pm\ii\Delta$。在复 $q^2$ 处使用 OPE 是额外的假设（\cref{rem:ee-complex-ope}）。}
+\label{fig:ee-pi-plane}
+\end{figure}
+%%% END fig:ee-pi-plane

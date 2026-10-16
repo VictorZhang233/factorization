@@ -1,0 +1,209 @@
+% =====================================================================
+%  powercounting.tex —— 红外幂次计数：法向坐标、顶角共线区、Sterman 发散度公式（Feynman 规范）、
+%  e+e-/DIS/DY 的领头区域、Glauber/软/超软标度（第 3 章 / 附录 E 用）
+%  研究目录：research/c_regions；数值核对见 power_counting.py、vertex_collinear_numeric.py。
+% =====================================================================
+\section{幂次计数}
+\label{sec:powercount}
+
+\subsection{法向坐标与区域标度}
+
+在夹点面 $\mathcal S$ 附近取内禀坐标与法向坐标 $\kappa_i$，令 $\kappa_i=\lambda^{a_i}\kappa'_i$，每个分母保留最低次项 $\lambda^{A_j}$，分子保留最低次项
+$\lambda^{s}$，则齐次积分 $\propto\lambda^{p}$，
+\begin{equation}\label{eq:pc-generic}
+p=\sum_ia_i-\sum_jA_j+s:\qquad p>0\ \text{压低},\quad p=0\ \text{对数},\quad p<0\ \text{幂次发散}.
+\end{equation}
+只有在确认齐次积分自身不再有新的夹点面（即某些法向变量更快地趋于零的子面）后，这一估计才是完整的。
+本书区分两种小参数：“SCET 单位” $\lambda$（共线 $Q(1,\lambda^2,\lambda)$）与 Sterman 单位 $\lambda_S=\lambda^2$；Sterman 的发散度 $\omega$ 是
+$\lambda_S$ 的幂次，$p=2\omega$。
+
+\begin{table}[htbp]\centering\small
+\caption{区域标度（$(k^+,k^-,k_T)$，喷注沿 $\pm z$）及其与 $A$ 共线线 $p_A\sim Q(1,\lambda^2,\lambda)$ 的耦合}
+\label{tab:pc-modes}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.3cm}ll>{\raggedright\arraybackslash}X@{}}\toprule
+区域 & 标度 & $k^2$ & $(p_A+k)^2-p_A^2$ 及 eikonal 近似误差\\\midrule
+硬 & $Q(1,1,1)$ & $Q^2$ & ——\\
+$A$ 共线 & $Q(1,\lambda^2,\lambda)$ & $\lambda^2Q^2$ & ——\\
+软 & $Q(\lambda,\lambda,\lambda)$ & $\lambda^2Q^2$ & $\simeq2p_A^+k^-\sim\lambda Q^2$，误差 $O(\lambda)$\\
+超软（Libby--Sterman 的“软”） & $Q(\lambda^2,\lambda^2,\lambda^2)$ & $\lambda^4Q^2$ & $\simeq2p_A^+k^-\sim\lambda^2Q^2$，误差 $O(\lambda^2)$\\
+Glauber & $Q(\lambda^2,\lambda^2,\lambda)$ & $\simeq-k_T^2\sim\lambda^2Q^2$ & $2p_A^+k^--2\vec p_{AT}\!\cdot\!\vec k_T-k_T^2$：非 eikonal，误差 $O(1)$\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{顶角共线区的对数标度}
+
+取 \cref{sec:landau} 的无质量顶角，$p_1=(p_1^+,0,0_T)$，$p_2=(0,p_2^-,0_T)$，$Q^2=2p_1^+p_2^-$，$x=k^+/p_1^+$：
+$D_0=2k^+k^--k_T^2$，$D_1=-2(p_1^+-k^+)k^--k_T^2$，$D_2=2k^+(p_2^-+k^-)-k_T^2$（均 $+\ii0$）。当 $0<x<1$ 时，$D_0$、$D_2$ 的 $k^-$ 极点在实轴下方，
+$D_1$ 的在上方；$x<0$ 或 $x>1$ 时三个极点同侧，$k^-$ 积分为零。$k_T\to0$ 时 $D_0$ 与 $D_1$ 的极点从两侧夹向 $k^-=0$——这就是共线夹点。
+在上半平面闭合，
+\begin{equation}\label{eq:pc-kminus}
+\int_{-\infty}^{\infty}\!\dd k^-\,\frac{1}{(D_0+\ii0)(D_1+\ii0)(D_2+\ii0)}
+=\frac{2\pi\ii}{2p_1^+}\,\frac{1}{k_T^2\big(xQ^2-k_T^2/(1-x)\big)}\ \xrightarrow{\,k_T\to0\,}\ \frac{2\pi\ii}{2p_1^+\,xQ^2}\,\frac{1}{k_T^2}.
+\end{equation}
+于是 $\int\dd^2k_T/k_T^2$ 对数发散：每个壳层 $\lambda<|k_T|<2\lambda$ 贡献相同的 $\pi\ln4\times2\pi\ii/(2p_1^+xQ^2)$；剩下的 $\int\dd x/x$ 在 $x\to0$ 处是软端点，
+给出第二个对数。用法向坐标 $k^-=\lambda^2\kappa$、$k_T=\lambda\tau$ 直接计数：测度 $\lambda^4$，$D_0,D_1\sim\lambda^2$，$D_2\simeq xQ^2\sim\lambda^0$，$p=0$。
+对在壳无质量顶角，硬、共线、软、超软、Glauber 各标度均给出 $p=0$——它没有内禀的小标度，因而其低能区域在维数正规化中皆无标度。
+对离壳顶角（$p_i^2=-P^2=-\lambda^2Q^2$），共线族 $(0,2c,c)$ 在 $c\le1$ 时 $p=0$、$c\ge1$ 时 $p=2c-2$；软族 $(c,c,c)$ 在 $c\le2$ 时 $p=0$、
+$c\ge2$ 时 $p=2c-4$：外线虚度把共线对数截断于 $k_T\sim P$，把软对数截断于 $k\sim P^2/Q$（超软标度）。
+
+\subsection{红外发散度公式}
+
+记约化图 $R$ 的硬部分 $H$（及割线另一侧的 $H^*$）、喷注 $J$（沿光线 $\beta_J$）与超软子图 $S$。对沿 $+z$ 的喷注 $J$：
+接入 $H$（与 $H^*$）的线\emph{不截肢}——$f$ 条夸克线，其中 $f^g$ 条以“好”分量（$\gamma^-\gamma^+/2$）、$f^b$ 条以“坏”分量与 $H$ 收缩；
+$b$ 条胶子线，其中 $b_+$ 条经喷注分量 $J^+$（标量/纵向极化）、$t$ 条横向、$u$ 条经 $J^-$；软线接入点\emph{截肢}——$s^g$ 个胶子、
+$s^q$ 个夸克；$e_J=1$（振幅中带一个外部在壳部分子的喷注），$e_J=2$（前向振幅或 DIS/DY 的靶喷注，以及割图中的末态喷注）。
+
+\begin{proposition}[Feynman 规范下的表观红外发散度]\label{prop:pc-omega}\tagR\
+在上述记号下，区域 $R$ 的齐次积分 $\propto\lambda_S^{\omega(R)}$（不计对数），
+\begin{equation}\label{eq:pc-omega}
+\omega(R)=\sum_J\frac12\Big(f_J^{g}+t_J+2u_J+2f_J^{b}-e_J\Big)+\frac12\sum_Js^{q}_J+b_{S\to H}+\frac32\,f_{S\to H}.
+\end{equation}
+附着在喷注上的软胶子不花代价；附着在喷注上的软夸克每个代价 $\tfrac12$；附着在 $H$ 上的软胶子（夸克）每个代价 $1$（$\tfrac32$）。
+\end{proposition}
+
+\begin{proof}
+\emph{推动引理。}喷注子图是其动量的 Lorentz 协变函数。沿 $z$ 以快度 $y$（$\ee^{y}=\lambda$）推动：共线动量
+$Q(1,\lambda^2,\lambda)\to\lambda Q(1,1,1)$（喷注静止系），超软动量 $Q(\lambda^2,\lambda^2,\lambda^2)\to Q(\lambda^3,\lambda,\lambda^2)$，其主分量 $k^-$ 同为 $\lambda Q$，而在领头
+幂次下喷注只通过 $k^-$ 依赖软动量（eikonal 耦合）。在静止系中喷注在领头幂次下是 $\sim\lambda Q$ 的动量的 $\dim J$ 次齐次函数
+（$\dim J$ 为其质量量纲），故 $J\sim\lambda^{\dim J}$（表观地，不计子区域的对数）。推回原参考系时，每个上指标 $+$ 乘 $\lambda^{-1}$、每个 $-$
+指标乘 $\lambda$、横向指标不变，旋量的好分量乘 $\lambda^{-1/2}$、坏分量乘 $\lambda^{1/2}$。
+
+\emph{计数（SCET 单位）。} $D=4$ 中截肢连通 Green 函数的量纲为 $4-\sum_{\text{腿}}d$，$d=1$（胶子）、$\tfrac32$（夸克）；
+不截肢一条腿再加 $-2$（胶子）或 $-1$（夸克）；外部旋量加 $\tfrac12$，极化矢量加 $0$。$e_J=1$ 时
+$\dim J=3-3b-\tfrac52f-s^g-\tfrac32s^q$，$J$–$H$ 圈数为 $b+f-1$（各 $\sim\lambda^4$），推动因子
+$\lambda^{-b_++u-\frac12f^g+\frac12f^b}$，软接入因子 $\lambda^{-s^g-\frac12s^q}$，故
+\[
+p_J=\dim J+4(b+f-1)-b_++u-\tfrac12f^g+\tfrac12f^b-s^g-\tfrac12s^q=(f^g+t-1)+2(u+f^b)-2(s^g+s^q).
+\]
+$e_J=2$ 时：前向喷注多一条截肢外腿而圈数仍为 $b+f-1$；割图末态喷注无外腿，有 $b+f-2$ 个相对圈动量，喷注总动量只有
+$P_J^2\sim\lambda^2$ 一个法向变量。两种情形都给出 $p_J=(f^g+t-2)+2(u+f^b)-2(s^g+s^q)$。软子图的每个连通分支 $a$
+（$M_a^g$ 条胶子、$M_a^q$ 条夸克外线，不截肢，动量 $\sim\lambda^2Q$）贡献 $p_{S_a}=2(4-3M_a^g-\tfrac52M_a^q)+8(M_a-1)=2M_a^g+3M_a^q$；
+$H$ 为 $O(1)$。求和并利用 $\sum_aM_a^g=\sum_Js^g_J+b_{S\to H}$、$\sum_aM_a^q=\sum_Js^q_J+f_{S\to H}$，得 $p=2\omega$ 与 \cref{eq:pc-omega}。
+\end{proof}
+
+\begin{remark}
+(a) \cref{prop:pc-omega} 是关于齐次积分标度的陈述，只用到 Lorentz 协变性、量纲分析以及领头幂次下 $H$ 与小分量无关；
+它自动计入鬼场、四胶子顶点与自能插入。区域贡献的实际上界 $\lambda_S^{\omega}$（乘对数）需要逐层分析嵌套夹点面
+（Sterman 1978；Libby--Sterman 1978；Collins 2011 第 5 章），在本书中记为 \tagA。
+(b) Feynman 规范下单个图可能是“超领头”的（$\omega<0$，例如只经标量极化胶子接入 $H$ 的胶子喷注）；这些项只在规范不变的
+图之和中由 Ward 恒等式相消。
+(c) 与 Sterman 直接计数（TASI'95 式 (64)：$n_T=M_J+M_{J'}+2L_J+2L_{J'}-N_J-N_{J'}+s'_T$，$s'_T\ge\frac12(V_{3,J}+V_{3,J'}-M_J-M_{J'})$）相比，
+单软胶子、双胶子梯形图与 $3g\to1g$ 软网均给出 $n_T=0=\omega$；其式 (63) 中的 $4(L_S+M_J+M_{J'}-1)$ 预设 $S$ 连通，式 (64) 对任意个
+连通分支成立。CSS 1989 式 (143) 是物理规范的形式，对 $b_+=0$ 的组态给出相同的分类。
+(d) 数值核对：$\gamma^*\to q\bar qg$ 中胶子与夸克共线时，夸克辐射平方项的分子 $\sim\lambda^2$（逐项为 $\lambda^0$ 的 $\gamma^-\cdots\gamma^-$ 结构相消），
+$|M|^2\sim\lambda^{-2}$，乘共线相空间 $\lambda^2$ 后为对数；一圈顶角在共线区只有 $J^+H^-$ 为领头，且 $J\cdot H=(J^+/k^+)(k\cdot H)+O(\lambda^2)$——
+只有标量（$K$ 胶子）极化存活，经 Ward 恒等式化为 Wilson 线。
+\end{remark}
+
+\begin{table}[htbp]\centering\small
+\caption{\cref{eq:pc-omega} 的若干例子（$\omega$ 为 Sterman 单位）}\label{tab:pc-examples}
+\begin{tabular}{@{}lc@{}}\toprule
+约化图 & $\omega$\\\midrule
+一圈顶角：喷注间软胶子；或共线胶子以标量极化接入 $H$ & $0$\\
+共线胶子以横向极化接入 $H$（扭度 3 型） & $\tfrac12$\\
+“$-$” 极化胶子接入 $H$；三条夸克线接入 $H$（扭度 4 型） & $1$\\
+喷注间交换软夸克；软胶子接入 $H$ & $1$\\
+软夸克接入 $H$ & $2$\\
+$e^+e^-$ 双喷注割图，任意多标量极化胶子与软胶子 & $0$\\
+仅一个横向胶子、其余为标量极化的胶子喷注（超领头，规范相消） & $-\tfrac12$\\\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{领头区域}
+
+令 $\omega=0$（并利用 $\omega<0$ 项的 Ward 恒等式相消），在 Feynman 规范下：
+\begin{itemize}[leftmargin=2em]
+\item \textbf{$e^+e^-\to$ 强子}（割开的真空极化，Sterman 1978）：一个硬顶点 $H$（$H^*$）；末态喷注 $J_i$（$e=2$）各自在割线两侧
+  \emph{恰以一个物理部分子}（一个好分量夸克，或一个横向极化胶子）接入 $H$ 与 $H^*$，\emph{外加任意多个标量（纵向）极化胶子}；
+  没有“$-$”极化胶子与坏分量；超软子图 $S$ 只经胶子连到喷注（$S$ 内部可有软夸克圈），\emph{从不连到 $H$}。
+\item \textbf{DIS}：靶喷注 $A$（$e=2$）在两侧各以一个物理部分子加任意多标量胶子接入 $H$；对末态割线求和后末态夹点不再被夹住
+  （遍举性），领头区域约化为 $H\otimes$（靶喷注）。
+\item \textbf{Drell--Yan}：两个入射喷注 $A$、$B$（各 $e=2$），各以一个物理部分子加任意多标量胶子接入 $H$；$S$ 连接 $A$、$B$（及末态旁观者），
+  不连 $H$；此外旁观者之间的 Glauber 交换在幂次计数上同为领头且被夹住，只有对末态割线求和后才相消（CSS 1985、1988；Bodwin 1985）\tagA。
+\end{itemize}
+这与 CSS 1989 第 8.7 节的表述一致：领头幂次下每个喷注只有一条线进入给定的硬子图；协变规范中可有任意多纵向极化胶子把喷注连到
+硬部分；软子图的外线总是胶子，且只连到高能线而不连硬子图；对 DIS 与 DY，对末态求和消除了涉及末态喷注的夹点。
+
+\begin{figure}[htbp]\centering
+\begin{subfigure}[b]{0.32\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.78]
+  \draw[hard blob] (-2.1,0) circle (0.42); \node at (-2.1,0) {$H$};
+  \draw[hard blob] (2.1,0) circle (0.42); \node at (2.1,0) {$H^{*}$};
+  \draw[jet blob] (0,1.25) ellipse (0.95 and 0.38); \node at (-0.45,1.25) {$J_1$};
+  \draw[jet blob] (0,-1.25) ellipse (0.95 and 0.38); \node at (-0.45,-1.25) {$J_2$};
+  \draw[soft blob] (-0.42,0) circle (0.3); \node at (-0.42,0) {$S$};
+  \draw[plain] (-1.85,0.33) -- (-0.8,1.08); \draw[plain] (1.85,0.33) -- (0.8,1.08);
+  \draw[plain] (-1.85,-0.33) -- (-0.8,-1.08); \draw[plain] (1.85,-0.33) -- (0.8,-1.08);
+  \draw[longit] (-1.7,0.12) -- (-0.92,0.95);
+  \draw[longit] (1.7,-0.12) -- (0.92,-0.95);
+  \draw[gluon] (-0.5,0.29) -- (-0.62,0.89); \draw[gluon] (-0.3,-0.27) -- (-0.15,-0.88);
+  \draw[cut] (0,1.9) -- (0,-1.9);
+  \draw[photon] (-3.2,0) -- (-2.52,0); \draw[photon] (2.52,0) -- (3.2,0);
+\end{tikzpicture}
+\caption{$e^+e^-\to$ 强子}\label{fig:pc-ee}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.32\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.85]
+  \draw[hadron blob] (0,-1.3) ellipse (1.3 and 0.42); \node at (-0.6,-1.3) {$A$};
+  \draw[hard blob] (-1.4,0.6) circle (0.4); \node at (-1.4,0.6) {$H$};
+  \draw[hard blob] (1.4,0.6) circle (0.4); \node at (1.4,0.6) {$H^{*}$};
+  \draw[plain] (-1.2,-0.95) -- (-1.45,0.2); \draw[plain] (1.2,-0.95) -- (1.45,0.2);
+  \draw[longit] (-0.75,-0.92) -- (-1.15,0.3); \draw[longit] (0.75,-0.92) -- (1.15,0.3);
+  \draw[plain] (-1.05,0.78) -- (1.05,0.78); \draw[plain] (-1.0,0.5) -- (1.0,0.5);
+  \draw[photon] (-2.6,1.5) -- (-1.72,0.85); \draw[photon] (1.72,0.85) -- (2.6,1.5);
+  \draw[plain] (-2.4,-1.3) -- (-1.3,-1.3); \draw[plain] (1.3,-1.3) -- (2.4,-1.3);
+  \draw[cut] (0,1.7) -- (0,-1.95);
+\end{tikzpicture}
+\caption{DIS（对末态求和之后）}\label{fig:pc-dis}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.32\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.85]
+  \draw[jet blob] (0,1.35) ellipse (1.3 and 0.38); \node at (0,1.35) {$A$};
+  \draw[jetB blob] (0,-1.35) ellipse (1.3 and 0.38); \node at (0,-1.35) {$B$};
+  \draw[hard blob] (-1.5,0) circle (0.36); \node at (-1.5,0) {$H$};
+  \draw[hard blob] (1.5,0) circle (0.36); \node at (1.5,0) {$H^{*}$};
+  \draw[soft blob] (0,0) circle (0.3); \node at (0,0) {$S$};
+  \draw[plain] (-1.15,1.02) -- (-1.42,0.35); \draw[plain] (1.15,1.02) -- (1.42,0.35);
+  \draw[plain] (-1.15,-1.02) -- (-1.42,-0.35); \draw[plain] (1.15,-1.02) -- (1.42,-0.35);
+  \draw[longit] (-0.75,1.0) -- (-1.25,0.24);
+  \draw[gluon] (0,0.3) -- (0,0.97); \draw[gluon] (0,-0.3) -- (0,-0.97);
+  \draw[glauber] (0.62,1.0) -- (0.62,-1.0);
+  \draw[photon] (-1.86,0) -- (-2.6,0); \draw[photon] (1.86,0) -- (2.6,0);
+  \draw[cut] (0.32,1.9) -- (0.32,-1.9);
+\end{tikzpicture}
+\caption{Drell--Yan（含 Glauber 交换）}\label{fig:pc-dy}
+\end{subfigure}
+\caption{Feynman 规范下的领头约化图。蓝色卷线为标量（纵向）极化胶子，可任意多条；绿色为超软子图，只连喷注；红色卷线
+为旁观者间的 Glauber 交换。}\label{fig:pc-leading}
+\end{figure}
+
+\subsection{Glauber、软与超软}
+
+$A$ 共线线与 $B$ 共线线之间交换一个胶子：软 $\lambda^4\cdot\lambda^{-2}\cdot\lambda^{-1}\cdot\lambda^{-1}$、超软 $\lambda^8\cdot\lambda^{-4}\cdot\lambda^{-2}\cdot\lambda^{-2}$、
+Glauber $\lambda^6\cdot\lambda^{-2}\cdot\lambda^{-2}\cdot\lambda^{-2}$，全部为 $\lambda^0$。区别在 eikonal 近似：软与超软区有效（误差 $\lambda$、$\lambda^2$），Glauber 区失效
+（\cref{tab:pc-modes}）。Glauber 区是否构成困难取决于它是否被夹住：在一圈顶角中，Glauber 区内 $D_1\simeq-2p_1^+k^--k_T^2$ 只依赖 $k^-$，
+$D_2\simeq2p_2^-k^+-k_T^2$ 只依赖 $k^+$，$D_0\simeq-k_T^2$ 两者都不依赖：每个光锥积分只遇到一个极点，围道可移至 $|k^\pm|\sim k_T$，那里 eikonal
+近似成立（CSS 1989 式 (138)）——顶角的 Glauber 区\emph{未被夹住}。若同一共线子图中携带 $k$ 的既有入射线又有出射线（DY 中的初、末态
+旁观者相互作用），极点 $k^-=-k_T^2/(2p_A^+)+\ii0$ 与 $k^-=+k_T^2/(2p_{A'}^+)-\ii0$ 在 $|k^-|\sim k_T^2/p^+$ 处夹住围道：精确的 $k^-$ 积分有限，
+$=2\pi\ii/[2k_T^2(p_A^++p_{A'}^+)]$，而 eikonal 近似给出随 $\ii0\to0$ 发散的结果——被夹住的 Glauber 区不能用 eikonal 近似处理，需要单独的
+相消论证。
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=1.25]
+  \draw[lcaxis] (0,0) -- (5.6,0) node[right] {\small $\log_{1/\lambda}(Q/k^+)$};
+  \draw[lcaxis] (0,0) -- (0,5.2) node[above] {\small $\log_{1/\lambda}(Q/k^-)$};
+  \foreach \i in {1,2,3,4} {\draw (\i,0.06) -- (\i,-0.06) node[below] {\scriptsize $\i$}; \draw (0.06,\i) -- (-0.06,\i) node[left] {\scriptsize $\i$};}
+  \draw[dashed,gray] (2,0) -- (0,2);
+  \draw[dashed,gray] (4,0) -- (0,4);
+  \fill (0,0) circle (2.2pt) node[above right] {\small 硬};
+  \fill[blue!70!black] (0,2) circle (2.2pt) node[above right] {\small $A$ 共线};
+  \fill[orange!80!black] (2,0) circle (2.2pt) node[above right] {\small $B$ 共线};
+  \fill[green!50!black] (1,1) circle (2.2pt) node[above right] {\small 软};
+  \fill[green!40!black] (2,2) circle (2.2pt) node[above right=2pt] {\small 超软（$k_T\sim\lambda^2Q$）};
+  \draw[red!60!black,line width=0.9pt] (2,2) circle (4.2pt);
+  \node[red!60!black,below right=3pt] at (2,2) {\small Glauber（$k_T\sim\lambda Q$）};
+\end{tikzpicture}
+\caption{$(\ln k^+,\ln k^-)$ 平面上的模式（坐标为 $k^\pm$ 以 $\lambda$ 为底的标度指数）。下、上两条虚线分别为 $k^+k^-\sim\lambda^2Q^2$ 与 $\lambda^4Q^2$。
+共线与软模式位于 $k^2\sim\lambda^2Q^2$ 的双曲线上；超软与 Glauber 的光锥分量相同，
+但 Glauber 的 $k_T\sim\lambda Q\gg\sqrt{k^+k^-}$，故远离质壳（$k^2\simeq-k_T^2$）。}\label{fig:pc-modes}
+\end{figure}

@@ -1,0 +1,76 @@
+=== L1: envelope identity d(F/U)/dx_j = -D_j(k_c) ===
+PASS L1 envelope identity and F/U = stationary value, n=3 lines
+PASS L1 envelope identity and F/U = stationary value, n=4 lines
+=== L2: deformation identity ===
+PASS L2 dF(z)/deta|0 = -i * sum x_j w_j^2 on the simplex
+PASS L2 O(eta^2) coefficient is real for real kinematics
+PASS L2 deformation preserves sum z_j = 1
+PASS L2 V = sum x_j (dF_j)^2 - c^2 (variance form)
+=== L3: alpha-space Landau solution sets (closed simplex) ===
+  massless on-shell vertex: F = -s*x1*x2
+   support (0,) : whole face
+   support (1,) : whole face
+   support (2,) : whole face
+   support (0, 1) : whole face
+   support (0, 2) : whole face
+PASS L3a massless vertex: Landau set = edges {0,1},{0,2} (+ their endpoints); edge {1,2} and interior excluded
+  off-shell vertex: F = P2*x0*x1 + P2*x0*x2 + Q2*x1*x2
+   support (0,) : whole face
+   support (1,) : whole face
+   support (2,) : whole face
+PASS L3b off-shell vertex: only the three corners (each = one massless line at zero momentum)
+  massive-exchange vertex: F = M2*x0**2 + M2*x0*x1 + M2*x0*x2 + Q2*x1*x2
+   support (1,) : whole face
+   support (2,) : whole face
+PASS L3c massive exchange: only corners (0,1,0),(0,0,1) (zero-momentum quark lines)
+  massive-leg vertex: F = Q2*x1*x2 + msq*x1**2 + 2*msq*x1*x2 + msq*x2**2
+   support (0,) : whole face
+PASS L3d massive legs, massless gluon: only corner (1,0,0)
+  massless box: F = -s*y0*y2 - t*y1*y3
+   support (0,) : whole face
+   support (1,) : whole face
+   support (2,) : whole face
+   support (3,) : whole face
+   support (0, 1) : whole face
+   support (0, 3) : whole face
+   support (1, 2) : whole face
+   support (2, 3) : whole face
+PASS L3e massless box: Landau set = 4 vertices + edges (0,1),(1,2),(2,3),(0,3); (0,2),(1,3) excluded
+PASS L3f massless bubble (p^2=s!=0): only the two corners (trivial zero-momentum lines)
+PASS L3f massless bubble at p^2=0: F vanishes identically (every point is a solution)
+=== L4: momentum-space Landau equations for the vertex ===
+  Cayley matrix Y = [[0, 0, 0], [0, 0, -s/2], [0, -s/2, 0]]
+   S = (0,)  null space of Y_S: [[1]]
+   S = (1,)  null space of Y_S: [[1]]
+   S = (2,)  null space of Y_S: [[1]]
+   S = (0, 1)  null space of Y_S: [[1, 0], [0, 1]]
+   S = (0, 2)  null space of Y_S: [[1, 0], [0, 1]]
+   S = (1, 2)  null space of Y_S: []
+   S = (0, 1, 2)  null space of Y_S: [[1, 0, 0]]
+PASS L4 det Y_{12} = -s^2/4 (normal threshold only at s=0)
+PASS L4 face x2=0: k_c = x1 p1 puts lines 0 and 1 on shell (collinear-1), line 2 off shell
+PASS L4 loop equation a2(p2+k)+a0 k+a1(k-p1)=0 holds with (a0,a1,a2)=(1-x,x,0), k=x p1
+PASS L4 Coleman-Norton: vertex positions consistent (Y2=X, quark and gluon both reach Y1 along p1)
+=== L5: Gordan alternative at sample points (scipy linprog) ===
+   collinear-1 point k=0.3 p1                    on-shell lines [0, 1]: trap [0.7 0.3]
+   collinear-2 point k=-0.6 p2                   on-shell lines [0, 2]: trap [0.4 0.6]
+   soft point k=0                                on-shell lines [0, 1, 2]: trap [ 1. -0.  0.]
+   generic point on k^2=0                        on-shell lines [0]: deform [0.5 0.  0.  0. ]
+   both quark lines on shell (qqbar cut surface) on-shell lines [1, 2]: deform [0.  0.  0.5 0. ]
+PASS L5 collinear point is trapped (alpha exists)
+PASS L5 generic on-shell point is not trapped (deformation exists)
+=== L6: deformed simplex, massive vertex (m=1, gluon mass 0.3, on-shell legs p_i^2=m^2) ===
+   s= 3.0: min|F| real simplex = 8.19e-02   min|F(z)| deformed (eta=0.05) = 8.190e-02
+   s= 5.0: min|F| real simplex = 8.16e-06   min|F(z)| deformed (eta=0.05) = 1.220e-03
+   s= 4.4: min|F| real simplex = 1.89e-06   min|F(z)| deformed (eta=0.05) = 5.296e-04
+   s= 4.1: min|F| real simplex = 8.87e-07   min|F(z)| deformed (eta=0.05) = 1.467e-04
+   s= 4.0: min|F| real simplex = 0.00e+00   min|F(z)| deformed (eta=0.05) = 6.344e-06
+PASS L6 above threshold (s=5m^2): deformed contour avoids F=0
+PASS L6 at normal threshold (s=4m^2): F(z) vanishes on the deformed contour too (Landau point x=(0,1/2,1/2))
+=== L7: behaviour of F near the soft corner x=(1,0,0) ===
+   off-shell vertex   F ~ -r*(P2*r - P2 + Q2*r*u**2 - Q2*r*u)
+   massive-leg vertex F ~ -r**2*(Q2*u**2 - Q2*u - msq)
+PASS L7 off-shell: F = r P2 + O(r^2) -> int r dr / r converges (no divergence despite Landau point)
+PASS L7 massive legs: F = r^2 (msq + u(1-u) Q2) -> int r dr / r^2 diverges logarithmically (soft divergence)
+
+SUMMARY: 23/23 checks passed

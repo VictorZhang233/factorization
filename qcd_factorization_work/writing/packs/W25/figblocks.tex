@@ -1,0 +1,334 @@
+%%% BEGIN fig:lamet-hybrid
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 ratio/.style={draw=red!65!black,line width=1.1pt},
+  fd2 hyb/.style={draw=blue!60!black,line width=1.6pt},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % x(z) = 10 z  (|z| in fm);  y = 2.4 (f - 0.4),  f(z) = 1 + 0.25 ln(z/0.2) + 0.5 max(0,z-0.45)^2  (schematic)
+  % ======================= (a) the two |z| intervals =======================
+  \begin{scope}[yshift=5.1cm]
+    \fill[blue!12] (0,0) rectangle (2.5,0.62);
+    \fill[orange!14] (2.5,0) rectangle (12,0.62);
+    \draw[gray!60!black,line width=0.5pt] (0,0) rectangle (12,0.62);
+    \node[fd2 lab] at (1.25,0.31) {比值方案};
+    \node[fd2 lab] at (7.25,0.31) {Wilson 线质量减除：$\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$};
+    \node[fd2 note,anchor=south] at (1.25,0.7) {$\tilde h(\lambda,z^2)/\tilde h(0,z^2)$};
+    \node[fd2 note,anchor=south] at (7.25,0.7) {$Z_{\rm hyb}=\ee^{\delta m z_S}/\tilde h(0,z_S^2)$ 由 $z_S$ 处的连续性确定};
+    \draw[fd2 ax] (0,-0.02) -- (12.7,-0.02) node[right,font=\small] {$|z|$};
+    \foreach \t/\l in {0/0,12/1.2\,\mathrm{fm}} {\draw[gray!60!black,line width=0.45pt] (\t,-0.1) -- (\t,0.06); \node[fd2 note,below=2pt] at (\t,-0.06) {$\l$};}
+    \draw[gray!60!black,line width=0.45pt] (2.5,-0.1) -- (2.5,0.06);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.3) -- (3.0,-0.3);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.36) -- (2.0,-0.24) (3.0,-0.36) -- (3.0,-0.24);
+    \node[fd2 note,anchor=west] at (3.08,-0.31) {$z_S\approx0.2$--$0.3$ fm};
+    \node[fd2 lab] at (-1.25,0.31) {(a)};
+  \end{scope}
+  % ======================= (b) conversion factor to MS-bar (schematic) =======================
+  \fill[gray!14] (4.5,0) rectangle (12,4.0);
+  \node[fd2 note,align=center,text=gray!35!black] at (9.6,0.38) {非微扰区：$\alpha_s(1/|z|)$ 不再小};
+  \draw[gray!65!black,line width=0.5pt,dash pattern=on 3pt off 2pt] (2.5,0) -- (2.5,5.1);
+  \draw[fd2 ratio] plot[domain=0.03:0.45,samples=60,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))});
+  \draw[fd2 ratio,dash pattern=on 4pt off 2pt] plot[domain=0.45:1.2,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2)+0.5*(\x-0.45)^2)});
+  \draw[fd2 hyb] plot[domain=0.03:0.25,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))}) -- (12,{2.4*(0.6+0.25*ln(1.25))});
+  \fill[black] (2.5,{2.4*(0.6+0.25*ln(1.25))}) circle[radius=1.8pt];
+  \draw[fd2 ax] (0,0) -- (12.7,0) node[right,font=\small] {$|z|/\mathrm{fm}$};
+  \draw[fd2 ax] (0,0) -- (0,4.25);
+  \node[fd2 note,rotate=90,anchor=south] at (-0.12,2.1) {到 $\MSbar$ 的换算因子（示意）};
+  \foreach \t/\l in {0/0,2/0.2,4/0.4,6/0.6,8/0.8,10/1.0,12/1.2} {\draw[gray!60!black,line width=0.45pt] (\t,-0.06) -- (\t,0.06); \node[font=\scriptsize,below=2pt] at (\t,-0.04) {$\l$};}
+  \node[fd2 note,text=red!55!black,anchor=south east] at (11.6,3.25) {比值方案、RI/MOM：依赖 $\ln(z^2\mu^2)$};
+  \node[fd2 note,text=blue!50!black,anchor=north west] at (4.65,1.42) {混合方案：$|z|>z_S$ 时保持在 $z_S$ 处的值（处处微扰）};
+  \node[fd2 lab] at (-1.25,2.1) {(b)};
+\end{tikzpicture}
+\caption{混合重整化方案（示意）。(a)~$|z|\le z_S$ 用比值方案，紫外发散（包括 Wilson 线的线性发散）在比值中相消；$|z|>z_S$ 只减去 Wilson 线的线性发散与对数因子（$\delta m$ 的符号约定同 \cref{prop:lattice-renormalizability}：$O^R=Z_j^{-2}\ee^{-\delta m|z|}O^B$）。
+(b)~到 $\MSbar$ 的换算因子：混合方案中它等于 $z_S$ 处的值，在所有 $|z|$ 上都是微扰的，因此动量空间匹配成立；比值方案与 RI/MOM 方案的换算因子依赖于 $\ln(z^2\mu^2)$，在大 $|z|$ 处含 $\alpha_s(1/|z|)$（灰色区），动量空间匹配没有依据（\cref{rem:lamet-ratio-large-z}）。
+单圈混合核满足 $\int\dd\xi\,C_{\rm hyb}=1$（\cref{prop:lamet-hybrid-kernel}，VF-LAM-10）。}
+\label{fig:lamet-hybrid}
+\end{figure}
+%%% END fig:lamet-hybrid
+
+%%% BEGIN fig:lamet-ioffe
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.8\textwidth,height=6.4cm,xmin=0,xmax=16.6,ymin=0,ymax=1.25,
+  axis lines=left,axis line style={gray!60!black},clip=false,
+  xlabel={Ioffe 时间 $\lambda=P\cdot z$},ylabel={$|z|/\mathrm{fm}$},
+  xtick={0,2,...,16},ytick={0,0.2,...,1.2},
+  yticklabel style={/pgf/number format/fixed,/pgf/number format/fixed zerofill,/pgf/number format/precision=1},
+  tick label style={font=\scriptsize},label style={font=\small},
+  every axis x label/.style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  every axis y label/.style={at={(axis description cs:-0.075,0.5)},rotate=90,anchor=south}]
+  % lattice data region (schematic) and short-distance band
+  \fill[gray!9] (axis cs:0,0) rectangle (axis cs:15,1.0);
+  \draw[gray!50,line width=0.4pt,dash pattern=on 3pt off 2pt] (axis cs:0,1.0) -- (axis cs:15,1.0) -- (axis cs:15,0);
+  \fill[blue!11] (axis cs:0,0) rectangle (axis cs:16.6,0.3);
+  % pseudo-distributions: fixed z^2
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.1) -- (axis cs:16.6,0.1);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.2) -- (axis cs:16.6,0.2);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.3) -- (axis cs:16.6,0.3);
+  % quasi-distributions: fixed P^z, |z| = 0.1973 lambda/(P^z/GeV) fm
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:6.335,samples=2] {0.1973*x/1};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:12.67,samples=2] {0.1973*x/2};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:16.6,samples=2] {0.1973*x/3};
+  % light-cone ITD on the lambda axis
+  \draw[blue!55!black,line width=2.2pt,line cap=butt] (axis cs:0,0) -- (axis cs:16.6,0);
+  % labels
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:6.335,1.25) {$P^z=1$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:12.67,1.25) {$P^z=2$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=west] at (axis cs:16.6,1.092) {$P^z=3$ GeV};
+  \node[font=\footnotesize,text=red!50!black,align=left,anchor=west,inner sep=1.2pt] at (axis cs:0.6,1.135) {准分布：固定 $P^z$\\[-1pt]（射线 $|z|=|\lambda|/P^z$）};
+  \draw[red!55!black,line width=0.55pt,-{Stealth[length=4.5pt,width=3.8pt]}] (axis cs:6.9,0.97) to[bend left=14] node[pos=0.55,above right=-1pt,font=\footnotesize] {$P^z\to\infty$} (axis cs:13.4,0.6);
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.3) {$|z|=0.3$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.2) {$|z|=0.2$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.1) {$|z|=0.1$ fm};
+  \node[font=\footnotesize,anchor=west,align=left] at (axis cs:16.6,0.52) {赝分布：\\[-1pt]固定 $z^2$};
+  \node[font=\footnotesize,text=blue!45!black,anchor=north west,align=left] at (axis cs:16.6,-0.02) {光锥 ITD $I(\lambda)$\\[-1pt]（$z^2=0$）};
+  \node[font=\footnotesize,fill=blue!11,inner sep=1.5pt] at (axis cs:9.6,0.15) {短距离因子化（SDF）};
+  \node[font=\footnotesize,text=gray!45!black,anchor=south east] at (axis cs:14.85,0.33) {格点数据区（示意）};
+\end{axis}
+\end{tikzpicture}
+\caption{Ioffe 时间 $\lambda=P\cdot z$（$=-P^zz$，等时类空间隔 $z^\mu=z\hat e_z^\mu$）与间隔 $|z|$ 平面上的三种表示（图中只画 $\lambda\ge0$；$\hbar c=0.1973$ GeV\,fm）。光锥 ITD $I(\lambda)=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x)$ 位于 $z^2=0$（粗线）；
+固定 $z^2$ 的水平线（点线）给出赝分布：对 $\lambda$ 作 Fourier 变换，支集为 $[-1,1]$；固定 $P^z$ 的射线 $|z|=|\lambda|/P^z$（虚线，$P^z=1,2,3$ GeV）给出准分布：$z$ 与 $\lambda$ 同时变化，$P^z$ 增大时射线趋向光锥轴。
+短距离因子化只用阴影带（$|z|\lesssim0.3$ fm）内的数据，准分布的 Fourier 变换则需要整条射线（长距离部分见正文）；灰色矩形示意格点数据所及的范围。}
+\label{fig:lamet-ioffe}
+\end{figure}
+%%% END fig:lamet-ioffe
+
+%%% BEGIN fig:lamet-lattice-geometries
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 grid/.style={draw=gray!30,line width=0.3pt},
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 site/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=5pt},
+  fd2 osite/.style={circle,draw=black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5pt},
+  fd2 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lab/.style={font=\small,fill=white,inner sep=1pt},
+  fd2 note/.style={font=\footnotesize,fill=white,inner sep=1pt}]
+  % ======================= (a) quasi-PDF operator =======================
+  \begin{scope}
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.4,1.8);
+    \draw[wilson plain] (0,0) -- (1.8,0);
+    \path[fd2 warrow=0.56] (0,0) -- (1.8,0);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (1.8,0) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=north] at (1.8,-0.12) {$\bar\psi(z\hat e_z)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$z$} (1.8,0.36);
+    \draw[fd2 dim] (2.1,1.32) -- node[fd2 note,above=1pt] {$a$} (2.4,1.32);
+    \draw[fd2 ax] (-0.45,1.05) -- (0.2,1.05) node[fd2 note,right=0pt] {$\hat z$};
+    \draw[fd2 ax] (-0.45,1.05) -- (-0.45,1.62) node[fd2 note,right=1pt] {$\vec b_\perp$};
+    \node[font=\small] at (0.9,-1.15) {$\bar\psi(z\hat e_z)\,\Gamma\,W[z\hat e_z,0]\,\psi(0)$};
+    \node[font=\small] at (0.9,-1.75) {(a)\ 准 PDF：直 Wilson 线};
+  \end{scope}
+  % ======================= (b) quasi-TMD operator: space-like staple =======================
+  \begin{scope}[xshift=4.4cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.7,1.8);
+    \draw[wilson plain] (0,0) -- (2.1,0) -- (2.1,1.2) -- (0.9,1.2);
+    \path[fd2 warrow=0.52] (0,0) -- (2.1,0);
+    \path[fd2 warrow=0.55] (2.1,0) -- (2.1,1.2);
+    \path[fd2 warrow=0.6] (2.1,1.2) -- (0.9,1.2);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (0.9,1.2) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=south] at (0.75,1.33) {$\bar\psi(z\hat e_z+\vec b_\perp)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$L$} (2.1,0.36);
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \draw[red!60!black,line width=0.6pt,-{Stealth[length=4.5pt,width=3.8pt]}] (2.25,0.6) -- (2.85,0.6) node[font=\footnotesize,text=red!55!black,right=1pt] {$L\to\infty$};
+    \node[font=\small] at (1.05,-1.15) {$\bar\psi(z\hat e_z+\vec b_\perp)\,\Gamma\,\mathcal W_z\,\psi(0)$};
+    \node[font=\small] at (1.05,-1.75) {(b)\ 准 TMD：类空订书钉};
+  \end{scope}
+  % ======================= (c) rectangular Wilson loop =======================
+  \begin{scope}[xshift=9.45cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (4.8,1.8);
+    \draw[wilson plain] (0,0) rectangle (4.2,1.2);
+    \path[fd2 warrow=0.5] (0,0) -- (4.2,0);
+    \path[fd2 warrow=0.55] (4.2,0) -- (4.2,1.2);
+    \path[fd2 warrow=0.5] (4.2,1.2) -- (0,1.2);
+    \path[fd2 warrow=0.55] (0,1.2) -- (0,0);
+    \draw[fd2 dim] (0,-0.36) -- (4.2,-0.36);
+    \node[fd2 note] at (2.1,-0.36) {$2L$};
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \node[font=\small,fill=white,inner sep=1.2pt] at (2.1,0.6) {$Z_E(2L,b_\perp)$};
+    \node[font=\small] at (2.1,-1.15) {$\frac1{N_c}\Tr\langle0|W_\perp\,\mathcal W_z(\vec b_\perp;2L)|0\rangle$};
+    \node[font=\small] at (2.1,-1.75) {(c)\ 矩形 Wilson 圈};
+  \end{scope}
+\end{tikzpicture}
+\caption{格点上的算符几何（等时面 $t=0$，晶格间距 $a$；实心点为 $\psi$、空心点为 $\bar\psi$ 所在格点，双线为规范链，箭头为路径方向，即 $W[b,a]$ 由 $a$ 指向 $b$）：
+(a)~准 PDF 算符的直 Wilson 线 $W[z\hat e_z,0]$；(b)~准 TMD 算符的订书钉形 Wilson 线 $\mathcal W_z$：自 $\psi$ 沿 $+\hat z$ 走长度 $L$，经横向连接（间隔 $b_\perp$），再沿 $-\hat z$ 回到 $\bar\psi$（图示为 DY 型；SIDIS 型沿 $-\hat z$）；
+(c)~矩形 Wilson 圈 $Z_E(2L,b_\perp)$，$\sqrt{Z_E}$ 除去订书钉的线性发散、尖点发散与捏点奇点，使 $L\to\infty$ 的极限存在。手征对称性不严格的格点费米子还引起同维混合 $\Gamma\to\Gamma'$（见正文）。
+注意：这里的订书钉是类空的，与\cref{fig:tmd-staple}中 Collins TMD 的类光订书钉不同。}
+\label{fig:lamet-lattice-geometries}
+\end{figure}
+%%% END fig:lamet-lattice-geometries
+
+%%% BEGIN fig:lamet-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 light/.style={draw=gray!60},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs/\wpos/\ttl in {a/0/0.5/{(a)\ 顶点}, b/3.1/0.32/{(b)\ 帆}, c/6.2/0.68/{(c)\ 帆（镜像）}, d/9.3/0.5/{(d)\ Wilson 线自能}, e/12.4/0.5/{(e)\ 外线自能}} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (O1) at (-0.85,0);   \coordinate (O2) at (0.85,0);
+    \coordinate (I) at (-1.35,-1.35); \coordinate (F) at (1.35,-1.35);
+    \coordinate (i1) at ($(I)!0.5!(O1)$); \coordinate (f1) at ($(O2)!0.5!(F)$);
+    \if a\panel \draw[gluon] (i1) -- (f1); \fi
+    \if b\panel \draw[gluon] (i1) to[bend right=28] (0.32,0); \fi
+    \if c\panel \draw[gluon] (-0.32,0) to[bend right=28] (f1); \fi
+    \if d\panel \draw[gluon] (-0.48,0) arc[start angle=180,end angle=360,radius=0.48]; \fi
+    \if e\panel
+      \draw[gluon,fd2 light] ($(I)!0.22!(O1)$) to[bend left=80] ($(I)!0.78!(O1)$);
+    \fi
+    \draw[wilson=\wpos] (O1) -- (O2);
+    \if e\panel
+      \draw[quark=0.88,fd2 light] (I) -- (O1);
+    \else
+      \draw[quark=0.3] (I) -- (O1);
+    \fi
+    \draw[quark=0.7] (O2) -- (F);
+    \if a\panel \node[vertex] at (i1) {}; \node[vertex] at (f1) {}; \fi
+    \if b\panel \node[vertex] at (i1) {}; \node[vertex] at (0.32,0) {}; \fi
+    \if c\panel \node[vertex] at (-0.32,0) {}; \node[vertex] at (f1) {}; \fi
+    \if d\panel \node[vertex] at (-0.48,0) {}; \node[vertex] at (0.48,0) {}; \fi
+    \if e\panel
+      \node[vertex,fill=gray!60] at ($(I)!0.22!(O1)$) {}; \node[vertex,fill=gray!60] at ($(I)!0.78!(O1)$) {};
+    \fi
+    \node[opvertex] at (O1) {};  \node[opvertex] at (O2) {};
+    \node[fd2 note,above=2pt] at (O1) {$0$};
+    \node[fd2 note,above=1pt] at (O2) {$z\hat e_z$};
+    \node[fd2 lab] at (0,-1.78) {\ttl};
+  \end{scope}}
+  % external momenta (same in all panels)
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.24] (-1.35,-1.35) -- (-0.85,0);
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.76] (0.85,0) -- (1.35,-1.35);
+  % unphysical-region contributions (xi > 1), VF-LAM-7
+  \node[fd2 lab] at (0,-2.62) {$a\displaystyle\int_0^1\!\dd y\,\frac{1-y}{|\xi-y|}$};
+  \draw[fd2 bracket] (1.75,-2.08) -- (1.75,-2.16) -- (7.75,-2.16) -- (7.75,-2.08);
+  \node[fd2 lab] at (4.65,-2.62) {(b)+(c)：$\dfrac{a}{1-\xi}\displaystyle\int_0^1\!\dd y\,\frac{\xi+y}{|\xi-y|}$};
+  \node[fd2 lab] at (9.3,-2.62) {$-\dfrac{a}{|1-\xi|}$};
+  \node[fd2 note,text=gray!45!black] at (12.4,-2.62) {（只出现在 $\delta(1-\xi)$ 中）};
+\end{tikzpicture}
+\caption{准 PDF 的单圈图（Feynman 规范，在壳无质量夸克 $p=(p^z,0,0,p^z)$，$\Gamma=\gamma^0$；入射与出射夸克动量同为 $p$，前向矩阵元，无割线）。双线为等时、沿 $\hat z$ 的类空 Wilson 线 $W[z\hat e_z,0]$（箭头为路径方向），$\otimes$ 为算符端点 $\psi(0)$、$\bar\psi(z\hat e_z)$：
+(a)~顶点图，(b)(c)~“帆”图，(d)~Wilson 线自能，(e)~外线自能。图下为非物理区 $\xi>1$ 中各图的贡献（$y$ 为 Feynman 参数，$a=\frac{\alpha_sC_F}{2\pi}$），在 $d=4$ 中都有限，其和为
+$\tilde q^{(1)}=a\big[\frac{1+\xi^2}{1-\xi}\ln\frac{\xi}{\xi-1}+1\big]$（VF-LAM-7，与\cite{IzubuchiEtAl2018}附录 B 一致）；维数正规化中 Wilson 线自能没有线性发散。}
+\label{fig:lamet-oneloop}
+\end{figure}
+%%% END fig:lamet-oneloop
+
+%%% BEGIN fig:lattice-matching
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 qty/.style={draw=black!70,fill=white,rounded corners=2pt,line width=0.6pt,
+      minimum width=4.3cm,minimum height=0.95cm,align=center,font=\small},
+  fd2 frame/.style={draw=#1!60!black,fill=#1!4,rounded corners=4pt,line width=0.6pt},
+  fd2 match/.style={draw=black!80,line width=1.0pt,{Stealth[length=7pt,width=6pt]}-{Stealth[length=7pt,width=6pt]}},
+  fd2 ft/.style={draw=gray!55!black,line width=0.6pt,{Stealth[length=4.5pt,width=3.8pt]}-{Stealth[length=4.5pt,width=3.8pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % column frames
+  \draw[fd2 frame=gray] (-7.45,-2.85) rectangle (-1.85,2.45);
+  \draw[fd2 frame=blue] (1.85,-2.85) rectangle (7.45,2.45);
+  \node[fd2 lab,font=\small\bfseries] at (-4.6,2.12) {格点：等时（欧氏）矩阵元};
+  \node[fd2 lab,font=\small\bfseries] at (4.6,2.12) {光锥分布（$\MSbar$）};
+  % quantities
+  \node[fd2 qty] (q)  at (-4.6,1.05)  {准 PDF $\tilde q_\Gamma(x,P^z)$\\[-1pt]{\footnotesize 固定 $P^z$}};
+  \node[fd2 qty] (h)  at (-4.6,-1.05) {准 ITD $\tilde h(\lambda,z^2)$\\[-1pt]{\footnotesize $\propto\langle P|\bar\psi(z\hat e_z)\Gamma W[z\hat e_z,0]\psi(0)|P\rangle_R$}};
+  \node[fd2 qty] (f)  at (4.6,1.05)   {光锥 PDF $f(y,\mu)$\\[-1pt]{\footnotesize 支集 $[-1,1]$}};
+  \node[fd2 qty] (I)  at (4.6,-1.05)  {光锥 ITD $I(\lambda,\mu)$\\[-1pt]{\footnotesize $\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x,\mu)$}};
+  \draw[fd2 ft] (q) -- node[fd2 note,right=2pt,align=left] {Fourier：沿射线\\$z=-\lambda/P^z$} (h);
+  \draw[fd2 ft] (f) -- node[fd2 note,left=2pt] {Fourier} (I);
+  \node[fd2 note,align=center,text=gray!30!black] at (-4.65,-2.2) {非微扰重整化（除去线性发散 $\ee^{-\delta m|z|}$）\\[-1pt]与方案选择，见\cref{fig:lamet-hybrid}};
+  % matching arrows
+  \draw[fd2 match] (q.east) -- node[fd2 lab,above=2pt] {LaMET 匹配} node[fd2 lab,below=1pt] {$C\big(\frac xy,\frac{\mu}{|y|P^z}\big)$} (f.west);
+  \draw[fd2 match] (h.east) -- node[fd2 lab,above=2pt] {SDF 匹配} node[fd2 lab,below=1pt] {$\mathcal C(\alpha,-z^2\mu^2)$} (I.west);
+  % formulas
+  \node[fd2 lab] at (0,-3.55) {LaMET：$\tilde q(x,P^z)=\displaystyle\int_{-1}^{1}\frac{\dd y}{|y|}\,C\Big(\frac xy,\frac{\mu}{|y|P^z}\Big)f(y,\mu)+\order{\frac{\Lambda^2}{x^2P_z^2},\frac{\Lambda^2}{(1-x)^{2-\delta}P_z^2}}$};
+  \node[fd2 lab] at (0,-4.65) {SDF：$\tilde h(\lambda,z^2)=\displaystyle\int_{-1}^{1}\!\dd\alpha\,\mathcal C(\alpha,-z^2\mu^2)\,I(\alpha\lambda,\mu)+\order{z^2\Lambda^2}$\quad（$|z|\lesssim0.2$--$0.3$ fm）};
+  % status footer
+  \node[draw=gray!60,fill=gray!5,rounded corners=2pt,inner sep=4pt,font=\small] at (0,-5.6)
+    {微扰匹配：全阶论证\hspace{0.25em}{\color{RoyalBlue!80!black}\textbf{[A]}}；强子层次：依赖编号假设\hspace{0.25em}{\color{Plum!80!black}\textbf{[C]}}};
+\end{tikzpicture}
+\caption{LaMET 与短距离因子化（SDF）的结构。格点可计算的等时关联函数（左）经微扰匹配与光锥 PDF（右）相联系：准 PDF 与准 ITD 是同一矩阵元的两种 Fourier 表示，LaMET 在固定 $P^z$ 下作动量空间匹配，匹配核的宗量是部分子动量 $|y|P^z$（而非强子动量 $P^z$）；
+SDF 在固定 $z^2$ 的短距离处作坐标空间匹配（VF-LAM-6）。误差为幂次修正：动量空间中在两端点分别按 $\Lambda^2/(x^2P_z^2)$ 与 $\Lambda^2/((1-x)^{2-\delta}P_z^2)$ 增大（$\delta$ 由扭度 4 分布的端点行为决定）。
+部分子态的匹配定理是全阶论证（\cref{thm:lattice-lamet}），强子层次的陈述依赖于编号假设 \cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}（\cref{thm:lamet-hadronic}）。}
+\label{fig:lattice-matching}
+\end{figure}
+%%% END fig:lattice-matching
+
+%%% BEGIN fig:quasi-pdf
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 ax/.style={lcaxis,gray!60!black},
+  t3 lc/.style={draw=gray!60,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  t3 band/.style={fill=gray!16,draw=gray!50,line width=0.4pt},
+  t3 qwil/.style={wilson plain,draw=blue!60!black},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 qop/.style={circle,draw=blue!60!black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=7pt,
+      path picture={\draw[blue!60!black,line width=0.6pt] (path picture bounding box.north west)--(path picture bounding box.south east)
+                    (path picture bounding box.south west)--(path picture bounding box.north east);}},
+  t3 hyp/.style={draw=gray!60!black,line width=0.5pt,dash pattern=on 1.2pt off 1.4pt},
+  t3 boost/.style={draw=black!70,line width=0.9pt,-{Stealth[length=7pt,width=6pt]}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % =================== (a) hadron moving with large P^z ===================
+  \begin{scope}
+    \fill[t3 band] (-1.29,-1.3) -- (1.67,2.4) -- (2.17,2.4) -- (-0.79,-1.3) -- cycle;
+    \draw[t3 lc] (-1.35,-1.35) -- (2.35,2.35);  \draw[t3 lc] (1.35,-1.35) -- (-2.35,2.35);
+    \draw[t3 ax] (-2.7,0) -- (2.65,0) node[below left=1pt and -2pt] {$z$};
+    \draw[t3 ax] (0,-1.45) -- (0,2.75) node[left] {$t$};
+    % light-cone operator (along w^+ = 0) and quasi-PDF operator (t = 0)
+    \draw[wilson plain] (0,0) -- (-1.35,1.35);  \path[t3 warrow=0.6] (0,0) -- (-1.35,1.35);
+    \draw[t3 qwil] (0,0) -- (-1.3,0);           \path[t3 warrow=0.62,blue!60!black] (0,0) -- (-1.3,0);
+    \node[opvertex] at (0,0) {};  \node[opvertex] at (-1.35,1.35) {};
+    \node[t3 qop] at (-1.3,0) {};
+    \node[t3 lab,below right=0pt] at (0,0) {$\psi(0)$};
+    \node[t3 lab,above left=0pt] at (-1.35,1.35) {$\bar\psi(w)$};
+    \node[t3 lab,below=2pt,text=blue!50!black] at (-1.3,0) {$\bar\psi(z)$};
+    \node[t3 note,anchor=south] at (-2.25,2.35) {$w^+=0$};
+    \node[t3 note,anchor=south] at (2.3,2.35) {$w^-=0$};
+    \node[t3 note,anchor=east] at (-1.2,-1.05) {强子};
+    \node[t3 lab] at (0,-2.0) {(a)\ 强子以大 $P^z$ 运动};
+  \end{scope}
+  % boost
+  \draw[t3 boost] (2.85,1.0) -- node[t3 note,above=2pt,align=center] {沿 $z$ 方向的\\Lorentz 变换} (4.75,1.0);
+  \node[t3 note] at (3.8,0.62) {$\tanh y=v$};
+  % =================== (b) hadron rest frame ===================
+  \begin{scope}[xshift=8.3cm]
+    \fill[t3 band] (-0.4,-1.3) rectangle (0.4,2.4);
+    \draw[t3 lc] (-1.35,-1.35) -- (2.35,2.35);  \draw[t3 lc] (1.35,-1.35) -- (-2.35,2.35);
+    \draw[t3 ax] (-2.7,0) -- (2.65,0) node[below left=1pt and -2pt] {$z$};
+    \draw[t3 ax] (0,-1.45) -- (0,2.75) node[left] {$t$};
+    % invariant hyperbola z^2 - t^2 = z_0^2 on which the end point of the boosted operator moves
+    \draw[t3 hyp] plot[domain=-0.95:1.74,samples=50] ({-sqrt(1.69+\x*\x)},\x);
+    \draw[gray!60!black,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}]
+      plot[domain=0.3:1.2,samples=20] ({-sqrt(1.69+\x*\x)-0.2},{\x+0.12});
+    \fill[gray!60!black] (-1.3,0) circle[radius=1.6pt];
+    \draw[t3 qwil] (0,0) -- (-2.1667,1.7333);   \path[t3 warrow=0.55,blue!60!black] (0,0) -- (-2.1667,1.7333);
+    \node[opvertex] at (0,0) {};  \node[t3 qop] at (-2.1667,1.7333) {};
+    \node[t3 lab,below right=0pt] at (0,0) {$\psi(0)$};
+    \node[t3 lab,left=2pt,text=blue!50!black] at (-2.1667,1.7333) {$\bar\psi(z)$};
+    \node[t3 note,anchor=east] at (-1.95,0.55) {$P^z$ 增大};
+    \node[t3 note,anchor=north] at (-1.3,-0.08) {$t=0$};
+    \node[t3 note,anchor=south] at (-2.3,2.35) {$w^+=0$};
+    \node[t3 note,anchor=south] at (2.3,2.35) {$w^-=0$};
+    \node[t3 note,anchor=west] at (0.5,-0.85) {强子};
+    \node[t3 lab] at (0,-2.0) {(b)\ 强子静止系};
+  \end{scope}
+\end{tikzpicture}
+\caption{准 PDF 与光锥 PDF 算符的时空图（$z$ 为纵向坐标；阴影带为强子的世界带）。(a) 中黑色双线为光锥 PDF 算符的 Wilson 线 $W[w,0]$，
+$w=(0^+,w^-,0_{\mathrm T})$ 位于光锥 $w^+=0$（即 $t=-z$）上，$f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle$；
+蓝色双线为准 PDF 算符的 Wilson 线 $W[z,0]$，沿 $z$ 轴、在等时面 $t=0$ 上，$\tilde q(x,P^z)=\int\frac{\dd z}{4\pi}\ee^{\ii xP^zz}\langle P|\bar\psi(z)\Gamma W[z,0]\psi(0)|P\rangle$（$\Gamma=\gamma^z$ 或 $\gamma^t$，归一化见正文）。
+(a)~强子以速度 $v$ 沿 $+z$ 运动；(b)~经快度为 $y$（$\tanh y=v$）的 Lorentz 变换转到强子静止系后，等时间隔 $(t,z)=(0,z)$ 变为 $(-z\sinh y,\,z\cosh y)$：
+其端点由 $t=0$ 处（灰点）沿不变双曲线 $z^2-t^2=\text{常数}$（点线）移动，随 $P^z$ 增大而趋向光锥 $w^+=0$，即光锥 PDF 算符的方向；光锥方向本身在变换下不变（只被伸缩）。
+因此大 $P^z$ 下的准 PDF 趋近光锥 PDF，二者之差由微扰匹配系数描述（大动量有效理论，见正文）；此图取 $v=0.8$。}
+\label{fig:quasi-pdf}
+\end{figure}
+%%% END fig:quasi-pdf

@@ -1,0 +1,114 @@
+\section{Fourier 步骤：长程行为、解析带与可恢复的自由度}\label{sec:lamet-fourier}
+
+准 PDF 需要沿整条射线 $z^2=-\lambda^2/P_z^2$ 的 $\tilde h$，而格点数据只到 $|z|\le z_L$，即 $|\lambda|\le\lambda_L=z_LP^z$，且信号随 $|z|$ 迅速变差。本节回答三个数学问题：大 $|z|$ 处的衰减从何而来（\cref{thm:lamet-exp-decay}）；衰减意味着什么（\cref{lem:lamet-strip,prop:lamet-truncation}）；没有衰减信息时数据能确定什么（\cref{prop:lamet-slepian}）。数值示意见\cref{fig:lamet-fourier}。
+
+\begin{assumption}[谱隙与边界值正则性 \tagC]\label{asm:lamet-gap}
+设 $\phi$ 为 Hermite 标量场，$|\vec p\rangle$ 为质量 $m$ 的单粒子态，$\sqrt Z=\langle\Omega|\phi(0)|\vec p\rangle$；零动量态之间的矩阵元按对称极限理解：$\langle\vec 0|A|\vec 0\rangle\equiv\frac12\lim_{\vec p\to0}\big(\langle\vec p|A|-\vec p\rangle+\langle-\vec p|A|\vec p\rangle\big)$\cite[第~5.1~节]{Ji:2026vir}。
+\begin{enumerate}[label=(GP\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 外态是孤立的单粒子态；在 $\phi(0)|\vec 0\rangle$ 的谱分解中分出真空 $P_\Omega$ 与交叉真空道 $|\vec p;-\vec p\rangle\langle\vec p;-\vec p|$（两粒子态，其中一个粒子是由 $\phi$ 自真空产生的，$\vec p\to0$ 时能量为 $2m$）之后，其余中间态 $P'$ 的能量满足 $E-m\ge\Delta m>0$：谱分布 $\rho_{\vec z}(E)=\langle\vec 0|\phi(0,\vec z)\delta(H-E)P'\phi(0)|\vec 0\rangle$ 与 $\tilde\rho_{\vec z}(E)=\langle\vec 0|\phi(0)\delta(H-E)P'\phi(0,\vec z)|\vec 0\rangle$ 是支撑在 $E\ge m+\Delta m$ 中的缓增分布（不含单粒子中间态；单粒子中间态的处理见第~23~章）。
+\item 由此定义的 $G_>(w,\vec z)=\int\dd E\,\rho_{\vec z}(E)\ee^{-\ii(E-m)w}$（$\Imag w<0$）与 $G_<(w,\vec z)=\int\dd E\,\tilde\rho_{\vec z}(E)\ee^{\ii(E-m)w}$（$\Imag w>0$）在割线 $\{\Imag w=0,\ |\Real w|\ge|\vec z|\}$ 的某个邻域内满足 $|G_\gtrless(w,\vec z)|\le C_b(1+|w|)^N|w^2-\vec z^{\,2}|^{-k}$（$C_b$ 至多多项式地依赖于 $|\vec z|$），并在割线上（端点 $\pm|\vec z|$ 除外）有连续的边界值（Fredenhagen 型的适度正则性）。
+\item （QCD 中的应用）Wilson 线算符在非微扰层次化为 QCD$+$静态源中的定域算符 $\bar Q\Gamma\psi$（参见\cref{asm:lamet-aux-renorm}），重—轻扇区在静态阈值之上有能隙 $\Lambda_X=m_X-m_Q>0$（禁闭；由 $B^{(*)}$ 质量估计 $\Lambda_X\approx0.5$ GeV，$m_Q(\tau)+\Lambda(\tau)$ 的分割依赖于重整子方案）。
+\end{enumerate}
+地位：对 QCD 为 \tagC——(GP1)(GP2) 是所考虑的道中标准的公理化假设；(GP3) 需要重—轻扇区的禁闭与\cref{asm:lamet-aux-renorm}的非微扰形式；格点数值（$\Lambda_X\approx0.5$ GeV）只是证据。
+文献：\cite[第~5~节]{Ji:2026vir}（预印本），\cite{Fredenhagen:1984bz}。
+被使用于：\cref{thm:lamet-exp-decay}、\cref{conj:lamet-decay-qcd}。
+解除途径：在构造性或公理化框架中对所考虑的道证明 (GP1)(GP2)；(GP3) 需要对禁闭的控制，超出现有方法。
+\uses{asm:lamet-aux-renorm}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC。决定等级的是 (GP3)：它要求带静态色源的扩展理论中重—轻扇区有能隙（禁闭），并要求\cref{asm:lamet-aux-renorm}在非微扰层次成立；(GP1)(GP2) 是对所考虑的道的标准公理化要求，在四维相互作用理论中同样没有证明（来源\cite[第~5~节]{Ji:2026vir}为预印本）。这一假设是\cref{thm:lamet-exp-decay}的前提；提高等级需要 (GP3) 的非微扰证明，超出现有方法。
+
+\begin{theorem}[局域性蕴含类空关联函数的指数衰减（Ji--Liu--Su） \tagR]\label{thm:lamet-exp-decay}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:intro-wightman}、\cref{asm:lamet-gap}。设 Hermite 定域标量场 $\phi$ 满足 Wightman 公理中的定域性、谱条件与缓增性（即以 $\phi$ 代替 QCD 复合场的\cref{asm:intro-wightman}(W1)--(W3)），并满足 (GP1)(GP2)。则对零动量单粒子态，当 $|\vec z|\to\infty$ 时
+\begin{equation}\label{eq:lamet-expdecay}
+f(\vec z)\equiv\langle\vec 0|\phi(0,\vec z)\phi(0)|\vec 0\rangle=2Z+\order{P(|\vec z|)\,\ee^{-\Delta m|\vec z|}},
+\end{equation}% VF-LAM-18
+其中零动量矩阵元按\cref{asm:lamet-gap}中的对称极限定义，$P$ 是多项式（其次数由 (GP2) 中的指数决定；若 (GP2) 中 $N=k=0$ 且 $C_b$ 与 $|\vec z|$ 无关，它是常数），$Z$ 由 $\sqrt Z=\langle\Omega|\phi(0)|\vec p\rangle$ 给出（真空道与交叉真空道各贡献 $Z$）。在这些假设下衰减率 $\Delta m$ 不能改进。
+（本定理是关于满足所列公理的标量场论的陈述；对 QCD 的应用是后面的猜想。）
+\uses{asm:intro-wightman, asm:lamet-gap}
+\end{theorem}
+
+\begin{proof}
+记 $R=|\vec z|$，$w=t-\ii t_E$。
+
+\emph{第 1 步（分离与延拓）。}在 $\langle\vec 0|\phi(t,\vec z)\phi(0)|\vec 0\rangle=\ee^{\ii mt}\langle\vec 0|\phi(0,\vec z)\ee^{-\ii Ht}\phi(0)|\vec 0\rangle$ 中插入 $P_\Omega+P_1+P_{n\ge2}$，并按 (GP1) 把交叉真空道从 $P_{n\ge2}$ 中分出：真空道给出 $Z\ee^{\ii mt}$，交叉道（能量 $2m$）给出 $Z\ee^{-\ii mt}$；另一种次序 $\langle\vec 0|\phi(0)\phi(t,\vec z)|\vec 0\rangle$ 中两者互换。于是两种次序都写成 $2Z\cos(mw)+G_\gtrless(w)$，$2Z\cos(mw)$ 是整函数。由谱条件 (W2) 与 (GP1)，$\rho_{\vec z}$ 支撑在 $E-m\ge\Delta m$，而 $\Imag w<0$ 时 $|\ee^{-\ii(E-m)w}|=\ee^{-(E-m)|\Imag w|}\le\ee^{-\Delta m|\Imag w|}$；由缓增性 (W3)，支撑在半直线上的缓增分布的 Laplace 变换给出：$G_>$ 在下半平面全纯，且 $|G_>(w)|\le C(1+|w|)^{N}(1+|\Imag w|^{-k})\ee^{-\Delta m|\Imag w|}$（参见\cite{Vladimirov2002,Streater:1989vi}）；$G_<$ 在上半平面有同样的性质。$C$ 至多多项式地依赖于 $R$。
+
+\emph{第 2 步（定域性与楔边定理）。}当 $|t|<R$ 时 $(t,\vec z)$ 是类空的，由定域性 (W1)，$[\phi(t,\vec z),\phi(0)]=0$，两种次序的边界值相等；减去公共的 $2Z\cos(mt)$ 得 $G_>(t-\ii0)=G_<(t+\ii0)$（作为 $(-R,R)$ 上的分布）。边界值存在，因为第 1 步的界只以 $|\Imag w|$ 的幂次发散。一元的楔边定理（Painlevé 型定理；参见\cite{Streater:1989vi}）把 $G_>$ 与 $G_<$ 粘合成一个在
+$\Omega=\mathbb C\setminus\{t\in\mathbb R:|t|\ge R\}$ 上全纯的函数 $G$。$f(\vec z)=2Z+G(0)$。
+
+\emph{第 3 步（Phragmén--Lindelöf）。}令 $S(w)=\sqrt{R^2-w^2}$（主支）。$R^2-w^2\in(-\infty,0]$ 当且仅当 $w$ 为实数且 $|w|\ge R$，所以 $S$ 在 $\Omega$ 上全纯，$\Real S>0$，$S(0)=R$；在割线上 $S=\mp\ii\,{\rm sgn}(t)\sqrt{t^2-R^2}$ 为纯虚数，$|R+S|=|t|$；在 $\Omega$ 中 $|\Imag w|\le\Real S\le|\Imag w|+R$（由 $(\Real S)^2-(\Imag S)^2=R^2-t^2+t_E^2$ 与 $\Real S\cdot\Imag S=tt_E$ 直接得出：若 $\Real S<|t_E|$ 则 $|\Imag S|>|t|$，从而 $(\Real S)^2>R^2+t_E^2$，矛盾；若 $\Real S\ge|t_E|$ 则 $(\Imag S)^2\le t^2$，从而 $(\Real S)^2\le R^2+t_E^2$）。考虑
+\[
+\Phi(w)=G(w)\,\ee^{\Delta m\,S(w)}\,\frac{S(w)^{2k}}{(R+S(w))^{N'}},\qquad N'\ge N,
+\]
+它在 $\Omega$ 中全纯（$R+S\neq0$）。在割线上 $|\ee^{\Delta mS}|=1$，由 (GP2)，$|\Phi|\le C_b(1+|t|)^N|t^2-R^2|^{-k}|t^2-R^2|^k|t|^{-N'}\le C_b\,(1+R^{-1})^N R^{N-N'}\equiv M$；在端点 $\pm R$ 附近 $\Phi$ 有界。在 $|\Imag w|\ge1$ 处，由第 1 步与 $\Real S\le|\Imag w|+R$，$|\Phi|\le2C\ee^{\Delta mR}(1+R)^{2k}R^{-N'}(1+|w|)^{N+2k}$（用 $|S|^{2k}=|R^2-w^2|^k\le(1+R)^{2k}(1+|w|)^{2k}$ 与 $|R+S|\ge R$）；在其余有界区域，$\Phi$ 或由 (GP2) 控制，或在 $\Omega$ 的紧子集上连续。所以 $\Phi$ 至多多项式增长。共形映射 $\zeta=\arcsin(w/R)$ 把 $\Omega$ 映为带形 $|\Real\zeta|<\frac\pi2$，割线映为两条边，$|w|\le R\cosh(\Imag\zeta)$；多项式增长化为 $\ee^{N''|\Imag\zeta|}$，远低于宽度为 $\pi$ 的带形中 Phragmén--Lindelöf 原理所允许的 $\exp(\ee^{c|\Imag\zeta|})$（$c<1$）\cite{Titchmarsh1939}。因此在 $\Omega$ 中 $|\Phi|\le M$（两个端点是有界的例外边界点，不影响结论）。
+
+\emph{第 4 步（$w=0$ 处的值）。}$\Phi(0)=G(0)\ee^{\Delta mR}R^{2k}/(2R)^{N'}$，故 $|G(0)|\le M\,2^{N'}R^{N'-2k}\ee^{-\Delta mR}$；$C_b$ 至多多项式地依赖于 $R$，即得\cref{eq:lamet-expdecay}。最后，$G(w)=\ee^{-\Delta mS(w)}$ 满足第 1 步的界（$\Real S\ge|\Imag w|$）与 (GP2)（割线上 $|G|=1$），且 $G(0)=\ee^{-\Delta mR}$，所以仅凭这些假设衰减率不能改进；在物理关联函数中，这一衰减率由前向奇异性的贡献饱和\cite{Ji:2026vir}。
+\end{proof}
+
+第 3 步的思想来自 Fredenhagen 对真空两点函数的聚类定理\cite{Fredenhagen:1984bz}：$\log|G|$ 是次调和的，$-\Delta m\Real S$ 是在割线上为零、在原点为 $-\Delta mR$ 的调和函数，指数衰减就从虚轴方向“搬运”到原点。原文\cite[第~5.1~节]{Ji:2026vir}（预印本）用共形映射与 Jensen 公式完成这一步，并只说明在割线附近与大实时间处需要“非常温和的正则性假设”；这里把这些假设明确写成 (GP2)，并用 Phragmén--Lindelöf 原理给出完整的论证。内容等级为 \tagC（来自\cref{asm:lamet-gap}）。该文的推广——单粒子中间态、任意外动量、$\varphi^3/\varphi^4$ 理论中各阶微扰论的谱表示——见\cref{prop:yzliu-decay-extensions}（第~23~章）。
+
+\begin{conjecture}[QCD 准分布矩阵元的长程渐近形式 \tagC]\label{conj:lamet-decay-qcd}
+QCD 中强子的准 PDF 矩阵元以重—轻束缚能 $\Lambda$ 指数衰减；对 $\pi$ 介子的价夸克分布，领头渐近形式为
+\begin{equation}\label{eq:lamet-LA}
+\tilde h^{\rm LA}(z,P^z)=\big[A_2\ee^{\ii\,{\rm sgn}(z)\phi_2}+A_1\ee^{\ii\,{\rm sgn}(z)\phi_1}\ee^{-\ii P^zz}+A_3\ee^{\ii\,{\rm sgn}(z)\phi_3}\ee^{\ii P^zz}\big]\ee^{-\Lambda|z|},
+\end{equation}% VF-LAM-18
+次领头渐近形式 $\propto\ee^{-\Lambda|z|}/|z|$；核子的非极化分布为 $A_2\ee^{\ii\phi_2{\rm sgn}z}\ee^{-\Lambda|z|}(1+A_2'/|z|+\cdots)$；螺旋度、横度分布、DA 与 GPD 有类似形式。
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{thm:lamet-exp-decay, asm:lamet-gap, asm:lamet-aux-renorm, def:lattice-quasi}
+\end{conjecture}
+
+\paragraph{地位与缺口}
+\tagC：依赖于禁闭（(GP3)）、非微扰的 HQET 约化，以及把标量场的定理推广到带 Wilson 线的规范理论；支持它的有色散分析、Lorentz 对称性与重味谱\cite[第~2--3~节]{Ji:2026vir}（预印本），以及 $\varphi^3$ 理论中的两圈检验（第~23~章）。实际上它被用来外推格点数据\cite{Gao:2021dbh,Su:2022fiu}。不能说“指数衰减定理在 QCD 中成立”：在 QCD 中被证明的只是\cref{thm:lamet-exp-decay}这一条件定理，其前提 (GP3) 是猜想。
+
+\begin{lemma}[准 PDF 的解析带]\label{lem:lamet-strip}
+若对所有实 $\lambda$ 有 $|\tilde h(\lambda,-\lambda^2/P_z^2)|\le A(1+|\lambda|)^k\ee^{-m|\lambda|/P^z}$，则 $\tilde q(x,P^z)$ 全纯地延拓到带形 $|\Imag x|<m/P^z$；特别地它在 $\mathbb R$ 上实解析：有限 $P^z$ 下在 $x=0,\pm1$ 处没有端点奇异性；PDF 的 $x^a(1-x)^b$ 行为只能在 $m/P^z\to0$ 时出现。% VF-LAM-17
+\uses{def:lattice-quasi}
+\end{lemma}
+
+\begin{proof}
+对 $x=x_R+\ii x_I$，$|\ee^{-\ii x\lambda}|=\ee^{x_I\lambda}\le\ee^{|x_I||\lambda|}$。在 $|x_I|\le m/P^z-\epsilon$ 上，\cref{eq:lamet-quasi-itd}的被积函数被 $A(1+|\lambda|)^k\ee^{-\epsilon|\lambda|}$ 控制，积分一致绝对收敛；故 $\tilde q$ 在带内连续，由 Fubini 定理它沿任一三角形回路的积分为零，由 Morera 定理它全纯。宽度是最优的：$\ee^{-m|\lambda|/P^z}$ 的 Fourier 变换是在 $\pm\ii m/P^z$ 处有极点的 Lorentz 函数。
+\end{proof}
+
+这把文献\cite{Ji:2024oka}中“有限 $P^z$ 下准 PDF 在 $y=0,1$ 处解析”的说法精确化；它是 Paley--Wiener 型的经典事实，同样的应用也见于\cite{Monahan:2026skv}（预印本）。
+
+\begin{proposition}[Fourier 截断误差界]\label{prop:lamet-truncation}
+在\cref{lem:lamet-strip}的假设下，若 $|\lambda|>\lambda_L$ 时 $k=0$，则
+\begin{equation}\label{eq:lamet-truncation}
+\Big|\tilde q(x)-\int_{|\lambda|\le\lambda_L}\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h\Big|\le\frac{AP^z}{\pi m}\ee^{-mz_L},\qquad z_L=\lambda_L/P^z .
+\end{equation}% VF-LAM-17
+对 $m=0.5$ GeV（$\hbar c=0.1973$ GeV\,fm），$z_L=1$ fm 时 $\ee^{-mz_L}=0.079$，$z_L=1.5$ fm 时 $0.022$：对现有的 $z_L$ 并不是参数上小的。
+\uses{lem:lamet-strip}
+\end{proposition}
+
+\begin{proof}
+差等于 $\int_{|\lambda|>\lambda_L}\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h$，其绝对值不超过 $\frac A{2\pi}\cdot2\int_{\lambda_L}^\infty\ee^{-m\lambda/P^z}\dd\lambda=\frac{AP^z}{\pi m}\ee^{-m\lambda_L/P^z}$；数值：$mz_L=0.5\times1/0.1973=2.534$，$\ee^{-2.534}=0.079$；$z_L=1.5$ fm 时 $mz_L=3.801$，$\ee^{-3.801}=0.022$。对 $x=0$ 与正的尾部，界是可以达到的。
+\end{proof}
+
+\begin{proposition}[有限 Ioffe 时间窗口内可稳定恢复的自由度]\label{prop:lamet-slepian}
+对支撑在 $[-1,1]$ 中的分布 $\mathcal P$，数据 $\tilde h(\lambda)$（$|\lambda|\le\lambda_L$）唯一确定 $\mathcal P$（\cref{cor:lamet-entire}），但反演不稳定：$L^2[-1,1]$ 上的时频限制算子
+\[
+(Kf)(x)=\int_{-1}^1\frac{\sin\lambda_L(x-y)}{\pi(x-y)}\,f(y)\,\dd y
+\]
+的本征值位于 $(0,1)$ 中，迹为 $2\lambda_L/\pi$；约有 $2\lambda_L/\pi$ 个本征值接近 $1$，其余超指数地衰减，这是 Slepian 与 Pollak 的结果\cite{SlepianPollak1961}；按 Landau 与 Widom\cite{LandauWidom1980}，本征值大于 $\epsilon$ 的个数为
+\[
+N(\epsilon)=\frac{2\lambda_L}\pi+\frac1{\pi^2}\ln\frac{1-\epsilon}\epsilon\,\ln\lambda_L+o(\ln\lambda_L);
+\]
+数值上，本征值大于 $\frac12$ 的个数在 $\lambda_L=5,10,15,25$ 时分别为 $3,6,10,16$。% VF-LAM-17
+\uses{cor:lamet-entire}
+\end{proposition}
+
+\begin{proof}
+唯一性：由\cref{cor:lamet-entire}，$\tilde h$ 是整函数，在一个区间上的值决定它（唯一性定理）。记 $\chi_I$ 为区间 $I$ 的特征函数，$\mathcal F$ 为 Fourier 变换，则
+\[
+K=\chi_{[-1,1]}\,\mathcal F^{-1}\chi_{[-\lambda_L,\lambda_L]}\mathcal F\,\chi_{[-1,1]},\qquad K(x,y)=\int_{-\lambda_L}^{\lambda_L}\frac{\dd\lambda}{2\pi}\ee^{\ii\lambda(x-y)}=\frac{\sin\lambda_L(x-y)}{\pi(x-y)},
+\]
+它是正的紧算子，范数小于 $1$，迹为 $\int_{-1}^1K(x,x)\,\dd x=\int_{-1}^1\frac{\lambda_L}\pi\dd x=\frac{2\lambda_L}\pi$。本征函数是长椭球函数，本征值分布见\cite{SlepianPollak1961,LandauWidom1980}；所列数值是对 $K$ 离散化后的数值对角化（$\lambda_L=5,10,15,25$ 时迹为 $3.18,6.37,9.55,15.92$）。“约有 $2\lambda_L/\pi$ 个可恢复的模式”是对这些事实的标准诠释，不是定理：带误差 $\epsilon$ 的数据只确定沿本征值大于 $\sim\epsilon$ 的本征函数的分量。
+\end{proof}
+
+\begin{example}[截断误差与可恢复模式数的数值]\label{ex:lamet-fourier-numbers}
+取 $m=0.5$ GeV。$z_L=1$ fm 时 $\ee^{-mz_L}=0.079$，$z_L=1.5$ fm 时 $0.022$。对 $P^z=2$ GeV、$z_L=1$ fm，$\lambda_L=z_LP^z/\hbar c=10.14$，截断误差界为 $\frac{AP^z}{\pi m}\ee^{-mz_L}=0.10\,A$；时频限制算子的迹为 $6.45$，本征值大于 $\frac12$ 的有 $6$ 个、大于 $0.99$ 的只有 $4$ 个——数据大约携带 $[-1,1]$ 上 $\mathcal P$ 的六个独立“模式”，其余必须来自先验信息（函数形式、正定性、渐近行为）。
+\uses{prop:lamet-truncation, prop:lamet-slepian}
+\end{example}
+
+%%% FIGBLOCK fig:lamet-fourier

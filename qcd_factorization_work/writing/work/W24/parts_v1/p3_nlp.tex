@@ -1,0 +1,102 @@
+%% ---------------------------------------------------------------------
+\section{次领头幂次：次软定理与端点发散}\label{sec:power-nlp}
+
+“次领头幂次”（NLP）指相对于领头项只压低一个小参数幂次的修正：阈值附近的 $(1-z)^0$ 项（相对于 $1/(1-z)_+$，见第~13~章），$q_{\mathrm T}$ 分布中的 $q_{\mathrm T}^2/Q^2$ 项，$m/Q$ 型的质量修正，等等。它们有两类来源。第一类来自软辐射本身在其能量上的次领头展开：软胶子（或软光子）的发射振幅在 $1/k$ 的程函项之后还有 $k^0$ 项，在树图层次上由次软定理完全确定。第二类来自领头幂次中不出现的新结构——软夸克的交换、次领头的共线相互作用——它们在因子化公式中引入新的卷积，而这些卷积在动量分数的端点处一般发散。本节先完整证明第一类的树图定理，再说明第二类的困难。
+
+\subsection{树图层次的次软定理}
+
+我们在阿贝尔情形下陈述并证明这一定理（例如 QCD$\times$QED 中光子的发射）：带电粒子以 $D_\mu=\partial_\mu-\ii eQA_\mu$ 与光子最小耦合，于是电荷为 $Q$ 的标量的顶点是 $\ii eQ(p+p')^\mu$（$p$、$p'$ 沿粒子流方向），费米子的顶点是 $\ii eQ\gamma^\mu$，与全书 QCD 顶点 $\ii g\gamma^\mu t^a$ 的约定一致（第~2~章）。
+
+\begin{proposition}[次软定理 \tagR]\label{prop:power-next-to-soft}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（树图层次。）设自旋为 0 或 $\frac12$、质量为 $m_i$ 的带电粒子与光子最小耦合（中性粒子的自旋任意，相互作用任意），$\mathcal M_n(p_1,\dots,p_n)$ 是一个树图振幅，全部外线动量取为出射，第 $i$ 条外线的物理电荷为 $eQ_i$（$\sum_iQ_i=0$），且所论运动学点附近 $\mathcal M_n$ 的各内线均不在壳。令 $\mathcal M_{n+1}(k,\varepsilon;p_1,\dots,p_n)$ 为再多一个出射光子（$k^2=0$，$\varepsilon\cdot k=0$，$\sum_ip_i+k=0$，各外线在壳）的树图振幅，$k=\lambda\hat k$。当 $\lambda\to0$ 时：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item（Low，含自旋的推广）
+\begin{equation}\label{eq:power-lbk}
+\mathcal M_{n+1}=-e\sum_iQ_i\Big[\frac{\varepsilon^*\!\cdot p_i}{k\cdot p_i}+\frac{\varepsilon^*_\mu k_\nu J_i^{\mu\nu}}{k\cdot p_i}\Big]\mathcal M_n+O(\lambda),\qquad
+J_i^{\mu\nu}=p_i^\mu\partial_i^\nu-p_i^\nu\partial_i^\mu+\Sigma_i^{\mu\nu},
+\end{equation}
+其中 $\partial_i^\nu\equiv\partial/\partial p_{i\nu}$ 作用于截去外线波函数后的振幅（取由同一组 Feynman 规则给出的光滑延拓；结果到 $O(\lambda^0)$ 与延拓的选取无关），$\Sigma_i^{\mu\nu}$ 是第 $i$ 条外线的自旋生成元：对标量为零；对出射费米子 $\bar u(p_i)\mapsto-\frac{\ii}{2}\bar u(p_i)\sigma^{\mu\nu}$，对出射反费米子 $v(p_i)\mapsto\frac{\ii}{2}\sigma^{\mu\nu}v(p_i)$（入射的情形由交叉给出：$u\mapsto\frac{\ii}{2}\sigma^{\mu\nu}u$，$\bar v\mapsto-\frac{\ii}{2}\bar v\sigma^{\mu\nu}$），$\sigma^{\mu\nu}=\frac{\ii}{2}[\gamma^\mu,\gamma^\nu]$。
+\item（Burnett--Kroll）对光子极化与全部自旋求和，
+\begin{equation}\label{eq:power-bk}
+\sum|\mathcal M_{n+1}|^2=-e^2\sum_{i,j}\frac{Q_iQ_j\,p_i\cdot p_j}{(p_i\cdot k)(p_j\cdot k)}\sum|\mathcal M_n|^2
+-e^2\sum_{i,j}\frac{Q_iQ_j\,p_{i\mu}k_\nu}{(p_i\cdot k)(p_j\cdot k)}L_j^{\mu\nu}\sum|\mathcal M_n|^2+O(\lambda^0),
+\end{equation}
+$L_j^{\mu\nu}=p_j^\mu\partial_j^\nu-p_j^\nu\partial_j^\mu$ 作用于对自旋求和后的非辐射平方振幅（包括自旋投影算符对动量的依赖）。于是辐射截面按光子能量展开的前两项只依赖于非极化的非辐射截面。
+\end{enumerate}
+（本命题只涉及部分子振幅。）
+\uses{prop:qcd-soft-collinear-limits, lem:method-ward-abelian}
+\end{proposition}
+
+\begin{proof}
+\emph{第一步：外线发射。}把 $\mathcal M_{n+1}$ 的树图分成两类：光子接在第 $i$ 条带电外线上的图（外线发射），以及接在内线或顶点上的图（内线发射）。设第 $i$ 条外线是出射粒子。光子发射前，它的动量是 $p_i+k$，外线传播子的分母为 $(p_i+k)^2-m_i^2=2p_i\cdot k$。对标量，顶点与传播子的乘积为
+\begin{equation*}
+\ii eQ_i(2p_i+k)\cdot\varepsilon^*\,\frac{\ii}{2p_i\cdot k}=-eQ_i\frac{\varepsilon^*\!\cdot p_i}{k\cdot p_i}\qquad(\varepsilon^*\!\cdot k=0).
+\end{equation*}
+对费米子，利用 $\bar u(p)(\sla p-m)=0$ 得 $\bar u(p)\gamma^\mu(\sla p+m)=\bar u(p)\big[2p^\mu-(\sla p-m)\gamma^\mu\big]=2p^\mu\bar u(p)$，于是
+\begin{equation*}
+\bar u(p_i)\,\ii eQ_i\sla\varepsilon^*\,\frac{\ii(\sla p_i+\sla k+m_i)}{2p_i\cdot k}=-eQ_i\,\bar u(p_i)\Big[\frac{\varepsilon^*\!\cdot p_i}{k\cdot p_i}+\frac{\sla\varepsilon^*\sla k}{2\,k\cdot p_i}\Big].
+\end{equation*}
+由 $\gamma^\mu\gamma^\nu=g^{\mu\nu}-\ii\sigma^{\mu\nu}$ 与 $\varepsilon^*\!\cdot k=0$，$\sla\varepsilon^*\sla k=-\ii\sigma^{\mu\nu}\varepsilon^*_\mu k_\nu$，所以第二项正是 $\varepsilon^*_\mu k_\nu\Sigma_i^{\mu\nu}/(k\cdot p_i)$ 作用在 $\bar u(p_i)$ 上。对出射反费米子，同样的计算（用 $(\sla p+m)v(p)=0$）给出 $(+\frac{\ii}{2}\sigma^{\mu\nu})$ 从左方作用于 $v(p_i)$；入射粒子的情形由交叉得到。外线发射图其余部分是非辐射振幅在动量 $(\dots,p_i+k,\dots)$ 处的值（这组动量满足动量守恒），展开得 $\mathcal M_n+k_\nu\partial_i^\nu\mathcal M_n+O(k^2)$。因此全部外线发射之和（去掉 $\varepsilon^*_\mu$）为
+\begin{equation}\label{eq:power-lbk-ext}
+E^\mu=-e\sum_iQ_i\Big[\frac{p_i^\mu}{k\cdot p_i}\big(1+k_\nu\partial_i^\nu\big)+\frac{k_\nu\Sigma_i^{\mu\nu}}{k\cdot p_i}\Big]\mathcal M_n+O(\lambda).
+\end{equation}
+
+\emph{第二步：内线发射由规范不变性确定。}内线发射之和 $I^\mu(k)$ 在 $k=0$ 处解析（没有内线在壳），$I^\mu(k)=I^\mu(0)+O(\lambda)$。树图层次的阿贝尔 Ward 恒等式给出 $k_\mu(E^\mu+I^\mu)=0$ 对一切类光的 $k$ 成立：沿每条带电线把光子的各种插入求和，插入顶点与相邻传播子满足伸缩恒等式——对费米子线即\cref{lem:method-ward-abelian}所依据的基本恒等式，对标量线则是 $(2p+k)\cdot k=[(p+k)^2-m^2]-[p^2-m^2]$——两端在壳时边界项为零。把它按 $\lambda$ 的幂次展开。$O(\lambda^0)$：$k_\mu E^\mu$ 的领头项是 $-e\sum_iQ_i\mathcal M_n$，由电荷守恒为零（自旋项不贡献，因为 $k_\mu k_\nu\Sigma^{\mu\nu}=0$）。$O(\lambda)$：
+\begin{equation*}
+-e\sum_iQ_i\,k_\nu\partial_i^\nu\mathcal M_n+k_\mu I^\mu(0)=0 .
+\end{equation*}
+类光矢量张成整个闵氏空间，而 $I^\mu(0)$ 与 $k$ 无关，故 $I^\mu(0)=e\sum_iQ_i\,\partial_i^\mu\mathcal M_n$。
+
+\emph{第三步：合并。}由 \eqref{eq:power-lbk-ext} 与 $I^\mu(0)$，
+\begin{equation*}
+\mathcal M_{n+1}=\varepsilon^*_\mu(E^\mu+I^\mu)=-e\sum_iQ_i\Big[\frac{\varepsilon^*\!\cdot p_i}{k\cdot p_i}+\frac{(\varepsilon^*\!\cdot p_i)(k\cdot\partial_i)-(k\cdot p_i)(\varepsilon^*\!\cdot\partial_i)+\varepsilon^*_\mu k_\nu\Sigma_i^{\mu\nu}}{k\cdot p_i}\Big]\mathcal M_n+O(\lambda),
+\end{equation*}
+而 $(\varepsilon^*\!\cdot p_i)(k\cdot\partial_i)-(k\cdot p_i)(\varepsilon^*\!\cdot\partial_i)=\varepsilon^*_\mu k_\nu(p_i^\mu\partial_i^\nu-p_i^\nu\partial_i^\mu)$，这就是 \eqref{eq:power-lbk}。
+
+\emph{第四步：与延拓无关。}两种光滑延拓之差在在壳且动量守恒的流形上为零，因而局部地是 $\sum_ja_j(p)(p_j^2-m_j^2)+b_\mu(p)P^\mu$ 的形式，其中 $P\equiv\sum_jp_j$ 是全部出射动量之和（非辐射过程中 $P=0$）。$L_i^{\mu\nu}=p_i^\mu\partial_i^\nu-p_i^\nu\partial_i^\mu$ 作用于 $p_i^2-m_i^2$ 得 $2(p_i^\mu p_i^\nu-p_i^\nu p_i^\mu)=0$。对第二种项：辐射运动学中 $\sum_jp_j=-k$，领头项中 $\mathcal M_n$ 的改变是 $b\cdot(-k)$，贡献 $+e(b\cdot k)\sum_iQ_i\frac{\varepsilon^*\cdot p_i}{k\cdot p_i}$；次领头项中 $L_i$ 作用于 $b\cdot\sum_jp_j$ 给出 $\varepsilon^*_\mu k_\nu(p_i^\mu b^\nu-p_i^\nu b^\mu)$，其贡献为 $-e(k\cdot b)\sum_iQ_i\frac{\varepsilon^*\cdot p_i}{k\cdot p_i}+e(\varepsilon^*\!\cdot b)\sum_iQ_i$，后一项由电荷守恒为零。两者相消。
+
+\emph{第五步：Burnett--Kroll。}由于完整振幅满足 Ward 恒等式，对光子极化求和可用 $\sum\varepsilon_\rho\varepsilon^*_\mu=-g_{\rho\mu}$。记 $S^{(0)}=-e\sum_iQ_i\frac{\varepsilon^*\cdot p_i}{k\cdot p_i}$，平方后的 $O(\lambda^{-2})$ 项即 \eqref{eq:power-bk} 的第一项；交叉项为
+\begin{equation*}
+2\Real\sum_{\mathrm{pol}}S^{(0)*}\Big(-e\sum_jQ_j\frac{\varepsilon^*_\mu k_\nu}{k\cdot p_j}\Big)\mathcal M_n^*J_j^{\mu\nu}\mathcal M_n
+=-e^2\sum_{i,j}\frac{Q_iQ_jp_{i\mu}k_\nu}{(k\cdot p_i)(k\cdot p_j)}\,2\Real\big[\mathcal M_n^*J_j^{\mu\nu}\mathcal M_n\big].
+\end{equation*}
+对自旋求和后，$2\Real[\mathcal M_n^*J_j\mathcal M_n]=L_j(\sum|\mathcal M_n|^2)$：轨道部分是一阶实微分算符，自然如此；对费米子线 $\sum_s|\bar u(p)\tilde{\mathcal M}|^2=\TrD[(\sla p+m)\tilde{\mathcal M}\bar{\tilde{\mathcal M}}]$，自旋项贡献 $\TrD\big[\big(-\frac{\ii}{2}\big)[\sla p,\sigma^{\mu\nu}]\tilde{\mathcal M}\bar{\tilde{\mathcal M}}\big]$，而由 $[\sla p,\sigma^{\mu\nu}]=2\ii(p^\mu\gamma^\nu-p^\nu\gamma^\mu)$，它恰好等于 $L^{\mu\nu}$ 作用于投影算符 $\sla p+m$ 所给出的 $\TrD[(p^\mu\gamma^\nu-p^\nu\gamma^\mu)\tilde{\mathcal M}\bar{\tilde{\mathcal M}}]$。这就证明了 (b)。
+
+\emph{核对。}我们在标量 QED 与旋量 QED 的树图过程中（含带电内线，两个中性标量产生一对带电粒子）对 \eqref{eq:power-lbk} 与 \eqref{eq:power-bk} 作了数值检验：精确振幅与 \eqref{eq:power-lbk} 之差按 $\lambda^1$ 变化，去掉自旋项则差值变为 $O(\lambda^0)$；两种不同的延拓给出的差别是 $O(\lambda)$；\eqref{eq:power-bk} 与精确平方振幅之差保持 $O(\lambda^0)$。
+\end{proof}
+
+\eqref{eq:power-lbk} 的领头项就是\cref{prop:qcd-soft-collinear-limits}(a) 中软极限的阿贝尔形式（整体符号随电荷与色荷算符的符号约定而定；按我们的顶点，出射夸克发射一个出射胶子给出 $-g\,t^a(\varepsilon^*\!\cdot p)/(k\cdot p)$）。原始的定理属于 Low\cite{Low1958}（截面的前两项由弹性振幅与粒子的电磁常数完全确定），对非极化粒子的推广属于 Burnett 与 Kroll\cite{BurnettKroll1968}。在树图层次，对软胶子发射可以作完全平行的推导：把 $eQ_i$ 换成色荷算符，并用色守恒代替电荷守恒。
+
+\paragraph{树图之外。}
+\eqref{eq:power-lbk} 的推导用到了“内线发射在 $k=0$ 处解析”。在圈图中这一点不再成立：圈积分中存在与外线共线的区域，其中内线可以与外线一同接近在壳，把展开参数从 $k$ 换成 $k\cdot p_i/m_i^2$ 之类的组合。Del Duca 指出，在高能极限下 Low 与 Burnett--Kroll 的定理只在光子动量趋于零时才成立，并把定理推广到更大的光子动量区域，在那里次领头阶出现依赖于外线粒子结构的项\cite{DelDuca1990}。以这一推广（文献中称为 LBKD 定理）为基础，Bonocore 等人把次领头幂次的阈值对数组织成普适的构件，引入“辐射喷注函数”，并说明朴素的次软定理在规范理论的圈图层次上失效\cite{Bonocore:2015esa}；其非阿贝尔推广见\cite{Bonocore:2016awd}，Drell--Yan 中直到 N$^3$LO 的次领头幂次阈值项的检验见\cite{Bahjat-Abbas:2018hpv}。因此，圈图层次上的次软因子化在 QCD 中是全阶论证的层次（\tagA），它正是次领头幂次阈值因子化的出发点（\cref{prop:thr-nlp}，\tagP）。
+
+\subsection{端点发散}
+
+第二类次领头幂次效应引出一个领头幂次中没有的新困难。先看一个最简单的示意。设某个物理量在领头对数精度上由
+\begin{equation}\label{eq:power-endpoint-toy}
+A(\rho)=\int_\rho^1\frac{\dd z}{z}\ln\frac{z}{\rho}=\frac12\ln^2\frac1\rho,\qquad\rho=\frac{m^2}{Q^2}\ll1
+\end{equation}
+给出（双对数来自 $z$ 与 $z/\rho$ 都可以很小的区域）。若先在固定的 $z$ 处对 $\rho$ 展开——这正是“因子化公式中各个单标度函数分别展开”所做的事——被积函数变成 $\frac1z(\ln z+\ln\frac1\rho)$，对 $z\in[0,1]$ 积分在端点 $z\to0$ 处发散。用解析正规子 $z^\eta$ 计算，
+\begin{equation*}
+\int_0^1\!\dd z\,z^{-1+\eta}\Big(\ln z+\ln\frac1\rho\Big)=-\frac{1}{\eta^2}+\frac{1}{\eta}\ln\frac1\rho ,
+\end{equation*}
+只剩下纯极点；有限的双对数 $\frac12\ln^2(1/\rho)$ 要靠另一个描述端点区 $z\lesssim\rho$ 的项（在真实问题中是软夸克区）把极点抵消后才能恢复——这里由 $\int_0^\rho\dd z\,z^{-1+\eta}(\ln z+\ln\frac1\rho)$ 提供，两项之差在 $\eta\to0$ 时恰为 $\frac12\ln^2(1/\rho)$。这些极点来自卷积本身，不来自任何一个函数的紫外发散，因此不能靠对各个函数分别作 $\MSbar$ 重整化来消除。在真实的 $h\to\gamma\gamma$（$b$ 夸克圈）振幅中，领头阶的双对数正是这样的结构：领头双对数级数的第一项是 $\mathcal M_0\hat L^2/2$，$\hat L$ 为 $\ln(-M_h^2/m_b^2)$ 型的大对数（完整的处理见第~24~章）。% VF-FRO-9
+
+\begin{proposition}[次领头幂次因子化与端点发散 \tagP]\label{prop:power-nlp-endpoint}
+在次领头幂次，因子化公式中的单标度函数对动量分数的卷积，在把这些函数在 $d=4$ 中重整化（$\MSbar$）之后，一般在端点处发散；所产生的极点不能通过对各个函数分别重整化来消除。消除端点发散的“重新因子化”只在逐个过程中实现：Drell--Yan 与胶子融合产生 Higgs 的阈值区次领头幂次领头对数重求和\cite{Beneke:2018gvs,Beneke:2019mua}；经 $b$ 夸克圈的 $h\to\gamma\gamma$ 的重整化端点因子化定理\cite{Liu:2019oav,Liu:2020wbn}；% VF-FRO-9
+轻夸克诱导的 $gg\to h$\cite{Liu:2022ajh}；次领头幂次的 $\bar B\to X_s\gamma$\cite{Hurth:2023paz}；大 $x$ 处 DIS 的非对角道\cite{Beneke:2020ibj}与非对角的“胶子推力”中的端点因子化条件\cite{Beneke:2022obx}；次领头幂次的 DIS 与 PDF 因子化\cite{Beneke:2026miy}（预印本）。阈值 Drell--Yan 在次领头幂次的因子化只在去掉维数正规子之前成立\cite{Beneke:2019oqx}。
+（本命题是关于微扰论中次领头幂次因子化公式的陈述；其强子层次的应用另需领头幂次之外的桥接，此处不作断言。）
+\uses{prop:power-next-to-soft, prop:thr-nlp}
+\end{proposition}
+
+\begin{proofsketch}
+\begin{enumerate}[label=\arabic*.,leftmargin=1.6em,itemsep=1pt,topsep=2pt]
+\item \emph{机制。}在次领头幂次，软夸克交换或次领头共线相互作用使硬函数在动量分数的端点附近按 $1/z$ 变化，而相应矩阵元在 $z\to0$ 处趋于非零（至多差对数），卷积的行为如 \eqref{eq:power-endpoint-toy} 中先展开后积分的被积函数；在维数正规化中，这表现为卷积产生的、不属于任何单个函数的 $1/\varepsilon^k$ 极点。Liu 与 Neubert 在 $h\to\gamma\gamma$ 中明确看到了这一点，并称之为维数正规化与 $\MSbar$ 方案的一种意外失效\cite{Liu:2019oav}；阈值 Drell--Yan 中的同一现象见\cite{Beneke:2019oqx}。
+\item \emph{重新因子化条件。}在已解决的情形中，某一项的被积函数在 $z\to0$ 处的领头行为与另一项（例如描述软夸克区的项）的结构算符性地相等。$h\to\gamma\gamma$ 的两个 $D$ 维重新因子化条件最初在 NLO 上验证并被猜测对所有阶成立\cite{Liu:2019oav}，随后在 SCET 内部被证明\cite[第~3~节]{Liu:2020wbn}；据此可以把定理改写为各项分别有限、由重整化的四维函数表示的形式，并对所有阶成立\cite{Liu:2020wbn}。胶子推力中的算符性端点条件在 $O(\as)$ 上得到检验\cite{Beneke:2022obx}。
+\item \emph{其余情形。}领头对数的次领头幂次重求和（Drell--Yan、Higgs、非对角 DIS）由 $d$ 维一致性关系与重新因子化在领头对数精度上完成\cite{Beneke:2018gvs,Beneke:2019mua,Beneke:2020ibj}；$\bar B\to X_s\gamma$ 见\cite{Hurth:2023paz}；次领头幂次 DIS 见\cite{Beneke:2026miy}（预印本）。
+\end{enumerate}
+完整论证见所引文献；前沿现状见第~24~章（\cref{thm:front-hgg}、\cref{prop:front-nlp-threshold}、\cref{prop:front-nlp-ll}、\cref{prop:front-nlp-dis}）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+没有一般的次领头幂次因子化定理；已有的结果都是逐个过程的，而且大多只到领头对数精度，或依赖 SCET 自身的前提（模式集合的完备性与 Glauber 模式的缺席，第~24~章的 \cref{asm:front-scet-modes}）。$h\to\gamma\gamma$ 的重整化定理是所有阶的（在 SCET 框架内为 \tagA），阈值 Drell--Yan 在次领头幂次只有裸的 $d$ 维因子化\cite{Beneke:2019oqx}（\tagP）。对 $B\to M_1M_2$，幂次修正中的端点发散至今没有被重新因子化（\cref{prop:heavy-qcdf-endpoint}，\tagV）。文献中还报告了若干分歧，本书不作裁决：例如 $h\to\gamma\gamma$ 三圈振幅的次领头对数与较早的常规预言不一致\cite{Liu:2020wbn,Akhoury:2001mz}，SIDIS 的次领头幂次计算与较早的推导有若干差别\cite{Rodini:2023plb}；次领头幂次 TMD 因子化中 Glauber 交换的相消在所有现有工作中都是被假定的（\cref{conj:front-glauber-nlp}）。这些前沿问题的现状见第~24~章。升级途径：一个对一般过程成立的次领头幂次区域分析，以及端点重新因子化的系统构造。

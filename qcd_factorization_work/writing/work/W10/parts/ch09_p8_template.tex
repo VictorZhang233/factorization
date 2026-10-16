@@ -1,0 +1,131 @@
+% ---------------------------------------------------------------------
+\section{模板定理；因子化标度与方案}\label{sec:method-template}
+
+后面各章只需对各自的过程逐条验证下面的 (H1)--(H5)；第~18~章则指出因子化破坏时失效的是哪一条。
+
+\begin{theorem}[因子化模板定理 \tagA]\label{thm:method-template}
+设观测量 $\sigma$ 的共线方向为 $n_A,n_B,\ldots$，并假设：
+\begin{enumerate}[label=\textbf{(H\arabic*)},leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 其领头区域是\cref{thm:ir-leading-regions}的区域（加上 Glauber 区），且幂次计数在积分范数下成立（\cref{asm:appN-envelope,asm:appN-separation}）；
+\item 在 $H$--$J$ 界面上共线近似成立，K 胶子退耦为 Wilson 线（\cref{lem:method-ward-multi,prop:method-collinear-wilson}；精确形式\cref{asm:appN-ward-product}）；
+\item 在把围道移出 Glauber 区、或证明 Glauber 贡献显式相消之后，软近似成立，软胶子退耦（\cref{prop:method-glauber-deformation,prop:method-soft-wilson}；
+  对 Drell--Yan 型过程，其精确形式是\cref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs}）；
+\item 不受观测量约束的末态相互作用由幺正性相消，软因子或者为 $1$（共线因子化），或者是 Wilson 线的明确定义的真空矩阵元（TMD）（\cref{lem:method-soft-unitarity,prop:method-fsi}，\cref{asm:appN-cutsum}，\cref{asm:appO-lcopt}）；
+\item 减除项与定义 PDF、FF（或 TMD）的算符的重整化矩阵元一致（\cref{thm:method-subtraction}，\cref{asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}；TMD 另需\cref{asm:appN-tmd}）。
+\end{enumerate}
+则
+\begin{equation}\label{eq:method-template}
+\sigma=\sum_{ij}H_{ij}\otimes f_{i/A}\otimes f_{j/B}\,[\otimes S]+\order{\lambda^p} ,
+\end{equation}
+其中 $H_{ij}$ 可以用部分子外态计算（\cref{prop:pdf-partonic-dr}）。
+
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2、MA4）。
+% errtype: E-S
+\uses{thm:ir-leading-regions,lem:method-ward-multi,prop:method-collinear-wilson,prop:method-soft-wilson,prop:method-glauber-deformation,lem:method-soft-unitarity,prop:method-fsi,thm:method-subtraction,prop:pdf-partonic-dr,asm:intro-bridge,asm:appN-envelope,asm:appN-separation,asm:appN-ward-product,asm:appN-cutsum,asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}
+\end{theorem}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{3.3cm}@{}}
+\toprule
+假设 & 精确形式（标签） & 地位 & 逐过程验证于\\
+\midrule
+(H1) & \cref{thm:ir-leading-regions}（标度陈述）；\cref{asm:appN-envelope,asm:appN-separation} & [A]（标度陈述 E-S；积分形式未证） & \cref{prop:disall-regions}，\cref{prop:tmd-h1h5}\\
+(H2) & \cref{lem:method-ward-multi}；\cref{asm:appN-ward-product}；具名缺口\cref{asm:appN-brst-nonlocal} & [A]；阿贝尔与 $n\le2$ 树图 [R]；缺口 [C] & \cref{prop:disall-h2}\\
+(H3) & \cref{prop:method-glauber-deformation}；Drell--Yan 型：\cref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs} & [A]；DIS、$e^+e^-$ 平凡 & \cref{prop:disall-h3h4}，\cref{thm:dy-factorization}\\
+(H4) & \cref{lem:method-soft-unitarity,prop:method-fsi}；\cref{asm:appN-cutsum,asm:appO-lcopt} & [A]；软因子的幺正性 [R] & \cref{prop:disall-h3h4}，\cref{thm:coll-sia}\\
+(H5) & \cref{asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}（TMD 另加\cref{asm:appN-tmd}） & [A]；(V1)(V2) 为约定 & \cref{prop:disall-h5}，\cref{prop:tmd-h1h5}\\
+\bottomrule
+\end{tabularx}
+\caption{模板定理（\cref{thm:method-template}）的假设 (H1)--(H5) 与附录~N、附录~O 中编号假设的对应。最后一列是各过程章节中验证相应假设的陈述：第~10~章（DIS）、第~11~章（单举湮灭）、
+第~12~章（Drell--Yan）、第~14~章（小 $q_T$ 的 Drell--Yan）。}
+\label{tab:method-hypotheses}
+\end{table}
+
+\begin{proofsketch}
+从 (H1)--(H5) 出发的演绎如下（固定 $\as$ 的阶，部分子外态带红外正规子）。
+(1) \emph{减除。}由 (H1) 与 (H5)（\cref{thm:method-subtraction}），对每个（割图求和后的）被积函数 $\Gamma=\sum_RC_R\Gamma+r$，$r$ 在积分范数下被压低，每个 $C_R\Gamma$ 绝对可积。
+(2) \emph{减除项的结构。}$C_R\Gamma=T_RX_R$：$T_R$ 在每个 $H$--$J$ 界面插入共线投影、在每个 $S$--$J$ 界面插入软投影；分解为 K 与 G 部分后，由 (H2)，超出最小部分子内容的 G 胶子只给出压低的贡献。
+(3) \emph{共线 Wilson 线。}对图与 $A$ 共线 K 胶子的一切附着求和，由 (H2)，$C_R\Gamma=H_R(\hat k)\otimes J_A^W\otimes\cdots$，$J_A^W$ 附有沿 $n_B$ 的 Wilson 线；固定 $k^+=\xi P_A^+$ 积掉 $k^-,\mathbf k_T$，
+得到定义 PDF 的光线算符的矩阵元（减去其零区重叠）；$B$ 同理。
+(4) \emph{软 Wilson 线。}由 (H3)，在离开 Glauber 区的围道上软近似成立，对附着求和后软胶子化为沿 $n_A$、$n_B$ 的 Wilson 线，$S_R$ 是它们的真空矩阵元。
+(5) \emph{末态与软因子。}由 (H4)，不受约束的末态相互作用相消；共线因子化中所有 Wilson 线位于一点，软因子为 $1$；TMD 中它保留为 $\tilde S(\mathbf b_T)$。
+(6) \emph{重组与重整化。}固定硬部分、对喷注与软图求和，得到完整的裸算符矩阵元，零区重叠由嵌套的减除扣除；由 (H5)，减除项等于 $\overline{\rm MS}$ 重整化的算符矩阵元，
+对硬图求和并作递归减除得到与靶无关的系数：$H^{[n]}=\hat\sigma^{[n]}-\sum_{m<n}H^{[m]}\otimes[f\otimes f]^{[n-m]}_{\text{部分子}}$，在纯维数正规化中用部分子外态计算（\cref{prop:pdf-partonic-dr}）。
+由此得到\cref{eq:method-template}的部分子形式；换成强子态是\cref{asm:intro-bridge}的 (Br1)--(Br3)。（各步的幂次陈述是 E-S 型的。）
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[A] 同时反映了\cref{thm:method-subtraction}的地位与各假设的地位；(H$i$) 与编号假设的对应见\cref{tab:method-hypotheses}，每个过程章节都在自己的状态段落中逐条验证。
+决定 [A] 的最弱环节是：\cref{asm:appN-collins}（连同\cref{asm:appN-envelope,asm:appN-separation,asm:appN-contour}）——积分范数下的减除估计；\cref{asm:appN-ward-product}——含鬼场的多胶子 Ward 恒等式；
+对 Drell--Yan 型过程还有\cref{asm:appO-mixing}(c)、\cref{asm:appO-deformation}(b)--(d) 与\cref{asm:appO-rewritten-cs}（\cite[第~14.4.8~节]{Collins2011}）；对强子则是\cref{asm:intro-bridge}（\tagC）。
+(H2) 中有一个具名缺口：多定域光线算符的 BRST 分类（\cref{asm:appN-brst-nonlocal}，\tagC；Collins\cite[第~11.3.2~节]{Collins2011}明确假定它），它包含在文献论证的等级之中，在此点名，
+并由每个 Feynman 规范的过程章节重提；它只是\cref{thm:appN-structure}的形式前提，因而该条件定理的内容等级为 [C]。误差类型：所断言的是 E-N，文献中存在的是 E-S。
+上述演绎的精确条件形式是附录~N 的\cref{thm:appN-structure}（\tagR，$R_{\mathrm{cond}}$），本定理不以它为前提。文献：\cite{CollinsSoperSterman1989}，\cite[第~10、11、14~章]{Collins2011}。
+
+\begin{proposition}[因子化标度与方案 \tagR]\label{prop:method-scale-scheme}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设系数函数定义为 $\overline{\rm MS}$ 减除后的部分子截面：对单强子过程，$\hat\sigma_j=\sum_iC_i\otimes f_{i/j}$，
+其中 $\hat\sigma_j$ 是纯维数正规化中（用 $\as(\mu)$ 表示的）裸部分子截面，$f_{i/j}$ 是 $\overline{\rm MS}$ 重整化的部分子 PDF（双强子过程有两个卷积）。则：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item $\dfrac{\partial C_i}{\partial\ln\mu_F^2}=-\sum_kC_k\otimes\mathcal P_{ki}$，$\mathcal P$ 是\cref{thm:pdf-dglap}的 DGLAP 核；
+\item 方案变换 $f'=Z\otimes f$ 与 $C'=C\otimes Z^{-1}$ 保持 $C\otimes f$ 不变（\cref{rem:pdf-schemes}）；
+\item 若把 $C$ 用另一标度 $\mu_R$ 处的 $\as(\mu_R)$ 展开，其 $\mu_R$ 依赖由 $\beta$ 函数（\cref{prop:prelim-beta}）固定：$\bigl(\partial_{\ln\mu_R^2}+\beta(\as)\partial_{\as}\bigr)C=0$。
+\end{enumerate}
+因此，若因子化公式（\cref{def:intro-factorization}）成立，$\sigma=C\otimes f$ 的 $\mu_F$ 依赖逐阶相消，截断到 $\as^N$ 时剩余的标度依赖是 $O(\as^{N+1})$。（本命题只涉及部分子态的系数函数。）
+\uses{def:intro-factorization,thm:pdf-dglap,prop:prelim-beta,rem:pdf-schemes}
+\end{proposition}
+
+\begin{proof}
+(a) 纯维数正规化中裸部分子 PDF 是 $\delta_{ij}\delta(1-\xi)$（无标度），故 $f_{i/j}=Z_{ij}$（$f_{\rm ren}=Z\otimes f_{\rm bare}$），于是 $C=\hat\sigma\otimes Z^{-1}$（矩阵卷积）。
+裸截面作为裸耦合的函数不依赖于 $\mu$；用 $\as(\mu)$ 表示时，这一无关性是逐阶的。于是
+$\frac{\partial C}{\partial\ln\mu^2}=\hat\sigma\otimes\frac{\partial Z^{-1}}{\partial\ln\mu^2}=-\hat\sigma\otimes Z^{-1}\otimes\frac{\partial Z}{\partial\ln\mu^2}\otimes Z^{-1}=-C\otimes\mathcal P$，
+其中 $\mathcal P=\frac{\partial Z}{\partial\ln\mu^2}\otimes Z^{-1}$ 正是\cref{thm:pdf-dglap}中的核：由 $f_{\rm ren}=Z\otimes f_{\rm bare}$ 得 $\partial f_{\rm ren}/\partial\ln\mu^2=\mathcal P\otimes f_{\rm ren}$。
+（$\mathcal P$ 在单圈为 $\frac{\as}{2\pi}P$；这一等式对 $\varepsilon$ 的 Laurent 级数逐阶成立，若 $C$ 在 $\varepsilon=0$ 有限，则对有限的 $C$ 成立。）
+(b) $C'\otimes f'=C\otimes Z^{-1}\otimes Z\otimes f=C\otimes f$。(c) $C$ 作为物理量不依赖于用哪个标度的耦合表示，即 $\dd C/\dd\ln\mu_R^2=0$；把 $\dd\as/\dd\ln\mu_R^2=\beta(\as)$ 代入即得所述方程。
+例如对领头阶为 $\as^0$ 的过程，$C=c_0+\as(\mu_R)c_1+\as^2(\mu_R)[c_2+\frac{\beta_0}{4\pi}c_1\ln\frac{\mu_R^2}{\mu_F^2}]+\cdots$。最后一句：$\dd(C\otimes f)/\dd\ln\mu_F^2=-C\otimes\mathcal P\otimes f+C\otimes\mathcal P\otimes f=0$，
+截断后的残差来自被截掉的高阶项。我们用符号计算核对了两圈层次的对数结构。% check: w10_scale.py
+\end{proof}
+
+逻辑次序是：DGLAP 方程来自算符重整化（\cref{thm:pdf-dglap}），在任何因子化定理之前成立；标度无关性是推论，而不是反过来——从 $\sigma$ 的 $\mu_F$ 无关性“导出”DGLAP 再用 DGLAP“证明”$\mu_F$ 无关性是循环论证。
+同样，把标度在 $2$ 倍范围内变动来估计理论误差只是一种约定：因子化保证的只是剩余的标度依赖属于更高阶。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章涉及的常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+\item 「软因子总是相消、总是 $1$」——只对共线单举截面成立（\cref{lem:method-soft-unitarity}）；在 TMD 因子化中软因子是本质的，以平方根的方式并入 TMD（第~14~章）。
+\item 「纯维数正规化中夸克里的夸克 PDF 是 $\delta(1-x)$，所以什么也没发生」——这只对裸 PDF 成立；重整化的部分子 PDF 由红外极点组成，紫外抵消项被重新解释为红外极点（\cref{ex:method-dis-oneloop}）。
+\item 「把 $\mu_R,\mu_F$ 变动 $2$ 倍就给出理论误差」——这是没有定理支持的约定（\cref{prop:method-scale-scheme}）。
+\item 「把 $k^-$ 围道推到 $|k^-|\sim|\mathbf k_T|$ 就离开了 Glauber 区」——单分量形变留在 $G_\delta$ 中，必须沿 $e_G$ 同时形变两个分量（\cref{rem:method-two-component}）。
+\item 「可以对减除项逐项作归纳来证明减除定理」——单个链项一般不可积，只有分组表达式被压低（\cref{ex:method-naive-induction}）。
+\item 「先对原图用 Ward 恒等式」——Ward 恒等式只对近似之后的被积函数使用，次序是“近似 $\to$ Ward 恒等式 $\to$ Wilson 线”（\cref{sec:method-strategy}）。
+\item 「由 $\sigma$ 的标度无关性导出 DGLAP」——循环论证；DGLAP 来自算符重整化（\cref{prop:method-scale-scheme}）。
+\item 「Collins 减除法与 BPHZ 一样严格」——Minkowski 空间中没有 Weinberg 定理的类比，减除定理是 [A]（\cref{thm:method-subtraction}）。
+\item 「软因子为 $1$ 可以在处理 Glauber 区之前使用」——幺正性论证要求软胶子已化为 Wilson 线，即 Glauber 区已被处理（\cref{sec:method-unitarity}）。
+\end{itemize}
+\end{tcolorbox}
+
+\paragraph{本章小结。}全阶因子化证明的六步（区域、近似、Grammer--Yennie 分解、Ward 恒等式、Glauber 区与幺正性、减除）汇总为模板定理。在精确层次上严格成立的是组合学、Ward 恒等式的单胶子与树图情形、
+$i0$ 相容性与局部精度；以编号假设明确列出而未证明的是一般图的减除条件（\cref{asm:appN-collins}）、积分形式的幂次计数（\cref{asm:appN-envelope,asm:appN-separation}）、多胶子 Ward 恒等式的乘积结构
+（\cref{asm:appN-ward-product}，连同具名缺口\cref{asm:appN-brst-nonlocal}）与 Drell--Yan 型过程的 Glauber 输入（附录~O）。下表列出章内陈述与附录中精确形式的对应。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+本章陈述 & 精确形式（附录） & 区别（假设，误差类型）\\
+\midrule
+\cref{thm:method-subtraction}（[A]） & \cref{thm:appN-subtraction}（[R, $R_{\mathrm{cond}}$]） & 对给定 $\Gamma$ 的 (CS1)--(CS3) 与\cref{asm:appN-contour}(a) 为前提；本章的 [A] 是\cref{asm:appN-collins}；E-N（文献中为 E-S）\\
+\cref{lem:method-collinear-accuracy,lem:method-soft-accuracy}（[A]） & \cref{lem:method-local-accuracy}（[R, $R_{\mathrm{cond}}$]）与\cref{lem:appN-error-table} & 标度陈述 E-S 对积分范数 E-N，前提\cref{asm:appN-envelope,asm:appN-separation}\\
+\cref{lem:method-ward-multi}（[A]） & \cref{asm:appN-ward-product}；附录~F 的\cref{prop:appF-induction} & 乘积结构与减除的重组作为编号假设；具名缺口\cref{asm:appN-brst-nonlocal}（[C]）\\
+\cref{prop:method-fsi}（[A]） & \cref{lem:appO-unitarity}（[R, $R_{\mathrm{cond}}$]） & 前提\cref{asm:appO-lcopt}；割图求和的公共表示\cref{asm:appN-cutsum}\\
+\cref{prop:method-glauber-deformation}（[A]） & \cref{prop:appO-target}（[R, $R_{\mathrm{PT}}$]），\cref{thm:appO-main}（[R, $R_{\mathrm{cond}}$]） & 图类 $\mathcal G_0$ 与分级构型的形变目标；色单态单举 Drell--Yan 在\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}等假设之下；E-W $\to$ E-N\\
+\cref{thm:method-template}（[A]） & \cref{thm:appN-subtraction}（[R, $R_{\mathrm{cond}}$]）与假设登记表；装配后的结构定理\cref{thm:appN-structure}（[R, $R_{\mathrm{cond}}$]） & 各过程的前提逐个列出（\cref{tab:method-hypotheses}）；\cref{thm:appN-structure}的内容等级为 [C]（经由具名缺口\cref{asm:appN-brst-nonlocal}）\\
+\bottomrule
+\end{tabularx}
+\caption{第~9~章的陈述与附录~N、附录~O（及附录~F）中精确形式的对应。}
+\label{tab:method-correspondence}
+\end{table}

@@ -1,0 +1,85 @@
+% ---------------------------------------------------------------------
+\section{解析性、谱表示与 Adler 函数}\label{sec:ee-analytic}
+
+$R$ 是 $\Pi$ 在割线上的虚部，而微扰论最可靠的区域是远离一切阈的欧氏区 $q^2<0$。连接两者的解析性在两个独立的层次上成立：微扰论的每一阶由 Feynman 积分直接读出（\cref{lem:ee-single-scale}）；非微扰地则来自 Wightman 公理（\cref{prop:ee-analytic}），只在\cref{asm:intro-wightman}之下成立。
+
+\begin{lemma}[无质量传播子型图的单标度结构 \tagR]\label{lem:ee-single-scale}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 $n_f$ 味无质量 QCD（任意协变规范）的维数正规化（\cref{def:qcd-dimreg}）中，记 $a_0\equiv g_0^2\mu_0^{-2\varepsilon}/(4\pi^2)$。$\Pi$ 的每个裸的 $(n+1)$ 圈贡献都具有形式
+\begin{equation}\label{eq:ee-single-scale}
+\Pi^{[n+1]}_{\rm bare}(q^2)=a_0^n\,c_n(\varepsilon)\,(\mu_0^2)^{n\varepsilon}\,(-q^2-\ii0)^{-(n+1)\varepsilon},
+\end{equation}
+% VF-EE-15
+$c_n(\varepsilon)$ 与 $q^2$ 无关，是 $\varepsilon$ 的亚纯函数，对实的 $\varepsilon$ 为实数。特别地，在不是 $c_n$ 极点的固定 $\varepsilon$ 处，每一阶在 $q^2\in\mathbb C\setminus[0,\infty)$ 上解析，割线上的边值由 $(-s\mp\ii0)^{-k\varepsilon}=s^{-k\varepsilon}\ee^{\pm\ii\pi k\varepsilon}$（$s>0$）给出。（本引理只涉及 Feynman 图。）
+\uses{def:ir-landau-setup,def:qcd-dimreg}
+\end{lemma}
+\begin{proof}
+(1)~\emph{量纲与 Lorentz 不变性。}每个 $(n+1)$ 圈图用 $-g_{\mu\nu}/[(D-1)q^2]$ 投影后是标量积分 $I(q)=\int\prod_l\frac{\dd^Dk_l}{(2\pi)^D}N(k,q)\prod_j(D_j+\ii0)^{-\nu_j}$ 之和，$N$ 是标量积的多项式，内线无质量。对欧氏的 $q$，在 $D$ 的收敛区内令 $k_l=\lambda k'_l$ 得 $I(\lambda q)=\lambda^\omega I(q)$，这一齐次性随解析延拓保持；转动不变性使 $I=C(-q^2)^{\omega/2}$，$C$ 与 $q$ 无关。各个闵氏积分 $I$ 经 Wick 转动带有 $\ii$ 的幂次，但它们在 $\Pi$ 中与\cref{eq:ee-Pidef}的因子 $\ii$ 及顶点因子组合后，欧氏区的 $\Pi$ 是实的欧氏积分（那里没有割线），故 $c_n$ 对实的 $\varepsilon$ 为实数。$\Pi$ 的量纲是 $-2\varepsilon$，$g_0^{2n}=(4\pi^2a_0)^n\mu_0^{2n\varepsilon}$ 带量纲 $2n\varepsilon$，故 $q^2$ 的幂次是 $-(n+1)\varepsilon$。
+
+(2)~\emph{解析性与 $\ii0$。}由\cref{def:ir-landau-setup}的参数表示，外动量只经由第二 Symanzik 多项式进入（分子只带来 $\alpha$ 的多项式与 $\mathcal F$ 的其他幂次）。对 $q$ 从一个流顶点流入、从另一个流出的无质量两点图，
+\begin{equation}\label{eq:ee-F0}
+\mathcal F(\alpha)=-q^2\,\mathcal F_0(\alpha),\qquad \mathcal F_0(\alpha)=\sum_{T^2}\ \prod_{j\notin T^2}\alpha_j\ \ge0 ,
+\end{equation}
+求和遍及把两个流顶点分开的生成 2-森林\cite{Bogner:2010kv}。对 $q^2\in\mathbb C\setminus[0,\infty)$，$-q^2\mathcal F_0$ 不落在负实轴上，积分解析；$q^2=s>0$ 时 $-\ii0$ 规定 $(-s\mathcal F_0-\ii0)^c=\mathcal F_0^cs^c\ee^{-\ii\pi c}$。由恒等定理，(1) 的结果延拓为 $I=C(-q^2-\ii0)^{\omega/2}$。
+
+(3)~\emph{亚纯性。}维数正规化的积分由对 $D$ 的解析延拓定义，是 $\varepsilon$ 的亚纯函数，在 $\varepsilon=0$ 附近只有有限阶极点\cite{tHooftVeltman1972,Collins1984}；有限个图相加即得 $c_n$。
+\end{proof}
+例如 $n=0$ 时 $\Pi_0=N_ce_q^2\frac{2(D-2)}{D-1}\frac{G(1,1)}{(4\pi)^{D/2}}(-q^2-\ii0)^{-\varepsilon}$（\cref{ex:prelim-vacpol}），$n=1$ 见\cref{prop:ee-twoloop}。这一结构保证了每一阶的 $\varepsilon$ 展开系数都是 $\ln(-q^2/\mu^2)$ 的多项式，是\cref{thm:ee-R-finite}的关键输入。
+
+\begin{proposition}[解析性与正定性 \tagR]\label{prop:ee-analytic}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设\cref{asm:intro-wightman}成立。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{谱表示。}存在支撑在 $[s_0,\infty)$ 上的正测度（$s_0=4m_\pi^2$，电磁流道中最低的强子阈；其绝对连续部分为 $\pi^{-1}\Imag\Pi(s+\ii0)\,\dd s$，下文为书写简便统一记作 $\pi^{-1}\Imag\Pi(s)\,\dd s$），使 $\Pi(q^2)$ 在 $\mathbb C\setminus[s_0,\infty)$ 上解析，$\Pi(q^{2*})=\Pi(q^2)^*$，$\Imag\Pi(s+\ii0)\ge0$，且对某个整数 $N\ge1$ 与任意 $\mu^2>0$，
+\begin{equation}\label{eq:ee-KL}
+\Pi(q^2)=P_{N-1}(q^2)+\frac{(q^2+\mu^2)^N}{\pi}\int_{s_0}^\infty\!\dd s\,\frac{\Imag\Pi(s)}{(s+\mu^2)^N(s-q^2-\ii0)} ,
+\end{equation}
+$P_{N-1}$ 是次数不超过 $N-1$ 的多项式（编时乘积的接触项）。（无质量微扰论中逐阶的相应解析性见\cref{lem:ee-single-scale}，那里 $s_0=0$。）
+\item \emph{一次减除的确切条件。}下列三条等价：
+(i)~对某个（从而一切）$\mu^2>0$，$\int_{s_0}^\infty\dd s\,\Imag\Pi(s)/(s+\mu^2)^2<\infty$，即 $\int^\infty\dd s\,\Imag\Pi(s)/s^2<\infty$；
+(ii)~$Q^2\int_{s_0}^\infty\dd s\,R(s)/(s+Q^2)^2$ 对某一个（从而一切）欧氏点 $Q^2>0$ 有限，即下文 Adler 函数的色散积分在一个欧氏点有限；
+(iii)~适当选取接触项后一次减除即够：
+\begin{equation}\label{eq:ee-once}
+\Pi(q^2)-\Pi(-\mu^2)=\frac{q^2+\mu^2}{\pi}\int_{s_0}^\infty\!\dd s\,\frac{\Imag\Pi(s)}{(s-q^2-\ii0)(s+\mu^2)} .
+\end{equation}
+减除点取在欧氏区，因为对无质量夸克 $\Pi(0)$ 红外发散（微扰论中 $\Pi\sim-\frac{R_0}{12\pi^2}\ln(-q^2)$）。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}（MA0：Källén--Lehmann 表示、正定谱密度、多项式有界）。
+\uses{prop:ee-R-ImPi,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+(a)~这是 Källén--Lehmann 表示：由\cref{asm:intro-wightman}(W1)(W2)，\cref{eq:ee-Wdef}是缓增分布，协变性与流守恒给出 $W^{\mu\nu}=(q^\mu q^\nu-q^2g^{\mu\nu})\,2\Imag\Pi\,\theta(q^0)$；度规正定给出 $\varepsilon^*_\mu W^{\mu\nu}\varepsilon_\nu=\sum_X(2\pi)^4\delta^4(q-p_X)|\langle X|\varepsilon\cdot j|0\rangle|^2\ge0$；谱条件给出支撑 $q^2\ge s_0$（$\alpha$ 的最低阶无光子末态，能与 $1^{--}$ 的流耦合的最轻强子态是 $\pi^+\pi^-$）；缓增性给出 $N$。编时乘积是对易子的推迟延拓，在相差多项式（$\delta^4(x)$ 及其导数）的意义下由 Wightman 函数确定，即\cref{eq:ee-KL}；实性来自 $j^\mu$ 的厄米性。
+
+(b)~(i)$\Leftrightarrow$(ii)：被积函数非负；对 $s\ge Q^2$ 有 $(2s)^{-2}\le(s+Q^2)^{-2}\le s^{-2}$，在 $[s_0,Q^2]$ 上 $(s+Q^2)^{-2}\le Q^{-4}$ 且谱测度局部有限，故 (ii) 收敛当且仅当 $\int^\infty\Imag\Pi/s^2<\infty$；同理 (i) 与 $\mu^2$ 无关。正定性是本质的：振荡的谱函数可以使积分条件收敛而绝对发散。
+(i)$\Rightarrow$(iii)：由有限几何级数，
+\begin{equation}\label{eq:ee-geom}
+\begin{split}
+\frac{(q^2+\mu^2)^N}{(s+\mu^2)^N(s-q^2)}&=\frac{q^2+\mu^2}{(s+\mu^2)(s-q^2)}-\sum_{k=1}^{N-1}\frac{(q^2+\mu^2)^k}{(s+\mu^2)^{k+1}} .
+\end{split}
+\end{equation}
+在 (i) 之下 $c_k\equiv\frac1\pi\int\dd s\,\Imag\Pi(s)(s+\mu^2)^{-k-1}<\infty$（$k\ge1$），代入\cref{eq:ee-KL}，$\Pi(q^2)$ 等于\cref{eq:ee-once}右边的积分加上多项式 $P_{N-1}(q^2)-\sum_{k=1}^{N-1}c_k(q^2+\mu^2)^k$；后者在 $q^2=-\mu^2$ 处等于 $\Pi(-\mu^2)$，其非常数部分是 $\Pi^{\mu\nu}$ 的接触项 $(q^\mu q^\nu-q^2g^{\mu\nu})(q^2)^k$，可由编时乘积的定义去掉。
+(iii)$\Rightarrow$(i)：在 $q^2=-2\mu^2$ 处\cref{eq:ee-once}的被积函数定号，其绝对收敛即 (i)。在微扰论中编时乘积由重整化确定到只差一个常数（$\Pi^{\mu\nu}$ 的超表观发散度为 $2$，横向性只允许 $(q^\mu q^\nu-q^2g^{\mu\nu})\times$常数），(iii) 的“适当选取”是自动的。
+\end{proof}
+条件 (i) 在 QCD 中被期望成立（渐近自由使 $R\to R_0$），但这已是微扰论与强子之间的桥接（\cref{asm:intro-bridge}），不是公理的推论。
+
+\begin{definition}[Adler 函数]\label{def:ee-adler}
+对欧氏的 $Q^2=-q^2>0$，定义 Adler 函数\cite{Adler1974}
+\[
+D(Q^2)\equiv-12\pi^2Q^2\,\frac{\dd\Pi(-Q^2)}{\dd Q^2}.
+\]
+$D$ 无量纲，不受 $\Pi$ 的加法重整化（接触常数）的影响；对自由夸克，$\Pi_0=\frac{R_0}{12\pi^2}(\frac53-L)$ 给出 $D=R_0$。
+\uses{def:ee-R}
+\end{definition}
+
+\begin{proposition}[Adler 函数的色散表示 \tagR]\label{prop:ee-adler-dispersion}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）在\cref{prop:ee-analytic}(b) 的等价条件下，
+\begin{equation}\label{eq:ee-adler-disp}
+D(Q^2)=Q^2\int_0^\infty\!\dd s\,\frac{R(s)}{(s+Q^2)^2}\qquad(R(s)\equiv0,\ s<s_0),
+\end{equation}
+% VF-EE-14
+右边对 $Q^2\in\mathbb C\setminus(-\infty,-s_0]$ 解析，在 $Q^2>0$ 上为正。若 $R\equiv R_c$ 为常数（$s_0=0$），则 $D\equiv R_c$。
+非微扰地位：对强子谱函数需\cref{asm:intro-wightman}（MA0，经由\cref{prop:ee-analytic}）；对微扰论的固定阶（$s_0=0$）无需假设。
+\uses{def:ee-adler,prop:ee-analytic,prop:ee-R-ImPi,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+在\cref{eq:ee-once}中令 $q^2=-Q^2$ 并对 $Q^2$ 求导：$\frac{\dd}{\dd Q^2}\frac{\mu^2-Q^2}{(s+Q^2)(s+\mu^2)}=-\frac{1}{(s+Q^2)^2}$，故 $\frac{\dd\Pi(-Q^2)}{\dd Q^2}=-\frac1\pi\int\dd s\,\frac{\Imag\Pi(s)}{(s+Q^2)^2}$（对 $Q^2\ge Q_0^2>0$，被积函数及其导数被 $\Imag\Pi(s)(s+Q_0^2)^{-2}$ 的常数倍控制，可在积分号下求导）。于是 $D=12\pi Q^2\int\Imag\Pi/(s+Q^2)^2$，用 $R=12\pi\Imag\Pi$（\cref{prop:ee-R-ImPi}）即得\cref{eq:ee-adler-disp}，结果与 $\mu^2$ 无关。在 $\mathbb C\setminus(-\infty,-s_0]$ 的紧子集上 $|s+Q^2|^{-2}\le C(s+1)^{-2}$ 一致成立，故积分解析。最后 $Q^2\int_0^\infty\dd s\,(s+Q^2)^{-2}=1$。
+\end{proof}
+核 $Q^2/(s+Q^2)^2$ 正定、积分为 $1$：$D$ 是 $R$ 的一种“欧氏抹平”，对共振不敏感；回到逐点的 $R(s)$ 需要解析延拓（\cref{prop:ee-contour}）。

@@ -1,0 +1,178 @@
+% =====================================================================
+\section{组织：哪一条假设失效；测量相容性判据}\label{sec:break-overview}
+% =====================================================================
+
+\paragraph{几种因子化，几类证据。}由强到弱：(F1) \emph{振幅的严格共线因子化}——部分子 $1\parallel2$ 时 $|\mathcal M(p_1,p_2,\dots)\rangle\simeq\mathrm{Sp}(p_1,p_2;\tilde P)|\mathcal M(\tilde P,\dots)\rangle$，分裂矩阵与非共线部分子的动量和颜色无关；(F2) \emph{截面的共线因子化}——质量奇异性被吸收进普适的、由算符定义的 PDF（\cref{def:pdf-quark,def:pdf-gluon}），它不需要 (F1)，因为 (F1) 的失效可以在截面中相消；(F3) \emph{标准 TMD 因子化}与 (F4) \emph{广义 TMD 因子化}（\cref{def:break-generalized-tmd}），(F3) 蕴含 (F4)；(F5) 非全局观测量在否决尺度以下的 PDF 因子化。证据分三类：\emph{模型反例}（阿贝尔、标量或旁观者模型中与一般论证的预言相矛盾的显式结果）足以否定“对一般图成立”的证明方法——若方法在模型中失效，它在 QCD 中也会失效\cite{Collins2007}——但不给出 QCD 中破坏的大小；\emph{显式计算}是 QCD 中某一阶的完整计算；\emph{实验}给出强子层次的现象，但不说明是哪一步论证失效。
+
+\paragraph{哪一条假设失效。}模板定理\cref{thm:method-template}假设：(H1) 领头区域（含 Glauber 区）完备，幂次计数在积分范数下成立；(H2) 硬—共线界面上共线近似成立，纵向胶子退耦为 Wilson 线；(H3) 移出 Glauber 区或证明 Glauber 贡献相消之后，软近似成立、软胶子退耦；(H4) 不受观测量约束的末态相互作用由幺正性相消，软因子为 $1$ 或 Wilson 线的真空矩阵元；(H5) 减除项等于算符的重整化矩阵元。本章的破坏都发生在 (H3)、(H4) 或振幅层次的 (H2)（\cref{tab:break-cases}）。
+
+\begin{table}[htbp]
+\centering
+\caption{各情形中模板定理（\cref{thm:method-template}）的哪一条假设失效，以及证据类型；“(O-3)”指\cref{app:appO}中 Glauber 相消论证的单侧改写一步。}
+\label{tab:break-cases}
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.29\textwidth}>{\raggedright\arraybackslash}p{0.2\textwidth}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+情形 & 失效的假设 & 地位 & 证据 \\
+\midrule
+TMD 敏感的 $h_1h_2\to H_1H_2X$（\cref{thm:break-tmd}） & (H3)(H4)：色纠缠；(O-3) & \tagV & 模型反例\cite{CollinsQiu2007,Collins2007,RogersMulders2010} \\
+振幅的严格共线因子化，类空（\cref{prop:break-spacelike}） & 振幅层次的 (H2) & \tagV & 显式单圈计算\cite{CataniDeFlorianRodrigo2012} \\
+超出 NNLO 的质量奇异性因子化（\cref{prop:break-mass-singularity}） & (H3) & \tagC & \cite{CataniDeFlorianRodrigo2012}；恢复的证据\cite{Becher:2024kmk} \\
+喷注间隙等非全局观测量（\cref{prop:break-fss}） & (H3)；测量与演化不对易 & 振幅 \tagV；超领头对数 \tagP；PDF 因子化 \tagC & 显式计算\cite{ForshawSeymourSiodmok2012}；\cref{prop:jets-sll}；\cite{Becher:2024kmk} \\
+对 MPI 敏感的观测量（\cref{prop:break-jet-veto}） & (H3)：旁观者 Glauber 交换与软辐射 & \tagV & 显式模型反例\cite{Zeng:2015iba}；\cite{Gaunt2014}与\cite{Schwartz:2018obd}之争 \\
+强子—强子硬衍射（\cref{prop:break-hh-diffraction}） & (H3)(H4)：间隙存活 & \tagV & 实验\cite{AffolderEtAl2000,CDF:2012nhl} \\
+衍射 DIS（\cref{thm:break-ddis}） & 无 & \tagA & 全阶论证\cite{Collins1998a} \\
+双 Drell--Yan（\cref{thm:break-double-dy}） & (H3) 成立 & \tagA & 全阶论证\cite{Diehl:2015bca} \\
+有色末态的双部分子散射（\cref{conj:break-dps-coloured}） & (H3) & \tagC & 无全阶论证 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{definition}[标准与广义 TMD 因子化]\label{def:break-generalized-tmd}
+考虑 $h_1(P_1)+h_2(P_2)\to H_1+H_2+X$，$H_1$、$H_2$ 在横向近乎背对背，测量 $\boldsymbol q_{\mathrm T}=\boldsymbol p_{H_1\mathrm T}+\boldsymbol p_{H_2\mathrm T}$，$|\boldsymbol q_{\mathrm T}|\ll|\boldsymbol p_{H_i\mathrm T}|$。
+(i) \emph{标准 TMD 因子化}指
+\begin{equation}\label{eq:break-standard-tmd}
+\dd\sigma=\sum_j H_j\otimes\Phi_{h_1}\otimes\Phi_{h_2}\otimes\Delta_{H_1}\otimes\Delta_{H_2}\otimes S+\text{幂次修正},
+\end{equation}
+其中 $\Phi_{h_i}$、$\Delta_{H_i}$ 是带指向未来或指向过去 U 形 Wilson 线的 TMD 分布与碎裂关联函数（\cref{def:tmd-unsub}），$S$ 为软因子，且这些关联函数与 SIDIS、Drell--Yan、$e^+e^-\to h_1h_2X$ 中的是同一批对象，或只通过纯微扰的计算与之相联系\cite{Collins2007}（T 奇函数允许按时间反演规则变号）。
+(ii) \emph{广义 TMD 因子化}\cite{BacchettaBomhofMuldersPijlman2005,Bomhof:2004aw,Bomhof:2006dp}指
+\begin{equation}\label{eq:break-generalized-tmd}
+\dd\sigma=\sum_{j,c}H_{j,c}\otimes\Phi^{[\mathcal W_{c,j,1}]}_{h_1}\otimes\Phi^{[\mathcal W_{c,j,2}]}_{h_2}\otimes\Delta^{[\mathcal W_{c,j,3}]}_{H_1}\otimes\Delta^{[\mathcal W_{c,j,4}]}_{H_2}+\text{幂次修正},
+\end{equation}
+$c$ 标记色流路径；每个关联函数是\emph{单个}强子的矩阵元，两个部分子场之间嵌入依赖于过程与色流的规范不变 Wilson 线结构 $\mathcal W$，例如\cite[式~(A11a)]{BacchettaBomhofMuldersPijlman2005}
+\begin{equation}\label{eq:break-bbmp-link}
+U^{[tt^*]}_{qq}=\frac{1}{N^2-1}\Big[(N^2+1)\,\frac{\Trc U^{[\square]}}{N}\,U^{[+]}-2\,U^{[\square]}U^{[+]}\Big],\qquad U^{[\square]}=U^{[+]}U^{[-]\dagger},
+\end{equation}
+$U^{[\pm]}$ 是指向未来（过去）的 U 形线，$U^{[\square]}$ 是二者组成的闭合 Wilson 圈。\cref{eq:break-generalized-tmd}中没有 $\langle h_1h_2|\cdots|h_1h_2\rangle$ 型的矩阵元\cite[式~(3)]{RogersMulders2010}。
+\uses{def:tmd-unsub}
+\end{definition}
+
+$g\to0$ 时 $U^{[tt^*]}_{qq}\to[(N^2+1)-2]/(N^2-1)=1$，差别只出现在胶子交换中；时间反演规则见\cref{thm:tmd-sivers-sign}（\tagR，$R_{\mathrm{def}}$）。
+
+\subsection{测量相容性判据}
+
+Drell--Yan 中旁观者末态相互作用的相消依赖于对旁观者末态的完全求和（\cref{lem:dy-fsi}，全阶论证，\tagA）。所以“观测量足够单举”须精确化为：对旁观者末态单举，且测量不妨碍随后的围道形变。附录~O 把这一相消写成光锥序微扰论（LCOPT）中的精确恒等式；我们问它在插入测量算符后是否仍成立。
+
+在\cref{lem:appO-unitarity}的设定中，$J_A$ 按光锥时间 $\tau\equiv x^+$ 排序，$V_H$、$V_H^\dagger$ 位于 $\tau=0$。固定两侧初态部分的排序后，$V_H$ 之后的顶点按闭时路径次序排成链 $v_1,\dots,v_n$，相邻中间态 $s_0,\dots,s_n$ 的光锥能量为 $E_i$，割线穿过某个 $s_j$（\cref{def:appO-chain}）；顶点 $v_i$ 的约化权重在振幅一侧为 $\alpha_i$、在共轭一侧为 $\beta_i$，内部顶点 $\alpha_i=\beta_i$（\cref{lem:appJ-cut-hermiticity}），振幅（共轭）一侧的软插入 $\beta_i=0$（$\alpha_i=0$）。割线穿过 $s_j$ 的项为
+\begin{equation}\label{eq:break-Tj}
+\mathcal T_j=W_j\int\frac{\dd\mathcal E}{2\pi}\prod_{i<j}\frac{1}{\mathcal E-E_i+\ii0}\;2\pi\delta(\mathcal E-E_j)\prod_{i>j}\frac{1}{\mathcal E-E_i-\ii0},\qquad W_j=\prod_{i\le j}\alpha_i\prod_{i>j}\beta_i ,
+\end{equation}
+$\mathcal E$ 为末态总光锥能量。割位置恒等式（\cref{lem:appO-cut-position}）说 $\sum_j\mathcal T_j$ 中只有 $\alpha_m\neq\beta_m$ 的顶点有贡献：内部顶点——末态相互作用——在割线求和中消去（光锥时间中的 Veltman 最大时刻方程\cite{Veltman1963}）。其唯一物理输入是每个割态以权重 $1$ 计入。一般的观测量给割态 $X$ 一个权重 $\pi(X)$：单举截面 $\pi\equiv1$；$b$ 空间中的 TMD 截面 $\pi(X)=\ee^{\ii\boldsymbol b\cdot\boldsymbol P_{X\mathrm T}}$；鉴别末态强子或要求快度间隙时 $\pi$ 是投影。
+
+\begin{lemma}[带测量权重的割位置恒等式]\label{lem:break-weighted-cut}
+设链的数据如\cref{def:appO-chain}，并设 $\pi_0,\dots,\pi_n\in\mathbb C$ 为割线穿过 $s_0,\dots,s_n$ 时的测量权重。以 $\ii\eta_0$（$\eta_0>0$）代替 $\ii0$、以 $2\eta_0/(x^2+\eta_0^2)$ 代替 $2\pi\delta(x)$，记 $H_m(\mathcal E)=\prod_{i<m}(\mathcal E-E_i+\ii\eta_0)^{-1}\prod_{i\ge m}(\mathcal E-E_i-\ii\eta_0)^{-1}$，则对每个 $\eta_0>0$ 精确地有
+\begin{equation}\label{eq:break-weighted-cut}
+\sum_{j=0}^n\pi_j\,\mathcal T_j=\delta_{n0}\,\pi_0W_0-\ii\sum_{m=1}^n\big(\pi_m\alpha_m-\pi_{m-1}\beta_m\big)\prod_{i<m}\alpha_i\prod_{i>m}\beta_i\int\frac{\dd\mathcal E}{2\pi}\,H_m(\mathcal E).
+\end{equation}
+因此：(i) 若每个内部顶点两侧 $\pi_m=\pi_{m-1}$，内部顶点不贡献；(ii) 若 $\pi_j\equiv\pi$，\cref{eq:break-weighted-cut}是 $\pi$ 乘以\cref{lem:appO-cut-position}的无权和；(iii) 一个 $\pi_m\neq\pi_{m-1}$ 的内部顶点贡献 $-\ii\alpha_m(\pi_m-\pi_{m-1})\prod_{i<m}\alpha_i\prod_{i>m}\beta_i\int\frac{\dd\mathcal E}{2\pi}H_m$，一般不为零。
+\uses{def:appO-chain,lem:appO-cut-position}
+\end{lemma}
+
+\begin{proof}
+记 $a_i=(\mathcal E-E_i+\ii\eta_0)^{-1}$、$b_i=(\mathcal E-E_i-\ii\eta_0)^{-1}$。由 $\frac{2\eta_0}{x^2+\eta_0^2}=\ii[(x+\ii\eta_0)^{-1}-(x-\ii\eta_0)^{-1}]$，切割因子为 $\ii(a_j-b_j)$，而 $\prod_{i<j}a_i\,\ii(a_j-b_j)\prod_{i>j}b_i=\ii(H_{j+1}-H_j)$，其中 $H_0=\prod_ib_i$、$H_{n+1}=\prod_ia_i$。Abel 求和给出
+$\sum_j\pi_jW_j\,\ii(H_{j+1}-H_j)=\ii(\pi_nW_nH_{n+1}-\pi_0W_0H_0)+\ii\sum_{m=1}^n(\pi_{m-1}W_{m-1}-\pi_mW_m)H_m$，
+且 $\pi_{m-1}W_{m-1}-\pi_mW_m=-(\pi_m\alpha_m-\pi_{m-1}\beta_m)\prod_{i<m}\alpha_i\prod_{i>m}\beta_i$（$W_{m-1}$、$W_m$ 只在第 $m$ 个因子上不同：$\beta_m$ 对 $\alpha_m$）。$n\ge1$ 时 $H_0$、$H_{n+1}$ 至少按 $|\mathcal E|^{-2}$ 衰减且极点各在同一半平面，积分为零；$n=0$ 时左边为 $\pi_0W_0\int\frac{\dd\mathcal E}{2\pi}\frac{2\eta_0}{(\mathcal E-E_0)^2+\eta_0^2}=\pi_0W_0$。这就是\cref{eq:break-weighted-cut}；$\pi\equiv1$ 时它化为\cref{lem:appO-cut-position}，(i)--(iii) 由内部顶点的系数 $\alpha_m(\pi_m-\pi_{m-1})$ 读出（$n\ge1$、$E_i$ 互异时 $\int H_m$ 是 $E_i$ 的非零有理函数）。
+\end{proof}
+
+（对随机的 $n\le5$ 的链，以对 $\mathcal E$ 的数值积分与留数公式两种独立方法计算\cref{eq:break-weighted-cut}两边，相对偏差 $6\times10^{-16}$。）
+
+\begin{proposition}[测量相容性判据 \tagR]\label{prop:break-measurement}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appO-lcopt}（及 \cref{lem:appO-unitarity}）。（本命题只涉及部分子态。）
+设定如\cref{lem:appO-unitarity}：DY 型领头区域中的 $J_A$，$V_H$、$V_H^\dagger$ 位于 $\tau=0$，$J_A$ 之外的一切（插入 $O_a$、$O'_b$ 及其外部因子）固定；$U(\tau_2,\tau_1)$（$0\le\tau_1\le\tau_2$）为 $J_A$ 的光锥能量在相互作用绘景中生成的演化算符。测量由割态上的对角算符 $\Pi=\sum_X|X\rangle\pi(X)\langle X|$ 给出（$\pi$ 有界）。假设
+(M1) $[\Pi,U(\tau_2,\tau_1)]=0$，等价地，由一个内部顶点相连的两个中间态总有相同的 $\pi$；
+(M2) $\Pi$ 与 $\tau=0$ 的插入对易：对旁观者交换局域化于 $\tau=0$ 所得的算符 $\mathcal W$（振幅一侧）、$\mathcal W'$（共轭一侧，\cref{app:appO}），$[\Pi,\mathcal W]=[\Pi,\mathcal W'^\dagger]=0$。
+则：(a) 以权重 $\pi$ 对 $J_A$ 的割线求和、对 $\mathcal E$ 无权积分，得插入 $\Pi$ 的闭时路径矩阵元
+\begin{equation}\label{eq:break-ctp-Pi}
+\mathcal J_A^{\Pi}=\int\prod_a\dd\tau_a\,\ee^{-\ii k_a^-\tau_a}\prod_b\dd\tau'_b\,\ee^{+\ii k_b'^-\tau'_b}\,
+\big\langle P_A\big|\bar{\mathrm T}\big\{V_H^\dagger(0)\textstyle\prod_bO_b'^\dagger(\tau'_b)\big\}\,\Pi\,\mathrm T\big\{V_H(0)\prod_aO_a(\tau_a)\big\}\big|P_A\big\rangle ;
+\end{equation}
+(b) 由 (M1)，晚于全部插入的内部顶点不贡献；无 $\tau>0$ 插入时 $\mathcal J_A^{\Pi}=\langle\Psi'|\Pi|\Psi\rangle$，$|\Psi\rangle=V_H(0)\mathrm T\{\prod_aO_a(\tau_a)\}|P_A\rangle$：$J_A$ 内部的末态相互作用不出现（即\cref{lem:appO-unitarity}(b) 插入 $\Pi$ 后的形式）；
+(c) 两族只在最晚插入 $v_m$ 的侧别上不同的割图之和为 $-\ii(\pi_m\alpha_m-\pi_{m-1}\beta_m)$ 乘一个公共因子，$\pi_m=\pi_{m-1}$ 时即 $\pi_m$ 乘以\cref{lem:appO-unitarity}(c) 的结果；
+(d) 由 (M2)，$\mathcal W'^\dagger\Pi\mathcal W=\Pi\,\mathcal W'^\dagger\mathcal W$，附录~O 中形如 $\mathcal W'^\dagger\mathcal W=1+\order{\lambda^a}$ 的旁观者相消式插入 $\Pi$ 后形式不变。
+例：$\Pi=1$（单举截面）与 $\Pi_{\boldsymbol b}=\ee^{\ii\boldsymbol b\cdot\hat{\boldsymbol P}_{\mathrm T}}$（$b$ 空间的 TMD Drell--Yan，$\hat{\boldsymbol P}_{\mathrm T}$ 为全部末态的总横动量）满足 (M1)(M2)。
+% errtype: E-S
+\uses{lem:appO-unitarity,asm:appO-lcopt,def:appO-chain,lem:appO-cut-position,lem:break-weighted-cut}
+\end{proposition}
+
+\begin{proof}
+(a) 由\cref{asm:appO-lcopt}，在\cref{lem:appO-unitarity}的设定中每个割图都是光锥序项之和，每项沿其末态链取\cref{eq:break-Tj}的形式，以权重 $\pi$ 求和即对每条链作 $\sum_j\pi(s_j)\mathcal T_j$；在算符语言中这只是把割态的完备求和 $\sum_X|X\rangle\langle X|$ 换成 $\Pi$，其余与\cref{lem:appO-unitarity}(a) 的推导相同。
+(b) 对每条链用\cref{lem:break-weighted-cut}：由 (M1)，内部顶点两侧 $\pi$ 相同，按 (i) 不贡献；无 $\tau>0$ 插入时链上全是内部顶点，只剩 $\delta_{n0}\pi_0W_0$，即 $V_H$ 刚作用后的割态，$\mathcal J_A^\Pi=\langle\Psi'|\Pi|\Psi\rangle$。在算符语言中，设最晚插入在 $\tau_{\max}$，则 $U(\tau_f,\tau_{\max})^\dagger\,\Pi\,U(\tau_f,\tau_{\max})=\Pi\,U^\dagger U=\Pi$（(M1) 与 $U$ 的幺正性；光前真空平凡由\cref{asm:appO-lcopt}(i) 保证）。二者逐链等价，因为 $U$ 的光锥序展开逐顶点生成链上的内部顶点。
+(c) 振幅一侧那一族 $\beta_m=0$，由\cref{eq:break-weighted-cut}贡献 $-\ii\pi_m\alpha_mC$；共轭一侧那一族 $\alpha_m=0$，贡献 $+\ii\pi_{m-1}\beta_mC$，$C=\prod_{i<m}\alpha_i\prod_{i>m}\beta_i\int\frac{\dd\mathcal E}{2\pi}H_m$ 为公共因子（晚于 $v_m$ 的都是内部顶点）。$\pi_m=\pi_{m-1}$ 时和为 $\pi_m(-\ii)(\alpha_m-\beta_m)C$，即 $\pi_m$ 乘以\cref{lem:appO-cut-position}给出的结果。
+(d) $\mathcal W'^\dagger\Pi\mathcal W=\mathcal W'^\dagger\mathcal W\Pi=\Pi\mathcal W'^\dagger\mathcal W$。
+例：$\Pi=1$ 显然。对 $\Pi_{\boldsymbol b}$，光锥序微扰论的每个顶点精确地守恒正分量与横向动量，故由内部顶点相连的两态 $\pi=\ee^{\ii\boldsymbol b\cdot\boldsymbol P_{\mathrm T}}$ 相同，(M1) 成立（等价地 $[\hat P^-,\hat{\boldsymbol P}_{\mathrm T}]=0$，自由部分亦然）；$\tau=0$ 的局域化 Glauber 算符的核只依赖于两旁观者横向位置之差，它在 $A$、$B$ 的旁观者之间转移横动量而保持总横动量，故与作用于全部末态的 $\Pi_{\boldsymbol b}$ 对易，(M2) 成立。
+\end{proof}
+
+两点说明。对 $\Pi_{\boldsymbol b}$，软插入把 $\boldsymbol k_{\mathrm T}$ 带进 $J_A$，$\pi_m=\ee^{\ii\boldsymbol b\cdot\boldsymbol k_{\mathrm T}}\pi_{m-1}$：这些只依附于穿过割线的软动量的相位使 TMD 软因子 $\tilde S(\boldsymbol b_{\mathrm T})\neq1$（\cref{lem:tmd-glauber}，\tagA；精确形式\cref{prop:appO-tmd}）。$\tau=0$ 的 Glauber 算符不与只作用于 $J_A$ 末态的 $\ee^{\ii\boldsymbol b\cdot\hat{\boldsymbol P}_{A\mathrm T}}$ 对易，所以判据中的 $\Pi$ 必须是对整个末态的测量（脚本 \texttt{s5\_measurement.py}）。\cref{fig:break-measurement}画出两个满足与两个不满足判据的测量。
+
+%%% BEGIN fig:break-measurement
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hv/.style={circle,draw,line width=0.7pt,fill=gray!35,minimum size=0.42cm,inner sep=0pt},
+  ff br/.style={draw=black!75,line width=0.8pt},
+  ff arr/.style={postaction={decorate,decoration={markings,mark=at position #1 with {\arrow{Stealth[length=5pt,width=4.4pt]}}}}},
+  ff pi/.style={draw=black!80,fill=yellow!20,line width=0.8pt,minimum size=0.62cm,inner sep=1pt,font=\small},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff ok/.style={draw=OliveGreen!70!black,fill=OliveGreen!7,line width=0.7pt,rounded corners=2pt,
+                text width=3.85cm,align=left,inner sep=3pt,font=\footnotesize,minimum height=1.12cm},
+  ff no/.style={ff ok,draw=BrickRed!75!black,fill=BrickRed!6},
+  ff head/.style={font=\footnotesize,inner sep=1pt}]
+  % ============================================================= (a) closed time path with the measurement at the cut
+  \begin{scope}
+    \fill[gray!14,rounded corners=2pt] (2.5,-0.55) rectangle (5.75,1.55);
+    \draw[ff br,ff arr=0.3] (0.21,1.0) -- (5.2,1.0);
+    \draw[ff br,ff arr=0.7] (5.2,0.0) -- (0.21,0.0);
+    \draw[ff br] (5.2,1.0) arc[start angle=90,end angle=-90,radius=0.5];
+    \node[ff hv] at (0,1.0) {}; \node[ff hv] at (0,0.0) {};
+    \node[ff lab,anchor=south] at (0,1.24) {$V_H(0)$};
+    \node[ff lab,anchor=north] at (0,-0.24) {$V_H^\dagger(0)$};
+    \node[ff lab,text=black!65] at (1.3,1.25) {振幅（${\rm T}$ 序）};
+    \node[ff lab,text=black!65] at (1.3,-0.25) {共轭（$\bar{\rm T}$ 序）};
+    % latest insertion
+    \draw[gluon,draw=green!45!black] (2.5,1.0) -- (2.5,1.7);
+    \node[vertex,fill=green!45!black] at (2.5,1.0) {};
+    \draw[gray!60!black,line width=0.5pt,dash pattern=on 1.2pt off 1.5pt] (2.5,-0.75) -- (2.5,1.75);
+    \node[ff lab,anchor=north,text=black!70] at (2.5,-0.75) {$\tau_{\max}$};
+    \node[ff lab,text=black!70] at (3.95,1.3) {$U(\tau_f,\tau_{\max})$};
+    \node[ff lab,text=black!70] at (3.95,-0.3) {$U^\dagger(\tau_f,\tau_{\max})$};
+    \node[vertex] at (3.45,1.0) {}; \node[vertex] at (4.35,0.0) {};
+    % the cut and the measurement operator
+    \draw[cut] (5.7,-0.75) -- (5.7,1.75);
+    \node[ff pi] at (5.7,0.5) {$\Pi$};
+    \node[ff lab,anchor=north,text=red!60!black] at (5.7,-0.75) {割线 $\tau_f$};
+    \node[font=\footnotesize,align=center] at (2.75,-1.75) {$[\Pi,U]=0\ \Rightarrow\ U^\dagger\Pi\,U=\Pi$：\\$\tau>\tau_{\max}$ 的末态相互作用在两支上相消};
+    \node at (2.75,-2.75) {(a)\ 闭时路中的测量算符};
+  \end{scope}
+  % ============================================================= (b) four measurement operators
+  \begin{scope}[xshift=6.85cm]
+    \node[ff head,text=OliveGreen!60!black] at (2.07,1.95) {与 $U$ 对易：判据成立\ $\checkmark$};
+    \node[ff head,text=BrickRed!75!black] at (6.47,1.95) {与 $U$ 不对易：判据失效\ $\times$};
+    \node[ff ok,anchor=north west] at (0,1.6) {$\Pi=1$\\单举截面：共线 DY、DIS};
+    \node[ff ok,anchor=north west] at (0,0.2) {$\Pi=\ee^{\ii\mathbf b\cdot\hat{\mathbf P}_T}$\\TMD Drell--Yan（$b$ 空间）};
+    \node[ff no,anchor=north west] at (4.4,1.6) {$\Pi_h$：鉴别末态强子\\$pp\to h_1h_2X$ 的 TMD 测量};
+    \node[ff no,anchor=north west] at (4.4,0.2) {$\Pi_{\rm gap}$：快度间隙\\强子--强子衍射，间隙存活};
+    \node at (4.27,-2.75) {(b)\ 四种测量};
+  \end{scope}
+\end{tikzpicture}
+\caption{测量相容性判据（\cref{prop:break-measurement}；示意）。
+(a)~对 $J_A$ 的割线求和之后，割态之间的测量算符 $\Pi$ 位于闭时路的转折点（割线 $\tau_f$）；若 $\Pi$ 与附录~O 的光锥演化 $U$ 以及 $\tau=0$ 的局域插入对易，则最晚插入（时刻 $\tau_{\max}$）之后的演化在两支上合成 $U^\dagger\Pi\,U=\Pi$，同一喷注内部的末态相互作用相消，即\cref{lem:appO-unitarity} 在插入 $\Pi$ 后仍成立（$R_{\rm cond}$，前提\cref{asm:appO-lcopt}）。
+(b)~$\Pi=1$（单举截面）与 $\Pi=\ee^{\ii\mathbf b\cdot\hat{\mathbf P}_T}$（$b$ 空间的 TMD Drell--Yan，因 $[\hat P^-,\hat{\mathbf P}_T]=0$，\cref{prop:appO-tmd}）满足判据；鉴别末态强子的投影 $\Pi_h$ 与快度间隙投影 $\Pi_{\rm gap}$ 不与演化对易，割线求和的配对失效（对 $pp\to h_1h_2X$ 失效于单侧改写步骤 (O-3)），与\cref{thm:break-tmd} 和\cref{prop:break-hh-diffraction} 的破坏一致。
+判据只定位失效之处（\cref{rem:break-measurement-failures}），本身不是因子化破坏的证明。}
+\label{fig:break-measurement}
+\end{figure}
+%%% END fig:break-measurement
+
+\begin{remark}[失效的位置]\label{rem:break-measurement-failures}
+(1) \emph{鉴别末态强子。}在 $pp\to h_1h_2X$ 中被测强子来自被观测的喷注子图 $J_1$、$J_2$（方向 $w_1$、$w_2$），它们不能并入硬部分；$J_1$ 内部改变被测粒子身份或动量的顶点使 $\pi$ 在内部顶点处改变，(M1) 不成立，$U^\dagger\Pi_hU\neq\Pi_h$，\cref{lem:break-weighted-cut}(iii) 的项不相消。
+(2) \emph{失效于 (O-3)。}附录~O 的单侧改写把 $J_A$ 中被钳住的 $k^-$ 依赖局域化到 $\tau=0$，它要求其余外部因子在 $J_A$ 的能量尺度 $\lambda^2$ 上与 $k^-$ 无关；DY 中的 $J_B$ 满足这一点。对 $J_1$，设其一条线 $l\simeq\xi Q\,w_1$（中心喷注，$l^\pm,|\boldsymbol l_{\mathrm T}|\sim Q$），则
+\begin{equation}\label{eq:break-J1-denominator}
+(l+k)^2-m^2=(l^2-m^2)+2\big(l^+k^-+l^-k^+-\boldsymbol l_{\mathrm T}\cdot\boldsymbol k_{\mathrm T}\big)+k^2 ,\qquad l^2-m^2\sim\lambda^2Q^2 .
+\end{equation}
+在通常的 Glauber 区（$k^\pm\sim\lambda^2Q$、$k_{\mathrm T}\sim\lambda Q$）中 $-2\boldsymbol l_{\mathrm T}\cdot\boldsymbol k_{\mathrm T}\sim\lambda Q^2$ 占优，$J_1$ 的 $k^-$ 依赖只是 $\order{\lambda}$ 的相对效应；相关的钳夹区是\emph{相对于方向对 $(n_A,w_1)$ 的} Glauber 区：$k\cdot n_A=k^-\sim\lambda^2$、$k\cdot w_1\sim\lambda^2$、$\boldsymbol k_{\mathrm T}$ 几乎与 $\boldsymbol w_{1\mathrm T}$ 正交。在那里 $2l\cdot k=2\xi Q\,(w_1\cdot k)\sim\lambda^2Q^2$ 与 $l^2-m^2$ 同阶，其中的 $2l^+k^-$ 使 $J_1$ 在 $k^-\sim\lambda^2Q$ 的尺度上依赖于 $k^-$，等光锥时刻局域化失效。（若只看 $2l^+k^-$ 而略去 $-2\boldsymbol l_{\mathrm T}\cdot\boldsymbol k_{\mathrm T}$，会误以为在通常的 Glauber 区中就已如此。）
+(3) \emph{快度间隙。}$\Pi_{\rm gap}$ 既不与演化对易（发射到间隙中的胶子改变 $\pi$），也不与 $\tau=0$ 的插入对易（Glauber 算符是色空间中的转动，改变决定是否向间隙辐射的色单态—八重态成分）：$\langle\cdots\mathcal W'^\dagger\Pi_{\rm gap}\mathcal W\cdots\rangle\neq\langle\cdots\Pi_{\rm gap}\cdots\rangle$，即间隙存活。
+这些只\emph{定位}附录~O 的论证在哪一步失效，本身不是破坏的证明；破坏的证据是\cref{sec:break-tmd}与\cref{sec:break-diffraction}中的显式反例与实验。
+\uses{prop:break-measurement}
+\end{remark}
+
+判据给出的是附录~O 机制可用的\emph{充分}条件，不是因子化成立的必要条件：衍射 DIS 中探测领头质子的投影不与演化对易，但那里只有一个入射强子，Collins 用另一个光锥分量的围道形变绕开了靶子图上的钳夹（\cref{thm:break-ddis}）。反过来，满足判据的观测量仍须完成附录~O 的其余步骤才得到因子化（\cref{thm:appO-main}，\tagR，$R_{\mathrm{cond}}$，内容等级 [A]）。

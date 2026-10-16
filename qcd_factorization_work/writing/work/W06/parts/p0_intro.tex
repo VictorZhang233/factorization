@@ -1,0 +1,24 @@
+% =====================================================================
+%  ch06_ee.tex —— 第 6 章  严格核心 I：e+e- 湮灭总截面（writer W06）
+%  公式核对脚本：writing/work/W06/*.py（日志 writing/work/W06/logs/）
+% =====================================================================
+\chapter{严格核心 I：$e^+e^-$ 湮灭总截面}\label{ch:ee}
+
+在讨论带强子初态的因子化之前，先看一个几乎“没有因子化可谈”的过程：$e^+e^-\to\text{强子}$ 的总截面。初态是无色的轻子，强子末态被全部求和，截面因而只依赖于电磁流的两点关联函数 $\Pi(q^2)$，$R(s)$ 恰是 $\Pi$ 在类时实轴上的虚部（\cref{prop:ee-R-ImPi}）。这里没有部分子分布，也没有碎裂函数，“因子化定理”退化为一句话：$R$ 等于一个可以逐阶计算的短程量，$R=R_0[1+\order{\as}]$。正因为如此简单，它是检验全书严格性分级（\cref{def:intro-tags}）的最佳实验室：公理化的解析性、重整化微扰论、以 OPE 为条件的陈述与非微扰的夸克—强子对偶，在这里可以被干净地彼此分开（\cref{rem:ee-status-layout}），而后面的每一个过程都会以更复杂的形式重复这四个层次。
+
+物理上的难点在红外。末态的每一类部分子截面——$q\bar q$、$q\bar qg$、$q\bar qgg$、……——在无质量 QCD 中都含有软发散与共线发散，在 $D=4-2\varepsilon$ 维中表现为 $\as^n$ 阶直到 $\varepsilon^{-2n}$ 的极点；只有对全部简并末态求和，这些极点才相消（KLN 定理，\cref{thm:ir-kln}，\tagA）。本章的主结论是\cref{thm:ee-R-finite}：$R(s)\equiv12\pi\Imag\Pi(s+\ii0)$ 的微扰展开在每一阶红外有限，并且是 $\ln(s/\mu^2)$ 的多项式（\tagR，$R_{\mathrm{PT}}$）。证明完全绕开闵氏空间的钳夹分析：欧氏区的 Green 函数红外有限（\cref{thm:ee-euclid-ir}）；无质量传播子型积分只有一个标度，使每一阶 $\varepsilon$ 展开的系数都是 $\ln(-q^2/\mu^2)$ 的多项式（\cref{lem:ee-single-scale}）；而多项式的解析延拓是平凡的。$\order{\as}$ 的系数由割图与欧氏两圈关联函数两种独立方法算出，二者在 $\varepsilon\to0$ \emph{之前}就逐项一致（\cref{prop:ee-cutting-exact}）。$R$ 与 $D$ 维部分子割图之和的等同（\cref{cor:ee-cuts}）以及含夸克 QCD 的欧氏 OPE（\cref{thm:ee-ope}）只有全阶论证（\tagA）；非微扰凝聚与对偶是猜想（\cref{conj:ee-np-ope,conj:ee-duality}，\tagC）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{thm:ee-R-finite,thm:ee-euclid-ir,lem:ee-single-scale,prop:ee-adler-rg,prop:ee-oneloop,prop:ee-twoloop,prop:ee-cutting-exact,cor:ee-R-alphas}（\tagR，$R_{\mathrm{PT}}$；\cref{thm:ee-euclid-ir}所用的收敛定理引自文献）；\cref{prop:ee-R-ImPi,prop:ee-analytic,prop:ee-adler-dispersion,prop:ee-contour,prop:ee-smearing}（\tagR，$R_{\mathrm{def}}$；对强子态需\cref{asm:intro-wightman}）。\par
+\textbf{给出全阶论证：}\cref{cor:ee-cuts}（\tagA；瓶颈：无质量维数正规化中含鬼场的割图规则，\cref{rem:prelim-cutting-dr}）；\cref{thm:ee-ope}（\tagA；瓶颈：含夸克 QCD 的微扰 OPE）。\par
+\textbf{没有证明：}非微扰 OPE 与凝聚（\cref{conj:ee-np-ope}，\tagC；\cref{asm:intro-np-ope}）；夸克—强子对偶（\cref{conj:ee-duality}，\tagC）；在复 $q^2$ 处使用 OPE（\cref{rem:ee-complex-ope}）；微扰 $R(s)$ 的逐点意义。
+\end{tcolorbox}
+
+本章的展开参数是 $a\equiv\as(\mu)/\pi$（记号约定见\cref{tab:front-notation}），对数记号为 $L\equiv\ln(-q^2/\mu^2)$（欧氏区 $q^2<0$）与 $\ell\equiv\ln(s/\mu^2)$（$s>0$）；$D=4-2\varepsilon$，裸耦合 $g_0^2=4\pi\as\mu_0^{2\varepsilon}$（$\mu_0$ 为裸标度），并记
+\begin{equation}\label{eq:ee-cGamma}
+c_\Gamma\equiv\frac{\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)},\qquad
+G(a,b)\equiv\frac{\Gamma(a+b-\frac D2)\Gamma(\frac D2-a)\Gamma(\frac D2-b)}{\Gamma(a)\Gamma(b)\Gamma(D-a-b)} ,
+\end{equation}
+$G(a,b)$ 是单圈两点积分的系数（\cref{lem:appC-bubble}）。本章的安排如下：\cref{sec:ee-R}与\cref{sec:ee-analytic}建立 $R$、$\Pi$ 与 Adler 函数之间的关系及其解析性；\cref{sec:ee-euclid}证明欧氏红外有限性并导出重整化群结构；\cref{sec:ee-theorem}证明主定理；\cref{sec:ee-oneloop}在 $\order{\as}$ 用两种方法验证它；\cref{sec:ee-higher}讨论高阶系数与 $\pi^2$ 项；\cref{sec:ee-ope}与\cref{sec:ee-duality}讨论非微扰层次：OPE、凝聚与对偶。

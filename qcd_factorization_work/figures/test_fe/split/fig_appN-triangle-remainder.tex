@@ -1,0 +1,30 @@
+\begin{figure}[htbp]
+\centering
+% Data: inline coordinates from spec_v2/checks/fig_data.py (log: checks/fig_data.log), i.e. the
+% closed form Q^2 I = Phi^(1)(t,t) (VF-REF-2) minus the Collins subtraction terms written with
+% tilde Q^2 (VF-REF-3); dashed curves are the NLP expansions of prop:appN-triangle-exact (c)(d).
+% Recomputed independently with mpmath (dps=40): e.g. t=0.01: -3.8972454 and 27.313006.
+\begin{tikzpicture}
+\begin{axis}[name=A,width=0.48\textwidth,height=5.6cm,xmode=log,xmin=1e-5,xmax=0.2,ymin=-9,ymax=-3.4,
+  xlabel={$t=m^2/Q^2$},ylabel={$Q^2\!\int r\,/\,t$},tick label style={font=\scriptsize},label style={font=\small},
+  legend style={font=\scriptsize,draw=none,fill=none,at={(0.03,0.03)},anchor=south west},legend cell align=left]
+\addplot[only marks,mark=*,mark size=1.2pt] coordinates {(1.0e-5,-3.99879) (1.77828e-5,-3.99808) (3.16228e-5,-3.99697) (5.62341e-5,-3.99527) (0.0001,-3.99268) (0.000177828,-3.98881) (0.000316228,-3.98313) (0.000562341,-3.97501) (0.001,-3.96377) (0.00177828,-3.94895) (0.00316228,-3.93081) (0.00562341,-3.91148) (0.01,-3.89725) (0.0177828,-3.90336) (0.0316228,-3.96534) (0.0562341,-4.17112) (0.1,-4.7898) (0.15,-6.06052) (0.2,-8.80249)};
+\addlegendentry{精确}
+\addplot[domain=1e-5:0.2,samples=80,thick,dashed,red!60!black]{-4+x*(ln(1/x)^2-15+pi^2/3)};
+\addlegendentry{$-4+t(L^2-15+\frac{\pi^2}3)$}
+\end{axis}
+\begin{axis}[name=B,at={(A.east)},anchor=west,xshift=1.7cm,width=0.48\textwidth,height=5.6cm,xmode=log,xmin=1e-5,xmax=0.2,ymin=0,ymax=235,
+  xlabel={$t=m^2/Q^2$},ylabel={NLP 系数},tick label style={font=\scriptsize},label style={font=\small},
+  legend style={font=\scriptsize,draw=none,fill=none,at={(0.97,0.97)},anchor=north east},legend cell align=left]
+\addplot[only marks,mark=*,mark size=1.2pt] coordinates {(1.0e-5,221.629) (1.77828e-5,198.089) (3.16228e-5,175.876) (5.62341e-5,154.992) (0.0001,135.438) (0.000177828,117.216) (0.000316228,100.33) (0.000562341,84.7839) (0.001,70.5819) (0.00177828,57.7299) (0.00316228,46.2333) (0.00562341,36.0952) (0.01,27.313) (0.0177828,19.8734) (0.0316228,13.745) (0.0562341,8.87051) (0.1,5.16015) (0.15,3.17897) (0.2,2.05715)};
+\addlegendentry{精确 $(Q^2I-L^2-\frac{\pi^2}3)/t$}
+\addplot[domain=1e-5:0.2,samples=80,thick,dashed,blue!60!black]{2*ln(1/x)^2-4*ln(1/x)-4+2*pi^2/3};
+\addlegendentry{$2L^2-4L-4+\frac{2\pi^2}3$}
+\end{axis}
+\node[anchor=north] at ([yshift=-1.18cm]A.south) {(a)\ 余项：次领头幂次无对数};
+\node[anchor=north] at ([yshift=-1.18cm]B.south) {(b)\ 原积分：次领头系数含 $L^2$、$L$};
+\end{tikzpicture}
+\caption{单圈离壳三角图的 Collins 减除（$t=m^2/Q^2$，$L=\ln(1/t)$）：(a)~精确余项 $Q^2\!\int r/t$ 趋于 $-4$，修正为 $t(L^2-15+\frac{\pi^2}3)$——余项在次领头幂次没有对数；
+(b)~原积分 $Q^2I$ 的次领头系数按 $2L^2-4L-4+\frac{2\pi^2}3$ 增长，这些对数完全由用精确运动学（$\tilde Q^2\neq Q^2$）写出的减除项再现（\cref{prop:appN-triangle-exact}，VF-REF-2，VF-REF-3）。}
+\label{fig:appN-triangle-remainder}
+\end{figure}

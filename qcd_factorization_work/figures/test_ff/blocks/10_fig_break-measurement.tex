@@ -1,0 +1,57 @@
+%%% BEGIN fig:break-measurement
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hv/.style={circle,draw,line width=0.7pt,fill=gray!35,minimum size=0.42cm,inner sep=0pt},
+  ff br/.style={draw=black!75,line width=0.8pt},
+  ff arr/.style={postaction={decorate,decoration={markings,mark=at position #1 with {\arrow{Stealth[length=5pt,width=4.4pt]}}}}},
+  ff pi/.style={draw=black!80,fill=yellow!20,line width=0.8pt,minimum size=0.62cm,inner sep=1pt,font=\small},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff ok/.style={draw=OliveGreen!70!black,fill=OliveGreen!7,line width=0.7pt,rounded corners=2pt,
+                text width=3.85cm,align=left,inner sep=3pt,font=\footnotesize,minimum height=1.12cm},
+  ff no/.style={ff ok,draw=BrickRed!75!black,fill=BrickRed!6},
+  ff head/.style={font=\footnotesize,inner sep=1pt}]
+  % ============================================================= (a) closed time path with the measurement at the cut
+  \begin{scope}
+    \fill[gray!14,rounded corners=2pt] (2.5,-0.55) rectangle (5.75,1.55);
+    \draw[ff br,ff arr=0.3] (0.21,1.0) -- (5.2,1.0);
+    \draw[ff br,ff arr=0.7] (5.2,0.0) -- (0.21,0.0);
+    \draw[ff br] (5.2,1.0) arc[start angle=90,end angle=-90,radius=0.5];
+    \node[ff hv] at (0,1.0) {}; \node[ff hv] at (0,0.0) {};
+    \node[ff lab,anchor=south] at (0,1.24) {$V_H(0)$};
+    \node[ff lab,anchor=north] at (0,-0.24) {$V_H^\dagger(0)$};
+    \node[ff lab,text=black!65] at (1.3,1.25) {振幅（${\rm T}$ 序）};
+    \node[ff lab,text=black!65] at (1.3,-0.25) {共轭（$\bar{\rm T}$ 序）};
+    % latest insertion
+    \draw[gluon,draw=green!45!black] (2.5,1.0) -- (2.5,1.7);
+    \node[vertex,fill=green!45!black] at (2.5,1.0) {};
+    \draw[gray!60!black,line width=0.5pt,dash pattern=on 1.2pt off 1.5pt] (2.5,-0.75) -- (2.5,1.75);
+    \node[ff lab,anchor=north,text=black!70] at (2.5,-0.75) {$\tau_{\max}$};
+    \node[ff lab,text=black!70] at (3.95,1.3) {$U(\tau_f,\tau_{\max})$};
+    \node[ff lab,text=black!70] at (3.95,-0.3) {$U^\dagger(\tau_f,\tau_{\max})$};
+    \node[vertex] at (3.45,1.0) {}; \node[vertex] at (4.35,0.0) {};
+    % the cut and the measurement operator
+    \draw[cut] (5.7,-0.75) -- (5.7,1.75);
+    \node[ff pi] at (5.7,0.5) {$\Pi$};
+    \node[ff lab,anchor=north,text=red!60!black] at (5.7,-0.75) {割线 $\tau_f$};
+    \node[font=\footnotesize,align=center] at (2.75,-1.75) {$[\Pi,U]=0\ \Rightarrow\ U^\dagger\Pi\,U=\Pi$：\\$\tau>\tau_{\max}$ 的末态相互作用在两支上相消};
+    \node at (2.75,-2.75) {(a)\ 闭时路中的测量算符};
+  \end{scope}
+  % ============================================================= (b) four measurement operators
+  \begin{scope}[xshift=6.85cm]
+    \node[ff head,text=OliveGreen!60!black] at (2.07,1.95) {与 $U$ 对易：判据成立\ $\checkmark$};
+    \node[ff head,text=BrickRed!75!black] at (6.47,1.95) {与 $U$ 不对易：判据失效\ $\times$};
+    \node[ff ok,anchor=north west] at (0,1.6) {$\Pi=1$\\单举截面：共线 DY、DIS};
+    \node[ff ok,anchor=north west] at (0,0.2) {$\Pi=\ee^{\ii\mathbf b\cdot\hat{\mathbf P}_T}$\\TMD Drell--Yan（$b$ 空间）};
+    \node[ff no,anchor=north west] at (4.4,1.6) {$\Pi_h$：鉴别末态强子\\$pp\to h_1h_2X$ 的 TMD 测量};
+    \node[ff no,anchor=north west] at (4.4,0.2) {$\Pi_{\rm gap}$：快度间隙\\强子--强子衍射，间隙存活};
+    \node at (4.27,-2.75) {(b)\ 四种测量};
+  \end{scope}
+\end{tikzpicture}
+\caption{测量相容性判据（\cref{prop:break-measurement}；示意）。
+(a)~对 $J_A$ 的割线求和之后，割态之间的测量算符 $\Pi$ 位于闭时路的转折点（割线 $\tau_f$）；若 $\Pi$ 与附录~O 的光锥演化 $U$ 以及 $\tau=0$ 的局域插入对易，则最晚插入（时刻 $\tau_{\max}$）之后的演化在两支上合成 $U^\dagger\Pi\,U=\Pi$，同一喷注内部的末态相互作用相消，即\cref{lem:appO-unitarity} 在插入 $\Pi$ 后仍成立（$R_{\rm cond}$，前提\cref{asm:appO-lcopt}）。
+(b)~$\Pi=1$（单举截面）与 $\Pi=\ee^{\ii\mathbf b\cdot\hat{\mathbf P}_T}$（$b$ 空间的 TMD Drell--Yan，因 $[\hat P^-,\hat{\mathbf P}_T]=0$，\cref{prop:appO-tmd}）满足判据；鉴别末态强子的投影 $\Pi_h$ 与快度间隙投影 $\Pi_{\rm gap}$ 不与演化对易，割线求和的配对失效（对 $pp\to h_1h_2X$ 失效于单侧改写步骤 (O-3)），与\cref{thm:break-tmd} 和\cref{prop:break-hh-diffraction} 的破坏一致。
+判据只定位失效之处（\cref{rem:break-measurement-failures}），本身不是因子化破坏的证明。}
+\label{fig:break-measurement}
+\end{figure}
+%%% END fig:break-measurement

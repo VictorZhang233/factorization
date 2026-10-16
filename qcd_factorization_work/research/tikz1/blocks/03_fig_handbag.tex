@@ -1,0 +1,41 @@
+%%% BEGIN fig:handbag
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \coordinate (vl) at (-1.5,2.2); \coordinate (vr) at (1.5,2.2);
+  \coordinate (bl) at (-1.5,0);   \coordinate (br) at (1.5,0);
+  % spectators (drawn first; the blobs cover their ends)
+  \foreach \y in {0.24,0,-0.24} \draw[plain] (bl) ++(0,\y) -- ++(3,0);
+  % struck quark: up, across the cut, down
+  \draw[quark] (-1.5,0.45) -- (vl);
+  \draw[quark=0.75] (vl) -- (vr);
+  \draw[quark] (vr) -- (1.5,0.45);
+  \draw[photon] (-2.65,3.1) -- (vl);
+  \draw[photon] (vr) -- (2.65,3.1);
+  \draw[t1 hadron] (-3.3,0) -- (bl);
+  \draw[t1 hadron] (br) -- (3.3,0);
+  \draw[hadron blob] (bl) ellipse[x radius=0.78,y radius=0.45];
+  \draw[hadron blob] (br) ellipse[x radius=0.78,y radius=0.45];
+  \node at (bl) {$A$}; \node at (br) {$A$};
+  \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+  \draw[cut] (0,-0.85) -- (0,2.9);
+  % momenta and labels
+  \path[mom={$\xi P$}] (-1.5,0.45) -- (vl);
+  \path[mom={$\xi P$}] (vr) -- (1.5,0.45);
+  \path[mom={$\xi P+q$},mom pos=0.24] (vl) -- (vr);
+  \path[mom'={$q$}] (-2.65,3.1) -- (vl);
+  \path[mom'={$q$}] (vr) -- (2.65,3.1);
+  \node[left] at (-2.65,3.1) {$\nu$};
+  \node[right] at (2.65,3.1) {$\mu$};
+  \path[mom={$P$},mom sep=0.3cm] (-3.3,0) -- (-2.28,0);
+  \path[mom={$P$},mom sep=0.3cm] (2.28,0) -- (3.3,0);
+  \node[font=\small] at (0.42,-0.62) {$X$};
+\end{tikzpicture}
+\caption{部分子模型中 DIS 的割图（“手提包图”）。竖直虚线为末态割线：左侧为振幅 $\langle X|j^\nu|P\rangle$，
+右侧为共轭振幅 $\langle P|j^\mu|X\rangle$。被击中的夸克 $\xi P$ 由强子 $A$ 中出射，吸收虚光子后以动量 $\xi P+q$ 穿过割线，
+在右侧放出虚光子后回到强子；旁观者（剩余部分 $X$）不与虚光子作用，直接穿过割线。
+割线上的在壳条件 $(\xi P+q)^2=0$ 在 $M^2/Q^2\to0$ 时给出 $\xi=x$。箭头表示费米子数流向（被击中的若是反夸克，箭头反向）。}
+\label{fig:handbag}
+\end{figure}
+%%% END fig:handbag

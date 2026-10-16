@@ -1,0 +1,133 @@
+% ---------------------------------------------------------------------
+\section{强子靶：Wightman 色散关系、欧氏线段与固定 $n$ 的矩}\label{sec:dis-np}
+
+对部分子靶，前向 OPE 是固定阶 Taylor 系数之间的恒等式；对强子靶，非微扰 OPE（\cref{asm:intro-np-ope}）只是一个在欧氏 $q$ 上成立的\emph{渐近}陈述，而强子质量 $M>0$ 使欧氏点只落在 $\omega$ 平面虚轴上一段很短的线段上。从一段长度为 $\order{M/Q}$ 的线段上的渐近信息出发，不可能直接“比较 Taylor 系数”——这正是误解 M34 的错误所在。本节说明，结构函数的正性与一个由 Wightman 公理证明的有限减除色散关系恰好补上这一缺口。
+
+\begin{lemma}[欧氏点在 $\omega$ 平面上的位置 \tagR]\label{lem:dis-euclid-segment}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）在靶静止系 $P=(M,\mathbf 0)$ 中，欧氏动量 $q=(\ii q^4,\mathbf q)$（$q^4$、$\mathbf q$ 为实，$Q^2=(q^4)^2+\mathbf q^2$）在 $|\mathbf q|\ge Q/2$ 时给出
+\begin{equation}\label{eq:dis-segment}
+\omega=\frac{2\ii Mq^4}{Q^2}\in\mathcal I_Q\equiv\Big\{\ii y:\ |y|\le\frac{\sqrt3M}{Q}\Big\},\qquad \hat P^2=\frac{M^2\mathbf q^2}{Q^2}\ge\frac{M^2}4,\qquad \hat P=P-\frac{P\cdot q}{q^2}\,q,
+\end{equation}
+且 $\mathcal I_Q$ 的每一点都可达到。$T_2$ 可由投影
+\begin{equation}\label{eq:dis-T2-projector}
+T_2=\frac{3\nu}{2(\hat P^2)^2}\Big[\hat P_\mu\hat P_\nu-\frac{\hat P^2}3g_{\mu\nu}\Big]T^{\mu\nu},\qquad \nu=P\cdot q,
+\end{equation}
+从张量中取出。% VF-REF-1
+（本引理是运动学陈述。）
+\uses{def:dis-compton}
+\end{lemma}
+
+\begin{proof}
+$P\cdot q=\ii Mq^4$，$\omega=2P\cdot q/Q^2=2\ii Mq^4/Q^2$。$|\mathbf q|\ge Q/2$ 等价于 $(q^4)^2\le\frac34Q^2$，即 $|\omega|\le\sqrt3M/Q$；$q^4$ 取遍 $[-\frac{\sqrt3}2Q,\frac{\sqrt3}2Q]$ 时 $\omega$ 取遍 $\mathcal I_Q$。$\hat P^2=M^2+(P\cdot q)^2/Q^2=M^2(1-(q^4)^2/Q^2)=M^2\mathbf q^2/Q^2$。投影：由 $\hat P\cdot q=0$，$\hat P_\mu\hat P_\nu T^{\mu\nu}=-\hat P^2T_1+(\hat P^2)^2T_2/\nu$，$g_{\mu\nu}T^{\mu\nu}=-3T_1+\hat P^2T_2/\nu$（四维中 $g_{\mu\nu}\tilde g^{\mu\nu}=3$），代入即得\cref{eq:dis-T2-projector}（\texttt{s2\_compton.py}）。条件 $|\mathbf q|\ge Q/2$ 使 $\hat P^2\ge M^2/4$，于是 $3|\nu|/(2(\hat P^2)^2)\le12\sqrt3\,Q/M^3$；由于 $\hat P_\mu\hat P_\nu$ 与 $\hat P^2g_{\mu\nu}$ 本身是 $\order{M^2}$，投影把 $T^{\mu\nu}$ 的界至多放大 $\order{Q/M}$ 倍。
+\end{proof}
+
+线段的位置见\cref{fig:dis-euclid-segment}。对质子（$M=0.938\,\mathrm{GeV}$），半长 $\sqrt3M/Q$ 在 $Q=2,10,100\,\mathrm{GeV}$ 时分别为 $0.81$、$0.16$、$0.016$（\texttt{s6\_np\_examples.py}）：$Q\to\infty$ 时线段缩向原点，OPE 只控制 $T_2$ 在原点附近一个越来越小的集合上的值。
+
+%%INSERT fig:dis-euclid-segment
+
+\begin{proposition}[由 Wightman 公理得到的有限减除色散关系 \tagR]\label{prop:dis-dispersion-np}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:intro-wightman}。对强子靶（自旋平均），固定 $Q^2>0$：
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item $T_2$ 在 $\mathbb C\setminus\big((-\infty,-1]\cup[1,\infty)\big)$ 中解析，是奇函数，并且实解析；
+\item $|T_2(\omega)|\le C_Q(1+|\omega|)^A|\Imag\omega|^{-B}$，其中 $A,B$ 与 $Q$ 无关，$C_Q$ 对 $Q$ 局部有界；
+\item $\Disc T_2\equiv T_2(\omega+\ii0)-T_2(\omega-\ii0)=4\pi\ii\,F_2(1/\omega)\,\dd\omega$，在 $(0,\infty)$ 上是正测度（含 $\omega=1$ 的弹性点）；
+\item 对每个偶数 $n_0>A+1$，$\int_0^1x^{n_0-2}F_2\,\dd x<\infty$，且
+\begin{equation}\label{eq:dis-dispersion-np}
+T_2(\omega)=\sum_{n<n_0}t_n\,\omega^{n-1}+4\,\omega^{n_0-1}\int_0^1\dd x\,\frac{x^{n_0-2}F_2(x)}{1-x^2\omega^2},
+\end{equation}
+故对一切偶数 $n\ge n_0$ 有 $t_n=4\int_0^1x^{n-2}F_2\,\dd x$。% VF-REF-4
+\end{enumerate}
+非微扰地位：见前提（MA0）。
+\uses{def:dis-compton,prop:dis-W-structure,lem:appK-entire,asm:intro-wightman,lem:appM-forward-tube,lem:appM-hatP-zero,lem:appM-positivity,lem:appM-green}
+\end{proposition}
+
+\begin{proof}
+完整证明见附录~M 的\cref{sec:appM-np}，步骤如下。(a)(b) (W4) 给出对易子的协变推迟延拓 $\tilde R^{\mu\nu}(q)$，$T=\ii\tilde R$；它在前向管 $\Imag q\in V_+$ 中全纯且满足 Vladimirov 型界（\cref{lem:appM-forward-tube}；\cite{Streater:1989vi}）。沿靶静止系中的参数化 $q=(w,0,0,s)$、$s^2=w^2+Q^2$ 取 $\Imag w>0$，就留在前向管内，且到其边界的距离 $\ge w_2Q^2/(2\sqrt2(|w|^2+Q^2))$，由此得 (b)，$A,B$ 不依赖于 $Q$。在 $|\omega|<1$ 上 $W^{\mu\nu}=0$（\cref{prop:dis-W-structure}(iv)），上下半平面的边界值在那里相等，一维的楔边定理（edge of the wedge）\cite{Epstein1960}（配合对 $Q^2$ 的抹平，\cref{lem:appM-positivity}）把它们粘成 (a) 中的解析函数；交叉给出奇性，投影奇异的点 $\hat P=0$ 是可去的（\cref{lem:appM-hatP-zero}）。(c) 由\cref{prop:dis-W-structure}(iii) 的正性，并把四维分布边界值限制到固定 $Q^2$ 的一维切片（\cref{lem:appM-positivity}）。(d) 由 (b)(c) 与几乎解析延拓加 Green 公式（\cref{lem:appM-green}），不连续性测度满足 $\nu_Q([1,R])\le CR^{A+1}$，故 $n_0>A+1$ 时\cref{eq:dis-dispersion-np}中的积分收敛，并且与 $T_2$ 有同样的跳跃；$H=T_2-\sum_{n<n_0}t_n\omega^{n-1}-(\text{积分项})$ 没有跳跃，是满足多项式界的整函数，由\cref{lem:appK-entire}是多项式；它在原点有 $n_0-1$ 阶零点，而在虚轴上增长慢于 $|\omega|^{n_0-1}$，故 $H\equiv0$。这取代了“在增长假设下扔掉无穷远处的大圆”的旧说法：解析性与与 $Q$ 无关的多项式界是 Wightman 公理的定理。
+\end{proof}
+
+\begin{proposition}[低阶矩与增长条件的等价 \tagR]\label{prop:dis-low-moments}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $F_2(x)\,\dd x$ 是 $[0,1]$ 上的正测度（含弹性点），偶数 $n_0\ge4$，且在 $|\omega|<1$ 与虚轴上 $T_2$ 有有限减除的表示
+\begin{equation}\label{eq:dis-low-rep}
+T_2(\omega)=\sum_{n<n_0}t_n\,\omega^{n-1}+4\,\omega^{n_0-1}\int_0^1\dd x\,\frac{x^{n_0-2}F_2(x)}{1-x^2\omega^2},\qquad \int_0^1x^{n_0-2}F_2\,\dd x<\infty .
+\end{equation}
+则“对一切偶数 $2\le n<n_0$ 有 $t_n=4\int_0^1x^{n-2}F_2\,\dd x$”当且仅当 $\lim_{y\to\infty}T_2(\ii y)/(\ii y)=0$；等价地，$\int_0^1F_2\,\dd x<\infty$，且奇多项式 $T_2(\omega)-4\omega\int_0^1\frac{F_2\,\dd x}{1-x^2\omega^2}$（“固定极点”项，对 $F_2$ 不可见）为零。$F_2$ 在 $x\to0$ 时的 Regge 行为对此既非必要也非充分。
+\uses{def:dis-compton}
+\end{proposition}
+
+\begin{proof}
+设 $k\ge4$ 为偶数，表示\cref{eq:dis-low-rep}以 $n_0=k$ 成立。在 $\omega=\ii y$ 处 $1-x^2\omega^2=1+x^2y^2$，而 $4(\ii y)^{k-1}\int\frac{x^{k-2}F_2}{1+x^2y^2}=-(\ii y)^{k-3}\cdot4\int x^{k-4}F_2\frac{x^2y^2}{1+x^2y^2}$，于是
+\begin{equation}\label{eq:dis-descent}
+\frac{T_2(\ii y)}{\ii y}=\sum_{n<k-2}t_n(\ii y)^{n-2}+(\ii y)^{k-4}\Big[t_{k-2}-4\int_0^1\dd x\,x^{k-4}F_2(x)\frac{x^2y^2}{1+x^2y^2}\Big]
+\end{equation}
+（\texttt{s6\_np\_examples.py} 对 $k=4,6$ 数值核对）。由单调收敛，$y\to\infty$ 时方括号趋于 $t_{k-2}-4\int x^{k-4}F_2\in[-\infty,\infty)$。
+\emph{必要性}（下降归纳）：设 $T_2(\ii y)/(\ii y)\to0$。$k\ge6$ 时\cref{eq:dis-descent}右端第一项的幂次至多为 $k-6$，若方括号的极限不为零，第二项将以 $y^{k-4}$ 发散；$k=4$ 时第一项不存在，极限本身就是方括号的极限。两种情形都迫使 $\int x^{k-4}F_2<\infty$ 且 $t_{k-2}=4\int x^{k-4}F_2$；这时恒等式 $\frac{\omega^2x^2}{1-x^2\omega^2}=\frac1{1-x^2\omega^2}-1$ 表明表示对 $n_0=k-2$ 也成立。从 $k=n_0$ 降到 $k=4$，得一切偶数 $2\le n<n_0$ 的等式，以及 $\int F_2<\infty$。
+\emph{充分性}：若这些等式成立，则表示对 $n_0=2$ 成立，$T_2(\ii y)/(\ii y)=4\int_0^1\frac{F_2\,\dd x}{1+x^2y^2}\to0$（控制收敛）。
+等价表述：若 $\int F_2<\infty$，则 $T_2-4\omega\int\frac{F_2}{1-x^2\omega^2}$ 是次数至多 $n_0-3$ 的奇多项式，其 $\omega^{n-1}$ 系数为 $t_n-4\int x^{n-2}F_2$；它是实的整函数，在割线上没有跳跃，所以 $F_2$ 看不见它。Regge 行为 $F_2\sim x^{1-\alpha_0}$（$\alpha_0<2$）只保证 $\int F_2<\infty$，不能排除固定极点项，故不充分；而任何可积的 $F_2$ 都行，不必有幂律形式，故不必要。
+\end{proof}
+
+由\cref{prop:dis-dispersion-np}(d)，强子靶满足\cref{eq:dis-low-rep}，所以对强子而言，低阶矩（特别是 $n=2$ 的动量求和规则）的成立\emph{等价于}增长条件\cref{asm:intro-growth}；它不是 Wightman 公理的推论（固定极点问题，参见第~11~章的 Burkhardt--Cottingham 求和规则）。
+
+\begin{example}[固定极点与不可积的 $F_2$]\label{ex:dis-fixed-pole}
+取 $F_2=x^{0.4}(1-x)^3+0.15\,\delta(1-x)$，令 $T_2=4\omega\int_0^1\frac{F_2\,\dd x}{1-x^2\omega^2}+c\,\omega$，$c=0.3$。$c\,\omega$ 是实的整函数，$\Disc T_2$ 与 $c$ 无关；但 $t_2=1.37746$，而 $4M^{(2)}_2=1.07746$，相差正是 $c$；$T_2(\ii y)/(\ii y)$ 在 $y=10^2,10^4$ 时为 $0.30990$、$0.30002$，趋于 $c\ne0$。反之，取 $F_2=x^{-6/5}(1-x)^3$：$\int x^2F_2<\infty$，$n_0=4$ 的表示存在，但 $\int F_2=\infty$，由\cref{eq:dis-descent}，$T_2(\ii y)/(\ii y)=-4\frac{\pi/2}{\sin(0.9\pi)}y^{1/5}+\order{1}\approx-20.33\,y^{1/5}$，数值斜率 $-20.33$（\texttt{s6\_np\_examples.py}）：增长条件不成立，动量型求和规则无意义。两个例子中 $F_2$ 都可以有 Regge 型的小 $x$ 行为。
+\uses{prop:dis-low-moments}
+\end{example}
+
+\begin{lemma}[OPE 在线段上的多项式逼近 \tagR]\label{lem:dis-ope-segment}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:intro-np-ope}。设\cref{asm:intro-np-ope}的 (O1) 在强子态之间对量纲至多 $N$ 的算符成立（无单位算符项，$T^{\mu\nu}$ 对称横向），协变系数满足 $|\tilde C_j|\le K|q|^{2-d_j}\ln^k|q|$，矩阵元 $\langle P|O_j|P\rangle$ 是 $M^{d_j-2-r}$ 乘以 $r$ 个 $P$ 与 $g$、$\epsilon$ 的组合（$d_j-r\ge2$），奇扭度系数按 (O2) 满足 $|\tilde C_j|\le Km|q|^{1-d_j}\ln^k|q|$（$m$ 为轻夸克质量），且扭度 2 只来自 $O^{(n)}_q$、$O^{(n)}_g$（\cref{lem:dis-twist-classification}）。则存在奇多项式 $\mathcal P_N(\omega)=\sum_{n\le N-2}\pi^{(N)}_n\omega^{n-1}$，使
+\begin{equation}\label{eq:dis-ope-segment}
+\sup_{\omega\in\mathcal I_Q}|T_2(\omega)-\mathcal P_N(\omega)|\le K_N\Big(\frac MQ\Big)^{N-2}\ln^kQ,\qquad |\pi^{(N)}_n|\le K\ln^kQ,\qquad \pi^{(N)}_n=4\sum_iC^{(n)}_{2,i}A^{(n)}_i+\order{\frac{M^2+mM}{Q^2}\ln^kQ}.
+\end{equation}
+非微扰地位：见前提。
+\uses{lem:dis-euclid-segment,lem:dis-twist-classification,lem:appK-markov,asm:intro-np-ope}
+\end{lemma}
+
+\begin{proof}
+完整证明见附录~M 的\cref{sec:appM-np}。(0) 用 $\Pi=g-qq/q^2$ 横向化（在欧氏点上有界）。(1) 对称横向张量的一般形式是 $A\tilde g+B\hat P\hat P$；第 $j$ 个算符的贡献 $\tau_j=\nu B_j$ 是 $\omega$ 的次数至多 $d_j-3$ 的多项式，含 $r$ 个 $P$ 的项只贡献奇偶性为 $r-1$ 的幂次，取奇部分。(2) 用\cref{lem:dis-euclid-segment}的投影，在 $\mathcal I_Q$ 上 $|\tau_j|\le C(M/Q)^{d_j-3}\ln^kQ$，余项不超过 $K_N(M/Q)^{N-2}\ln^kQ$。(3) 系数由 V. A. Markov 的系数不等式控制（\cref{lem:appK-markov}，\cite{Markoff1916}）；按 $d_j\ge n+4$（扭度 $\ge4$，给出 $M^2/Q^2$）、$d_j=n+3$（扭度 3，手征奇，给出 $mM/Q^2$）、$d_j=n+2$（扭度 2，给出 $4\sum_iC^{(n)}_{2,i}A^{(n)}_i$ 加迹项的 $M^2/Q^2$）分情形，得\cref{eq:dis-ope-segment}。没有手征压低时误差只能是 $\order{M/Q}$。
+\end{proof}
+
+\begin{theorem}[由定域 OPE 得到固定 $n$ 的 Taylor 系数 \tagR]\label{thm:dis-fixed-n}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:intro-np-ope}、\cref{asm:intro-wightman}（经由\cref{lem:dis-ope-segment}、\cref{prop:dis-dispersion-np}）。设\cref{lem:dis-ope-segment}的结论对每个偶数 $N$ 成立；$T_2$ 在 $|\omega|<1$ 中解析且为奇函数；$F_2\,\dd x\ge0$（含弹性点）；存在与 $Q$ 无关的偶数 $n_0$，使对一切偶数 $n\ge n_0$ 有 $t_n=4\int x^{n-2}F_2$。则对\emph{每个}偶数 $n\ge2$，
+\begin{equation}\label{eq:dis-fixed-n}
+t_n(Q^2)=4\sum_iC^{(n)}_{2,i}A^{(n)}_i+\order{\frac{M^2+mM}{Q^2}\ln^kQ}.
+\end{equation}
+证明中不对自旋求和，也不交换极限。
+非微扰地位：见前提（MA0）。
+\uses{lem:dis-ope-segment,prop:dis-dispersion-np,prop:dis-W-structure,lem:appK-markov,asm:intro-np-ope,asm:intro-wightman}
+\end{theorem}
+
+\begin{proof}
+完整证明见附录~M 的\cref{sec:appM-np}。固定偶数 $n$，取足够大的 $N$，令 $N'$ 为 $\ge N-1$ 的最小偶数，$r_Q=\sqrt3M/Q$。(1)（正性给出的精确尾项）把 $\frac1{1-u}=\sum_{j<J}u^j+\frac{u^J}{1-u}$（$u=x^2\omega^2$）代入色散关系，得 $T_2(\omega)-\sum_{n'<N'}t_{n'}\omega^{n'-1}=4\omega^{N'-1}\int\frac{x^{N'-2}F_2\,\dd x}{1-x^2\omega^2}$；在 $\omega=\ii y$ 处分母 $\ge1$、$F_2\ge0$，故此尾项不超过 $t_{N'}|y|^{N'-1}\le t_{n_0}|y|^{N'-1}$。(2)（Markov 不等式）于是奇多项式 $h=\mathcal P_N-\sum_{n'<N'}t_{n'}\omega^{n'-1}$ 在 $\mathcal I_Q$ 上满足 $|h|\le K_N(M/Q)^{N-2}\ln^kQ+t_{n_0}r_Q^{N'-1}$，由\cref{lem:appK-markov}，$|\pi_{n'}-t_{n'}|\le c_N\big[K_N(M/Q)^{N-2}\ln^kQ+t_{n_0}r_Q^{N'-1}\big]r_Q^{1-n'}$。(3)（自举）取 $n'=n_0$：右端第二项是 $c_Nr_Q^{N'-n_0}t_{n_0}$，$Q$ 足够大时不超过 $\frac12t_{n_0}$，再由 $t_{n_0}\ge0$ 与 $|\pi_{n_0}|\le K\ln^kQ$ 得 $t_{n_0}=\order{\ln^kQ}$。(4) 对给定的 $n$，$|t_n-\pi_n|=\order{(M/Q)^{N-1-n}\ln^kQ}=\order{(M/Q)^2\ln^kQ}$，再由\cref{eq:dis-ope-segment}的最后一式得\cref{eq:dis-fixed-n}。
+\end{proof}
+
+正性在此不可缺少：它把未知的无穷多个高阶 Taylor 系数的影响压成一个被 $t_{n_0}$ 控制的尾项，而 Markov 不等式把多项式在短线段上的小值转化为系数的界。部分子结构函数不是正测度，所以这条路线只属于非微扰层次；它的微扰对应物是\cref{prop:dis-ope-forward}。误解 M34——“欧氏 OPE 代入、收缩、比较系数即得强子结构函数的矩”——的错误正在于此：OPE 只在长度为 $\order{M/Q}$ 的线段上提供信息，需要正性与色散关系才能得到固定 $n$ 的矩，而 $n<n_0$ 还需要增长条件。
+
+\begin{theorem}[DIS 矩因子化的非微扰条件定理 \tagR]\label{thm:dis-moments-np}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}（对 $n<n_0$ 另需\cref{asm:intro-growth}）。
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item 由 $\mu_0$ 处的算符经精确的算符重整化群定义的 $\mu$ 处系数在每个 $\mu$ 满足\cref{asm:intro-np-ope}(O1) 与重整化群方程，且
+\begin{equation}\label{eq:dis-np-rg}
+C^{(n)}_{2,i}\Big(\frac{Q^2}{\mu^2},\as(\mu)\Big)=\sum_jC^{(n)}_{2,j}\big(1,\as(Q)\big)\Big[\mathcal P\exp\Big(-\int_\mu^Q\frac{\dd\mu'}{\mu'}\gamma^{(n)}(\as(\mu'))\Big)\Big]_{ji},
+\end{equation}
+$\gamma^{(n)}=-2\Gamma^{(n)}$，$\mathcal P$ 把较大的标度排在左边；$C(1,\as(Q))$ 渐近于其 $\overline{\rm MS}$ 微扰级数。
+\item 对偶数 $n\ge n_0$（$n_0$ 见\cref{prop:dis-dispersion-np}(d)）：$\int_0^1x^{n-2}F_2\,\dd x=\sum_iC^{(n)}_{2,i}A^{(n)}_i+\order{\frac{\Lambda_h^2}{Q^2}\ln^kQ}$（$\Lambda_h$ 为强子尺度，$\Lambda_h^2\sim M^2+mM$）；在\cref{asm:intro-growth}之下对一切偶数 $n\ge2$ 成立。
+\item 若存在 $[0,1]$ 上以扭度 2 矩为偶数矩的有限带号测度 $\Phi_Q$（假设 ($\Phi$)），则 $F_2\,\dd x-\Phi_Q$ 在 $x$ 空间弱收敛于零（精确形式见本节末的推论）。
+\end{enumerate}
+非微扰地位：见前提（MA0、MA3、MA4）。
+\uses{thm:dis-fixed-n,prop:dis-dispersion-np,prop:dis-low-moments,thm:prelim-composite-renorm,prop:qcd-rge,thm:qcd-asymptotic-freedom,asm:intro-wightman,asm:intro-composite,asm:intro-np-ope,asm:intro-af-coeff,asm:intro-growth,lem:appM-norm-bound}
+\end{theorem}
+
+\begin{proof}
+完整证明见附录~M 的\cref{sec:appM-np}。(i) 精确的算符关系 $O_i(\mu_0)=\sum_jU_{ij}O_j(\mu)$（\cref{asm:intro-composite}；微扰形式见\cref{thm:prelim-composite-renorm}与\cref{prop:qcd-rge}）把 $\mu_0$ 处的 (O1) 搬到 $\mu$ 处；演化矩阵的范数由渐近自由控制（\cref{thm:qcd-asymptotic-freedom}，\cref{lem:appM-norm-bound}：把每个算符按 $M_0^{d_i-d_{\min}}$ 重标度后质量混合有界，$\|U^{\pm1}\|$ 至多是对数的幂），故系数界 $|\tilde C_i|\le K|q|^{2-d_i}\ln^k|q|$ 保持；扭度 2 没有向低量纲算符的混合，\cref{eq:dis-np-rg}就是 $\mu\,\dd C/\dd\mu=C\gamma$ 的解（\texttt{s4\_wilson\_rg.py} 核对路径排序），$C(1,\as(Q))$ 的渐近性来自\cref{asm:intro-af-coeff}。这里直接用算符重整化群，而不用以 OPE 为前提的系数重整化群命题，否则前提中还要加上微扰 OPE 的总括定理。(ii) 验证\cref{thm:dis-fixed-n}的假设：\cref{lem:dis-ope-segment}由\cref{asm:intro-np-ope}（配合 (W1) 的宇称与 (W4)）给出；解析性、奇性与正性来自\cref{prop:dis-dispersion-np}(a)(c)，$n_0$ 来自其 (d)；于是 $t_n=4\sum CA+\order{\cdot}$ 对一切偶数 $n$ 成立，而 $t_n=4\int x^{n-2}F_2$ 对 $n\ge n_0$ 成立；$n<n_0$ 由\cref{prop:dis-low-moments}与\cref{asm:intro-growth}。(iii) 即本节末推论的内容，其证明只用到 (ii)。
+\end{proof}
+
+\begin{corollary}[$x$ 空间的弱收敛 \tagR]\label{cor:dis-weak-xspace}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}（经由\cref{thm:dis-moments-np}）。设 $Q$ 足够大时存在 $[0,1]$ 上的有限带号测度 $\Phi_Q$，其偶数矩为扭度 2 的矩：$\int x^{n-2}\dd\Phi_Q=\sum_iC^{(n)}_{2,i}A^{(n)}_i$（偶数 $n\ge n_0$；假设 ($\Phi$)）。则 (i) 对 $x^2$ 的多项式 $\phi$，$\int x^{n_0-2}\phi\,\dd(F_2\dd x-\Phi_Q)=\order{\frac{M^2+mM}{Q^2}\ln^kQ}$；(ii) 若 $x^{n_0-2}F_2\dd x$ 与 $x^{n_0-2}|\Phi_Q|$ 的总质量对 $Q$ 一致有界，则对一切 $\phi\in C[0,1]$，$\int x^{n_0-2}\phi\,\dd(F_2\dd x-\Phi_Q)\to0$。
+非微扰地位：见前提。
+\uses{thm:dis-moments-np,lem:appA-weak-convergence,lem:appK-hausdorff,thm:appK-even-moments,asm:intro-wightman,asm:intro-composite,asm:intro-np-ope,asm:intro-af-coeff}
+\end{corollary}
+
+\begin{proof}
+完整证明见附录~M 的\cref{sec:appM-np}。(i) 由\cref{thm:dis-moments-np}(ii)，对有限个偶数矩逐项相减。(ii) $x^2$ 的多项式在 $C[0,1]$ 中稠密（在 $t=x^2$ 中用 Weierstrass 定理；Hausdorff 唯一性\cref{lem:appK-hausdorff}，偶数矩定理\cref{thm:appK-even-moments}），再用总质量的一致界作 $\varepsilon/3$ 论证（\cref{lem:appA-weak-convergence}）。
+\end{proof}
+
+收敛率只对固定的多项式 $\phi$ 成立，对 $\phi\in C[0,1]$ 一致的速率推不出来；逐点的 $\order{1/Q^2}$ 更不可能由 OPE 得到（\cref{rem:dis-nonuniform}）。$\Phi_Q$ 的存在本身是一个 Hausdorff 矩问题（附录~K 的\cref{rem:appK-counterexamples}）；实际应用中用截断到 $\as(Q)^K$ 的 $\Phi_{Q,K}$ 代替，误差为 $\order{\as(Q)^{K+1}}$。

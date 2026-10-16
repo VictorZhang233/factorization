@@ -1,0 +1,139 @@
+% ===================================================================================
+% c_pdf_oneloop.tex  —  单圈夸克中夸克分布（Feynman 规范，Wilson 线），重整化与 P_qq
+% （research/c_pdf，对应 DERIVATION.md §3；验证脚本 scripts/s2_oneloop_qq.py）
+% ===================================================================================
+\section{单圈夸克中夸克分布：Feynman 规范下由算符定义直接计算}\label{sec:cpdf-oneloop}
+
+靶为在壳无质量夸克 $p=(p^+,0,\bm 0_{\mathrm T})$。红外用胶子质量 $m$ 正规化（含程函项后有质量矢量耦合到守恒流，
+极化求和中 $l^\mu l^\nu/m^2$ 项的贡献为零），紫外用维数正规化 $D=4-2\varepsilon$。
+插入完备态并完成 $w^-$ 积分，
+\begin{equation}\label{eq:cpdf-cut}
+f(\xi)=\sum_X\tfrac12\,\delta\big(\xi P^+-(P-p_X)^+\big)\,
+\langle P|[\bar\psi W](0)|X\rangle\,\gamma^+\,\langle X|[W\psi](0)|P\rangle ,
+\end{equation}
+其中 $W[w,0]=W[w,\infty n]\,W[\infty n,0]$ 被割线分成两半。$\order{\as}$ 的图见 \cref{fig:cpdf-oneloop}；
+Wilson 线两侧同时连接胶子的实辐射图 R3 与 Wilson 线自能 V3 均正比于 $n^2=0$。
+
+\begin{figure}[htbp]
+\centering
+\newcommand{\cpdfframe}{%
+  \draw[cut] (0,3.15) -- (0,-0.35);
+  \draw[wilson plain] (0,2.2) -- (-1.3,2.9);
+  \draw[wilson plain] (0,2.2) -- (1.3,2.9);
+  \draw[quark=0.3] (-1.3,0) -- (0,2.2);
+  \draw[quark=0.74] (0,2.2) -- (1.3,0);
+  \node[opvertex] at (0,2.2) {};
+  \node[below] at (-1.3,0) {$p$};
+  \node[below] at (1.3,0) {$p$};}
+\begin{tikzpicture}[fd,scale=0.82]
+  \cpdfframe
+  \draw[gluon] (-0.65,1.1) -- (0.65,1.1);
+  \node[vertex] at (-0.65,1.1) {}; \node[vertex] at (0.65,1.1) {};
+  \node at (0,-0.95) {R1};
+\end{tikzpicture}\hspace{0.6em}
+\begin{tikzpicture}[fd,scale=0.82]
+  \cpdfframe
+  \draw[gluon] (-0.65,1.1) to[out=-5,in=-95] (1.04,2.76);
+  \node[vertex] at (-0.65,1.1) {}; \node[vertex] at (1.04,2.76) {};
+  \node at (0,-0.95) {R2\,+\,共轭};
+\end{tikzpicture}\hspace{0.6em}
+\begin{tikzpicture}[fd,scale=0.82]
+  \cpdfframe
+  \draw[gluon] (-0.65,1.1) -- (-0.715,2.585);
+  \node[vertex] at (-0.65,1.1) {}; \node[vertex] at (-0.715,2.585) {};
+  \node at (0,-0.95) {V1\,+\,共轭};
+\end{tikzpicture}\hspace{0.6em}
+\begin{tikzpicture}[fd,scale=0.82]
+  \cpdfframe
+  \draw[gluon] (-1.04,0.44) to[bend left=75] (-0.39,1.54);
+  \node[vertex] at (-1.04,0.44) {}; \node[vertex] at (-0.39,1.54) {};
+  \node at (0,-0.95) {V2\,+\,共轭};
+\end{tikzpicture}
+\caption{夸克中夸克分布的 $\order{\as}$ 割图（Feynman 规范）。$\otimes$ 为算符顶角，双线为 Wilson 线，
+竖直虚线为末态割线。R1：梯形图；R2：Wilson 线与夸克线之间的实胶子；V1：Wilson 线与夸克线之间的虚胶子；
+V2：外线自能（LSZ 留数）。}\label{fig:cpdf-oneloop}
+\end{figure}
+
+\paragraph{实辐射。}
+运动学：$l=\big((1-\xi)p^+,\frac{l_{\mathrm T}^2+m^2}{2(1-\xi)p^+},\bm l_{\mathrm T}\big)$，$k=p-l$，$n\cdot k=\xi p^+$，
+$k^2=-(l_{\mathrm T}^2+\xi m^2)/(1-\xi)$。由 \cref{eq:cpdf-amp} 平方（$D$ 维 Dirac 代数）并完成单胶子相空间积分，
+\begin{equation}\label{eq:cpdf-real}
+\begin{aligned}
+f_R(\xi)&=\frac{g^2C_F}{(2\pi)^{D-1}}\int\dd^{D-2}l_{\mathrm T}
+\Big[\underbrace{\frac{(1-\varepsilon)(1-\xi)\,l_{\mathrm T}^2}{(l_{\mathrm T}^2+\xi m^2)^2}}_{\text{R1}}
++\underbrace{\frac{2\xi}{(1-\xi)(l_{\mathrm T}^2+\xi m^2)}}_{\text{R2+共轭}}\Big]\\
+&=A_\varepsilon\Big[(1-\varepsilon)^2(1-\xi)\,\xi^{-\varepsilon}+\frac{2\xi^{1-\varepsilon}}{1-\xi}\Big],
+\end{aligned}
+\end{equation}
+\begin{equation}\label{eq:cpdf-Aeps}
+A_\varepsilon\equiv\frac{\as}{2\pi}C_F\,\ee^{\varepsilon\gamma_E}\Gamma(\varepsilon)\Big(\frac{\mu^2}{m^2}\Big)^{\varepsilon}
+=\frac{\as}{2\pi}C_F\Big[\frac1\varepsilon+\ln\frac{\mu^2}{m^2}+\order{\varepsilon}\Big],
+\end{equation}
+这里用了 $\MSbar$ 裸耦合 $g_0^2=4\pi\as\mu^{2\varepsilon}S_\varepsilon^{-1}$，$S_\varepsilon=(4\pi)^\varepsilon\ee^{-\varepsilon\gamma_E}$。
+无质量极限下被积函数乘以 $l_{\mathrm T}^2$ 等于 $\frac{1+\xi^2}{1-\xi}-\varepsilon(1-\xi)$；在光锥规范中只有梯形图，得到同一 $D$ 维核。
+
+\paragraph{虚 Wilson 线顶角 V1。}
+利用 $\bar u\gamma^+(\sla{p}-\sla{l})\gamma^+u=2(p^+-l^+)\,\bar u\gamma^+u$，
+\begin{equation}
+\frac{V_1}{\text{树图}}=\ii g^2C_F\int\frac{\dd^Dl}{(2\pi)^D}\,
+\frac{2(p^+-l^+)}{(l^+-\ii0)\,(l^2-m^2+\ii0)\,\big((p-l)^2+\ii0\big)} .
+\end{equation}
+两个传播子的 $l^-$ 极点仅当 $0<l^+<p^+$ 时位于实轴两侧，闭合围道得
+$\int\dd l^-\,[\cdots]=\pi\ii\,\theta(0<l^+<p^+)/\big(p^+(l_{\mathrm T}^2+xm^2)\big)$，$l^+=(1-x)p^+$。于是
+\begin{equation}\label{eq:cpdf-V1}
+\frac{V_1+V_1^\dagger}{\text{树图}}=-\frac{g^2C_F}{(2\pi)^{D-1}}\int_0^1\!\dd x\int\dd^{D-2}l_{\mathrm T}\,\frac{2x}{(1-x)(l_{\mathrm T}^2+xm^2)}
+=-A_\varepsilon\int_0^1\dd x\,\frac{2x^{1-\varepsilon}}{1-x},
+\end{equation}
+它乘以 $\delta(1-\xi)$，且其被积函数恰为 R2 被积函数（取 $\xi=x$）的相反数：R2 与 V1 合成分布 $A_\varepsilon[2\xi^{1-\varepsilon}/(1-\xi)]_+$。
+端点 $x\to1$（$l^+\to0$）的发散不受维数正规化调控，只在这一组合中相消，必须在固定 $x=\xi$ 处先组合再积分。
+
+\paragraph{外线自能 V2。}
+$\Sigma(p)=\sla{p}\,\Sigma_V(p^2)$，留数 $R=1/(1-\Sigma_V(0))$，
+$\Sigma_V(0)=-A_\varepsilon\frac{1-\varepsilon}{2-\varepsilon}$，其紫外极点 $-\frac{\as}{4\pi}\frac{C_F}{\varepsilon}$ 即 Feynman 规范的 $\delta Z_2$；两条外线合计贡献 $(R-1)\,\delta(1-\xi)$。
+
+\begin{proposition}[裸单圈结果]\tagR\label{prop:cpdf-bare}
+对检验函数 $h$，
+\begin{equation}\label{eq:cpdf-bare}
+\langle f^{(1)}_{\mathrm{bare}},h\rangle=A_\varepsilon\Big\{\int_0^1\!\dd\xi\Big[(1-\varepsilon)^2(1-\xi)\,\xi^{-\varepsilon}h(\xi)
++\frac{2\xi^{1-\varepsilon}}{1-\xi}\big(h(\xi)-h(1)\big)\Big]-\frac{1-\varepsilon}{2-\varepsilon}\,h(1)\Big\}.
+\end{equation}
+(i) 夸克数对任意 $\varepsilon$ 精确守恒：$\int_0^1f^{(1)}_{\mathrm{bare}}=0$。
+(ii) 紫外极点为 $\frac{\as}{2\pi}\frac1\varepsilon P_{qq}$，其中
+\begin{equation}\label{eq:cpdf-Pqq}
+P_{qq}(\xi)=C_F\Big\{\underbrace{(1-\xi)}_{\text{R1}}+\underbrace{\Big[\frac{2\xi}{1-\xi}\Big]_+}_{\text{R2+V1}}\underbrace{-\tfrac12\delta(1-\xi)}_{\text{V2}}\Big\}
+=C_F\Big[\frac{1+\xi^2}{1-\xi}\Big]_+=C_F\Big[\frac{1+\xi^2}{(1-\xi)_+}+\frac32\delta(1-\xi)\Big].
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+(i) $(1-\varepsilon)^2\int_0^1(1-\xi)\xi^{-\varepsilon}\dd\xi=\frac{1-\varepsilon}{2-\varepsilon}$。
+(ii) 由 $A_\varepsilon=\frac{\as}{2\pi}C_F/\varepsilon+\cdots$ 读出极点，并利用 $[g]_+$ 的定义验证 \cref{eq:cpdf-Pqq} 中的分布恒等式。
+\end{proof}
+
+\begin{remark}[$\delta$ 项的来源]
+$\frac32=2-\frac12$：其中 $2$ 来自把 R2 与 V1 的组合改写成标准形式，$[2\xi/(1-\xi)]_+=2\xi/(1-\xi)_++2\delta(1-\xi)$；
+$-\frac12$ 来自外线自能（$Z_2$）。梯形图 R1 不含 $\delta$ 项。
+\end{remark}
+
+\paragraph{重整化。}
+约定 $f_{\mathrm{ren}}=Z\otimes f_{\mathrm{bare}}$，$Z$ 用 $\as(\mu)$ 表示时只含 $\varepsilon$ 的纯极点（$\MSbar$，$S_\varepsilon$ 如上）。由 \cref{prop:cpdf-bare}，
+\begin{equation}\label{eq:cpdf-Z}
+Z_{qq}(x)=\delta(1-x)-\frac{\as}{2\pi}\frac1\varepsilon\,P_{qq}(x)+\order{\as^2}.
+\end{equation}
+若采用相反约定 $f_{\mathrm{bare}}=Z'\otimes f_{\mathrm{ren}}$，则极点项变号。由于 $D$ 维中 $\dd\as/\dd\ln\mu^2=-\varepsilon\as+\order{\as^2}$，
+$\frac{\dd Z}{\dd\ln\mu^2}Z^{-1}=\frac{\as}{2\pi}P_{qq}$，即 DGLAP 方程。胶子质量正规化下的 $\MSbar$ 有限结果（依赖于正规化方式，并非物理量）为
+\begin{equation}
+f^{(1)}_{q/q}(\xi;\mu)=\frac{\as}{2\pi}\Big\{P_{qq}(\xi)\ln\frac{\mu^2}{m^2}
++C_F\Big[-(1-\xi)(2+\ln\xi)-\Big[\frac{2\xi\ln\xi}{1-\xi}\Big]_++\frac14\delta(1-\xi)\Big]\Big\},
+\qquad\int_0^1f^{(1)}_{q/q}=0 .
+\end{equation}
+
+\paragraph{纯维数正规化。}
+若 $m=0$，所有单圈积分都没有标度：虚图恒为零，实图正比于
+\begin{equation}
+\int\frac{\dd^{2-2\varepsilon}l_{\mathrm T}}{l_{\mathrm T}^2}
+=\pi^{1-\varepsilon}\Gamma(1+\varepsilon)M^{-2\varepsilon}\Big(\frac1{\varepsilon_{\mathrm{UV}}}-\frac1{\varepsilon_{\mathrm{IR}}}\Big)=0
+\end{equation}
+（$M$ 为任意分割点）。因此裸分布 $f^{\mathrm{bare}}_{q/q}=\delta(1-\xi)$ 对所有阶成立，重整化后
+$f_{q/q}(\xi;\mu)=Z_{qq}\otimes\delta=\delta(1-\xi)-\frac{\as}{2\pi}\frac1\varepsilon P_{qq}(\xi)+\order{\as^2}$，其中 $\varepsilon$ 此时是红外极点。
+一般地 $f_{i/j}=\delta_{ij}\delta(1-\xi)-\frac{\as}{2\pi\varepsilon}P_{ij}(\xi)+\order{\as^2}$，这正是把部分子截面匹配到系数函数时所用的形式。

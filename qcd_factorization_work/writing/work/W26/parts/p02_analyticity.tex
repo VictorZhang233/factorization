@@ -1,0 +1,66 @@
+\section{双曲角解析性}\label{sec:yzliu-analyticity}
+
+TMD 文献中的软函数用到各种方向的 Wilson 线：Collins 的类空倾斜线（\cref{def:tmd-soft}）、Ji--Liu--Liu 的类时线、SIDIS 与 $e^+e^-$ 中指向未来的线。CSS 与 Collins 断言 DY 软因子与时序无关并在各过程间普适\cite{CollinsMetz2004}，\cite[第~13~章]{Collins2011}。对单一时序的软函数，答案由复双曲角上的一个解析函数统一给出。
+
+\begin{definition}[双曲角与六种构型]\label{def:yzliu-hyperbolic-angle}
+设 $S(b_\perp,\mu;v_1,v_2)$ 为单一时序、经 $Z$ 因子减除的软函数，其构造同\cref{def:lamet-soft-offlc}，但入射段沿 $v_1$、出射段沿 $v_2$，二者可以类时或类空、指向过去或未来\cite[式~(93)]{Liu:2022nnk}；约定 $v_1$ 为入射段沿路径指向尖点的切向量，$v_2$ 为出射段背离尖点的切向量（\cref{def:prelim-wilson}）。双曲角由
+\begin{equation}\label{eq:yzliu-theta}
+\cosh\theta(v_1,v_2)=\frac{v_1\cdot v_2-\ii0}{\sqrt{v_1^2-\ii0}\,\sqrt{v_2^2-\ii0}},\qquad -\pi\le\Imag\theta\le\pi
+\end{equation}
+定义（平方根取主支）；六种构型的取值见\cref{tab:yzliu-theta}。在 $(t,z)$ 分量中取 DY 形 $v_1=(w,1)$、$v_2=(-w,1)$（$|w|<1$，两条类空线都指向过去）与形状因子形 $v_1=(w,1)$、$v_2=(w,-1)$（$|w|>1$，类时线一入一出），分别得 $\cosh Y=\frac{1+w^2}{1-w^2}$ 与 $\frac{w^2+1}{w^2-1}$。% VF-YZL-4
+\uses{def:lamet-soft-offlc,def:prelim-wilson}
+\end{definition}
+% Writer note (W26, s02): VF-YZL-4 and WRITER_SPEC row 46 transcribe Liu:2022nnk eq. (123), which has sqrt(v^2 + i0) in the
+% denominator. With v1 = incoming and v2 = outgoing tangent (Liu's own form-factor analogy, APPB 4.5: incoming momenta v1, -v2),
+% that choice reproduces the four rows with v1^2 v2^2 > 0 but interchanges the two mixed (time-like/space-like) rows of
+% Liu's Table 1, which the explicit one-loop exchange integral confirms (scripts/s02_theta_table.py). Corrected here.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}llllll@{}}
+\toprule
+$v_1$ & $v_2$ & $v_1$ 的指向 & $v_2$ 的指向 & $\theta$ & 例 \\
+\midrule
+类空 & 类空 & 过去 & 过去 & $Y$ & Collins 的 DY 软因子 $S_{\mathrm{DY}}$ \\
+类时 & 类时 & 过去 & 过去 & $Y-\ii\pi$ & 类时 DY \\
+类时 & 类时 & 过去 & 未来 & $Y$ & 形状因子 $S_{\mathrm{FF}}$（\cref{thm:yzliu-soft-hqet}） \\
+类空 & 类空 & 过去 & 未来 & $Y+\ii\pi$ & 类空 SIDIS \\
+类时 & 类空 & 过去 & 未来 & $Y+\frac{\ii\pi}{2}$ & \\
+类时 & 类空 & 过去 & 过去 & $Y-\frac{\ii\pi}{2}$ & \\
+\bottomrule
+\end{tabular}
+\caption{单一时序软函数的双曲角（\cite[表~1]{Liu:2022nnk}）。$Y$ 为两方向快度之和，取向约定使 $Y\to+\infty$ 时两条线趋于相反的类光方向（即光锥极限）；对类空线，“过去／未来”指该段位于 $t<0$ 或 $t>0$。}
+\label{tab:yzliu-theta}
+\end{table}
+
+\paragraph{单圈检验。}$\pm\ii0$ 处方由单胶子交换确定。入射段 $sv_1$（$s<0$）与出射段 $tv_2$（$t>0$）之间的交换中，$x^2=t^2Q(\rho)$，$\rho=-s/t$，$Q=\rho^2v_1^2+2\rho\,v_1\cdot v_2+v_2^2$；$\int\dd t/t$ 是尖点发散，角度依赖部分为
+\begin{equation}\label{eq:yzliu-theta-oneloop}
+F(v_1,v_2)=v_1\cdot v_2\int_0^\infty\frac{\dd\rho}{Q(\rho)-\ii0}=\theta\coth\theta .
+\end{equation}
+类时—类时、过去—未来构型给出通常的尖点函数 $\mathcal Y\coth\mathcal Y$（$\mathcal Y=Y+Y'$，\cref{prop:appB-cusp-oneloop}）。类时—类空、过去—未来构型（$v_2=(\sinh Y',-\cosh Y')$）中 $v_1\cdot v_2=\sinh\mathcal Y$，$Q$ 在 $\rho_*=\ee^{-\mathcal Y}$ 处为零、$Q'(\rho_*)=2\cosh\mathcal Y$，主值部分为 $\mathcal Y\tanh\mathcal Y$，$-\ii0$ 贡献 $\frac{\ii\pi}{2}\tanh\mathcal Y$，故 $F=(\mathcal Y+\frac{\ii\pi}{2})\tanh\mathcal Y$，$\theta=\mathcal Y+\frac{\ii\pi}2$；\cref{eq:yzliu-theta}中 $\sqrt{v_2^2-\ii0}=-\ii$ 正给出 $\cosh\theta=\ii\sinh\mathcal Y$。我们对六种构型逐一数值计算了\cref{eq:yzliu-theta-oneloop}，与表中的 $\theta$ 一致。
+
+\begin{assumption}[维数正规化微扰论中的 Wightman 结构 \tagA]\label{asm:yzliu-wightman-pt}
+(WP1) 在线性协变规范中、维数正规化取一般 $\varepsilon\ne0$ 时，胶子与鬼场的 Wightman 函数逐阶满足谱条件与局域对易性（协变算符形式\cite{KugoOjima1979}），因而其坐标空间表示是（置换扩展）管域上全纯函数的边界值，并在固有复 Lorentz 变换下协变（Bargmann--Hall--Wightman 定理\cite[定理~2-11]{Streater:1989vi}）；(WP2) 同一类光线上的类光间隔给出无标度贡献，正规子 $\eta\to0^+$ 可在被积函数层次上取。地位：[A] 级——形式上是协变算符形式与 Bargmann--Hall--Wightman 定理的推论，Liu 使用了它（“the author believes in it”\cite[第~4~节]{Liu:2023pjb}），但对一般 $\varepsilon$ 的维数正规化（不定度规、规范依赖的 Green 函数）没有作为精确命题被证明。文献：\cite[附录~F]{Liu:2022nnk}，\cite[第~2~节、附录~B]{Liu:2023pjb}，\cite[附录~C.2]{Ji:2023pba}，\cite{KugoOjima1979,Streater:1989vi}。被使用于：\cref{thm:yzliu-analyticity}、\cref{thm:yzliu-time-ordering}、\cref{conj:yzliu-complex-wilson}、\cref{thm:yzliu-jet-continuation}。解除途径：证明全部带分子的胶子／鬼场 Wightman 函数的维数正规化参数表示是置换扩展管域上全纯函数的边界值，例如把时序定理中坐标空间参数函数的正性与阈下论证推广到所有图。
+\uses{def:prelim-qcd,def:prelim-brst}
+\end{assumption}
+
+\paragraph{地位与缺口。}[A] 级：所断言的性质在正规化之前的协变算符形式中有全阶论证，对维数正规化的微扰论没有精确证明，Liu 自己把它列为开放问题。它是\cref{thm:yzliu-analyticity,thm:yzliu-time-ordering,thm:yzliu-jet-continuation}的瓶颈。
+
+\begin{theorem}[软函数对复双曲角的解析性 \tagA]\label{thm:yzliu-analyticity}
+在微扰论各阶（维数正规化，线性协变规范），单一时序的减除软函数只通过 $\theta(v_1,v_2)$（\cref{def:yzliu-hyperbolic-angle}）依赖于方向，是在 $|\Imag\theta|<\pi$ 中全纯、连续到 $|\Imag\theta|=\pi$ 的同一函数 $S(\theta)$ 的边界值，\cref{tab:yzliu-theta}的六种构型均为其边界值。推论：(i) $S_{\mathrm{DY}}(b_\perp,\mu,Y,Y')=S_{\mathrm{FF}}(b_\perp,\mu,Y,Y')$——Collins 的类空（倾斜、双重时序）DY 软因子等于\cref{thm:yzliu-soft-hqet}的形状因子软函数；(ii) 对一半在光锥上、一半离光锥的软函数，$S(b_\perp,\mu,\delta,\hat z)=S(b_\perp,\mu,-\ii\delta,\hat t)$（$\delta>0$；在光锥极限下两者只差一个与 $\ln\delta$ 相伴的相位）；(iii) 在 $\delta$ 正规子中 $S^+(b_\perp,\mu,\delta,\delta)=S^{-\dagger}(b_\perp,\mu,\frac{\ii\delta}{1+\ii0},\frac{\ii\delta}{1+\ii0})$，即 $\ln\frac{\mu^2}{2\delta^+\delta^-}\tilde K\to(\ln\frac{\mu^2}{2\delta^+\delta^-}+\ii\pi)\tilde K$；(iv) 在标准的 $\delta$ 正规子中 DY 与 SIDIS 软因子相等（借助 Hartogs 关于分别全纯函数的定理）。（本定理只涉及真空中的 Wilson 线关联函数。）% VF-YZL-4
+\uses{def:yzliu-hyperbolic-angle,asm:yzliu-wightman-pt,thm:yzliu-soft-hqet,def:tmd-soft}
+\end{theorem}
+
+\begin{proofsketch}
+文献\cite[第~4.5--4.7~节，附录~F、H]{Liu:2022nnk}给出三条途径。（1）谱论证：能量为正时可把 $v^0$ 延拓到下半平面 $w$；在 $w=-\ii v_0$ 处 DY 形与形状因子形函数都变成欧氏 Wilson 回路，二者只差 $(\tau,z)$ 平面内的转动，唯一性给出 $g(w)=f(1/w)$，再映到 $\theta$\cite[式~(124)--(134)]{Liu:2022nnk}；这需要正定度规的物理规范与一致的能隙（“although no one can prove it!”），本书不采用。（2）有限长订书钉上的延拓。（3）本书采用 Wightman 函数：按 $z$ 坐标排列所选的点（类空间隔对时序不敏感），把参数乘以 $-\ii$，相邻点之差落入前向管 $\mathbb R^4-\ii V_+$；两种构型由固有复 Lorentz 变换 $\Lambda(t,z)=(\ii z,\ii t)$（快度 $\ii\pi/2$ 的推动，行列式 $+1$）联系，扩展管域上的复 Lorentz 协变性即 Bargmann--Hall--Wightman 定理（\cref{asm:yzliu-wightman-pt}(WP1)）。单圈的\cref{eq:yzliu-theta-oneloop}是一个检验。(i) 是表中第一、三行取同一 $\theta=Y$ 的结果（两条类空的过去指向线之间只有类空间隔，双重时序与单一时序定义相同）；(ii)(iii) 是同一延拓对 $\delta$ 正规化软函数的应用；(iv) 见\cite[式~(H.7)--(H.11)]{Liu:2022nnk}。
+\end{proofsketch}
+% Terminology (claim E13; App Q row 16): Liu:2022nnk App. F writes "edge of the wedge" for the BHW step and prints the map as
+% (it,iz); the correct map is (iz,it) (Liu:2023pjb eq. (3.25)). Neither slip is reproduced.
+
+\paragraph{地位与缺口。}全阶论证 [A]，瓶颈\cref{asm:yzliu-wightman-pt}；作者认为完整结果具有同样的解析性“是很自然的期望”，非微扰陈述只是 [C]。与 CSS 的关系：文献\cite{Collins2011,CollinsMetz2004}断言的时序无关性与普适性，在单一时序部分由本定理给出解析机制，并精确指出普适性可能失效之处（\cref{prop:yzliu-universality-classes}）。离光锥 TMD 软函数解析延拓的系统分类见文献\cite{Liu:2022nnk}；尖点反常维度对尖点角的解析性可追溯到文献\cite{KorchemskyRadyushkin1987}。升级途径：把\cref{asm:yzliu-wightman-pt}证明为定理。
+
+%%FIG fig:yzliu-theta-strip
+
+\cref{fig:yzliu-theta-strip}把这一结构画在复 $\theta$ 平面上：Collins 的 DY 软因子与形状因子软函数位于同一点 $\theta=Y$。双重时序且含类时方向的软函数不在这一图景之内（\cref{sec:yzliu-rapidity}末）。

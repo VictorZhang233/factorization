@@ -1,0 +1,94 @@
+%%% BEGIN fig:smallx-dipole
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc shock/.style={fill=orange!22,draw=orange!60!black,line width=0.6pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc ax/.style={lcaxis,gray!60!black},
+  fc dim/.style={draw=gray!60!black,line width=0.5pt,{Stealth[length=3.2pt,width=3pt]}-{Stealth[length=3.2pt,width=3pt]}},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc tiny/.style={font=\scriptsize}]
+  % =====================================================================
+  % (a) gamma* -> q qbar dipole crossing the shock wave
+  % =====================================================================
+  \begin{scope}
+    \fill[fc shock] (-0.12,-1.45) rectangle (0.12,1.45);
+    \draw[photon] (-2.95,0) -- (-2.15,0);
+    \draw[quark] (-2.15,0) -- (-1.6,0.85);
+    \draw[quark] (-1.6,0.85) -- (1.6,0.85);
+    \draw[quark] (1.6,0.85) -- (2.15,0);
+    \draw[quark] (2.15,0) -- (1.6,-0.85);
+    \draw[quark] (1.6,-0.85) -- (-1.6,-0.85);
+    \draw[quark] (-1.6,-0.85) -- (-2.15,0);
+    \draw[photon] (2.15,0) -- (2.95,0);
+    \node[vertex] at (-2.15,0) {};  \node[vertex] at (2.15,0) {};
+    \node[fc lab,anchor=south] at (-2.65,0.08) {$\gamma^*$};
+    \node[fc lab,anchor=south] at (2.65,0.08) {$\gamma^*$};
+    \node[fc note,anchor=south] at (-0.75,0.88) {$q$};
+    \node[fc note,anchor=north] at (-0.75,-0.88) {$\bar q$};
+    \node[fc note,anchor=south west] at (0.12,0.88) {$V_{\boldsymbol x_0}$};
+    \node[fc note,anchor=north west] at (0.12,-0.88) {$V^\dagger_{\boldsymbol x_1}$};
+    \draw[fc dim] (-1.1,0.78) -- (-1.1,-0.78);
+    \node[fc note,anchor=west] at (-1.05,0) {$r$};
+    \node[fc note,anchor=east] at (-1.68,0.88) {$\boldsymbol x_0$};
+    \node[fc note,anchor=east] at (-1.68,-0.88) {$\boldsymbol x_1$};
+    \node[fc note,anchor=south,text=orange!40!black] at (0,1.47) {冲击波（靶）};
+    \draw[fc ax] (-2.9,-1.85) -- (2.9,-1.85) node[right,fc note,text=black] {$x^-$};
+    \draw[gray!60!black,line width=0.5pt] (0,-1.78) -- (0,-1.92);
+    \node[fc tiny,anchor=north] at (0,-1.9) {$0$};
+    \node[fc lab] at (0,-2.65) {(a)\ $q\bar q$偶极子穿过冲击波};
+  \end{scope}
+  % =====================================================================
+  % (b) one step of BK evolution: soft gluon at x_2
+  % =====================================================================
+  \begin{scope}[xshift=6.45cm]
+    \fill[fc shock] (-0.12,-1.45) rectangle (0.12,1.45);
+    \draw[fc soft] (-1.3,0.95) .. controls (-0.95,0.2) and (-0.75,0) .. (-0.45,0) -- (0.45,0)
+        .. controls (0.75,0) and (0.95,-0.2) .. (1.3,-0.95);
+    \draw[quark] (-2.2,0.95) -- (2.2,0.95);
+    \draw[quark] (2.2,-0.95) -- (-2.2,-0.95);
+    \node[vertex] at (-1.3,0.95) {};  \node[vertex] at (1.3,-0.95) {};
+    \node[fc note,anchor=east] at (-2.2,0.95) {$\boldsymbol x_0$};
+    \node[fc note,anchor=east] at (-2.2,-0.95) {$\boldsymbol x_1$};
+    \node[fc note,anchor=south west] at (0.12,0.98) {$V_{\boldsymbol x_0}$};
+    \node[fc note,anchor=north west] at (0.12,-0.98) {$V^\dagger_{\boldsymbol x_1}$};
+    \node[fc note,anchor=south east,text=green!35!black] at (-0.15,0.05) {$\boldsymbol x_2$};
+    \node[fc note,anchor=north west] at (0.15,-0.05) {$U_{\boldsymbol x_2}$};
+    \node[fc note,anchor=south,text=orange!40!black] at (0,1.47) {冲击波（靶）};
+    \draw[fc ax] (-2.2,-1.85) -- (2.3,-1.85) node[right,fc note,text=black] {$x^-$};
+    \draw[gray!60!black,line width=0.5pt] (0,-1.78) -- (0,-1.92);
+    \node[fc tiny,anchor=north] at (0,-1.9) {$0$};
+    \node[fc lab] at (0,-2.65) {(b)\ 软胶子在$\boldsymbol x_2$穿过冲击波};
+  \end{scope}
+  % =====================================================================
+  % (c) transverse plane: the dipole (x0,x1) splits into (x0,x2), (x2,x1)
+  % =====================================================================
+  \begin{scope}[shift={(10.75,0.2)}]
+    \coordinate (X0) at (-0.55,0.95);  \coordinate (X1) at (0.15,-1.0);  \coordinate (X2) at (0.7,0.25);
+    \draw[gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.8pt] (X0) -- (X1);
+    \draw[blue!55!black,line width=0.9pt] (X0) -- (X2) -- (X1);
+    \fill (X0) circle[radius=1.8pt];  \fill (X1) circle[radius=1.8pt];
+    \fill[green!45!black] (X2) circle[radius=1.8pt];
+    \node[fc note,anchor=south east] at (X0) {$\boldsymbol x_0$};
+    \node[fc note,anchor=north east] at (X1) {$\boldsymbol x_1$};
+    \node[fc note,anchor=west,text=green!35!black] at (X2) {$\boldsymbol x_2$};
+    \node[fc tiny,anchor=east] at ($(X0)!0.5!(X1)$) {$x_{01}$};
+    \node[fc tiny,anchor=south west] at ($(X0)!0.5!(X2)$) {$x_{02}$};
+    \node[fc tiny,anchor=north west] at ($(X2)!0.5!(X1)$) {$x_{12}$};
+    \node[fc note] at (0.1,-1.75) {核$\dfrac{x_{01}^2}{x_{02}^2\,x_{12}^2}$};
+    \node[fc lab] at (0.1,-2.85) {(c)\ 横向平面};
+  \end{scope}
+  % =====================================================================
+  % S matrix and BK equation (VF-MISC-4)
+  % =====================================================================
+  \node[fc lab] at (5.0,-3.65) {$S_{01}=\dfrac1{N_c}\Tr\big[V_{\boldsymbol x_0}V^\dagger_{\boldsymbol x_1}\big]$，\quad $N_{01}=1-S_{01}$，\quad $\bar\alpha_s=\dfrac{N_c\alpha_s}{\pi}$};
+  \node[fc lab] at (5.0,-4.7) {$\partial_YN_{01}=\dfrac{\bar\alpha_s}{2\pi}\displaystyle\int\dd^2x_2\,\frac{x_{01}^2}{x_{02}^2x_{12}^2}\big[N_{02}+N_{12}-N_{01}-N_{02}N_{12}\big]$};
+\end{tikzpicture}
+\caption{偶极子图像与 BK 演化（示意；靶强子沿$+z$运动，Lorentz 收缩为位于$x^-=0$的冲击波，偶极子沿$-z$运动，以$x^-$为光锥时间；(a)、(b) 中竖直方向示意横向位置）。
+(a)~虚光子分裂为横向尺寸$r=|\boldsymbol x_0-\boldsymbol x_1|$的$q\bar q$偶极子（箭头为费米子数流向），夸克与反夸克穿过冲击波时分别获得 Wilson 线$V_{\boldsymbol x_0}$、$V^\dagger_{\boldsymbol x_1}$（$V_{\boldsymbol x}=\mathrm P\exp[\ii g\int\dd x^-A^+(x^-,\boldsymbol x)]$），偶极子的$S$矩阵为$S_{01}$。
+(b)~偶极子发射的软胶子（绿色）在横向位置$\boldsymbol x_2$穿过冲击波（伴随表示的$U_{\boldsymbol x_2}$；图中只画出一种附着方式）；(c)~在大$N_c$下它把偶极子$(\boldsymbol x_0,\boldsymbol x_1)$（虚线）分裂为$(\boldsymbol x_0,\boldsymbol x_2)$与$(\boldsymbol x_2,\boldsymbol x_1)$，权重为偶极子核；两个子偶极子同时散射给出 BK 方程的非线性项$-N_{02}N_{12}$（VF-MISC-4，\cref{thm:smallx-bk}）。
+这是 Regge（程函）展开中固定对数精度下的结果，不是 QCD 的领头幂次定理。}
+\label{fig:smallx-dipole}
+\end{figure}
+%%% END fig:smallx-dipole

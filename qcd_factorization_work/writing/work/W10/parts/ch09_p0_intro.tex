@@ -1,0 +1,37 @@
+% =====================================================================
+%  第 9 章  全阶因子化证明的一般方法（ch09_method.tex；writer W10）
+% =====================================================================
+\chapter{全阶因子化证明的一般方法}\label{ch:method}
+
+第二部分的三章给出了因子化的“严格核心”：$e^+e^-$ 总截面在微扰论每一阶红外有限（\cref{thm:ee-R-finite}）；对 DIS 的矩，算符乘积展开（OPE）把因子化化为对算符矩阵元的陈述；对部分子分布，算符定义
+（\cref{def:pdf-quark,def:pdf-gluon}）独立于任何过程而存在。然而，DIS 的 $x$ 空间结构函数、Drell--Yan 截面、单举湮灭、
+半单举 DIS 以及一切没有 OPE 可用的过程，其因子化只能在动量空间中逐图地论证：先找出 Feynman 积分的领头区域，
+在每个区域中作近似，用 Ward 恒等式把纵向胶子收拢成 Wilson 线，处理 Glauber 区，最后用减除法避免区域重叠造成的重复计数。
+本章把这一套步骤整理成\emph{一台可以反复使用的证明机器}，并逐步说明每一步在什么层次上是严格的。
+
+本章的结论分三类（见下框）：在所用层次上完整证明的陈述（Ward 恒等式的单胶子与树图情形、$i0$ 相容性、单胶子交换、软因子的幺正性、组合学引理，以及三个条件定理）；全阶论证（\tagA），其中最重要的是减除定理与因子化模板定理（\cref{thm:method-template}）；以及明确列出、本章不证明的输入——附录~N 与附录~O 的编号假设，每个 \tagA 结论都在其「地位与缺口」段落中点名它所依赖的假设。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:method-ward-elementary,lem:method-ward-abelian,prop:method-ward-one,prop:method-ward-tree,lem:method-i0-compat,prop:method-glauber-oneloop,ex:method-naive-induction}（\tagR，$R_{\mathrm{PT}}$）；
+\cref{lem:method-soft-unitarity}（\tagR，$R_{\mathrm{def}}$）；\cref{prop:method-scale-scheme}（\tagR，$R_{\mathrm{PT}}$）；
+数学结果：\cref{lem:method-meets,lem:method-covering,lem:method-telescoping,lem:method-gy,prop:method-chains,lem:method-pairing,prop:method-product,lem:method-no-pole}；
+条件定理：\cref{lem:method-local-accuracy}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-envelope,asm:appN-separation}）、
+\cref{cor:method-removing-eps}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-contour}）与附录~N 的\cref{thm:appN-subtraction}（\tagR，$R_{\mathrm{cond}}$）。\par
+\textbf{给出全阶论证：}\cref{lem:method-collinear-accuracy,lem:method-soft-accuracy,prop:method-gy-suppression}（\tagA）；
+\cref{lem:method-ward-multi}（\tagA；瓶颈\cref{asm:appN-ward-product}）；\cref{prop:method-collinear-wilson,prop:method-soft-wilson}（\tagA）；
+\cref{thm:method-subtraction}（\tagA；瓶颈\cref{asm:appN-collins}）；\cref{prop:method-fsi}（\tagA；\cref{asm:appN-cutsum,asm:appO-lcopt}）；
+\cref{prop:method-glauber-deformation}（\tagA；\cref{asm:appO-deformation}）；\cref{thm:method-template}（\tagA）。\par
+\textbf{没有证明：}积分范数意义下的全阶幂次计数（\cref{asm:appN-envelope,asm:appN-separation}）；含鬼场的非阿贝尔多胶子 Ward 恒等式的完整组合学，
+以及其中被明确假定的多定域光线算符的 BRST 分类（具名缺口\cref{asm:appN-brst-nonlocal}，\tagC）；Glauber 区的一般情形
+（\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-rewritten-cs}）；单个链项的可积性——它一般\emph{不成立}（\cref{ex:method-naive-induction}）。
+\end{tcolorbox}
+
+记号：光锥分量 $v^\pm=(v^0\pm v^3)/\sqrt2$；$A$ 沿 $+z$、$B$ 沿 $-z$ 运动；$n_A=(1^+,0^-,\mathbf 0_T)$，$n_A\cdot v=v^-$，$n_B=(0^+,1^-,\mathbf 0_T)$，$n_B\cdot v=v^+$（\cref{def:prelim-lightfront}；$n_B$ 即 Collins 的 $w_2$）。$\lambda$ 是幂次参数（红外正规子与硬标度之比，例如 $m/Q$），
+$L\equiv\ln(1/\lambda)$；各区域的标度是\cref{def:ir-scalings}的标度。维数正规化取 $D=4-2\varepsilon$，标量模型例子中的圈积分测度为
+$\mu^{2\varepsilon}\int\dd^Dk/(\ii\pi^{D/2})$。协变导数 $D_\mu=\partial_\mu-\ii gA^a_\mu t^a$，夸克—胶子顶点 $\ii g\gamma^\mu t^a$；
+Collins（2011）的耦合常数与此差一个符号（他的 $D=\partial+\ii gA$，故 $g_{\rm Collins}=-g$，其 Wilson 线为 $P\exp(-\ii g\int n\cdot A)$），凡引用其公式处都已换算。
+Wilson 线 $W[b,a]=P\exp\bigl(\ii g\int_a^b\dd z^\mu A^a_\mu t^a\bigr)$（离 $b$ 近的点在左），其动量空间规则见\cref{prop:prelim-wilson-rules}。
+
+%%FIG fig:method-flowchart%%

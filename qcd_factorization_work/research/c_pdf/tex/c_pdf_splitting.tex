@@ -1,0 +1,72 @@
+% ===================================================================================
+% c_pdf_splitting.tex  —  领头阶分裂函数、δ 项、求和规则、Mellin 矩与反常维度约定
+% （research/c_pdf，对应 DERIVATION.md §4；验证脚本 scripts/s3_splitting.py）
+% ===================================================================================
+\section{领头阶分裂函数、求和规则与 Mellin 矩}\label{sec:cpdf-split}
+
+\paragraph{$D$ 维实辐射核。}
+在光锥规范 $A^+=0$（$W=1$）中，对无质量在壳部分子 $j$ 与一个末态实部分子，算符定义给出
+$f^{\mathrm{real}}_{i/j}(\xi)=\frac{g^2}{(2\pi)^{D-1}}\int\dd^{D-2}l_{\mathrm T}\,\hat P_{ij}(\xi;\varepsilon)/l_{\mathrm T}^2$
+（$D=4$ 时即 $\frac{\as}{2\pi}\hat P_{ij}\int\dd l_{\mathrm T}^2/l_{\mathrm T}^2$），其中（夸克自旋取 $\frac12$ 平均，胶子极化取 $\frac1{D-2}$ 平均）
+\begin{equation}\label{eq:cpdf-Phat}
+\begin{aligned}
+\hat P_{qq}&=C_F\Big[\frac{1+z^2}{1-z}-\varepsilon(1-z)\Big], &
+\hat P_{gq}&=C_F\Big[\frac{1+(1-z)^2}{z}-\varepsilon z\Big],\\
+\hat P_{qg}&=T_F\Big[1-\frac{2z(1-z)}{1-\varepsilon}\Big], &
+\hat P_{gg}&=2C_A\Big[\frac{z}{1-z}+\frac{1-z}{z}+z(1-z)\Big],
+\end{aligned}
+\end{equation}
+与 Catani--Seymour 的自旋平均 CDR 核一致。
+
+\begin{theorem}[领头阶分裂函数]\tagR\label{thm:cpdf-split}
+$\MSbar$ 方案下，$P_{ij}$ 在 $z<1$ 处等于 $\hat P_{ij}(z;0)$，在 $z=1$ 处由虚修正补全：
+\begin{equation}\label{eq:cpdf-Pij}
+\begin{aligned}
+P_{qq}(z)&=C_F\Big[\frac{1+z^2}{1-z}\Big]_+=C_F\Big[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\Big],\\
+P_{qg}(z)&=T_F\big[z^2+(1-z)^2\big],\qquad P_{gq}(z)=C_F\,\frac{1+(1-z)^2}{z},\\
+P_{gg}(z)&=2C_A\Big[\frac{z}{(1-z)_+}+\frac{1-z}{z}+z(1-z)\Big]+\frac{11C_A-4n_fT_F}{6}\,\delta(1-z).
+\end{aligned}
+\end{equation}
+$\delta(1-z)$ 的系数 $\frac{11C_A-4n_fT_F}{6}=\frac{\beta_0}{2}$ 既可由动量守恒得到，也可由局域算符计算中的 $\delta Z_3$ 直接得到（\cref{sec:cpdf-anomdim}），两者一致。
+\end{theorem}
+
+\paragraph{求和规则。}
+夸克数守恒要求 $\int_0^1P_{qq}=0$，由此 $b_q=C_F\int_0^1(1+z)\,\dd z=\frac32C_F$。
+动量（胶子列）：$\int_0^1z\,[P_{gg}+2n_fP_{qg}]=0$。代入 $\int_0^1\frac{z^2}{(1-z)_+}=-\frac32$，$\int_0^1(1-z)=\frac12$，$\int_0^1z^2(1-z)=\frac1{12}$，
+$2n_fT_F\int_0^1z[z^2+(1-z)^2]=\frac23n_fT_F$，得 $b_g=\frac{11}{6}C_A-\frac23n_fT_F$。
+动量（夸克列）：$\int_0^1z\,[P_{qq}+P_{gq}]=-\frac43C_F+\frac43C_F=0$，这是一个不含任何待定参数的独立检验。
+电荷共轭给出 $P_{\bar q\bar q}=P_{qq}$，$P_{\bar qg}=P_{qg}$，$P_{g\bar q}=P_{gq}$；领头阶 $P_{q\bar q}=0$。
+
+\paragraph{Mellin 矩。}
+记 $\gamma_{ij}(N)=\int_0^1\dd z\,z^{N-1}P_{ij}(z)$，矩 $a_i(N)=\int_0^1x^{N-1}f_i$ 满足
+$\frac{\dd a_i}{\dd\ln\mu^2}=\frac{\as}{2\pi}\sum_j\gamma_{ij}(N)a_j$。由 $\int_0^1\frac{z^{N-1}-1}{1-z}\dd z=-S_1(N-1)$ 得
+\begin{equation}\label{eq:cpdf-gammas}
+\begin{aligned}
+\gamma_{qq}(N)&=C_F\Big[\frac32+\frac{1}{N(N+1)}-2S_1(N)\Big],\\
+\gamma_{qg}(N)&=T_F\,\frac{N^2+N+2}{N(N+1)(N+2)},\qquad
+\gamma_{gq}(N)=C_F\,\frac{N^2+N+2}{(N-1)N(N+1)},\\
+\gamma_{gg}(N)&=2C_A\Big[\frac{1}{N(N-1)}+\frac{1}{(N+1)(N+2)}-S_1(N)\Big]+\frac{11C_A-4n_fT_F}{6},
+\end{aligned}
+\end{equation}
+其中 $S_1(N)=\sum_{j=1}^N\frac1j$ 延拓为 $\psi(N+1)+\gamma_E$（唯一性见 \cref{sec:cpdf-unique}）。
+特别地 $\gamma_{qq}(1)=0$；$N=2$ 时单态矩阵 $\begin{pmatrix}\gamma_{qq}&2n_f\gamma_{qg}\\ \gamma_{gq}&\gamma_{gg}\end{pmatrix}
+=\begin{pmatrix}-\frac43C_F&\frac23n_fT_F\\ \frac43C_F&-\frac23n_fT_F\end{pmatrix}$ 的两列之和均为零，本征值为 $0$ 与 $-\frac{4C_F+2n_fT_F}{3}$；
+对 SU(3) 渐近动量份额为 $\langle x\rangle_\Sigma\to\frac{3n_f}{16+3n_f}$，$\langle x\rangle_g\to\frac{16}{16+3n_f}$。
+大 $N$ 时 $\gamma_{qq}\to-2C_F(\ln N+\gamma_E)+\frac32C_F$，$\gamma_{gg}\to-2C_A(\ln N+\gamma_E)+\frac{\beta_0}{2}$。
+
+\begin{table}[htbp]
+\centering
+\caption{领头阶非单态反常维度在常见约定之间的换算}\label{tab:cpdf-conv}
+\begin{tabular}{@{}lll@{}}
+\toprule
+约定 & 定义 & 与本书 $\gamma(N)$ 的关系\\
+\midrule
+本书 $=$ ESW & $P=\frac{\as}{2\pi}P^{(0)}+\cdots$，$\gamma=\int z^{N-1}P^{(0)}$ & 相同\\
+MVV & $\frac{\dd f}{\dd\ln\mu^2}=\sum_n a_s^{n+1}P^{(n)}\otimes f$，$a_s=\frac{\as}{4\pi}$， & $\gamma^{(0)}_{\mathrm{MVV}}=-2\gamma$\\
+    & $\gamma^{(n)}=-\int x^{N-1}P^{(n)}$ & \\
+算符（GW/GP） & $\mu\frac{\dd O_N}{\dd\mu}=-\gamma_O\,O_N$ & $\gamma_O=-\frac{\as}{\pi}\gamma(N)$\\
+\bottomrule
+\end{tabular}
+\end{table}
+例如 $\gamma^{(0)}_{\mathrm{ns}}=C_F\big[4S_1(N)-3-\frac{2}{N(N+1)}\big]$（MVV），
+$\gamma_O=\frac{\as}{2\pi}C_F\big[1-\frac{2}{N(N+1)}+4\sum_{j=2}^N\frac1j\big]$（Gross--Wilczek，Georgi--Politzer）。

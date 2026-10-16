@@ -1,0 +1,285 @@
+% =====================================================================================
+%  c_glauber_snippets.tex —— Glauber 区、因子化的破坏与色代数（研究阶段素材，供第 10、12 章转录）
+%  依赖：preamble_fact.tex（\ii \dd \ee \as \kT \bT \qT \order \tagR \tagA \tagP \tagC \tagV, proofsketch）。
+%  所有公式均有脚本核验（见 ../DERIVATION.md 与 ../logs/*.log，检验编号写在 % 注释中）。
+%  约定：度规 (+,-,-,-)；v^\pm=(v^0\pm v^3)/\sqrt2；D_\mu=\partial_\mu-\ii g A^a_\mu t^a；
+%        标量顶点 +\ii e(p+p')^\mu；胶子传播子 -\ii g_{\mu\nu}/(k^2-m_g^2+\ii0)；Catani--Seymour 色荷。
+% =====================================================================================
+
+\section{Glauber 区：Drell--Yan 中的夹挤与相消}\label{sec:glb-dy}
+
+强子 A 沿 $+z$、B 沿 $-z$ 运动，$\lambda=m/Q$。各动量区域的标度为
+\begin{equation}\label{eq:glb-scalings}
+\text{A 共线：}(1,\lambda^2,\lambda)Q,\qquad \text{B 共线：}(\lambda^2,1,\lambda)Q,\qquad
+\text{软：}(\lambda,\lambda,\lambda)Q,\qquad \text{Glauber：}(\lambda^2,\lambda^2,\lambda)Q ,
+\end{equation}
+即 Glauber 动量满足 $|k^+k^-|\ll \kT^2$。在 A、B 两个旁观者之间交换一个 Glauber 胶子，相对于不交换的图，积分测度
+$\sim\lambda^6Q^4$，胶子传播子 $\sim\lambda^{-2}Q^{-2}$，两条新出现的旁观者传播子 $\sim\lambda^{-4}Q^{-4}$，顶点与大分量耦合
+$\sim Q^2$，总标度为 $\lambda^0Q^0$：Glauber 交换是领头幂次的。% [P5]
+
+\subsection{单胶子交换的极点结构}
+
+设交换动量 $k$ 由 B 侧的线 Y 流入 A 侧的线 X；末态旁观者动量 $p_A'$、$p_B'$ 在壳，活跃部分子
+$l_a=P_A-p_A'$、$l_b=P_B-p_B'$。在 Glauber 区内到领头幂次（相对误差 $\order{\lambda^2}$）
+\begin{equation}\label{eq:glb-dens}
+\begin{aligned}
+(p_A'-k)^2-m_s^2+\ii0&=-2p_A'^{+}(k^--c_A)+\ii0, &\quad c_A&=\frac{2\,\bm p'_{A,\mathrm T}\!\cdot\bm k_{\mathrm T}-\kT^2}{2p_A'^{+}},\\
+(l_a+k)^2-m_a^2+\ii0&=2l_a^{+}(k^--d_A)+\ii0, & d_A&=\frac{(\bm l_{a,\mathrm T}+\bm k_{\mathrm T})^2+m_a^2-2l_a^+l_a^-}{2l_a^{+}},\\
+(p_B'+k)^2-m_s^2+\ii0&=2p_B'^{-}(k^+-c_B)+\ii0, & c_B&=\frac{2\,\bm p'_{B,\mathrm T}\!\cdot\bm k_{\mathrm T}+\kT^2}{2p_B'^{-}},\\
+(l_b-k)^2-m_b^2+\ii0&=-2l_b^{-}(k^+-d_B)+\ii0, & d_B&=\frac{2l_b^+l_b^--(\bm l_{b,\mathrm T}-\bm k_{\mathrm T})^2-m_b^2}{2l_b^{-}} .
+\end{aligned}
+\end{equation}
+于是 $k^-=c_A+\ii0$（上半平面）、$k^-=d_A-\ii0$（下半平面）、$k^+=c_B-\ii0$（下半平面）、$k^+=d_B+\ii0$（上半平面），
+四个极点都距原点 $\order{\lambda^2Q}$；胶子极点 $k^-=(\kT^2+m_g^2-\ii0)/(2k^+)$ 在 $|k^-|\sim Q$ 处，不在 Glauber 区内。
+
+\begin{proposition}[单胶子交换的 Glauber 夹挤 \tagR]\label{prop:glb-pinch}
+对上述单胶子交换（领头幂次传播子），各连接类的围道性质如\cref{tab:glb-poles}所示：只有旁观者–旁观者交换在 $k^-$ 与
+$k^+$ 两个变量上同时被夹挤；其余情形至少有一个光锥分量可以移出 Glauber 区。
+\end{proposition}
+% [P1a-g, SS1a]
+
+\begin{table}[htbp]\centering
+\caption{单胶子交换的极点位置（$k$ 由 Y 流入 X）}\label{tab:glb-poles}
+\begin{tabular}{@{}llllp{4.6cm}@{}}\toprule
+X（A 侧） & Y（B 侧） & $k^-$ 极点（A 的线） & $k^+$ 极点（B 的线） & 结论\\\midrule
+旁观者 $s_A$ & 旁观者 $s_B$ & 上、下：被夹挤 & 下、上：被夹挤 & Glauber 夹挤，不能形变\\
+旁观者 $s_A$ & 活跃 $b$ & 被夹挤 & 仅 $b$（上）：自由 & $k^+$ 移入下半平面至 $|k^+|\sim Q$，$b$ 化为 $f_A$ 中指向过去的 Wilson 线\\
+活跃 $a$ & 旁观者 $s_B$ & 仅 $a$（下）：自由 & 被夹挤 & 镜像情形\\
+活跃 $a$ & 活跃 $b$ & 仅 $a$ & 仅 $b$ & 无共线夹挤（属软因子/硬顶点）\\\bottomrule
+\end{tabular}
+\end{table}
+
+判别法则：动量为 $l+sk$、带大正分量的线，其 $k^-$ 极点当 $s=+1$ 时在下半平面、$s=-1$ 时在上半平面（与质量和虚度无关）。
+因此 $k$ 所经过的一个共线子图的各线若全为初态线或全为末态线，极点在同一侧，可以形变；Drell--Yan 中每个强子子图既有
+初态活跃线又有末态旁观者线，故 $k^-$ 被 A 夹挤、$k^+$ 被 B 夹挤。DIS 中靶子图同样夹挤 $k^-$，但另一侧只有末态的
+流喷注线，$k^+$ 可以形变（末态相互作用可以移开）；$e^+e^-$ 中所有共线线都是末态线，不出现夹挤。% [P1f,g, P4, SS5]
+
+\subsection{旁观者–旁观者交换的精确计算与相消}
+
+\begin{proposition}[旁观者–旁观者 Glauber 交换核 \tagR]\label{prop:glb-kernel}
+在上述模型中（旁观者荷 $e_A,e_B$），领头幂次下
+\begin{equation}\label{eq:glb-kernel}
+\mathcal M^{(1)}_{SS}(p_A',p_B')=\int\!\frac{\dd^2k_{\mathrm T}}{(2\pi)^2}\;V(\kT)\;\mathcal M^{(0)}(p_A'-k_{\mathrm T},\,p_B'+k_{\mathrm T}),
+\qquad V(\kT)=\frac{-\ii\,e_Ae_B}{\kT^2+m_g^2},
+\end{equation}
+它是纯虚、对 $\bm k_{\mathrm T}$ 为偶的核；非阿贝尔情形 $e_Ae_B\to g^2\,\bm T_A\!\cdot\!\bm T_B$（厄米色矩阵）。
+在冲量参数空间（$\mathcal M(\bm\Delta)=\int\dd^2b\,\ee^{-\ii\bm\Delta\cdot\bm b}\tilde{\mathcal M}(\bm b)$，
+$\bm\Delta=(\bm p'_{B,\mathrm T}-\bm p'_{A,\mathrm T})/2$）
+\begin{equation}\label{eq:glb-chi}
+\tilde{\mathcal M}^{(1)}=\ii\chi(b)\,\tilde{\mathcal M}^{(0)},\qquad
+\chi(b)=-\frac{e_Ae_B}{2\pi}K_0(m_gb)\xrightarrow{m_g\to0}\frac{e_Ae_B}{2\pi}\Big[\ln\frac{m_gb}{2}+\gamma_E\Big].
+\end{equation}
+\end{proposition}
+% [SS1b-e, SS3a,b; 与 c_dy 的独立计算一致]
+\begin{proof}
+$k^-$ 积分的被积函数以 $1/(k^-)^2$ 衰减，在上半平面闭合只拾取 A 旁观者极点：
+\[
+\int\!\frac{\dd k^-}{2\pi}\,(\ii e_A\,2p_A'^+)\,\frac{\ii}{-2p_A'^+(k^--c_A)+\ii0}\,\frac{\ii}{D_a}=(\ii e_A)\Big[\frac{\ii}{D_a}\Big]_{k^-=c_A},
+\]
+即旁观者被置于壳上、其余因子恰为旁观者动量平移后的树图振幅；$k^+$ 在下半平面闭合同理给出 $(\ii e_B)$。
+乘以 Glauber 区的胶子传播子 $-\ii/(k^2-m_g^2)\simeq \ii/(\kT^2+m_g^2)$ 即得 \eqref{eq:glb-kernel}；
+$\int\frac{\dd^2k}{(2\pi)^2}\frac{\ee^{-\ii\bm k\cdot\bm b}}{k^2+m_g^2}=\frac{K_0(m_gb)}{2\pi}$ 给出 \eqref{eq:glb-chi}。
+\end{proof}
+
+\begin{proposition}[单胶子层次的幺正性相消 \tagR]\label{prop:glb-cancel}
+胶子位于末态切割左侧与右侧的两张切割图之和
+$\int\dd^2\Delta\,2\,\mathrm{Re}\big[\mathcal M^{(1)}\mathcal M^{(0)*}\big]=0$，但逐点（固定 $\bm\Delta$）不为零。
+在阿贝尔程函近似下 $n$ 次交换给出 $(\ii\chi)^n/n!$，$\tilde{\mathcal M}=\ee^{\ii\chi(b)}\tilde{\mathcal M}^{(0)}$，
+故对任何不测量 $\bm\Delta$ 的观测量（Drell--Yan 的单举截面，乃至固定 $\qT=-(\bm p'_{A,\mathrm T}+\bm p'_{B,\mathrm T})$ 的截面）
+旁观者–旁观者交换完全相消。
+\end{proposition}
+% [SS3c-e, U3a,b]
+\begin{proof}
+记 $C(\bm k)=\int\dd^2\Delta\,\mathcal M^{(0)}(\bm\Delta+\bm k)\mathcal M^{(0)*}(\bm\Delta)$，则 $C(-\bm k)=C(\bm k)^*$；利用 $V^*=-V$、
+$V(-\bm k)=V(\bm k)$，两切割之和为 $\int\frac{\dd^2k}{(2\pi)^2}V(\bm k)[C(\bm k)-C(-\bm k)]=0$。全阶形式由 Parseval 等式与 $|\ee^{\ii\chi}|=1$ 得到。
+\end{proof}
+
+\begin{lemma}[末态切割位置求和恒等式 \tagR]\label{lem:glb-cutsum}
+设光前能量分母 $a_f=E-d_f$（$f=1,\dots,N$），振幅侧为 $1/(a+\ii\varepsilon)$，共轭侧为 $1/(a-\ii\varepsilon)$，切割处为
+$2\varepsilon/(a^2+\varepsilon^2)\to2\pi\delta(a)$，则对任意 $\varepsilon>0$ 精确成立
+\begin{equation}\label{eq:glb-cutsum}
+\sum_{c=1}^N\Big[\prod_{f>c}\frac1{a_f-\ii\varepsilon}\Big]\frac{2\varepsilon}{a_c^2+\varepsilon^2}\Big[\prod_{f<c}\frac1{a_f+\ii\varepsilon}\Big]
+=\ii\prod_{f=1}^N\frac1{a_f+\ii\varepsilon}-\ii\prod_{f=1}^N\frac1{a_f-\ii\varepsilon},
+\end{equation}
+对 $E$ 积分后 $\int\frac{\dd E}{2\pi}(\cdots)=\delta_{N1}$：末态相互作用在对切割求和后相消。
+\end{lemma}
+% [U1, U1-int]
+\begin{proof}
+$\frac{2\varepsilon}{a^2+\varepsilon^2}=\ii\big[\frac1{a+\ii\varepsilon}-\frac1{a-\ii\varepsilon}\big]$，代入后求和逐项相消（望远镜求和）。$N\ge2$ 时右边每一乘积的极点
+全在同一侧且以 $E^{-N}$ 衰减，积分为零；$N=1$ 时给出 $\int\frac{\dd E}{2\pi}2\pi\delta(E-d_1)=1$。
+\end{proof}
+
+\begin{remark}[双胶子与非阿贝尔交换]
+（i）梯形与交叉梯形的色因子不同：$L=c^2$，$X=c^2+\tfrac{C_A}{2}c$，$c=\bm T_1\!\cdot\!\bm T_2$（对任意表示成立）；阿贝尔情形中
+“盒图＋交叉盒图”在被积函数层次合成 $\delta(k^+)\delta(k^-)$ 从而指数化，QCD 中此操作不再成立（Rothstein--Stewart 2016）。
+采用其快度正规子时交叉 Glauber 图为零，梯形图指数化为 $\ee^{\ii\varphi(b)}$，$\varphi$ 为厄米色矩阵；非阿贝尔的交叉盒图部分
+属于软区。（ii）$U=\ee^{\ii\chi\,\bm T_A\cdot\bm T_B}$ 幺正，故求色迹、对 $\bm\Delta$ 积分后的单举相消仍成立。（iii）但
+$[\bm T_A\!\cdot\!\bm T_B,\bm T_A\!\cdot\!\bm T_j]\neq0$：Glauber 相位与涉及第三条带色线的软交换不对易，阿贝尔论证在振幅层次失效；
+这正是非单举观测量中因子化破坏（Forshaw--Seymour--Siódmok；Schwartz--Yan--Zhu 2018：领头破坏来自至少含一个软胶子、
+带 Lipatov 顶点的图）的根源。（iv）幺正性只保护迹：与 $\bm T_A\!\cdot\!\bm T_B$ 不对易的色投影（如快度隙所要求的色单态条件）
+会被 Glauber 相位改变。
+\end{remark}
+% [U5a,b, SS4a-e, U4]
+
+Drell--Yan 单举截面中 Glauber 区的处理（Bodwin 1985；Collins--Soper--Sterman 1985、1988）为 \tagA：
+其关键步骤即 \cref{prop:glb-pinch,prop:glb-kernel,prop:glb-cancel,lem:glb-cutsum} 所示的“夹挤只出现在旁观者–旁观者交换中，
+而旁观者–旁观者交换在对末态切割求和后相消，剩余初态极点同侧、围道可移出 Glauber 区”。
+
+% =====================================================================================
+\section{强子–强子产生背靠背强子：TMD 因子化的破坏}\label{sec:glb-tmdbreak}
+
+\begin{definition}[标准与广义 TMD 因子化]\label{def:glb-gentmd}
+对 $h_1+h_2\to H_3+H_4+X$（$H_3,H_4$ 近似背靠背，测量横动量失衡 $\qT\ll P_{\mathrm T}$）：
+\emph{标准} TMD 因子化指 $\dd\sigma=H\otimes\Phi_{H_1}\otimes\Phi_{H_2}\otimes\Delta_{H_3}\otimes\Delta_{H_4}$（另含软因子）$+$幂次修正，
+其中各 TMD 关联函数与 SIDIS、Drell--Yan、$e^+e^-$ 中的相同（T 奇函数允许按 Wilson 线时间反演规则变号）。
+\emph{广义} TMD 因子化（Bacchetta--Bomhof--Mulders--Pijlman；Bomhof--Mulders--Pijlman）指
+\begin{equation}\label{eq:glb-gentmd}
+\dd\sigma=\sum_{j,c}H_{j,c}\otimes\Phi^{[\mathrm{WL}_{c,j1}]}_{H_1,j}\otimes\Phi^{[\mathrm{WL}_{c,j2}]}_{H_2,j}\otimes
+\Delta^{[\mathrm{WL}_{c,j3}]}_{H_3,j}\otimes\Delta^{[\mathrm{WL}_{c,j4}]}_{H_4,j}+\text{幂次修正},
+\end{equation}
+其中 $j$ 为子过程、$c$ 为色流路径；每个关联函数都是\emph{单个}强子的矩阵元，两场之间嵌入依赖于过程与色流的规范不变
+Wilson 线结构，且不出现 $\langle H_1H_2|\cdots|H_1H_2\rangle$ 型矩阵元（Rogers--Mulders 2010 式 (3)）。
+\end{definition}
+
+\begin{proposition}[胶子极点色因子的闭合公式 \tagR]\label{prop:glb-CG}
+在程函近似下，来自极化强子旁观者的胶子与夸克线连接的极点部分对入射与出射夸克系数相同、对反夸克相反；于是对胶子极点
+（Sivers 型 T 奇项）以 SIDIS 为归一（$=+1$）的强度为
+\begin{equation}\label{eq:glb-CG}
+C_G=1+\frac{2\,\langle\bm T_a\!\cdot\!\bm T_b\rangle}{C_F},
+\end{equation}
+$a$ 为极化强子的入射部分子，$b$ 为另一入射部分子（Catani--Seymour 色荷）。特别地 SIDIS 给出 $+1$，Drell--Yan
+（$\bm T_a+\bm T_b=0$）给出 $-1$。
+\end{proposition}
+% [C1, C1n, C2, C5]
+\begin{proof}
+极点部分之和为色算符 $P=\sum_{\text{出}}\bm T_j-\sum_{\text{入},j\neq a}\bm T_j=-\bm T_a-2\bm T_b$（用色守恒），与强子 1 关联函数的
+耦合为 $-\bm T_a$；以 SIDIS（$P=-\bm T_a$）归一即得 \eqref{eq:glb-CG}。
+\end{proof}
+
+\begin{table}[htbp]\centering
+\caption{各夸克道的胶子极点强度（与 BBMP 2005 式 (B5)(B6)、QVY 2007 表 I 逐项一致，$N$ 任意）}\label{tab:glb-CG}
+\begin{tabular}{@{}lccc@{}}\toprule
+道 & $\langle\bm T_a\!\cdot\!\bm T_b\rangle$ & $C_G$ & SU(3)\\\midrule
+$qq'\to qq'$，$t$ 道平方（$tt^*$）及 $uu^*$ & $-1/N$ & $(N^2-5)/(N^2-1)$ & $1/2$\\
+$qq\to qq$，$tu^*$ 干涉 & $-(N^2+1)/(2N)$ & $-(N^2+3)/(N^2-1)$ & $-3/2$\\
+$q\bar q'\to q\bar q'$，$t$ 道平方 & $-(N^2-2)/(2N)$ & $-(N^2-3)/(N^2-1)$ & $-3/4$\\
+$q\bar q\to q'\bar q'$（$ss^*$）及 $st^*$ & $1/(2N)$ & $(N^2+1)/(N^2-1)$ & $5/4$\\\bottomrule
+\end{tabular}
+\end{table}
+
+以 $qq'\to qq'$ 的 $t$ 道图为例（QVY 2007 表 I）：$C_u=(N^2-1)/(4N^2)$，与 $h_2$ 入射部分子的初态相互作用 $C_I=-1/(2N^2)$，与出射
+部分子 $P_1$、$P_2$ 的末态相互作用 $C_{F1}=-1/(4N^2)$、$C_{F2}=(N^2-2)/(4N^2)$；相对 Born 为 $-2/(N^2-1)$、$-1/(N^2-1)$、
+$(N^2-2)/(N^2-1)$（SU(3)：$-\tfrac14,-\tfrac18,\tfrac78$），和为 $(N^2-5)/(N^2-1)$。$C_G-1=2\langle\bm T_a\!\cdot\!\bm T_b\rangle/C_F$
+是强子 1 的部分子与强子 2 的部分子之间的色关联——这种“纠缠”是任何只附着于强子 1 的过程无关 Wilson 线（只能给出 $\pm1$）
+无法再现的。
+
+\begin{proposition}[Collins 2007 的双胶子反常（阿贝尔模型）\tagR]\label{prop:glb-C07}
+在 Collins--Qiu 阿贝尔模型中，单胶子程函和为
+$E(l)=\frac{g_2}{l^++\ii0}+\frac{g_2}{-l^++\ii0}+\frac{g_1}{-l^++\ii0}=-\pi\ii(2g_2+g_1)\delta(l^+)-g_1\,\mathrm{PV}\frac1{l^+}$；
+双胶子（切割两侧）相对于标准 Wilson 线的反常为 $4\pi^2g_2(g_2+g_1)\delta(l_1^+)\delta(l_2^+)$，同侧时为其相反数。由此对强子 1 的 TMD 的
+反常贡献为 $I_1=\mathcal N F(\kT)^2$、$I_2=-\mathcal N\,G(\kT)/(\kT^2+m_q^2)$，
+\begin{equation}\label{eq:glb-FG}
+\begin{aligned}
+F(k)&=\frac{\pi}{\sqrt\Lambda}\ln\frac{s+\sqrt\Lambda}{s-\sqrt\Lambda},\qquad s=k^2+m_g^2+m_q^2,\quad \Lambda=s^2-4m_g^2m_q^2,\\
+G(k)&=\pi^2\!\int_0^1\!\!\dd x\!\int_0^1\!\!\dd y\;\frac{1}{x(1-x)\,[y(1-y)k^2+(1-y)m_g^2]+y\,[xm_q^2+(1-x)m_g^2]},
+\end{aligned}
+\end{equation}
+满足 $\int\dd^2\kT\,(I_1+I_2)=0$（共线因子化在此阶保持），但 $I_1+I_2$ 逐点非零且变号，且 $I_1(0)+I_2(0)$ 与 $-\mathcal N$ 同号。
+\end{proposition}
+% [A1-A4]
+\begin{proof}
+$b$ 空间中 $\tilde F=(2\pi)^2K_0(m_gb)K_0(m_qb)$、$\tilde G=(2\pi)^3K_0(m_gb)^2K_0(m_qb)$，由 Parseval 等式两者积分均为
+$\pm\mathcal N(2\pi)^3\int_0^\infty\dd b\,b\,K_0(m_gb)^2K_0(m_qb)^2$。取正测度 $\dd\mu=\frac{\dd^2b}{(2\pi)^2}2\pi K_0(m_qb)$，$\int\dd\mu=m_q^{-2}$，
+$F(0)=\int\dd\mu\,2\pi K_0(m_gb)$、$G(0)=\int\dd\mu\,[2\pi K_0(m_gb)]^2$，由 Cauchy--Schwarz 不等式 $F(0)^2<G(0)/m_q^2$（严格，因 $K_0(m_gb)$ 非常数）。
+\end{proof}
+
+\begin{theorem}[背靠背强子产生中 TMD 因子化的破坏 \tagV]\label{thm:glb-tmdbreak}
+对 $h_1+h_2\to H_3+H_4+X$ 的 TMD 敏感观测量，标准 TMD 因子化不成立；在非阿贝尔规范理论中，广义 TMD 因子化
+\eqref{eq:glb-gentmd} 亦不成立。
+\end{theorem}
+\begin{proofsketch}
+（1）Collins--Qiu 2007：单胶子时 T 奇项系数为 $g_1+2g_2$，其中 $g_2$ 部分不能写成荷为 $g_1$ 的 Wilson 线。
+（2）Collins 2007：双胶子时非极化截面出现反常 $4\pi^2g_2(g_2+g_1)\delta\delta$，与标准 Wilson 线不符，仅在对 $\kT$ 积分后相消；
+阿贝尔情形中这些项与广义因子化相容。（3）Rogers--Mulders 2010（SU($N_c$) 旁观者模型、色中性硬交换、双横向自旋不对称）：
+来自同一强子的双胶子图要求每个 TMD 含色迹 Wilson 圈，其单胶子项为零；而两强子各贡献一个胶子、连接到对方部分子线的图
+色因子为 $\mathrm{Tr}[t^at^b]\mathrm{Tr}[t^bt^a]=T_F^2(N_c^2-1)\neq0$，广义公式给出 $0$，矛盾。等价地，以单胶子色权重
+$C_1(X)$、$C_2(Y)$ 与双胶子色权重 $C(X,Y)$ 表示，SU($N$) 下 $\sum_{X,Y}C(X,Y)=C_F^2+4T_F^2(N^2-1)/N^2$，而任何每强子一套 Wilson
+线结构的公式给出 $(\sum_XC_1)(\sum_YC_2)=C_F^2$（SU(3)：$24/9$ 对 $16/9$）；U(1) 下二者恒等。
+\end{proofsketch}
+% [C3, C6, C6b]
+
+% =====================================================================================
+\section{衍射：DIS 中的证明与强子–强子中的失效}\label{sec:glb-diff}
+
+\begin{theorem}[衍射 DIS 的因子化（Collins 1998）\tagA]\label{thm:glb-ddis}
+\begin{equation}\label{eq:glb-ddis}
+F_2^{(D)}(x_{bj},Q,x_{\mathbb P},t)=\sum_iC_{2i}\otimes f_i^{D}+\text{$Q$ 的非领头幂次},\qquad
+x_{\mathbb P}=1-\frac{q\cdot p'}{q\cdot p},\ t=(p-p')^2,
+\end{equation}
+其中 $C_{2i}$ 与单举 DIS 相同，$f_i^D$ 为 Berera--Soper 衍射部分子密度（同一算符、末态限定含探测到的 $p'$），服从通常的 DGLAP
+方程。结论对靶碎裂区中任何相对于入射强子固定的末态条件、任何轻子诱导的硬过程成立。
+\end{theorem}
+\begin{proofsketch}
+与单举 DIS 唯一的不同在软胶子相消。软胶子连接末态喷注时只有末态极点，$k^+$ 可移出 Coulomb 区，得程函线
+$1/(k^+-\ii\varepsilon)$。软胶子 $r$ 连接靶子图 A 时，A 同时含初态线与末态线（且末态受衍射条件约束，不能对其切割求和），
+$r^-$ 被夹挤；但 $r^+$ 在软区附近只遇到末态喷注极点，A 的共线线把 $r^+$ 极点放在 $|r^+|\sim Q$ 处，于是可把 $r^+$ 移至
+$|r^+|\gg|r^-|$ 的非软区：小 $r^-$ 处不存在软区夹挤，两端都可用软近似。一般软子图中，沿负动量流反向重排 $r$ 直至入射线
+（质子或虚光子），再经 A 的大正动量线闭合，即可避免夹挤。这一步用到了另一入射粒子是轻子（无旁观者）。
+\end{proofsketch}
+% [D1a-c]
+
+\begin{proposition}[强子–强子硬衍射中证明失效 \tagV]\label{prop:glb-hhdiff}
+对 $A+B\to p'+X$（含硬子过程、探测到领头 $p'$ 或要求快度隙），A 系统与 B 的旁观者之间的软/Glauber 胶子在 $r^-$（被 A 的
+初、末态线）与 $r^+$（被 B 的初态活跃部分子与末态残余）上同时被夹挤；Drell--Yan 中消除这一夹挤的办法——对残余末态的
+全部切割求和——被衍射条件所禁止，故旁观者–旁观者 Glauber 交换不再相消，因子化不成立。
+\end{proposition}
+% [D1d,e]
+幺正性保证单举和不变，但把事件移出衍射样本：对与 Glauber 算符不对易的投影 $P$，$\langle i|U^\dagger PU|i\rangle<\langle i|P|i\rangle$
+（“快度隙存活概率” $<1$）。玩具模型中，色单态偶极子的单态存活概率在尺寸趋于零时为 $1$（色透明），否则小于 $1$，单态向
+八重态的泄漏对相位差为二次，系数为 $C_F/(2N)$。此外还可能存在“相干坡密子”机制（Collins--Frankfurt--Strikman 1993）。
+实验上，CDF Run I 衍射双喷注的衍射结构函数比由 HERA 衍射 DIS 推得的预言低一个量级（$\order{10}$）；HERA 衍射光生
+双喷注需乘约 $0.5$（H1 2007），而衍射 DIS 双喷注与因子化相符。% [D2a-f]
+
+% =====================================================================================
+\section{类空共线因子化的破坏与超领头对数}\label{sec:glb-sl}
+
+\begin{proposition}[一圈类空分裂矩阵（Catani--de Florian--Rodrigo 2012）\tagV]\label{prop:glb-sl1}
+一圈分裂矩阵为 $\mathrm{Sp}^{(1)}=\mathrm{Sp}^{(1)}_H+\bm I_C\,\mathrm{Sp}^{(0)}$，其中与类时情形唯一的差别是
+\begin{equation}\label{eq:glb-delta}
+\delta_{\rm TL}=-\frac1\epsilon(C_{12}+C_2-C_1)f(\epsilon;z_2)\ \longrightarrow\
+\bm\delta=\frac2\epsilon\sum_{j=3}^n\bm T_2\!\cdot\!\bm T_j\,f(\epsilon;z_2-\ii0\,s_{j2}),
+\end{equation}
+$f(\epsilon;1/x)=\epsilon^{-1}[{}_2F_1(1,-\epsilon;1-\epsilon;1-x)-1]$。类时区由色相干性（$\sum_{j\ge3}\bm T_j=-(\bm T_1+\bm T_2)$）恢复严格因子化；
+仅一个入射带色部分子（DIS 运动学）时有效严格因子化；两个入射带色部分子时
+\begin{equation}\label{eq:glb-deltahh}
+\bm\delta=-\frac1\epsilon(C_{12}+C_2-C_1)f(\epsilon;z_2-\ii0)+\frac{\ii}{\epsilon}\,4\,\bm T_2\!\cdot\!\bm T_3\,f_I(\epsilon;z_2),\qquad
+f_I(\epsilon;x)=-\Theta(-x)\,\pi\Big(\frac{-x}{1-x}\Big)^{-\epsilon},
+\end{equation}
+$\bm T_2\!\cdot\!\bm T_3$（3 为入射非共线部分子）在 $n\ge4$ 个 QCD 部分子时不正比于单位矩阵：振幅层次的严格共线因子化在一圈失效。
+\end{proposition}
+% [S1-S4]
+
+\begin{proposition}[平方振幅与截面 \tagV]\label{prop:glb-sl2}
+（1）$P^{(1)}$ 严格因子化：破坏项为反厄米，在 $\mathrm{Sp}^\dagger\mathrm{Sp}$ 中相消。（2）$P^{(2)}$ 含厄米非阿贝尔算符
+$\propto f_{abc}\bm T_i^a\bm T_j^b\bm T_k^c$；$n=4$ 时因 $\mathrm{Sp}^{(0)\dagger}f_{abc}\bm T_1^a\bm T_2^b\mathrm{Sp}^{(0)}=0$ 而无贡献，$n\ge5$ 时非零
+（CdFR）。（3）纯 QCD 树图振幅的色分量相对为实，该两圈项为实对称矩阵与反对称矩阵之迹，期望值为零；破坏始于三圈
+（双对易子 $[\Delta,[\Delta,I+I^\dagger]]$），含相对相位（如 $s$ 道 $W/Z$ 宽度）时两圈即非零（Forshaw--Seymour--Siódmok 2012）。
+（4）对单举强子–强子截面，CdFR 指出质量奇异性因子化可能自 N$^3$LO 起受影响，除非与其他子过程相消；纯 QCD 截面中
+这些效应至 NNLO 看来相消，更高阶尚属开放问题（Guan--Herzog--Ma--Mistlberger--Suresh 2024）。
+\end{proposition}
+% [S5-S7]
+
+足够单举的截面中共线因子化之所以得以保存：破坏项来自入射带色部分子之间的 Coulomb/Glauber 交换，而在强子截面中真正的
+入射态是色单态强子，最长距离尺度上相应色因子为零；这些交换正是 \cref{sec:glb-dy} 中在对末态单举求和后经幺正性与围道形变
+相消的那一类（CSS 1988；Aybat--Sterman 2009）。该相消在非单举观测量中不完全：共线对数只能在实辐射被单举求和的尺度
+以下吸收进部分子分布。由此，单举 Drell--Yan 型过程的共线因子化为 \tagA，CdFR/FSS 项在 N$^3$LO 截面中显式相消为 \tagC。
+
+\begin{proposition}[超领头对数 \tagP]\label{prop:glb-sll}
+对“喷注间快度隙”截面（隙宽 $Y$，否决尺度 $Q_0$），Coulomb 相位破坏初态共线发射的实–虚相消，首个超领头对数出现在相对
+Born 的 $\order{\as^4}$：对夸克–夸克散射、一个胶子在隙外（Forshaw--Kyrieleis--Seymour 2006）
+\begin{equation}\label{eq:glb-sll}
+\sigma_{1,\rm SLL}=-\sigma_0\Big(\frac{2\as}{\pi}\Big)^4\ln^5\frac{Q}{Q_0}\;\pi^2Y\;\frac{3N^2-4}{480};
+\end{equation}
+全阶结构为 $\as^{n+3}L^{2n+3}$（$n\ge1$），需两次 Glauber 相位算符插入，大 $N_c$ 下消失，$2\to1$ 过程自四圈、$2\to0$ 过程自五圈
+出现（Becher--Neubert--Shao 2021）。
+\end{proposition}

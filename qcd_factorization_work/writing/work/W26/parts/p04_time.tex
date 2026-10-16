@@ -1,0 +1,77 @@
+\section{时序定理}\label{sec:yzliu-time-ordering}
+
+DY 软因子是振幅与共轭振幅之积，含时序 $T$ 与反时序 $\bar T$ 两部分；它是否等于某个单一时序的量（因而与时序无关、可欧氏化），在文献中说法不一\cite{Moult:2018jzp}。Liu 在指数正规子中把这一问题变成坐标空间解析性的问题\cite{Liu:2023pjb}。
+
+\begin{definition}[指数正规子下的软因子]\label{def:yzliu-exp-soft}
+记 $n\equiv n_A$、$\bar n\equiv n_B$（Liu 的 $n$、$\bar n$），$W_n(x)=W[x,x-\infty n]$ 为指向过去的类光 Wilson 线，$W_{\bar n+}(x)=W[x+\infty\bar n,x]$ 为指向未来的类光线（\cref{def:prelim-wilson}；换算到本书约定：$g\to-g$），$e_t=(1,0,0,0)$，$e_z=(0,0,0,1)$，正规子 $\nu>0$\cite{Li:2016axz}。DY 形软因子与单一时序软因子分别为\cite[式~(3.7)、(3.20)]{Liu:2023pjb}
+\begin{gather}
+S(b_\perp,\nu,\varepsilon)=\tfrac{1}{N_c}\Tr\big\langle\Omega\big|\bar T\big[W_n^\dagger W_{\bar n}\big](\vec b_\perp-\ii\nu e_t)\;T\big[W_{\bar n}^\dagger W_n\big](0)\big|\Omega\big\rangle ,\label{eq:yzliu-S-exp}\\
+S_t(b_\perp,\nu,\varepsilon)=\tfrac{1}{N_c}\Tr\big\langle\Omega\big|T\,W_n^\dagger(\vec b_\perp-\nu e_z)\,W_{\bar n+}^\dagger(\vec b_\perp-\nu e_z)\,W_{\bar n+}(0)\,W_n(0)\big|\Omega\big\rangle .\label{eq:yzliu-St}
+\end{gather}
+$S$ 的谱表示 $S=\sum_m\int\dd\Pi_m|\langle m|TW_{\bar n}^\dagger W_n|\Omega\rangle|^2\ee^{\ii\vec k_m\cdot\vec b_\perp-\nu E_m}$ 表明 $\ee^{-\nu E_m}$ 正规化 $k^+\to0$ 或 $\infty$ 的快度发散；$S_t$ 是间隔 $\vec b_\perp-\nu e_z$ 的一对类光色源沿 $n$ 入射、沿 $\bar n$ 出射的类空形状因子（\cref{def:tmd-soft}）。完整版本 $S^{\mathrm{full}}(L^+,L^-,b_\perp,\nu,Y,\varepsilon)$、$S_t^{\mathrm{full}}$ 含有限光前长度 $L^\pm$、离光锥倾斜（$n_Y=n-\ee^{-Y}\bar n$ 或 $v=n+\ee^{-Y}\bar n$）、$Z$ 因子减除与沿 $\vec b_\perp-\ii\nu e_t$ 或 $\vec b_\perp-\nu e_z$ 的横向连接。
+\uses{def:tmd-soft,def:prelim-wilson}
+\end{definition}
+
+\begin{lemma}[坐标空间参数函数的正性（全子式矩阵树公式）]\label{lem:yzliu-matrix-tree}
+设 $G$ 为连通图，无蝌蚪线且无连接两个外顶点的线，外顶点集 $E$、内顶点集 $V$；坐标空间 Schwinger 表示中线 $l$ 带权 $w_l=1/(4\alpha_l)$ 与因子 $\ee^{-w_l(x_{s(l)}-x_{t(l)})^2_E}$。对内顶点位置积分后，指数化为 $-\sum_{e<e'}P_{ee'}(\alpha)\,x^2_{E,ee'}$，其中
+\begin{equation}\label{eq:yzliu-Pee}
+P_{ee'}(\alpha)=\frac{\sum_{\mathcal L\in\mathcal L(e,e')}\prod_{l\in\mathcal L}\alpha_l^{-1}\sum_{\mathcal T\in\mathcal T_1(G/(E\cup\mathcal L))}\prod_{l\in\mathcal T}\alpha_l^{-1}}{4\sum_{\mathcal T\in\mathcal T_1(G/E)}\prod_{l\in\mathcal T}\alpha_l^{-1}}\ \ge0 ,
+\end{equation}
+$\mathcal L(e,e')$ 为经由内顶点连接 $e$、$e'$ 的路径集，$G/E$ 为把 $E$ 收缩为一点并删去蝌蚪线所得的图，$\mathcal T_1$ 表示生成树集\cite[式~(2.10)、附录~A]{Liu:2023pjb}。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+指数为 $-\sum_lw_l(x_{s(l)}-x_{t(l)})^2=-\sum_{i,j}L_{ij}\,x_i\cdot x_j$，$L$ 为带权 Laplace 矩阵（$L_{ii}=\sum_{l\ni i}w_l$，$i\ne j$ 时 $L_{ij}=-\sum_{l:i\text{–}j}w_l$）。分块为 $E$、$V$ 并对 $x_V$ 作 Gauss 积分，指数变为 $-x_E^{\mathsf T}\tilde Lx_E$，$\tilde L=L_{EE}-L_{EV}L_{VV}^{-1}L_{VE}$。常矢量在 $L$ 的核中，故 $\tilde L$ 的行和为零，$x_E^{\mathsf T}\tilde Lx_E=\sum_{e<e'}P_{ee'}(x_e-x_{e'})^2$，$P_{ee'}=-\tilde L_{ee'}=\sum_{v,v'}(-L_{ev})(L_{VV}^{-1})_{vv'}(-L_{v'e'})$（$L_{EE}$ 无非对角元）。$-L_{ev}\ge0$；又 $L_{VV}=D-A$，$D$ 为正对角阵、$A\ge0$ 对称，且 $x^{\mathsf T}L_{VV}x=\sum_{\text{内线}}w(x_v-x_{v'})^2+\sum_{v\text{–}E}w\,x_v^2>0$（$G$ 连通，内图每个分支都连到 $E$），故非负对称阵 $M=D^{-1/2}AD^{-1/2}$ 的最大本征值（由 Perron--Frobenius 定理即其谱半径）小于 1，$L_{VV}^{-1}=D^{-1/2}\sum_{k\ge0}M^kD^{-1/2}$ 逐元非负，于是 $P_{ee'}\ge0$。\cref{eq:yzliu-Pee}的显式形式是全子式矩阵树定理\cite{Bogner:2010kv}对 $L_{VV}$ 的余子式的应用。
+\end{proof}
+
+\begin{lemma}[末态求和恒等式]\label{lem:yzliu-final-state}
+设 $E_k>0$ 互不相同，$\nu>0$，$\eta\to0^+$，则 % VF-YZL-12
+\begin{equation}\label{eq:yzliu-final-state}
+\int_{-\infty}^{\infty}\frac{\dd E}{2\pi\ii}\,\ee^{-\nu|E|/\sqrt2}\Big[\prod_k\frac{1}{E-E_k-\ii\eta}-\prod_k\frac{1}{E-E_k+\ii\eta}\Big]=\sum_k\ee^{-\nu E_k/\sqrt2}\prod_{j\ne k}\frac{1}{E_k-E_j} .
+\end{equation}
+% uses: none
+\end{lemma}
+
+\begin{proof}
+部分分式 $\prod_k(E-e_k)^{-1}=\sum_kc_k(E-e_k)^{-1}$，$c_k=\prod_{j\ne k}(e_k-e_j)^{-1}$；取 $e_k=E_k\pm\ii\eta$ 时 $e_k-e_j=E_k-E_j$，$c_k$ 与 $\eta$ 无关。于是方括号等于 $\sum_kc_k\,2\ii\eta/[(E-E_k)^2+\eta^2]$；它乘以有界连续函数 $\ee^{-\nu|E|/\sqrt2}$ 后可积，$\eta\to0^+$ 时 Lorentz 近似恒等元给出 $2\pi\ii\sum_kc_k\delta(E-E_k)$，由 $E_k>0$ 得右边。
+\end{proof}
+
+\begin{tcolorbox}[enhanced,breakable,colback=gray!3!white,colframe=gray!45!black,boxrule=0.5pt,arc=2pt,left=4pt,right=4pt,top=2pt,bottom=2pt,title={Wightman 预备知识},fonttitle=\bfseries\small]
+\small
+由谱条件，Wightman 分布 $\langle\Omega|\phi(z_{P_n})\cdots\phi(z_{P_1})|\Omega\rangle$ 延拓为管域 $\mathfrak S^P_n=\{-\Imag(z_{P_k}-z_{P_{k-1}})\in V_+\}$ 上的全纯函数；用固有复 Lorentz 变换延拓到扩展管域（Bargmann--Hall--Wightman 定理，只需谱条件与实 Lorentz 协变性\cite[定理~2-11]{Streater:1989vi}）；局域对易性把 $n!$ 个延拓粘合为置换扩展管域上的单一函数。时序乘积是 $-x_{ij}^2+\ii\eta$ 的边界值；欧氏点上的限制是 Schwinger 函数。阈下区域 $\mathcal E'_n=\{\Real z_{ij}^2<0,\ \forall i<j\}$ 中维数正规化的参数表示（\cref{lem:yzliu-matrix-tree}）一致有界，$\mathfrak S^P_n\cap\mathcal E'_n$ 道路连通\cite[第~2~节、附录~B]{Liu:2023pjb}。
+\end{tcolorbox}
+
+\begin{theorem}[DY 形 TMD 软因子的时序无关性 \tagA]\label{thm:yzliu-time-ordering}
+在维数正规化（$\varepsilon\ne0$）、线性协变规范的微扰论各阶：(1) $S(b_\perp,\nu,\varepsilon)$（\cref{def:yzliu-exp-soft}）有无割线的阈下参数表示，由胶子 Wightman 函数构成，其不变间隔平方为 % VF-YZL-12
+\begin{equation}\label{eq:yzliu-invariants}
+\begin{gathered}
+x^2_{A,ij}=-2\lambda^R_i\lambda^R_j,\qquad x^2_{B,ij}=-\nu^2-b_\perp^2-\sqrt2\,\ii\nu(\lambda^L_i-\lambda^R_j),\\
+x^2_{C,ij}=-\nu^2-b_\perp^2-2\lambda^L_i\lambda^R_j-\sqrt2\,\ii\nu(\lambda^L_i-\lambda^R_j),
+\end{gathered}
+\end{equation}
+（$\lambda^{R}_i<0$、$\lambda^L_i<0$ 为 $T$、$\bar T$ 部分 Wilson 线上点的参数）每个虚部都伴随不大于 $-b_\perp^2-\nu^2<0$ 的实部；(2) $S(b_\perp,\nu,\varepsilon)=S_t(b_\perp,\nu,\varepsilon)$：作为振幅平方的 DY 软因子等于一对类光色源的类空形状因子；(3) 主等式 $S^{\mathrm{full}}(L^+,L^-,b_\perp,\nu,Y,\varepsilon)=S_t^{\mathrm{full}}(-\ii L^-,-\ii L^+,b_\perp,\nu,Y,\varepsilon)$\cite[式~(3.71)；不等长度见式~(3.54)]{Liu:2023pjb}，以不同次序取极限即得离光锥、有限光前长度与指数正规子下的相应等式；(4) 由乘法重整化，裸等式蕴含重整化后的等式。（本定理只涉及真空中的 Wilson 线关联函数。）
+\uses{def:yzliu-exp-soft,asm:yzliu-wightman-pt,lem:yzliu-matrix-tree,prop:appB-webs}
+\end{theorem}
+
+\begin{proofsketch}
+（1）逐类列举 $T$ 与 $\bar T$ 部分上点对的不变间隔：同一部分不同线上的间隔类空，跨部分的间隔即\cref{eq:yzliu-invariants}；同一线上的类光间隔由 Wightman 处方 $-\ii\eta$ 从阈下一侧逼近，且自连接部分无标度（\cref{asm:yzliu-wightman-pt}(WP2)），故 $\eta\to0^+$ 可在参数表示中先取\cite[第~3.1~节]{Liu:2023pjb}。（2）对 $S_t$ 作 Wick 转动 $\lambda\to-\ii\lambda$、$\alpha\to-\ii\rho$（不引入指数增长，式~(3.21)--(3.24)），其参数表示与 $S$ 的逐项相同；等价地，二者的 Wightman 函数由固有复 Lorentz 变换 $\Lambda(t,z)=(\ii z,\ii t)$ 联系（\cref{fig:yzliu-complex-lorentz}）：$\Lambda(-\ii\lambda n)=\lambda n$，$\Lambda(-\ii\lambda\bar n)=-\lambda\bar n$，$\Lambda(-\nu e_z)=-\ii\nu e_t$，$\Lambda v=\ii n_Y$，$\Lambda v'=-\ii\bar n_Y$（式~(3.25)--(3.32)、(3.58)），协变性来自\cref{asm:yzliu-wightman-pt}(WP1)。（3）$Z$ 因子与横向连接使有限长度的等式规范不变，并消去光前无穷远处的边界项（web 结构：\cref{prop:appB-webs}）。（4）$P_{ij}(\alpha)\ge0$（\cref{lem:yzliu-matrix-tree}）保证阈下表示的一致有界。来源：\cite{Liu:2023pjb}（发表版本）。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]，是这一性质目前最仔细的论证：组合部分严格（\cref{lem:yzliu-matrix-tree}），余下的缺口是\cref{asm:yzliu-wightman-pt}（“the author believes in it”\cite[第~4~节]{Liu:2023pjb}）。作者明确限定：“it is outside the scope of this paper to show that this definition correctly captures soft contributions to the DY process”（同上，脚注~5）。作者陈述的推论：TMD 软因子（从而 CS 核）在单举 TMD 与遍举光前波函数之间普适；指数正规子可用于光前波函数；经由形状因子的欧氏路线有了更坚实的基础；算符次序为 $T\bar T$、更“非定域”的 $e^+e^-$ 软因子不在其内。据我们所知（INSPIRE 检索，2026 年 10 月），文献\cite{Liu:2023pjb}首次给出明确的全阶论证（以维数正规化坐标空间解析性为条件），说明指数正规子中的 DY 软因子与时序无关并等于单一时序的形状因子。此前，有限光前长度与 $\delta$ 正规子中的时序无关性已被使用\cite{Vladimirov:2016dll,Vladimirov:2017ksc}；有的作者直接陈述它\cite{Collins2011,CollinsMetz2004,Echevarria:2015byo}，有的持谨慎态度\cite{Moult:2018jzp}；文献\cite{Vladimirov:2017ksc}的期刊版本称 SIDIS 软因子快度发散的因子化“remains the open question”（第~32~页；按\cite{Liu:2023pjb}的引述）。因此这一定理是全阶论证而非严格证明；其非微扰推广见\cref{conj:yzliu-complex-wilson}。
+
+%%FIG fig:yzliu-complex-lorentz
+
+\begin{proposition}[指数正规子下 DY 与 SIDIS 软因子相等 \tagP]\label{prop:yzliu-dy-sidis-exp}
+在指数正规子中、类光线无穷长时，DY 与 SIDIS 软因子相等\cite[附录~C]{Liu:2023pjb}：先在光前微扰论中启发式地论证，末态求和为实，由\cref{lem:yzliu-final-state}；再把类光线变形为有限长度的类时与类空线。一般地 $S_t\ne S_{\mathrm{SIDIS}}$。（本命题只涉及真空中的 Wilson 线关联函数。）
+\uses{def:yzliu-exp-soft,lem:yzliu-final-state,thm:yzliu-time-ordering}
+\end{proposition}
+
+\paragraph{地位与缺口。}部分 [P]：论证是启发式的（追踪 $\pm\ii\eta$），不是由解析性得到的；$\delta$ 正规子中的对应结论是\cref{thm:yzliu-analyticity}(iv)，算符层面的 T 反演对 Sivers 函数的作用见\cref{thm:tmd-sivers-sign}。升级途径：把第二种论证（有限长度变形）写成完整的解析性证明。
+
+\begin{conjecture}[复时空中的 Wilson 圈 \tagC]\label{conj:yzliu-complex-wilson}
+在完整的 QCD 中，对点都位于置换扩展管域中的闭合 Wilson 圈 $C$，$\langle\Tr W(C)\rangle$ 存在并在固有复 Lorentz 变换下不变\cite[第~3.4~节]{Liu:2023pjb}。非微扰地位：\cref{asm:intro-wightman}（MA0）及其对 Wilson 圈的推广。
+\uses{asm:yzliu-wightman-pt,thm:yzliu-time-ordering}
+\end{conjecture}
+
+\paragraph{地位与缺口。}猜想 [C]：没有非微扰论证；若成立，它把\cref{thm:yzliu-time-ordering}推广到微扰论之外。它需要非微扰 QCD 的 Wightman 结构（\cref{asm:intro-wightman}）及其对 Wilson 圈的推广。

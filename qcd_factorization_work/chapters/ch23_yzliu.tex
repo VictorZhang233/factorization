@@ -1,0 +1,1202 @@
+% ch23_yzliu.tex -- Chapter 23: Yizhuang Liu 的严格因子化研究 (writer W26).
+% Assembled from writing/work/W26/parts/p*.tex by writing/work/W26/assemble.py; figure blocks copied verbatim
+% from writing/packs/W26/figblocks.tex (LA-10).
+\chapter{Yizhuang Liu 的严格因子化研究}\label{ch:yzliu}
+
+本章讨论 Yizhuang Liu（单独或与合作者）把 TMD 因子化与大动量有效理论（large-momentum effective theory，LaMET）中的若干论证整理为带明确前提的定理级陈述的工作，并逐条给出其地位。结论分属五个层次：（i）两条纯数学引理有完整证明；（ii）显式的定阶结果——本征软函数的两圈结构、准 GPD 单圈匹配核在 $x=\pm\xi$ 附近的结构、重—轻硬核的单圈与两圈内容——在所述的阶上严格（\tagR，$R_{\mathrm{PT}}$）；（iii）“软函数是静态色源对的形状因子”在谱假设下证明完整（\tagR，$R_{\mathrm{cond}}$），内容等级 \tagC；（iv）主体——软函数的欧氏表示、复双曲角解析性、快度发散的线性性、本征软函数、时序无关性、准 TMD 因子化的 Collins 式证明、阈值因子化——都是全阶论证（\tagA），其中三个“公理化”的结果共享瓶颈\cref{asm:yzliu-wightman-pt}；（v）二维可解模型中的结果在模型内严格，作为 QCD 的陈述只是 \tagP，若干推广是猜想（\tagC）。没有一个全阶结果达到 \tagR。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:yzliu-matrix-tree,lem:yzliu-final-state}（数学）；\cref{prop:yzliu-sI-twoloop,prop:yzliu-gpd-oneloop}（\tagR，$R_{\mathrm{PT}}$，限于所述阶），\cref{prop:yzliu-hard-kernel}(b)(c) 与\cref{prop:yzliu-ad-algebra}的两圈内容（\tagR，$R_{\mathrm{PT}}$）；\cref{cor:yzliu-soft-form-factor}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:yzliu-heavy-pair}；内容等级 \tagC）；在所述模型中：\cref{thm:yzliu-gn-convergence}（作为 QCD 的陈述为 \tagP）。\par
+\textbf{给出全阶论证：}\cref{lem:yzliu-partial-exp,prop:yzliu-pinch-ultrasoft,thm:yzliu-soft-hqet}（\tagA）；\cref{thm:yzliu-analyticity,thm:yzliu-time-ordering,thm:yzliu-jet-continuation}（\tagA；瓶颈\cref{asm:yzliu-wightman-pt}）；\cref{prop:yzliu-rapidity-linear,thm:yzliu-intrinsic-soft}（\tagA；瓶颈为快度切片的红外步骤）；\cref{prop:yzliu-qtmd-powercount,prop:yzliu-hard-kernel,prop:yzliu-lfwf,prop:yzliu-meson-ff,prop:yzliu-dy-quasi,prop:yzliu-sivers,thm:yzliu-threshold,prop:yzliu-ad-algebra}（\tagA）。\par
+\textbf{没有证明：}\cref{asm:yzliu-wightman-pt}作为数学命题；普适类的一般陈述（\cref{prop:yzliu-universality-classes}，\tagP，瓶颈\cref{asm:yzliu-lightcone-uniform}）；复时空 Wilson 圈猜想（\cref{conj:yzliu-complex-wilson}，\tagC）；大 $\beta_0$ 之外的重整子归一化与强子层次的阈值渐近（\cref{conj:yzliu-renormalon-norm,conj:yzliu-threshold-hadronic}，\tagC）；GPD 在 $x=\pm\xi$ 处的可计算性（\cref{conj:yzliu-gpd-xi}，\tagC）；$e^+e^-$ 软因子的普适性。
+\end{tcolorbox}
+
+\section{引言：纲领、约定对照与自我评估}\label{sec:yzliu-intro}
+
+TMD 因子化（\cref{thm:tmd-factorization}，全阶论证 [A]）中的软因子（\cref{def:tmd-soft}）是伸向无穷远、近乎类光的 Wilson 线的真空期望，即软辐射的“截面”，看上去本质上是闵氏的，无法直接放到欧氏格点上；LaMET 的准 TMD 定理（\cref{thm:lamet-quasi-tmd}，[A]）把这一困难集中到约化软函数 $S_r$（\cref{def:lamet-reduced-soft}）上。Liu 及其合作者的工作围绕七个主题展开，本章依次讨论：TMD 软物理的欧氏实现（\cref{sec:yzliu-soft}）；CSS 型论证背后的解析结构——复双曲角解析性、快度发散的线性性、本征软函数与普适类、时序定理（\cref{sec:yzliu-analyticity}至\cref{sec:yzliu-time-ordering}）；准 TMD 定理的 Collins 式证明、硬核、光前波函数、介子形状因子、Drell--Yan 与 Sivers 比值（\cref{sec:yzliu-quasi-tmd}与\cref{sec:yzliu-exclusive}）；准 PDF 匹配核的阈值因子化与线性重整子（\cref{sec:yzliu-threshold}与\cref{sec:yzliu-renormalon}）；GPD 在 $x=\pm\xi$ 附近（\cref{sec:yzliu-gpd}）；二维可解模型（\cref{sec:yzliu-models}）；指数衰减定理的推广（\cref{sec:yzliu-decay}）。
+
+\paragraph{自我评估。}Liu 在讲义结尾写道：“all the proofs in the paper, except the ones for the analyticity, follow the typical rigorous standards in the TMD factorization literature”\cite[第~6~节]{Liu:2022nnk}；要把这些“physical proofs”提升为与紫外重整化理论同等水平的数学证明，必须在闵氏空间中研究奇异的 Feynman 积分，发展“a rigorous multi-scale analysis which allows simultaneous decomposition of the longitudinal and transverse phase space”。“TMD 文献的通常标准”正是本书 [A] 的含义（\cref{def:intro-tags}），故本章的分级与作者本人的评价一致；作者自己除外的解析性证明，本书改用 Wightman 函数的路线表述，其瓶颈明确记为\cref{asm:yzliu-wightman-pt}（[A] 级）。
+
+\paragraph{约定。}本章沿用第~22~章引言（\cref{sec:lamet-intro}）的约定词典；Liu 等人文献特有的约定陷阱见\cref{tab:yzliu-conventions}。此外：Liu 的 $n$、$\bar n$ 即本书 $n_A$、$n_B$；其准 TMD 与阈值文献中的 $\lambda=zP^z$（或 $zp^z$）、二维 Gross--Neveu 文献中的 $\lambda=-p\cdot x$ 都是本书 Ioffe 时间的相反数，后者的 $z^2\equiv-x^2$ 是本书的 $-z^2$；Liu 等人的 $L_z\equiv\ln(\zeta_z/\mu^2)$ 与 $l_z$ 分别是本书的 $L_\zeta$ 与 $L_z$。本章记 $b_\perp\equiv b_{\mathrm T}$，以 $a\equiv\alpha_sC_F/(2\pi)$ 为展开参数，$\lambda$ 只表示 Ioffe 时间。他们用 $D=\partial+\ii gA$；本章引用的核与软函数与 $g$ 的符号无关，$g$ 的奇次量注明“换算到本书约定：$g\to-g$”。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+项目 & 本书约定（与 Liu 等人文献的换算） \\
+\midrule
+CS 核与因子 $\frac12$ & Liu 等人的 $K$ 即 $\tilde K$：$2\zeta\partial_\zeta\ln f^{\mathrm{TMD}}=\tilde K$；准 TMD 指数为 $\exp[\frac12\tilde K\ln(\zeta_z/\zeta)]$，比值为 $(\zeta_{z,1}/\zeta_{z,2})^{\tilde K/2}=(P^z_1/P^z_2)^{\tilde K}$（缺少 $\frac12$ 的印刷形式见附录~Q 第~11~条）。 \\
+CS 标度 $\zeta$ & 只通过 CS 方程使用；不转录 $y_n$ 的关系式（Liu 的 $\zeta=2(xP^+)^2\ee^{2y_n}$ 与 Collins 的符号可能不同）。 \\
+硬核的位置 & 采用 $\tilde f\sqrt{S_r}=H\,\ee^{\cdots}f^{\mathrm{TMD}}$（PLB\cite{Ji:2019ewn}、讲义\cite{Liu:2022nnk}）；RMP\cite{JiEtAl2021}式~(209) 的 $H$ 是其倒数。 \\
+重—轻因子 & 单个顶点的 $C^\pm_{HL}$；$H=|H_{HL}|=C^+_{HL}C^-_{HL}$；Ji--Liu--Su\cite{Ji:2023pba}的“$H_{HL}$”指一对顶点之积。 \\
+大角尖点常数 & $\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)=\theta\,\Gamma_{\mathrm{cusp}}(\alpha_s)+\gamma_{HH}(\alpha_s)+\order{\ee^{-\theta}}$，$\gamma_{HH}^{(1)}=-\alpha_sC_F/\pi$；PLB 的 $\Gamma_S=\gamma_{HH}$，讲义与 PRD~105\cite{Ji:2021znw}的 $\Gamma_S=-\gamma_{HH}$，RMP 式~(205)--(206) 的符号自相矛盾（附录~Q 第~13~条）。本章只用 $\gamma_{HH}$。 \\
+$\beta$ 函数与 Borel 变量 & 本书 $\mu^2\frac{\dd\alpha_s}{\dd\mu^2}=-\frac{\beta_0}{4\pi}\alpha_s^2$。(a)~PLB、讲义、RMP、PRD~105：$\frac{\dd\alpha_s}{\dd\ln\mu}=\beta_0^{(a)}\alpha_s^2$，$\beta_0^{(a)}=-\frac{1}{2\pi}(\frac{11}{3}C_A-\frac43N_fT_F)$；(b)~JHEP~2023/24\cite{Ji:2023pba,Liu:2023onm}：$\frac{\dd\alpha_s}{\dd\ln\mu}=-\beta_0^{(b)}\alpha_s^2$，$\beta_0^{(b)}=\frac{11C_A}{6\pi}-\frac{n_f}{3\pi}$。于是 $\beta_0^{(b)}=\frac{\beta_0}{2\pi}=-\beta_0^{(a)}$，$\mu\frac{\dd}{\dd\mu}=2\mu^2\frac{\dd}{\dd\mu^2}$；Liu--Su 的 $u=\beta_0^{(b)}t/2$ 即本书的 $u=\beta_0t/(4\pi)$（\cref{def:power-borel}）。 \\
+双曲角与复 Lorentz 变换 & $\theta(v_1,v_2)$ 及其 $\pm\ii0$ 处方见\cref{def:yzliu-hyperbolic-angle}；联系两种软因子的固有复 Lorentz 变换是 $\Lambda(t,z)=(\ii z,\ii t)$（快度为 $\ii\pi/2$ 的推动）。 \\
+\bottomrule
+\end{tabularx}
+\caption{第~23~章：Liu 等人文献的约定与本书约定的对照（其余约定见\cref{sec:lamet-intro}的约定词典）。}
+\label{tab:yzliu-conventions}
+\end{table}
+
+\section{离光锥软函数的欧氏化}\label{sec:yzliu-soft}
+
+离光锥软函数 $S(b_\perp,\mu,Y,Y')$ 是两个订书钉形 Wilson 回路的时序真空期望：入射段沿类时速度 $v=\gamma(1,\beta,\mathbf 0_\perp)$，出射段沿 $v'=\gamma'(1,-\beta',\mathbf 0_\perp)$（$\beta=\tanh Y$，$\beta'=\tanh Y'$），除以矩形回路之积的平方根后取 $t,t'\to\infty$（\cref{def:lamet-soft-offlc}，\cref{fig:yzliu-soft-hqet}(a)）。本节说明它为何可以在欧氏空间计算。
+
+
+\begin{lemma}[部分指数化引理 \tagA]\label{lem:yzliu-partial-exp}
+设 $W(C;x'\to x)$ 为沿任意分段光滑路径 $C$ 的基础表示 Wilson 线（\cref{def:prelim-wilson}），$O(x)$、$O'(x')$ 为端点上的定域算符，$F(C,x,x')\equiv\Tr\langle O(x)W(C;x'\to x)O'(x')\rangle$。则在微扰论每一阶（Feynman 规范，维数正规化）
+\begin{equation}\label{eq:yzliu-partial-exp}
+F(C,x,x')=\ee^{\Phi(C)}\,\Tr\big\langle O(x)\,W(C;x'\to x)\,O'(x')\big\rangle_{\mathrm{2PI}} ,
+\end{equation}
+其中 $\ee^{\Phi(C)}$ 是线本身迹归一化的真空期望，$\Phi(C)$ 为其全部 web（胶子端点都在 $C$ 上的不可约图）之和，色因子取最大非阿贝尔的修正色因子（\cref{prop:appB-webs}）；$\langle\cdots\rangle_{\mathrm{2PI}}$ 为算符—规范线二粒子不可约顶点 $w_0$ 之和，其色因子同样按修正规则计算（一般不是最大非阿贝尔的）。对带算符插入的闭合回路，同一结论借助复制技巧成立。（本引理只涉及微扰论中的算符与 Wilson 线关联函数。）
+\uses{prop:appB-webs,def:prelim-wilson}
+\end{lemma}
+
+\begin{proofsketch}
+（1）每个图的色因子分解为 $C(G)=\sum_{d}\prod_{i=0}^{n(d)}\tilde C(w_i)$，$d$ 由一个顶点 $w_0$ 与若干 web $w_{i\ge1}$ 组成，这是 Gatheral 与 Frenkel--Taylor 的分解\cite{Gatheral1983,FrenkelTaylor1984}在有端点算符时的推广；（2）固定 $w_0$ 的推广程函恒等式 $\sum_{G\in\mathcal G_d}\mathcal I(G)=S_d^{-1}\prod_{i=0}^{n(d)}\mathcal I(w_i)$，$S_d=\prod_in_i!$\cite[式~(B.5)]{Liu:2022nnk}；（3）对 $d$ 求和，web 部分组成 $\ee^{\Phi(C)}$；$\ee^{\Phi(C)}=\Tr\langle W(C)\rangle$ 由复制技巧（$\langle W\rangle^n=1+n\ln\langle W\rangle+\order{n^2}$，只有 web 的色因子对 $n$ 线性）得到。完整论证见\cite[第~3.2~节与附录~B]{Liu:2022nnk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]。闭合回路的 web 指数化是标准的全阶论证（\cref{prop:appB-webs}，[A]）；推广到固定的顶点 $w_0$ 只被陈述为“与标准情形类似”，恒等式在 $w_0$ 固定时的证明没有写出\cite[附录~B]{Liu:2022nnk}——这是最弱的一步。写出这一组合证明即可把引理提升为 [R, $R_{\mathrm{PT}}$]。
+
+%%% BEGIN fig:yzliu-soft-hqet
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lc/.style={draw=gray!55,line width=0.5pt,dash pattern=on 1.2pt off 1.6pt},
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 heavy/.style={draw,solid,line width=1.4pt,fd arrow=#1},
+  fd2 heavy/.default=0.5,
+  fd2 sheet/.style={fill=gray!13,draw=none},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % geometry: beta = 0.55, t = t' = 1.85; perspective b_perp vector B = (1.7,0.55)
+  \foreach \panel/\xs in {a/0, b/7.6} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (O) at (0,0);          \coordinate (OB) at (1.7,0.55);
+    \coordinate (P) at (-1.0175,-1.85); \coordinate (PB) at (0.6825,-1.3);
+    \coordinate (F) at (-1.0175,1.85);  \coordinate (FB) at (0.6825,2.4);
+    % axes and light cone (b_perp = 0)
+    \draw[fd2 lc] (-1.75,-1.75) -- (1.75,1.75);  \draw[fd2 lc] (-1.75,1.75) -- (1.75,-1.75);
+    \draw[fd2 ax] (-1.75,0) -- (2.75,0) node[below left=1pt and -3pt,font=\footnotesize] {$z$};
+    \draw[fd2 ax] (0,-2.25) -- (0,2.95) node[left,font=\footnotesize] {$t$};
+    \draw[gray!60!black,line width=0.5pt,dash pattern=on 3pt off 2pt,-{Stealth[length=4pt,width=3.4pt]}] (O) -- (2.45,0.79) node[right,font=\footnotesize] {$\vec b_\perp$};
+    \if a\panel
+      % two staple-shaped Wilson lines: past (v) and future (v'), closed at -t and t'
+      \draw[wilson plain] (OB) -- (PB) -- (P) -- (O) -- (F) -- (FB) -- cycle;
+      \path[fd2 warrow=0.55] (P) -- (O);    \path[fd2 warrow=0.6] (O) -- (F);
+      \path[fd2 warrow=0.55] (FB) -- (OB);  \path[fd2 warrow=0.6] (OB) -- (PB);
+      \path[fd2 warrow=0.55] (F) -- (FB);   \path[fd2 warrow=0.55] (PB) -- (P);
+      \node[opvertex] at (O) {};  \node[opvertex] at (OB) {};
+      \node[fd2 lab,anchor=east] at (-0.6,-1.0) {$v$};
+      \node[fd2 lab,anchor=east] at (-0.6,1.0) {$v'$};
+      \node[fd2 note,anchor=north east] at ($(P)+(0.02,-0.04)$) {$-t$};
+      \node[fd2 note,anchor=south east] at ($(F)+(0.02,0.04)$) {$t'$};
+      \node[fd2 note,anchor=north west] at (0.05,-0.02) {$0$};
+      \node[fd2 lab,align=center] at (0.45,-3.1) {$S=\displaystyle\lim_{t,t'\to\infty}\frac{W(t,t',b_\perp,Y,Y')}{\sqrt{Z(2t,b_\perp,Y)\,Z(2t',b_\perp,Y')}}$};
+      \node[fd2 note,align=left,anchor=west] at (1.95,1.75) {时序乘积 $\mathcal T$};
+      \node[fd2 lab] at (0.45,-4.2) {(a)\ 订书钉形 Wilson 回路};
+    \else
+      % HQET picture: static colour sources Q (at 0) and Qbar (at b_perp)
+      \fill[fd2 sheet] (P) -- (O) -- (F) -- (FB) -- (OB) -- (PB) -- cycle;
+      \draw[fd2 heavy=0.55] (P) -- (O);    \draw[fd2 heavy=0.55] (O) -- (F);
+      \draw[fd2 heavy=0.5] (FB) -- (OB);   \draw[fd2 heavy=0.55] (OB) -- (PB);
+      \draw[gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt] (O) -- (OB);
+      \node[opvertex] at (O) {};  \node[opvertex] at (OB) {};
+      \node[fd2 lab,anchor=east] at (-0.6,-1.0) {$v$};
+      \node[fd2 lab,anchor=east] at (-0.6,1.0) {$v'$};
+      \node[fd2 note,anchor=east] at (-1.05,-1.9) {$Q$};
+      \node[fd2 note,anchor=west] at (0.72,-1.38) {$\bar Q$};
+      \node[fd2 note,anchor=south,inner sep=1pt] at (0.62,0.44) {$J$（$t=0$）};
+      \node[fd2 lab,anchor=north] at (-0.15,-2.15) {$|Q\bar Q,\vec b_\perp\rangle_v$};
+      \node[fd2 lab,anchor=west] at (0.8,2.6) {${}_{v'}\langle Q\bar Q,\vec b_\perp|$};
+      \node[draw=gray!55,fill=gray!4,rounded corners=2pt,font=\footnotesize,align=left,anchor=north west,inner sep=3pt] at (1.75,-0.55)
+        {欧氏表示：\\$\ii\tilde v\cdot D_E=D_\tau-\ii\beta D_z$\\（$\tau$：欧氏时间）};
+      \node[fd2 lab] at (0.45,-4.2) {(b)\ HQET 形状因子};
+    \fi
+  \end{scope}}
+  \node[fd2 lab,align=center] at (8.05,-3.1) {$S={}_{v'}\langle Q\bar Q,\vec b_\perp|\,J\,|Q\bar Q,\vec b_\perp\rangle_v$};
+\end{tikzpicture}
+\caption{离光锥 TMD 软函数作为快速色源对的形状因子（$v=\gamma(1,\beta,\mathbf 0_\perp)$、$v'=\gamma'(1,-\beta',\mathbf 0_\perp)$，$\beta=\tanh Y$、$\beta'=\tanh Y'$，坐标 $(t,z,\vec b_\perp)$，$\vec b_\perp$ 方向按透视画出）。
+(a)~两个订书钉形 Wilson 回路（$t<0$ 沿 $v$，$t>0$ 沿 $v'$，在 $-t$ 与 $t'$ 处由横向连接闭合）的时序真空期望，除以 $\sqrt{ZZ}$（$Z$ 为矩形回路）后取 $t,t'\to\infty$；箭头为路径方向：$0$ 处沿世界线指向未来（色源 $Q$），$\vec b_\perp$ 处指向过去（$\bar Q$）。
+(b)~等价的 HQET 图像：间隔 $b_\perp$ 的色单态静态 $Q\bar Q$ 对以速度 $v$ 运动，在 $t=0$ 被等时的流 $J$ 踢到 $v'$，软函数是 ${}_{v'}\langle Q\bar Q,\vec b_\perp|J|Q\bar Q,\vec b_\perp\rangle_v$，因而有欧氏表示（\cref{thm:yzliu-soft-hqet}，全阶论证 [A]；非微扰的形状因子形式另需\cref{asm:yzliu-heavy-pair}）。
+大快度下 $\ln S=(Y+Y')\tilde K+\mathcal D+\order{\ee^{-(Y+Y')}}$，本征软函数 $S_I=\ee^{-\mathcal D}$（VF-YZL-2）。}
+\label{fig:yzliu-soft-hqet}
+\end{figure}
+%%% END fig:yzliu-soft-hqet
+
+\paragraph{捏点奇点与超软模式。}准 TMD 订书钉（\cref{def:lamet-quasi-tmd}）的两条反平行长边在单胶子交换中给出 $1/[(k^z+\ii0)(k^z-\ii0)]$，在 $k^z=0$ 处被钳住；按 $z$ 坐标统一排序两边的顶点（“单线记号”：一对反平行规范线合成一条量纲为 $\frac32$ 的有效线）后，交换图化为单条规范线的自能图乘以额外的 $1/(-\ii0)$，后者在有限长度 $L$ 下正比于 $L$\cite[式~(41)--(43)]{Liu:2022nnk}。它的意义是一对色源沿虚时间的传播，需要 LSZ 型的截肢。
+
+\begin{proposition}[捏点奇点、超软模式与 $L\to\infty$ 极限 \tagA]\label{prop:yzliu-pinch-ultrasoft}
+在微扰论各阶：(a) 对准 TMD 订书钉 $\mathcal W_z$，$\ee^{\Phi(\mathcal W_z)}=\langle0|\mathcal W_z|0\rangle\sim\ee^{-LE(b_\perp)}$，$E=2\delta m+V(b_\perp)$，而矩形回路 $Z_E(2L,b_\perp,\mu)\sim\ee^{-2LE}$，故 $\lim_{L\to\infty}\langle P|\tilde O_z|P\rangle/\sqrt{Z_E}$ 逐阶存在，全部捏点奇点都在 $\ee^{\Phi(\mathcal W_z)}$ 中；(b) 在高阶，单个图出现正比于 $1/L$ 的幂次红外发散（超软模式），这是静态势中 Appelquist--Dine--Muzinich 效应的类比——静态势的伪红外发散自 $\order{\alpha_s^4}$ 起出现\cite{Appelquist:1977es,Brambilla:1999qa}；把偶极子的二粒子不可约自相互作用重求和为有效单线的修饰传播子后，这些发散相消，相关能标是 $V_8-V$，对快度为 $Y$ 的软函数为 $\alpha_sC_A\ee^{-Y}/(2b_\perp)$；依赖 $Y$ 的“超—超软”模式被论证为由色中性与 Ward 恒等式相消；(c) 类时、双重时序的软函数没有捏点奇点且红外有限。（本命题只涉及部分子态与真空中的 Wilson 线关联函数。）
+% errtype: E-S
+\uses{lem:yzliu-partial-exp,def:lamet-quasi-tmd,def:lamet-soft-offlc}
+\end{proposition}
+
+\begin{proofsketch}
+（a）由\cref{lem:yzliu-partial-exp}，$\langle P|\tilde O_z|P\rangle=\ee^{\Phi(\mathcal W_z)}\langle P|\tilde O_z|P\rangle_{\mathrm{2PI}}$；单线记号下钳夹只来自偶极子自相互作用的插入，它们全部在 $\ee^{\Phi}$ 中，而类空订书钉相当于一对沿虚时间传播的重夸克\cite[第~3.2~节]{Liu:2022nnk}。（b）与 Lamb 位移类似：逐阶展开修饰传播子 $1/[k\cdot v'-\Sigma(k\cdot v',b_\perp)+\ii0]$ 得到幂次发散，重求和后 $\Sigma(0,b_\perp)\sim\ee^{-Y}\alpha_sC_A/(2b_\perp)$ 起截断作用\cite[第~3.3、4.3~节，式~(109)--(111)]{Liu:2022nnk}。（c）对“4PI” web 的数目归纳\cite[附录~D]{Liu:2022nnk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]；(a) 是\cref{asm:lamet-staple}(ST2) 的全阶论证。(b) 中重求和后的全阶相消与“超—超软”模式的相消是论证而非证明——最弱的一步（幂次计数层次，误差类型 E-S）；(c) 的归纳假定低阶已无幂次红外发散。原文对超软效应在准 TMD 中开始出现的圈数说法不一，本书只引用静态势的陈述。用矩形回路除去离光锥订书钉自相互作用的做法可追溯到文献\cite{Collins:2008ht,Ji:2018hvs}，(a) 为之提供了全阶依据。升级途径见\cref{rem:yzliu-open}第~(8)~项。
+
+\paragraph{作为形状因子的软函数。}沿速度 $v$ 运动的静态色源的拉氏量 $\psi_v^\dagger\,\ii v\cdot D\,\psi_v$ 给出传播子 $\ii/(v\cdot k+\ii0)$ 与顶点 $\ii gt^av^\mu$，恰是程函规则（\cref{prop:prelim-wilson-rules}）：静态色源的传播子就是一条 Wilson 线。
+
+\begin{theorem}[离光锥软函数是快速色源对的形状因子 \tagA]\label{thm:yzliu-soft-hqet}
+设 $\psi_v$、$\eta_v$ 为沿 $v$ 运动的静态色源（基础与反基础表示），$\mathcal L=\psi_v^\dagger\,\ii v\cdot D\,\psi_v+\eta_v^\dagger\,\ii v\cdot D\,\eta_v$（$D$ 取本书的符号），
+\begin{equation}\label{eq:yzliu-hqet-J}
+J(\vec b_\perp,v,v')=\eta^\dagger_{v'}(\vec b_\perp)\,\eta_v(\vec b_\perp)\,\psi^\dagger_{v'}(0)\,\psi_v(0)
+\end{equation}
+为 $t=0$ 时把速度由 $v$ 变为 $v'$ 的流。则在微扰论各阶：(a) \cref{def:lamet-soft-offlc}的 $S(b_\perp,\mu,Y,Y')$ 等于由色单态 $Q\bar Q$ 插值场在 $-t$ 处产生、在 $t'$ 处湮灭、中间插入 $J$ 的截肢关联函数在 $t,t'\to\infty$ 的极限；(b) 因 $J$ 是等时算符，$S=\lim_{\tau,\tau'\to\infty}W_E/\sqrt{Z_EZ_E}$，其中 $W_E$、$Z_E$ 用欧氏 HQET 计算，其拉氏量为 $\psi_v^\dagger(\ii\tilde v\cdot D_E)\psi_v+\eta_v^\dagger(\ii\tilde v\cdot D_E)\eta_v$，$\tilde v=\gamma(-\ii,-\beta,\mathbf 0_\perp)$，$\ii\tilde v\cdot D_E=\gamma(D_\tau-\ii\beta D_z)$（欧氏内积；常数因子 $\gamma$ 可由场的归一化吸收）；(c) $S$ 只依赖于 $Y+Y'$。（本定理是微扰论中真空关联函数之间的恒等式。）% VF-YZL-2
+% Writer note (W26): Ji:2019sxk eq. (13) prints i v~.D_E = D^tau - i beta D^z with v~ = gamma(-i,-beta,0); with the Euclidean
+% inner product the left side is gamma(D_tau - i beta D_z) (checked from i v.D, t = -i tau, A_0 = i A_tau); the factor gamma is
+% absorbed by the field normalization. Printed here with the factor.
+\uses{def:lamet-soft-offlc,lem:yzliu-partial-exp,asm:lamet-aux-renorm}
+\end{theorem}
+
+\begin{proofsketch}
+（1）静态色源的传播子是 Wilson 线，四个色源的时序关联函数逐图重现两个订书钉形回路，插值场中的横向 Wilson 线给出订书钉的横向连接；（2）$Z(2t)=W(t,t,b_\perp,Y,-Y)$ 是不改变速度的同一关联函数，由\cref{lem:yzliu-partial-exp}，自相互作用与时间演化在 $W/\sqrt{ZZ}$ 中相消（LSZ 型截肢）；（3）静态源与流的乘法可重整性（\cref{asm:lamet-aux-renorm}）使等式对重整化的量成立；（4）初、末态是演化得到的最低态，$J$ 只作用于 $t=0$，把实时间演化换成欧氏演化投影到同一组态，作者在单圈阶显式核对了 (b)\cite[式~(12)--(13)]{Ji:2019sxk}；（5）沿 $z$ 的推动使 $Y\to Y+\eta$、$Y'\to Y'-\eta$。见\cite[式~(1)--(13)]{Ji:2019sxk}，\cite[第~4.1--4.2~节、附录~A]{Liu:2022nnk}，\cite[第~V.C~节]{JiEtAl2021}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]：组合部分依赖\cref{lem:yzliu-partial-exp}（[A]），紫外部分依赖\cref{asm:lamet-aux-renorm}（[A]），欧氏化一步只在单圈阶显式核对；非微扰的形状因子形式是\cref{cor:yzliu-soft-form-factor}（内容等级 [C]）。作者指出的格点困难：静态夸克的倍增问题、流与速度的重整化、大速度色源的噪声\cite{Ji:2019sxk}。此前的欧氏“弯折”软函数\cite{Ji:2014hxa,Ebert:2019okf}只含欧氏直角尖点，单圈时其反常维度与 $\gamma_{HH}$ 一致，但由两圈角依赖尖点反常维度\cite{KorchemskyRadyushkin1987}在欧氏尖点角 $\frac\pi2$（即双曲角 $\theta=\ii\frac\pi2$）处的值，我们得到（以 $(\alpha_s/\pi)^2$ 为单位）% VF-YZL-17
+\begin{equation}\label{eq:yzliu-bent-mismatch}
+\Gamma^{(2)}_{\mathrm{cusp}}\big(\tfrac\pi2\big)-\gamma^{(2)}_{HH}=C_FC_A\Big(\frac{\zeta_3}{2}-\frac{\pi^2}{24}\Big)\approx0.190\,C_FC_A ,
+\end{equation}
+$n_f$ 部分相等；这些因子只依赖于 $\mu b_\perp$，故在 $\order{\alpha_s^2}$ 产生任何与 $b_\perp$ 无关的核都无法吸收的 $\ln(\mu^2b_\perp^2)$ 项。这一论证属于文献\cite{Ji:2019sxk}（亦见\cite{Ji:2019ewn}），文献\cite{Ebert:2022fmh}转述了它，\cref{eq:yzliu-bent-mismatch}的数值是本书的计算。据我们所知（INSPIRE 检索，2026 年 10 月），文献\cite{Ji:2019sxk}首次把 Collins 的离光锥软因子表示为与时间无关的矩阵元——快速重夸克对的形状因子；此前的弯折软函数只再现单圈对数。这也纠正了误解 M16：快度发散不是正规化的人为产物——$\ln S$ 随 $Y+Y'$ 线性增长（\cref{prop:yzliu-rapidity-linear}），斜率正是物理形状因子的 Collins--Soper 核。
+
+\begin{example}[单圈离光锥软函数与 $S_r$]\label{ex:yzliu-soft-oneloop}
+由\cref{lem:tmd-soft-oneloop}(b)，快度差为 $\mathcal Y$ 的单圈软因子为 $\tilde S^{(1)}=-2a(\mathcal Y\coth\mathcal Y-\sigma)L_b$，$\sigma=1$ 对应含自能的类时线，$\sigma=0$ 对应不含自相互作用的类空线（\cref{def:tmd-soft}）。Ji--Liu--Liu 的软函数对应 $\sigma=1$、$\mathcal Y=Y+Y'$；由 $\coth\mathcal Y=1+2\ee^{-2\mathcal Y}+\cdots$，% VF-TMD-8
+\begin{equation}\label{eq:yzliu-soft-oneloop}
+S^{(1)}=-2a(\mathcal Y-1)L_b+\order{\mathcal Y\ee^{-2\mathcal Y}}=a\big[2-2(Y+Y')\big]L_b+\order{\mathcal Y\ee^{-2\mathcal Y}} ,
+\end{equation}
+故 $\tilde K^{(1)}=-2aL_b$，$\mathcal D^{(1)}=2aL_b$，$S_r^{(1)}=-\mathcal D^{(1)}=-\frac{\alpha_sC_F}{\pi}L_b$（\cref{def:lamet-reduced-soft}）。$\sigma=0$ 给出同样的斜率而 $\mathcal D^{(1)}=0$：这正是\cref{def:lamet-soft-offlc}必须采用 Ji--Liu--Liu 归一化（类时线、保留自能、以 $Z$ 因子减除）的原因——单个软函数依赖于正规化方式，只有组合才是物理的。又 $\mu^2\frac{\dd\ln S}{\dd\mu^2}=-\Gamma(\mathcal Y)$，$\Gamma(\mathcal Y)=\frac{\alpha_sC_F}{\pi}(\mathcal Y\coth\mathcal Y-1)\to\mathcal Y\Gamma_{\mathrm{cusp}}+\gamma^{(1)}_{HH}$，$\gamma^{(1)}_{HH}=-\frac{\alpha_sC_F}{\pi}$：于是 $\mu^2\frac{\dd\tilde K}{\dd\mu^2}=-\Gamma_{\mathrm{cusp}}$，$\mu^2\frac{\dd\ln S_r}{\dd\mu^2}=\gamma_{HH}$。
+\uses{thm:yzliu-soft-hqet,lem:tmd-soft-oneloop,def:lamet-reduced-soft}
+\end{example}
+
+\begin{assumption}[静态色单态 $Q\bar Q$ 对的谱假设 \tagC]\label{asm:yzliu-heavy-pair}
+(HP1) 在固定 $\vec b_\perp$ 的静态色单态 $Q\bar Q$ 扇区中存在孤立的基态，剩余能量 $E=\gamma^{-1}V(\vec b_\perp)$，连续谱有能隙（激发态由 Riemann--Lebesgue 引理或 $t\to t(1-\ii0)$ 投影掉）；(HP2) 色源对的插值场以非零、推动不变的交叠 $\Phi(\vec b_\perp)$ 产生基态；(HP3) 规范线自能与色源对的时间演化恰被 $\sqrt{ZZ}$ 消去（LSZ 型截肢；微扰论中这正是部分指数化引理的内容）。地位：[C]——非微扰谱假设，(HP1) 有格点静态势作为证据。文献：\cite{Ji:2019sxk}，\cite[第~4.1--4.2~节、附录~A]{Liu:2022nnk}。被使用于：\cref{cor:yzliu-soft-form-factor}。解除途径：(HP1) 需要静态色单态扇区的能隙（禁闭），(HP2)(HP3) 需要非微扰 HQET 中静态源的 LSZ 型构造。
+\uses{def:lamet-soft-offlc}
+\end{assumption}
+
+\paragraph{地位与缺口。}猜想级（[C]）：涉及禁闭扇区的谱，没有全阶论证；以它为前提的陈述内容等级都是 [C]，而微扰的\cref{thm:yzliu-soft-hqet}不依赖于它。
+
+\begin{corollary}[软函数是静态色源对的形状因子（非微扰形式） \tagR]\label{cor:yzliu-soft-form-factor}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:yzliu-heavy-pair}（及 \cref{thm:yzliu-soft-hqet}）。设 $|Q\bar Q,\vec b_\perp\rangle_v$ 为以速度 $v$ 运动、横向间隔 $\vec b_\perp$、剩余动量为零的最低色单态静态色源对，则
+\begin{equation}\label{eq:yzliu-soft-ff}
+S(b_\perp,Y,Y')={}_{v'}\big\langle Q\bar Q,\vec b_\perp\big|\,J(\vec b_\perp,v,v')\,\big|Q\bar Q,\vec b_\perp\big\rangle_v :
+\end{equation}
+离光锥软函数是快速色单态静态源对的弹性形状因子。% VF-YZL-2
+非微扰地位：\cref{asm:intro-wightman}（MA0）。
+\uses{asm:yzliu-heavy-pair,thm:yzliu-soft-hqet}
+\end{corollary}
+
+\begin{proof}
+由\cref{thm:yzliu-soft-hqet}(a)，$S=\lim W(t,t')/\sqrt{Z(2t)Z(2t')}$，$W=\langle0|O_{v'}(t')\,J(0)\,O^\dagger_v(-t)|0\rangle$，$O_v$ 为色源对的插值场。在 $J$ 前后插入色源对扇区能量本征态 $\{|n\rangle_v\}$（剩余能量 $E_n$）的完备集：$W=\sum_{m,n}\langle0|O_{v'}|m\rangle\ee^{-\ii E'_mt'}\langle m|J|n\rangle\ee^{-\ii E_nt}\langle n|O_v^\dagger|0\rangle$。令 $t,t'\to\infty(1-\ii0)$，由 (HP1) 只有基态存活：$W\to\Phi'^*\Phi\,\ee^{-\ii E'_0t'-\ii E_0t}\,{}_{v'}\langle0|J|0\rangle_v$，$\Phi={}_v\langle0|O_v^\dagger|0\rangle$。$Z(2t)$ 是 $v'=v$ 时的同一关联函数，而 $J(\vec b_\perp,v,v)$ 在色源对态上为恒等，故 $Z(2t)\to|\Phi|^2\ee^{-2\ii E_0t}$，$Z(2t')\to|\Phi'|^2\ee^{-2\ii E'_0t'}$，从而 $W/\sqrt{Z(2t)Z(2t')}\to(\Phi'^*\Phi/|\Phi'\Phi|)\,{}_{v'}\langle0|J|0\rangle_v$。由 (HP2)，$\Phi\ne0$ 且推动不变，$\Phi'=\Phi$，相位因子为 1；由 (HP3)，$\sqrt{ZZ}$ 消去的恰是自能与时间演化，左边的极限即离光锥软函数 $S$ 本身。于是得\cref{eq:yzliu-soft-ff}（参见\cite[式~(8)、(11)]{Ji:2019sxk}）。
+\end{proof}
+
+推论的内容等级为 [C]；其格点上的对应物是通过介子形状因子提取本征软函数（\cref{prop:yzliu-meson-ff}）。
+
+\section{双曲角解析性}\label{sec:yzliu-analyticity}
+
+TMD 文献中的软函数用到各种方向的 Wilson 线：Collins 的类空倾斜线（\cref{def:tmd-soft}）、Ji--Liu--Liu 的类时线、SIDIS 与 $e^+e^-$ 中指向未来的线。CSS 与 Collins 断言 DY 软因子与时序无关并在各过程间普适\cite{CollinsMetz2004}，\cite[第~13~章]{Collins2011}。对单一时序的软函数，答案由复双曲角上的一个解析函数统一给出。
+
+\begin{definition}[双曲角与六种构型]\label{def:yzliu-hyperbolic-angle}
+设 $S(b_\perp,\mu;v_1,v_2)$ 为单一时序、经 $Z$ 因子减除的软函数，其构造同\cref{def:lamet-soft-offlc}，但入射段沿 $v_1$、出射段沿 $v_2$，二者可以类时或类空、指向过去或未来\cite[式~(93)]{Liu:2022nnk}；约定 $v_1$ 为入射段沿路径指向尖点的切向量，$v_2$ 为出射段背离尖点的切向量（\cref{def:prelim-wilson}）。双曲角由
+\begin{equation}\label{eq:yzliu-theta}
+\cosh\theta(v_1,v_2)=\frac{v_1\cdot v_2-\ii0}{\sqrt{v_1^2-\ii0}\,\sqrt{v_2^2-\ii0}},\qquad -\pi\le\Imag\theta\le\pi
+\end{equation}
+定义（平方根取主支）；六种构型的取值见\cref{tab:yzliu-theta}。在 $(t,z)$ 分量中取 DY 形 $v_1=(w,1)$、$v_2=(-w,1)$（$|w|<1$，两条类空线都指向过去）与形状因子形 $v_1=(w,1)$、$v_2=(w,-1)$（$|w|>1$，类时线一入一出），分别得 $\cosh Y=\frac{1+w^2}{1-w^2}$ 与 $\frac{w^2+1}{w^2-1}$。% VF-YZL-4
+\uses{def:lamet-soft-offlc,def:prelim-wilson}
+\end{definition}
+% Writer note (W26, s02): VF-YZL-4 and WRITER_SPEC row 46 transcribe Liu:2022nnk eq. (123), which has sqrt(v^2 + i0) in the
+% denominator. With v1 = incoming and v2 = outgoing tangent (Liu's own form-factor analogy, APPB 4.5: incoming momenta v1, -v2),
+% that choice reproduces the four rows with v1^2 v2^2 > 0 but interchanges the two mixed (time-like/space-like) rows of
+% Liu's Table 1, which the explicit one-loop exchange integral confirms (scripts/s02_theta_table.py). Corrected here.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}llllll@{}}
+\toprule
+$v_1$ & $v_2$ & $v_1$ 的指向 & $v_2$ 的指向 & $\theta$ & 例 \\
+\midrule
+类空 & 类空 & 过去 & 过去 & $Y$ & Collins 的 DY 软因子 $S_{\mathrm{DY}}$ \\
+类时 & 类时 & 过去 & 过去 & $Y-\ii\pi$ & 类时 DY \\
+类时 & 类时 & 过去 & 未来 & $Y$ & 形状因子 $S_{\mathrm{FF}}$（\cref{thm:yzliu-soft-hqet}） \\
+类空 & 类空 & 过去 & 未来 & $Y+\ii\pi$ & 类空 SIDIS \\
+类时 & 类空 & 过去 & 未来 & $Y+\frac{\ii\pi}{2}$ & \\
+类时 & 类空 & 过去 & 过去 & $Y-\frac{\ii\pi}{2}$ & \\
+\bottomrule
+\end{tabular}
+\caption{单一时序软函数的双曲角（\cite[表~1]{Liu:2022nnk}）。$Y$ 为两方向快度之和，取向约定使 $Y\to+\infty$ 时两条线趋于相反的类光方向（即光锥极限）；对类空线，“过去／未来”指该段位于 $t<0$ 或 $t>0$。}
+\label{tab:yzliu-theta}
+\end{table}
+
+\paragraph{单圈检验。}$\pm\ii0$ 处方由单胶子交换确定。入射段 $sv_1$（$s<0$）与出射段 $tv_2$（$t>0$）之间的交换中，$x^2=t^2Q(\rho)$，$\rho=-s/t$，$Q=\rho^2v_1^2+2\rho\,v_1\cdot v_2+v_2^2$；$\int\dd t/t$ 是尖点发散，角度依赖部分为
+\begin{equation}\label{eq:yzliu-theta-oneloop}
+F(v_1,v_2)=v_1\cdot v_2\int_0^\infty\frac{\dd\rho}{Q(\rho)-\ii0}=\theta\coth\theta .
+\end{equation}
+类时—类时、过去—未来构型给出通常的尖点函数 $\mathcal Y\coth\mathcal Y$（$\mathcal Y=Y+Y'$，\cref{prop:appB-cusp-oneloop}）。类时—类空、过去—未来构型（$v_2=(\sinh Y',-\cosh Y')$）中 $v_1\cdot v_2=\sinh\mathcal Y$，$Q$ 在 $\rho_*=\ee^{-\mathcal Y}$ 处为零、$Q'(\rho_*)=2\cosh\mathcal Y$，主值部分为 $\mathcal Y\tanh\mathcal Y$，$-\ii0$ 贡献 $\frac{\ii\pi}{2}\tanh\mathcal Y$，故 $F=(\mathcal Y+\frac{\ii\pi}{2})\tanh\mathcal Y$，$\theta=\mathcal Y+\frac{\ii\pi}2$；\cref{eq:yzliu-theta}中 $\sqrt{v_2^2-\ii0}=-\ii$ 正给出 $\cosh\theta=\ii\sinh\mathcal Y$。我们对六种构型逐一数值计算了\cref{eq:yzliu-theta-oneloop}，与表中的 $\theta$ 一致。
+
+\begin{assumption}[维数正规化微扰论中的 Wightman 结构 \tagA]\label{asm:yzliu-wightman-pt}
+(WP1) 在线性协变规范中、维数正规化取一般 $\varepsilon\ne0$ 时，胶子与鬼场的 Wightman 函数逐阶满足谱条件与局域对易性（协变算符形式\cite{KugoOjima1979}），因而其坐标空间表示是（置换扩展）管域上全纯函数的边界值，并在固有复 Lorentz 变换下协变（Bargmann--Hall--Wightman 定理\cite[定理~2-11]{Streater:1989vi}）；(WP2) 同一类光线上的类光间隔给出无标度贡献，正规子 $\eta\to0^+$ 可在被积函数层次上取。地位：[A] 级——形式上是协变算符形式与 Bargmann--Hall--Wightman 定理的推论，Liu 使用了它（“the author believes in it”\cite[第~4~节]{Liu:2023pjb}），但对一般 $\varepsilon$ 的维数正规化（不定度规、规范依赖的 Green 函数）没有作为精确命题被证明。文献：\cite[附录~F]{Liu:2022nnk}，\cite[第~2~节、附录~B]{Liu:2023pjb}，\cite[附录~C.2]{Ji:2023pba}，\cite{KugoOjima1979,Streater:1989vi}。被使用于：\cref{thm:yzliu-analyticity}、\cref{thm:yzliu-time-ordering}、\cref{conj:yzliu-complex-wilson}、\cref{thm:yzliu-jet-continuation}。解除途径：证明全部带分子的胶子／鬼场 Wightman 函数的维数正规化参数表示是置换扩展管域上全纯函数的边界值，例如把时序定理中坐标空间参数函数的正性与阈下论证推广到所有图。
+\uses{def:prelim-qcd,def:prelim-brst}
+\end{assumption}
+
+\paragraph{地位与缺口。}[A] 级：所断言的性质在正规化之前的协变算符形式中有全阶论证，对维数正规化的微扰论没有精确证明，Liu 自己把它列为开放问题。它是\cref{thm:yzliu-analyticity,thm:yzliu-time-ordering,thm:yzliu-jet-continuation}的瓶颈。
+
+\begin{theorem}[软函数对复双曲角的解析性 \tagA]\label{thm:yzliu-analyticity}
+在微扰论各阶（维数正规化，线性协变规范），单一时序的减除软函数只通过 $\theta(v_1,v_2)$（\cref{def:yzliu-hyperbolic-angle}）依赖于方向，是在 $|\Imag\theta|<\pi$ 中全纯、连续到 $|\Imag\theta|=\pi$ 的同一函数 $S(\theta)$ 的边界值，\cref{tab:yzliu-theta}的六种构型均为其边界值。推论：(i) $S_{\mathrm{DY}}(b_\perp,\mu,Y,Y')=S_{\mathrm{FF}}(b_\perp,\mu,Y,Y')$——Collins 的类空（倾斜、双重时序）DY 软因子等于\cref{thm:yzliu-soft-hqet}的形状因子软函数；(ii) 对一半在光锥上、一半离光锥的软函数，$S(b_\perp,\mu,\delta,\hat z)=S(b_\perp,\mu,-\ii\delta,\hat t)$（$\delta>0$；在光锥极限下两者只差一个与 $\ln\delta$ 相伴的相位）；(iii) 在 $\delta$ 正规子中 $S^+(b_\perp,\mu,\delta,\delta)=S^{-\dagger}(b_\perp,\mu,\frac{\ii\delta}{1+\ii0},\frac{\ii\delta}{1+\ii0})$，即 $\ln\frac{\mu^2}{2\delta^+\delta^-}\tilde K\to(\ln\frac{\mu^2}{2\delta^+\delta^-}+\ii\pi)\tilde K$；(iv) 在标准的 $\delta$ 正规子中 DY 与 SIDIS 软因子相等（借助 Hartogs 关于分别全纯函数的定理）。（本定理只涉及真空中的 Wilson 线关联函数。）% VF-YZL-4
+\uses{def:yzliu-hyperbolic-angle,asm:yzliu-wightman-pt,thm:yzliu-soft-hqet,def:tmd-soft}
+\end{theorem}
+
+\begin{proofsketch}
+文献\cite[第~4.5--4.7~节，附录~F、H]{Liu:2022nnk}给出三条途径。（1）谱论证：能量为正时可把 $v^0$ 延拓到下半平面 $w$；在 $w=-\ii v_0$ 处 DY 形与形状因子形函数都变成欧氏 Wilson 回路，二者只差 $(\tau,z)$ 平面内的转动，唯一性给出 $g(w)=f(1/w)$，再映到 $\theta$\cite[式~(124)--(134)]{Liu:2022nnk}；这需要正定度规的物理规范与一致的能隙（“although no one can prove it!”），本书不采用。（2）有限长订书钉上的延拓。（3）本书采用 Wightman 函数：按 $z$ 坐标排列所选的点（类空间隔对时序不敏感），把参数乘以 $-\ii$，相邻点之差落入前向管 $\mathbb R^4-\ii V_+$；两种构型由固有复 Lorentz 变换 $\Lambda(t,z)=(\ii z,\ii t)$（快度 $\ii\pi/2$ 的推动，行列式 $+1$）联系，扩展管域上的复 Lorentz 协变性即 Bargmann--Hall--Wightman 定理（\cref{asm:yzliu-wightman-pt}(WP1)）。单圈的\cref{eq:yzliu-theta-oneloop}是一个检验。(i) 是表中第一、三行取同一 $\theta=Y$ 的结果（两条类空的过去指向线之间只有类空间隔，双重时序与单一时序定义相同）；(ii)(iii) 是同一延拓对 $\delta$ 正规化软函数的应用；(iv) 见\cite[式~(H.7)--(H.11)]{Liu:2022nnk}。
+\end{proofsketch}
+% Terminology (claim E13; App Q row 16): Liu:2022nnk App. F writes "edge of the wedge" for the BHW step and prints the map as
+% (it,iz); the correct map is (iz,it) (Liu:2023pjb eq. (3.25)). Neither slip is reproduced.
+
+\paragraph{地位与缺口。}全阶论证 [A]，瓶颈\cref{asm:yzliu-wightman-pt}；作者认为完整结果具有同样的解析性“是很自然的期望”，非微扰陈述只是 [C]。与 CSS 的关系：文献\cite{Collins2011,CollinsMetz2004}断言的时序无关性与普适性，在单一时序部分由本定理给出解析机制，并精确指出普适性可能失效之处（\cref{prop:yzliu-universality-classes}）。离光锥 TMD 软函数解析延拓的系统分类见文献\cite{Liu:2022nnk}；尖点反常维度对尖点角的解析性可追溯到文献\cite{KorchemskyRadyushkin1987}。升级途径：把\cref{asm:yzliu-wightman-pt}证明为定理。
+
+%%% BEGIN fig:yzliu-theta-strip
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1cm,y=0.75cm,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 tick/.style={draw=gray!60!black,line width=0.45pt},
+  fd2 pt/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=5.4pt},
+  fd2 lab/.style={font=\footnotesize,align=left,anchor=west,inner sep=1.5pt},
+  fd2 val/.style={font=\footnotesize,anchor=east,inner sep=1.5pt},
+  fd2 note/.style={font=\footnotesize}]
+  \def\Yo{3.0}
+  % ---- the strip |Im theta| <= pi and its boundary lines ----
+  \fill[blue!7] (0,-3.1416) rectangle (11.4,3.1416);
+  \draw[blue!50!black,line width=0.75pt] (0,3.1416) -- (11.4,3.1416);
+  \draw[blue!50!black,line width=0.75pt] (0,-3.1416) -- (11.4,-3.1416);
+  \node[fd2 note,text=blue!45!black,anchor=south east] at (11.4,3.1416) {$\Imag\theta=\pi$};
+  \node[fd2 note,text=blue!45!black,anchor=north east] at (11.4,-3.1416) {$\Imag\theta=-\pi$};
+  \node[fd2 note,text=blue!45!black,align=center] at (9.35,1.62) {$S(\theta)$ 在 $|\Imag\theta|<\pi$ 中全纯，\\连续到边界};
+  % ---- axes ----
+  \draw[fd2 ax] (-0.7,0) -- (11.85,0) node[right] {$\Real\theta$};
+  \draw[fd2 ax] (0,-4.05) -- (0,4.15) node[left] {$\Imag\theta$};
+  \foreach \y/\t in {3.1416/{\pi},1.5708/{\frac{\pi}{2}},-1.5708/{-\frac{\pi}{2}},-3.1416/{-\pi}} {
+    \draw[fd2 tick] (-0.07,\y) -- (0.07,\y);
+    \node[font=\scriptsize,anchor=east,inner sep=1pt] at (-0.1,\y) {$\t$};}
+  \node[font=\scriptsize,anchor=north east,inner sep=1.5pt] at (0,0) {$0$};
+  % ---- the line Re theta = Y_0 ----
+  \draw[gray!60,line width=0.5pt,dash pattern=on 3pt off 2pt] (\Yo,-3.85) -- (\Yo,3.85);
+  \draw[fd2 tick] (\Yo,-0.07) -- (\Yo,0.07);
+  \node[font=\scriptsize,anchor=north,inner sep=1.5pt] at (\Yo,-3.85) {$\Real\theta=Y_0$};
+  % ---- the six configurations (VF-YZL-4) ----
+  \foreach \y in {3.1416,1.5708,0,-1.5708,-3.1416} \node[fd2 pt] at (\Yo,\y) {};
+  \node[fd2 val] at (\Yo-0.12,3.1416+0.32) {$Y_0+\ii\pi$};
+  \node[fd2 val] at (\Yo-0.12,1.5708+0.32) {$Y_0+\frac{\ii\pi}{2}$};
+  \node[fd2 val,fill=blue!7] at (\Yo-0.12,0.36) {$Y_0$};
+  \node[fd2 val] at (\Yo-0.12,-1.5708+0.32) {$Y_0-\frac{\ii\pi}{2}$};
+  \node[fd2 val] at (\Yo-0.12,-3.1416+0.32) {$Y_0-\ii\pi$};
+  \node[fd2 lab] at (\Yo+0.15,3.1416+0.36) {类空/类空，过去/未来};
+  \node[fd2 lab] at (\Yo+0.15,1.5708+0.36) {类时/类空，过去/未来};
+  \node[fd2 lab] at (\Yo+0.15,0.62) {类空/类空，过去/过去（Collins 的 DY 软因子 $S_{\mathrm{DY}}$）};
+  \node[fd2 lab] at (\Yo+0.15,-0.42) {类时/类时，过去/未来（形状因子 $S_{\mathrm{FF}}$）};
+  \node[fd2 lab] at (\Yo+0.15,-1.5708+0.36) {类时/类空，过去/过去};
+  \node[fd2 lab] at (\Yo+0.15,-3.1416+0.36) {类时/类时，过去/过去};
+  % ---- light-cone limit ----
+  \draw[red!60!black,line width=0.8pt,-{Stealth[length=5.5pt,width=4.6pt]}] (7.3,-2.05) -- (10.9,-2.05);
+  \node[fd2 note,text=red!55!black,align=center,anchor=south] at (9.1,-2.0) {$Y\to\infty$：光锥极限};
+  \node[fd2 note,text=red!55!black,align=center,anchor=north] at (9.1,-2.12) {（假设对 $\Imag\theta$ 一致）};
+\end{tikzpicture}
+\caption{离光锥软函数对双曲角的解析性。单一时序的减除软函数只通过双曲角 $\theta(v_1,v_2)$（$\cosh\theta=v_1\cdot v_2/\sqrt{v_1^2v_2^2}$，$\pm\ii0$ 处方见正文）依赖于两个方向，是带形 $-\pi\le\Imag\theta\le\pi$（阴影，$\Real\theta\ge0$）上同一函数 $S(\theta)$ 的取值；
+在固定的 $\Real\theta=Y_0$ 上标出两个方向为类空/类时、过去/未来指向的六种组合所对应的 $\theta$（VF-YZL-4），其中 $\theta=Y_0$ 一点同时代表 Collins 的类空 DY 软因子与类时形状因子软函数，
+由此在微扰论各阶 $S_{\mathrm{DY}}=S_{\mathrm{FF}}$（\cref{thm:yzliu-analyticity}，全阶论证 [A]；前提为维数正规化微扰论中的 Wightman 结构，\cref{asm:yzliu-wightman-pt}）。
+光锥极限 $Y\to\infty$ 能否越过整个带形延拓，取决于该极限对 $\Imag\theta$ 的一致性；它只在 $\Imag\theta\in\{0,\pm\frac{\pi}{2},\pm\pi\}$ 处得到微扰验证（\cref{asm:yzliu-lightcone-uniform}，部分 [P]）。}
+\label{fig:yzliu-theta-strip}
+\end{figure}
+%%% END fig:yzliu-theta-strip
+
+\cref{fig:yzliu-theta-strip}把这一结构画在复 $\theta$ 平面上：Collins 的 DY 软因子与形状因子软函数位于同一点 $\theta=Y$。双重时序且含类时方向的软函数不在这一图景之内（\cref{sec:yzliu-rapidity}末）。
+
+\section{快度发散的因子化、本征软函数与普适类}\label{sec:yzliu-rapidity}
+
+CSS 理论要求 $\ln S$ 对总快度线性增长、斜率为 Collins--Soper 核 $\tilde K$，余下的有限部分即约化软函数；第~22~章把这一性质列为假设（\cref{asm:lamet-soft-rapidity}）。本节给出其全阶论证与本征软函数的性质。
+
+\begin{proposition}[离光锥软函数中快度发散的因子化（线性性） \tagA]\label{prop:yzliu-rapidity-linear}
+在微扰论各阶，当 $Y+Y'\to\infty$ 时
+\begin{equation}\label{eq:yzliu-rapidity-linear}
+\ln S(b_\perp,\mu,Y,Y')=(Y+Y')\,\tilde K(b_\perp,\mu)+\mathcal D(b_\perp,\mu)+\order{\ee^{-(Y+Y')}} ,
+\end{equation}
+$\tilde K$ 为 Collins--Soper 核（\cref{prop:tmd-evolution}）。等价地，$S=\Psi^\dagger(b_\perp,\mu,Y')\Psi(b_\perp,\mu,Y)$，$\Psi$ 是快度为 $Y$ 的静态 $Q\bar Q$ 对经快度重整化的光锥波函数\cite[式~(116)]{Liu:2022nnk}，$|\Psi(b_\perp,\mu,Y)|=\ee^{\tilde KY+\mathcal D_1-\frac12\mathcal D_2}$，从而 $\mathcal D=2\mathcal D_1-\mathcal D_2$；这里 $\mathcal D_2$、$\mathcal D_1$ 分别是两侧都在光锥上（$\delta$ 正规化）与一半在光锥上的软函数中与快度无关的部分。（本命题只涉及真空中的 Wilson 线关联函数。）
+% errtype: E-S
+\uses{def:lamet-soft-offlc,prop:tmd-evolution,lem:yzliu-partial-exp,prop:appB-webs}
+\end{proposition}
+
+\begin{proofsketch}
+（1）区域分析\cite[第~4.4~节]{Liu:2022nnk}：幂次计数参数为 $\ee^{-(Y+Y')/2}$，领头区域是分别与 $v$、$v'$ 共线的两个子图加一个软子图，硬部分平凡（在壳程函外线，无硬标度）。（2）轴规范 $n\cdot A=0$，$n=\hat z+\vec n_\perp$（无 Glauber 问题，共线 $A^\pm$ 不进入硬部分）\cite[附录~E]{Liu:2022nnk}：由\cref{lem:yzliu-partial-exp}与\cref{prop:appB-webs}，web 分为自相互作用 web 与顶点 web；软因子化与复制技巧（web 对复制数线性）表明顶点 web 对图求和后没有领头共线贡献，故发散部分满足 $\mathrm{div}_1(Y+Y')=\mathrm{div}_2(Y)+\mathrm{div}_2(Y')$。\emph{Cauchy 一步}：令 $f(t)\equiv\mathrm{div}_2(Y_0+t)-\mathrm{div}_2(Y_0)$，分别取 $(Y,Y')=(Y_0+t,Y_0+t')$ 与 $(Y_0+t+t',Y_0)$，左边相同，相减得 $f(t+t')=f(t)+f(t')$；于是 $f(m/n)=\frac mnf(1)$，由连续性 $f(t)=tf(1)$，发散部分对快度线性，斜率只依赖于 $b_\perp$、$\mu$；无硬标度，故硬区不产生额外的 $Y$ 依赖。（3）固定阶 $n$ 的快度切片：快度轴分成宽 $nY_0$ 的薄片，逐片积掉最高快度的胶子群，每步误差 $\order{\ee^{-Y_0}}$，得 $|V(Y)-V(Y')|\lesssim(Y-Y')\ee^{-Y'/n}$\cite[式~(E.1)--(E.13)]{Liu:2022nnk}。$|\Psi|$ 的形式来自对色源对光锥波函数的同样分析\cite[式~(116)--(122)]{Liu:2022nnk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]，也是\cref{asm:lamet-soft-rapidity}(SR) 的全阶论证。有一步是明确假定的：积掉最高快度胶子群时需要控制其红外行为（典型标度 $k^+k^-\sim k_\perp^2\sim1/b_\perp^2$）——“This can be non-trivial, of course. Assuming this can be done”\cite[附录~E]{Liu:2022nnk}。这是最弱的一步（误差类型 E-S）。结论与 Collins--Soper 的断言\cite{CollinsSoper1981}一致；Liu 指出文献\cite{Collins:2011ca}没有说明共线模式如何被压低到足以消除单圈以上的快度发散，而他对\cite{CollinsSoper1981}的批评是另一回事——其红外安全性论证是启发式的，对线性发散留有漏洞\cite[第~4.4~节、附录~D]{Liu:2022nnk}。类光正规子的共形映射重整化定理见\cite{Vladimirov:2017ksc}（推广见第~24~章\cref{prop:front-rapidity-renorm}），三圈软函数\cite{Li:2016axz}与\cref{eq:yzliu-rapidity-linear}相容。升级途径：证明这一红外控制步骤。
+
+\begin{definition}[本征软函数的光锥定义]\label{def:yzliu-intrinsic-soft-lc}
+令 $S(b_\perp,\mu,\delta^+,\delta^-)$ 为两条类光订书钉都用 $\delta$ 正规子（\cref{rem:tmd-schemes}）的软函数，$S(b_\perp,\mu,\delta^+,\hat z)$ 为一条 $\delta$ 正规化的类光订书钉与一条沿 $\hat z$ 的类空订书钉组成、以 $\sqrt{Z_E}$（\cref{def:lamet-quasi-tmd}）减除自相互作用的软函数（\cref{def:tmd-soft}）。本征软函数定义为\cite[式~(72)、(76)]{Liu:2022nnk} % VF-YZL-2
+\begin{equation}\label{eq:yzliu-SI-lc}
+\sqrt{S_I(b_\perp,\mu)}=\lim_{\delta^+\to0}\frac{\sqrt{S(b_\perp,\mu,\delta^+,\delta^-=\delta^+)}}{S(b_\perp,\mu,\delta^+,\hat z)} .
+\end{equation}
+\uses{def:lamet-quasi-tmd,def:tmd-soft,rem:tmd-schemes}
+\end{definition}
+
+\begin{theorem}[本征软函数：定义的等价、方案无关性与反常维度 \tagA]\label{thm:yzliu-intrinsic-soft}
+在微扰论各阶：(a) $S_I=S_r=\ee^{-\mathcal D}$（\cref{def:lamet-reduced-soft}）；(b) 记 $S_1(b_\perp,\delta,Y')=\ee^{(Y'-\ln\delta)\tilde K+\mathcal D_1}$、$S_2(b_\perp,\delta,\delta')=\ee^{-\ln(\delta\delta')\tilde K+\mathcal D_2}$，则 $\mathcal D=2\mathcal D_1-\mathcal D_2$，$S_I$ 与快度正规化方案无关，尽管 $\mathcal D$、$\mathcal D_1$、$\mathcal D_2$ 各自与方案有关；(c) $S_I$ 是间隔 $b_\perp$ 的静态 $Q\bar Q$ 对的光锥波函数（的平方）；(d) 在所有阶
+\begin{equation}\label{eq:yzliu-SI-rge}
+\mu^2\frac{\dd\ln S_I(b_\perp,\mu)}{\dd\mu^2}=\gamma_{HH}(\alpha_s),
+\end{equation}
+单圈 $S_I=1-\frac{\alpha_sC_F}{\pi}L_b$。（本定理只涉及真空中的 Wilson 线关联函数。）% VF-YZL-2, VF-YZL-3
+\uses{def:yzliu-intrinsic-soft-lc,def:lamet-reduced-soft,prop:yzliu-rapidity-linear,thm:yzliu-analyticity,def:sudakov-cusp,prop:appB-cusp-oneloop}
+\end{theorem}
+
+\begin{proofsketch}
+（b）把 $S_1$、$S_2$ 代入 $S_I=S_2(\delta,\delta')/[S_1(\delta,Y'=0)\,S_1(Y=0,\delta')]$\cite[式~(19)]{Ji:2019sxk}，$\tilde K$ 项 $-\ln(\delta\delta')+\ln\delta+\ln\delta'=0$，正规子相消，$\ln S_I=\mathcal D_2-2\mathcal D_1$；由\cref{prop:yzliu-rapidity-linear}，$\mathcal D=2\mathcal D_1-\mathcal D_2$。光锥定义\cref{eq:yzliu-SI-lc}同样给出 $\mathcal D_1=\frac12(\mathcal D+\mathcal D_2)$。（a）两种一半在光锥上的软函数（类空 $\hat z$ 与类时订书钉）由\cref{thm:yzliu-analyticity}(ii) 相联系，只差一个在 $S_I$ 中相消的相位；结合区域分析即得\cite[式~(19)--(21)]{Ji:2019sxk}，\cite[式~(18)--(21)]{Ji:2019ewn}，\cite[式~(76)--(81)、(120)--(122)]{Liu:2022nnk}，\cite[式~(46)--(48)]{Ji:2021znw}。（c）来自 $S=\Psi^\dagger\Psi$。（d）$S_I$ 是乘法重整化的带尖点 Wilson 回路之比；软函数有两个夹角为 $Y+Y'$ 的尖点，$\mu^2\frac{\dd\ln S}{\dd\mu^2}=-\Gamma_{\mathrm{cusp}}(\alpha_s,Y+Y')$（\cref{def:sudakov-cusp}），代入大角展开 $\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)=\theta\Gamma_{\mathrm{cusp}}(\alpha_s)+\gamma_{HH}+\order{\ee^{-\theta}}$ 并与\cref{eq:yzliu-rapidity-linear}比较：$\mu^2\frac{\dd\tilde K}{\dd\mu^2}=-\Gamma_{\mathrm{cusp}}$，$\mu^2\frac{\dd\mathcal D}{\dd\mu^2}=-\gamma_{HH}$；单圈值由\cref{prop:appB-cusp-oneloop}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]：(a)--(c) 是\cref{prop:yzliu-rapidity-linear}（最弱的一步是快度切片的红外控制）与区域分析的推论；(d) 依赖带尖点 Wilson 回路的全阶乘法可重整性与同一光锥极限。两圈值见\cref{prop:yzliu-sI-twoloop}。归属：$S_I$ 由 Ji、Liu 与 Liu 作为有算符定义、与快度方案无关、可欧氏计算的对象引入\cite{Ji:2019sxk,Ji:2019ewn}；此前 Ebert、Stewart 与 Zhao 已引入一个未定的非微扰软失配因子 $g^S_q$\cite{EbertStewartZhao2019}。
+
+\begin{proposition}[$S_I$ 的两圈结构 \tagR]\label{prop:yzliu-sI-twoloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本命题是两圈阶的显式陈述：$S_I$（\cref{def:yzliu-intrinsic-soft-lc}）是乘法重整化的带尖点 Wilson 回路之比，其两圈反常维度是两圈角依赖尖点反常维度的大角常数（所有阶的 RGE 是\cref{thm:yzliu-intrinsic-soft}(d)，此处只作指引）。取 $\mu^2\frac{\dd\alpha_s}{\dd\mu^2}=-\frac{\beta_0}{4\pi}\alpha_s^2$，% VF-YZL-3
+\begin{gather}
+\gamma_{HH}=-\frac{\alpha_sC_F}{\pi}+\frac{\alpha_s^2}{\pi^2}\,C_F\Big[C_A\Big(-\frac{49}{36}+\frac{\pi^2}{12}-\frac{\zeta_3}{2}\Big)+\frac59T_Fn_f\Big]+\order{\alpha_s^3},\label{eq:yzliu-gammaHH}\\
+\ln S_I=-\frac{\alpha_sC_F}{\pi}L_b+\alpha_s^2\Big[-\frac{C_F\beta_0}{8\pi^2}L_b^2+\hat\gamma_{HH}L_b+c_2\Big]+\order{\alpha_s^3},\label{eq:yzliu-lnSI-2loop}
+\end{gather}
+$\hat\gamma_{HH}$ 为\cref{eq:yzliu-gammaHH}中 $\alpha_s^2$ 的系数，常数 $c_2$ 不由 RGE 确定。（本命题只涉及真空中的 Wilson 线关联函数。）
+\uses{def:yzliu-intrinsic-soft-lc,def:sudakov-cusp,prop:appB-cusp-oneloop}
+\end{proposition}
+% Verification (claims E08, E09, E11; App Q rows 12, 13, 15): the printed two-loop Gamma_S of Liu:2022nnk (81) and Ji:2021znw
+% (73) [= (72) of arXiv v1] has the wrong sign; JiEtAl2021 (205)-(206) have inconsistent RGE signs; the L_b^2 coefficient of
+% Liu:2022nnk (81) and JiEtAl2021 (208) is a factor 2 too large; the single log of Liu:2022nnk (81) has the wrong sign.
+% Correct forms printed here; scripts s03, s04, s13 (W26).
+
+\begin{proof}
+（1）RGE。每个尖点乘法重整化，反常维度为 $\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)$（\cref{def:sudakov-cusp}），两圈时这是显式计算\cite{KorchemskyRadyushkin1987}。软函数两个尖点的夹角为 $Y+Y'$，$\mu^2\frac{\dd\ln S}{\dd\mu^2}=-\Gamma_{\mathrm{cusp}}(\alpha_s,Y+Y')$；把大角展开代入 $\ln S=(Y+Y')\tilde K+\mathcal D$，常数项给出 $\mu^2\frac{\dd\ln S_I}{\dd\mu^2}=\gamma_{HH}$。两圈阶这一步只用到显式的两圈尖点反常维度。（2）$\gamma^{(2)}_{HH}$。按单个尖点 $\frac{\dd}{\dd\ln\mu}$ 的归一化\cite[式~(13)--(15)]{Becher:2009kw}（单圈部分即\cref{prop:appB-cusp-oneloop}）：
+\begin{equation}\label{eq:yzliu-cusp-2loop}
+\begin{aligned}
+\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)={}&\frac{\alpha_s}{\pi}C_F(\theta\coth\theta-1)+\frac{\alpha_s^2}{\pi^2}C_F\Big\{\Big[C_A\Big(\frac{67}{36}-\frac{\pi^2}{12}\Big)-\frac59T_Fn_f\Big]\theta\coth\theta+\frac{C_A}{2}B(\theta)\\
+&+C_A\Big(\frac{\pi^2}{12}-\frac{49}{36}-\frac{\zeta_3}{2}\Big)+\frac59T_Fn_f\Big\}+\order{\alpha_s^3},\\
+B(\theta)={}&\coth^2\theta\Big[\mathrm{Li}_3(\ee^{-2\theta})+\theta\,\mathrm{Li}_2(\ee^{-2\theta})-\zeta_3+\frac{\pi^2\theta}{6}+\frac{\theta^3}{3}\Big]+\frac{\pi^2}{6}+\zeta_3+\theta^2\\
+&+\coth\theta\Big[\mathrm{Li}_2(\ee^{-2\theta})-2\theta\ln(1-\ee^{-2\theta})-\frac{\pi^2}{6}(1+\theta)-\theta^2-\frac{\theta^3}{3}\Big].
+\end{aligned}
+\end{equation}
+检验：$B(0)=\zeta_3-1$，故 $\Gamma_{\mathrm{cusp}}(\alpha_s,0)=0$（直线无尖点）。$\theta\to\infty$ 时 $\coth\theta=1+\order{\ee^{-2\theta}}$、$\mathrm{Li}_n(\ee^{-2\theta})\to0$，方括号中的 $\theta^3$、$\theta^2$、$\pi^2\theta$、$\zeta_3$ 项两两相消，$B(\theta)=\order{\theta^3\ee^{-2\theta}}$。于是 $\theta\coth\theta$ 的系数是两圈类光尖点反常维度（与\cref{def:sudakov-cusp}的 $\Gamma_1$ 相同），常数项即\cref{eq:yzliu-gammaHH}的两圈系数。$n_f$ 项也可独立得到：它等于 $-\frac59T_Fn_f\frac{\alpha_s}{\pi}$ 乘以单圈函数（跑动耦合效应），大角常数为 $+\frac59T_Fn_fC_F\frac{\alpha_s^2}{\pi^2}$。（3）对数结构：对 $\ln S_I=-\frac{\alpha_s(\mu)C_F}{\pi}L_b+\alpha_s^2[cL_b^2+\hat\gamma L_b+c_2]$ 用 $\mu^2\frac{\dd L_b}{\dd\mu^2}=1$ 与跑动耦合（见下例），$\mu^2\frac{\dd\ln S_I}{\dd\mu^2}=-\frac{\alpha_sC_F}{\pi}+\alpha_s^2[(\frac{C_F\beta_0}{4\pi^2}+2c)L_b+\hat\gamma]$；与 $b_\perp$ 无关的 $\gamma_{HH}$ 相等要求 $c=-\frac{C_F\beta_0}{8\pi^2}$、$\hat\gamma=\hat\gamma_{HH}$，$c_2$ 不受约束。
+\end{proof}
+
+这一结构与\cite[式~(A.6)]{Ji:2023pba}及 RMP\cite{JiEtAl2021}的 $\Gamma_S^{(2)}$（按\cref{tab:yzliu-conventions}换算）一致；部分文献中的两圈反常维度与 $L_b^2$ 系数有印刷错误（附录~Q 第~12、13、15~条）。三圈常数本书不引用。
+
+\begin{example}[由 RGE 确定两圈 $L_b^2$ 系数]\label{ex:yzliu-sI-rge}
+对 $\ln S_I=-\frac{\alpha_s(\mu)C_F}{\pi}L_b+\alpha_s^2[cL_b^2+\hat\gamma L_b+c_2]$ 作用 $\mu^2\frac{\dd}{\dd\mu^2}$：单圈项中的跑动给出 $-\frac{C_F}{\pi}(-\frac{\beta_0}{4\pi}\alpha_s^2)L_b=\frac{C_F\beta_0}{4\pi^2}\alpha_s^2L_b$，二次项给出 $2c\,\alpha_s^2L_b$；$\gamma_{HH}$ 与 $L_b$ 无关，故 $c=-\frac{C_F\beta_0}{8\pi^2}$。取 $n_f=4$（$\beta_0=\frac{25}{3}$），$c=-0.1407$；对 $\gamma^{(1)}_{HH}$ 用单圈跑动精确积分、在 $\alpha_s=0.002$ 处提取 $\alpha_s^2L_b^2$ 系数得 $-0.1408$。在 Liu 等人的约定 (a) 下 $c=\beta_0^{(a)}C_F/(4\pi)$。
+\uses{prop:yzliu-sI-twoloop}
+\end{example}
+
+\begin{assumption}[光锥极限对 ${\rm Im}\,\theta$ 的一致性 \tagP]\label{asm:yzliu-lightcone-uniform}
+(UL) 单一时序软函数的光锥极限 $Y\to\infty$ 对 $\Imag\theta\in[-\pi,\pi]$ 一致，因而光锥形式 $\ee^{(Y+Y')\tilde K+\mathcal D}$ 越过整个带形延拓。地位：[P]——只在 $\Imag\theta\in\{0,\pm\frac\pi2,\pm\pi\}$（实闵氏空间可实现的构型）处得到微扰验证。文献：\cite[第~4.5--4.7~节、第~6~节]{Liu:2022nnk}。被使用于：\cref{prop:yzliu-universality-classes}。解除途径：在每一阶给出 $\order{\ee^{-\theta}}$ 余项在带形内的一致界。
+\uses{def:yzliu-hyperbolic-angle,thm:yzliu-analyticity}
+\end{assumption}
+
+\paragraph{地位与缺口。}[P]：只在带形内五条可实现的直线上成立；以它为前提的普适类陈述至多为 [P]。
+
+\begin{proposition}[软函数的普适类 \tagP]\label{prop:yzliu-universality-classes}
+在光锥极限下只剩三个独立对象：静态 $Q\bar Q$ 对的光锥波函数 $\Psi$、单个重夸克态的 TMD 分布 $f^{\mathrm{TMD}}$、重夸克的 TMD 碎裂函数 $D^{\mathrm{TMD}}$；分类见\cref{tab:yzliu-classes}。类时双重时序软函数之间（重夸克 TMD 分布与碎裂函数之间）的普适性不被断言。（本命题只涉及真空中的 Wilson 线关联函数与重夸克态。）
+\uses{thm:yzliu-analyticity,prop:yzliu-rapidity-linear,asm:yzliu-lightcone-uniform}
+\end{proposition}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+类型 & 时序 & $v_1$（指向） & $v_2$（指向） & 超软模式 & 光锥因子化 & 欧氏表示 \\
+\midrule
+形状因子 & 单一 & 任意 & 任意 & 有 & $\Psi^\dagger\Psi$ & 有 \\
+类空 DY & 双重 & 类空（过去） & 类空（过去） & 有 & $\Psi^\dagger\Psi$ & 有 \\
+类时 DY & 双重 & 类时（过去） & 类时（过去） & 无 & $f^{\mathrm{TMD}\dagger}f^{\mathrm{TMD}}$ & 有 \\
+$\gamma^*\to\bar QQ+$强子 & 双重 & 类时（未来） & 类时（未来） & 无 & $D^{\mathrm{TMD}\dagger}D^{\mathrm{TMD}}$ & 无 \\
+类时 SIDIS & 双重 & 类时（过去） & 类时（未来） & 无 & $D^{\mathrm{TMD}}f^{\mathrm{TMD}}$ & 无 \\
+类空 SIDIS & 双重 & 类空（过去） & 类空（未来） & 有 & $\Psi^\dagger\Psi$ & 有 \\
+准 TMD & 双重 & 类时（过去） & 类空（任意） & 有 & $\Psi^\dagger f^{\mathrm{TMD}}$ & 有 \\
+准碎裂 & 双重 & 类空（任意） & 类时（未来） & 有 & $D^{\mathrm{TMD}}\Psi$ & 无 \\
+\bottomrule
+\end{tabular}
+\caption{离光锥软函数在光锥极限下的普适类（按\cite[表~2]{Liu:2022nnk}的印刷页转录）。只有 $\Psi$ 与 $f^{\mathrm{TMD}}$ 类有欧氏表示。}
+\label{tab:yzliu-classes}
+\end{table}
+
+\begin{proofsketch}
+单一时序软函数由\cref{thm:yzliu-analyticity}表示为同一 $S(\theta)$ 的边界值；在 (UL) 下光锥形式越过整个带形，故所有单一时序（以及只含类空间隔、因而与时序无关的）软函数在光锥极限下化为 $\Psi^\dagger\Psi$（\cref{prop:yzliu-rapidity-linear}）。含类时方向的双重时序软函数不在这一解析结构内：类时线代表实时间传播的重夸克，可以区分它在初态（TMD 分布）还是末态喷注（碎裂函数），光锥正规子给出 $S_{\mathrm{mix}}(v,v')=f^{\mathrm{TMD}}D^{\mathrm{TMD}}$、$S_{\mathrm{mix}}(v,-v')=f^{\mathrm{TMD}}f^{\mathrm{TMD}\dagger}$\cite[第~4.6--4.7~节，式~(139)--(142)]{Liu:2022nnk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}部分 [P]：等级由\cref{asm:yzliu-lightcone-uniform}决定。对类时双重时序的情形，作者写道“we are not clear at this moment whether the heavy-quark TMDPDF and fragmentation functions are equal to all orders”\cite[第~6~节]{Liu:2022nnk}。这张表把“正规化方式无关紧要”的说法变成明确的分类，并指出普适性可能失效之处：类时双重时序、碎裂型以及 $e^+e^-$ 软因子——软因子的时序并非“总是无关紧要”。升级途径：带形内余项的一致界，以及双重时序软函数的解析结构（\cref{rem:yzliu-open}第~(3)、(4)~项）。
+
+\section{时序定理}\label{sec:yzliu-time-ordering}
+
+DY 软因子是振幅与共轭振幅之积，含时序 $T$ 与反时序 $\bar T$ 两部分；它是否等于某个单一时序的量（因而与时序无关、可欧氏化），在文献中说法不一\cite{Moult:2018jzp}。Liu 在指数正规子中把这一问题变成坐标空间解析性的问题\cite{Liu:2023pjb}。
+
+\begin{definition}[指数正规子下的软因子]\label{def:yzliu-exp-soft}
+记 $n\equiv n_A$、$\bar n\equiv n_B$（Liu 的 $n$、$\bar n$），$W_n(x)=W[x,x-\infty n]$ 为指向过去的类光 Wilson 线，$W_{\bar n+}(x)=W[x+\infty\bar n,x]$ 为指向未来的类光线（\cref{def:prelim-wilson}；换算到本书约定：$g\to-g$），$e_t=(1,0,0,0)$，$e_z=(0,0,0,1)$，正规子 $\nu>0$\cite{Li:2016axz}。DY 形软因子与单一时序软因子分别为\cite[式~(3.7)、(3.20)]{Liu:2023pjb}
+\begin{gather}
+S(b_\perp,\nu,\varepsilon)=\tfrac{1}{N_c}\Tr\big\langle\Omega\big|\bar T\big[W_n^\dagger W_{\bar n}\big](\vec b_\perp-\ii\nu e_t)\;T\big[W_{\bar n}^\dagger W_n\big](0)\big|\Omega\big\rangle ,\label{eq:yzliu-S-exp}\\
+S_t(b_\perp,\nu,\varepsilon)=\tfrac{1}{N_c}\Tr\big\langle\Omega\big|T\,W_n^\dagger(\vec b_\perp-\nu e_z)\,W_{\bar n+}^\dagger(\vec b_\perp-\nu e_z)\,W_{\bar n+}(0)\,W_n(0)\big|\Omega\big\rangle .\label{eq:yzliu-St}
+\end{gather}
+$S$ 的谱表示 $S=\sum_m\int\dd\Pi_m|\langle m|TW_{\bar n}^\dagger W_n|\Omega\rangle|^2\ee^{\ii\vec k_m\cdot\vec b_\perp-\nu E_m}$ 表明 $\ee^{-\nu E_m}$ 正规化 $k^+\to0$ 或 $\infty$ 的快度发散；$S_t$ 是间隔 $\vec b_\perp-\nu e_z$ 的一对类光色源沿 $n$ 入射、沿 $\bar n$ 出射的类空形状因子（\cref{def:tmd-soft}）。完整版本 $S^{\mathrm{full}}(L^+,L^-,b_\perp,\nu,Y,\varepsilon)$、$S_t^{\mathrm{full}}$ 含有限光前长度 $L^\pm$、离光锥倾斜（$n_Y=n-\ee^{-Y}\bar n$ 或 $v=n+\ee^{-Y}\bar n$）、$Z$ 因子减除与沿 $\vec b_\perp-\ii\nu e_t$ 或 $\vec b_\perp-\nu e_z$ 的横向连接。
+\uses{def:tmd-soft,def:prelim-wilson}
+\end{definition}
+
+\begin{lemma}[坐标空间参数函数的正性（全子式矩阵树公式）]\label{lem:yzliu-matrix-tree}
+设 $G$ 为连通图，无蝌蚪线且无连接两个外顶点的线，外顶点集 $E$、内顶点集 $V$；坐标空间 Schwinger 表示中线 $l$ 带权 $w_l=1/(4\alpha_l)$ 与因子 $\ee^{-w_l(x_{s(l)}-x_{t(l)})^2_E}$。对内顶点位置积分后，指数化为 $-\sum_{e<e'}P_{ee'}(\alpha)\,x^2_{E,ee'}$，其中
+\begin{equation}\label{eq:yzliu-Pee}
+P_{ee'}(\alpha)=\frac{\sum_{\mathcal L\in\mathcal L(e,e')}\prod_{l\in\mathcal L}\alpha_l^{-1}\sum_{\mathcal T\in\mathcal T_1(G/(E\cup\mathcal L))}\prod_{l\in\mathcal T}\alpha_l^{-1}}{4\sum_{\mathcal T\in\mathcal T_1(G/E)}\prod_{l\in\mathcal T}\alpha_l^{-1}}\ \ge0 ,
+\end{equation}
+$\mathcal L(e,e')$ 为经由内顶点连接 $e$、$e'$ 的路径集，$G/E$ 为把 $E$ 收缩为一点并删去蝌蚪线所得的图，$\mathcal T_1$ 表示生成树集\cite[式~(2.10)、附录~A]{Liu:2023pjb}。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+指数为 $-\sum_lw_l(x_{s(l)}-x_{t(l)})^2=-\sum_{i,j}L_{ij}\,x_i\cdot x_j$，$L$ 为带权 Laplace 矩阵（$L_{ii}=\sum_{l\ni i}w_l$，$i\ne j$ 时 $L_{ij}=-\sum_{l:i\text{–}j}w_l$）。分块为 $E$、$V$ 并对 $x_V$ 作 Gauss 积分，指数变为 $-x_E^{\mathsf T}\tilde Lx_E$，$\tilde L=L_{EE}-L_{EV}L_{VV}^{-1}L_{VE}$。常矢量在 $L$ 的核中，故 $\tilde L$ 的行和为零，$x_E^{\mathsf T}\tilde Lx_E=\sum_{e<e'}P_{ee'}(x_e-x_{e'})^2$，$P_{ee'}=-\tilde L_{ee'}=\sum_{v,v'}(-L_{ev})(L_{VV}^{-1})_{vv'}(-L_{v'e'})$（$L_{EE}$ 无非对角元）。$-L_{ev}\ge0$；又 $L_{VV}=D-A$，$D$ 为正对角阵、$A\ge0$ 对称，且 $x^{\mathsf T}L_{VV}x=\sum_{\text{内线}}w(x_v-x_{v'})^2+\sum_{v\text{–}E}w\,x_v^2>0$（$G$ 连通，内图每个分支都连到 $E$），故非负对称阵 $M=D^{-1/2}AD^{-1/2}$ 的最大本征值（由 Perron--Frobenius 定理即其谱半径）小于 1，$L_{VV}^{-1}=D^{-1/2}\sum_{k\ge0}M^kD^{-1/2}$ 逐元非负，于是 $P_{ee'}\ge0$。\cref{eq:yzliu-Pee}的显式形式是全子式矩阵树定理\cite{Bogner:2010kv}对 $L_{VV}$ 的余子式的应用。
+\end{proof}
+
+\begin{lemma}[末态求和恒等式]\label{lem:yzliu-final-state}
+设 $E_k>0$ 互不相同，$\nu>0$，$\eta\to0^+$，则 % VF-YZL-12
+\begin{equation}\label{eq:yzliu-final-state}
+\int_{-\infty}^{\infty}\frac{\dd E}{2\pi\ii}\,\ee^{-\nu|E|/\sqrt2}\Big[\prod_k\frac{1}{E-E_k-\ii\eta}-\prod_k\frac{1}{E-E_k+\ii\eta}\Big]=\sum_k\ee^{-\nu E_k/\sqrt2}\prod_{j\ne k}\frac{1}{E_k-E_j} .
+\end{equation}
+% uses: none
+\end{lemma}
+
+\begin{proof}
+部分分式 $\prod_k(E-e_k)^{-1}=\sum_kc_k(E-e_k)^{-1}$，$c_k=\prod_{j\ne k}(e_k-e_j)^{-1}$；取 $e_k=E_k\pm\ii\eta$ 时 $e_k-e_j=E_k-E_j$，$c_k$ 与 $\eta$ 无关。于是方括号等于 $\sum_kc_k\,2\ii\eta/[(E-E_k)^2+\eta^2]$；它乘以有界连续函数 $\ee^{-\nu|E|/\sqrt2}$ 后可积，$\eta\to0^+$ 时 Lorentz 近似恒等元给出 $2\pi\ii\sum_kc_k\delta(E-E_k)$，由 $E_k>0$ 得右边。
+\end{proof}
+
+\begin{tcolorbox}[enhanced,breakable,colback=gray!3!white,colframe=gray!45!black,boxrule=0.5pt,arc=2pt,left=4pt,right=4pt,top=2pt,bottom=2pt,title={Wightman 预备知识},fonttitle=\bfseries\small]
+\small
+由谱条件，Wightman 分布 $\langle\Omega|\phi(z_{P_n})\cdots\phi(z_{P_1})|\Omega\rangle$ 延拓为管域 $\mathfrak S^P_n=\{-\Imag(z_{P_k}-z_{P_{k-1}})\in V_+\}$ 上的全纯函数；用固有复 Lorentz 变换延拓到扩展管域（Bargmann--Hall--Wightman 定理，只需谱条件与实 Lorentz 协变性\cite[定理~2-11]{Streater:1989vi}）；局域对易性把 $n!$ 个延拓粘合为置换扩展管域上的单一函数。时序乘积是 $-x_{ij}^2+\ii\eta$ 的边界值；欧氏点上的限制是 Schwinger 函数。阈下区域 $\mathcal E'_n=\{\Real z_{ij}^2<0,\ \forall i<j\}$ 中维数正规化的参数表示（\cref{lem:yzliu-matrix-tree}）一致有界，$\mathfrak S^P_n\cap\mathcal E'_n$ 道路连通\cite[第~2~节、附录~B]{Liu:2023pjb}。
+\end{tcolorbox}
+
+\begin{theorem}[DY 形 TMD 软因子的时序无关性 \tagA]\label{thm:yzliu-time-ordering}
+在维数正规化（$\varepsilon\ne0$）、线性协变规范的微扰论各阶：(1) $S(b_\perp,\nu,\varepsilon)$（\cref{def:yzliu-exp-soft}）有无割线的阈下参数表示，由胶子 Wightman 函数构成，其不变间隔平方为 % VF-YZL-12
+\begin{equation}\label{eq:yzliu-invariants}
+\begin{gathered}
+x^2_{A,ij}=-2\lambda^R_i\lambda^R_j,\qquad x^2_{B,ij}=-\nu^2-b_\perp^2-\sqrt2\,\ii\nu(\lambda^L_i-\lambda^R_j),\\
+x^2_{C,ij}=-\nu^2-b_\perp^2-2\lambda^L_i\lambda^R_j-\sqrt2\,\ii\nu(\lambda^L_i-\lambda^R_j),
+\end{gathered}
+\end{equation}
+（$\lambda^{R}_i<0$、$\lambda^L_i<0$ 为 $T$、$\bar T$ 部分 Wilson 线上点的参数）每个虚部都伴随不大于 $-b_\perp^2-\nu^2<0$ 的实部；(2) $S(b_\perp,\nu,\varepsilon)=S_t(b_\perp,\nu,\varepsilon)$：作为振幅平方的 DY 软因子等于一对类光色源的类空形状因子；(3) 主等式 $S^{\mathrm{full}}(L^+,L^-,b_\perp,\nu,Y,\varepsilon)=S_t^{\mathrm{full}}(-\ii L^-,-\ii L^+,b_\perp,\nu,Y,\varepsilon)$\cite[式~(3.71)；不等长度见式~(3.54)]{Liu:2023pjb}，以不同次序取极限即得离光锥、有限光前长度与指数正规子下的相应等式；(4) 由乘法重整化，裸等式蕴含重整化后的等式。（本定理只涉及真空中的 Wilson 线关联函数。）
+\uses{def:yzliu-exp-soft,asm:yzliu-wightman-pt,lem:yzliu-matrix-tree,prop:appB-webs}
+\end{theorem}
+
+\begin{proofsketch}
+（1）逐类列举 $T$ 与 $\bar T$ 部分上点对的不变间隔：同一部分不同线上的间隔类空，跨部分的间隔即\cref{eq:yzliu-invariants}；同一线上的类光间隔由 Wightman 处方 $-\ii\eta$ 从阈下一侧逼近，且自连接部分无标度（\cref{asm:yzliu-wightman-pt}(WP2)），故 $\eta\to0^+$ 可在参数表示中先取\cite[第~3.1~节]{Liu:2023pjb}。（2）对 $S_t$ 作 Wick 转动 $\lambda\to-\ii\lambda$、$\alpha\to-\ii\rho$（不引入指数增长，式~(3.21)--(3.24)），其参数表示与 $S$ 的逐项相同；等价地，二者的 Wightman 函数由固有复 Lorentz 变换 $\Lambda(t,z)=(\ii z,\ii t)$ 联系（\cref{fig:yzliu-complex-lorentz}）：$\Lambda(-\ii\lambda n)=\lambda n$，$\Lambda(-\ii\lambda\bar n)=-\lambda\bar n$，$\Lambda(-\nu e_z)=-\ii\nu e_t$，$\Lambda v=\ii n_Y$，$\Lambda v'=-\ii\bar n_Y$（式~(3.25)--(3.32)、(3.58)），协变性来自\cref{asm:yzliu-wightman-pt}(WP1)。（3）$Z$ 因子与横向连接使有限长度的等式规范不变，并消去光前无穷远处的边界项（web 结构：\cref{prop:appB-webs}）。（4）$P_{ij}(\alpha)\ge0$（\cref{lem:yzliu-matrix-tree}）保证阈下表示的一致有界。来源：\cite{Liu:2023pjb}（发表版本）。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]，是这一性质目前最仔细的论证：组合部分严格（\cref{lem:yzliu-matrix-tree}），余下的缺口是\cref{asm:yzliu-wightman-pt}（“the author believes in it”\cite[第~4~节]{Liu:2023pjb}）。作者明确限定：“it is outside the scope of this paper to show that this definition correctly captures soft contributions to the DY process”（同上，脚注~5）。作者陈述的推论：TMD 软因子（从而 CS 核）在单举 TMD 与遍举光前波函数之间普适；指数正规子可用于光前波函数；经由形状因子的欧氏路线有了更坚实的基础；算符次序为 $T\bar T$、更“非定域”的 $e^+e^-$ 软因子不在其内。据我们所知（INSPIRE 检索，2026 年 10 月），文献\cite{Liu:2023pjb}首次给出明确的全阶论证（以维数正规化坐标空间解析性为条件），说明指数正规子中的 DY 软因子与时序无关并等于单一时序的形状因子。此前，有限光前长度与 $\delta$ 正规子中的时序无关性已被使用\cite{Vladimirov:2016dll,Vladimirov:2017ksc}；有的作者直接陈述它\cite{Collins2011,CollinsMetz2004,Echevarria:2015byo}，有的持谨慎态度\cite{Moult:2018jzp}；文献\cite{Vladimirov:2017ksc}的期刊版本称 SIDIS 软因子快度发散的因子化“remains the open question”（第~32~页；按\cite{Liu:2023pjb}的引述）。因此这一定理是全阶论证而非严格证明；其非微扰推广见\cref{conj:yzliu-complex-wilson}。
+
+%%% BEGIN fig:yzliu-complex-lorentz
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=1.08,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lc/.style={draw=gray!55,line width=0.5pt,dash pattern=on 3pt off 2pt},
+  fd2 wl/.style={wilson=#1},
+  fd2 wlc/.style={draw=violet!70!black,solid,double,double distance=1.6pt,line width=0.55pt,
+      postaction={decorate,solid,decoration={markings,mark=at position #1 with
+      {\arrow[xshift=3.2pt,line width=0.6pt,violet!70!black]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 vtx/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=4pt},
+  fd2 vtxc/.style={circle,fill=violet!70!black,draw=none,inner sep=0pt,minimum size=4pt},
+  fd2 shift/.style={draw=#1,line width=0.6pt,-{Stealth[length=4pt,width=3.4pt]}},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ===================== left: S, DY shape, exponential regulator =====================
+  \begin{scope}
+    \draw[fd2 ax] (-2.15,1.0) -- (-1.55,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (-2.15,1.0) -- (-2.15,1.6) node[above=-1pt,fd2 note] {$t$};
+    \draw[fd2 lc] (-1.85,-1.85) -- (1.25,1.25);
+    \draw[fd2 lc] (1.85,-1.85) -- (-1.25,1.25);
+    % amplitude T[W^dag_nbar(0) W_n(0)]: past-pointing lines meeting at 0
+    \draw[fd2 wl=0.55] (-1.5,-1.5) -- (0,0);
+    \draw[fd2 wl=0.72] (0,0) -- (1.5,-1.5);
+    \node[fd2 vtx] at (0,0) {};
+    % conjugate amplitude Tbar[W^dag_n W_nbar] at b - i nu e_t (drawn displaced)
+    \draw[fd2 wlc=0.55] (1.5,-2.65) -- (0,-1.15);
+    \draw[fd2 wlc=0.55] (0,-1.15) -- (-1.5,-2.65);
+    \node[fd2 vtxc] at (0,-1.15) {};
+    \draw[fd2 shift=violet!60!black,dotted,line width=0.8pt] (0,-0.1) -- (0,-1.04);
+    \node[font=\scriptsize,text=violet!55!black,anchor=west,inner sep=1pt] at (0.04,-0.9) {$-\ii\nu e_t$};
+    % labels
+    \node[fd2 note,anchor=west] at (0.1,0.02) {$0$};
+    \node[fd2 note,anchor=north east] at (-1.42,-1.45) {$n$};
+    \node[fd2 note,anchor=north west] at (1.42,-1.45) {$\bar n$};
+    \node[fd2 note,anchor=south] at (0,0.14) {$T[W_{\bar n}^\dagger W_n](0)$};
+    \node[fd2 note,anchor=north,align=center,text=violet!55!black] at (0,-2.75) {$\bar T[W_n^\dagger W_{\bar n}](\vec b_\perp-\ii\nu e_t)$\\[1pt]（虚时间位移）};
+    \node[fd2 lab,align=center] at (0,-4.2) {$S$：DY 形软因子（指数正规子）};
+  \end{scope}
+  % ===================== right: S_t, single time ordering, space-like form factor =====================
+  \begin{scope}[xshift=9.6cm]
+    \draw[fd2 ax] (0.55,1.0) -- (1.15,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (0.55,1.0) -- (0.55,1.6) node[above=-1pt,fd2 note] {$t$};
+    \draw[fd2 lc] (-1.85,-1.85) -- (1.0,1.0);
+    \draw[fd2 lc] (1.0,-1.0) -- (-1.85,1.85);
+    % pair at 0: incoming along n (past), outgoing along nbar (future)
+    \draw[fd2 wl=0.55] (-1.5,-1.5) -- (0,0);
+    \draw[fd2 wl=0.6] (0,0) -- (-1.5,1.5);
+    \node[fd2 vtx] at (0,0) {};
+    % pair at b - nu e_z (real space-like shift)
+    \draw[fd2 wlc=0.5] (-2.7,1.5) -- (-1.2,0);
+    \draw[fd2 wlc=0.55] (-1.2,0) -- (-2.7,-1.5);
+    \node[fd2 vtxc] at (-1.2,0) {};
+    \draw[fd2 shift=violet!60!black] (-0.1,0) -- (-1.1,0);
+    \node[font=\scriptsize,text=violet!55!black,anchor=south,inner sep=1pt] at (-0.68,0.05) {$-\nu e_z$};
+    % labels
+    \node[fd2 note,anchor=west] at (0.1,0) {$0$};
+    \node[fd2 note,anchor=north west] at (-1.42,-1.45) {$n$};
+    \node[fd2 note,anchor=south west] at (-1.42,1.45) {$\bar n$};
+    \node[fd2 note,anchor=north,align=center,text=violet!55!black] at (-2.0,-1.62) {$\vec b_\perp-\nu e_z$\\[1pt]（实的类空位移）};
+    \node[fd2 note,anchor=south,align=center] at (-1.2,1.95) {$T[W_n^\dagger W_{\bar n+}^\dagger\,W_{\bar n+}W_n]$（单一时序）};
+    \node[fd2 lab,align=center] at (-1.1,-4.2) {$S_t$：单一时序的类空形状因子};
+  \end{scope}
+  % ===================== the complex Lorentz transformation =====================
+  \draw[line width=1.5pt,{Stealth[length=8pt,width=8pt]}-{Stealth[length=8pt,width=8pt]}] (2.25,0.05) -- (6.3,0.05);
+  \node[fd2 lab,anchor=south] at (4.27,0.22) {$\Lambda(t,z)=(\ii z,\ii t)$};
+  \node[fd2 note,anchor=north,align=left] at (4.27,-0.2) {$\Lambda(-\ii\lambda n)=\lambda n$\\[1pt]$\Lambda(-\ii\lambda\bar n)=-\lambda\bar n$\\[1pt]$\Lambda(-\nu e_z)=-\ii\nu e_t$};
+  % ===================== invariant lengths =====================
+  \node[fd2 lab] at (4.3,-5.0) {$x^2_{B,ij}=-\nu^2-b_\perp^2-\sqrt2\,\ii\nu\big(\lambda^L_i-\lambda^R_j\big)$：实部 $\le-b_\perp^2-\nu^2<0$，阈下、无割线};
+\end{tikzpicture}
+\caption{时序无关性的解析延拓图像（$(z,t)$ 平面示意；双线为类光 Wilson 线，箭头为路径方向；$n$、$\bar n$ 分别沿 $+z$、$-z$，即本书 $n_A$、$n_B$ 的方向；横向间隔 $\vec b_\perp$ 垂直于纸面）。
+左：指数正规子下的 DY 形软因子 $S$——振幅中的 $T[W_{\bar n}^\dagger W_n](0)$ 与共轭振幅中位于 $\vec b_\perp-\ii\nu e_t$ 的 $\bar T[W_n^\dagger W_{\bar n}]$（紫色，虚时间位移画成竖直错开）；
+右：单一时序的类空形状因子 $S_t$——位于 $0$ 与 $\vec b_\perp-\nu e_z$ 的一对类光色源，沿 $n$ 入射、沿 $\bar n$ 出射。
+二者由复 Lorentz 变换 $\Lambda(t,z)=(\ii z,\ii t)$（快度为 $\ii\pi/2$ 的推动）相联系，所有不变间隔的实部都为负（阈下表示，例如图下的 $x^2_{B,ij}$）。
+在维数正规化中胶子 Wightman 函数满足谱条件与局域对易性的假设下（\cref{asm:yzliu-wightman-pt}；复 Lorentz 协变性来自 Bargmann--Hall--Wightman 定理），微扰论各阶 $S=S_t$（\cref{thm:yzliu-time-ordering}，全阶论证 [A]；VF-YZL-12）。}
+\label{fig:yzliu-complex-lorentz}
+\end{figure}
+%%% END fig:yzliu-complex-lorentz
+
+\begin{proposition}[指数正规子下 DY 与 SIDIS 软因子相等 \tagP]\label{prop:yzliu-dy-sidis-exp}
+在指数正规子中、类光线无穷长时，DY 与 SIDIS 软因子相等\cite[附录~C]{Liu:2023pjb}：先在光前微扰论中启发式地论证，末态求和为实，由\cref{lem:yzliu-final-state}；再把类光线变形为有限长度的类时与类空线。一般地 $S_t\ne S_{\mathrm{SIDIS}}$。（本命题只涉及真空中的 Wilson 线关联函数。）
+\uses{def:yzliu-exp-soft,lem:yzliu-final-state,thm:yzliu-time-ordering}
+\end{proposition}
+
+\paragraph{地位与缺口。}部分 [P]：论证是启发式的（追踪 $\pm\ii\eta$），不是由解析性得到的；$\delta$ 正规子中的对应结论是\cref{thm:yzliu-analyticity}(iv)，算符层面的 T 反演对 Sivers 函数的作用见\cref{thm:tmd-sivers-sign}。升级途径：把第二种论证（有限长度变形）写成完整的解析性证明。
+
+\begin{conjecture}[复时空中的 Wilson 圈 \tagC]\label{conj:yzliu-complex-wilson}
+在完整的 QCD 中，对点都位于置换扩展管域中的闭合 Wilson 圈 $C$，$\langle\Tr W(C)\rangle$ 存在并在固有复 Lorentz 变换下不变\cite[第~3.4~节]{Liu:2023pjb}。非微扰地位：\cref{asm:intro-wightman}（MA0）及其对 Wilson 圈的推广。
+\uses{asm:yzliu-wightman-pt,thm:yzliu-time-ordering}
+\end{conjecture}
+
+\paragraph{地位与缺口。}猜想 [C]：没有非微扰论证；若成立，它把\cref{thm:yzliu-time-ordering}推广到微扰论之外。它需要非微扰 QCD 的 Wightman 结构（\cref{asm:intro-wightman}）及其对 Wilson 圈的推广。
+
+\section{准 TMD 因子化的 Collins 式证明与匹配核}\label{sec:yzliu-quasi-tmd}
+
+准 TMD 因子化定理陈述于第~22~章（\cref{thm:lamet-quasi-tmd}，[A]）。本节给出 Liu 的 Collins 式证明路线——单线记号下的幂次计数（\cref{fig:yzliu-leading-region}）——以及硬核的全阶结构与显式结果。
+
+%%% BEGIN fig:yzliu-leading-region
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.95,
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 hadron/.style={bound state,line cap=butt},
+  fd2 dipole/.style={draw=green!40!black,line width=2.2pt,dash pattern=on 5pt off 3pt,line cap=butt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ======================= (a) double-line notation =======================
+  \begin{scope}
+    % staple (space-like): from psi(0) along +z to L, transverse link, back along -z to psibar
+    \draw[wilson=0.5] (1.94,1.75) -- (4.3,1.75);
+    \draw[wilson=0.55] (4.3,1.75) -- (4.3,2.8);
+    \draw[wilson=0.42] (4.3,2.8) -- (0.69,2.8);
+    % soft subgraph S: gluons to the staple and to C
+    \draw[fd2 soft] (2.98,1.07) -- (2.55,1.75);
+    \draw[fd2 soft] (3.55,1.05) -- (4.3,2.25);
+    \draw[fd2 soft] (2.85,0.55) -- (2.4,0.3);
+    \draw[fd2 soft] (3.1,0.3) -- (2.6,0.0);
+    \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] at (3.35,0.68) {$S$};
+    % collinear quark lines (arrows: fermion-number flow) and longitudinal gluons
+    \draw[quark=0.55] (1.68,0.48) -- (1.7,1.47);
+    \draw[quark=0.5] (0.45,2.52) -- (0.55,0.5);
+    \draw[longit] (2.12,0.42) -- (1.88,1.55);   \longitmark{(2.12,0.42)}{(1.88,1.55)}
+    \draw[longit] (-0.02,0.38) -- (0.26,2.58);  \longitmark{(-0.02,0.38)}{(0.26,2.58)}
+    \node[fd2 note,text=blue!55!black] at (2.33,1.05) {$\cdots$};
+    \node[fd2 note,text=blue!55!black] at (-0.27,1.5) {$\cdots$};
+    % collinear subgraph C (hadron P along +z; forward matrix element)
+    \draw[fd2 hadron] (-0.95,-0.75) -- (0.25,-0.2);
+    \draw[fd2 hadron] (2.55,-0.2) -- (3.75,-0.75);
+    \node[jet blob,ellipse,minimum width=2.7cm,minimum height=1.05cm,inner sep=0pt] at (1.4,0.0) {$C$};
+    % hard vertices at the two quark--link junctions
+    \node[hard blob,circle,minimum size=0.54cm,inner sep=0pt] at (1.7,1.75) {\footnotesize$H$};
+    \node[hard blob,circle,minimum size=0.54cm,inner sep=0pt] at (0.45,2.8) {\footnotesize$H$};
+    % labels
+    \node[fd2 note,anchor=north west] at (-0.95,-0.75) {$P$};
+    \node[fd2 note,anchor=north east] at (3.75,-0.75) {$P$};
+    \node[fd2 note,anchor=east] at (1.4,1.78) {$0$};
+    \node[fd2 note,anchor=south] at (0.45,3.08) {$z\hat e_z+\vec b_\perp$};
+    \node[fd2 note,anchor=west] at (4.38,2.27) {$L\to\infty$};
+    \node[fd2 lab] at (1.9,-1.5) {(a)\ 双线记号};
+  \end{scope}
+  % ======================= (b) single-line notation =======================
+  \begin{scope}[xshift=7.15cm]
+    % dipole line H -- S and soft gluons S -- C
+    \draw[fd2 dipole] (1.33,2.3) -- (3.12,2.3);
+    \draw[fd2 soft] (3.35,1.86) -- (2.42,0.3);
+    \draw[fd2 soft] (3.8,1.9) -- (2.66,0.02);
+    \node[soft blob,circle,minimum size=0.9cm,inner sep=0pt] at (3.55,2.3) {$S$};
+    % collinear quark lines and longitudinal gluons into H
+    \draw[quark=0.55] (0.75,0.48) -- (0.75,1.97);
+    \draw[quark=0.55] (1.15,1.97) -- (1.2,0.5);
+    \draw[longit] (1.75,0.42) -- (1.34,2.07);   \longitmark{(1.75,0.42)}{(1.34,2.07)}
+    \draw[longit] (0.12,0.4) -- (0.56,2.07);    \longitmark{(0.12,0.4)}{(0.56,2.07)}
+    % C and H
+    \draw[fd2 hadron] (-0.95,-0.75) -- (0.25,-0.2);
+    \draw[fd2 hadron] (2.55,-0.2) -- (3.75,-0.75);
+    \node[jet blob,ellipse,minimum width=2.7cm,minimum height=1.05cm,inner sep=0pt] at (1.4,0.0) {$C$};
+    \node[hard blob,circle,minimum size=0.75cm,inner sep=0pt] at (0.95,2.3) {$H$};
+    \node[fd2 note,anchor=north west] at (-0.95,-0.75) {$P$};
+    \node[fd2 note,anchor=north east] at (3.75,-0.75) {$P$};
+    \node[fd2 note,anchor=south,text=green!30!black] at (2.25,2.82) {偶极线：量纲 $\frac32$、自旋 $0$};
+    \node[fd2 lab] at (1.4,-1.5) {(b)\ 单线记号};
+    % power counting
+    \node[draw=gray!60,rounded corners=2pt,fill=gray!5,inner sep=4pt,align=left,font=\footnotesize,anchor=west] at (4.35,0.95)
+      {$F(H)=-\frac72+2+\frac32=0$\\[3pt]
+       $2$：两条共线夸克线\\[1pt]
+       $\frac32$：一条偶极线\\[3pt]
+       $F(SC)\ge0$};
+  \end{scope}
+\end{tikzpicture}
+\caption{准 TMD 的领头区域（示意；幂次计数参数为 $1/(b_\perp P^z)$）。
+(a)~双线记号：共线子图 $C$（强子动量 $P$ 沿 $+\hat z$，前向矩阵元）、位于两个夸克—规范线连接点 $0$ 与 $z\hat e_z+\vec b_\perp$ 的硬顶点 $H$、类空订书钉（双线，箭头为路径方向：自 $\psi(0)$ 沿 $+\hat z$ 到 $L\to\infty$，经横向连接回到 $\bar\psi$；与\cref{fig:tmd-staple}中的类光订书钉不同）与软子图 $S$；细线箭头为费米子数流向；$C$ 与 $H$ 之间可有任意多条纵向共线胶子（带点的蓝色胶子），$S$ 与 $C$ 之间可有任意多条软胶子（绿色）。
+(b)~单线记号：一对订书钉线合成一条量纲 $\frac32$、自旋 $0$ 的偶极线（粗虚线）。
+幂次计数 $F(H)=0$、$F(SC)\ge0$ 表明没有超领头区域，且硬动量不能在 $0$ 与 $\vec b_\perp$ 之间传递，因而匹配中没有 $x$ 卷积（VF-YZL-8；\cref{prop:yzliu-qtmd-powercount}，全阶论证 [A]）。}
+\label{fig:yzliu-leading-region}
+\end{figure}
+%%% END fig:yzliu-leading-region
+
+\begin{proposition}[准 TMD 因子化的 Collins 式证明：单线记号下的幂次计数 \tagA]\label{prop:yzliu-qtmd-powercount}
+在以在壳无质量部分子为外态的微扰论各阶，对\cref{def:lamet-quasi-tmd}的准 TMD，在局部假设 (QT1)--(QT7) 之下：(i) Landau 方程给出的领头区域只有一个外共线方向，共线位移与订书钉位移退耦，订书钉传播子只能经偶极子 $2\to2$ 插入（\cref{prop:yzliu-pinch-ultrasoft}的捏点）取得非零的 Feynman 参数解；(ii) 在单线记号（一对订书钉线 = 一条量纲 $\frac32$、自旋 $0$ 的线）下，幂次计数参数 $\lambda_{\mathrm{pc}}\equiv1/(b_\perp P^z)$ 的幂为 $\lambda_{\mathrm{pc}}^{F(H)+F(SC)+F(H')+F(H'')}$，% VF-YZL-8
+\begin{equation}\label{eq:yzliu-FH}
+\begin{aligned}
+F(H)&=\sum_{s=0,1}\big[N(CH,1,s)+N(SH,1,s)\big]+N(CH,\tfrac32,\tfrac12)\\
+&\quad+\tfrac32\sum_{s=0,\frac12}N(SH,\tfrac32,s)-N(CH,1,\ell)-\tfrac72 ,\qquad F(SC)=\tfrac12N(SC,\tfrac32,\tfrac12)+N(SC,1,0),
+\end{aligned}
+\end{equation}
+$F(H')=F(H'')=0$（$N(XY,d,s)$ 为子图 $X$、$Y$ 之间量纲 $d$、自旋 $s$ 的线数，$\ell$ 指纵向极化的共线胶子）；$F(H),F(SC)\ge0$（无超领头区域），领头区域为 $N(CH,\frac32,\frac12)=2$、$N(SH,\frac32,0)=1$、任意多条纵向共线胶子进入 $H$、任意多条软胶子进入 $C$，其余为零（$F(H)=-\frac72+2+\frac32=0$；每多一条进入 $H$ 的软胶子代价 $+1$）；(iii) 经软—共线（Grammer--Yennie 型）近似与 Ward 恒等式，在任何光锥上的正规子中 $\tilde f=H\,\frac{f(x,b_\perp,\mu,\delta^-)}{S(b_\perp,\mu,\delta^+,\delta^-)}\,S(b_\perp,\mu,\delta^+,\hat z)$\cite[式~(74)]{Liu:2022nnk}；(iv) 与\cref{thm:yzliu-intrinsic-soft}结合即得\cref{thm:lamet-quasi-tmd}（指数为 $\frac12\tilde K\ln\frac{\zeta_z}{\zeta}$），动量演化 $P^z\frac{\dd}{\dd P^z}\ln\tilde f=\tilde K+\mathcal G$，$\mathcal G^{(1)}=\frac{\alpha_sC_F}{\pi}(1-L_\zeta)$。% VF-YZL-5
+局部假设（原文的 (Q1)--(Q7)）：(QT1) 领头区域由 Landau 方程给出；(QT2) 单个割图中可能出现的其他共线方向在对割求和后相消；(QT3) 无 Glauber 区：硬区内所有小 $k^z$ 的规范线极点可变形到上半平面，同一变形避开 $k^+k^-\ll k_\perp^2$；(QT4) 捏点与超软模式如\cref{prop:yzliu-pinch-ultrasoft}；(QT5) 硬子图是均匀的，各分量 $\sim P^z$；(QT6) 订书钉算符乘法可重整（\cref{asm:lamet-staple}(ST1)）；(QT7) 以在壳无质量部分子为外态的微扰论。（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{def:lamet-quasi-tmd,thm:lamet-quasi-tmd,asm:lamet-staple,prop:yzliu-pinch-ultrasoft,thm:yzliu-intrinsic-soft,prop:tmd-regions}
+\end{proposition}
+
+\begin{proofsketch}
+（1）Landau 方程\cite[附录~C]{Liu:2022nnk}与对割求和（(QT2)，与\cref{prop:tmd-regions}同型）给出 (i)。（2）$F(H)=-D(H)-B(H)+1$：硬核的质量量纲 $D(H)=\frac92-\sum_iN_id_i$（$\frac92$ 来自两个夸克场与一条单线订书钉），推动增强 $B(H)=N(CH,1,\ell)+\frac12N(CH,\frac32,\frac12)$，$+1$ 来自归一化 $1/P^z$，即得\cref{eq:yzliu-FH}；孤立硬核 $H'$、$H''$ 可吸收进软区、共线区或重整化\cite[式~(54)--(61)]{Liu:2022nnk}。（3）进入 $H$ 的总有两条夸克线与一条单线订书钉，且 $N(CH,1,1)\ge N(CH,1,\ell)$，故 $F(H)\ge0$，等号即领头区域；硬动量不能在 $0$ 与 $\vec b_\perp$ 之间传递，故没有 $x$ 卷积\cite[式~(64)--(68)]{Liu:2022nnk}（此步只给出 E-S 型陈述）。（4）硬区内规范线传播子为 $\prod_j(\sum_{k\ge j}p^z_k+\ii0)^{-1}$，$p^z_i=\sum_ja_{ij}k^z_j$，$a_{ij}\ge0$，故所有 $k^z_j$ 可变形到上半平面，同时给出 (QT5) 与 (QT3)\cite[式~(62)--(63)]{Liu:2022nnk}。（5）软—共线近似与 Ward 恒等式给出 (iii)。（6）由\cref{thm:yzliu-intrinsic-soft}(b)，(iii) 中的正规子与 $f^{\mathrm{TMD}}=f(\delta^-)/\sqrt{S(\delta^+,\delta^-)}$ 的正规子相消，常数项给出 $1/\sqrt{S_I}$，$\zeta_z$ 依赖由 CS 方程与动量演化固定；单圈检验见\cite[式~(23)、(39)、(85)]{Liu:2022nnk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]：幂次计数各步只给出 E-S 型陈述，(QT1)--(QT5) 是 CSS 型论证的标准步骤而非定理；PLB 版本自称是数学证明的“sketch”\cite{Ji:2019ewn}；提升为 [R] 需要\cref{sec:yzliu-intro}所引的多标度分析。据我们截至 2026 年 10 月的文献检索（INSPIRE 检索），尚未见针对有限长订书钉的专门 Glauber 分析。独立的支持：Vladimirov 与 Schäfer 的 SCET$_{\mathrm{II}}$ 推导（附单圈检验）\cite{Vladimirov:2020ofp}，Ebert、Schindler、Stewart 与 Zhao 经大快度方案的全阶论证\cite{Ebert:2022fmh}，NNLO 的直接计算\cite{delRio:2023pse}与\cite{Ji:2023pba}。Ji、Liu 与 Liu\cite{Ji:2019ewn}把准 TMD 匹配到方案无关、软因子可欧氏计算的 TMD 分布；单线幂次计数见\cite[式~(54)--(68)]{Liu:2022nnk}。
+
+\begin{proposition}[准 TMD 匹配核：RGE、重—轻分解与两圈结果 \tagA]\label{prop:yzliu-hard-kernel}
+(a) 硬核满足
+\begin{equation}\label{eq:yzliu-H-rge}
+\mu\frac{\dd}{\dd\mu}\ln H\Big(\frac{\zeta_z}{\mu^2}\Big)=\Gamma_{\mathrm{cusp}}\ln\frac{\zeta_z}{\mu^2}+\gamma_C,\qquad \gamma_C\equiv\tilde\gamma_H=\gamma_V+2\gamma_F+\gamma_{HH}=\gamma_V+2\gamma_F+2\gamma_{HL}-\gamma_s ,
+\end{equation}
+$\gamma_V$ 为轻夸克 Sudakov 形状因子的非尖点反常维度，$\gamma_F$ 为重—轻流的反常维度，$\gamma_{HL}$ 为重—轻尖点的常数，$\gamma_s$ 为类光软常数\cite[式~(A.11)]{Ji:2023pba}（PLB 的 $2\gamma_F+\Gamma_S+2\gamma_H$ 与讲义的 $2\gamma_F-\Gamma_S+2\gamma_J$ 按\cref{tab:yzliu-conventions}换算后与此一致）。(b)（单圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）% VF-YZL-6
+\begin{equation}\label{eq:yzliu-H1}
+H=1+a\Big(-2+\frac{\pi^2}{12}-\frac{L_\zeta^2}{2}+L_\zeta\Big)=1+\frac{\alpha_sC_F}{4\pi}\Big(-L_\zeta^2+2L_\zeta-4+\frac{\pi^2}{6}\Big),\qquad H=C^+_{HL}C^-_{HL},
+\end{equation}
+$C^\pm_{HL}=1+\frac{\alpha_sC_F}{8\pi}(-4-\frac{5\pi^2}{6}+2L_\pm-L_\pm^2)$，$L_\pm=L_\zeta\pm\ii\pi$，$\Imag C^{\pm(1)}_{HL}=\pm\frac{\alpha_sC_F}{4}(1-L_\zeta)$；同号的一对 $C^\pm_{HL}(\zeta_z)C^\pm_{HL}(\bar\zeta_z)$ 是介子准光前波函数的核，$\zeta_z=\bar\zeta_z$ 时其单圈相位为 $\pm\frac{\alpha_sC_F}{2}(1-L_\zeta)$（对应 $\mathrm{sgn}(z)=\mp1$）；$\gamma^{(1)}_C=-\frac{\alpha_sC_F}{\pi}$。(c)（两圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 JHEP~2023 的约定下（$\frac{\dd}{\dd\ln\mu}$，$\beta_0\equiv\beta_0^{(b)}$，$T_F=\frac12$，$\alpha_s$ 展开），% VF-YZL-7
+\begin{gather}
+\tilde\gamma^{(2)}_H=\frac{1188\zeta_3-99\pi^2-1108}{432\pi^2}C_FC_A-\frac{36\zeta_3+6-7\pi^2}{12\pi^2}C_F^2+\Big(\frac1{24}+\frac{10}{27\pi^2}\Big)C_Fn_f,\label{eq:yzliu-gH2}\\
+\ln H^{(2)}=\frac{C_F\beta_0}{24\pi}L_\zeta^3-\frac14\Big(\Gamma^{(2)}_{\mathrm{cusp}}+\frac{C_F\beta_0}{2\pi}\Big)L_\zeta^2-\Big(\frac{C_F\beta_0}{4\pi}\Big(-2+\frac{\pi^2}{12}\Big)+\frac{\tilde\gamma^{(2)}_H}{2}\Big)L_\zeta+c_H,\label{eq:yzliu-lnH2}
+\end{gather}
+$c_H=(\frac{241\zeta_3}{144\pi^2}+\frac{11\pi^2}{320}-\frac{559}{1728}-\frac{971}{324\pi^2})C_FC_A+\frac{-45\zeta_3-2\pi^4+30\pi^2-30}{24\pi^2}C_F^2+\frac{36\zeta_3+51\pi^2+1312}{1296\pi^2}C_Fn_fT_F=0.0725\,C_F^2-0.0840\,C_FC_A+0.1453\,C_Fn_fT_F$，其中 $\Gamma^{(2)}_{\mathrm{cusp}}=\frac{C_F}{\pi^2}\big[C_A\big(\frac{67}{36}-\frac{\pi^2}{12}\big)-\frac59T_Fn_f\big]$ 是 $\Gamma_{\mathrm{cusp}}$ 的 $\alpha_s^2$ 系数（单圈系数为 $\frac{C_F}{\pi}$）。（本命题只涉及部分子态。）
+\uses{thm:lamet-quasi-tmd,prop:yzliu-qtmd-powercount,def:sudakov-cusp,prop:lattice-renormalizability}
+\end{proposition}
+
+\begin{proofsketch}
+（a）对\cref{thm:lamet-quasi-tmd}取 $\mu\frac{\dd}{\dd\mu}$：订书钉算符由端点因子乘法重整化（\cref{prop:lattice-renormalizability}），$\tilde f$ 的反常维度 $2\gamma_F$ 与 $\zeta_z$ 无关；代入 $\mu\frac{\dd\tilde K}{\dd\mu}=-2\Gamma_{\mathrm{cusp}}$、$\mu\frac{\dd\ln f^{\mathrm{TMD}}}{\dd\mu}=-\gamma_V-\Gamma_{\mathrm{cusp}}\ln\frac{\zeta}{\mu^2}$、$\mu\frac{\dd\ln S_r}{\dd\mu}=2\gamma_{HH}$，$\zeta$ 依赖相消，即得\cref{eq:yzliu-H-rge}；单圈 $\gamma_V^{(1)}=-\frac{3\alpha_sC_F}{2\pi}$、$2\gamma_F^{(1)}=\frac{3\alpha_sC_F}{2\pi}$、$\gamma_{HH}^{(1)}=-\frac{\alpha_sC_F}{\pi}$。（b）$H^{(1)}$ 是\cref{thm:lamet-quasi-tmd}(b) 的单圈内容，分解见下例；$\mu\frac{\dd H^{(1)}}{\dd\mu}=-2\partial_{L_\zeta}H^{(1)}=\frac{\alpha_sC_F}{\pi}(L_\zeta-1)$ 给出 $\Gamma^{(1)}_{\mathrm{cusp}}$ 与 $\gamma^{(1)}_C$。（c）以 $\frac{\dd L_\zeta}{\dd\ln\mu}=-2$、$\frac{\dd\alpha_s}{\dd\ln\mu}=-\beta_0\alpha_s^2$ 逐阶积分\cref{eq:yzliu-H-rge}，$\alpha_s^2$ 阶给出 $\partial_L\ln H^{(2)}=-\frac12[\Gamma^{(2)}_{\mathrm{cusp}}L+\tilde\gamma^{(2)}_H+\beta_0h_1(L)]$，$h_1=\frac{C_F}{2\pi}(-2+\frac{\pi^2}{12}-\frac{L^2}{2}+L)$，积分即\cref{eq:yzliu-lnH2}；$\tilde\gamma^{(2)}_H$ 由两圈输入\cite[式~(A.1)--(A.5)、(A.11)]{Ji:2023pba}得到，与其式~(A.13) 一致；$c_H$ 取自\cite[式~(5.11)]{Ji:2023pba}，与直接的 NNLO 计算\cite{delRio:2023pse}一致；$\tilde\gamma^{(2)}_H$ 与 $c_H$ 的 $n_f$ 部分与独立的大 $\beta_0$ 结果\cite[式~(2.41)--(2.42)]{Liu:2023onm}一致。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}RGE 的结构为全阶论证 [A]（来自\cref{thm:lamet-quasi-tmd}的 RG 相容性，[A]）；(b)、(c) 在所述阶上为 [R, $R_{\mathrm{PT}}$]。勘误：文献\cite{Ji:2019ewn}式~(26) 的 $\gamma^{(2)}_C$ 有误，正确值见\cite[式~(A.12)--(A.13)]{Ji:2023pba}（附录~Q 第~14~条）。
+% Verification: claim E10 (Ji:2023pba cites the earlier value without noting the discrepancy); scripts s05, s06 (W26).
+
+\begin{example}[单圈 $H=C^+_{HL}C^-_{HL}$ 与相位]\label{ex:yzliu-hl-decomposition}
+由 $L_++L_-=2L_\zeta$、$L_+^2+L_-^2=2L_\zeta^2-2\pi^2$，$(C^+C^-)^{(1)}=C^{+(1)}+C^{-(1)}=\frac{\alpha_sC_F}{8\pi}(-8-\frac{5\pi^2}{3}+4L_\zeta-2L_\zeta^2+2\pi^2)=\frac{\alpha_sC_F}{4\pi}(-4+\frac{\pi^2}{6}+2L_\zeta-L_\zeta^2)=H^{(1)}$。又 $L_+^2=L_\zeta^2-\pi^2+2\ii\pi L_\zeta$，故 $\Imag C^{+(1)}=\frac{\alpha_sC_F}{8\pi}(2\pi-2\pi L_\zeta)=\frac{\alpha_sC_F}{4}(1-L_\zeta)$，$(C^+)^2$ 的相位为 $\frac{\alpha_sC_F}{2}(1-L_\zeta)$；在 $H=C^+C^-$ 中两个相位相消，这就是准 TMD 的核为实而光前波函数的核有虚部的原因。
+\uses{prop:yzliu-hard-kernel}
+\end{example}
+
+\section{光前波函数、介子形状因子、DY 与 Sivers 比}\label{sec:yzliu-exclusive}
+
+同一个重—轻核 $H$ 与同一个 $S_I$ 出现在一系列格点可计算的对象中。本节四个命题的结构相同：领头区域分析给出因子化，$\tilde K$ 与 $S_I$ 在适当的组合中相消。
+
+\begin{proposition}[准光前波函数振幅的因子化 \tagA]\label{prop:yzliu-lfwf}
+在微扰论各阶（硬核以部分子态计算）：(i) 以广义软函数 $S^\pm_N$ 定义的、快度重整化的 $N$ 部分子光前波函数振幅 $\psi^\pm_N(x_i,\vec b_{i\perp},\mu,\zeta)$（$\pm$：类光规范连线指向未来／过去）满足 $2\zeta\partial_\zeta\ln\psi^\pm_N=\tilde K_N$ 与一个 RGE；未来与过去两种版本由解析延拓相联，例如 $S^{-\dagger}_N(\delta^+\delta^-)=S^+_N(-\delta^+\delta^-+\ii0)$。(ii) 准光前波函数振幅（类空订书钉）满足
+\begin{equation}\label{eq:yzliu-lfwf}
+\tilde\psi^\pm_N\sqrt{S_{rN}}=\exp\Big[\frac12\ln\frac{\mp\zeta_z+\ii0}{\zeta}\,\tilde K_N\Big]H^\pm_N\Big(\frac{\zeta_{z,i}}{\mu^2}\Big)\psi^\pm_N+\order{\frac{\Lambda^2}{\zeta_{z,i}},\frac{M^2}{\zeta_{z,i}},\frac1{\delta b_{ij\perp}^2\zeta_{z,i}}},
+\end{equation}
+对 $q\bar q$ 介子，单圈快度对数相差 $\frac12\tilde K\ln(\zeta_z/\zeta)$（因 $\sqrt{\zeta_z\bar\zeta_z/(\zeta\bar\zeta)}=\zeta_z/\zeta$），$H^\pm_{q\bar q}=C^\pm_{HL}(\zeta_z)\,C^\pm_{HL}(\bar\zeta_z)$（\cref{prop:yzliu-hard-kernel}(b)），其虚部不相消。(iii) $\tilde K_N$ 可由两个动量下的准光前波函数之比得到。非微扰地位：\cref{asm:intro-bridge}、\cref{asm:intro-composite}（MA0、MA1、MA2）。
+% errtype: E-S
+\uses{thm:lamet-quasi-tmd,prop:yzliu-hard-kernel,thm:yzliu-time-ordering}
+\end{proposition}
+
+\begin{proofsketch}
+文献\cite[第~II--V~节]{Ji:2021znw}给出证明概要。领头区域与\cref{thm:lamet-quasi-tmd}相同：硬核局限在两个夸克—连线顶点附近，共线子图与光前振幅相同，软辐射由 $S^\pm_N$ 吸收；$\tilde K_N$ 与 TMD 的 $\tilde K$ 相同（$N=2$）是\cref{thm:yzliu-time-ordering}所支持的普适性。$\pm\ii0$ 由光前无穷远处的指数衰减确定。单圈检验：把期刊版的单圈振幅、准振幅、约化软函数与核代入\cref{eq:yzliu-lfwf}，$L_b$ 依赖相消当且仅当指数系数为 $\frac12$ 且取 $+\ii0$；对 $\psi^+$ 取 $-\ii0$ 会留下与 $b_\perp$ 有关、不能被 $H^+$ 吸收的余项 $-2\pi\ii\,aL_b$。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]，结构与\cref{thm:lamet-quasi-tmd}相同，最弱的一步仍是幂次计数（E-S）；$\tilde K$ 在光前波函数与 TMD 之间的普适性由\cref{thm:yzliu-time-ordering}支持。指数中的 $\frac12$ 见期刊版\cite[式~(49)、(51)、(74)]{Ji:2021znw}，其脚注~1 指出了其他文献中的遗漏（附录~Q 第~11~条）；期刊版式~(49)、(74) 中的 $-\ii0$ 对 $\psi^+$ 与其单圈结果不相容，$+\ii0$ 的写法见\cite[式~(4.4)]{Liu:2023onm}。与准 TMD 不同，$H^\pm_{q\bar q}$ 的两个因子相位相同（\cref{ex:yzliu-hl-decomposition}）。概念上，光前量子化可看作积掉小 $k^+$ 模式的有效理论，LaMET 则是“有效光前量子化”\cite[第~II.C~节]{Ji:2021znw}。
+% Verification: claim E02 (journal version correct; +i0 consistent with the one-loop expressions); script s07 (W26).
+
+\begin{proposition}[大动量下的介子形状因子与 $S_I$ 的提取 \tagA]\label{prop:yzliu-meson-ff}
+对由不同味的轻夸克场 $\psi$、$\eta$ 构成的形状因子 $F(b_\perp,P,P',\mu)=\langle P'|\bar\eta(\vec b_\perp)\Gamma'\eta(\vec b_\perp)\,\bar\psi(0)\Gamma\psi(0)|P\rangle$，$P=(P^t,P^z,\vec0_\perp)$、$P'=(P^t,-P^z,\vec0_\perp)$，$\Gamma=\Gamma'=1$ 或 $\gamma_\perp$。在局部假设 (MF) 之下，于 $P^z$ 大、$b_\perp\gg1/P^z$ 时 % VF-YZL-16
+\begin{equation}\label{eq:yzliu-meson-ff}
+F=S_I(b_\perp,\mu)\int\dd x\,\dd x'\,H(x,x')\,\tilde\psi^\dagger(x',b_\perp)\,\tilde\psi(x,b_\perp)+\cdots,\qquad H=\frac{H_1(Q^2,\bar Q^2,\mu^2)}{H_2(\zeta_z,\bar\zeta_z)\,H_2(\zeta'_z,\bar\zeta'_z)},
+\end{equation}
+$H_1=H^{\mathrm{Sud}}(-Q^2)H^{\mathrm{Sud}}(-\bar Q^2)$（类空 Sudakov 形状因子的硬核），$Q^2=\sqrt{\zeta_z\zeta'_z}$，$\bar Q^2=\sqrt{\bar\zeta_z\bar\zeta'_z}$，$\tilde\psi$ 是\cref{prop:yzliu-lfwf}的 $q\bar q$ 准光前波函数（订书钉指向 $-\hat z$），$H_2$ 为其匹配核；因此 $S_I=F/\int H\tilde\psi^\dagger\tilde\psi$ 可在格点上计算。(MF)：该遍举形状因子在 Li--Sterman 意义下 TMD 因子化——$0$ 与 $\vec b_\perp$ 处两个硬核、两个共线子图、一个软子图，Glauber 交换如 DY/SIDIS 处理（\cref{lem:tmd-glauber}），全部规范连线取指向未来。非微扰地位：\cref{asm:intro-bridge}、\cref{asm:intro-composite}（MA0、MA1、MA2）。
+\uses{prop:yzliu-lfwf,thm:yzliu-intrinsic-soft,lem:tmd-glauber}
+\end{proposition}
+
+\begin{proofsketch}
+（1）领头区域\cite[第~5~节、图~25]{Liu:2022nnk}：软发散由 $S(b_\perp,\mu,\delta^+,\delta^-)$ 因子化，共线发散由未减除的振幅 $\psi(x,b_\perp,\mu,\delta^{-\prime})$ 吸收并除以软函数以免重复计数；全部连线指向未来时软函数等于标准 DY 软因子，得 $F=\int H_1\,\psi^\dagger\psi\,S/(S\,S)$，正规子全部相消\cite[式~(145)]{Liu:2022nnk}；$H_1$ 由类空 Sudakov 形状因子给出\cite[式~(148)]{Liu:2022nnk}。（2）对准振幅作同样的分析得 $\tilde\psi=H_2\,\psi(\delta^-)S(\delta^+)/S(\delta^+,\delta^-)$\cite[式~(150)]{Liu:2022nnk}。（3）代入并用 $\zeta\zeta'=\zeta_z\zeta'_z$，振幅与 CS 核全部相消，只剩\cref{thm:yzliu-intrinsic-soft}的 $S_I$\cite[式~(151)--(152)]{Liu:2022nnk}。关系 $2\mathcal D_1-\mathcal D_2=\mathcal D$ 与上述主公式已在单圈验证\cite{Ji:2019sxk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}因子化为全阶论证 [A]；最弱的一步是遍举形状因子的 Glauber 处理，仅类比 DY/SIDIS 论证。2020 年的原始论文\cite{Ji:2019sxk}只陈述了 $F$ 与 $\tilde\psi$ 的因子化而把细节留待以后发表，若只据此，这一关系只能算 [P]；本书依据此后写出的领头区域论证\cite[第~5~节]{Liu:2022nnk}给出 [A]。单圈检验是证据；全部连线指向未来时软函数的时序无关性见\cref{thm:yzliu-time-ordering}。解释：这是 Collins--Soper 轴规范因子化\cite{CollinsSoper1981}的规范不变完成；端点处 $H$ 只有 $1+\alpha_s\ln^2x$ 的对数发散，准波函数线性衰减，端点区行为为 $x\ln^2x$，若令 $x+x'=1$ 则改善为 $x^2\ln^2x$。格点：LPC 在领头阶因子化下计算了 $S_I$\cite{LatticeParton:2020uhz}，单圈修正见\cite{LatticePartonLPC:2023pdv}，单圈 TMD 波函数与软函数见\cite{Deng:2022gzi}；Collins--Soper 核的格点提取更早已有\cite{Shanahan:2020zxr}。
+
+\begin{proposition}[以准 TMD 表示的小 $q_T$ Drell--Yan 截面 \tagA]\label{prop:yzliu-dy-quasi}
+在\cref{thm:tmd-factorization}与\cref{thm:lamet-quasi-tmd}成立的条件下，
+\begin{equation}\label{eq:yzliu-dy-quasi}
+\frac{\dd\sigma_{\mathrm{DY}}}{\dd^2\vec b_\perp\,\dd x\,\dd x'}=\hat\sigma(x,x',\mu,\zeta_z,\zeta'_z)\,S_I(b_\perp,\mu)\,\tilde f(x,b_\perp,\mu,\zeta_z)\,\tilde f(x',b_\perp,\mu,\zeta'_z)+\cdots,
+\end{equation}
+$\mathcal H(Q^2/\mu^2)=H(\zeta_z/\mu^2)H(\zeta'_z/\mu^2)\hat\sigma$，$\mathcal H$ 为\cref{thm:tmd-factorization}的硬因子；当 $\zeta_z\zeta'_z=\zeta_A\zeta_B=Q^4$ 时 CS 因子相消，不需要取光锥极限。非微扰地位：\cref{asm:intro-bridge}、\cref{asm:intro-composite}（MA0、MA1、MA2）。
+\uses{thm:tmd-factorization,thm:lamet-quasi-tmd,thm:yzliu-intrinsic-soft}
+\end{proposition}
+
+\begin{proof}
+由\cref{thm:tmd-factorization}，$\dd\sigma/(\dd^2\vec b_\perp\dd x\dd x')=\mathcal H\,f^{\mathrm{TMD}}(x,b_\perp,\mu,\zeta_A)f^{\mathrm{TMD}}(x',b_\perp,\mu,\zeta_B)$，$\zeta_A\zeta_B=Q^4$。由\cref{thm:lamet-quasi-tmd}，$f^{\mathrm{TMD}}(\zeta)=\tilde f(\zeta_z)\sqrt{S_r}\,\ee^{-\frac12\tilde K\ln(\zeta_z/\zeta)}/H(\zeta_z/\mu^2)$。两式相乘，指数为 $-\frac12\tilde K\ln\frac{\zeta_z\zeta'_z}{\zeta_A\zeta_B}$，在 $\zeta_z\zeta'_z=Q^4$ 时为零；由\cref{thm:yzliu-intrinsic-soft}(a)，$S_r=S_I$，于是得\cref{eq:yzliu-dy-quasi}，$\hat\sigma=\mathcal H/(HH')$。在两个强子动量为 $\pm P^z$ 的质心系中，领头幂次下 $Q^2=xx's\simeq4xx'P_z^2$，故 $\zeta_z\zeta'_z=(2xP^z)^2(2x'P^z)^2=Q^4$ 自动成立。这里只用 $b$ 空间截面，不涉及 Fourier 符号约定。
+\end{proof}
+
+\paragraph{地位与缺口。}全阶论证 [A]，以\cref{thm:tmd-factorization}（[A]，含其 Glauber 论证）与\cref{thm:lamet-quasi-tmd}（[A]）为条件\cite[式~(22)]{Ji:2019sxk}\cite[式~(27)]{Ji:2019ewn}\cite[式~(155)]{Liu:2022nnk}。
+
+\begin{proposition}[由准 TMD 之比得到 Sivers 不对称 \tagA]\label{prop:yzliu-sivers}
+匹配核与自旋无关（只含硬胶子），故在同一 $(x,b_\perp,P^z)$ 处，准 Sivers 函数与非极化准 TMD 之比在幂次修正之内等于相应的光锥比值（$S_I$ 与 $H$ 相消）；DY 与 SIDIS 的符号来自订书钉方向 $\pm\hat z$，与\cref{thm:tmd-sivers-sign}一致。非微扰地位：\cref{asm:intro-bridge}、\cref{asm:intro-composite}（MA0、MA1、MA2）。
+\uses{def:lamet-quasi-tmd,thm:lamet-quasi-tmd,prop:lamet-tmd-ratios,thm:tmd-sivers-sign}
+\end{proposition}
+
+\begin{proofsketch}
+领头区域分析对一切自旋结构相同\cite[第~I--II~节]{Ji:2020jeb}：共线子图与光锥 TMD 相同，硬核只依赖色表示，故比值中 $H$、$S_I$ 与 CS 因子相消（\cref{prop:lamet-tmd-ratios}）。对沿 $+z$ 运动的强子，DY 型订书钉伸向 $+\hat z$、SIDIS 型伸向 $-\hat z$（\cref{def:lamet-quasi-tmd}），分别对应指向过去与指向未来的类光连线：指向过去的 $n_B$ 方向连线位于 $t<0$、$z>0$ 一侧，指向未来的位于 $t>0$、$z<0$ 一侧；由此继承\cref{thm:tmd-sivers-sign}的相对符号（这一相对符号与 $g$ 的符号约定无关）。比值在同一 $\vec b_\perp$ 处取，与 Fourier 符号约定无关。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]（概要）。证据：单圈、小 $b_\perp$ 极限下准 Sivers 函数再现共线扭度 3（Qiu--Sterman）描述；硬胶子极点（色因子 $\frac{C_A}2$）部分抵消软胶子极点（$\frac1{2N_c}$），端点与捏点项剩下 $\frac{C_A}2-\frac1{2N_c}=C_F$\cite[第~III~节]{Ji:2020jeb}。
+
+\section{阈值极限：重—轻 Sudakov 核与类空喷注函数}\label{sec:yzliu-threshold}
+
+准 PDF 匹配核在 $\xi\to1$ 处含 $\ln^k|1-\xi|/(1-\xi)$ 型的大对数。Ji、Liu 与 Su\cite{Ji:2023pba}论证了它们与 $x\to1$ 的 DIS 一样可以因子化（\cref{fig:yzliu-threshold}）：硬核正是准 TMD 的重—轻核 $H$，半硬标度 $|1-\xi|p^z$ 处的交换由一个类空喷注函数重求和。
+
+%%% BEGIN fig:yzliu-threshold
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 hadron/.style={bound state,line cap=butt},
+  fd2 hv/.style={hard blob,circle,minimum size=0.42cm,inner sep=0pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ======================= (a) DIS at x -> 1 =======================
+  \begin{scope}
+    % remnant and soft radiation between jet and remnant
+    \draw[draw=gray!60!black,line width=0.8pt] (1.45,-0.28) -- (4.85,-0.98);
+    \draw[fd2 soft] (3.98,1.12) -- (3.82,-0.76);
+    \draw[fd2 soft] (4.55,1.46) -- (4.5,-0.9);
+    % struck quark, photon, outgoing jet
+    \draw[quark=0.5] (1.5,0.1) -- (2.95,0.38);
+    \draw[photon] (2.45,1.75) -- (2.95,0.38);
+    \draw[quark=0.6] (2.95,0.38) -- (3.6,1.06);
+    \node[jetB blob,ellipse,minimum width=1.75cm,minimum height=0.5cm,inner sep=0pt,rotate=40] at (4.12,1.55) {};
+    \node[fd2 hv] at (2.95,0.38) {};
+    % target
+    \draw[fd2 hadron] (-0.75,0) -- (0.3,0);
+    \node[hadron blob,ellipse,minimum width=1.3cm,minimum height=0.85cm,inner sep=0pt] at (0.9,0) {$f$};
+    % labels
+    \node[fd2 note,anchor=south] at (-0.25,0.05) {$P$};
+    \node[fd2 note,anchor=north] at (2.15,0.12) {$xP$};
+    \node[fd2 note,anchor=east] at (2.45,1.6) {$q$};
+    \node[fd2 note,anchor=north west] at (3.02,0.3) {$H$};
+    \node[fd2 note,anchor=south west] at (4.6,2.02) {窄喷注 $J$};
+    \node[fd2 note,anchor=north,text=green!30!black] at (4.15,-1.08) {软辐射 $S$};
+    \node[fd2 note,anchor=north east,text=gray!35!black] at (2.6,-0.55) {残余 $(1-x)P$};
+    \node[fd2 note,align=center] at (2.05,-1.95) {$H$：$Q^2$；\ $J$：$p_J^2\sim(1-x)Q^2$；\ $S$：能量 $\sim(1-x)Q$};
+    \node[fd2 lab] at (2.05,-2.6) {(a)\ $x\to1$ 的 DIS};
+  \end{scope}
+  % ======================= (b) quasi-PDF kernel at xi -> 1 =======================
+  \begin{scope}[xshift=9.25cm]
+    \draw[fd2 ax] (-2.3,1.0) -- (-1.7,1.0) node[right=-1pt,fd2 note] {$z$};
+    \draw[fd2 ax] (-2.3,1.0) -- (-2.3,1.6) node[above=-1pt,fd2 note] {$t$};
+    % space-like jet function: link + semi-hard gluons (dashed box)
+    \draw[region] (-0.95,-1.05) rectangle (3.95,1.05);
+    \draw[fd2 soft] (-0.62,-0.62) .. controls (-0.05,-0.82) and (0.85,-0.62) .. (1.15,0);
+    \draw[fd2 soft] (1.85,0) .. controls (2.15,0.62) and (3.0,0.82) .. (3.62,0.62);
+    \draw[wilson=0.42] (0,0) -- (3.0,0);
+    % collinear quark: in along n at 0, out along n at z
+    \draw[quark=0.55] (-1.35,-1.35) -- (0,0);
+    \draw[quark=0.5] (3.0,0) -- (4.35,1.35);
+    \node[fd2 hv] at (0,0) {};
+    \node[fd2 hv] at (3.0,0) {};
+    % labels
+    \node[fd2 note,anchor=south east] at (-1.02,-1.0) {$p$};
+    \node[fd2 note,anchor=east] at (-0.25,0.02) {$H$};
+    \node[fd2 note,anchor=north west] at (3.1,-0.1) {$H$};
+    \node[fd2 note,anchor=south] at (0.0,0.22) {$0$};
+    \node[fd2 note,anchor=south] at (3.0,0.2) {$z$};
+    \node[fd2 note,anchor=north] at (2.35,-0.14) {$W[z\hat e_z,0]$};
+    \node[fd2 note,anchor=south west,text=gray!35!black] at (-0.95,1.07) {虚线框：类空喷注函数 $\tilde J$};
+    \node[fd2 note,align=center] at (1.5,-1.95) {$H$：硬，$\zeta_z=4p_z^2$；\ 绿色：半硬胶子，$|1-\xi|\,p^z$};
+    \node[fd2 lab] at (1.5,-2.6) {(b)\ $\xi\to1$ 的准 PDF 匹配核};
+  \end{scope}
+  % ======================= threshold factorization =======================
+  \node[fd2 lab] at (6.85,-3.55) {$C\Big(\xi,\dfrac{p^z}{\mu}\Big)\Big|_{\xi\to1}=H\Big(\dfrac{4p_z^2}{\mu^2}\Big)\,p^z\,J_f\Big(\dfrac{(1-\xi)p^z}{\mu},\dfrac{4p_z^2}{\mu^2}\Big)\big[1+\order{1-\xi}\big]$，\quad $J_f=\tilde J\,\ee^{\ii\,\mathrm{sgn}(z)A}$};
+\end{tikzpicture}
+\caption{阈值因子化的时空图像（示意）。
+(a)~$x\to1$ 的 DIS：被击出的夸克在硬顶点 $H$ 吸收虚光子后形成窄喷注 $J$，喷注与靶残余之间只有软辐射 $S$。
+(b)~$\xi\to1$ 的准 PDF 匹配核（$\Gamma=\gamma^0$，$\MSbar$，非单态）：共线夸克（动量 $p$，沿类光方向；细线箭头为费米子数流向）在类空 Wilson 线 $W[z\hat e_z,0]$（双线，箭头为路径方向）的两个连接点处发生硬相互作用（灰色顶点 $H$，标度 $\zeta_z=4p_z^2$），并与静态规范线交换半硬胶子（绿色，标度 $|1-\xi|p^z$）；虚线框内的部分组成类空喷注函数 $\tilde J$，乘上相位因子后为 $J_f$。
+$H$ 与准 TMD 因子化中的硬核相同（\cref{thm:yzliu-threshold}，全阶论证 [A]；VF-LAM-14，VF-YZL-9）。
+这一因子化形式在单圈精确成立；精确的两圈核在阈值极限下与它的全部 41 个奇异项相容（其中两个常数由比较定出）。}
+\label{fig:yzliu-threshold}
+\end{figure}
+%%% END fig:yzliu-threshold
+
+\begin{definition}[重—轻 Sudakov 因子与类空喷注函数]\label{def:yzliu-hl-jet}
+(a) $C^\pm_{HL}$ 为单个顶点的重—轻 Sudakov 因子（在壳轻夸克变为静态类空连线）；文献\cite{Ji:2023pba}的 “$H_{HL}$” 指一对顶点；$H\equiv|H_{HL}|=C^+_{HL}C^-_{HL}$（\cref{prop:yzliu-hard-kernel}）。(b) 类空喷注函数 % VF-LAM-14, VF-YZL-9
+\begin{equation}\label{eq:yzliu-jet-def}
+\tilde J(\mu z)=\langle\Omega|\mathcal T\,W_{n,+}(zn_z)\,W_z^\dagger(zn_z)\,W_z(0)\,W_{n,-}(0)|\Omega\rangle ,
+\end{equation}
+$W_{n,-}(0)$ 为自 $-\infty n$ 到 $0$ 的类光连线，$W_{n,+}(zn_z)$ 为自 $zn_z$ 到 $+\infty n$ 的类光连线，$W_z^\dagger(zn_z)W_z(0)$ 为 $0$ 与 $zn_z$ 之间的类空连线（\cref{def:prelim-wilson}）：类光静态色源变为类空静态色源再变回的“跃迁形状因子”。它在阈下、为实、只依赖 $|z|$，共轭于半硬标度 $|1-\xi|p^z$；类时版本 $\tilde J(\mu t)$ 由 $n_z\to n_t$ 得到。(c) $J_f(z\mu)\equiv\tilde J(z^2\mu^2)\,\ee^{\ii\,\mathrm{sgn}(z)A(L_\zeta)}$，$\mathrm{sgn}(z)A=\mathrm{Arg}\,H_{HL}$。约定：我们的算符 $\bar\psi(z)\gamma^0W[z,0]\psi(0)$（\cref{def:lattice-quasi}）与文献\cite{Ji:2023pba}相同，$\mathrm{sgn}(z)$ 含义一致；该文的 $\lambda=zp^z=-\lambda_{\text{本书}}$，其 $L_z$、$l_z$ 即本书的 $L_\zeta$、$L_z=\ln(z^2\mu^2\ee^{2\gamma_E}/4)$。
+\uses{def:prelim-wilson,def:lattice-quasi,prop:yzliu-hard-kernel}
+\end{definition}
+
+\begin{theorem}[类空与类时重夸克喷注函数的解析延拓 \tagA]\label{thm:yzliu-jet-continuation}
+在维数正规化微扰论各阶，对 $t>0$，$\tilde J(t=-\ii|z|,D)=\tilde J(z,D)$。因此两圈类空喷注函数可由类时重夸克喷注函数\cite{Jain:2008gb}得到。单圈 % VF-YZL-9
+\begin{equation}\label{eq:yzliu-jet-1loop}
+\tilde J=1+a\Big(\frac12L_z^2+L_z+\frac{\pi^2}{12}+2\Big),\qquad \frac{\dd\ln\tilde J}{\dd\ln\mu}=\Gamma_{\mathrm{cusp}}L_z-\tilde\gamma_J,\qquad \tilde\gamma^{(1)}_J=-\frac{\alpha_sC_F}{\pi},
+\end{equation}
+两圈 $\tilde\gamma^{(2)}_J=C_FC_A(-\frac{1396}{27}+\frac{23\pi^2}9+20\zeta_3)+C_Fn_f(\frac{232}{27}-\frac{2\pi^2}9)$（以 $(\frac{\alpha_s}{4\pi})^2$ 为单位）。（本定理只涉及真空中的 Wilson 线关联函数。）
+\uses{def:yzliu-hl-jet,asm:yzliu-wightman-pt}
+\end{theorem}
+
+\begin{proofsketch}
+证明一\cite[附录~C.1]{Ji:2023pba}：在坐标空间用胶子 $m$ 点关联函数的 Schwinger 表示，缩并保持 $\int D\alpha\,\mathcal P(\alpha)\exp[-\frac\ii2\sum Q_{ij}(x_i-x_j)^2]$、$Q\ge0$ 的形式；对剩余的标度参数 $s$，所有留数极点位于第二象限，故可转动 $s\to-\ii s$，再令 $t\to-\ii z$；自旋结构逐项对应\cite[式~(C.19)--(C.21)]{Ji:2023pba}。证明二\cite[附录~C.2]{Ji:2023pba}：前向管中的 Wightman 函数加复 Lorentz 协变性（\cref{asm:yzliu-wightman-pt}）。单圈：裸表达式在 $\overline{\mathrm{MS}}$ 中的极点为 $a[\frac1{\varepsilon^2}+\frac{L_z+1}{\varepsilon}]$，有限部分即\cref{eq:yzliu-jet-1loop}；$\frac{\dd L_z}{\dd\ln\mu}=2$ 给出 $\frac{\dd\tilde J^{(1)}}{\dd\ln\mu}=2a(L_z+1)$，即 $\Gamma^{(1)}_{\mathrm{cusp}}=2a$、$\tilde\gamma^{(1)}_J=-2a$。两圈：$\tilde\gamma_J=2\gamma_{HL}-2\gamma_s$，由\cite[式~(A.4)--(A.5)]{Ji:2023pba}得上式，与类时重夸克喷注函数的反常维度相同。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]，与\cref{thm:yzliu-time-ordering}同类，证明一给出完整的组合概要，证明二的瓶颈是\cref{asm:yzliu-wightman-pt}。$\tilde\gamma_J$ 等于类时重夸克喷注函数的反常维度；$\tilde J$ 为实的论证：在时序微扰论中类光连线的能量分母同号，唯一的虚部来源是 $t=0$ 的静态类空连线，而 $z>0$ 时回路只含类空与类光间隔、处在阈下。
+
+\begin{theorem}[准 PDF 匹配核的阈值因子化（Ji--Liu--Su） \tagA]\label{thm:yzliu-threshold}
+对\cref{thm:lattice-lamet}的非单态 $\overline{\mathrm{MS}}$ 核（$\Gamma=\gamma^0$，$\xi=x/y$），在 $1-\xi$ 的领头幂次（所有 $\propto(1-\xi)^{-1}\ln^k|1-\xi|$ 与 $\delta(1-\xi)$ 的项），微扰论各阶
+\begin{equation}\label{eq:yzliu-threshold}
+C\Big(\xi,\frac{p^z}{\mu}\Big)\Big|_{\xi\to1}=H\Big(\frac{4p_z^2}{\mu^2}\Big)\,p^z\,J_f\Big(\frac{(1-\xi)p^z}{\mu},\frac{4p_z^2}{\mu^2}\Big)\big[1+\order{1-\xi}\big],\qquad p^z=|y|P^z ,
+\end{equation}
+$H=|H_{HL}|$ 与准 TMD、准光前波函数因子化中的核相同（普适性），$J_f$ 如\cref{def:yzliu-hl-jet}。单圈：$H^{(1)}=a(-2+\frac{\pi^2}{12}-\frac{L_\zeta^2}2+L_\zeta)$，$\tilde J^{(1)}$ 如\cref{eq:yzliu-jet-1loop}，$\Imag J^{(1)}_f=a\pi\,\mathrm{sgn}(z)(L_\zeta-1)$；在动量空间 % VF-LAM-14
+\begin{equation}\label{eq:yzliu-Jf-mom}
+p^zJ_f=\delta(1-\xi)\Big[1+a\Big(2+\frac{\pi^2}4+\frac{L_\zeta^2}2-L_\zeta\Big)\Big]+a\Big[\mathcal P\frac{\ln(1-\xi)^2}{|1-\xi|}+(L_\zeta-1)\Big(\mathcal P\frac1{1-\xi}+\mathcal P\frac1{|1-\xi|}\Big)\Big].
+\end{equation}
+RGE：$\frac{\dd\ln H}{\dd\ln\mu}=\Gamma_{\mathrm{cusp}}L_\zeta+\tilde\gamma_H$，$\frac{\dd\ln\tilde J}{\dd\ln\mu}=\Gamma_{\mathrm{cusp}}L_z-\tilde\gamma_J$，$\frac{\dd\ln H_{HL}}{\dd\ln\mu}=\Gamma_{\mathrm{cusp}}L_\zeta+\tilde\gamma_H-\ii\pi\,\mathrm{sgn}(z)\Gamma_{\mathrm{cusp}}$；单圈时总反常维度 $\Gamma_{\mathrm{cusp}}[\ln(\lambda^2\ee^{2\gamma_E})-\ii\pi\,\mathrm{sgn}z]$ 与 $\mu$ 无关。（本定理只涉及部分子态。）
+\uses{def:yzliu-hl-jet,thm:yzliu-jet-continuation,prop:yzliu-hard-kernel,prop:lamet-oneloop,thm:lattice-lamet}
+\end{theorem}
+
+\begin{proofsketch}
+（1）领头区域\cite[第~1--2~节、图~1]{Ji:2023pba}：入射与出射共线夸克在两个夸克—连线连接点处有硬顶点（标度 $\zeta_z=4p_z^2$），半硬胶子（$|1-\xi|p^z$）在共线夸克与静态连线之间交换——相当于 $x\to1$ 的 DIS\cite{Sterman1987,BecherNeubertPecjak2007}，类空连线取代了反共线夸克；两次 $k_z=\order{p_z}$ 相反的硬实交换受相空间压低。（2）$\tilde J$ 是真空 Wilson 回路关联函数，经\cref{thm:yzliu-jet-continuation}与类时重夸克喷注函数相联。（3）RG 相容性再现 DGLAP 的阈值极限（见下面的反常维度代数）。（4）定阶：单圈精确成立（与\cref{prop:lamet-oneloop}比较，见下例）；把 $H^{(1)}$、$\tilde J^{(1)}$ 与相位代入，$\frac{\dd}{\dd\ln\mu}[H^{(1)}+\tilde J^{(1)}+\ii\pi\,\mathrm{sgn}(z)a(L_\zeta-1)]=2a[L_\zeta+L_z-\ii\pi\,\mathrm{sgn}z]$，而 $L_\zeta+L_z=\ln(\lambda^2\ee^{2\gamma_E})$。NNLO 检验见下文。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]：领头区域论证加时空图像与 RG 相容性（SCET 型），不是完整的 Collins 式幂次计数证明；相对于 DIS 阈值因子化（\cref{prop:thr-dis}），新的要素是相位。单圈的坐标空间核在 $|\lambda|$ 直到 $10^5$ 处与\cref{eq:yzliu-threshold}一致，包括 $\lambda<0$ 时相位的符号。归属：文献\cite{Ji:2023pba}推导了动量空间核的阈值因子化 $C\to H\cdot J$ 及其 RG 重求和；更早，文献\cite{Gao:2021hxl}解释了阈值对数的来源，并在 NLL 重求和了赝 PDF 系数中的阈值对数。
+% Verification: claim N06 (one-loop check to |lambda| = 1e5, verification, no marker); script s08 (W26).
+
+\begin{example}[阈值因子化的单圈检验]\label{ex:yzliu-threshold-oneloop}
+$0<\xi<1$：$\overline{\mathrm{MS}}$ 准 PDF 核的奇异部分为 $\frac{2a}{1-\xi}(L_\zeta+\ln(1-\xi)-1)$（\cref{prop:lamet-oneloop}(e)）；由 $\mathcal P\frac1{|1-\xi|}+\mathcal P\frac1{1-\xi}=\frac2{1-\xi}$，它等于\cref{eq:yzliu-Jf-mom}的 $J^{(1)}_f$。$\xi>1$：两个主值相消，核给出 $\frac{2a\ln(\xi-1)}{\xi-1}=J^{(1)}_f$。$\delta(1-\xi)$ 项的系数给出 $H^{(1)}$，与\cref{prop:yzliu-hard-kernel}(b) 的准 TMD 核相同。坐标空间中，记单圈的坐标空间核为 $h(\lambda)$（$\lambda=p\cdot z$），则 $\ee^{-\ii\lambda}h(\lambda)-1-[H^{(1)}+\tilde J^{(1)}+\ii\pi a\,\mathrm{sgn}(z)(L_\zeta-1)]$ 在 $|\lambda|\to\infty$ 时按 $\ln^2|\lambda|/|\lambda|$ 趋于零。
+\uses{thm:yzliu-threshold,prop:lamet-oneloop}
+\end{example}
+
+\begin{proposition}[反常维度代数 \tagA]\label{prop:yzliu-ad-algebra}
+在基 $\{\Gamma_{\mathrm{cusp}},\gamma_F,\gamma_V,\gamma_s,\gamma_{HL}\}$ 下，% VF-YZL-10
+\begin{equation}\label{eq:yzliu-ad-algebra}
+\begin{gathered}
+\gamma_\phi=-\tfrac12\gamma_V-\tfrac12\gamma_s,\qquad \gamma^{\mathrm{thr}}_J=\tfrac12\gamma_V-\tfrac12\gamma_s,\qquad \tilde\gamma_J=2\gamma_{HL}-2\gamma_s,\\
+\gamma_{HH}=2\gamma_{HL}-\gamma_s,\qquad \tilde\gamma_H=\gamma_V+2\gamma_F+2\gamma_{HL}-\gamma_s ;
+\end{gathered}
+\end{equation}
+阈值处的 DGLAP 相容性 $2\gamma_\phi+\tilde\gamma_H-\tilde\gamma_J=2\gamma_F$（端点形式 $P_{qq}\to\frac{2\Gamma_{\mathrm{cusp}}}{(1-z)_+}+2\gamma_\phi\delta(1-z)$）。（两圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）文献\cite{Ji:2023pba}的两圈输入 (A.1)--(A.5) 再现 $\gamma^{(2)}_{HH}$（独立地见\cref{prop:yzliu-sI-twoloop}）与 $\tilde\gamma^{(2)}_H$（\cref{prop:yzliu-hard-kernel}(c)）；$\gamma_V$ 为标准的夸克形状因子非尖点反常维度。（本命题只涉及部分子态。）
+\uses{thm:yzliu-threshold,prop:yzliu-hard-kernel,thm:yzliu-intrinsic-soft,thm:yzliu-jet-continuation}
+\end{proposition}
+
+\begin{proof}
+对\cref{eq:yzliu-threshold}取 $\frac{\dd}{\dd\ln\mu}$：$H$ 贡献 $\tilde\gamma_H$，$J_f$ 在动量空间满足 $\frac{\dd J_f}{\dd\ln\mu}=-(\tilde\gamma_J+\Gamma_{\mathrm{cusp}}\ln\frac{4p_z^2}{\mu^2})J_f-2\Gamma_{\mathrm{cusp}}\mathcal P\!\int_{\xi'>\xi}\frac{J_f(\xi')}{\xi'-\xi}\dd\xi'$，于是 $C$ 的演化含 $(\tilde\gamma_H-\tilde\gamma_J)C$ 与一个积分项\cite[附录~A]{Ji:2023pba}。积分项再现 DGLAP 核的 $\frac{2\Gamma_{\mathrm{cusp}}}{(1-z)_+}$；$\delta(1-z)$ 项相符要求 $2\gamma_\phi+\tilde\gamma_H-\tilde\gamma_J=2\gamma_F$（$\gamma_F$ 来自准 PDF 的乘法重整化，\cref{prop:yzliu-hard-kernel}(a)）。DIS 阈值因子化给出 $\gamma_V+(\gamma_\phi+\gamma_s)+\gamma_\phi=0$，其中 $\gamma_\phi+\gamma_s=-\gamma^{\mathrm{thr}}_J$，故 $2\gamma_\phi=-\gamma_V-\gamma_s$。代入 $\tilde\gamma_J=2\gamma_{HL}-2\gamma_s$ 即得 $\tilde\gamma_H=\gamma_V+2\gamma_F+2\gamma_{HL}-\gamma_s$；反之，把\cref{eq:yzliu-ad-algebra}代入，$2\gamma_\phi+\tilde\gamma_H-\tilde\gamma_J=(-\gamma_V-\gamma_s)+(\gamma_V+2\gamma_F+2\gamma_{HL}-\gamma_s)-(2\gamma_{HL}-2\gamma_s)=2\gamma_F$ 恒成立。$\gamma_{HH}=2\gamma_{HL}-\gamma_s$ 由角依赖尖点反常维度的大角渐近 $\Gamma_{\mathrm{cusp}}(\alpha_s,Y)\to Y\Gamma_{\mathrm{cusp}}+\gamma_{HH}$ 与\cref{thm:yzliu-intrinsic-soft}(d) 得到，$\tilde\gamma_J$ 的结构见\cref{thm:yzliu-jet-continuation}。两圈：把 (A.1)--(A.5) 代入，得 $\gamma^{(2)}_{HH}$ 与上面所引的两圈值一致，得 $\tilde\gamma^{(2)}_H$ 与\cref{prop:yzliu-hard-kernel}(c) 的\cref{eq:yzliu-gH2}一致（即 (A.11) 与 (A.13) 相符）；单圈 $\gamma^{(1)}_\phi=\frac{3\alpha_sC_F}{4\pi}$。
+\end{proof}
+
+\paragraph{地位与缺口。}结构关系为全阶论证 [A]（来自 [A] 级因子化公式的相容性）；两圈值为 [R, $R_{\mathrm{PT}}$]。
+
+\begin{proposition}[阈值因子化的 NNLO 检验 \tagP]\label{prop:yzliu-threshold-nnlo}
+精确的两圈非单态核\cite{Li:2020xml,Chen:2020ody}（\cref{prop:lamet-twoloop}）的阈值极限再现\cref{thm:yzliu-threshold}的全部 41 个非零奇异项（$\delta(1-\xi)$ 与 $\ln^k(1-\xi)/(1-\xi)$，$k\le3$），其中两个常数由比较定出：$c_a$（两圈相位）与 $c_H$（两圈 $\ln H$，\cref{prop:yzliu-hard-kernel}(c)）；独立计算的 NNLO 准 TMD 系数\cite{delRio:2023pse}与此 $c_H$ 一致。（本命题只涉及部分子态。）
+\uses{thm:yzliu-threshold,prop:yzliu-hard-kernel,prop:lamet-twoloop}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]：带两个拟合常数的定阶验证\cite[第~5~节、式~(5.7)、(5.10)--(5.11)]{Ji:2023pba}。
+
+\begin{remark}[阈值重求和与大 $x$ 适用域]\label{rem:yzliu-threshold-domain}
+重求和核\cite[式~(6.19)]{Ji:2023pba}（$\mu_i=|1-\xi|p^z$，$\eta=2a_\Gamma(\mu_i,\mu)$，$\hat A=A(\alpha(\zeta_z))+\pi a_\Gamma(\zeta_z,\mu)$，$[\ ]_\star$ 为该文式~(6.18) 的星分布）为 % TR, checked on the rendered page 18 of arXiv:2305.04416v1 (eqs. (6.13)-(6.19); eta, A-hat, mu_i as defined there)
+\begin{equation*}
+\begin{aligned}
+C={}&H(\alpha(\zeta_z))\,\ee^{2S(\zeta_z,\mu)-2S(\mu_i,\mu)-a_H(\zeta_z,\mu)+a_J(\mu_i,\mu)}\,\tilde J(L_z=-2\partial_\eta,\alpha(\mu_i))\\
+&\times\Big[\frac{\sin(\mathrm{sgn}(1-\xi)\hat A+\frac{\eta\pi}2)}{|1-\xi|}\Big(\frac{2|1-\xi|p^z}{\mu_i}\Big)^\eta\Big]_\star\frac{\Gamma(1-\eta)\ee^{-\eta\gamma_E}}\pi ;
+\end{aligned}
+\end{equation*}
+微扰喷注函数要求 $\Lambda\ll|1-\xi|p^z\ll p^z$。数值上（据\cite{Ji:2024hit}的摘要与引言；$x$ 为光锥动量分数）：硬部分在 $xP^z$、阈值软函数在 $(1-x)P^z$，$\alpha_s^k\ln^{2k}(1-x)$ 的重求和“至关重要”；$(1-x)P^z\to\Lambda$ 时匹配失效，$xP^z$ 与 $(1-x)P^z$ 均远大于 $\Lambda$ 时可用；线性重整子重求和可与阈值重求和结合。更早的 Mellin 空间 NLL 见\cite{Gao:2021hxl}，GPD 的阈值重求和见\cite{Holligan:2025baj}。本注细化了\cref{rem:lamet-domain}。
+\end{remark}
+
+\section{重—轻核的线性重整子}\label{sec:yzliu-renormalon}
+
+重—轻核 $H_{HL}$ 的相位来自类空连线上眼形传播子的切割。Liu 与 Su\cite{Liu:2023onm}发现这一相位带有线性红外重整子，其强度与极点质量的线性重整子相同。
+
+\begin{proposition}[重—轻 Sudakov 核的线性红外重整子 \tagP]\label{prop:yzliu-linear-renormalon}
+在大 $\beta_0$（泡链）近似中，$\overline{\mathrm{MS}}$ 单顶点重—轻核 $C^{-\mathrm{sgn}z}_{HL}$（\cref{prop:yzliu-hard-kernel}(b)；即文献\cite{Liu:2023onm}的 $H_{HL}$）的 Borel 变换（Borel 变量 $u=\beta_0^{(b)}t/2$，与本书的 $u$ 相同，\cref{def:power-borel}）在右半平面的第一个奇点位于 $u=\frac12$，且只出现在虚部： % VF-YZL-11
+\begin{equation}\label{eq:yzliu-renormalon}
+\begin{gathered}
+\Imag B(u)\xrightarrow{u\to\frac12}\frac{\mu}{p^z}\frac{C_F\ee^{5/6}}{2\pi}\frac{\mathrm{sgn}(z)}{u-\frac12},\\
+A_{\mathrm{asym}}=-2\frac{\mu}{p^z}\sum_nr_n\alpha_s^{n+1},\quad r_n=N_m(\beta_0^{(b)})^n\Gamma(n+1),\quad N_m=\frac{C_F\ee^{5/6}}{\pi}\simeq0.977,
+\end{gathered}
+\end{equation}
+$N_m$ 即极点质量与 Wilson 线线性重整子的归一化；实部没有线性重整子，轻—轻 Sudakov 核也没有。它 (i) 在类空夸克双线性系数函数的阈值展开（坐标空间与矩空间）中，与一个显式的次领头幂次阈值软算符的紫外重整子相消；(ii) 在准光前波函数的 TMD 展开中，与含量纲 1 的 Wilson 线尖点算符 $\hat O=[n_z\infty,0]\int_{-\infty}^0\dd x^+[0,x^+]D_\perp^2[x^+,-\infty]$ 的次领头幂次软因子 $S^\pm_q$ 的紫外重整子相消。该重整子与线性紫外发散相联，而与线性快度发散无关；在泡链层次，准光前波函数的 TMD 展开不收敛（留数正负交替，并有指数小项）；Coulomb 规范中的夸克场重整化也有线性重整子。（本命题只涉及部分子态与算符。）
+\uses{prop:yzliu-hard-kernel,def:power-borel,prop:power-renormalon-examples,prop:lamet-lrr}
+\end{proposition}
+
+\begin{proofsketch}
+（1）泡链：把单圈图（\cref{prop:yzliu-hard-kernel}(b)）中的胶子传播子换成链和；链和的 Borel 变换为 $(\mu^2\ee^{5/3})^u(-k^2)^{-1-u}$\cite[式~(2.44)--(2.45)]{Liu:2023onm}。（2）虚部来自对眼形传播子作切割 $\frac1{k^z\pm\ii0}\to\mp\ii\pi\delta(k^z)$；余下的积分给出 $\Gamma$ 函数之比，在 $u=\frac12$ 有单极点，留数为 $\frac{C_F\,\mathrm{sgn}(z)}{\pi}\ee^{5/6-L_\zeta/2}=\frac{\mu}{p^z}\frac{C_F\ee^{5/6}}{2\pi}\mathrm{sgn}(z)$（$\ee^{-L_\zeta/2}=\mu/(2p^z)$），即\cref{eq:yzliu-renormalon}\cite[式~(2.46)--(2.47)]{Liu:2023onm}；实部在 $u=\frac12$ 正则。（3）由 Borel 变换的定义（\cref{def:power-borel}），单极点 $\frac{c}{u-\frac12}$ 对应系数 $-2c\,(\beta_0^{(b)})^kk!$；按 $\mathrm{sgn}(z)A=2\,\mathrm{Arg}\,C^{-\mathrm{sgn}z}_{HL}$ 换算即得 $A_{\mathrm{asym}}$ 与 $N_m$\cite[式~(2.48)--(2.50)]{Liu:2023onm}；歧义 $\sim(\mu/p^z)(\Lambda^2/\mu^2)^{1/2}=\Lambda/p^z$，是线性幂次修正。（4）相消：阈值展开见\cite[第~3.6~节]{Liu:2023onm}，准光前波函数见\cite[第~4.3--4.4~节、式~(4.28)--(4.33)]{Liu:2023onm}。启发式来源：类空连线产生的“虚势” $gA^z\sim\ii V$ 是线性静态势的解析延拓，给出 $-\ii\frac{\delta m}{2p^z}$ 型修正。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[P]：在泡链中精确，超出大 $\beta_0$ 无推导（\cref{conj:yzliu-renormalon-norm}）。推论：它解释了格点 CS 核提取（\cref{prop:lattice-cs-kernel}）中虚部收敛缓慢的现象；取 Borel 重求和的硬核可减轻这一问题。背景见\cite{Beneke1999,Braun:2018brg}；Wilson 线自能的线性重整子见\cref{prop:lamet-lrr}。
+
+\begin{conjecture}[线性重整子归一化的普适性 \tagC]\label{conj:yzliu-renormalon-norm}
+在大 $\beta_0$ 之外，重—轻核相位的线性重整子归一化仍等于极点质量的 $N_m$：$n_f=0,\dots,5$ 时 $N_m=0.622,\dots,0.524$\cite[式~(2.52)]{Liu:2023onm}。（本猜想只涉及部分子态。）
+\uses{prop:yzliu-linear-renormalon}
+\end{conjecture}
+
+\paragraph{地位与缺口。}[C]：文献\cite{Liu:2023onm}类比极点质量与 Wilson 线的线性重整子提出；只有泡链值被推导（\cref{prop:yzliu-linear-renormalon}），对重—轻核没有超出大 $\beta_0$ 的论证。升级途径：对重—轻核作超出泡链的重整子分析。
+
+\begin{conjecture}[强子夸克双线性矩阵元的阈值渐近 \tagC]\label{conj:yzliu-threshold-hadronic}
+在中等 $z$ 处，强子夸克双线性矩阵元在阈值极限 $\lambda\to-\ii\infty$（本书的 Ioffe 时间；Liu 的变量中为 $\lambda\to+\ii\infty$）有完全因子化的渐近形式：重—轻核 $H_{HL}$ 乘以非微扰阈值软因子 $J(z\Lambda_{\mathrm{QCD}})$ 与扭度 2 PDF 的阈值极限，修正为 $\order{1/|\lambda|}$\cite[式~(3.50)]{Liu:2023onm}。非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{prop:yzliu-linear-renormalon,thm:yzliu-threshold}
+\end{conjecture}
+
+\paragraph{地位与缺口。}[C]：文献\cite{Liu:2023onm}的假设形式。理由是：欧氏时间演化的指数压低迫使大能量在两个夸克—连线顶点处流入流出，中间态（“割”）保持轻，故大 $|\lambda|$ 由阈值区主导。它预设了\cref{thm:yzliu-threshold}（只对部分子核为 [A]）的强子层次版本，以及非微扰阈值软因子 $J(z\Lambda_{\mathrm{QCD}})$；强子层次没有论证。升级途径：强子层次的阈值因子化（参见\cref{asm:intro-bridge}）。
+
+\section{GPD 在 $x=\pm\xi$ 附近}\label{sec:yzliu-gpd}
+
+$x=\pm\xi$ 处一个部分子的光锥动量趋于零，“可能的软标度” $2|x\pm\xi|P^z$ 似乎使 LaMET 失效。下面的命题在单圈给出精确的结构，猜想则陈述 Su 等人\cite{Su:2026eta}（预印本）的全阶主张。
+
+\begin{proposition}[准 GPD 单圈匹配核在 $x=\pm\xi$ 附近的结构 \tagR]\label{prop:yzliu-gpd-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本命题限于单圈阶。考虑\cref{def:lamet-quasi-gpd}的非单态准 GPD（$\Gamma=\gamma^t$，$H$ 型结构，$\overline{\mathrm{MS}}$），外态为动量 $p^z$ 的夸克；以 $p^z$ 重新标度，准变量为 $x'$，斜度为 $0<\xi'<1$（\cref{def:excl-gpd}）。记 $\ell(s)\equiv\ln\frac{4p_z^2s^2}{\mu^2}$。单圈核 $\frac{\alpha_sC_F}{2\pi}G(x',\xi')$ 在 $x'<-\xi'$、$|x'|<\xi'$、$\xi'<x'<1$、$x'>1$ 四个区域中都可写成 % re-derived from the explicit kernel (MD14), script s09 (W26)
+\begin{equation}\label{eq:yzliu-gpd-decomp}
+G=c_+\,\ell(x'+\xi')+c_-\,\ell(x'-\xi')+c_1\,\ell(1-x')+R,\qquad c_\pm=\frac{|x'\pm\xi'|}{1\pm\xi'}\Big[\frac1{2(1-x')}\pm\frac1{4\xi'}\Big],
+\end{equation}
+$R$ 为有理函数（另有 $x'=1$ 处的虚修正，即 $\delta(1-x')$ 项与加号处方）。因此可能的软标度 $2|x'\pm\xi'|p^z$ 的对数总乘以 $|x'\pm\xi'|$，在 $x'\to\mp\xi'$ 时线性趋于零。回到原变量：在准 GPD 的匹配公式中（$y$ 为准变量，$x$ 为光锥变量，$|\xi|<x$），这些项为 $\big[\frac1{2(x-y)}\pm\frac1{4\xi}\big]\frac{|y\pm\xi|}{x\pm\xi}\ln\frac{4\bar P_z^2(y\pm\xi)^2}{\mu^2}$；在单圈逆匹配（由准 GPD 求光锥 GPD）中，相应项为 $\big[\frac1{2(x-y)}\mp\frac1{4\xi}\big]\frac{|x\pm\xi|}{y\pm\xi}\ln\frac{4\bar P_z^2(x\pm\xi)^2}{\mu^2}$（$x$ 为光锥变量，$y$ 为准变量，$|\xi|<y$）。（本命题只涉及部分子态。）
+\uses{def:lamet-quasi-gpd,def:excl-gpd}
+\end{proposition}
+
+\begin{proof}
+记 $\ell_\pm=\ln|x'\pm\xi'|$，$\ell_1=\ln|1-x'|$，$L_\mu=\ln\frac{4p_z^2}{\mu^2}$。显式的单圈核\cite[式~(39)--(43)、(46)]{Liu:2019urm}（该文第一作者为 Yu-Sheng Liu）为：$x'<-\xi'$ 时 $G_1=-b_+(\ell_1-\ell_+)-b_-(\ell_1-\ell_-)$，$b_\pm=\frac1{x'-1}\mp\frac{x'}{2\xi'}+\frac{1+x'}{2(1\pm\xi')}$；$|x'|<\xi'$ 时 $G_2=E(L_\mu+2\ell_1+\ell_+-\ell_--1)+D(\ell_--\ell_1)$，$E=\frac{(x'+\xi')(1-x'+2\xi')}{2\xi'(1-x')(1+\xi')}$，$D=\frac{x'+\xi'^2}{\xi'(1-\xi'^2)}$；$\xi'<x'<1$ 时 $G_3=A(L_\mu+\frac12(\ell_++\ell_-)+\ell_1-1)+B(\ell_+-\ell_-)$，$A=\frac{1+x'^2-2\xi'^2}{(1-x')(1-\xi'^2)}$，$B=\frac{x'+\xi'^2}{2\xi'(1-\xi'^2)}$；$x'>1$ 时为 $-G_1$。因 $\ell(s)=L_\mu+2\ln|s|$，形如\cref{eq:yzliu-gpd-decomp}的分解存在当且仅当 $L_\mu$ 的系数等于 $c_++c_-+c_1$，此时 $c_\pm$ 为 $\ell_\pm$ 系数之半、$c_1$ 为 $\ell_1$ 系数之半。
+
+（1）$\xi'<x'<1$：$c_+=\frac A4+\frac B2=\frac{\xi'(1+x'^2-2\xi'^2)+(x'+\xi'^2)(1-x')}{4\xi'(1-x')(1-\xi'^2)}$。分子等于 $(x'+\xi')(1-x'+2\xi')(1-\xi')$（两边展开均为 $x'-x'^2+\xi'+\xi'^2+x'^2\xi'-x'\xi'^2-2\xi'^3$），故 $c_+=\frac{(x'+\xi')(1-x'+2\xi')}{4\xi'(1-x')(1+\xi')}=\frac E2=\frac{x'+\xi'}{1+\xi'}\big[\frac1{2(1-x')}+\frac1{4\xi'}\big]$。$A$ 对 $\xi'$ 为偶、$B$ 为奇，故 $c_-=\frac A4-\frac B2=c_+|_{\xi'\to-\xi'}$，而 $c_++c_-+c_1=\frac A2+\frac A2=A$ 即 $L_\mu$ 的系数。（2）$|x'|<\xi'$：$c_+=\frac E2$，同上；$c_-=\frac{D-E}2$，通分后分子为 $2(x'+\xi'^2)(1-x')-(x'+\xi')(1-x'+2\xi')(1-\xi')=(\xi'-x')(x'+2\xi'-1)(1+\xi')$，故 $c_-=\frac{(\xi'-x')(x'+2\xi'-1)}{4\xi'(1-x')(1-\xi')}=\frac{|x'-\xi'|}{1-\xi'}\big[\frac1{2(1-x')}-\frac1{4\xi'}\big]$；$c_1=E-\frac D2$，三者之和为 $E$，即 $L_\mu$ 的系数。（3）$x'<-\xi'$：$G_1$ 不含 $L_\mu$；通分得 $b_+=-\frac{(x'+\xi')(1-x'+2\xi')}{2\xi'(1-x')(1+\xi')}=-E$，故 $c_+=-\frac E2=\frac{|x'+\xi'|}{1+\xi'}\big[\frac1{2(1-x')}+\frac1{4\xi'}\big]$（此处 $x'+\xi'<0$），同理 $c_-=\frac{b_-}2$ 给出闭式，$c_1=-\frac{b_++b_-}2$ 使三者之和为零。（4）$x'>1$：$G=-G_1$，$c_\pm$ 变号，而 $x'\pm\xi'>0$，闭式仍成立。于是\cref{eq:yzliu-gpd-decomp}在四个区域成立，$c_\pm$ 含因子 $|x'\pm\xi'|$。
+
+换回原变量：$x'=y/x$，$\xi'=\xi/x$，$p^z=x\bar P^z$，并乘以 $1/|x|$，$\frac1x c_+=\frac{|y+\xi|}{x+\xi}\big[\frac1{2(x-y)}+\frac1{4\xi}\big]$，$\ell(x'+\xi')=\ln\frac{4\bar P_z^2(y+\xi)^2}{\mu^2}$。单圈逆核为 $\delta-C^{(1)}$，其中输出变量（光锥 $x$）与积分变量（准 $y$）交换角色，$-\frac1y c_\pm(x/y,\xi/y)$ 即陈述中的形式。
+
+检验：$\xi'\to0$ 时 $G_1$、$G_3$ 趋于准 PDF 的单圈核；$L_\mu$ 的系数在 ERBL 区为 $E$、在 DGLAP 区为 $A$，与由光线算符演化核独立推出的 GPD 演化核一致；ERBL 区 $\ell_+$ 的系数与截断方案的独立计算\cite{Ji:2015qla}一致。
+\end{proof}
+% Su:2026eta eq. (7) as printed (arXiv v1, rendered page 3; it describes the inverse kernel C of their eq. (6), y quasi, x light-cone)
+% has (1/(2(y-x)) -+ 1/(4 xi)) |x+-xi|/(y+-xi): relative to the inverse kernel derived here from Liu:2019urm eqs. (40)-(46)
+% (transcription re-checked on the rendered page 7) the 1/(2(y-x)) term has the opposite sign; with the other reading (x quasi)
+% the 1/(4 xi) term would disagree instead. Candidate erratum of a preprint, reported, not printed; the vanishing as x -> -+xi
+% is unaffected. Scripts s09, s14 (W26).
+
+\paragraph{地位与缺口。}在所述阶为 [R, $R_{\mathrm{PT}}$]。全阶匹配\cref{thm:lamet-quasi-gpd}（[A]）只是指引，不是前提。这是 DVCS 在 $x_B=\xi$ 处的类比：那里 $\xi-x_B$ 的双对数乘以 $(x_B-\xi)$，与实光子相联的软区受幂次压低\cite{JiOsborne1998,CollinsFreund1999,Radyushkin1997}。
+
+\begin{conjecture}[GPD 在 $x=\pm\xi$ 附近的 LaMET 可计算性 \tagC]\label{conj:yzliu-gpd-xi}
+在 $x=\pm\xi$ 附近，准 GPD 的匹配不受与 $(x\pm\xi)P^z$ 相联的软标度的领头扭度贡献；条件 $2|x\pm\xi|P^z\gg\Lambda$ 可代之以 $2(|x|+|\xi|)P^z\gg\Lambda$ 与 $2|1\pm x|P^z\gg\Lambda$；以完整单圈匹配提取的 GPD 在 $x=\pm\xi$ 处连续而导数不连续（取正规子次序 $\epsilon_2\ll|\epsilon_1|\to0$；其他次序发散）\cite{Su:2026eta}。非微扰地位：\cref{asm:intro-bridge}、\cref{asm:intro-composite}（MA0、MA1、MA2）。
+\uses{prop:yzliu-gpd-oneloop,thm:lamet-quasi-gpd}
+\end{conjecture}
+
+\paragraph{地位与缺口。}[C]，开放。文献\cite{Su:2026eta}（预印本）对四组格点数据作了重新分析，认为此前看到的不连续“may arise from regulator-related numerical artifacts”；单圈的依据是\cref{prop:yzliu-gpd-oneloop}。另一方面，重整子分析预言 $x=\pm\xi$ 处的非微扰修正只受硬标度一次幂压低，来自软动量，与 Wilson 线紫外重整子无关\cite{Braun:2024snf}；运动学扭度 3 贡献在 $x=\pm\xi$ 处对数增强且不连续\cite{Braun:2023alc}。两种立场并不严格矛盾（没有领头扭度的软项，与增强到 $1/P^z$ 的幂次修正），两方也未互相批评。证明需要对准 GPD 在 $x=\pm\xi$ 处的软夸克（零模）区作全阶幂次计数，类似\cite{CollinsFreund1999}。
+
+\section{可精确求解的模型}\label{sec:yzliu-models}
+
+扭度展开究竟是收敛的还是渐近的，在 QCD 中无法回答。Liu 在二维模型中把这一问题算到底；本节各命题作为 QCD 陈述都只是 [P]，第一句话写明模型。
+
+\begin{theorem}[二维 $U(N)$ Gross--Neveu 模型中扭度展开的绝对收敛 \tagP]\label{thm:yzliu-gn-convergence}
+在二维 $U(N)$ Gross--Neveu 模型中，于 $1/N$ 展开的次领头阶，价“结构函数” % VF-YZL-13
+\begin{equation}\label{eq:yzliu-gn-sf}
+\langle p,i|\bar\psi^i(z)\psi^i(0)|p,i\rangle-\langle p,i|\bar\psi^j(z)\psi^j(0)|p,i\rangle=\bar u(p)u(p)\,\mathcal E(-z^2m^2,\lambda)\qquad(i\ne j)
+\end{equation}
+（$z$ 为类空间隔，$\lambda=p\cdot z$ 为本书约定的 Ioffe 时间；Liu 的变量为 $-z^2$ 与 $-\lambda$）在 Bjorken 极限 $z^2\to0$（固定 $\lambda$）有显式的全幂次扭度展开，并且对一切 $0<-z^2<\infty$ 与 $\lambda\in-\ii\mathbb R_{\ge0}$（虚 Ioffe 时间；在 Liu 的变量中为 $\ii\mathbb R_{\ge0}$），该展开逐点绝对收敛。（本定理只涉及二维模型。）
+% uses: none
+\end{theorem}
+
+\begin{proofsketch}
+（模型内部的证明\cite[第~2、4~节]{Liu:2024omb}。）（1）$\mathcal E$ 写成三个函数 $F_{1,2,3}$ 的组合，每个都是对耦合 $s$ 与对 $u$（关于 $-z^2m^2/4$）的双重 Mellin 积分，被积函数为 $\Gamma$ 函数与 $_1\tilde F_1(\cdot,\cdot,-\lambda)$ 之积；闭合 $u$ 回路即得按 $(-z^2m^2/4)^l$ 排列的扭度展开，每一幂次的硬函数与非微扰函数为对 $t$ 的 Borel 积分\cite[式~(2.4)、(2.6)--(2.15)]{Liu:2024omb}。（2）关键不等式（$l\in\mathbb Z_{\ge0}$，$0<c<\frac12$，$y\in\mathbb R$，$\lambda\ge0$，此处 $\lambda$ 为 Liu 变量中虚轴上的坐标）\cite[式~(4.2)--(4.5)]{Liu:2024omb}：
+\begin{gather*}
+\big|{}_1F_1(2+2l+2(c+\ii y),1+2l+c+\ii y,-\lambda)\big|\le1,\qquad\big|{}_1F_1(2+2l,1+2l-c-\ii y,-\lambda)\big|\le1,\\
+\Big|\frac{\Gamma(-l+c+\ii y)}{\Gamma(1+2l-c-\ii y)}\Big|\le\Big|\frac{\Gamma(-l+c)}{\Gamma(1+2l-c)}\Big|,\qquad\Big|\frac{\Gamma(2l+2+2c+2\ii y)}{\Gamma(1+2l+c+\ii y)}\Big|\le\frac{\Gamma(2l+2+2c)}{\Gamma(1+2l+c)} ;
+\end{gather*}
+第三式也可由 $|\Gamma(x+\ii y)|$ 的乘积公式得到。（3）余项 $r(s,t)=\frac{\Gamma(s+t-1)}{\Gamma(-s+t)}-t^{2s-1}$ 满足 $|r|\le A(c)\big|\frac{1-2s}{t^{2-2s}}\big|$（$t\ge1$），$A(c)<\infty$\cite[式~(4.7)]{Liu:2024omb}。（4）减去大 $t$ 尾巴后，$t$ 积分与 $l$ 求和被 $\sum_l(\frac{-z^2m^2}{4})^l\frac{C(c)}{l!}\big|\frac{\Gamma(-c-l)\Gamma(2l+2+2c)}{\Gamma(1+2l+c)}\big|$ 控制；由于 $|\Gamma(-c-l)|\sim1/l!$，通项含 $1/(l!)^2$，对一切 $-z^2$ 收敛；对硬函数 $\mathcal H^{l,p}_1$ 与非微扰函数 $q^{l,p}_1$ 的完整展开，同类界给出含 $1/(l!)^2$ 与 $1/(p!)^2$ 的控制级数\cite[式~(4.11)、(4.13)]{Liu:2024omb}。$F_1$ 的论证是完整的，$F_2$、$F_3$ 原文称“similar”。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}作为 QCD 陈述为 [P]；在模型内于 $\order{1/N}$ 严格，只有 $F_2$、$F_3$ 两部分原文称与 $F_1$ “类似”。意义：作者指出“the specific structure of the QCD Bjorken limit commonly called `collinear factorization', strictly speaking, has no exact derivation up to now”\cite[第~1~节]{Liu:2024omb}；这里在一个边缘（渐近自由）的二维理论中，把前向矩阵元的 Bjorken 极限扭度展开推到全幂次并证明逐点收敛；对真空关联函数，$O(N)$ $\sigma$ 模型中全幂次收敛的 OPE 更早已得到\cite{Beneke:1998eq}。只覆盖\emph{虚} Ioffe 时间（参见\cref{asm:lamet-uniform}）；它不蕴含 QCD 扭度展开的收敛性，动量空间展开甚至可以发散（\cref{prop:yzliu-on-factorial}）。
+
+\begin{proposition}[Gross--Neveu 模型中扭度展开的结构：重整子相消与真空凝聚 \tagP]\label{prop:yzliu-gn-structure}
+在同一模型（$1/N$ 次领头阶）中：(i) 硬函数 $\mathcal H^{l,p}_k$ 与类 PDF 的非微扰函数 $q^{l,p}_k$、$\hat q^{(l)}_k$ 在所有幂次都以 Borel 积分出现；(ii) 对每个 $l$，$t=n$ 处的重整子极点在幂次 $p$ 的硬函数与幂次 $p+n$ 的非微扰函数之间相消（$t=0$ 处是对数型的紫外—红外相消，即标度与方案依赖的来源）；(iii) 领头幂次的非微扰函数在坐标空间与动量分数空间 $0<\alpha<1$ 中有显式形式，在 $\alpha=0$ 处带“零模型”减除；(iv) 阈值展开到次次领头阈值幂次，阈值渐近与“Regge”渐近之间有复苏（resurgence）关系；(v) 在次领头幂次（经 $g_0^2\langle\bar\psi\psi\rangle$ 已在领头幂次）出现对真空凝聚敏感的海夸克算符：“the `internal structure' of the fermion and the vacuum can not be cleanly separated for our correlator, thus in the strict sense the `collinear factorization' in the partonic picture is invalid, but the OPE expansion always works”\cite[第~2.4~节]{Liu:2024omb}。（本命题只涉及二维模型。）
+\uses{thm:yzliu-gn-convergence,def:power-borel}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite[第~1--2.1、4、7~节]{Liu:2024omb}）。
+
+\begin{proposition}[超可重整二维 $O(N)$ 模型：动量空间 OPE 的阶乘增强 \tagP]\label{prop:yzliu-on-factorial}
+在超可重整的二维 $O(N)$ 四次模型中，于 $1/N$ 的次领头阶，标量两点函数的大 $p^2$ OPE 中，高幂次系数函数（由定点微扰论中的红外减除引入）与凝聚都有阶乘增强，例如 % VF-YZL-14
+\begin{equation}\label{eq:yzliu-on-factorial}
+\begin{aligned}
+\mathcal H_{0,0,s_1=n}(p^2)&\sim\frac1{(p^2)^n}\Big(\frac g{4\pi}\Big)^{n+1}\frac{\dd^n}{\dd t^n}\Big[\Big(\frac{m^2}{p^2}\Big)^t\psi(1-n-t)-\frac1t\Big]_{t=0}\\
+&\xrightarrow{n\to\infty}-n!\frac{g^{n+1}}{(4\pi)^{n+1}}\frac{m^2}{(p^2)^{n+1}}+n!\frac{(-1)^ng^{n+1}}{(4\pi)^{n+1}}\frac1{m^2(p^2)^{n-1}}+\cdots ;
+\end{aligned}
+\end{equation}
+增强只在不同幂次之间“非对角地”于系数函数与凝聚之间相消，故动量空间的幂次展开发散（单一的 Borel 处方不能补救）；在坐标空间，$1/(n!)^2$ 的压低使其收敛；$\overline{\mathrm{MS}}$ 重整化因子不引入阶乘增长。（本命题只涉及二维模型。）
+\uses{def:power-borel}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite[第~1、4~节]{Liu:2025edu}）。\cref{eq:yzliu-on-factorial}的渐近形式可直接检验：记 $r=m^2/p^2$，$\frac{\dd^n}{\dd t^n}[r^t\psi(1-n-t)-\frac1t]_{t=0}$ 与 $-n!\,r+(-1)^nn!/r$ 之比在 $r=0.3$、$n=4,8,\dots,20$ 时为 $1.16,\ 1.008,\ 1.0005,\ 1.00003,\ 1.000002$。关联：\cref{thm:lamet-hadronic}的余项是动量空间的幂次展开，至多是渐近的（\cref{rem:lamet-open}第~13~项）。
+
+\begin{proposition}[二维非线性 $\sigma$ 模型：凝聚与跨级数 \tagP]\label{prop:yzliu-nlsm}
+在二维 $O(N)$ 非线性 $\sigma$ 模型中，于 $1/N$ 的次领头阶，一个明显 $O(N)$ 对称的无质量微扰框架（四次线性 $\sigma$ 模型的极限）再现微扰两点函数及其第一个指数小修正——后者来自拉氏量（迹反常）算符的凝聚——与精确的大 $N$ 解完全一致；微扰自能在正实轴上的第一个 Borel 奇点（$y=2$）是\emph{紫外}重整子，被凝聚的歧义抵消。（本命题只涉及二维模型。）
+\uses{def:power-borel}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite[第~1、5~节]{Liu:2025bqq}）；四阶自由能与 TBA 一致见\cite{Liu:2026npv}（预印本）。补充了\cref{prop:power-renormalon-examples}（$O(N)$ $\sigma$ 模型、GN 模型的 Borel 可和性）。
+
+\begin{proposition}[二维大 $N_c$ QCD 中的准 PDF \tagP]\label{prop:yzliu-2dqcd}
+在二维标量与旋量 QCD 的 $1/N_c$ 展开中，介子的准 PDF（\cref{def:lattice-quasi}）在 $1/N_c$ 的领头与次领头阶于 $P\to\infty$ 时趋于光锥 PDF，不需要额外的重整化（二维 QCD 是超可重整的）。（本命题只涉及二维模型。）
+\uses{def:lattice-quasi,prop:power-thooft-model}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite{Ji:2018waw}，比较\cref{prop:power-thooft-model}）。相关：'t Hooft 模型中轻介子比重夸克偶素更慢地趋于光锥\cite{Jia:2018qee}；准 GPD 见\cite{Jia:2024atq}，该文也修正了\cite{Jia:2018qee}对味中性介子在 $\order{N_c^0}$ 的准 PDF 表达式，多出的项在 $P\to\infty$ 时为零；在 $x=0$ 处正则的光前求和规则见\cite{Ji:2020bby}。
+
+\begin{remark}[坐标空间与动量空间之间变换的教训]\label{rem:yzliu-transforms}
+由坐标空间 Fourier 变换到动量空间比反方向安全；这在定阶与 Borel 表示下正确，而对不能写成 Borel 形式的 RG 重求和表达式“questionable”；截断的 Borel 被积函数会产生假的重整子；在平面二维 QCD 中，小 $z^2$ 展开的收敛半径为无穷，大 $p^2$ 展开阶乘增长但可 Borel 求和\cite[第~6~节]{Liu:2024omb}。
+\end{remark}
+
+\begin{remark}[瞬子与模型研究]\label{rem:yzliu-instantons}
+小瞬子对准 PDF 匹配核的贡献可作为跨级数的一部分来研究\cite{Liu:2021evw}（预印本；依赖模型，不给数值）；在瞬子真空中、假定因子化成立，可计算 $\pi$ 与 $K$ 介子的准 PDF\cite{Kock:2020frx}。
+\end{remark}
+
+\section{欧氏关联函数的长程渐近：推广}\label{sec:yzliu-decay}
+
+第~22~章的 Fourier 步骤依赖类空关联函数的指数衰减（\cref{thm:lamet-exp-decay}）。Ji、Liu 与 Su\cite{Ji:2026vir}（预印本）把这一结果推广到有单粒子中间态的道，并在标量理论中给出微扰论各阶的证明。
+
+\begin{proposition}[标量场论中的谱表示与指数衰减（微扰论各阶） \tagP]\label{prop:yzliu-decay-extensions}
+在 $\varphi^3$ 与 $\varphi^4$ 标量理论中，微扰论各阶，任意外动量下的前向关联函数有谱表示
+\begin{equation}\label{eq:yzliu-decay-spectral}
+f(\vec z,\vec p)=2Z\cos(\vec z\cdot\vec p)+\int_{-1}^1\dd x\int_{s(x)}^\infty\dd s\,\rho(s,x)\,\ee^{\ii x\vec z\cdot\vec p}K_0(s|\vec z|),
+\end{equation}
+谱支撑 $x\in(-1,1)$（“a result of locality”），谱隙 $s_0=\min_xs(x)>0$；因此它在大类空间隔处指数衰减（由参数表示证明\cite[第~5.3~节]{Ji:2026vir}）。两圈 $\varphi^3$ 计算检验了渐近形式。（本命题只涉及标量理论。）
+% uses: none
+\end{proposition}
+% Writer note (W26): eq. (5.33) of Ji:2026vir checked on the PDF (v1). In its eqs. (5.21)-(5.23) the third exponent lacks |z| and
+% (5.22) carries m^2 instead of m in front of the square root (dimensional slips); only the verbal content is printed.
+
+\paragraph{地位与缺口。}[P]（标量理论，微扰论；预印本\cite[第~1--2、5、6~节]{Ji:2026vir}）。同一文献经形状因子的谱表示及其“局域性完备化”，把\cref{thm:lamet-exp-decay}推广到有单粒子中间态的道：衰减率为 $M$、$\sqrt{s_{\mathrm{th}}}\,m$ 或由 $s_{\mathrm{th}}$、$m$、$M$ 决定的 $m_c$（$m$、$M$ 为外态与最轻中间单粒子态的质量，$s_{\mathrm{th}}m^2$ 为单粒子形状因子在类时道的阈值，与上式的谱隙 $s_0$ 不是同一个量）\cite[式~(5.19)--(5.23)]{Ji:2026vir}，局域性消去了末态形状因子的奇点。这一推广的地位与\cref{thm:lamet-exp-decay}相同——在公理下的蕴含，其内容等级经谱假设为 [C]——不另行定级。关联：第~22~章的 Fourier 步骤（\cref{lem:lamet-strip}、\cref{prop:lamet-truncation}）与正问题／逆问题之争。
+
+\section{地位、与 CSS 的关系、状态表与开放问题}\label{sec:yzliu-status}
+
+本章各陈述的标签、瓶颈与误差类型汇总于\cref{tab:yzliu-status}与\cref{tab:yzliu-status-b}。
+
+\begin{remark}[与 CSS、Collins 与 SCET 的关系]\label{rem:yzliu-relation-css}
+本章直接沿用而不重新证明的有：以 Collins 软因子表示的 DY/SIDIS 的 TMD 因子化（\cref{thm:tmd-factorization}，[A]）、CS 演化、单举过程中 Glauber 交换与末态相互作用的相消。超出 CSS 的部分是：软物理的欧氏实现；格点可计算对象的新因子化定理；CSS 型论证隐含使用的引理（时序、解析性、普适类、快度因子化）；重—轻核的阈值与重整子结构；可精确求解的模型；公理化工具（坐标空间解析性、管域、复 Lorentz 协变性、集团性质）。SCET 推导\cite{Vladimirov:2020ofp,Ebert:2022fmh,delRio:2023pse}在把格点软因子等同于 $S_I$ 之后与\cref{thm:lamet-quasi-tmd}一致。全局背景：全局 TMD 拟合\cite{Scimemi:2019cmh}需要的大 $b_\perp$ 输入正是格点纲领想要提供的；Wightman 框架下的 $e^+e^-$ 软因子\cite{Collins:2023cuo}仍是开放的。多部分子软因子快度发散的重整化见第~24~章\cref{prop:front-rapidity-renorm}。
+\end{remark}
+
+
+
+\begin{tcolorbox}[enhanced,breakable,colback=gray!3!white,colframe=gray!45!black,boxrule=0.5pt,arc=2pt,left=4pt,right=4pt,top=2pt,bottom=2pt,title={常见误解},fonttitle=\bfseries\small]
+\small
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+\item 「TMD 的普适性可以直接假定。」不对：SIDIS 与 DY 之间的普适性只到 Wilson 线方向为止，必须由算符定义（订书钉方向）与时间反演推出；本章的时序定理与普适类（\cref{thm:yzliu-time-ordering}、\cref{prop:yzliu-universality-classes}）正是这样的推导。
+\item 「单个 TMD 或软函数与快度正规子无关。」不对：只有组合后的对象与正规子无关；欧氏“弯折”软函数从两圈起就不对（\cref{thm:yzliu-soft-hqet}的地位段）。
+\item 「TMD 的软因子总是相消、恒为 1。」不对：它只在共线单举截面中为 1；在 TMD 因子化中以平方根进入，而 $S_I$ 是可测的非微扰函数（\cref{prop:yzliu-meson-ff}）。
+\item 「快度发散是正规子的人为产物。」不对：物理的重夸克形状因子中 $\ln S$ 随 $Y+Y'$ 线性增长，斜率正是 CS 核（\cref{prop:yzliu-rapidity-linear}、\cref{thm:yzliu-soft-hqet}）。
+\item 「TMD 软函数本质上是闵氏的，因此不能在格点上计算。」不对：离光锥软函数是快速色源对的形状因子，有欧氏表示（\cref{thm:yzliu-soft-hqet}）；$S_I$ 也可由介子形状因子提取（\cref{prop:yzliu-meson-ff}）。
+\item 「软因子的时序总是无关紧要。」不对：类时双重时序与碎裂型软函数属于不同的普适类（\cref{prop:yzliu-universality-classes}）。
+\item 「二维模型的结果表明 QCD 的扭度展开收敛。」不对：\cref{thm:yzliu-gn-convergence}是模型结果，只覆盖虚 Ioffe 时间；动量空间的幂次展开甚至可以发散（\cref{prop:yzliu-on-factorial}）。
+\end{itemize}
+\end{tcolorbox}
+
+\begin{remark}[开放问题]\label{rem:yzliu-open}
+(1) [R] 级的准 TMD／TMD 因子化（奇异闵氏积分的多标度分析）；(2) 把\cref{asm:yzliu-wightman-pt}证明为定理；(3) \cref{conj:yzliu-complex-wilson}以及一致谱隙与光锥一致性假设（\cref{asm:yzliu-lightcone-uniform}）；(4) 类时双重时序软函数的普适性；$e^+e^-$ 软因子；(5) $S_I$ 框架中的极化与胶子准 TMD（部分见\cite{Ebert:2022fmh}）；(6) 大 $\beta_0$ 之外的线性重整子归一化；强子阈值猜想；(7) 四维扭度展开是收敛还是渐近（\cref{thm:yzliu-gn-convergence}与\cref{prop:yzliu-on-factorial}）；(8) 超软与“超—超软”模式的全阶控制，以及\cref{prop:yzliu-rapidity-linear}中的红外步骤；(9) 单圈之外 GPD 在 $x=\pm\xi$ 处的行为。
+\end{remark}
+
+\begin{table}[!htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.25cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}p{1.75cm}>{\raggedright\arraybackslash}p{3.15cm}>{\raggedright\arraybackslash}p{1.35cm}>{\raggedright\arraybackslash}p{0.95cm}@{}}
+\toprule
+陈述 & 内容 & 标签 & 瓶颈 & 误差类型 & 发表 \\
+\midrule
+\cref{lem:yzliu-partial-exp} & 部分指数化 & [A] & 固定顶点的组合证明未写出 & — & 是 \\
+\cref{prop:yzliu-pinch-ultrasoft} & 捏点、超软模式、$L\to\infty$ & [A] & 重求和后超软相消 & E-S & 是 \\
+\cref{thm:yzliu-soft-hqet} & 软函数 = 色源对形状因子 & [A] & 欧氏化只在单圈核对 & — & 是 \\
+\cref{asm:yzliu-heavy-pair} & 静态 $Q\bar Q$ 谱 & [C] & 禁闭扇区 & — & — \\
+\cref{cor:yzliu-soft-form-factor} & 非微扰形状因子形式 & [R, $R_{\mathrm{cond}}$] & \cref{asm:yzliu-heavy-pair} & — & 是 \\
+\cref{asm:yzliu-wightman-pt} & 维数正规化中的 Wightman 结构 & [A] & 无精确证明 & — & — \\
+\cref{thm:yzliu-analyticity} & 复双曲角解析性 & [A] & \cref{asm:yzliu-wightman-pt} & — & 是 \\
+\cref{prop:yzliu-rapidity-linear} & 快度发散线性 & [A] & 最高快度群的红外控制 & E-S & 是 \\
+\cref{thm:yzliu-intrinsic-soft} & $S_I$：等价、方案无关、RGE & [A] & 同上 & — & 是 \\
+\cref{prop:yzliu-sI-twoloop} & $S_I$ 两圈 & [R, $R_{\mathrm{PT}}$] & — & — & 是 \\
+\cref{asm:yzliu-lightcone-uniform} & 光锥极限一致性 & [P] & 只在五条线上 & — & — \\
+\cref{prop:yzliu-universality-classes} & 普适类 & [P] & \cref{asm:yzliu-lightcone-uniform} & — & 是 \\
+\cref{lem:yzliu-matrix-tree} & 矩阵树公式 & 数学 & — & — & 是 \\
+\cref{lem:yzliu-final-state} & 末态求和恒等式 & 数学 & — & — & 是 \\
+\cref{thm:yzliu-time-ordering} & 时序无关性 & [A] & \cref{asm:yzliu-wightman-pt} & — & 是 \\
+\cref{prop:yzliu-dy-sidis-exp} & 指数正规子下 DY = SIDIS & [P] & 启发式论证 & — & 是 \\
+\cref{conj:yzliu-complex-wilson} & 复时空 Wilson 圈 & [C] & 非微扰 & — & 是 \\
+\bottomrule
+\end{tabular}
+\caption{第~23~章状态表（一）：欧氏软函数、解析性、快度因子化与时序定理。“误差类型”列为最弱一步的误差类型（只列出幂次计数给出的 E-S）；“发表”指主要来源是否已在期刊正式发表。}
+\label{tab:yzliu-status}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.25cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}p{1.75cm}>{\raggedright\arraybackslash}p{3.15cm}>{\raggedright\arraybackslash}p{1.35cm}>{\raggedright\arraybackslash}p{0.95cm}@{}}
+\toprule
+陈述 & 内容 & 标签 & 瓶颈 & 误差类型 & 发表 \\
+\midrule
+\cref{prop:yzliu-qtmd-powercount} & 准 TMD 幂次计数 & [A] & 多标度分析；Glauber & E-S & 是 \\
+\cref{prop:yzliu-hard-kernel} & 匹配核（(b)(c) 为 [R, $R_{\mathrm{PT}}$]） & [A] & 继承准 TMD 定理 & — & 是 \\
+\cref{prop:yzliu-lfwf} & 准光前波函数 & [A] & 幂次计数 & E-S & 是 \\
+\cref{prop:yzliu-meson-ff} & 介子形状因子与 $S_I$ & [A] & 遍举 Glauber & — & 是 \\
+\cref{prop:yzliu-dy-quasi} & 以准 TMD 表示 DY & [A] & 两个 [A] 定理 & — & 是 \\
+\cref{prop:yzliu-sivers} & Sivers 比 & [A] & 概要 & — & 是 \\
+\cref{thm:yzliu-jet-continuation} & 喷注函数解析延拓 & [A] & \cref{asm:yzliu-wightman-pt}（证明二） & — & 是 \\
+\cref{thm:yzliu-threshold} & 阈值因子化 & [A] & 非 Collins 式幂次计数 & — & 是 \\
+\cref{prop:yzliu-ad-algebra} & 反常维度代数（两圈 [R, $R_{\mathrm{PT}}$]） & [A] & 继承阈值定理 & — & 是 \\
+\cref{prop:yzliu-threshold-nnlo} & NNLO 检验 & [P] & 两个拟合常数 & — & 是 \\
+\cref{prop:yzliu-linear-renormalon} & 线性重整子 & [P] & 泡链 & — & 是 \\
+\cref{conj:yzliu-renormalon-norm} & $N_m$ 的普适性 & [C] & 超出大 $\beta_0$ & — & 是 \\
+\cref{conj:yzliu-threshold-hadronic} & 强子阈值渐近 & [C] & 强子层次 & — & 是 \\
+\cref{prop:yzliu-gpd-oneloop} & 准 GPD 单圈结构 & [R, $R_{\mathrm{PT}}$] & — & — & 是$^\dagger$ \\
+\cref{conj:yzliu-gpd-xi} & GPD 在 $x=\pm\xi$ & [C] & 软夸克区幂次计数 & — & 否 \\
+\cref{thm:yzliu-gn-convergence} & GN 扭度展开收敛 & [P] & 模型；$F_2,F_3$ “类似” & — & 是 \\
+\cref{prop:yzliu-gn-structure} & GN 展开结构 & [P] & 模型 & — & 是 \\
+\cref{prop:yzliu-on-factorial} & $O(N)$ 阶乘增强 & [P] & 模型 & — & 是 \\
+\cref{prop:yzliu-nlsm} & 非线性 $\sigma$ 模型 & [P] & 模型 & — & 是 \\
+\cref{prop:yzliu-2dqcd} & 二维 QCD 准 PDF & [P] & 模型 & — & 是 \\
+\cref{prop:yzliu-decay-extensions} & 标量理论中的指数衰减 & [P] & 标量、微扰 & — & 否 \\
+\bottomrule
+\end{tabular}
+\caption{第~23~章状态表（续）：准 TMD、遍举与 DY、阈值、重整子、GPD、模型与长程渐近。$^\dagger$单圈核取自已发表的文献\cite{Liu:2019urm}，关于其结构的主张见预印本\cite{Su:2026eta}。}
+\label{tab:yzliu-status-b}
+\end{table}
+

@@ -1,0 +1,124 @@
+%% =====================================================================================
+\section{超领头对数}\label{sec:jets-sll}
+
+超领头对数源于强子对撞中两个有色的入射部分子。\Cref{thm:sudakov-ir-poles}（全阶论证，[A]）中无质量多腿振幅反常维数的偶极子项为 $\frac{\bm T_i\cdot\bm T_j}{2}\gamma_{\rm cusp}\ln\frac{\mu^2}{-s_{ij}}$
+（对有序对 $(i,j)$ 求和；$\gamma_{\rm cusp}=4\frac{\as}{4\pi}+\dots$ 是去掉 Casimir 的尖点反常维数；$s_{ij}=2\sigma_{ij}p_i\cdot p_j+\ii0$，$i,j$ 同为入射或同为出射时 $\sigma_{ij}=+1$，否则为 $-1$），
+其虚部来自 $\sigma_{ij}=+1$ 的对：$\ln\frac{\mu^2}{-s_{ij}}=\ln\frac{\mu^2}{2p_i\cdot p_j}+\ii\pi$（\cref{prop:sudakov-coulomb}）。若全部有色部分子都出射（$e^+e^-$），由 $\sum_i\bm T_i=0$，$\ii\pi\gamma_{\rm cusp}\sum_{i<j}\bm T_i\cdot\bm T_j=-\frac{\ii\pi}{2}\gamma_{\rm cusp}\sum_iC_i$ 只是 $c$ 数相位。
+在强子对撞的 $1+2\to3+4$ 中，记 $\bm T_{12}\equiv\bm T_1+\bm T_2=-(\bm T_3+\bm T_4)$（流过 $s$ 道的总色荷），
+\begin{equation}\label{eq:jets-coulomb-pp}
+\ii\pi\gamma_{\rm cusp}\big(\bm T_1\cdot\bm T_2+\bm T_3\cdot\bm T_4\big)=\ii\pi\gamma_{\rm cusp}\Big[\bm T_{12}^2-\frac12\big(C_1+C_2+C_3+C_4\big)\Big],
+\end{equation}
+算符部分 $\ii\pi\gamma_{\rm cusp}\bm T_{12}^2$（Coulomb/Glauber 相位）一般不是 $c$ 数，也不与软辐射的色算符对易。
+若测量对软辐射单举（软函数与色单位算符成正比），截面只依赖于 $\langle\mathcal M|\mathcal M\rangle$，其演化 $\langle\mathcal M|\bm\Gamma+\bm\Gamma^\dagger|\mathcal M\rangle$ 中反厄米的 $\ii\pi$ 项相消；对\cref{fig:jets-gap}的喷注间隙，软函数的色结构不平凡，相位不再相消，并破坏与入射部分子共线的发射的实—虚相消。
+
+%%% BEGIN fig:jets-gap
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ax/.style={lcaxis,gray!60!black},
+  fc jet/.style={fill=blue!12,draw=blue!50!black,line width=0.7pt},
+  fc gap/.style={pattern=north east lines,pattern color=gray!55},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc tiny/.style={font=\scriptsize}]
+  % =====================================================================
+  % rapidity-azimuth plane (y in units of 0.85 cm, phi in [0,2pi] -> [0,3.2] cm)
+  % =====================================================================
+  \begin{scope}
+    \fill[gray!4] (-4.25,0) rectangle (4.25,3.2);
+    \fill[fc gap] (-1.15,0) rectangle (1.15,3.2);
+    \draw[gray!60!black,line width=0.5pt] (-1.15,0) -- (-1.15,3.2) (1.15,0) -- (1.15,3.2);
+    \draw[line width=0.5pt,gray!60!black] (-4.25,0) rectangle (4.25,3.2);
+    \draw[fc ax] (-4.6,-0.45) -- (4.75,-0.45) node[right,fc lab,text=black] {$y$};
+    \draw[fc ax] (-4.6,-0.45) -- (-4.6,3.55) node[above,fc lab,text=black] {$\phi$};
+    \node[fc tiny,anchor=east] at (-4.65,0) {$0$};
+    \node[fc tiny,anchor=east] at (-4.65,3.2) {$2\pi$};
+    % jets
+    \draw[fc jet] (-2.55,1.0) circle[radius=0.62];
+    \draw[fc jet] (2.55,2.6) circle[radius=0.62];
+    \node[fc note,align=center] at (-2.55,1.0) {喷注\\[-2pt]1};
+    \node[fc note,align=center] at (2.55,2.6) {喷注\\[-2pt]2};
+    \draw[gray!60!black,line width=0.45pt] (-2.55,-0.38) -- (-2.55,-0.52) (2.55,-0.38) -- (2.55,-0.52);
+    \node[fc tiny,anchor=north] at (-2.55,-0.5) {$y_1$};
+    \node[fc tiny,anchor=north] at (2.55,-0.5) {$y_2$};
+    % the gap
+    \node[fc note,fill=white,inner sep=1.5pt,align=center] at (0,1.6) {间隙：\\$E_T<Q_0$};
+    \draw[gray!60!black,line width=0.5pt,{Stealth[length=3.2pt,width=3pt]}-{Stealth[length=3.2pt,width=3pt]}] (-1.15,3.42) -- (1.15,3.42);
+    \node[fc note,anchor=south] at (0,3.45) {$Y$};
+    % an out-of-gap soft gluon (the SLL needs radiation outside the gap)
+    \fill[green!45!black] (-3.55,2.45) circle[radius=2.2pt];
+    \node[fc tiny,anchor=north,text=green!35!black,align=center] at (-3.55,2.38) {间隙外\\[-2pt]软胶子};
+    % beam directions
+    \node[fc note,anchor=north west] at (-4.25,-0.95) {$\longleftarrow$束流$B$（$y\to-\infty$）};
+    \node[fc note,anchor=north east] at (4.25,-0.95) {束流$A$（$y\to+\infty$）$\longrightarrow$};
+    \node[fc lab] at (0,-1.9) {(a)\ $(y,\phi)$平面中的间隙可观测量};
+  \end{scope}
+  % =====================================================================
+  % inset: Coulomb/Glauber exchange between the incoming partons + soft emission
+  % =====================================================================
+  \begin{scope}[shift={(7.75,1.55)}]
+    \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt,font=\footnotesize] (H) at (0.35,0) {$H$};
+    \draw[quark] (-2.1,1.15) -- (H.150);
+    \draw[quark] (-2.1,-1.15) -- (H.210);
+    \draw[quark] (H.30) -- (1.65,1.15);
+    \draw[quark] (H.330) -- (1.65,-1.15);
+    \draw[glauber] (-0.95,0.58) -- (-0.95,-0.58);
+    \draw[fc soft] (-1.6,0.88) -- (-1.05,1.75);
+    \node[vertex] at (-0.95,0.58) {};  \node[vertex] at (-0.95,-0.58) {};  \node[vertex] at (-1.6,0.88) {};
+    \node[fc note,anchor=east] at (-2.1,1.15) {$1$};
+    \node[fc note,anchor=east] at (-2.1,-1.15) {$2$};
+    \node[fc note,anchor=west] at (1.65,1.15) {$3$};
+    \node[fc note,anchor=west] at (1.65,-1.15) {$4$};
+    \node[fc tiny,anchor=east,text=red!55!black,align=right] at (-1.1,0) {Glauber\\[-2pt]（$\ii\pi$）};
+    \node[fc tiny,anchor=west,text=green!35!black] at (-1.0,1.65) {软发射};
+    \node[fc lab] at (-0.2,-3.45) {(b)\ 初态 Glauber 相位与软发射};
+  \end{scope}
+\end{tikzpicture}
+\caption{强子对撞中的“喷注间隙”可观测量（示意）。(a)~两个硬喷注位于快度$y_1$、$y_2$，其间宽为$Y$的快度区间（阴影）内辐射的横能量被否决，$E_T<Q_0\ll Q$；束流沿$y\to\pm\infty$。
+(b)~初态两个有色部分子之间的 Coulomb/Glauber 交换（暗红色，虚部$\ii\pi$）与软辐射（绿色，例如间隙外的软胶子）不对易，实—虚相消失效，产生超领头对数：首项为相对 Born 的$\alpha_s^4\ln^5(Q/Q_0)$（VF-GLA-13）。
+其地位分三层：振幅层次严格共线因子化的破坏 [V]；超领头对数的固定阶与重求和结果 [P]；间隙截面的 PDF 因子化仍是猜想 [C]，并有恢复的证据（\cref{prop:jets-sll}）。}
+\label{fig:jets-gap}
+\end{figure}
+%%% END fig:jets-gap
+
+\begin{proposition}[超领头对数 \tagP]\label{prop:jets-sll}
+在强子对撞的喷注间隙截面中（两硬喷注之间宽为 $Y$ 的快度区间内软辐射的横能量被否决，$E_T<Q_0\ll Q$，$L=\ln(Q/Q_0)$），入射有色部分子之间的 Coulomb（Glauber）相位不相消，
+产生 $\as^mL^{2m-3}$（$m\ge4$）型的项，首项为相对 Born 截面的 $\as^4L^5$\cite[式~(3.22)]{ForshawKyrieleisSeymour2006}。具体地：
+(a) 夸克—夸克散射、间隙一侧有一个间隙外胶子时\cite[式~(3.24)]{ForshawKyrieleisSeymour2006}
+\begin{equation}\label{eq:jets-sll-fks}
+\sigma_{1,\rm SLL}=-\hat\sigma_B\Big(\frac{2\as}{\pi}\Big)^4\ln^5\frac{Q}{Q_0}\;\pi^2\,Y\,\frac{3N_c^2-4}{480},
+\end{equation}
+% VF-GLA-13
+$\hat\sigma_B$ 为该部分子道的 Born 截面；间隙外胶子在两侧之和为 $(3N_c^2-4)/240$\cite[式~(2.22)]{Forshaw:2008cq}。
+(b) 全阶的塔 $\hat\sigma_n^{\rm SLL}\propto(\frac{\as}{4\pi})^{n+3}L^{2n+3}$（$n\ge1$）已在领头对数精度上重求和\cite{Becher:2021zkk,Becher:2023mtx,Boer:2024hzh,Becher:2024nqc}；对夸克—夸克散射中色单态（光子交换型）的硬函数，在正向散射极限下
+\begin{equation}\label{eq:jets-sll-bns}
+\sum_{n\ge0}\hat\sigma_n^{\rm SLL}=-\hat\sigma_B\,\frac{4C_F}{3\pi}\,\as^3L^3\,Y\;{}_2F_2\Big(1,1;2,\frac52;-w\Big),\qquad w=\frac{N_c\as}{\pi}L^2,
+\end{equation}
+% VF-FRO-7 (Becher:2021zkk eq. (21), where Delta Y = Y)
+${}_2F_2(1,1;2,\frac52;-w)=\sum_{n\ge0}\frac{(-w)^n}{(n+1)(5/2)_n}$；$n=0$ 项是单对数的，$n=1$ 项即首个超领头对数 $\hat\sigma_B\frac{4}{15\pi^2}C_FN_c\as^4L^5Y$；
+$w\to\infty$ 时 ${}_2F_2\simeq\frac32\frac{\ln w}{w}$（$w=10^8$ 时比值为 $1.497$），是幂律而非 Sudakov 型下降。
+(c) 超领头对数在大 $N_c$ 极限（$\as N_c$ 固定）中消失；它需要两个有色的入射部分子；$2\to1$ 过程从四圈、$2\to0$ 过程（如带中心喷注否决的 $q\bar q\to V$）从五圈出现\cite{Becher:2021zkk}。
+(d) 色单态加一喷注产生中，一喷注度 $\tau_1$ 的分布含有从 $\as^4\ln^6(1/\tau_1)$ 开始的相干性破坏（“超超领头”）对数\cite{Banfi:2025mra}；Becher 等人在含 Glauber 模式的 SCET 中对 $qg\to qZ$ 道得到同样结论\cite{Becher:2026kbr}。（本命题只涉及部分子截面；PDF 因子化的地位见下文 (iii)。）
+\uses{prop:sudakov-coulomb,thm:sudakov-ir-poles}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 由\cref{thm:sudakov-ir-poles}，虚部即\cref{eq:jets-coulomb-pp}（$e^+e^-$ 中是 $c$ 数）。(2) 无 Coulomb 相位时，与入射部分子 $i$ 共线、不受约束的软胶子只“看到”$\bm T_i$，实发射与虚修正在色空间中对角地相消；间隙截面中，在其能量与 $Q$ 之间插入的 $\bm T_{12}^2$ 与 $\bm T_i$ 不对易，
+相消失效，每个间隙外胶子贡献 $\as L^2$ 而非 $\as L$，共线对数只能在 $Q_0$ 以下吸收进部分子分布\cite{ForshawKyrieleisSeymour2006}。
+(3) 截面是实的，含奇数个 $\ii\pi$ 的项相消；$\order{\as}$、$\order{\as^2}$ 至多含一个 $\ii\pi$，两个 $\ii\pi$ 至少需要 $\order{\as^3}$，而最软的胶子不产生净的 $\ii\pi$\cite{ForshawKyrieleisSeymour2006}。于是首项是 $(\ii\pi\as L)^2$（两次 Coulomb 交换）$\times\as LY$（向间隙的软发射）$\times\as L^2$（未相消的间隙外共线发射）$\sim\pi^2\as^4L^5Y$，与\cref{eq:jets-sll-fks}一致。
+(4) 每多一次间隙外的软—共线发射多一个 $\as L^2$，得 $\as^{3+n}L^{3+2n}$；有效场论中这是单圈反常维数的迭代（两次 Glauber 相位、$n$ 次软—共线插入与最后一次软反常维数\cite{Becher:2021zkk}），对色单态硬函数求和得\cref{eq:jets-sll-bns}。
+(5) 两式的首项相对于 $(\as N_c)^4$ 都按 $1/N_c^2$ 趋于零。显式计算见\cite[第~3~节]{ForshawKyrieleisSeymour2006}与\cite{Forshaw:2008cq}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}
+必须分开三件事。(i) \emph{振幅层次严格共线因子化的破坏}：类空共线极限中单圈劈裂振幅依赖于非共线部分子的色与动量——[V]，证据是显式计算（\cref{prop:break-spacelike}，前向指引）；
+Coulomb 交换与其他软交换的不对易在纯 QCD 中从三圈起破坏喷注间隙一类非单举截面中的严格共线因子化（\cref{prop:break-fss}，[V]，证据是显式计算；前向指引）。
+(ii) \emph{超领头对数本身}：其存在由显式的四圈计算确立\cite{ForshawKyrieleisSeymour2006}（其中假定的横动量排序对 Coulomb 胶子后来得到确认\cite{Angeles-Martinez:2015rna}；色基无关的复核见\cite{Forshaw:2008cq}）；全阶的塔与领头对数重求和是在有效场论因子化框架内得到的
+\cite{Becher:2021zkk,Becher:2023mtx,Boer:2024hzh,Becher:2024nqc}（该框架见\cref{prop:front-sll-all-orders}，全阶论证，[A]；前向指引）。作为 QCD 截面的全阶陈述，它依赖未经证明的 Glauber 相互作用处理，故为 [P]。
+(iii) \emph{间隙截面的 PDF 因子化}：[C]。\cite{Becher:2024kmk}发现三圈的“主动—主动”Glauber 贡献在领头对数上恰好把双对数演化变回否决标度以下的单对数 DGLAP 演化，即与 PDF 因子化相容；
+作者明确说明这一分析并不构成 PDF 因子化的证明（\cref{prop:front-restoration}，[P]；前向指引）。因此不能说间隙截面的因子化已经破坏：振幅层次的破坏 [V] 与截面层次的 PDF 因子化 [C] 是两个不同的陈述。
+(d) 是两个研究组以不同方法得到的显式领头对数计算\cite{Banfi:2025mra,Becher:2026kbr}：它说明标准的三 Wilson 线软函数因子化与指数化对一喷注度不成立（\cref{prop:front-jettiness-cvl}，[V]；前向指引），
+与\cite{Alioli:2023rxx}所说该观测量“不受超领头与非全局对数影响”在超领头的部分相悖（非全局对数不在争议之列）；额外的对数来自不触及共线极限的软宽角相空间，不带来新的极点，与标度 $\tau_1Q$ 上的 PDF 因子化相容\cite{Banfi:2025mra}。
+升级途径：对 (ii)，包括 Glauber 区的全阶论证；对 (iii)，超出三圈的 PDF 因子化论证。

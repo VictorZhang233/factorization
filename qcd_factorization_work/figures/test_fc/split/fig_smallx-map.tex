@@ -1,0 +1,49 @@
+%%% BEGIN fig:smallx-map
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ax/.style={lcaxis,gray!60!black,line width=0.6pt},
+  fc flow/.style={draw=gray!65!black,line width=1.4pt,-{Stealth[length=7pt,width=6pt]}},
+  fc tag/.style={draw=#1!70!black,fill=#1!10,rounded corners=1.6pt,line width=0.45pt,
+      inner xsep=2.2pt,inner ysep=1.4pt,font=\footnotesize\sffamily},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  % frame: horizontal ln(1/x) in [0,10], vertical ln Q^2 in [0,6.4]  (1 unit = 1 cm)
+  \fill[gray!14] (0,0) rectangle (10,0.75);
+  \node[fc note,text=gray!30!black] at (5.0,0.37) {$Q^2\lesssim\Lambda^2$：非微扰区};
+  % saturated region below the saturation line ln Q_s^2(x)
+  \fill[Plum!10] (3.2,0.75) -- (10,4.15) -- (10,0.75) -- cycle;
+  \draw[Plum!70!black,line width=1.1pt] (3.2,0.75) -- (10,4.15);
+  \node[fc note,text=Plum!60!black,rotate=26.57,anchor=south] at (9.2,3.78) {$\ln Q_s^2(x)$};
+  \node[fc lab,text=Plum!60!black] at (8.4,1.75) {饱和区};
+  \node[fc tag=Plum] at (8.4,1.22) {C 猜想};
+  % DGLAP: evolution in ln Q^2
+  \draw[fc flow] (0.75,1.2) -- (0.75,6.05);
+  \node[fc lab,anchor=west] at (0.95,5.8) {DGLAP：$\ln Q^2$演化};
+  \node[fc tag=OliveGreen,anchor=west] (fcR) at (0.95,5.28) {R 严格};
+  \node[fc note,anchor=west,inner sep=1pt] at ([xshift=2pt]fcR.east) {（微扰论）};
+  % BFKL: evolution in ln(1/x) towards the saturation line; k_T factorization
+  \draw[fc flow] (1.8,2.95) -- (7.3,2.95);
+  \node[fc lab,anchor=south] at (3.3,3.0) {BFKL：$\ln(1/x)$演化};
+  \node[fc tag=RoyalBlue,anchor=north west] (fcA) at (1.85,2.75) {A 全阶论证};
+  \node[fc note,anchor=west,inner sep=1pt] at ([xshift=2pt]fcA.east) {（LL/NLL）};
+  \node[fc note,anchor=north west,inner sep=1pt] (fcKT) at (1.85,2.12) {$k_T$因子化};
+  \node[fc tag=BurntOrange,anchor=west] at ([xshift=3pt]fcKT.east) {P 部分};
+  % double-log overlap
+  \draw[fc flow] (4.05,3.62) -- (5.55,5.12);
+  \node[fc note,anchor=west,align=left] at (5.65,5.62) {DLA：两种领头对数\\的双对数重叠};
+  % BK/JIMWLK near the saturation line
+  \node[fc note,anchor=west] at (6.25,4.68) {BK/JIMWLK（LL，偶极子框架）};
+  \node[fc tag=RoyalBlue,anchor=west] at (6.25,4.2) {A 全阶论证};
+  \draw[gray!60!black,line width=0.45pt,-{Stealth[length=3.5pt,width=3pt]}] (7.35,3.95) -- (7.85,3.25);
+  % axes
+  \draw[fc ax] (0,0) -- (10.45,0) node[right,fc lab,text=black] {$\ln(1/x)$};
+  \draw[fc ax] (0,0) -- (0,6.6) node[above,fc lab,text=black] {$\ln Q^2$};
+  \node[fc note,anchor=north] at (1.0,-0.05) {大$x$};
+  \node[fc note,anchor=north] at (9.0,-0.05) {小$x$};
+\end{tikzpicture}
+\caption{小$x$物理的“地图”（示意）。DGLAP 沿$\ln Q^2$演化（严格 [R]，微扰论中由算符重整化得到）；BFKL 沿$\ln(1/x)$重求和$(\alpha_s\ln\frac1x)^n$（全阶论证 [A]，LL/NLL）；$k_T$因子化只对特定过程在$\ln(1/x)$的领头对数精度下确立（部分 [P]）；
+BK/JIMWLK（全阶论证 [A]，偶极子框架中的 LL，\cref{thm:smallx-bk}）描述向饱和线$\ln Q_s^2(x)$的演化，其下方的饱和区是猜想 [C]（\cref{conj:smallx-saturation}）；两种领头对数在双对数（DLA）区重叠。小$x$结果是 Regge 展开中固定对数精度下的陈述，不是 QCD 的领头幂次定理。}
+\label{fig:smallx-map}
+\end{figure}
+%%% END fig:smallx-map

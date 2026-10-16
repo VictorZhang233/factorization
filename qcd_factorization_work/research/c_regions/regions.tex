@@ -1,0 +1,178 @@
+% =====================================================================
+%  regions.tex —— 区域方法：离壳 Sudakov 形状因子（一圈）、重叠与零仓、Newton 多面体、
+%  有质量交换下的解析正规子、有质量外线情形、证明现状（第 3 章用）
+%  研究目录：research/c_regions；全部公式由 sudakov_regions.py 核对（见 DERIVATION.md §3）。
+%  归一化：I = e^{eps gamma_E} mu^{2eps} \int d^Dk/(i pi^{D/2}) prod_j 1/(-q_j^2+m_j^2-i0)。
+% =====================================================================
+\section{区域方法}
+\label{sec:regions}
+
+\subsection{方法的表述}
+
+区域展开（Beneke--Smirnov 1998）：(i) 选定区域（圈动量或 Feynman 参数的标度）；(ii) 在每个区域内把被积函数按该区域中的小量作
+Taylor 展开；(iii) 每个展开项都在\emph{整个}积分区域上积分，用维数正规化（必要时加辅助解析正规子）；(iv) 无标度积分取为零；
+(v) 对区域求和。前提是：每个展开后的积分都已被正规化；区域集合完备；重叠贡献（多重展开）为零或已扣除。
+
+\subsection{离壳 Sudakov 形状因子}
+
+\begin{gather}\label{eq:reg-I}
+I=\ee^{\epsilon\gamma_E}\mu^{2\epsilon}\!\int\!\frac{\dd^Dk}{\ii\pi^{D/2}}\,
+\frac{1}{(-k^2-\ii0)\,(-(k+p_1)^2-\ii0)\,(-(k+p_2)^2-\ii0)},\\
+p_1^2=p_2^2=-P^2,\qquad (p_1-p_2)^2=-Q^2,\qquad t\equiv P^2/Q^2\ll1 .\nonumber
+\end{gather}
+此时 $\mathcal F=P^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2>0$，$I$ 在 $D=4$ 中有限且为实数：
+\begin{equation}\label{eq:reg-exact}
+Q^2I\big|_{\epsilon=0}=\int_0^1\!\dd u\,\frac{\ln\big(u(1-u)/t\big)}{u(1-u)-t}=\Phi^{(1)}(t,t),
+\end{equation}
+$\Phi^{(1)}$ 为 Usyukina--Davydychev 函数（数值上逐位符合）。注意：所有不变量为负时参数多项式为正，但 $Q^2\gg P^2$ 无法用欧氏外动量实现
+（欧氏几何中 $|p_1-p_2|^2\le4P^2$）；实动量是类空的 Minkowski 矢量，$p_1=(p_1^+,-P^2/2p_1^+,0_T)$，$p_2=(-P^2/2p_2^-,p_2^-,0_T)$。
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{离壳 Sudakov 三角形的区域（每项再乘 $1/Q^2$；$\lambda^2\sim t$；$\mathcal N(\epsilon)\equiv\ee^{\epsilon\gamma_E}\Gamma(1+\epsilon)\Gamma^2(-\epsilon)/\Gamma(1-2\epsilon)$）}\label{tab:reg-offshell}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.6cm}@{}}\toprule
+区域与标度 & 展开后的分母 & 结果\\\midrule
+硬 $H$：$Q(1,1,1)$ & $-k^2$，$-(k^2+2k\cdot\hat p_1)$，$-(k^2+2k\cdot\hat p_2)$，$\hat p_i^2=0$ &
+$\big(\tfrac{\mu^2}{Q^2}\big)^{\epsilon}\mathcal N(\epsilon)$\\
+共线 $C_1$：$Q(1,\lambda^2,\lambda)$ & $-k^2$，$-(k+p_1)^2$，$-2p_2^-k^+$ &
+$-\big(\tfrac{\mu^2}{P^2}\big)^{\epsilon}\mathcal N(\epsilon)$\\
+共线 $C_2$：$Q(\lambda^2,1,\lambda)$ & $-k^2$，$-2p_1^+k^-$，$-(k+p_2)^2$ & 同 $C_1$\\
+超软 $S$：$Q(\lambda^2,\lambda^2,\lambda^2)$ & $-k^2$，$-(2p_1^+k^--P^2)$，$-(2p_2^-k^+-P^2)$ &
+$-\big(\tfrac{\mu^2Q^2}{P^4}\big)^{\epsilon}\ee^{\epsilon\gamma_E}\Gamma(1+\epsilon)\Gamma(\epsilon)\Gamma(-\epsilon)$\\
+软 $(\lambda,\lambda,\lambda)$ & $-k^2$，$-2p_1^+k^-$，$-2p_2^-k^+$ & $0$（无标度）\\
+Glauber $(\lambda^2,\lambda^2,\lambda)$ & $k_T^2$，$-(2p_1^+k^--k_T^2-P^2)$，… & $0$（加解析正规子；未被夹住）\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{推导。}以 $C_1$ 为例：用 Feynman 参数 $x$ 合并 $-k^2$ 与 $-(k+p_1)^2$，平移 $\ell=k+xp_1$，再以
+$1/(A^2B)=2\int_0^\infty\dd\eta\,(A+\eta B)^{-3}$ 并入线性分母 $-2p_2^-k^+=-2p_2^-\ell^++xQ^2$；$\ell^+$ 的线性项由类光平移吸收，得
+\begin{align*}
+C_1&=\ee^{\epsilon\gamma_E}\Gamma(1+\epsilon)\,\mu^{2\epsilon}\int_0^1\!\dd x\int_0^\infty\!\dd\eta\,\big[x(1-x)P^2+\eta xQ^2\big]^{-1-\epsilon}\\
+&=\ee^{\epsilon\gamma_E}\Gamma(1+\epsilon)\,\frac{\mu^{2\epsilon}(P^2)^{-\epsilon}}{\epsilon\,Q^2}\int_0^1\dd x\,x^{-1-\epsilon}(1-x)^{-\epsilon}.
+\end{align*}
+$\eta$ 积分要求 $\Real\epsilon>0$，$x$ 积分要求 $\Real\epsilon<0$（软端 $x\to0$ 由维数正规化调节）：没有公共收敛带，区域积分由分解形式的解析延拓定义。
+$S$ 用两个 Schwinger 参数：$-k^2-2\eta_1p_1^+k^--2\eta_2p_2^-k^+=-(k+\eta_1p_1^+u+\eta_2p_2^-v)^2+\eta_1\eta_2Q^2$（$u\cdot k=k^-$，$v\cdot k=k^+$，$u\cdot v=1$），
+化为 $\Gamma(1+\epsilon)\iint\dd\eta_1\dd\eta_2[\eta_1\eta_2Q^2+(\eta_1+\eta_2)P^2]^{-1-\epsilon}$，收敛带 $0<\Real\epsilon<1$。$H$ 即在壳无质量三角形。
+\cref{tab:reg-offshell} 的三个非零结果与 Becher--Broggio--Ferroglia（2015）式 (2.39)、(2.41)、(2.43) 去掉 $\ee^{\epsilon\gamma_E}$ 后完全相同。
+
+\paragraph{展开与极点相消。}取 $\mu=Q$，$L=\ln(P^2/Q^2)$：
+\begin{align}
+Q^2H&=\frac1{\epsilon^2}-\frac{\pi^2}{12}-\frac73\zeta_3\,\epsilon+O(\epsilon^2),\nonumber\\
+Q^2C_1=Q^2C_2&=-\frac1{\epsilon^2}+\frac L\epsilon-\frac{L^2}2+\frac{\pi^2}{12}+\epsilon\Big(\frac{L^3}6-\frac{\pi^2L}{12}+\frac73\zeta_3\Big)+O(\epsilon^2),\nonumber\\
+Q^2S&=\frac1{\epsilon^2}-\frac{2L}\epsilon+2L^2+\frac{\pi^2}4+\epsilon\Big(-\frac43L^3-\frac{\pi^2L}2-\frac{\zeta_3}3\Big)+O(\epsilon^2),\nonumber
+\end{align}
+\begin{equation}\label{eq:reg-sum}
+Q^2\,(H+C_1+C_2+S)=\ln^2\frac{Q^2}{P^2}+\frac{\pi^2}3+\epsilon\Big(-L^3-\frac{2\pi^2}3L+2\zeta_3\Big)+O(\epsilon^2).
+\end{equation}
+$1/\epsilon^2$：$1-2+1=0$；$1/\epsilon$（一般 $\mu$）：$\ln\frac{\mu^2}{Q^2}-2\ln\frac{\mu^2}{P^2}+\ln\frac{\mu^2Q^2}{P^4}=0$。$H$ 的极点为红外极点（在壳三角形的软与
+共线发散），$S$ 的为紫外极点，$C_i$ 兼有二者：硬区域的红外极点被低能区域的紫外极点抵消。常数：$-\frac{\pi^2}{12}+2\cdot\frac{\pi^2}{12}+\frac{\pi^2}4=\frac{\pi^2}3$。
+\cref{eq:reg-sum} 的有限部分即 BBF（2015）式 (2.44)，也等于 $\Phi^{(1)}(t,t)$ 的领头幂次；$O(\epsilon)$ 项与精确积分的 $O(\epsilon)$ 系数
+$-\int_\Delta\ln\mathcal F/\mathcal F$ 在 $t=10^{-4},10^{-6},10^{-8}$ 处相符——区域方法在领头幂次上再现了完整的 $\epsilon$ 依赖。
+在参数表示中把各区域展开到更高阶，得
+\begin{equation}\label{eq:reg-nlp}
+Q^2I=L^2+\frac{\pi^2}3+t\Big(2L^2+4L-4+\frac{2\pi^2}3\Big)+t^2\big(6L^2+14L-11+2\pi^2\big)+O(t^3L^2),
+\end{equation}
+次领头与次次领头系数均与 $\Phi^{(1)}(t,t)$ 的展开一致，各阶的 $\epsilon$ 极点分别相消。
+不相等的虚度给出 $\frac1{Q^2}\big[\ln\frac{Q^2}{P_1^2}\ln\frac{Q^2}{P_2^2}+\frac{\pi^2}3\big]$。
+
+\subsection{重叠、零仓与 Jantzen 条件}\label{sec:regions-overlap}
+
+所有两两重叠项都是无标度积分。参数空间中
+\[
+T_ST_{C_1}I\propto\int_0^\infty\!\dd x_1\,x_1^{-1-\epsilon}\int_0^\infty\!\dd x_2\,(t+x_2)^{-1-\epsilon}=0,\qquad
+T_{C_1}T_HI\propto\int_0^\infty\!\dd x_2\,x_2^{-1-\epsilon}\times(\cdots)=0,
+\]
+其余类似；动量空间中 $T_ST_{C_1}I$ 化为 $\int_0^\infty\dd\eta_1\,\eta_1^{-1-\epsilon}\times(\cdots)=0$。
+故在维数正规化中无需零仓（zero-bin，Manohar--Stewart 2007）扣除。Jantzen（2011）从积分区域的划分出发导出区域方法，所需条件为：
+(1) 各收敛域互不相交且覆盖整个积分区域；(2) 各展开相互对易（其第 5 节放宽）；(3) 原积分及所有展开项（无论是否限制在收敛域）
+都已正规化；(4) 展开项在整个区域上积分时级数仍绝对收敛（或已正规化）。于是 $I=\sum_xT^{(x)}I-\sum_{x<x'}T^{(x)}T^{(x')}I+\cdots$，
+维数正规化下重叠项通常无标度。一维例子：$I=\int_0^\infty\dd k/[(k+m)(k+M)]$，用 $k^{-e}$ 正规化时
+\begin{gather*}
+T_s+T_h=\frac{m^{-e}\Gamma(e)\Gamma(1-e)}{M}+M^{-1-e}\Gamma(-e)\Gamma(1+e)\ \xrightarrow{\ e\to0\ }\ \frac{\ln(M/m)}M,\\
+T_sT_h=\int_0^\infty\frac{\dd k\,k^{-1-e}}{M}=0 ;
+\end{gather*}
+若改用截断 $[10^{-12},10^{12}]$（$m=10^{-3}$，$M=1$），$T_s+T_h=62.17$ 重复计数，只有 $T_s+T_h-T_sT_h=6.9078$ 才给出领头幂次 $\ln(M/m)/M$——这正是零仓扣除。
+
+\subsection{参数空间：区域即 Newton 多面体的下侧面}
+
+取 $\alpha_0=1$，$\mathcal U\mathcal F=(1+x_1+x_2)\,(t(x_1+x_2)+x_1x_2)$（$Q^2=1$）。其 Newton 多面体的下侧面（法向量的 $t$ 分量为正，Pak--Smirnov 2011）
+给出 $x_i\sim t^{r_i}$，$r\in\{(0,0),(0,1),(1,0),(1,1)\}$，与 $H$、$C_1$、$C_2$、$S$ 一一对应。对下一节的有质量交换，侧面只有
+$\{(0,0),(0,1),(1,0)\}$；软权重 $(\frac12,\frac12)$ 只在一条\emph{棱}上取极小——这是迫使使用解析正规化的快度简并的几何标志。
+
+\subsection{在壳无质量外线、有质量交换：需要解析正规子}
+
+\begin{equation}\label{eq:reg-IM}
+I_M=\ee^{\epsilon\gamma_E}\mu^{2\epsilon}\!\int\!\frac{\dd^Dk}{\ii\pi^{D/2}}\,\frac{\nu^{2(\delta_1+\delta_2)}}{(-k^2+M^2)\,(-(k+p_1)^2)^{1+\delta_1}\,(-(k+p_2)^2)^{1+\delta_2}},\qquad
+p_i^2=0,\quad t=\frac{M^2}{Q^2}.
+\end{equation}
+（这是“在壳无质量”情形：无质量在壳夸克、以规范玻色子质量作红外正规化；Jantzen 2011 第 6 节、BBF 2015 第 2.3 节。若交换粒子
+也无质量，在壳积分根本没有低能标度，见下文。）$\delta_i=0$、$\epsilon=0$ 时精确地有（Jantzen 式 (6.30)，其 $F=-I_M$；数值核对至 $10^{-10}$）
+\begin{equation}\label{eq:reg-IMexact}
+Q^2I_M=\frac12\ln^2\frac{Q^2}{M^2}+\ln\frac{Q^2}{M^2}\ln\Big(1-\frac{M^2}{Q^2}\Big)-\mathrm{Li}_2\Big(\frac{M^2}{Q^2}\Big)+\frac{\pi^2}3\ \xrightarrow{\ \text{领头幂次}\ }\ \frac12\ln^2\frac{Q^2}{M^2}+\frac{\pi^2}3 .
+\end{equation}
+各区域（$Q^2=\mu=\nu=1$）：
+\begin{align}
+H&=\ee^{\epsilon\gamma_E}\,\frac{\Gamma(1+\delta_1+\delta_2+\epsilon)\,\Gamma(-\epsilon-\delta_1)\,\Gamma(-\epsilon-\delta_2)}{\Gamma(1+\delta_1)\,\Gamma(1+\delta_2)\,\Gamma(1-2\epsilon-\delta_1-\delta_2)},\nonumber\\
+C_1&=\ee^{\epsilon\gamma_E}\frac{\Gamma(1+\delta_1+\delta_2+\epsilon)}{\Gamma(1+\delta_1)\Gamma(1+\delta_2)}\;t^{-\delta_1-\epsilon}\,
+B(1+\delta_2,\epsilon+\delta_1)\,B(\delta_1-\delta_2,\,1-\epsilon-\delta_1),\qquad C_2=C_1\big|_{\delta_1\leftrightarrow\delta_2}.\label{eq:reg-C1M}
+\end{align}
+\emph{纯维数正规化失效：}$\delta_1=\delta_2$ 时 $B(\delta_1-\delta_2,\cdot)\propto\Gamma(\delta_1-\delta_2)$ 对任意 $\epsilon$ 都奇异；动量空间中
+$C_1=\ee^{\epsilon\gamma_E}\Gamma(1+\epsilon)\int_0^1\dd x\,[(1-x)M^2]^{-\epsilon}/(\epsilon xQ^2)$ 含有未被调节的 $\int\dd x/x$（快度发散）。
+\emph{软区域}（$k\sim M$）在 $x_1\to\kappa x_1$、$x_2\to x_2/\kappa$（即 $k^\pm\to\kappa^{\pm1}k^\pm$）下只差因子 $\kappa^{\delta_1-\delta_2}$：$\delta_1\ne\delta_2$ 时为零，$\delta_1=\delta_2$ 时无定义；
+Glauber 区与 Jantzen 的辅助“共线平面”区亦无标度。结果：
+\begin{itemize}[leftmargin=2em]
+\item Jantzen 的选择 $\delta_1=-\delta_2=\delta$：
+  $C_1=\big(\tfrac{\mu^2}{M^2}\big)^{\epsilon}\big(\tfrac{Q^2}{M^2}\big)^{\delta}\dfrac{\ee^{\epsilon\gamma_E}\Gamma(\epsilon+\delta)\Gamma(1-\epsilon-\delta)\Gamma(2\delta)}{Q^2\,\Gamma(1-\epsilon+\delta)\Gamma(1+\delta)}$
+  （即其式 (6.27) 的领头幂次，取 $F\to-I$）；$C_1+C_2$ 中 $1/\delta$ 极点相消，
+  $\lim_{\delta\to0}(C_1+C_2)=\frac1{Q^2}\big(\frac{\mu^2}{Q^2}\big)^\epsilon\big[-\frac1{\epsilon^2}+\frac12\ln^2\frac{Q^2}{M^2}+\frac{5\pi^2}{12}\big]+O(\epsilon)$（其式 (6.29)）。
+\item BBF 的单一正规子（$\delta_1=0$，$\delta_2=\alpha$）：与被正规化的线共线的区域方括号为 $\frac1{\alpha\epsilon}-\frac1{\epsilon^2}+\frac{\pi^2}3$，另一区域为
+  $-\frac1{\alpha\epsilon}+\frac{\pi^2}6$（BBF 式 (2.50)）。
+\item 两种选择都给出 $H+C_1+C_2=\frac1{Q^2}\big[\frac12\ln^2\frac{Q^2}{M^2}+\frac{\pi^2}3\big]$，与 \cref{eq:reg-IMexact} 的领头幂次一致；解析正规子须在
+  $\epsilon\to0$ 之前移除。
+\end{itemize}
+单个共线积分在正规化之前只知道一个光锥方向与 $M$，但 $C_1+C_2$ 却依赖 $\ln(Q^2/M^2)$：正规子破坏了推动不变性，大对数通过 $1/\delta$ 极点的
+相消重新出现——即 Becher--Neubert（2011）所称的“共线反常”。
+
+\subsection{在壳有质量外线、无质量胶子：维数正规化已足够}
+
+$p_i^2=m^2$，内部夸克质量 $m$，胶子无质量，$t=m^2/Q^2$：$\mathcal F=Q^2\alpha_1\alpha_2+m^2(\alpha_1+\alpha_2)^2$。对 $\epsilon$ 与 $m$ 均精确地，
+\begin{equation}\label{eq:reg-massive-legs}
+I_m=-\frac{\ee^{\epsilon\gamma_E}\Gamma(1+\epsilon)}{2\epsilon}\,\mu^{2\epsilon}\!\int_0^1\!\dd u\,\big[m^2+u(1-u)Q^2\big]^{-1-\epsilon}
+\end{equation}
+（单极点：软红外发散）。各区域：$H$ 同前；$C_1=C_2=-\frac1{Q^2}\big(\frac{\mu^2}{m^2}\big)^{\epsilon}\frac{\ee^{\epsilon\gamma_E}\Gamma(1+\epsilon)}{2\epsilon^2}$——共线积分的软端为
+$\int\dd x\,x^{-1-2\epsilon}$，已被维数正规化调节；软区域无标度。求和（$\mu=Q$，$L=\ln(m^2/Q^2)$）得 $\frac1{Q^2}\big[\frac L\epsilon-\frac{L^2}2-\frac{\pi^2}6\big]$，与
+\cref{eq:reg-massive-legs} 的领头幂次（极点与有限部分）一致。所以：\emph{交换的玻色子无质量时，即便外线是在壳有质量的，维数正规化也能分离各区域；
+交换玻色子有质量时（外线有无质量皆然）才需要解析正规子。}在壳无质量外线、无质量交换时，$\mathcal F=Q^2\alpha_1\alpha_2$，积分即其硬区域，
+所有低能区域无标度，其红外极点在区域语言中就是无标度软/共线积分的紫外极点（$\frac1{\epsilon_{\rm UV}}-\frac1{\epsilon_{\rm IR}}=0$）。
+
+\subsection{QCD 型顶角的领头对数}
+
+类空形状因子（入射 $p_1$、出射 $p_2$，$q^2=-Q^2$），Feynman 规范一圈。以 eikonal 分子
+$\gamma^\nu\sla p_2\gamma^\mu\sla p_1\gamma_\nu=-2\sla p_1\gamma^\mu\sla p_2\to4p_1\!\cdot\!p_2\,\gamma^\mu$ 夹在近在壳旋量之间，$\Lambda^\mu=-\ii e\gamma^\mu\,\delta F$，
+\begin{equation}\label{eq:reg-LL}
+\delta F_{\rm LL}=-\frac{\alpha}{\pi}\,p_1\!\cdot\!p_2\,I
+\ \Rightarrow\ -\frac{\alpha}{2\pi}\ln\frac{Q^2}{P_1^2}\ln\frac{Q^2}{P_2^2}\ \ (\text{离壳}),\qquad
+-\frac{\alpha}{4\pi}\ln^2\frac{Q^2}{M^2}\ \ (\text{在壳，光子质量 }M).
+\end{equation}
+这与 Collins（1989）所引 Sudakov 的离壳结果 $F\sim\exp[-(g^2/8\pi^2)\ln^2Q^2]$ 及 Jackiw 的在壳有质量光子结果
+$F\sim\exp[-(g^2/16\pi^2)\ln^2Q^2]$ 的一圈系数一致（$g^2=4\pi\alpha$）。在 QCD 中一圈时 $\alpha\to C_F\as$；对在壳无质量夸克，同一分子乘以硬区域
+给出 $\frac{\as C_F}{4\pi}\big(\frac{\mu^2}{Q^2}\big)^\epsilon\big(-\frac2{\epsilon^2}+\cdots\big)$，即一圈夸克形状因子已知的双极点。单对数与常数需要完整分子。
+
+\subsection{区域方法的证明现状}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{欧氏型极限}（欧氏的大外动量、大质量）：区域展开与已被证明的“按子图展开”一致（Chetyrkin 1988；Gorishnii 1989；Smirnov 1990），
+  Semenova--Smirnov--Smirnov（2019）称之为“对欧氏空间典型极限的间接证明” \tagR。
+\item \textbf{一般（Minkowski）极限}（阈、Sudakov、Regge、在壳展开）：\emph{没有一般证明} \tagP。Jantzen（2011）在 \cref{sec:regions-overlap} 所述四个条件下
+  导出了该方法并在一圈例子（含有质量 Sudakov 形状因子）上演示，但 SSS 2019 认为对维数正规化积分用不等式划分区域难以构成数学证明；
+  Pak--Smirnov（2011）的 Newton 多面体算法“没有数学论证”，在 $\mathcal F$ 各项皆正时经验上一致，有正负号混合项时（势区、Glauber 区）需额外的
+  变量替换（Jantzen--Smirnov--Smirnov 2012）；SSS 2019（Lee--Pomeransky 表示、系数为正的多项式）证明了\emph{每个侧面}的领头阶贡献，
+  以及\emph{只有一个侧面}时的全阶展开，而“积分的领头阶等于各侧面之和”被归结为展开与正规子解析延拓可交换这一尚未证明的性质。
+  因此即使是离壳 Sudakov 例子（四个侧面、$\mathcal F>0$）也没有完整证明，本节对其作了一圈精确检验（至次次领头幂次）。
+  Gardi--Herzog--Jones--Ma--Schlenk（2023）对离壳无质量 Green 函数的在壳展开建立了“区域 $\leftrightarrow$ Landau 解 $\leftrightarrow$ Newton 多面体侧面”
+  的对应，并证明当每个连通软子图恰连接两个喷注时多重在壳展开可交换（Sudakov 形状因子的全部区域属于此类）。
+\item \textbf{正规化}：维数正规化不能分离区域时（有质量交换、$\qT$ 型观测量）需要辅助解析正规子，单个区域依赖正规子而其和不依赖
+  （Jantzen 2011；BBF 2015；Becher--Bell 2012；Chiu--Jain--Neill--Rothstein 2012）。
+\item \textbf{在因子化证明中的作用}：区域方法是计算工具与交叉检验；全阶因子化中领头区域的确定必须来自 Landau/夹点分析加幂次计数
+  （\cref{sec:landau,sec:powercount}），否则在 Minkowski 运动学中构成循环论证。
+\end{itemize}

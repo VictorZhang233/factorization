@@ -1,0 +1,282 @@
+% -----------------------------------------------------------------------------------------------------
+\section{区域分析}\label{sec:sudakov-regions}
+
+\cref{prop:sudakov-oneloop}的双极点从何而来？第~4~章的区域方法（\cref{def:ir-regions}）回答这个问题：把圈积分按圈动量的标度分成若干区域，
+在每个区域内按其小量 Taylor 展开、在整个积分域上用维数正规化积分、丢掉无标度积分，再求和。本节用三个一圈例子说明这一方法在 Sudakov 问题中的全部要点：
+在壳无质量情形积分就是它的硬区域；离壳情形有四个区域，其和可以与精确的闭合形式逐项比较；有质量交换的情形维数正规化不够用，必须加解析正规子。
+为了把动量积分与红外结构分开，我们先研究标量三角形
+\begin{equation}\label{eq:sudakov-triangle}
+I=\ee^{\varepsilon\gamma_E}\mu^{2\varepsilon}\int\!\frac{\dd^Dk}{\ii\pi^{D/2}}\,
+\frac{1}{(-k^2-\ii0)\,(-(k+p_1)^2-\ii0)\,(-(k+p_2)^2-\ii0)},
+\end{equation}
+它与 QCD 顶点的关系在\cref{ex:sudakov-ll}中给出：领头对数精度下，顶点修正正比于 $p_1\cdot p_2\,I$。
+
+\begin{example}[在壳无质量形状因子 = 硬区]\label{ex:sudakov-onshell-hard}
+取 $p_1^2=p_2^2=0$，$(p_1-p_2)^2=-Q^2$。一圈 Feynman 参数表示为
+$I=\ee^{\varepsilon\gamma_E}\mu^{2\varepsilon}\Gamma(1+\varepsilon)\int\!\dd F\,\mathcal F^{-1-\varepsilon}$，$\mathcal F=Q^2x y$（$x,y$ 为两条夸克线的参数）。用 Dirichlet 积分，
+\begin{equation}\label{eq:sudakov-onshell-H}
+Q^2I=\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\frac{\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(-\varepsilon)}{\Gamma(1-2\varepsilon)}
+\overset{\mu=Q}{=}\frac1{\varepsilon^2}-\frac{\pi^2}{12}-\frac73\zeta_3\varepsilon+O(\varepsilon^2)
+% VF-REG-10 (H)
+\end{equation}
+（积分在 $\Real\varepsilon<0$ 收敛：极点是红外的）。这正是按硬标度 $k\sim Q(1,1,1)$ 展开的结果：被积函数中没有任何小量，硬区域的展开就是原被积函数。
+其余区域都没有标度：例如与 $p_1$ 共线的区域把 $-(k+p_2)^2$ 换成 $-2p_2^-k^+$，被积函数在 $k^-\to\kappa^2k^-$、$\mathbf k_T\to\kappa\mathbf k_T$ 下齐次，积分为零。
+所以在区域语言中，在壳积分的红外极点是\emph{无标度低能区域的紫外极点}：低能区域的积分 $\propto(\frac1{\varepsilon_{\rm UV}}-\frac1{\varepsilon_{\rm IR}})=0$，
+其红外部分与硬区域的红外极点相同、紫外部分与之相消。完全相同的论证适用于\cref{prop:sudakov-oneloop}的整个顶点：一圈形状因子就是它的硬区域。
+这一机制——低能有效矩阵元的紫外极点吸收硬部分的红外极点——是\cref{thm:sudakov-ir-poles}中 $\mathbf Z$ 因子的起源。
+\uses{prop:sudakov-oneloop,def:ir-regions}
+\end{example}
+
+\begin{example}[离壳 Sudakov 三角形的区域展开]\label{ex:sudakov-offshell}
+取 $p_1^2=p_2^2=-P^2<0$，$(p_1-p_2)^2=-Q^2$，$t\equiv P^2/Q^2\ll1$，$\mathcal L\equiv\ln(Q^2/P^2)$。此时
+$\mathcal F=P^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2>0$，$I$ 在 $D=4$ 中有限且为实数。令 $\alpha_0=1-r$、$\alpha_1=ru$、$\alpha_2=r(1-u)$ 并对 $r$ 积分，
+\begin{equation}\label{eq:sudakov-offshell-exact}
+Q^2I\big|_{\varepsilon=0}=\int_0^1\!\dd u\,\frac{\ln\big(u(1-u)/t\big)}{u(1-u)-t}
+=\frac{4\,\mathrm{Li}_2(-\rho t)+\ln^2(\rho t)+\pi^2/3}{\sqrt{1-4t}},\qquad\rho=\frac{2}{1-2t+\sqrt{1-4t}},
+% VF-REF-2
+\end{equation}
+即 Usyukina--Davydychev 函数 $\Phi^{(1)}(t,t)$\cite{UsyukinaDavydychev1993a}；按 $t$ 展开
+\begin{equation}\label{eq:sudakov-offshell-nlp}
+Q^2I=\mathcal L^2+\frac{\pi^2}3+t\Big(2\mathcal L^2-4\mathcal L-4+\frac{2\pi^2}3\Big)+t^2\big(6\mathcal L^2-14\mathcal L-11+2\pi^2\big)+O(t^3\mathcal L^2).
+% VF-REF-2 (expansion; binding sign convention L = ln(Q^2/m^2))
+\end{equation}
+\emph{运动学注记。}$Q^2\gg P^2$ 不能用欧氏外动量实现（欧氏几何中 $|p_1-p_2|^2\le4P^2$）；实动量是类空的 Minkowski 矢量，
+$p_1=(p_1^+,\,-P^2/2p_1^+,\,\mathbf 0_T)$，$p_2=(-P^2/2p_2^-,\,p_2^-,\,\mathbf 0_T)$，$2p_1^+p_2^-=Q^2+O(P^2)$。因此这一极限不在欧氏大动量定理的范围内。
+
+\emph{区域。}在这一参考系中，$\lambda^2\sim t$，圈动量的四个贡献区域与展开后的分母列于\cref{tab:sudakov-regions}（参见\cref{fig:sudakov-ff}）。以共线区 $C_1$ 为例：
+用参数 $x$ 合并 $-k^2$ 与 $-(k+p_1)^2$ 得 $-\ell^2+x(1-x)P^2$（$\ell=k+xp_1$），线性分母 $-2p_2^-k^+=-2p_2^-\ell^++xQ^2$ 用
+$\frac{1}{A^2B}=2\int_0^\infty\frac{\dd\eta}{(A+\eta B)^3}$ 并入，$\ell^+$ 的线性项被类光平移 $\ell\to\ell+\eta p_2^-n_B$ 吸收（$n_B^2=0$），于是
+\[
+\begin{aligned}
+C_1&=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\mu^{2\varepsilon}\!\int_0^1\!\dd x\!\int_0^\infty\!\dd\eta\,\big[x(1-x)P^2+\eta xQ^2\big]^{-1-\varepsilon}\\
+&=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\frac{\mu^{2\varepsilon}(P^2)^{-\varepsilon}}{\varepsilon Q^2}\int_0^1\!\dd x\,x^{-1-\varepsilon}(1-x)^{-\varepsilon}.
+\end{aligned}
+\]
+$\eta$ 积分要求 $\Real\varepsilon>0$，$x$ 积分要求 $\Real\varepsilon<0$（$x\to0$ 的软端由维数正规化调节）：没有公共的收敛带，区域积分由两个因子各自的解析延拓之积定义，
+$\int_0^1x^{-1-\varepsilon}(1-x)^{-\varepsilon}\dd x=\Gamma(-\varepsilon)\Gamma(1-\varepsilon)/\Gamma(1-2\varepsilon)$。超软区 $S$ 用两个 Schwinger 参数：
+$-k^2-2\eta_1p_1^+k^--2\eta_2p_2^-k^+=-(k+\eta_1p_1^+n_A+\eta_2p_2^-n_B)^2+\eta_1\eta_2Q^2$（$n_A\cdot n_B=1$），得
+$S=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\mu^{2\varepsilon}\iint_0^\infty\dd\eta_1\dd\eta_2\,[\eta_1\eta_2Q^2+(\eta_1+\eta_2)P^2]^{-1-\varepsilon}$，
+在 $0<\Real\varepsilon<1$ 收敛；令 $\eta_i=t\,s_i$ 后先积 $s_2$ 再积 $s_1$，得 $\frac{1}{Q^2}(\frac{\mu^2Q^2}{P^4})^\varepsilon\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma(\varepsilon)\Gamma(1-\varepsilon)/\varepsilon$，
+与表中的形式相同。软区 $(\lambda,\lambda,\lambda)$ 的三个分母 $-k^2$、$-2p_1^+k^-$、$-2p_2^-k^+$ 在 $k\to\kappa k$ 下齐次，无标度；Glauber 区 $(\lambda^2,\lambda^2,\lambda)$ 中
+$k^\pm$ 各只出现在一个分母里，各有一个不被夹住的极点，加上解析正规子后为零。
+所有两两重叠（如 $T_ST_{C_1}$ 化为 $\int_0^\infty\dd\eta_1\,\eta_1^{-1-\varepsilon}\times(\cdots)$）都是无标度积分，所以在维数正规化中\emph{不需要零仓扣除}。
+
+\emph{极点相消与求和。}取 $\mu=Q$，
+\begin{align*}
+Q^2H&=\frac1{\varepsilon^2}-\frac{\pi^2}{12}+O(\varepsilon),\qquad
+Q^2C_{1,2}=-\frac1{\varepsilon^2}-\frac{\mathcal L}{\varepsilon}-\frac{\mathcal L^2}2+\frac{\pi^2}{12}+O(\varepsilon),\\
+Q^2S&=\frac1{\varepsilon^2}+\frac{2\mathcal L}{\varepsilon}+2\mathcal L^2+\frac{\pi^2}4+O(\varepsilon),
+\end{align*}
+\begin{equation}\label{eq:sudakov-regions-sum}
+Q^2(H+C_1+C_2+S)=\mathcal L^2+\frac{\pi^2}3+\varepsilon\Big(\mathcal L^3+\frac{2\pi^2}3\mathcal L+2\zeta_3\Big)+O(\varepsilon^2).
+% VF-REG-10
+\end{equation}
+$1/\varepsilon^2$ 的系数 $1-2+1=0$；对一般的 $\mu$，$1/\varepsilon$ 的系数 $\ln\frac{\mu^2}{Q^2}-2\ln\frac{\mu^2}{P^2}+\ln\frac{\mu^2Q^2}{P^4}=0$。$H$ 的极点是红外的（在壳三角形的软与共线发散），
+$S$ 的极点是紫外的，$C_i$ 兼有二者：硬区的红外极点被低能区的紫外极点抵消。常数为 $-\frac{\pi^2}{12}+2\cdot\frac{\pi^2}{12}+\frac{\pi^2}4=\frac{\pi^2}3$。
+式~\eqref{eq:sudakov-regions-sum} 的有限部分正是式~\eqref{eq:sudakov-offshell-nlp} 的领头幂次；把每个区域在参数表示中展开到更高阶，次领头与次次领头的系数也与
+式~\eqref{eq:sudakov-offshell-nlp} 逐项相同，且各阶的 $\varepsilon$ 极点分别相消（脚本 \texttt{s2\_regions.py}）。不等虚度 $P_1^2\ne P_2^2$ 时领头幂次为
+$\ln\frac{Q^2}{P_1^2}\ln\frac{Q^2}{P_2^2}+\frac{\pi^2}3$。三个非零区域的积分与\cite[第~2.2~节，式~(2.39)--(2.44)]{BecherBroggioFerroglia2015}去掉因子 $\ee^{\varepsilon\gamma_E}$ 后相同；
+方法源于\cite{BenekeSmirnov1998}（他们针对的是阈展开）。
+
+\emph{归一化与地位。}以 Minkowski 传播子 $(k^2-m^2)$ 与测度 $\dd^Dk/(\ii\pi^{D/2})$ 定义的 Passarino--Veltman 函数满足 $q^2C_0=Q^2I$（三个传播子各贡献一个负号，$q^2=-Q^2$）。% VF-REG-14
+本例对一圈作了精确检验（直至次次领头幂次），但这个四侧面的 Minkowski 例子并不在区域方法的任何一般证明之内（\cref{prop:ir-regions-minkowski}，[P]）。
+同一三角形的 Collins 减除项及其精确余项（余项在次领头幂次没有对数）见第~9~章\cref{ex:method-sudakov-subtraction}与附录~N 的\cref{prop:appN-triangle-exact}，
+其积分范数下的完整验证见\cref{prop:appN-triangle-cs}；两圈的九个区域见\cref{fig:method-hasse}。
+\uses{def:ir-regions,prop:ir-regions-minkowski}
+\end{example}
+
+\begin{table}[htbp]
+\centering\small
+\caption{离壳 Sudakov 三角形的区域（每项再乘 $1/Q^2$；标度按 $(k^+,k^-,k_T)$ 书写，$\lambda^2\sim t=P^2/Q^2$；
+$\mathcal N(\varepsilon)\equiv\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(-\varepsilon)/\Gamma(1-2\varepsilon)$）。}\label{tab:sudakov-regions}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.5cm}@{}}
+\toprule
+区域与标度 & 展开后的分母 & 区域积分\\
+\midrule
+硬 $H$：$Q(1,1,1)$ & $-k^2$，$-(k^2+2k\cdot\hat p_1)$，$-(k^2+2k\cdot\hat p_2)$，$\hat p_i^2=0$ & $\big(\tfrac{\mu^2}{Q^2}\big)^{\varepsilon}\mathcal N(\varepsilon)$\\
+共线 $C_1$：$Q(1,\lambda^2,\lambda)$ & $-k^2$，$-(k+p_1)^2$，$-2p_2^-k^+$ & $-\big(\tfrac{\mu^2}{P^2}\big)^{\varepsilon}\mathcal N(\varepsilon)$\\
+共线 $C_2$：$Q(\lambda^2,1,\lambda)$ & $-k^2$，$-2p_1^+k^-$，$-(k+p_2)^2$ & 同 $C_1$\\
+超软 $S$：$Q(\lambda^2,\lambda^2,\lambda^2)$ & $-k^2$，$-2p_1^+k^-+P^2$，$-2p_2^-k^++P^2$ &
+$-\big(\tfrac{\mu^2Q^2}{P^4}\big)^{\varepsilon}\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma(\varepsilon)\Gamma(-\varepsilon)$\\
+软：$Q(\lambda,\lambda,\lambda)$ & $-k^2$，$-2p_1^+k^-$，$-2p_2^-k^+$ & $0$（无标度）\\
+Glauber：$Q(\lambda^2,\lambda^2,\lambda)$ & $\mathbf k_T^2$，$\mathbf k_T^2-2p_1^+k^-+P^2$，$\mathbf k_T^2-2p_2^-k^++P^2$ & $0$（加解析正规子；不被夹住）\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%%% BEGIN fig:sudakov-ff
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hc/.style={draw=black,line width=1.15pt},
+  t2 c1/.style={draw=blue!60!black},
+  t2 c2/.style={draw=orange!80!black},
+  t2 us/.style={draw=green!45!black},
+  t2 v/.style={font=\scriptsize,inner sep=1pt},
+  t2 lab/.style={font=\small}]
+  % ======================= master graph with momentum routing =======================
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.25,0) -- (V);
+    \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon] (G2) -- (G1);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.25,0) -- (V);
+    \path[mom={$p_1-k$},mom pos=0.5] (V) -- (G1);
+    \path[mom'={$p_2+k$},mom pos=0.5] (V) -- (G2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) -- (G1);
+    \path[mom={$p_1$},mom pos=0.55] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G2) -- (E2);
+    \node[font=\footnotesize,align=center] at (0.75,-2.05) {$p_1^2\sim p_2^2\sim\lambda^2Q^2\ll Q^2=q^2$};
+  \end{scope}
+  % region panels: smaller copies (scale 0.74) of the same graph, internal lines coloured by their virtuality class
+  % #1 = shift, line styles for (V-G1), (V-G2), gluon; labels
+  % ---------------- hard ----------------
+  \begin{scope}[xshift=4.85cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \fill[gray!28] (V) -- (G1) -- (G2) -- cycle;
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,line width=1.0pt] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west] at ($(G1)!0.5!(G2)+(0.2,0)$) {$Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {硬区：$k\sim Q(1,1,1)$};
+  \end{scope}
+  % ---------------- collinear to p1 ----------------
+  \begin{scope}[xshift=9.35cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,t2 c1] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west,text=blue!50!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$1$ 共线：$k\sim Q(1,\lambda^2,\lambda)$};
+  \end{scope}
+  % ---------------- collinear to p2 ----------------
+  \begin{scope}[xshift=4.85cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 c2] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=orange!60!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$2$ 共线：$k\sim Q(\lambda^2,1,\lambda)$};
+  \end{scope}
+  % ---------------- ultrasoft ----------------
+  \begin{scope}[xshift=9.35cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 us] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=green!35!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^4Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {超软：$k\sim Q(\lambda^2,\lambda^2,\lambda^2)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈离壳 Sudakov 形状因子的按区域展开（此处画成类时情形 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$；$p_1$ 沿 $n$（$+$ 方向），$p_2$ 沿 $\bar n$）。
+左：动量走向，外线离壳 $p_1\sim Q(1,\lambda^2,\lambda)$、$p_2\sim Q(\lambda^2,1,\lambda)$，标度均按 $(k^+,k^-,k_T)$ 书写。
+右：圈动量 $k$ 的四个贡献区域，内线旁标出其虚度的量级：硬区（三条内线均离壳 $\sim Q^2$，整个圈收缩为一点，灰色）、
+$1$ 共线区（$k$ 与 $p_1-k$ 构成沿 $p_1$ 的喷注，蓝色；$p_2+k$ 为硬线）、$2$ 共线区（橙色，镜像）、超软区（胶子虚度 $\sim\lambda^4Q^2$，绿色；两条夸克线虚度 $\sim\lambda^2Q^2$）。
+软区 $k\sim Q(\lambda,\lambda,\lambda)$ 给出无标度积分，在维数正规化中为零。各区域单独含有 $1/\varepsilon^2$、$1/\varepsilon$ 极点：对标量三角形积分，这些极点在求和中完全相消，给出有限的原积分；
+对完整的 QCD 顶点，求和后只剩原积分本身的紫外发散，由重整化消去。}
+\label{fig:sudakov-ff}
+\end{figure}
+%%% END fig:sudakov-ff
+
+\cref{fig:sudakov-ff}的图注沿用了 SCET 文献的记号：图注中的 $n$ 与 $\bar n$ 分别是本书的 $n_A$ 与 $n_B$（$p_1$ 沿 $n_A$、$p_2$ 沿 $n_B$）。
+图画的是类时组态，而\cref{ex:sudakov-offshell}的积分取在类空运动学中；两者的区域完全相同，因为区域只由各条线的虚度标度决定，
+类时与类空的差别只在最后的解析延拓（\cref{prop:sudakov-oneloop}(b)）。
+
+\begin{remark}[一致性论证：单标度结构、$\mu$ 无关性与极点相消]\label{rem:sudakov-consistency}
+\cref{ex:sudakov-offshell}中各区域的双极点系数与双对数不必逐个计算，可以由三个一般性质确定。(i) \emph{单标度结构}：每个区域只依赖一个标度，
+$H$ 依赖 $Q^2$，$C_i$ 依赖 $P^2$（$Q^2$ 只以线性化分母的整体因子 $1/Q^2$ 出现），$S$ 依赖 $P^4/Q^2$（对超软分母作 $k^\pm\to k^\pm P^2/(2p^\mp)$、$k_T\to k_TP^2/Q$ 的伸缩即见），
+故 $Q^2R=c_R\,\varepsilon^{-2}(\mu^2/\Lambda_R^2)^\varepsilon(1+O(\varepsilon))$。(ii) 和与 $\mu$ 无关。(iii) 和中极点相消。记 $a=\ln\frac{\mu^2}{Q^2}$、$b=\ln\frac{\mu^2}{P^2}$，
+则 $\ln(\mu^2/\Lambda_R^2)$ 依次为 $a,\,b,\,b,\,2b-a$；$\varepsilon^{-2}$ 相消要求 $c_h+2c_c+c_s=0$，$\varepsilon^{-1}$ 中的对数项 $(c_h-c_s)a+2(c_c+c_s)b$ 不得依赖于 $a$、$b$，
+故 $c_s=c_h$、$c_c=-c_h$；以在壳三角形的 $c_h=1$ 归一化，$(c_h,c_1,c_2,c_s)=(1,-1,-1,1)$。于是双对数为
+\[
+\tfrac12\big[a^2-2b^2+(2b-a)^2\big]=(a-b)^2=\ln^2\frac{Q^2}{P^2},
+\]
+与式~\eqref{eq:sudakov-regions-sum} 一致。常数 $\pi^2/3$ 不由这一论证决定，它来自显式积分；论证本身又以区域展开成立为前提，而这在本例的 Minkowski 多侧面情形中并无一般证明（\cref{prop:ir-regions-minkowski}）。
+\uses{ex:sudakov-offshell}
+\end{remark}
+
+\begin{example}[有质量交换：需要解析正规化]\label{ex:sudakov-massive}
+现在令外线在壳且无质量（$p_i^2=0$），交换的玻色子有质量 $M$（例如电弱 Sudakov 问题，或以胶子质量作红外正规化），$t\equiv M^2/Q^2$。为了正规化，给两条夸克传播子加上解析正规子：
+\[
+I_M=\ee^{\varepsilon\gamma_E}\mu^{2\varepsilon}\!\int\!\frac{\dd^Dk}{\ii\pi^{D/2}}\,\frac{\nu^{2(\delta_1+\delta_2)}}{(-k^2+M^2)\,\big(-(k+p_1)^2\big)^{1+\delta_1}\big(-(k+p_2)^2\big)^{1+\delta_2}} .
+\]
+$\delta_i=0$、$\varepsilon=0$ 时积分有限，精确值为\cite[式~(6.30)]{Jantzen2011}
+\begin{equation}\label{eq:sudakov-massive-exact}
+Q^2I_M=\frac12\ln^2\frac{Q^2}{M^2}+\ln\frac{Q^2}{M^2}\ln\Big(1-\frac{M^2}{Q^2}\Big)-\mathrm{Li}_2\Big(\frac{M^2}{Q^2}\Big)+\frac{\pi^2}3
+\ \xrightarrow{\ \text{领头幂次}\ }\ \frac12\ln^2\frac{Q^2}{M^2}+\frac{\pi^2}3 .
+\end{equation}
+\emph{纯维数正规化失效。}$\delta_i=0$ 时，与 $p_1$ 共线的区域按\cref{ex:sudakov-offshell}的步骤（此时合并后的质量项为 $(1-x)M^2$）给出
+$C_1=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\mu^{2\varepsilon}\int_0^1\dd x\,[(1-x)M^2]^{-\varepsilon}/(\varepsilon xQ^2)$：$x\to0$ 处的 $\int\dd x/x$ 对任何 $\varepsilon$ 都发散。
+这是\emph{快度发散}：$x=k^+/p_1^+\to0$ 的胶子快度趋于 $-\infty$，而维数正规化只调节横动量积分。软区（$k\sim M$）在推动 $k^\pm\to\kappa^{\pm1}k^\pm$ 下只差因子 $\kappa^{\delta_1-\delta_2}$，
+故 $\delta_1\ne\delta_2$ 时为零，$\delta_1=\delta_2$ 时无定义。
+
+\emph{加解析正规子。}取 Jantzen 的选择 $\delta_1=-\delta_2=\delta$（$\mu=\nu$），参数积分给出（与\cite[式~(6.27)]{Jantzen2011}的领头幂次一致；该文的 $F$ 是这里的 $-I_M$）
+\[
+C_1=\frac{1}{Q^2}\Big(\frac{\mu^2}{M^2}\Big)^{\varepsilon}\Big(\frac{Q^2}{M^2}\Big)^{\delta}\frac{\ee^{\varepsilon\gamma_E}\Gamma(\varepsilon+\delta)\Gamma(1-\varepsilon-\delta)\Gamma(2\delta)}{\Gamma(1-\varepsilon+\delta)\Gamma(1+\delta)},\qquad
+C_2=C_1\big|_{\delta\to-\delta}.
+\]
+每个 $C_i$ 都有 $1/\delta$ 极点（来自 $\Gamma(\pm2\delta)$），它们在 $C_1+C_2$ 中相消。取 $\mu=Q$，先令 $\delta\to0$ 再展开 $\varepsilon$：
+\begin{equation}\label{eq:sudakov-massive-regions}
+\lim_{\delta\to0}Q^2(C_1+C_2)=-\frac1{\varepsilon^2}+\frac12\ln^2\frac{Q^2}{M^2}+\frac{5\pi^2}{12}+O(\varepsilon),\qquad
+Q^2(H+C_1+C_2)=\frac12\ln^2\frac{Q^2}{M^2}+\frac{\pi^2}3+O(\varepsilon),
+% VF-REG-11
+\end{equation}
+其中 $Q^2H=\varepsilon^{-2}-\pi^2/12+O(\varepsilon)$ 是式~\eqref{eq:sudakov-onshell-H}；结果与式~\eqref{eq:sudakov-massive-exact} 的领头幂次相同（\cite[式~(6.29)--(6.30)]{Jantzen2011}，
+\cite[第~2.3~节，式~(2.50)--(2.52)]{BecherBroggioFerroglia2015}）。换成 Becher--Broggio--Ferroglia 的单一正规子（$\delta_1=0$，$\delta_2=\alpha$），单个区域改变，但 $C_1+C_2$ 不变。
+解析正规子必须在 $\varepsilon\to0$ 之前移除。
+
+\emph{物理含义。}在正规化之前，单个共线积分只知道一个光锥方向与质量 $M$；然而 $C_1+C_2$ 却依赖于 $\ln(Q^2/M^2)$。原因是正规子破坏了推动不变性，大对数通过 $1/\delta$ 极点的相消重新出现，
+例如
+\[
+\Big(\frac{Q^2}{M^2}\Big)^{\pm\delta}\,\Gamma(\pm2\delta)=\pm\frac1{2\delta}+\frac12\ln\frac{Q^2}{M^2}-\gamma_E+O(\delta).
+\]
+这与 $q_T$ 分布中的“共线反常”同源\cite{BecherNeubert2011}（这一类比见\cite[第~2.3~节]{BecherBroggioFerroglia2015}）。
+快度发散不是“坏正规子的人为产物”：它标志着一个新的因子化变量（快度或 $\zeta$），其依赖由演化方程（\cref{sec:sudakov-evolution}，以及第~14~章的 Collins--Soper 方程）控制；
+不同正规子给出的单个区域不同，而正确组合后的物理量相同（参见\cite{BecherBell2012}）。
+
+\emph{对比：有质量外线、无质量胶子。}若外线在壳而有质量（$p_i^2=m^2$，内部夸克质量 $m$），胶子无质量，则共线区为
+$C_1=C_2=-\frac1{Q^2}(\frac{\mu^2}{m^2})^\varepsilon\frac{\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)}{2\varepsilon^2}$：合并后的质量项为 $x^2m^2$，软端为 $\int\dd x\,x^{-1-2\varepsilon}$，已被维数正规化调节；
+软区无标度。在 $\mu=Q$，$Q^2(H+C_1+C_2)=\frac1\varepsilon\ln\frac{m^2}{Q^2}-\frac12\ln^2\frac{m^2}{Q^2}-\frac{\pi^2}6$，与精确结果的领头幂次一致。% VF-REG-12
+所以，\emph{只有当交换的玻色子有质量时}（外线有无质量皆然）才必须使用解析正规子；“有质量形状因子必须用解析正规子”的笼统说法是不对的。
+\uses{def:ir-regions}
+\end{example}
+
+\begin{example}[双对数系数]\label{ex:sudakov-ll}
+领头对数（LL）只来自圈动量既软又共线的区域，此时顶点的分子可以作程函近似：在近在壳的旋量之间
+$\gamma^\nu\sla p_2\gamma^\mu\sla p_1\gamma_\nu=-2\sla p_1\gamma^\mu\sla p_2\to4p_1\cdot p_2\,\gamma^\mu$（用\cref{prop:sudakov-oneloop}证明第二步中的旋量恒等式）。
+于是 $\Lambda^\mu_{\rm LL}=-\ii g^2C_F\cdot4p_1\cdot p_2\,\gamma^\mu\int\frac{\dd^4k}{(2\pi)^4}\frac{1}{k^2(p_1-k)^2(p_2-k)^2}$，而该积分等于 $-\frac{\ii}{16\pi^2}I$（三个分母各换号，
+$\dd^4k=\ii\pi^2\cdot\frac{\dd^4k}{\ii\pi^2}$），故 $\delta F_{\rm LL}=-\frac{\alpha_sC_F}{\pi}\,p_1\cdot p_2\,I$，$2p_1\cdot p_2\simeq Q^2$。代入两个例子的领头幂次：
+\begin{equation}\label{eq:sudakov-LL}
+\begin{aligned}
+\delta F_{\rm LL}&=-\frac{\alpha}{2\pi}\ln\frac{Q^2}{P_1^2}\ln\frac{Q^2}{P_2^2}&&(\text{离壳外线，无质量光子}),\\
+\delta F_{\rm LL}&=-\frac{\alpha}{4\pi}\ln^2\frac{Q^2}{M^2}&&(\text{在壳外线，有质量光子}),
+\end{aligned}
+% VF-SUD-4
+\end{equation}
+在 QCD 中 $\alpha\to C_F\alpha_s$。这正是 Collins\cite{Collins:1989bt}所引的 Sudakov 离壳结果 $F\sim\exp[-\frac{g^2}{8\pi^2}\ln^2Q^2]$\cite{Sudakov1956}
+与 Jackiw 在壳有质量光子结果 $F\sim\exp[-\frac{g^2}{16\pi^2}\ln^2Q^2]$\cite{Jackiw:1968zz}的一圈系数（$g^2=4\pi\alpha$），参见\cite[第~10.5.2--10.5.3~节]{Collins2011}。
+两者相差因子 $2$ 的几何原因是：在胶子的 $(\ln k^+,\ln k^-)$ 平面中，离壳情形的双对数区域是一个菱形（外线虚度在 $k^\pm\sim P^2/Q$ 处给出截断），
+有质量光子情形是一个三角形（$k_T\gtrsim M$ 截去了一半），前者面积是后者的两倍（\cite[第~10.5.3~节与图~10.8]{Collins2011}）。数值示意：$\alpha_sC_F/(2\pi)\approx0.025$（$\alpha_s=0.118$），$\mathcal L=10$ 时离壳单圈双对数已达 $-2.5$，
+微扰展开必须重求和；把它指数化（\cref{cor:sudakov-exponentiation}）给出抑制因子 $\ee^{-2.5}\approx0.08$（固定耦合下的示意）。
+\uses{ex:sudakov-offshell,ex:sudakov-massive,prop:sudakov-oneloop}
+\end{example}

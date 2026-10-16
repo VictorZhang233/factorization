@@ -1,0 +1,66 @@
+\section{可精确求解的模型}\label{sec:yzliu-models}
+
+扭度展开究竟是收敛的还是渐近的，在 QCD 中无法回答。Liu 在二维模型中把这一问题算到底；本节各命题作为 QCD 陈述都只是 [P]，第一句话写明模型。
+
+\begin{theorem}[二维 $U(N)$ Gross--Neveu 模型中扭度展开的绝对收敛 \tagP]\label{thm:yzliu-gn-convergence}
+在二维 $U(N)$ Gross--Neveu 模型中，于 $1/N$ 展开的次领头阶，价“结构函数” % VF-YZL-13
+\begin{equation}\label{eq:yzliu-gn-sf}
+\langle p,i|\bar\psi^i(z)\psi^i(0)|p,i\rangle-\langle p,i|\bar\psi^j(z)\psi^j(0)|p,i\rangle=\bar u(p)u(p)\,\mathcal E(-z^2m^2,\lambda)\qquad(i\ne j)
+\end{equation}
+（$z$ 为类空间隔，$\lambda=p\cdot z$ 为本书约定的 Ioffe 时间；Liu 的变量为 $-z^2$ 与 $-\lambda$）在 Bjorken 极限 $z^2\to0$（固定 $\lambda$）有显式的全幂次扭度展开，并且对一切 $0<-z^2<\infty$ 与 $\lambda\in-\ii\mathbb R_{\ge0}$（虚 Ioffe 时间；在 Liu 的变量中为 $\ii\mathbb R_{\ge0}$），该展开逐点绝对收敛。（本定理只涉及二维模型。）
+% uses: none
+\end{theorem}
+
+\begin{proofsketch}
+（模型内部的证明\cite[第~2、4~节]{Liu:2024omb}。）（1）$\mathcal E$ 写成三个函数 $F_{1,2,3}$ 的组合，每个都是对耦合 $s$ 与对 $u$（关于 $-z^2m^2/4$）的双重 Mellin 积分，被积函数为 $\Gamma$ 函数与 $_1\tilde F_1(\cdot,\cdot,-\lambda)$ 之积；闭合 $u$ 回路即得按 $(-z^2m^2/4)^l$ 排列的扭度展开，每一幂次的硬函数与非微扰函数为对 $t$ 的 Borel 积分\cite[式~(2.4)、(2.6)--(2.15)]{Liu:2024omb}。（2）关键不等式（$l\in\mathbb Z_{\ge0}$，$0<c<\frac12$，$y\in\mathbb R$，$\lambda\ge0$，此处 $\lambda$ 为 Liu 变量中虚轴上的坐标）\cite[式~(4.2)--(4.5)]{Liu:2024omb}：
+\begin{gather*}
+\big|{}_1F_1(2+2l+2(c+\ii y),1+2l+c+\ii y,-\lambda)\big|\le1,\qquad\big|{}_1F_1(2+2l,1+2l-c-\ii y,-\lambda)\big|\le1,\\
+\Big|\frac{\Gamma(-l+c+\ii y)}{\Gamma(1+2l-c-\ii y)}\Big|\le\Big|\frac{\Gamma(-l+c)}{\Gamma(1+2l-c)}\Big|,\qquad\Big|\frac{\Gamma(2l+2+2c+2\ii y)}{\Gamma(1+2l+c+\ii y)}\Big|\le\frac{\Gamma(2l+2+2c)}{\Gamma(1+2l+c)} ;
+\end{gather*}
+第三式也可由 $|\Gamma(x+\ii y)|$ 的乘积公式得到。（3）余项 $r(s,t)=\frac{\Gamma(s+t-1)}{\Gamma(-s+t)}-t^{2s-1}$ 满足 $|r|\le A(c)\big|\frac{1-2s}{t^{2-2s}}\big|$（$t\ge1$），$A(c)<\infty$\cite[式~(4.7)]{Liu:2024omb}。（4）减去大 $t$ 尾巴后，$t$ 积分与 $l$ 求和被 $\sum_l(\frac{-z^2m^2}{4})^l\frac{C(c)}{l!}\big|\frac{\Gamma(-c-l)\Gamma(2l+2+2c)}{\Gamma(1+2l+c)}\big|$ 控制；由于 $|\Gamma(-c-l)|\sim1/l!$，通项含 $1/(l!)^2$，对一切 $-z^2$ 收敛；对硬函数 $\mathcal H^{l,p}_1$ 与非微扰函数 $q^{l,p}_1$ 的完整展开，同类界给出含 $1/(l!)^2$ 与 $1/(p!)^2$ 的控制级数\cite[式~(4.11)、(4.13)]{Liu:2024omb}。$F_1$ 的论证是完整的，$F_2$、$F_3$ 原文称“similar”。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}作为 QCD 陈述为 [P]；在模型内于 $\order{1/N}$ 严格，只有 $F_2$、$F_3$ 两部分原文称与 $F_1$ “类似”。意义：作者指出“the specific structure of the QCD Bjorken limit commonly called `collinear factorization', strictly speaking, has no exact derivation up to now”\cite[第~1~节]{Liu:2024omb}；这里在一个边缘（渐近自由）的二维理论中，把前向矩阵元的 Bjorken 极限扭度展开推到全幂次并证明逐点收敛；对真空关联函数，$O(N)$ $\sigma$ 模型中全幂次收敛的 OPE 更早已得到\cite{Beneke:1998eq}。只覆盖\emph{虚} Ioffe 时间（参见\cref{asm:lamet-uniform}）；它不蕴含 QCD 扭度展开的收敛性，动量空间展开甚至可以发散（\cref{prop:yzliu-on-factorial}）。
+
+\begin{proposition}[Gross--Neveu 模型中扭度展开的结构：重整子相消与真空凝聚 \tagP]\label{prop:yzliu-gn-structure}
+在同一模型（$1/N$ 次领头阶）中：(i) 硬函数 $\mathcal H^{l,p}_k$ 与类 PDF 的非微扰函数 $q^{l,p}_k$、$\hat q^{(l)}_k$ 在所有幂次都以 Borel 积分出现；(ii) 对每个 $l$，$t=n$ 处的重整子极点在幂次 $p$ 的硬函数与幂次 $p+n$ 的非微扰函数之间相消（$t=0$ 处是对数型的紫外—红外相消，即标度与方案依赖的来源）；(iii) 领头幂次的非微扰函数在坐标空间与动量分数空间 $0<\alpha<1$ 中有显式形式，在 $\alpha=0$ 处带“零模型”减除；(iv) 阈值展开到次次领头阈值幂次，阈值渐近与“Regge”渐近之间有复苏（resurgence）关系；(v) 在次领头幂次（经 $g_0^2\langle\bar\psi\psi\rangle$ 已在领头幂次）出现对真空凝聚敏感的海夸克算符：“the `internal structure' of the fermion and the vacuum can not be cleanly separated for our correlator, thus in the strict sense the `collinear factorization' in the partonic picture is invalid, but the OPE expansion always works”\cite[第~2.4~节]{Liu:2024omb}。（本命题只涉及二维模型。）
+\uses{thm:yzliu-gn-convergence,def:power-borel}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite[第~1--2.1、4、7~节]{Liu:2024omb}）。
+
+\begin{proposition}[超可重整二维 $O(N)$ 模型：动量空间 OPE 的阶乘增强 \tagP]\label{prop:yzliu-on-factorial}
+在超可重整的二维 $O(N)$ 四次模型中，于 $1/N$ 的次领头阶，标量两点函数的大 $p^2$ OPE 中，高幂次系数函数（由定点微扰论中的红外减除引入）与凝聚都有阶乘增强，例如 % VF-YZL-14
+\begin{equation}\label{eq:yzliu-on-factorial}
+\begin{aligned}
+\mathcal H_{0,0,s_1=n}(p^2)&\sim\frac1{(p^2)^n}\Big(\frac g{4\pi}\Big)^{n+1}\frac{\dd^n}{\dd t^n}\Big[\Big(\frac{m^2}{p^2}\Big)^t\psi(1-n-t)-\frac1t\Big]_{t=0}\\
+&\xrightarrow{n\to\infty}-n!\frac{g^{n+1}}{(4\pi)^{n+1}}\frac{m^2}{(p^2)^{n+1}}+n!\frac{(-1)^ng^{n+1}}{(4\pi)^{n+1}}\frac1{m^2(p^2)^{n-1}}+\cdots ;
+\end{aligned}
+\end{equation}
+增强只在不同幂次之间“非对角地”于系数函数与凝聚之间相消，故动量空间的幂次展开发散（单一的 Borel 处方不能补救）；在坐标空间，$1/(n!)^2$ 的压低使其收敛；$\overline{\mathrm{MS}}$ 重整化因子不引入阶乘增长。（本命题只涉及二维模型。）
+\uses{def:power-borel}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite[第~1、4~节]{Liu:2025edu}）。\cref{eq:yzliu-on-factorial}的渐近形式可直接检验：记 $r=m^2/p^2$，$\frac{\dd^n}{\dd t^n}[r^t\psi(1-n-t)-\frac1t]_{t=0}$ 与 $-n!\,r+(-1)^nn!/r$ 之比在 $r=0.3$、$n=4,8,\dots,20$ 时为 $1.16,\ 1.008,\ 1.0005,\ 1.00003,\ 1.000002$。关联：\cref{thm:lamet-hadronic}的余项是动量空间的幂次展开，至多是渐近的（\cref{rem:lamet-open}第~13~项）。
+
+\begin{proposition}[二维非线性 $\sigma$ 模型：凝聚与跨级数 \tagP]\label{prop:yzliu-nlsm}
+在二维 $O(N)$ 非线性 $\sigma$ 模型中，于 $1/N$ 的次领头阶，一个明显 $O(N)$ 对称的无质量微扰框架（四次线性 $\sigma$ 模型的极限）再现微扰两点函数及其第一个指数小修正——后者来自拉氏量（迹反常）算符的凝聚——与精确的大 $N$ 解完全一致；微扰自能在正实轴上的第一个 Borel 奇点（$y=2$）是\emph{紫外}重整子，被凝聚的歧义抵消。（本命题只涉及二维模型。）
+\uses{def:power-borel}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite[第~1、5~节]{Liu:2025bqq}）；四阶自由能与 TBA 一致见\cite{Liu:2026npv}（预印本）。补充了\cref{prop:power-renormalon-examples}（$O(N)$ $\sigma$ 模型、GN 模型的 Borel 可和性）。
+
+\begin{proposition}[二维大 $N_c$ QCD 中的准 PDF \tagP]\label{prop:yzliu-2dqcd}
+在二维标量与旋量 QCD 的 $1/N_c$ 展开中，介子的准 PDF（\cref{def:lattice-quasi}）在 $1/N_c$ 的领头与次领头阶于 $P\to\infty$ 时趋于光锥 PDF，不需要额外的重整化（二维 QCD 是超可重整的）。（本命题只涉及二维模型。）
+\uses{def:lattice-quasi,prop:power-thooft-model}
+\end{proposition}
+
+\paragraph{地位与缺口。}[P]（模型；\cite{Ji:2018waw}，比较\cref{prop:power-thooft-model}）。相关：'t Hooft 模型中轻介子比重夸克偶素更慢地趋于光锥\cite{Jia:2018qee}；准 GPD 见\cite{Jia:2024atq}，该文也修正了\cite{Jia:2018qee}对味中性介子在 $\order{N_c^0}$ 的准 PDF 表达式，多出的项在 $P\to\infty$ 时为零；在 $x=0$ 处正则的光前求和规则见\cite{Ji:2020bby}。
+
+\begin{remark}[坐标空间与动量空间之间变换的教训]\label{rem:yzliu-transforms}
+由坐标空间 Fourier 变换到动量空间比反方向安全；这在定阶与 Borel 表示下正确，而对不能写成 Borel 形式的 RG 重求和表达式“questionable”；截断的 Borel 被积函数会产生假的重整子；在平面二维 QCD 中，小 $z^2$ 展开的收敛半径为无穷，大 $p^2$ 展开阶乘增长但可 Borel 求和\cite[第~6~节]{Liu:2024omb}。
+\end{remark}
+
+\begin{remark}[瞬子与模型研究]\label{rem:yzliu-instantons}
+小瞬子对准 PDF 匹配核的贡献可作为跨级数的一部分来研究\cite{Liu:2021evw}（预印本；依赖模型，不给数值）；在瞬子真空中、假定因子化成立，可计算 $\pi$ 与 $K$ 介子的准 PDF\cite{Kock:2020frx}。
+\end{remark}

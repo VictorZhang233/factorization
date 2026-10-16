@@ -1,0 +1,93 @@
+\section{准分布、赝分布与格点截面}\label{sec:lattice-quasi}
+
+同一个等时矩阵元依赖于两个 Lorentz 不变量——Ioffe 时间 $\lambda=P\cdot z$ 与 $z^2$；对哪一个作 Fourier 变换，就得到准分布或赝分布（\cref{fig:lamet-ioffe}）。
+
+\begin{definition}[准分布、赝分布与格点截面]\label{def:lattice-quasi}
+取类空间隔 $z^\mu=z\,\hat e_z^\mu$（$\hat e_z=(0,0,0,1)$，$z\in\mathbb R$）与强子动量 $P^\mu=(P^0,0,0,P^z)$，$P^z>0$；Ioffe 时间 $\lambda\equiv P\cdot z=-P^zz$，$-z^2=z_3^2>0$。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{准 PDF}（quasi-PDF；$\Gamma\in\{\gamma^0,\gamma^z\}$，$\gamma^0\equiv\gamma^t$）：
+\begin{equation}\label{eq:lamet-quasi-def}
+\begin{gathered}
+\tilde q_\Gamma(x,P^z;\mu)=N_\Gamma\int_{-\infty}^{\infty}\frac{\dd z}{4\pi}\,\ee^{\ii xP^zz}\,\frac{\langle P|\bar\psi(z\hat e_z)\,\Gamma\,W[z\hat e_z,0]\,\psi(0)|P\rangle}{Z_X(z)},\\
+N_{\gamma^z}=1,\qquad N_{\gamma^0}=\frac{P^z}{P^0},
+\end{gathered}
+\end{equation}
+其中场与耦合是裸的，$Z_X(z)$ 是某一重整化方案 $X$ 的重整化因子（方案见本章后文）；$\ee^{\ii xP^zz}=\ee^{-\ii x\lambda}$，与光锥 PDF 中的 $\ee^{-\ii xP^+w^-}$ 对应。% VF-LAM-1
+\item \emph{准 Ioffe 时间分布}（准 ITD）：由 Lorentz 协变性，
+\[
+\langle P|\bar\psi(z)\gamma^\alpha W[z,0]\psi(0)|P\rangle=2P^\alpha\mathcal M(\lambda,-z^2)+2z^\alpha\mathcal N(\lambda,-z^2).
+\]
+令 $\tilde h_\Gamma(\lambda,z^2)\equiv\langle P|O_\Gamma(z)|P\rangle/(2P^\Gamma)$（$P^{\gamma^0}=P^0$，$P^{\gamma^z}=P^z$，$O_\Gamma$ 为\cref{eq:lamet-quasi-def}中的重整化算符）。因 $z^0=0$，$\Gamma=\gamma^0$ 只取出 $\mathcal M$，$\Gamma=\gamma^z$ 则混入 $\mathcal N$。于是
+\begin{equation}\label{eq:lamet-quasi-itd}
+\tilde q(x,P^z)=\int\frac{\dd\lambda}{2\pi}\,\ee^{-\ii x\lambda}\,\tilde h\Big(\lambda,-\frac{\lambda^2}{P_z^2}\Big)\qquad(\text{固定 }P^z\text{，}z\text{ 与 }\lambda\text{ 同时变化}).
+\end{equation}
+\item \emph{赝 PDF}（pseudo-PDF）与约化 ITD：固定 $z^2$，$\mathcal P(x,-z^2)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h(\lambda,z^2)$；约化 ITD $\mathfrak M(\lambda,z^2)=\tilde h(\lambda,z^2)/\tilde h(0,z^2)$。\emph{光锥 ITD} 为
+\begin{equation}\label{eq:lamet-lc-itd}
+I(\lambda,\mu)=\frac{\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle}{2P^+}=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x,\mu),
+\end{equation}
+其中 $w=(0^+,w^-,\mathbf 0_{\mathrm T})$，$\lambda=P^+w^-$。
+\item \emph{格点截面}\cite{MaQiu2018}：$\sigma_n(\omega,\eta^2,P^2)=\langle P|T\{\mathcal O_n(\eta)\}|P\rangle$，$\omega=P\cdot\eta$（即本书的 $\lambda$），$\eta^0=0$（Ma 与 Qiu 把间隔记作 $\xi$，这里改记为 $\eta$，以免与动量分数之比 $\xi$ 混淆）。称它是\emph{好的}格点截面，如果 (1) 它可在欧氏时间中计算，(2) 可重整（有连续极限），(3) 与 PDF 有相同的可因子化共线发散；例如 $\eta^{d_1+d_2-2}Z_1Z_2\,j_1(\eta)j_2(0)$（$d_i$ 为流 $j_i$ 的量纲）与 Wilson 线双线性算符 $\bar\psi(\eta)\sla\eta W[\eta,0]\psi(0)$。
+\end{enumerate}
+若方案保持定域极限（比值、混合方案；$\MSbar$ 不保持，见本章后文），由矢量流守恒，$\int\dd x\,\tilde q=\frac{N_\Gamma}{2P^z}\langle P|\bar\psi\Gamma\psi|P\rangle$ 等于价夸克数。
+\uses{def:prelim-wilson, def:pdf-quark, def:pdf-lightray}
+\end{definition}
+
+\cref{eq:lamet-quasi-itd}由换元 $\lambda=-P^zz$ 得出：$\dd z/(4\pi)=\dd\lambda/(4\pi P^z)$，且对两种 $\Gamma$ 都有 $N_\Gamma\cdot2P^\Gamma/(4\pi P^z)=1/(2\pi)$。\cref{eq:lamet-lc-itd}由平移不变性与沿直线的展开
+\[
+W[0,-w]\,\psi(-w)=\sum_k\frac1{k!}(-w\cdot D)^k\psi(0)\qquad(D=\partial-\ii gA)
+\]
+得出：$(-w\cdot D)^k=\ii^k(w\cdot\ii D)^k$，代入 $\langle P|\bar\psi\gamma^+(\ii D^+)^k\psi|P\rangle=2a_{k+1}(P^+)^{k+1}$ 得 $\sum_k\frac{(\ii\lambda)^k}{k!}a_{k+1}=\int\dd x\,\ee^{\ii x\lambda}f(x)$。对类空间隔，同样的展开给出树图层次的
+\[
+\langle P|\bar\psi(z)\gamma^\alpha W[z,0]\psi(0)|P\rangle=2P^\alpha\sum_n\frac{(\ii\lambda)^n}{n!}\,a_{n+1}+\cdots,
+\]
+这就是本书约定下 Ioffe 时间展开的相位。三种表示：
+\begin{center}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+表示 & 变换 & 宗量 & 支撑 \\
+\midrule
+准 ITD $\tilde h$ & — & $\lambda$、$z^2$ & — \\
+准 PDF $\tilde q$ & 固定 $P^z$，$z\to xP^z$ & $x$、$P^z$ & $\mathbb R$ \\
+赝 PDF $\mathcal P$ & 固定 $z^2$，$\lambda\to x$ & $x$、$z^2$ & $[-1,1]$（\cref{prop:lamet-support}） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%%% FIGBLOCK fig:lamet-ioffe
+
+\begin{proposition}[准关联函数的支撑性质（逐图） \tagR]\label{prop:lamet-support}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）对部分子外态，矩阵元 $\langle p|\bar\psi(z)\Gamma W[z,0]\psi(0)|p\rangle$（以及类似的多部分子关联函数）的每一个 Feynman 图，包括抵消项图，在固定 $z^2$ 下对 $\lambda=p\cdot z$ 的 Fourier 变换都支撑在 $[-1,1]$ 中；等价地，逐图有 $\tilde h(\lambda,z^2)=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}\mathcal P(x,-z^2)$。% VF-LAM-1
+（本命题只涉及部分子态。）
+\uses{def:lattice-quasi}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 每条传播子引入 Schwinger 参数 $\alpha_j\ge0$，Wilson 线顶点写成 $s_kz$，$s_k\in[0,1]$；对圈动量作 Gauss 积分后，被积函数对外动量与间隔的依赖只通过 $\exp\{\ii(p\cdot z)Q(\alpha,s)/D(\alpha)+\ii z^2A(\alpha,s)/D(\alpha)+\ii p^2B(\alpha)/D(\alpha)\}$，$D$ 是第一 Symanzik 多项式。(2) $Q/D$ 是端点位置的凸组合：外动量从 $\psi(0)$ 一端流入、从 $\bar\psi(z)$ 一端流出，其在 $\alpha$ 与 $s_k$ 上的权重非负且总和不超过 $1$，故 $|Q/D|\le1$。(3) 于是每个图都是 $\int_{-1}^1\dd x\,\ee^{\ii x\lambda}\rho(x,z^2)$ 型的叠加；抵消项图结构相同。单圈的例子：顶点图与帆图分别是 $\int_0^1\dd u\,g(u)\ee^{\ii u\lambda}$ 与 $\int_0^1\dd u\int_0^1\dd t\,g(u,t)\ee^{\ii(1-ut)\lambda}$ 型的积分\cite[第~III~节]{IzubuchiEtAl2018}。原始的参数表示分析见\cite{Radyushkin:1983wh}，这里的陈述与用法见\cite{Radyushkin2017,Radyushkin:2018cvn,IzubuchiEtAl2018}；光锥 PDF 的类似陈述是\cref{thm:pdf-support-pt}。完整论证见\cite{Radyushkin2017}及其所引文献。
+\end{proofsketch}
+
+\begin{corollary}[Ioffe 时间分布是指数型整函数 \tagR]\label{cor:lamet-entire}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）逐图地，$\lambda\mapsto\tilde h(\lambda,z^2)$ 可延拓为指数型 $\le1$ 的整函数：存在 $C$、$N$ 使 $|\tilde h(\lambda,z^2)|\le C(1+|\lambda|)^N\ee^{|\Imag\lambda|}$。逐阶由 $\mathcal P=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$ 确定的系数函数 $\mathcal C$ 也支撑在 $[-1,1]$ 中，其 Ioffe 时间变换同样是指数型 $\le1$ 的整函数。对 OPE 系数函数而言，这正是 Ma--Qiu “$\sigma_n$ 作为 $\omega$ 的函数解析，唯一的奇点在 $\omega=\infty$”\cite{MaQiu2018}这一说法的精确形式。
+（本推论只涉及部分子态。）
+\uses{def:lattice-quasi, prop:lamet-support, thm:pdf-support-pt}
+\end{corollary}
+
+\begin{proof}
+由\cref{prop:lamet-support}，$\tilde h(\lambda,z^2)=\langle\mathcal P(\cdot,-z^2),\ee^{\ii x\lambda}\rangle$，$\mathcal P$ 是支撑在 $[-1,1]$ 中的有限阶（$N$）分布。由 Paley--Wiener--Schwartz 定理\cite[定理~7.3.1]{Hormander2003}，紧支撑分布的 Fourier--Laplace 变换是整函数，且 $|\hat u(\zeta)|\le C(1+|\zeta|)^N\ee^{H(\Imag\zeta)}$，$H$ 为支集的支撑函数；对支集 $[-1,1]$ 与核 $\ee^{\ii x\lambda}$，$|\ee^{\ii x\lambda}|=\ee^{-x\Imag\lambda}\le\ee^{|\Imag\lambda|}$，即指数型 $\le1$。关于系数函数：对部分子靶，把系数函数逐阶\emph{定义}为乘法卷积方程 $\mathcal P=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$ 的解——因 $f^{(0)}_{i/j}=\delta_{ij}\delta(1-y)$，第 $k$ 阶的 $\mathcal C^{(k)}=\mathcal P^{(k)}-\sum_{l<k}\mathcal C^{(l)}\otimes f^{(k-l)}$ 唯一确定（这里只用到定义，不用 OPE）。$\mathcal P^{(k)}$ 支撑在 $[-1,1]$ 中（\cref{prop:lamet-support}），部分子 PDF 的各阶也支撑在 $[-1,1]$ 中（\cref{thm:pdf-support-pt}），而 $\alpha,y\in[-1,1]$ 蕴含 $x=\alpha y\in[-1,1]$，所以对 $k$ 归纳得 ${\rm supp}\,\mathcal C^{(k)}\subset[-1,1]$；再由 Paley--Wiener--Schwartz 定理，$\int\dd\alpha\,\ee^{\ii\alpha\lambda}\mathcal C(\alpha)$ 是指数型 $\le1$ 的整函数。对好的格点截面（\cref{def:lattice-quasi}(iv)），只要其部分子矩阵元逐图具有同样的支撑性质（对 Wilson 线双线性算符这就是\cref{prop:lamet-support}），同一论证给出关于 $\sigma_n$ 的陈述。
+\end{proof}
+
+\begin{example}[自由夸克的准 PDF：树图与单圈非物理区]\label{ex:lattice-quasi-tree}
+(a) \emph{树图。}对在壳夸克 $p=(p^0,0,0,p^z)$，自旋平均后 $\langle p|\bar\psi(z)\gamma^0\psi(0)|p\rangle=\frac12\sum_s\bar u\gamma^0u\,\ee^{\ii p\cdot z}=2p^0\ee^{-\ii p^zz}$，于是 $\tilde q^{(0)}(x)=\frac{p^z}{p^0}\int\frac{\dd z}{4\pi}\ee^{\ii xp^zz}\,2p^0\ee^{-\ii p^zz}=p^z\,\delta\big((x-1)p^z\big)=\delta(1-x)$；$\Gamma=\gamma^z$ 时 $\bar u\gamma^zu=2p^z$、$N_{\gamma^z}=1$，结果相同。
+
+(b) \emph{单圈，$\xi\notin[0,1]$。}夸克靶的准 PDF $\tilde q^{(1)}(\xi)$ 就是匹配核在 $y=1$ 处的值。取在壳无质量夸克 $p=(p^z,0,0,p^z)$、$\Gamma=\gamma^0$、Feynman 规范与本书的规则：顶点 $\ii g\gamma^\mu t^a$，Wilson 线的单胶子项 $\ii g\int_0^1\dd s\,z\cdot A(sz)$（\cref{prop:prelim-wilson-rules}）。离开 $\xi=1$ 后只有顶点图、两个帆图与 Wilson 线自能（\cref{fig:lamet-oneloop}）有贡献，在 $d=4$ 中都有限。Fourier 投影：算符在 $z$ 处放出动量 $k$ 的夸克，相位 $\ee^{\ii k\cdot z}=\ee^{-\ii k^zz}$，$\int\frac{\dd z}{4\pi}\ee^{\ii(\xi p^z-k^z)z}=\frac12\delta(k^z-\xi p^z)$，剩下对 $(k^0,\mathbf k_\perp)$ 的三维积分。
+\emph{顶点图}：因子 $(\ii g)^2\cdot\ii\cdot\ii\cdot(-\ii)\,C_F=-\ii g^2C_F$，迹 $\frac12\Tr[\sla p\gamma^\mu\sla k\gamma^0\sla k\gamma_\mu]=-8k^0(p\cdot k)+4k^2p^0$。用 $\frac1{A^2B}=\int_0^1\dd y\frac{2y}{[yA+(1-y)B]^3}$ 与 $yk^2+(1-y)(p-k)^2=l^2$（$l=k-(1-y)p$，$p^2=0$），分子化为 $-8l^0(p\cdot l)+4p^0l^2$；在 $(l^0,\mathbf l_\perp)$ 中对称积分（$l^z=(\xi-1+y)p^z$ 固定），分子 $\to p^0(\frac43l^2-\frac83l_z^2)$。Wick 转动后由 $\int\frac{\dd^3l_E}{(2\pi)^3}\frac1{(l_E^2+\ell^2)^2}=\frac1{8\pi|\ell|}$、$\int\frac{\dd^3l_E}{(2\pi)^3}\frac1{(l_E^2+\ell^2)^3}=\frac1{32\pi|\ell|^3}$ 得 $\int\frac{\dd^3l}{(2\pi)^3}\frac{\frac43l^2-\frac83l_z^2}{(l^2+\ii0)^3}=\frac{\ii}{4\pi|l^z|}$；连同 $\frac{p^z}{p^0}\cdot\frac12\cdot\frac1{2\pi}$ 与 $g^2C_F/(8\pi^2)=a$，$\tilde q_{\rm v}=a\int_0^1\dd y\frac{y}{|\xi-1+y|}=a\int_0^1\dd y\frac{1-y}{|\xi-y|}$。
+\emph{帆图}：动量 $p-k$ 的胶子在 $sz$ 处被吸收，Wilson 线因子与出射相位合起来为 $\ii g\int_0^1\dd s\,z^\mu\ee^{\ii p\cdot z-\ii s(p-k)\cdot z}=-g\,\hat e_z^\mu\,\frac{\ee^{-\ii p^zz}-\ee^{-\ii k^zz}}{p^z-k^z}$；$\xi\neq1$ 时只有第二项通过 Fourier 投影，给出 $-\delta(k^z-\xi p^z)/[(1-\xi)p^z]$。迹 $\frac12\Tr[\sla p\gamma^0\sla k\sla{\hat e}_z]=-2(p^0k^z+p^zk^0)$ 经 Feynman 参数化化为 $-2p_z^2(\xi+1-y)$；用 $\int\frac{\dd^3l}{(2\pi)^3}(l^2+\ii0)^{-2}=\frac{\ii}{8\pi|l^z|}$，每个帆图给出 $\frac a2\frac1{1-\xi}\int_0^1\dd y\frac{\xi+1-y}{|\xi-1+y|}$，两图之和 $\tilde q_{\rm s}=\frac a{1-\xi}\int_0^1\dd y\frac{\xi+y}{|\xi-y|}$。
+\emph{Wilson 线自能}：坐标空间中等于树图乘以 $a\,\ee^{\varepsilon\gamma_E}(\mu|z|/2)^{2\varepsilon}\frac{\Gamma(1-\varepsilon)}{\varepsilon(1-2\varepsilon)}=a\big[\frac1\varepsilon+L_z+2\big]+\order{\varepsilon}$——维数正规化中没有线性发散（它在 $\varepsilon=\frac12$ 的极点里）。$\xi\neq1$ 时只有 $\ln z_3^2$ 项有贡献，由 $\int\frac{\dd\zeta}{2\pi}\ee^{\ii u\zeta}\ln\zeta^2=-\frac1{|u|}$（$u\neq0$）得 $\tilde q_{\rm t}=-\frac a{|1-\xi|}$。外线自能只出现在 $\delta(1-\xi)$ 中。
+对 $\xi>1$，$\int_0^1\frac{1-y}{\xi-y}\dd y=(1-\xi)\ln\frac\xi{\xi-1}+1$，$\int_0^1\frac{\xi+y}{\xi-y}\dd y=2\xi\ln\frac\xi{\xi-1}-1$（$\xi<0$ 同理），对数的系数 $(1-\xi)+\frac{2\xi}{1-\xi}=\frac{1+\xi^2}{1-\xi}$，常数 $1-\frac1{1-\xi}-\frac1{\xi-1}=1$：
+\begin{equation}\label{eq:lamet-unphysical}
+\xi>1:\ \tilde q^{(1)}=a\Big[\frac{1+\xi^2}{1-\xi}\ln\frac{\xi}{\xi-1}+1\Big],\qquad
+\xi<0:\ \tilde q^{(1)}=a\Big[-\frac{1+\xi^2}{1-\xi}\ln\frac{-\xi}{1-\xi}-1\Big].
+\end{equation}% VF-LAM-7
+这与\cite[附录~B]{IzubuchiEtAl2018}在 $\varepsilon=0$ 处的结果一致，也与坐标空间核中 $\ln(-z^2)$ 项的 Fourier 变换一致。\emph{教训}：有限 $P^z$ 下准 PDF 支撑在整个实轴上，匹配是对 $y\in\mathbb R$ 的卷积；$|\xi|\to\infty$ 时 $\tilde q^{(1)}\to-\frac{3a}{2|\xi|}$（\cref{prop:lamet-tails}）。历史上的横动量截断计算\cite{XiongEtAl2014}含有线性发散 $\propto\Lambda_{\mathrm{UV}}/((1-y)^2P^z)$，破坏 $1/P_z^2$ 的幂次计数（据\cite{JiEtAl2021}的讨论）。
+\uses{def:lattice-quasi, prop:prelim-wilson-rules}
+\end{example}

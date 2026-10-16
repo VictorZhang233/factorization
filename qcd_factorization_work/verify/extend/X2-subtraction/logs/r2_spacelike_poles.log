@@ -1,0 +1,61 @@
+M2=0.001, Y=3.0, kap=0.01:  x0 = sqrt((M2+kap)e^(2Y)/2) = 1.489583285,  x0' = sqrt((M2+kap)e^(-2Y)/2) = 0.003692307811
+
+(1) closed forms vs exact residues at eta = 1e-30 (both assignments); engine cross-check for sigma=+1
+   sigma=+1 x=        -0.3: residues      0.0459100545477  closed      0.0459100545477  engine +4.5910054548e-02
+   sigma=+1 x= -0.00738462: residues         4103.5604347  closed         4103.5604347  engine +4.1035604347e+03
+   sigma=+1 x= -0.00184615: residues       -65656.9669551  closed       -65656.9669551  engine -6.5656966955e+04
+   sigma=+1 x=     -1.0e-5: residues       -9091031.63107  closed       -9091031.63107  engine -9.0910316311e+06
+   sigma=+1 x=      1.0e-5: residues        9090964.94814  closed        9090964.94814  engine +9.0909649481e+06
+   sigma=+1 x=  0.00184615: residues        49242.8008559  closed        49242.8008559  engine +4.9242800856e+04
+   sigma=+1 x=  0.00738462: residues        12310.9838693  closed        12310.9838693  engine +1.2310983869e+04
+   sigma=+1 x=    0.744792: residues        162.747349753  closed        162.747349753  engine +1.6274734975e+02
+   sigma=+1 x=     2.97917: residues       -10.1717093596  closed       -10.1717093596  engine -1.0171709360e+01
+   sigma=-1 x=        -0.3: residues                  0.0  closed                  0.0
+   sigma=-1 x= -0.00738462: residues                  0.0  closed                  0.0
+   sigma=-1 x= -0.00184615: residues                  0.0  closed                  0.0
+   sigma=-1 x=     -1.0e-5: residues                  0.0  closed                  0.0
+   sigma=-1 x=      1.0e-5: residues       -66.6829343323  closed       -66.6829343323
+   sigma=-1 x=  0.00184615: residues       -16414.1660992  closed       -16414.1660992
+   sigma=-1 x=  0.00738462: residues         16414.544304  closed         16414.544304
+   sigma=-1 x=    0.744792: residues         162.75034969  closed         162.75034969
+   sigma=-1 x=     2.97917: residues       -10.1716624867  closed       -10.1716624867
+   sigma=+1: x*rho at x=+-1e-9: 90.9096494773, 90.9096494773 (sign-adjusted);  c = 1/(2PP'(M2+kap)(1-e^-4Y)) = 90.9096494773
+
+(2) base poles at finite eta = 1e-7: complex roots of 1/rho(z), rho continued from the real region it serves
+   sigma=+1:
+      x = 0 (seen from x>0)   : pole at              0.0     5.89e-8 i  -> ABOVE the real axis (x_p + i0)
+      x = 0 (seen from x<0)   : pole at              0.0     5.89e-8 i  -> ABOVE the real axis (x_p + i0)
+      x = -x0'                : pole at -0.00369230781099    4.663e-8 i  -> ABOVE the real axis (x_p + i0)
+      x = +x0                 : pole at    1.48958328535   -2.366e-5 i  -> BELOW the real axis (x_p - i0)
+   sigma=-1:
+      x = +x0'                : pole at 0.00369230781099   -4.663e-8 i  -> BELOW the real axis (x_p - i0)
+      x = +x0                 : pole at    1.48958328535   -2.366e-5 i  -> BELOW the real axis (x_p - i0)
+   sigma=-1: x = 0 is not a pole (rho ~ -x/(P P' e (M2+kap)^2) -> 0), and rho = 0 identically for x < 0.
+
+(3) real-axis integrals at finite eta vs the distributional limit PV +- i pi Res, one interval per pole
+   sigma=+1:
+      x=0     on [-0.002,0.002]: Res = 90.90964948 (numerical 90.90964948)
+              PV + i pi Res = (-15.7861263484 + 285.601086938j);  PV - i pi Res = (-15.7861263484 - 285.601086938j)
+              finite eta 1e-6, 1e-8, 1e-10: (-15.8128630129 + 285.543198955j), (-15.7863937743 + 285.600508083j), (-15.7861290227 + 285.60108115j)  -> pole ABOVE (+i0)
+      x=-x0'  on [-0.4,-0.002]: Res = -45.45482474 (numerical -45.45482474)
+              PV + i pi Res = (-39.9547805946 - 142.800543469j);  PV - i pi Res = (-39.9547805946 + 142.800543469j)
+              finite eta 1e-6, 1e-8, 1e-10: (-39.9528369829 - 142.770364484j), (-39.9547611681 - 142.800241676j), (-39.9547804007 - 142.800540451j)  -> pole ABOVE (+i0)
+      x=x0    on [1.0,3.0]: Res = -45.45482474 (numerical -45.45482474)
+              PV + i pi Res = (21.8634870748 - 142.800543469j);  PV - i pi Res = (21.8634870748 + 142.800543469j)
+              finite eta 1e-6, 1e-8, 1e-10: (21.8340709893 + 142.771579258j), (21.8631928153 + 142.800253862j), (21.8634841322 + 142.800540573j)  -> pole BELOW (-i0)
+   sigma=-1:
+      x=x0'   on [0.002,0.1]: Res = 45.45482474 (numerical 45.45482474)
+              PV + i pi Res = (315.832959235 + 142.800543469j);  PV - i pi Res = (315.832959235 - 142.800543469j)
+              finite eta 1e-6, 1e-8, 1e-10: (315.835056603 - 142.761860554j), (315.832980248 - 142.800156637j), (315.832959445 - 142.800539601j)  -> pole BELOW (-i0)
+      x=x0    on [1.0,3.0]: Res = -45.45482474 (numerical -45.45482474)
+              PV + i pi Res = (21.8640379162 - 142.800543469j);  PV - i pi Res = (21.8640379162 + 142.800543469j)
+              finite eta 1e-6, 1e-8, 1e-10: (21.834734343 + 142.771527391j), (21.863744782 + 142.800253343j), (21.8640349848 + 142.800540568j)  -> pole BELOW (-i0)
+
+(4) compatibility with the symmetric Glauber deformation of (M3): k+ -> k+ - i d, k- -> k- - i d  (d > 0)
+    (t1 = kap + 2(P-k+)k- - i0 has its k- pole at -kap/2(P-k+) + i0; t2 = kap + 2P'k+ - 2k+k- - i0 has its k+ pole
+     at -kap/2(P'-k-) + i0: both lie in the upper half planes, so the Glauber region is left by Im k+- < 0.)
+   h1Y = 2P(k- - e k+) - i0                  : Im(factor)/d =   -1.41071, prescription sign -1 -> compatible
+   h2Y = 2P'(k+ - e k-) - i0  [sigma=+1]     : Im(factor)/d =   -1.41071, prescription sign -1 -> compatible
+   h2Y = 2P'(k+ - e k-) + i0  [sigma=-1]     : Im(factor)/d =   -1.41071, prescription sign +1 -> OBSTRUCTS the deformation
+   t1 (Glauber region, k+- small)            : Im(factor)/d =   -1.41421, prescription sign -1 -> compatible
+   t2 (Glauber region, k+- small)            : Im(factor)/d =   -1.41421, prescription sign -1 -> compatible

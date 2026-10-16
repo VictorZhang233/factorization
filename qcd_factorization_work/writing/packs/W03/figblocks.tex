@@ -1,0 +1,187 @@
+%%% BEGIN fig:prelim-lightcone
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lc/.style={draw=gray!60!black,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  fa hyp/.style={draw=black,line width=0.8pt,dash pattern=on 0.8pt off 1.6pt},
+  fa grid/.style={draw=gray!60,line width=0.5pt,dash pattern=on 0.8pt off 1.6pt},
+  fa pt/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=4.2pt},
+  fa boost/.style={draw=red!60!black,line width=0.9pt,-{Stealth[length=5pt,width=4.5pt]}},
+  fa leg/.style={draw=gray!50!black,line width=0.45pt},
+  fa lab/.style={font=\footnotesize},
+  fa wlab/.style={font=\footnotesize,fill=white,inner sep=1pt},
+  fa cap/.style={font=\footnotesize}]
+  % ===================== (a) the (z,t) plane =====================
+  \begin{scope}
+    % world-band of a hadron moving fast along +z (slope dt/dz = 1/v, v = 0.83)
+    \draw[hadron blob,line width=0.5pt] (1.35,-0.45) -- (1.82,-0.45) -- (3.99,2.15) -- (3.52,2.15) -- cycle;
+    \draw[fa leg] (1.9,-0.36) -- (2.35,-0.62);
+    \node[fa lab,anchor=north west,align=left,inner sep=1pt] at (2.3,-0.55) {沿 $+z$ 快速运动\\的强子世界带};
+    % axes and light-cone axes x^pm = (t pm z)/sqrt2
+    \draw[lcaxis] (-2.6,0) -- (4.45,0) node[fa lab,below] {$z$};
+    \draw[lcaxis] (0,-0.7) -- (0,3.0) node[fa lab,left] {$t$};
+    \draw[fa lc,-{Stealth[length=4pt,width=3.4pt]}] (-0.6,-0.6) -- (2.75,2.75) node[fa lab,anchor=south west,inner sep=1pt] {$x^+$};
+    \draw[fa lc,-{Stealth[length=4pt,width=3.4pt]}] (0.6,-0.6) -- (-2.75,2.75) node[fa lab,anchor=south east,inner sep=1pt] {$x^-$};
+    % invariant hyperbola t^2 - z^2 = c and a boost of rapidity eta along it
+    \draw[fa hyp] plot[domain=-1.2:1.2,samples=60,variable=\t] ({1.1*sinh(\t)},{1.1*cosh(\t)});
+    \node[fa lab,anchor=south east,inner sep=1pt] at (-0.2,2.12) {$t^2-z^2=c$};
+    \draw[fa leg] (-0.62,2.12) -- (-0.8,1.4);
+    \draw[fa boost] plot[domain=0.06:0.74,samples=20,variable=\t] ({1.1*sinh(\t)},{1.1*cosh(\t)});
+    \node[fa pt] at (0,1.1) {};
+    \node[fa pt] at (0.977,1.471) {};
+    \node[fa lab,text=red!55!black,anchor=north west] at (0.55,1.12) {推动 $\eta$};
+    \node[fa cap] at (0.9,-1.85) {(a)\ $(z,t)$ 平面};
+  \end{scope}
+  % ===================== (b) the (ln v^+, ln v^-) plane =====================
+  \begin{scope}[xshift=6.9cm]
+    \begin{scope}
+      \clip (0.05,0.05) rectangle (4.3,3.45);
+      % lines of constant v^+ v^-  (anti-diagonals, slope -1)
+      \foreach \c in {1.4,2.6,3.8,5.0,6.2} \draw[fa lc] (\c-3.6,3.6) -- (\c+0.2,-0.2);
+      % lines of constant rapidity y = (1/2) ln(v^+/v^-)  (diagonals, slope +1)
+      \foreach \d in {-2.4,-1.2,0,1.2,2.4} \draw[fa grid] (-0.2,-0.2+\d) -- (4.5,4.5+\d);
+    \end{scope}
+    \draw[lcaxis] (0,0) -- (4.55,0) node[fa lab,below left=1pt and -2pt] {$\ln v^+$};
+    \draw[lcaxis] (0,0) -- (0,3.7) node[fa lab,left] {$\ln v^-$};
+    % the boost: +eta in ln v^+, -eta in ln v^-
+    \draw[fa leg] (1.5,2.3) -- (2.6,2.3) -- (2.6,1.2);
+    \node[fa wlab,anchor=south] at (2.05,2.33) {$+\eta$};
+    \node[fa wlab,anchor=west] at (2.64,1.75) {$-\eta$};
+    \node[fa pt] (P) at (1.5,2.3) {};
+    \node[fa pt] (Q) at (2.6,1.2) {};
+    \draw[fa boost,shorten >=2pt,shorten <=2pt] (P) -- (Q);
+    \node[fa wlab,text=red!55!black,anchor=north east] at (1.95,1.68) {推动 $\eta$};
+    \node[fa wlab,anchor=south east] at (1.44,2.36) {$(\ln v^+,\ln v^-)$};
+    \node[fa wlab,anchor=north] at (2.6,1.1) {$(\ln v^++\eta,\ \ln v^--\eta)$};
+    % legend for the two line families
+    \draw[fa lc] (0.1,-0.75) -- (0.75,-0.75);
+    \node[fa lab,anchor=west] at (0.8,-0.75) {等 $v^+v^-$（反对角线）};
+    \draw[fa grid] (0.1,-1.15) -- (0.75,-1.15);
+    \node[fa lab,anchor=west] at (0.8,-1.15) {等快度 $y=\frac12\ln(v^+/v^-)$（对角线）};
+    \node[fa cap] at (2.2,-1.85) {(b)\ 对数光锥平面};
+  \end{scope}
+\end{tikzpicture}
+\caption{光锥坐标与 Lorentz 推动。(a) $(z,t)$ 平面中的光锥轴 $x^\pm=(t\pm z)/\sqrt2$ 与沿 $+z$ 快速运动的强子世界带；推动沿不变双曲线移动点。
+(b) 对数光锥平面中，快度为 $\eta$ 的推动 $v^\pm\to \ee^{\pm\eta}v^\pm$ 是沿反对角线的平移（$\ln v^+$ 增加 $\eta$，$\ln v^-$ 减少 $\eta$），等 $v^+v^-$ 线为反对角线（虚线），等快度线为对角线（点线）。}
+\label{fig:prelim-lightcone}
+\end{figure}
+%%% END fig:prelim-lightcone
+
+%%% BEGIN fig:prelim-wilson-rules
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa end/.style={circle,draw,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5.5pt},
+  fa idx/.style={font=\footnotesize,inner sep=1.5pt},
+  fa prop/.style={font=\small,inner sep=2pt},
+  fa cap/.style={font=\footnotesize}]
+  % ===================== (a) past-pointing line W[0,-infinity n] =====================
+  \begin{scope}
+    \draw[wilson=0.06] (0,0) -- (12.3,0);
+    \node[fa idx,left] at (-0.05,0) {$-\infty n$};
+    \node[fa end] at (12.3,0) {};
+    \node[fa idx,right] at (12.4,0) {$0$};
+    \foreach \x/\j in {1.5/1,5.1/2,8.7/3} {
+      \draw[gluon] (\x,1.35) node[fa idx,above]{$\mu_\j,a_\j$} -- (\x,0);
+      \path[mom={$k_\j$},mom sep=0.3cm] (\x,1.35) -- (\x,0.12);
+      \node[vertex] at (\x,0) {};
+    }
+    \node[fa prop,below] at (0.75,-0.18) {$\ell=0$};
+    \node[fa idx,anchor=south east] at (1.38,0.13) {$\ii g\,t^{a_1}n^{\mu_1}$};
+    \node[fa prop,below] at (3.3,-0.1) {$\dfrac{\ii}{n\cdot k_1+\ii0}$};
+    \node[fa prop,below] at (6.9,-0.1) {$\dfrac{\ii}{n\cdot(k_1+k_2)+\ii0}$};
+    \node[fa prop,below] at (10.5,-0.1) {$\dfrac{\ii}{n\cdot(k_1+k_2+k_3)+\ii0}$};
+    \node[fa cap] at (6.15,-1.55) {(a)\ 过去指向的 $W[0,-\infty n]$：$k_1$ 最靠近 $-\infty$，颜色因子 $t^{a_3}t^{a_2}t^{a_1}$};
+  \end{scope}
+  % ===================== (b) future-pointing line W[infinity n,0] =====================
+  \begin{scope}[yshift=-4.1cm]
+    \draw[wilson=0.94] (0,0) -- (12.3,0);
+    \node[fa end] at (0,0) {};
+    \node[fa idx,left] at (-0.1,0) {$0$};
+    \node[fa idx,right] at (12.35,0) {$+\infty n$};
+    \foreach \x/\j in {3.6/1,7.2/2,10.8/3} {
+      \draw[gluon] (\x,1.35) node[fa idx,above]{$\mu_\j,a_\j$} -- (\x,0);
+      \path[mom={$k_\j$},mom sep=0.3cm] (\x,1.35) -- (\x,0.12);
+      \node[vertex] at (\x,0) {};
+    }
+    \node[fa idx,anchor=south east] at (3.48,0.13) {$\ii g\,t^{a_1}n^{\mu_1}$};
+    \node[fa prop,below] at (1.8,-0.1) {$\dfrac{-\ii}{n\cdot(k_1+k_2+k_3)-\ii0}$};
+    \node[fa prop,below] at (5.4,-0.1) {$\dfrac{-\ii}{n\cdot(k_2+k_3)-\ii0}$};
+    \node[fa prop,below] at (9.0,-0.1) {$\dfrac{-\ii}{n\cdot k_3-\ii0}$};
+    \node[fa prop,below] at (11.55,-0.18) {$\ell=0$};
+    \node[fa cap] at (6.15,-1.55) {(b)\ 未来指向的 $W[\infty n,0]$：$k_1$ 最靠近 $0$，颜色因子 $t^{a_3}t^{a_2}t^{a_1}$};
+  \end{scope}
+\end{tikzpicture}
+\caption{半无限 Wilson 线的动量空间规则（$k$ 流入 Wilson 线；颜色矩阵按路径排序，靠近终点者在左）：(a) 过去指向，(b) 未来指向；双线上的箭头为路径取向，空心圆为有限端点 $0$。
+统一规则（VF-WL-1）：每个顶点 $\ii g\,t^{a_j}n^{\mu_j}$（图中只标出第一个）；有限端点与顶点之间、相邻顶点之间的每一段给一个程函传播子 $\ii/(n\cdot\ell+\ii0)$，
+$\ell$ 为沿路径取向流动的动量，伸向无穷远的一段 $\ell=0$、不给传播子。于是 (a) 中第 $j$ 个顶点之后的一段 $\ell=k_1+\dots+k_j$；
+(b) 中第 $j$ 个顶点之前的一段 $\ell=-(k_j+\dots+k_3)$，传播子即 $-\ii/(n\cdot(k_j+\dots+k_3)-\ii0)$。}
+\label{fig:prelim-wilson-rules}
+\end{figure}
+%%% END fig:prelim-wilson-rules
+
+%%% BEGIN fig:soft-eikonal
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 soft/.style={draw=green!45!black},
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large},
+  t2 hc/.style={hard blob,circle,minimum size=0.84cm,inner sep=0pt}]
+  % ======================= (a) outgoing quark =======================
+  \node[t2 hc] (H) at (0,0) {$H$};
+  \coordinate (X) at (1.95,0);
+  \draw[quark] (H.east) -- (X);
+  \draw[quark] (X) -- (3.35,0);
+  \draw[gluon,t2 soft] (2.6,1.3) -- (X);
+  \node[vertex] at (X) {};
+  \path[mom'={$p-k$}] (H.east) -- (X);
+  \path[mom'={$p$}] (X) -- (3.35,0);
+  \path[mom'={$k$},mom sep=0.3cm] (2.6,1.3) -- (X);
+  \node[t2 eq] at (4.15,0) {$\approx$};
+  \begin{scope}[xshift=5.4cm]
+    \node[t2 hc] (H) at (0,0) {$H$};
+    \draw[quark] (H.340) -- ($(H.340)+(3.0,0)$) coordinate (Eq);
+    \draw[wilson=0.82] (H.20) -- ($(H.20)+(3.0,0)$) coordinate (Ew);
+    \coordinate (Y) at ($(H.20)!0.55!(Ew)$);
+    \draw[gluon,t2 soft] ($(Y)+(0.65,1.16)$) -- (Y);
+    \path[mom'={$p$},mom pos=0.75] (H.340) -- (Eq);
+    \node[t2 lab,anchor=south] at ($(H.20)!0.25!(Ew)+(0,0.1)$) {$W_n[\infty,0]$};
+  \end{scope}
+  \node[font=\small] at (1.45,-1.15) {$\bar u(p)\,(\ii g\,t^a\gamma^\mu)\,\dfrac{\ii(\sla p-\sla k)}{(p-k)^2+\ii0}$};
+  \node[font=\small] at (7.0,-1.15) {$\bar u(p)\,\dfrac{g\,t^a\,n^\mu}{n\cdot k-\ii0}$};
+  \node[font=\small,anchor=west] at (-0.6,-2.0) {(a)\ 出射夸克：未来指向的 Wilson 线（$n\propto p$）};
+  % ======================= (b) incoming quark =======================
+  \begin{scope}[yshift=-4.1cm]
+    \node[t2 hc] (H) at (3.35,0) {$H$};
+    \coordinate (X) at (1.4,0);
+    \draw[quark] (0,0) -- (X);
+    \draw[quark] (X) -- (H.west);
+    \draw[gluon,t2 soft] (0.75,1.3) -- (X);
+    \node[vertex] at (X) {};
+    \path[mom'={$p$}] (0,0) -- (X);
+    \path[mom'={$p+k$}] (X) -- (H.west);
+    \path[mom={$k$},mom sep=0.3cm] (0.75,1.3) -- (X);
+    \node[t2 eq] at (4.15,0) {$\approx$};
+    \begin{scope}[xshift=5.4cm]
+      \node[t2 hc] (H) at (3.35,0) {$H$};
+      \draw[quark] ($(H.200)-(3.0,0)$) coordinate (Sq) -- (H.200);
+      \draw[wilson=0.25] ($(H.160)-(3.0,0)$) coordinate (Sw) -- (H.160);
+      \coordinate (Y) at ($(Sw)!0.45!(H.160)$);
+      \draw[gluon,t2 soft] ($(Y)+(-0.65,1.16)$) -- (Y);
+      \path[mom'={$p$},mom pos=0.3] (Sq) -- (H.200);
+      \node[t2 lab,anchor=south] at ($(Y)!0.55!(H.160)+(0,0.1)$) {$W_n[0,-\infty]$};
+    \end{scope}
+    \node[font=\small] at (1.7,-1.15) {$\dfrac{\ii(\sla p+\sla k)}{(p+k)^2+\ii0}\,(\ii g\,t^a\gamma^\mu)\,u(p)$};
+    \node[font=\small] at (7.0,-1.15) {$-\dfrac{g\,t^a\,n^\mu}{n\cdot k+\ii0}\,u(p)$};
+    \node[font=\small,anchor=west] at (-0.6,-2.0) {(b)\ 入射夸克：过去指向的 Wilson 线（$n\propto p$）};
+  \end{scope}
+\end{tikzpicture}
+\caption{软胶子的程函（eikonal）近似。软胶子（绿色，动量 $k$ 流入夸克线，色指标 $a$、Lorentz 指标 $\mu$）附着在高能无质量夸克线（动量 $p$）上。
+当 $k$ 的各分量都远小于 $p$ 的大分量、且不在 Glauber 区时，分子 $\bar u(p)\gamma^\mu(\sla p-\sla k)\to2p^\mu\bar u(p)$、分母 $(p-k)^2+\ii0\to-2p\cdot k+\ii0$，
+结果只依赖于 $p$ 的方向 $n$（对 $n$ 的标度不变），正是沿 $n$ 方向的 Wilson 线的单胶子 Feynman 规则：
+(a)~出射夸克对应未来指向的 $W_n[\infty,0]$，传播子为 $-\ii/(n\cdot k-\ii0)$；(b)~入射夸克对应过去指向的 $W_n[0,-\infty]$，传播子为 $\ii/(n\cdot k+\ii0)$
+（顶点因子均为 $\ii g\,t^a n^\mu$）。Wilson 线上的箭头与被替代的夸克线的费米子数流向一致。}
+\label{fig:soft-eikonal}
+\end{figure}
+%%% END fig:soft-eikonal

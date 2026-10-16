@@ -1,0 +1,18 @@
+% =====================================================================================
+% ch02_qcd.tex —— 第 2 章　QCD 基础——从规范不变性到渐近自由（writer W02）
+% 约定：WRITER_SPEC_v2 §3；公式来源 VERIFIED_FORMULAS_v2（VF-…，见行内注释）；
+% 独立核算脚本与日志：writing/work/W02/s1–s13（*.py, *.log）。
+% =====================================================================================
+\chapter{QCD 基础——从规范不变性到渐近自由}\label{ch:qcd}
+
+为什么描述强相互作用的是一个以 SU(3) 为规范群的非阿贝尔规范理论？这个理论的微扰论在什么意义上是严格的，它的耦合为什么在短距离上变弱，又为什么在长距离上需要特别小心？本书的全部因子化定理都是关于量子色动力学（quantum chromodynamics，QCD）的陈述，本章从这些最基础的问题出发，逐步建立后文所需的全部 QCD 基础：规范原理与拉氏量（\cref{sec:qcd-gauge}与\cref{sec:prelim-qcd}），规范固定、Faddeev--Popov 鬼场与由拉氏量导出的 Feynman 规则（\cref{sec:qcd-quantization}），紫外发散与维数正规化（\cref{sec:qcd-regularization}），BRST 对称性与物理态空间（\cref{sec:prelim-brst}），重整化、Slavnov--Taylor 恒等式与 $\MSbar$ 方案（\cref{sec:prelim-renorm}），单圈重整化常数与 $\beta$ 函数（\cref{sec:qcd-renorm}），重整化群、跑动耦合与渐近自由（\cref{sec:qcd-running}与\cref{sec:qcd-af}），最后在入门层次上讨论红外发散与红外安全（\cref{sec:qcd-ir}），作为通向第~3~至第~5~章的桥梁。
+
+本章的陈述按严格程度分为三类。由定义直接推出的代数事实标为 \tagR 并带限定语 $R_{\mathrm{def}}$：规范协变性、经典拉氏量的规范不变性、BRST 变换的幂零性、自由渐近 Fock 空间上的 BRST 上同调与紫外超表观发散度。重整化微扰论中的事实标为 \tagR 并带限定语 $R_{\mathrm{PT}}$：其中单圈重整化常数、$\beta_0$、重整化群方程、渐近自由与树图的软、共线极限在本章给出完整推导；可重整性、Slavnov--Taylor 恒等式、规范参数无关性与规范不变复合算符的重整化这几条证明很长的定理，本章给出证明的结构与完整证明的文献出处。路径积分的形式推导（Faddeev--Popov 构造）只作为不带标签的注出现。本章的陈述全部是关于部分子态、算符或 Feynman 图的；QCD 作为非微扰量子场论的存在性不在任何严格陈述之内，它属于第~1~章的全局假设\cref{asm:intro-wightman}（\tagC）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{本章给出完整推导的：}\cref{thm:qcd-gauge-invariance}（\tagR，$R_{\mathrm{def}}$；唯一性部分 (b) 为证明概要）；\cref{prop:qcd-covariance}（\tagR，$R_{\mathrm{def}}$）；\cref{lem:prelim-brst-nilpotent}（\tagR，$R_{\mathrm{def}}$，逐项计算见附录~J）；\cref{prop:qcd-brst-cohomology}（\tagR，$R_{\mathrm{def}}$）；\cref{prop:qcd-superficial-degree}（\tagR，$R_{\mathrm{def}}$）；单圈重整化常数与 $\beta_0$（\cref{ex:qcd-gluon-self-energy,ex:qcd-quark-self-energy-vertex,ex:qcd-beta0-four-ways}；\cref{prop:prelim-beta}的 $\beta_0$ 部分，\tagR，$R_{\mathrm{PT}}$）；\cref{prop:qcd-rge}（\tagR，$R_{\mathrm{PT}}$，以可重整性为前提的完整推导）；\cref{prop:prelim-rg}与\cref{thm:qcd-asymptotic-freedom}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:qcd-soft-collinear-limits}（\tagR，$R_{\mathrm{PT}}$，树图）。\par
+\textbf{本章只陈述、留待后文或文献的：}\cref{thm:qcd-renormalizability}、\cref{lem:qcd-st-regularized}、\cref{prop:qcd-st-relations}（全阶部分）、\cref{thm:prelim-slavnov-taylor}、\cref{prop:qcd-xi-independence}、\cref{thm:prelim-composite-renorm}（均为 \tagR，$R_{\mathrm{PT}}$：证明概要加完整证明的文献）；$\beta_1$、$\beta_2$（文献值）；红外定理（第~4~章：\cref{thm:ir-bn-qed}、\cref{thm:ir-kln}、\cref{prop:ir-bn-failure}、\cref{thm:ir-safe-finite}）；QCD 的非微扰存在性（\cref{asm:intro-wightman}，\tagC）；Gribov 复本与禁闭（不在本书范围之内）。
+\end{tcolorbox}
+

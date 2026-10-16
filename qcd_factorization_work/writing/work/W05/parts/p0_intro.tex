@@ -1,0 +1,35 @@
+% =====================================================================================================
+% ch05_sudakov.tex —— 第 5 章  Sudakov 形状因子与振幅的红外结构（writer W05）
+% 源：FINAL_OUTLINE_v2 Ch5；VERIFIED_FORMULAS_v2 (VF-SUD-1..5, VF-REG-10/11/12/14, VF-REF-2, VF-EE-4,
+%     VF-CONV-23, VF-SCET-8/16, VF-WL-1/3/6)；验证脚本 writing/work/W05/s1--s7（日志 logs/）。
+% =====================================================================================================
+\chapter{Sudakov 形状因子与振幅的红外结构}\label{ch:sudakov}
+
+一个带色（或带电）的粒子以很大的动量转移 $Q$ 被弹性散射、而不辐射任何胶子（光子），这件事的振幅随 $Q$ 怎样变化？
+经典图像给出一个定性的回答：电荷被突然改变方向，必然辐射，“什么都不辐射”的概率应当很小。
+Sudakov 在 QED 中发现\cite{Sudakov1956}，这一抑制在微扰级数中表现为每一圈出现两个大对数的项 $\alpha\ln^2(Q^2/m^2)$；
+把这些项求和，弹性形状因子比 $Q$ 的任何负幂次都下降得更快。
+这种\emph{双对数}（double logarithm）结构及其在 QCD 中的推广，是一切硬过程红外结构的原型：
+\cref{ch:ee}的总截面中它被实辐射完全抵消，在\cref{ch:dy}与\cref{ch:tmd}的 Drell--Yan 与横动量分布中它留下必须重求和的大对数。
+
+本章研究部分子层次上最简单的硬过程——无质量夸克的矢量形状因子。它不含强子与部分子分布，却已包含\cref{ch:method}中一般方法的全部要素：
+区域分解、共线与软近似、Ward 恒等式把纵向胶子收集为 Wilson 线、减除、演化与重求和。按本书的严格性词汇：单圈形状因子（对 $\varepsilon$ 精确）、单圈 Coulomb 相位、
+$K+G$ 方程与 web 指数化的单圈内容被完整证明（$[R]$）；全阶因子化 $F=H\,J_1J_2/S$、演化与指数化、多腿振幅红外极点的因子化与振幅的硬—软—共线因子化是全阶论证（$[A]$）；
+偶极子公式作为全阶公式与类空严格共线因子化已知失效（$[V]$）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:sudakov-oneloop}（\tagR，$R_{\mathrm{PT}}$，对 $\varepsilon$ 的所有阶精确）；\cref{prop:sudakov-coulomb}（\tagR，$R_{\mathrm{PT}}$，单圈）；
+\cref{prop:sudakov-kg}(b)（\tagR，$R_{\mathrm{PT}}$，单圈）与\cref{prop:sudakov-webs}(b)（\tagR，$R_{\mathrm{def}}$，$O(g^2)$）；
+区域分析各例的单圈精确计算（\cref{ex:sudakov-onshell-hard,ex:sudakov-offshell,ex:sudakov-massive,ex:sudakov-ll}）。\par
+\textbf{给出全阶论证：}\cref{thm:sudakov-factorization}（\tagA；减除在 Collins~2011 第~10~章中对此例完整，但只到标度陈述的层次；瓶颈：\cref{asm:appN-collins}的内容（指针）与非阿贝尔多胶子 Ward 恒等式）；
+\cref{prop:sudakov-kg}、\cref{cor:sudakov-exponentiation}、\cref{prop:sudakov-webs}、\cref{thm:sudakov-ir-poles}、\cref{prop:sudakov-amplitude-factorization}（均为\tagA）。\par
+\textbf{没有证明：}偶极子公式作为全阶精确公式（\cref{prop:sudakov-dipole-violation}，\tagV，三圈失效）；
+类空共线极限中的严格共线因子化（\cref{rem:sudakov-spacelike}，\tagV，详见\cref{ch:break}）；
+区域方法在本章 Minkowski 多侧面情形的一般证明（\cref{prop:ir-regions-minkowski}，\tagP）。
+\end{tcolorbox}
+
+本章陈述都只涉及部分子态与 Wilson 线算符，因而没有「非微扰地位」一行。记号沿用全书约定（\cref{tab:front-notation}）：度规 $(+,-,-,-)$，$v^\pm=(v^0\pm v^3)/\sqrt2$，
+$n_A\cdot v=v^-$，$n_B\cdot v=v^+$；顶点 $\ii g\gamma^\mu t^a$（\cref{def:prelim-feynman-rules}）；$D=4-2\varepsilon$ 与 $\MSbar$（\cref{def:qcd-dimreg,def:prelim-msbar}）；
+$W[b,a]=P\exp(\ii g\int_a^b\dd z\cdot A)$（\cref{def:prelim-wilson}）。Collins 的专著\cite{Collins2011}中 $g_{\mathrm{Collins}}=-g$（\cref{sec:appB-definition}）。

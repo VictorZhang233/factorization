@@ -1,0 +1,61 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 dipole/.style={draw=black!80,line width=2.4pt,dash pattern=on 6pt off 2.5pt,line cap=butt},
+  fd2 web/.style={gluon,draw=orange!70!black},
+  fd2 vtx/.style={gluon,draw=blue!60!black},
+  fd2 big/.style={font=\large},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize},
+  fd2 staple/.pic={
+    \draw[wilson plain] (0,0) -- (2.4,0) -- (2.4,0.8) -- (0.45,0.8);
+    \path[fd2 warrow=0.55] (0,0) -- (2.4,0);  \path[fd2 warrow=0.6] (2.4,0.8) -- (0.45,0.8);
+    \draw[quark=0.55] (-0.5,-0.42) -- (0,0);  \draw[quark=0.6] (0.45,0.8) -- (-0.05,1.22);
+    \node[opvertex] at (0,0) {};  \node[opvertex] at (0.45,0.8) {};}]
+  % ======================= (a) single-line notation =======================
+  \pic at (0,0) {fd2 staple};
+  \node[fd2 note,anchor=north] at (1.2,-0.08) {$L$};
+  \node[fd2 note,anchor=west] at (2.45,0.4) {$b_\perp$};
+  \node[fd2 big] at (3.65,0.4) {$\equiv$};
+  \draw[quark=0.55] (4.2,-0.02) -- (4.7,0.4);  \draw[quark=0.6] (4.7,0.4) -- (4.2,0.82);
+  \draw[fd2 dipole] (4.7,0.4) -- (7.4,0.4);
+  \draw[black!80,line width=1.0pt] (7.4,0.2) -- (7.4,0.6);
+  \node[opvertex,minimum size=8pt] at (4.7,0.4) {};
+  \node[fd2 note,anchor=south] at (6.2,0.58) {偶极线：量纲 $\frac32$、自旋 $0$};
+  \node[fd2 note,anchor=north] at (6.5,0.2) {（一对订书钉腿合成一条线）};
+  \node[fd2 lab] at (3.65,-1.0) {(a)\ 单线记号：订书钉的两条腿在 $\hat z$ 方向的演化合成一个色单态偶极子};
+  % ======================= (b) dipole 2PI decomposition =======================
+  \begin{scope}[yshift=-3.3cm]
+    % left: full correlator with a self-interaction web and an operator--link vertex
+    \draw[fd2 web] (1.6,0) -- (1.6,0.8);
+    \draw[fd2 vtx] (-0.3,-0.25) to[bend right=40] (0.75,0);
+    \pic at (0,0) {fd2 staple};
+    \node[vertex] at (1.6,0) {}; \node[vertex] at (1.6,0.8) {}; \node[vertex] at (0.75,0) {};
+    \node[fd2 big] at (3.2,0.4) {$=$};
+    % exponentiated webs
+    \node[fd2 big] at (3.95,0.4) {$\exp\Big\{$};
+    \begin{scope}[xshift=4.6cm]
+      \draw[fd2 web] (1.2,0) -- (1.2,0.8);
+      \draw[wilson plain] (0,0) -- (2.4,0) -- (2.4,0.8) -- (0,0.8);
+      \node[vertex] at (1.2,0) {}; \node[vertex] at (1.2,0.8) {};
+    \end{scope}
+    \node[fd2 lab,anchor=west] at (7.1,0.4) {$+\,\cdots\Big\}$};
+    \node[fd2 big] at (8.75,0.4) {$\times$};
+    % operator--link 2PI vertex part
+    \begin{scope}[xshift=9.75cm]
+      \draw[fd2 vtx] (-0.3,-0.25) to[bend right=40] (0.75,0);
+      \pic at (0,0) {fd2 staple};
+      \node[vertex] at (0.75,0) {};
+    \end{scope}
+    \node[fd2 note,text=orange!60!black] at (5.8,-0.42) {自相互作用 web：$\ee^{\Phi(\mathcal W_z)}=\langle0|\mathcal W_z|0\rangle$};
+    \node[fd2 note,text=blue!50!black] at (10.95,-0.75) {算符—规范线 2PI 顶点};
+    \node[fd2 lab,align=center] at (5.6,-1.65) {$\ee^{\Phi(\mathcal W_z)}\sim\ee^{-LE(b_\perp)}$，\quad $\sqrt{Z_E(2L,b_\perp)}\sim\ee^{-LE(b_\perp)}$，\quad $E=2\delta m+V(b_\perp)$};
+    \node[fd2 lab] at (5.6,-2.45) {(b)\ 偶极子 2PI 分解：除以 $\sqrt{Z_E}$ 后自相互作用 web 相消，$L\to\infty$ 的极限存在};
+  \end{scope}
+\end{tikzpicture}
+\caption{单线记号与偶极子 2PI 分解（示意；双线为类空 Wilson 线，箭头为路径方向，$\otimes$ 为夸克场端点）。(a)~准 TMD 的订书钉形 Wilson 线的两条腿沿 $\hat z$ 平行演化，可看作一个色单态“偶极子”，在单线记号中画成一条量纲 $\frac32$、自旋 $0$ 的线（用于\cref{prop:yzliu-qtmd-powercount}的幂次计数）。
+(b)~部分指数化引理（\cref{lem:yzliu-partial-exp}）：关联函数等于规范线真空期望值 $\ee^{\Phi(\mathcal W_z)}$（其 web 的指数，橙色胶子为一例）乘以算符—规范线两粒子不可约顶点之和（蓝色胶子为一例）；$\ee^{\Phi(\mathcal W_z)}$ 与 $\sqrt{Z_E}$ 都按 $\ee^{-LE(b_\perp)}$ 依赖于 $L$，在比值中相消（\cref{prop:yzliu-pinch-ultrasoft}）。}
+\label{fig:yzliu-single-line}
+\end{figure}

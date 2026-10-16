@@ -1,0 +1,1802 @@
+\chapter{LaMET 与格点因子化：季向东等人的因子化证明}\label{ch:lamet}
+
+格点 QCD 计算的是欧氏时空中的等时矩阵元，而部分子分布、TMD 与分布振幅是光锥上的量。本章讨论把两者联系起来的两套因子化理论——大动量有效理论（large-momentum effective theory，LaMET）与短距离因子化（short-distance factorization，SDF）——并按本书的分级把它们的内容严格分成三个层次：（i）显式的定阶结果（单圈与两圈匹配核、混合方案核、靶质量修正的闭式），在所述的阶上是严格的（\tagR，$R_{\mathrm{PT}}$）；（ii）部分子态的全阶微扰匹配定理：由编号假设出发的推导是完整的（\tagR，$R_{\mathrm{cond}}$），但这些假设——类空 Wilson 线算符的乘法可重整性与它的短距离算符乘积展开——在文献中只有全阶论证，因而定理的内容等级是 \tagA；（iii）强子层次的陈述：它的非微扰内容被精确地分离进三个编号假设（\cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}），三者都是 \tagC，LaMET 原理本身的非微扰形式也只是猜想（\cref{conj:lamet-principle}）。本章最后讨论格点今天实际使用的 TMD 一侧：准 TMD 因子化定理与由动量比值提取 Collins--Soper 核，二者都是全阶论证（\tagA）。格点结果提供的是强子矩阵元，是对这些定理的证据，而不是对任何截面因子化的检验。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:lamet-support,cor:lamet-entire}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:lamet-oneloop,prop:lamet-tails,prop:lamet-twoloop,prop:lamet-hybrid-kernel}（\tagR，$R_{\mathrm{PT}}$，限于所述阶）；\cref{thm:lamet-coordinate}（\tagR，$R_{\mathrm{cond}}$，前提\cref{prop:lattice-renormalizability}、\cref{asm:lamet-ope}）、\cref{thm:lamet-parton-momentum}（\tagR，$R_{\mathrm{cond}}$，前提\cref{thm:lamet-coordinate}）、\cref{prop:lamet-tmc,prop:lamet-sdf}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:lamet-ope}）；\cref{thm:lamet-hadronic}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}）；\cref{thm:lamet-exp-decay}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:intro-wightman}、\cref{asm:lamet-gap}）；\cref{lem:lamet-lorentzian,lem:lamet-fourier,cor:lamet-endpoint,lem:lamet-strip,prop:lamet-truncation,prop:lamet-slepian}（数学）；\cref{prop:lattice-moments}（\tagR，$R_{\mathrm{OPE}}$）。\par
+\textbf{给出全阶论证：}\cref{prop:lattice-renormalizability,prop:lamet-ad-spacelike}（\tagA；瓶颈\cref{asm:lamet-aux-renorm}）；\cref{thm:lattice-lamet,prop:lamet-gluon-singlet,thm:lamet-quasi-gpd,prop:lamet-scheme-validity}（\tagA；瓶颈\cref{asm:lamet-ope}）；\cref{prop:lamet-cfp}（\tagA；不用\cref{asm:lamet-ope}，瓶颈是光锥规范中只有概要的共线减除）；\cref{thm:lamet-lcs}（\tagA；只用定域流的微扰 OPE，\cref{thm:dis-ope}）；\cref{thm:lamet-quasi-tmd,prop:lattice-cs-kernel,prop:lamet-tmd-ratios}（\tagA；瓶颈\cref{asm:lamet-order-limits}）；\cref{cor:lamet-principle-pt}（\tagA）。\par
+\textbf{没有证明：}LaMET 原理的非微扰形式（\cref{conj:lamet-principle}，\tagC）；强子层次匹配所需的\cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}（\tagC）；QCD 中 Wilson 线关联函数的指数衰减（\cref{conj:lamet-decay-qcd}，\tagC）；比值与 RI/MOM 方案在大 $|z|$ 处的动量空间匹配（\cref{rem:lamet-ratio-large-z}，\tagC）；超出大 $\beta_0$ 模型或单圈的\cref{prop:lamet-lrr,prop:lamet-bvz,prop:lamet-polarized,prop:lamet-other-objects}（\tagP）；GPD 在 $x=\pm\xi$ 的情形（第~23~章）。
+\end{tcolorbox}
+
+\section{引言：欧氏方法与光锥量}\label{sec:lamet-intro}
+
+为什么格点不能直接计算部分子分布？按\cref{def:pdf-quark}，夸克分布是光锥间隔 $w=(0^+,w^-,\mathbf 0_{\mathrm T})$ 上双线性算符的 Fourier 变换，$w^-$ 方向的分离同时包含实时间与空间。格点 QCD 在欧氏时间中计算，能直接得到的是\emph{等时}算符的矩阵元。传统的出路是只算矩：由\cref{thm:pdf-moments-local}，PDF 的矩是定域扭度 2 算符的前向矩阵元，因而在欧氏空间可达（\cref{sec:lattice-moments}）；但格点的超立方对称性使高阶矩与低维算符发生幂次发散的混合，实际只能得到最低的几个矩。
+
+季向东（Xiangdong Ji）在 2013 年提出了另一条路\cite{Ji2013}：取一个以大动量 $P^z$ 运动的强子，计算沿 $z$ 方向的\emph{等时}类空关联函数 $\langle P|\bar\psi(z\hat e_z)\Gamma W[z\hat e_z,0]\psi(0)|P\rangle$，对 $z$ 作 Fourier 变换得到所谓准分布（quasi-PDF）。其物理图像见\cref{fig:quasi-pdf}：在强子静止系中看，等时间隔经过快度为 $y$ 的推动后，端点沿不变双曲线移向光锥；不变长度不变。由此产生一个启发性的图像：准分布与光锥分布的差别只来自紫外区，可以用微扰匹配系数描述，再加上按 $\Lambda_{\mathrm{QCD}}/P^z$ 与 $M/P^z$ 压低的幂次修正。这个图像的精确内容与地位正是本章的主题（\cref{conj:lamet-principle}）。这一想法发展为大动量有效理论\cite{Ji:2014gla,JiEtAl2021}。几乎同时，Radyushkin 指出同一个矩阵元也可以在固定小间隔 $z^2$ 处、对 Ioffe 时间作 Fourier 变换，得到支集在 $[-1,1]$ 上的赝分布（pseudo-PDF）\cite{Radyushkin2017}；Ma 与 Qiu 则把这类可在格点上计算、并与 PDF 有相同共线发散的量统称为“好的格点截面”\cite{Ma:2014jla,MaQiu2018}。这三条路线的数学内容是同一组因子化定理，本章把它们写成带编号假设的精确陈述。
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{2.3cm}X@{}}
+\toprule
+项目 & 本书约定（与文献的换算） \\
+\midrule
+耦合常数 & $D_\mu=\partial_\mu-\ii gA_\mu$，$W[b,a]=P\exp(\ii g\int_a^b\dd z\cdot A)$。Ji 等人的综述\cite{JiEtAl2021}、Liu 等人的工作与 Collins 用 $g\to-g$；文献\cite{IzubuchiEtAl2018}中光锥链与类空链对应相反的协变导数约定（附录~Q 第~10~条），只影响 $g$ 的奇次项。本章引用的单圈、两圈核都是 $g$ 的偶函数；遇到 $g$ 的奇次量时注明“（换算到本书约定：$g\to-g$）”。 \\
+Ioffe 时间 & 类空间隔 $z^\mu=z\hat e_z^\mu$，强子 $P=(P^0,0,0,P^z)$，$\lambda\equiv P\cdot z=-P^zz$，$-z^2=z_3^2>0$。文献\cite{IzubuchiEtAl2018}的 $\zeta=P^zz$、Radyushkin 的 $\nu=-(p\cdot z)$、Ji 等人的 $\tilde\lambda=zP^z$ 都等于 $-\lambda$；匹配核是实的，换算时只有相位 $\ee^{\pm\ii\alpha\lambda}$ 翻转。 \\
+对数 & $L_z=\ln(-z^2\mu^2\ee^{2\gamma_E}/4)$；$\ell_p=\ln(\mu^2/(4p_z^2))$，$p^z=|y|P^z$ 为部分子动量；$L_\zeta=\ln(\zeta_z/\mu^2)=-\ell_p$，$\zeta_z=(2xP^z)^2$；$L_b=\ln(\mu^2b_{\mathrm T}^2/b_0^2)$，$b_0=2\ee^{-\gamma_E}$。Liu 等与 Ji--Liu--Su 把 $L_\zeta$ 记作 $L_z$、把坐标对数记作 $l_z$。 \\
+展开参数 & 所有 LaMET 核用 $a\equiv\alpha_sC_F/(2\pi)$；文献中常见的 $\alpha_s/(4\pi)$ 已换算，同一公式内不混用。 \\
+字母 $\lambda$ & 本章与第~23~章中 $\lambda$ 专指 Ioffe 时间；幂次计数参数写成显式比值 $\Lambda/P^z$、$1/(b_{\mathrm T}P^z)$、$\ee^{-Y}$。 \\
+CS 核 & $2\zeta\partial_\zeta\ln f^{\mathrm{TMD}}=\tilde K$（Liu 等人的 $K$ 即 $\tilde K$）；准 TMD 匹配中的指数为 $\exp[\frac12\tilde K\ln(\zeta_z/\zeta)]$。 \\
+加号分布 & 区域 $D$ 上 $\int_D\dd\xi\,[g]^D_{+(1)}h=\int_D\dd\xi\,g(\xi)[h(\xi)-h(1)]$（\cref{def:prelim-plus}的推广）；动量空间核用三个区域 $[1,\infty]$、$[0,1]$、$[-\infty,0]$，混合方案的修正项是 $\mathbb R$ 上的加号分布。 \\
+\bottomrule
+\end{tabularx}
+\caption{第~22~章的记号约定及与 LaMET 文献的换算。}
+\label{tab:lamet-conventions}
+\end{table}
+
+%%% BEGIN fig:quasi-pdf
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 ax/.style={lcaxis,gray!60!black},
+  t3 lc/.style={draw=gray!60,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  t3 band/.style={fill=gray!16,draw=gray!50,line width=0.4pt},
+  t3 qwil/.style={wilson plain,draw=blue!60!black},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 qop/.style={circle,draw=blue!60!black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=7pt,
+      path picture={\draw[blue!60!black,line width=0.6pt] (path picture bounding box.north west)--(path picture bounding box.south east)
+                    (path picture bounding box.south west)--(path picture bounding box.north east);}},
+  t3 hyp/.style={draw=gray!60!black,line width=0.5pt,dash pattern=on 1.2pt off 1.4pt},
+  t3 boost/.style={draw=black!70,line width=0.9pt,-{Stealth[length=7pt,width=6pt]}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % =================== (a) hadron moving with large P^z ===================
+  \begin{scope}
+    \fill[t3 band] (-1.29,-1.3) -- (1.67,2.4) -- (2.17,2.4) -- (-0.79,-1.3) -- cycle;
+    \draw[t3 lc] (-1.35,-1.35) -- (2.35,2.35);  \draw[t3 lc] (1.35,-1.35) -- (-2.35,2.35);
+    \draw[t3 ax] (-2.7,0) -- (2.65,0) node[below left=1pt and -2pt] {$z$};
+    \draw[t3 ax] (0,-1.45) -- (0,2.75) node[left] {$t$};
+    % light-cone operator (along w^+ = 0) and quasi-PDF operator (t = 0)
+    \draw[wilson plain] (0,0) -- (-1.35,1.35);  \path[t3 warrow=0.6] (0,0) -- (-1.35,1.35);
+    \draw[t3 qwil] (0,0) -- (-1.3,0);           \path[t3 warrow=0.62,blue!60!black] (0,0) -- (-1.3,0);
+    \node[opvertex] at (0,0) {};  \node[opvertex] at (-1.35,1.35) {};
+    \node[t3 qop] at (-1.3,0) {};
+    \node[t3 lab,below right=0pt] at (0,0) {$\psi(0)$};
+    \node[t3 lab,above left=0pt] at (-1.35,1.35) {$\bar\psi(w)$};
+    \node[t3 lab,below=2pt,text=blue!50!black] at (-1.3,0) {$\bar\psi(z)$};
+    \node[t3 note,anchor=south] at (-2.25,2.35) {$w^+=0$};
+    \node[t3 note,anchor=south] at (2.3,2.35) {$w^-=0$};
+    \node[t3 note,anchor=east] at (-1.2,-1.05) {强子};
+    \node[t3 lab] at (0,-2.0) {(a)\ 强子以大 $P^z$ 运动};
+  \end{scope}
+  % boost
+  \draw[t3 boost] (2.85,1.0) -- node[t3 note,above=2pt,align=center] {沿 $z$ 方向的\\Lorentz 变换} (4.75,1.0);
+  \node[t3 note] at (3.8,0.62) {$\tanh y=v$};
+  % =================== (b) hadron rest frame ===================
+  \begin{scope}[xshift=8.3cm]
+    \fill[t3 band] (-0.4,-1.3) rectangle (0.4,2.4);
+    \draw[t3 lc] (-1.35,-1.35) -- (2.35,2.35);  \draw[t3 lc] (1.35,-1.35) -- (-2.35,2.35);
+    \draw[t3 ax] (-2.7,0) -- (2.65,0) node[below left=1pt and -2pt] {$z$};
+    \draw[t3 ax] (0,-1.45) -- (0,2.75) node[left] {$t$};
+    % invariant hyperbola z^2 - t^2 = z_0^2 on which the end point of the boosted operator moves
+    \draw[t3 hyp] plot[domain=-0.95:1.74,samples=50] ({-sqrt(1.69+\x*\x)},\x);
+    \draw[gray!60!black,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}]
+      plot[domain=0.3:1.2,samples=20] ({-sqrt(1.69+\x*\x)-0.2},{\x+0.12});
+    \fill[gray!60!black] (-1.3,0) circle[radius=1.6pt];
+    \draw[t3 qwil] (0,0) -- (-2.1667,1.7333);   \path[t3 warrow=0.55,blue!60!black] (0,0) -- (-2.1667,1.7333);
+    \node[opvertex] at (0,0) {};  \node[t3 qop] at (-2.1667,1.7333) {};
+    \node[t3 lab,below right=0pt] at (0,0) {$\psi(0)$};
+    \node[t3 lab,left=2pt,text=blue!50!black] at (-2.1667,1.7333) {$\bar\psi(z)$};
+    \node[t3 note,anchor=east] at (-1.95,0.55) {$P^z$ 增大};
+    \node[t3 note,anchor=north] at (-1.3,-0.08) {$t=0$};
+    \node[t3 note,anchor=south] at (-2.3,2.35) {$w^+=0$};
+    \node[t3 note,anchor=south] at (2.3,2.35) {$w^-=0$};
+    \node[t3 note,anchor=west] at (0.5,-0.85) {强子};
+    \node[t3 lab] at (0,-2.0) {(b)\ 强子静止系};
+  \end{scope}
+\end{tikzpicture}
+\caption{准 PDF 与光锥 PDF 算符的时空图（$z$ 为纵向坐标；阴影带为强子的世界带）。(a) 中黑色双线为光锥 PDF 算符的 Wilson 线 $W[w,0]$，
+$w=(0^+,w^-,0_{\mathrm T})$ 位于光锥 $w^+=0$（即 $t=-z$）上，$f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle$；
+蓝色双线为准 PDF 算符的 Wilson 线 $W[z,0]$，沿 $z$ 轴、在等时面 $t=0$ 上，$\tilde q(x,P^z)=\int\frac{\dd z}{4\pi}\ee^{\ii xP^zz}\langle P|\bar\psi(z)\Gamma W[z,0]\psi(0)|P\rangle$（$\Gamma=\gamma^z$ 或 $\gamma^t$，归一化见正文）。
+(a)~强子以速度 $v$ 沿 $+z$ 运动；(b)~经快度为 $y$（$\tanh y=v$）的 Lorentz 变换转到强子静止系后，等时间隔 $(t,z)=(0,z)$ 变为 $(-z\sinh y,\,z\cosh y)$：
+其端点由 $t=0$ 处（灰点）沿不变双曲线 $z^2-t^2=\text{常数}$（点线）移动，随 $P^z$ 增大而趋向光锥 $w^+=0$，即光锥 PDF 算符的方向；光锥方向本身在变换下不变（只被伸缩）。
+因此大 $P^z$ 下的准 PDF 趋近光锥 PDF，二者之差由微扰匹配系数描述（大动量有效理论，见正文）；此图取 $v=0.8$。}
+\label{fig:quasi-pdf}
+\end{figure}
+%%% END fig:quasi-pdf
+\cref{tab:lamet-conventions}汇集了本章的记号约定（$\gamma^0$ 与格点文献中的 $\gamma^t$ 是同一个矩阵）。读者应特别注意 Ioffe 时间的符号与对数 $L_z$、$L_\zeta$ 的区别：前者是坐标空间的对数，后者是动量空间的对数，后者的宗量是\emph{部分子}动量。
+
+\paragraph{三个层次与本章结构。}
+本章的每个结论都标明属于引言首段所说的哪个层次。\cref{sec:lamet-principle}陈述 LaMET 原理并说明它为何只是猜想；\cref{sec:lattice-moments}与\cref{sec:lattice-quasi}给出格点可计算的对象及其严格的支撑性质；\cref{sec:lamet-renorm}讨论类空 Wilson 线算符的重整化，这是整个匹配理论的第一个瓶颈；\cref{sec:lamet-oneloop}给出显式的单圈与两圈核；\cref{sec:lattice-matching}是本章的核心：匹配定理的精确陈述、三条证明路线与依赖结构（\cref{tab:lamet-dependency}）；\cref{sec:lamet-schemes}讨论重整化方案；\cref{sec:lamet-fourier}与\cref{sec:lamet-power}处理 Fourier 步骤与幂次修正，那里强子层次的非微扰假设被逐一分离出来；\cref{sec:lamet-sdf}比较 LaMET 与 SDF；\cref{sec:lamet-offforward}与\cref{sec:lattice-tmd}推广到非前向量与 TMD；\cref{sec:lattice-status}给出状态表、批评与开放问题。
+
+\section{LaMET 原理：内容、几种表述与地位}\label{sec:lamet-principle}
+
+出发点是与重夸克有效理论的类比：取 $m_Q\to\infty$ 只改变紫外物理，差别是可微扰计算的匹配系数。季向东提出，对以动量 $P^z$ 运动的强子，“先算等时关联函数、再令 $P^z\to\infty$”与“先令 $P^z\to\infty$（光前量子化）、再算关联函数”也只差紫外物理\cite{Ji2013,Ji:2014gla}。形式上的无穷推动极限相同的一族等时算符称为一个\emph{普适类}\cite{Ji:2014gla,Hatta:2013gta}：$\Gamma=\gamma^0$ 与 $\gamma^z$ 的准 PDF 算符都趋向 $\gamma^+$ 的光线算符（\cref{def:pdf-lightray}），匹配核不同（\cref{prop:lamet-oneloop}），极限相同。
+
+\begin{conjecture}[LaMET 原理（非微扰形式） \tagC]\label{conj:lamet-principle}
+设 $\mathcal O_E$ 为一个重整化的等时（欧氏）算符，其形式上的无穷推动极限是光前算符 $\mathcal O_{LF}$（记 $\mathcal O_E\in[\mathcal O_{LF}]$；例如 $\Gamma=\gamma^0$ 与 $\gamma^z$ 的准 PDF 算符都属于 $\gamma^+$ 的普适类，其光前算符给出\cref{def:pdf-quark}的夸克分布）。则对 $P^z\gg\Lqcd,M$ 的强子态，
+\begin{equation}\label{eq:lamet-principle}
+\begin{split}
+\langle P|\mathcal O_E|P\rangle(P^z,\mu)={}&\Big[\mathcal Z\Big(\frac{P^z}{\mu},\as(\mu)\Big)\otimes\langle P|\mathcal O_{LF}|P\rangle(\mu)\Big]\\
+&+\sum_{k\ge1}\Big(\frac{\Lambda}{P^z}\Big)^{2k}\times\big(\text{高扭度等时算符的矩阵元}\big),
+\end{split}
+\end{equation}
+其中：$\mathcal Z$ 有不含红外敏感性的微扰展开；幂次展开是渐近展开，按部分子的硬标度（$|x|P^z$、$|1-x|P^z$）而不是强子动量组织；当 Wilson 线自能与匹配系数用同一个重整子处方定义时，不出现 $\Lambda/P^z$ 的线性项（见本章后文对线性重整子的讨论）。
+
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-af-coeff}（MA0、MA4）。
+\uses{def:pdf-quark,def:pdf-lightray}
+\end{conjecture}
+
+\paragraph{地位与缺口}
+对任何一个普适类的任何一个成员，都没有非微扰的证明；证明需要 QCD 中的非微扰 OPE 或非微扰因子化定理，而这两者本身都是猜想（\cref{conj:ee-np-ope}、\cref{asm:intro-np-ope}；参见\cref{rem:power-np-status}）。\cref{eq:lamet-principle}的微扰内容——部分子态、领头幂次、逐阶——是本章末的\cref{cor:lamet-principle-pt}（\tagA）；共线情形的非微扰内容被精确地归结为三个编号假设\cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}（\tagC），即\cref{thm:lamet-hadronic}的前提。无线性项的说法是\cref{prop:lamet-lrr}（\tagP，大 $\beta_0$ 陈述）的内容。支持这一猜想的证据（不是证明）有：重整子分析（\cref{prop:lamet-bvz}）、二维可严格求解模型（\cref{thm:yzliu-gn-convergence}，第~23~章）与格点数据。季向东所说“由于 QCD 的渐近自由，两种极限次序只在微扰论中不同，对非微扰物理等价”\cite{Ji:2024oka}是一个启发式论证：它没有说明非微扰的余项如何控制。文献：\cite{Ji2013,Ji:2014gla}，\cite[第~II--III~节]{JiEtAl2021}，\cite{Ji:2020byp,Ji:2024oka}。要把标签提高到 \tagA，至少需要一个对强子态成立、余项关于 Ioffe 时间一致的非微扰算符乘积展开（\cref{asm:lamet-uniform}的解除途径）。
+
+\begin{remark}[LaMET 原理的几种表述及其可证明的内容]\label{rem:lamet-formulations}
+(a)~\emph{矩的形式}\cite{Ji2013}。扭度 2 算符 $O^{\mu_1\cdots\mu_n}=\mathcal S\,\bar\psi\gamma^{\mu_1}\ii D^{\mu_2}\cdots\ii D^{\mu_n}\psi-\text{迹}$ 满足 $\langle P|O^{\mu_1\cdots\mu_n}|P\rangle=2a_n(P^{\mu_1}\cdots P^{\mu_n}-\text{迹})$，$a_n=\int_{-1}^1\dd x\,x^{n-1}f(x)$（\cref{thm:pdf-moments-local}）。全部指标取 $z$ 分量时迹项可精确求出（\cref{prop:lamet-tmc}的证明）：
+\begin{equation}\label{eq:lamet-ji-moments}
+\begin{gathered}
+\langle P|\bar\psi\gamma^z(\ii D^z)^{n-1}\psi|P\rangle=2a_n(P^z)^nK_n(c)+(\text{高扭度}),\\
+K_n(c)=\sum_{i\ge0}\binom{n-i}{i}c^i=1+(n-1)c+\order{c^2},\qquad c=\frac{M^2}{4P_z^2}.
+\end{gathered}
+\end{equation}
+这是 Lorentz 协变性的推论（严格；\cite{Ji2013}写作 $2a_n(P^z)^n[1+\order{\Lambda^2/P_z^2,M^2/P_z^2}]$）。由此“反演”到非定域算符却是启发式的：对 $n$ 求和与 $P^z\to\infty$ 不可交换（$\MSbar$ 准 PDF 没有矩，\cref{prop:lamet-tails}）；紫外重整化与 $P^z\to\infty$ 也不可交换——\cite{Ji2013}在 $A^z=0$ 规范中用横动量截断 $\mu$ 算出的单圈准 PDF 含 $\Lambda_\mu/P^z$，$\Lambda_\mu=\sqrt{\mu^2+(1-x)^2P_z^2}-(1-x)P^z$：先取 $\mu\to\infty$ 得线性发散，先取 $P^z\to\infty$ 才得 DGLAP 对数。
+(b)~\emph{有效场论形式}\cite{Ji:2014gla}：$F(P^z/\Lambda_{\mathrm{UV}})=Z(P^z/\Lambda_{\mathrm{UV}},\Lambda_{\mathrm{UV}}/\mu)\,f(\mu)+\order{\Lambda^2/P_z^2}$，$\gamma=\partial\ln Z/\partial\ln P^z$；该文引入普适类（$\Delta G$ 见\cite{Hatta:2013gta}，据其摘要）、准光前波函数与最小可分辨动量分数 $x_{\min}\sim\Lambda/P^z$，并断言（未给证明）“Feynman 图层次的因子化可以逐阶证明”。
+(c)~\emph{动量密度与动量重整化群}\cite[第~II--III~节]{JiEtAl2021}：准 PDF 被诠释为夸克的动量密度 $N_P(k^z)$；由\cref{prop:lamet-oneloop}的 $\MSbar$ 核与 $\dd\ell_p/\dd\ln P^z=-2$（\cref{prop:lamet-oneloop}(f)）得单圈方程
+\begin{equation}\label{eq:lamet-momentum-rge}
+P^z\frac{\dd\tilde q}{\dd P^z}=\frac{\as C_F}{\pi}\Big[\Big[\frac{1+y^2}{1-y}\Big]_+-\frac32\delta(1-y)\Big]\otimes f+\order{\as^2};
+\end{equation}
+该文断言匹配公式及其逆对所有阶成立。
+(d)~\emph{“Weinberg 意义下”的欧氏有效理论}\cite{Ji:2020byp,Ji:2024oka}：共线夸克的领头大速度拉氏量 $\mathcal L^{(0)}_{q,v}=\bar\psi_v\big[\ii v\cdot D+\frac{\ii\bar v\cdot D}{2\gamma^2}+\ii D_\perp\frac1{2\ii\bar v\cdot D}\ii D_\perp\big]\sla{\bar v}\psi_v$（$v^\mu=(1,0,0,v)$，$v^2=1/\gamma^2$，$\bar v^\mu=(v,0,0,-1)/(2v)$，$v\cdot\bar v=1$；拉氏量只通过协变导数含耦合常数，在本书约定 $D=\partial-\ii gA$ 下形式不变）；有限推动是快度发散的非微扰正规子；扭度 4 等时关联函数的幂次发散须与领头系数的红外重整子一致地定义（类比 Symanzik 改进）；展开在 $x\sim\Lambda/P^z$ 处失效；有限 $P^z$ 下准 PDF 在 $y=0,1$ 处解析（精确形式见\cref{lem:lamet-strip}）。
+四种表述中只有 (a) 的矩关系与 (c) 中单圈方程的推导是严格的；“所有阶成立”由\cref{sec:lattice-matching}的匹配定理（\tagA）给出全阶论证，非微扰的断言即\cref{conj:lamet-principle}。
+\end{remark}
+
+\section{格点矩与欧氏 Compton 振幅}\label{sec:lattice-moments}
+
+最早、也最干净的做法是只算 PDF 的矩；它只用到第~7、8~章已有的结果。
+
+\begin{proposition}[格点可计算的矩 \tagR]\label{prop:lattice-moments}
+（$R_{\mathrm{OPE}}$：以 OPE 为前提而严格。QCD 中含夸克的微扰 OPE 是全阶论证（\cref{thm:dis-ope}），严格证明只对标量理论与纯 Yang--Mills 的规范不变算符给出；对强子态还须非微扰 OPE（\cref{asm:intro-np-ope}）。）
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item （由算符定义推出的部分）PDF 的矩 $A^{(n)}_i(\mu)$ 是定域扭度 2 算符的前向矩阵元，$A^{(n)}_q=\langle P|[\bar\psi\gamma^+(\ii D^+)^{n-1}\psi]_\mu|P\rangle/(2(P^+)^n)$，因而是欧氏空间可达的量：等时的定域算符矩阵元可以由欧氏时间的三点与两点关联函数之比得到。
+\item 在 $Q^2>0$、$|\omega|<1$（$\omega=1/x$）处，前向 Compton 振幅 $T^{\mu\nu}(\omega,Q^2)$ 位于所有割线之外，是实解析的，可由欧氏关联函数得到（例如借助虚构重夸克传递的 Compton 张量\cite{DetmoldLin2006}或 Feynman--Hellmann 方法\cite{ChambersEtAl2017}，据该文摘要）；它关于 $\omega$ 的 Taylor 系数是结构函数的矩，$T_2=\sum_{n=2,4,\dots}4\omega^{n-1}\int_0^1\dd x\,x^{n-2}F_2$（部分子靶；强子靶见有限减除形式），而这些矩的 OPE 分解是 $\sum_iC^{(n)}_{2,i}A^{(n)}_i+\order{\Lambda^2/Q^2}$。
+\item 因此，格点得到的矩及欧氏 Compton 振幅的 Taylor 系数直接检验矩因子化的非微扰条件定理，包括低阶矩 $n<n_0$ 处的增长条件；扭度 2 算符基可以在格点上非微扰地归一化，从而消除扭度 2 系数的 $\order{\Lambda^2/Q^2}$ 重排自由。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}（MA0、MA4）；$n<n_0$ 的矩另需\cref{asm:intro-growth}（MA3）。
+\uses{thm:pdf-moments-local,prop:dis-dispersion,prop:dis-dispersion-np,thm:dis-moments,thm:dis-moments-np,prop:power-rearrangement}
+\end{proposition}
+
+\begin{proof}
+(a) 是\cref{thm:pdf-moments-local}（\tagR，$R_{\mathrm{PT}}$；强子态在其非微扰地位所列假设下）：光线算符的矩等于定域扭度 2 算符的前向矩阵元；后者只含等时插入，欧氏时间演化只用来投影出基态强子。
+(b) 部分子靶：$|\omega|<1$ 处 $T_2$ 的 Taylor 系数等于矩，即\cref{prop:dis-dispersion}（\tagR，$R_{\mathrm{PT}}$）。强子靶：\cref{prop:dis-dispersion-np}（\tagR，$R_{\mathrm{cond}}$，前提只有\cref{asm:intro-wightman}）给出 $T_2$ 在 $\mathbb C\setminus((-\infty,-1]\cup[1,\infty))$ 中的解析性与偶数 $n\ge n_0$ 的有限减除色散关系，故 Taylor 系数等于对应的矩；$|\omega|<1$ 在割线之外，振幅不含在壳中间态，可由欧氏关联函数得到。矩的 OPE 分解：部分子靶为\cref{thm:dis-moments}(a)（\tagR，$R_{\mathrm{OPE}}$），强子靶为\cref{thm:dis-moments-np}（\tagR，$R_{\mathrm{cond}}$），二者的前提正是非微扰地位一行所列的全局假设。
+(c) 由 (a)(b)，格点上的 $A^{(n)}_i$ 与 Compton 振幅的 Taylor 系数分别代入\cref{thm:dis-moments-np}(ii) 的两边，即构成对该定理的直接检验；$n<n_0$ 时同时检验其额外前提\cref{asm:intro-growth}。\cref{prop:power-rearrangement}(a)（\tagR，$R_{\mathrm{def}}$）表明扭度 2 系数只在相对 $\order{\Lambda^2/Q^2}$ 的精度内有意义，除非算符基被非微扰地固定，而格点上定域算符的非微扰重整化正提供这种归一化。
+\end{proof}
+
+格点重整化与连续极限是数值问题，不属于本命题。更重要的限制是：超立方群的不可约表示有限，高阶定域矩的算符与低维算符以 $1/a$ 的幂次发散系数混合，可靠的只有最低几个矩（\cref{rem:lattice-critiques}）——这正是转向非定域算符的动机。
+
+\section{准分布、赝分布与格点截面}\label{sec:lattice-quasi}
+
+同一个等时矩阵元依赖于两个 Lorentz 不变量——Ioffe 时间 $\lambda=P\cdot z$ 与 $z^2$；对哪一个作 Fourier 变换，就得到准分布或赝分布（\cref{fig:lamet-ioffe}）。
+
+\begin{definition}[准分布、赝分布与格点截面]\label{def:lattice-quasi}
+取类空间隔 $z^\mu=z\,\hat e_z^\mu$（$\hat e_z=(0,0,0,1)$，$z\in\mathbb R$）与强子动量 $P^\mu=(P^0,0,0,P^z)$，$P^z>0$；Ioffe 时间 $\lambda\equiv P\cdot z=-P^zz$，$-z^2=z_3^2>0$。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{准 PDF}（quasi-PDF；$\Gamma\in\{\gamma^0,\gamma^z\}$，$\gamma^0\equiv\gamma^t$）：
+\begin{equation}\label{eq:lamet-quasi-def}
+\begin{gathered}
+\tilde q_\Gamma(x,P^z;\mu)=N_\Gamma\int_{-\infty}^{\infty}\frac{\dd z}{4\pi}\,\ee^{\ii xP^zz}\,\frac{\langle P|\bar\psi(z\hat e_z)\,\Gamma\,W[z\hat e_z,0]\,\psi(0)|P\rangle}{Z_X(z)},\\
+N_{\gamma^z}=1,\qquad N_{\gamma^0}=\frac{P^z}{P^0},
+\end{gathered}
+\end{equation}
+其中场与耦合是裸的，$Z_X(z)$ 是某一重整化方案 $X$ 的重整化因子（方案见本章后文）；$\ee^{\ii xP^zz}=\ee^{-\ii x\lambda}$，与光锥 PDF 中的 $\ee^{-\ii xP^+w^-}$ 对应。% VF-LAM-1
+\item \emph{准 Ioffe 时间分布}（准 ITD）：由 Lorentz 协变性，
+\[
+\langle P|\bar\psi(z)\gamma^\alpha W[z,0]\psi(0)|P\rangle=2P^\alpha\mathcal M(\lambda,-z^2)+2z^\alpha\mathcal N(\lambda,-z^2).
+\]
+令 $\tilde h_\Gamma(\lambda,z^2)\equiv\langle P|O_\Gamma(z)|P\rangle/(2P^\Gamma)$（$P^{\gamma^0}=P^0$，$P^{\gamma^z}=P^z$，$O_\Gamma$ 为\cref{eq:lamet-quasi-def}中的重整化算符）。因 $z^0=0$，$\Gamma=\gamma^0$ 只取出 $\mathcal M$，$\Gamma=\gamma^z$ 则混入 $\mathcal N$。于是
+\begin{equation}\label{eq:lamet-quasi-itd}
+\tilde q(x,P^z)=\int\frac{\dd\lambda}{2\pi}\,\ee^{-\ii x\lambda}\,\tilde h\Big(\lambda,-\frac{\lambda^2}{P_z^2}\Big)\qquad(\text{固定 }P^z\text{，}z\text{ 与 }\lambda\text{ 同时变化}).
+\end{equation}
+\item \emph{赝 PDF}（pseudo-PDF）与约化 ITD：固定 $z^2$，$\mathcal P(x,-z^2)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h(\lambda,z^2)$；约化 ITD $\mathfrak M(\lambda,z^2)=\tilde h(\lambda,z^2)/\tilde h(0,z^2)$。\emph{光锥 ITD} 为
+\begin{equation}\label{eq:lamet-lc-itd}
+I(\lambda,\mu)=\frac{\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle}{2P^+}=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x,\mu),
+\end{equation}
+其中 $w=(0^+,w^-,\mathbf 0_{\mathrm T})$，$\lambda=P^+w^-$。
+\item \emph{格点截面}\cite{MaQiu2018}：$\sigma_n(\omega,\eta^2,P^2)=\langle P|T\{\mathcal O_n(\eta)\}|P\rangle$，$\omega=P\cdot\eta$（即本书的 $\lambda$），$\eta^0=0$（Ma 与 Qiu 把间隔记作 $\xi$，这里改记为 $\eta$，以免与动量分数之比 $\xi$ 混淆）。称它是\emph{好的}格点截面，如果 (1) 它可在欧氏时间中计算，(2) 可重整（有连续极限），(3) 与 PDF 有相同的可因子化共线发散；例如 $\eta^{d_1+d_2-2}Z_1Z_2\,j_1(\eta)j_2(0)$（$d_i$ 为流 $j_i$ 的量纲）与 Wilson 线双线性算符 $\bar\psi(\eta)\sla\eta W[\eta,0]\psi(0)$。
+\end{enumerate}
+若方案保持定域极限（比值、混合方案；$\MSbar$ 不保持，见本章后文），由矢量流守恒，$\int\dd x\,\tilde q=\frac{N_\Gamma}{2P^z}\langle P|\bar\psi\Gamma\psi|P\rangle$ 等于价夸克数。
+\uses{def:prelim-wilson,def:pdf-quark,def:pdf-lightray}
+\end{definition}
+
+\cref{eq:lamet-quasi-itd}由换元 $\lambda=-P^zz$ 得出：$\dd z/(4\pi)=\dd\lambda/(4\pi P^z)$，且对两种 $\Gamma$ 都有 $N_\Gamma\cdot2P^\Gamma/(4\pi P^z)=1/(2\pi)$。\cref{eq:lamet-lc-itd}由平移不变性与沿直线的展开
+\[
+W[0,-w]\,\psi(-w)=\sum_k\frac1{k!}(-w\cdot D)^k\psi(0)\qquad(D=\partial-\ii gA)
+\]
+得出：$(-w\cdot D)^k=\ii^k(w\cdot\ii D)^k$，代入 $\langle P|\bar\psi\gamma^+(\ii D^+)^k\psi|P\rangle=2a_{k+1}(P^+)^{k+1}$ 得 $\sum_k\frac{(\ii\lambda)^k}{k!}a_{k+1}=\int\dd x\,\ee^{\ii x\lambda}f(x)$。对类空间隔，同样的展开给出树图层次的
+\[
+\langle P|\bar\psi(z)\gamma^\alpha W[z,0]\psi(0)|P\rangle=2P^\alpha\sum_n\frac{(\ii\lambda)^n}{n!}\,a_{n+1}+\cdots,
+\]
+这就是本书约定下 Ioffe 时间展开的相位。三种表示：
+\begin{center}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+表示 & 变换 & 宗量 & 支撑 \\
+\midrule
+准 ITD $\tilde h$ & — & $\lambda$、$z^2$ & — \\
+准 PDF $\tilde q$ & 固定 $P^z$，$z\to xP^z$ & $x$、$P^z$ & $\mathbb R$ \\
+赝 PDF $\mathcal P$ & 固定 $z^2$，$\lambda\to x$ & $x$、$z^2$ & $[-1,1]$（\cref{prop:lamet-support}） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%%% BEGIN fig:lamet-ioffe
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.8\textwidth,height=6.4cm,xmin=0,xmax=16.6,ymin=0,ymax=1.25,
+  axis lines=left,axis line style={gray!60!black},clip=false,
+  xlabel={Ioffe 时间 $\lambda=P\cdot z$},ylabel={$|z|/\mathrm{fm}$},
+  xtick={0,2,...,16},ytick={0,0.2,...,1.2},
+  yticklabel style={/pgf/number format/fixed,/pgf/number format/fixed zerofill,/pgf/number format/precision=1},
+  tick label style={font=\scriptsize},label style={font=\small},
+  every axis x label/.style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  every axis y label/.style={at={(axis description cs:-0.075,0.5)},rotate=90,anchor=south}]
+  % lattice data region (schematic) and short-distance band
+  \fill[gray!9] (axis cs:0,0) rectangle (axis cs:15,1.0);
+  \draw[gray!50,line width=0.4pt,dash pattern=on 3pt off 2pt] (axis cs:0,1.0) -- (axis cs:15,1.0) -- (axis cs:15,0);
+  \fill[blue!11] (axis cs:0,0) rectangle (axis cs:16.6,0.3);
+  % pseudo-distributions: fixed z^2
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.1) -- (axis cs:16.6,0.1);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.2) -- (axis cs:16.6,0.2);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.3) -- (axis cs:16.6,0.3);
+  % quasi-distributions: fixed P^z, |z| = 0.1973 lambda/(P^z/GeV) fm
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:6.335,samples=2] {0.1973*x/1};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:12.67,samples=2] {0.1973*x/2};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:16.6,samples=2] {0.1973*x/3};
+  % light-cone ITD on the lambda axis
+  \draw[blue!55!black,line width=2.2pt,line cap=butt] (axis cs:0,0) -- (axis cs:16.6,0);
+  % labels
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:6.335,1.25) {$P^z=1$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:12.67,1.25) {$P^z=2$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=west] at (axis cs:16.6,1.092) {$P^z=3$ GeV};
+  \node[font=\footnotesize,text=red!50!black,align=left,anchor=west,inner sep=1.2pt] at (axis cs:0.6,1.135) {准分布：固定 $P^z$\\[-1pt]（射线 $|z|=|\lambda|/P^z$）};
+  \draw[red!55!black,line width=0.55pt,-{Stealth[length=4.5pt,width=3.8pt]}] (axis cs:6.9,0.97) to[bend left=14] node[pos=0.55,above right=-1pt,font=\footnotesize] {$P^z\to\infty$} (axis cs:13.4,0.6);
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.3) {$|z|=0.3$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.2) {$|z|=0.2$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.1) {$|z|=0.1$ fm};
+  \node[font=\footnotesize,anchor=west,align=left] at (axis cs:16.6,0.52) {赝分布：\\[-1pt]固定 $z^2$};
+  \node[font=\footnotesize,text=blue!45!black,anchor=north west,align=left] at (axis cs:16.6,-0.02) {光锥 ITD $I(\lambda)$\\[-1pt]（$z^2=0$）};
+  \node[font=\footnotesize,fill=blue!11,inner sep=1.5pt] at (axis cs:9.6,0.15) {短距离因子化（SDF）};
+  \node[font=\footnotesize,text=gray!45!black,anchor=south east] at (axis cs:14.85,0.33) {格点数据区（示意）};
+\end{axis}
+\end{tikzpicture}
+\caption{Ioffe 时间 $\lambda=P\cdot z$（$=-P^zz$，等时类空间隔 $z^\mu=z\hat e_z^\mu$）与间隔 $|z|$ 平面上的三种表示（图中只画 $\lambda\ge0$；$\hbar c=0.1973$ GeV\,fm）。光锥 ITD $I(\lambda)=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x)$ 位于 $z^2=0$（粗线）；
+固定 $z^2$ 的水平线（点线）给出赝分布：对 $\lambda$ 作 Fourier 变换，支集为 $[-1,1]$；固定 $P^z$ 的射线 $|z|=|\lambda|/P^z$（虚线，$P^z=1,2,3$ GeV）给出准分布：$z$ 与 $\lambda$ 同时变化，$P^z$ 增大时射线趋向光锥轴。
+短距离因子化只用阴影带（$|z|\lesssim0.3$ fm）内的数据，准分布的 Fourier 变换则需要整条射线（长距离部分见正文）；灰色矩形示意格点数据所及的范围。}
+\label{fig:lamet-ioffe}
+\end{figure}
+%%% END fig:lamet-ioffe
+\begin{proposition}[准关联函数的支撑性质（逐图） \tagR]\label{prop:lamet-support}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）对部分子外态，矩阵元 $\langle p|\bar\psi(z)\Gamma W[z,0]\psi(0)|p\rangle$（以及类似的多部分子关联函数）的每一个 Feynman 图，包括抵消项图，在固定 $z^2$ 下对 $\lambda=p\cdot z$ 的 Fourier 变换都支撑在 $[-1,1]$ 中；等价地，逐图有 $\tilde h(\lambda,z^2)=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}\mathcal P(x,-z^2)$。% VF-LAM-1
+（本命题只涉及部分子态。）
+\uses{def:lattice-quasi}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 每条传播子引入 Schwinger 参数 $\alpha_j\ge0$，Wilson 线顶点写成 $s_kz$，$s_k\in[0,1]$；对圈动量作 Gauss 积分后，被积函数对外动量与间隔的依赖只通过 $\exp\{\ii(p\cdot z)Q(\alpha,s)/D(\alpha)+\ii z^2A(\alpha,s)/D(\alpha)+\ii p^2B(\alpha)/D(\alpha)\}$，$D$ 是第一 Symanzik 多项式。(2) $Q/D$ 是端点位置的凸组合：外动量从 $\psi(0)$ 一端流入、从 $\bar\psi(z)$ 一端流出，其在 $\alpha$ 与 $s_k$ 上的权重非负且总和不超过 $1$，故 $|Q/D|\le1$。(3) 于是每个图都是 $\int_{-1}^1\dd x\,\ee^{\ii x\lambda}\rho(x,z^2)$ 型的叠加；抵消项图结构相同。单圈的例子：顶点图与帆图分别是 $\int_0^1\dd u\,g(u)\ee^{\ii u\lambda}$ 与 $\int_0^1\dd u\int_0^1\dd t\,g(u,t)\ee^{\ii(1-ut)\lambda}$ 型的积分\cite[第~III~节]{IzubuchiEtAl2018}。原始的参数表示分析见\cite{Radyushkin:1983wh}，这里的陈述与用法见\cite{Radyushkin2017,Radyushkin:2018cvn,IzubuchiEtAl2018}；光锥 PDF 的类似陈述是\cref{thm:pdf-support-pt}。完整论证见\cite{Radyushkin2017}及其所引文献。
+\end{proofsketch}
+
+\begin{corollary}[Ioffe 时间分布是指数型整函数 \tagR]\label{cor:lamet-entire}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）逐图地，$\lambda\mapsto\tilde h(\lambda,z^2)$ 可延拓为指数型 $\le1$ 的整函数：存在 $C$、$N$ 使 $|\tilde h(\lambda,z^2)|\le C(1+|\lambda|)^N\ee^{|\Imag\lambda|}$。逐阶由 $\mathcal P=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$ 确定的系数函数 $\mathcal C$ 也支撑在 $[-1,1]$ 中，其 Ioffe 时间变换同样是指数型 $\le1$ 的整函数。对 OPE 系数函数而言，这正是 Ma--Qiu “$\sigma_n$ 作为 $\omega$ 的函数解析，唯一的奇点在 $\omega=\infty$”\cite{MaQiu2018}这一说法的精确形式。
+（本推论只涉及部分子态。）
+\uses{def:lattice-quasi,prop:lamet-support,thm:pdf-support-pt}
+\end{corollary}
+
+\begin{proof}
+由\cref{prop:lamet-support}，$\tilde h(\lambda,z^2)=\langle\mathcal P(\cdot,-z^2),\ee^{\ii x\lambda}\rangle$，$\mathcal P$ 是支撑在 $[-1,1]$ 中的有限阶（$N$）分布。由 Paley--Wiener--Schwartz 定理\cite[定理~7.3.1]{Hormander2003}，紧支撑分布的 Fourier--Laplace 变换是整函数，且 $|\hat u(\zeta)|\le C(1+|\zeta|)^N\ee^{H(\Imag\zeta)}$，$H$ 为支集的支撑函数；对支集 $[-1,1]$ 与核 $\ee^{\ii x\lambda}$，$|\ee^{\ii x\lambda}|=\ee^{-x\Imag\lambda}\le\ee^{|\Imag\lambda|}$，即指数型 $\le1$。关于系数函数：对部分子靶，把系数函数逐阶\emph{定义}为乘法卷积方程 $\mathcal P=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$ 的解——因 $f^{(0)}_{i/j}=\delta_{ij}\delta(1-y)$，第 $k$ 阶的 $\mathcal C^{(k)}=\mathcal P^{(k)}-\sum_{l<k}\mathcal C^{(l)}\otimes f^{(k-l)}$ 唯一确定（这里只用到定义，不用 OPE）。$\mathcal P^{(k)}$ 支撑在 $[-1,1]$ 中（\cref{prop:lamet-support}），部分子 PDF 的各阶也支撑在 $[-1,1]$ 中（\cref{thm:pdf-support-pt}），而 $\alpha,y\in[-1,1]$ 蕴含 $x=\alpha y\in[-1,1]$，所以对 $k$ 归纳得 ${\rm supp}\,\mathcal C^{(k)}\subset[-1,1]$；再由 Paley--Wiener--Schwartz 定理，$\int\dd\alpha\,\ee^{\ii\alpha\lambda}\mathcal C(\alpha)$ 是指数型 $\le1$ 的整函数。对好的格点截面（\cref{def:lattice-quasi}(iv)），只要其部分子矩阵元逐图具有同样的支撑性质（对 Wilson 线双线性算符这就是\cref{prop:lamet-support}），同一论证给出关于 $\sigma_n$ 的陈述。
+\end{proof}
+
+\begin{example}[自由夸克的准 PDF：树图与单圈非物理区]\label{ex:lattice-quasi-tree}
+(a) \emph{树图。}对在壳夸克 $p=(p^0,0,0,p^z)$，自旋平均后 $\langle p|\bar\psi(z)\gamma^0\psi(0)|p\rangle=\frac12\sum_s\bar u\gamma^0u\,\ee^{\ii p\cdot z}=2p^0\ee^{-\ii p^zz}$，于是 $\tilde q^{(0)}(x)=\frac{p^z}{p^0}\int\frac{\dd z}{4\pi}\ee^{\ii xp^zz}\,2p^0\ee^{-\ii p^zz}=p^z\,\delta\big((x-1)p^z\big)=\delta(1-x)$；$\Gamma=\gamma^z$ 时 $\bar u\gamma^zu=2p^z$、$N_{\gamma^z}=1$，结果相同。
+
+(b) \emph{单圈，$\xi\notin[0,1]$。}夸克靶的准 PDF $\tilde q^{(1)}(\xi)$ 就是匹配核在 $y=1$ 处的值。取在壳无质量夸克 $p=(p^z,0,0,p^z)$、$\Gamma=\gamma^0$、Feynman 规范与本书的规则：顶点 $\ii g\gamma^\mu t^a$，Wilson 线的单胶子项 $\ii g\int_0^1\dd s\,z\cdot A(sz)$（\cref{prop:prelim-wilson-rules}）。离开 $\xi=1$ 后只有顶点图、两个帆图与 Wilson 线自能（\cref{fig:lamet-oneloop}）有贡献，在 $d=4$ 中都有限。Fourier 投影：算符在 $z$ 处放出动量 $k$ 的夸克，相位 $\ee^{\ii k\cdot z}=\ee^{-\ii k^zz}$，$\int\frac{\dd z}{4\pi}\ee^{\ii(\xi p^z-k^z)z}=\frac12\delta(k^z-\xi p^z)$，剩下对 $(k^0,\mathbf k_\perp)$ 的三维积分。
+\emph{顶点图}：因子 $(\ii g)^2\cdot\ii\cdot\ii\cdot(-\ii)\,C_F=-\ii g^2C_F$，迹 $\frac12\Tr[\sla p\gamma^\mu\sla k\gamma^0\sla k\gamma_\mu]=-8k^0(p\cdot k)+4k^2p^0$。用 $\frac1{A^2B}=\int_0^1\dd y\frac{2y}{[yA+(1-y)B]^3}$ 与 $yk^2+(1-y)(p-k)^2=l^2$（$l=k-(1-y)p$，$p^2=0$），分子化为 $-8l^0(p\cdot l)+4p^0l^2$；在 $(l^0,\mathbf l_\perp)$ 中对称积分（$l^z=(\xi-1+y)p^z$ 固定），分子 $\to p^0(\frac43l^2-\frac83l_z^2)$。Wick 转动后由 $\int\frac{\dd^3l_E}{(2\pi)^3}\frac1{(l_E^2+\ell^2)^2}=\frac1{8\pi|\ell|}$、$\int\frac{\dd^3l_E}{(2\pi)^3}\frac1{(l_E^2+\ell^2)^3}=\frac1{32\pi|\ell|^3}$ 得 $\int\frac{\dd^3l}{(2\pi)^3}\frac{\frac43l^2-\frac83l_z^2}{(l^2+\ii0)^3}=\frac{\ii}{4\pi|l^z|}$；连同 $\frac{p^z}{p^0}\cdot\frac12\cdot\frac1{2\pi}$ 与 $g^2C_F/(8\pi^2)=a$，$\tilde q_{\rm v}=a\int_0^1\dd y\frac{y}{|\xi-1+y|}=a\int_0^1\dd y\frac{1-y}{|\xi-y|}$。
+\emph{帆图}：动量 $p-k$ 的胶子在 $sz$ 处被吸收，Wilson 线因子与出射相位合起来为 $\ii g\int_0^1\dd s\,z^\mu\ee^{\ii p\cdot z-\ii s(p-k)\cdot z}=-g\,\hat e_z^\mu\,\frac{\ee^{-\ii p^zz}-\ee^{-\ii k^zz}}{p^z-k^z}$；$\xi\neq1$ 时只有第二项通过 Fourier 投影，给出 $-\delta(k^z-\xi p^z)/[(1-\xi)p^z]$。迹 $\frac12\Tr[\sla p\gamma^0\sla k\sla{\hat e}_z]=-2(p^0k^z+p^zk^0)$ 经 Feynman 参数化化为 $-2p_z^2(\xi+1-y)$；用 $\int\frac{\dd^3l}{(2\pi)^3}(l^2+\ii0)^{-2}=\frac{\ii}{8\pi|l^z|}$，每个帆图给出 $\frac a2\frac1{1-\xi}\int_0^1\dd y\frac{\xi+1-y}{|\xi-1+y|}$，两图之和 $\tilde q_{\rm s}=\frac a{1-\xi}\int_0^1\dd y\frac{\xi+y}{|\xi-y|}$。
+\emph{Wilson 线自能}：坐标空间中等于树图乘以 $a\,\ee^{\varepsilon\gamma_E}(\mu|z|/2)^{2\varepsilon}\frac{\Gamma(1-\varepsilon)}{\varepsilon(1-2\varepsilon)}=a\big[\frac1\varepsilon+L_z+2\big]+\order{\varepsilon}$——维数正规化中没有线性发散（它在 $\varepsilon=\frac12$ 的极点里）。$\xi\neq1$ 时只有 $\ln z_3^2$ 项有贡献，由 $\int\frac{\dd\zeta}{2\pi}\ee^{\ii u\zeta}\ln\zeta^2=-\frac1{|u|}$（$u\neq0$）得 $\tilde q_{\rm t}=-\frac a{|1-\xi|}$。外线自能只出现在 $\delta(1-\xi)$ 中。
+对 $\xi>1$，$\int_0^1\frac{1-y}{\xi-y}\dd y=(1-\xi)\ln\frac\xi{\xi-1}+1$，$\int_0^1\frac{\xi+y}{\xi-y}\dd y=2\xi\ln\frac\xi{\xi-1}-1$（$\xi<0$ 同理），对数的系数 $(1-\xi)+\frac{2\xi}{1-\xi}=\frac{1+\xi^2}{1-\xi}$，常数 $1-\frac1{1-\xi}-\frac1{\xi-1}=1$：
+\begin{equation}\label{eq:lamet-unphysical}
+\xi>1:\ \tilde q^{(1)}=a\Big[\frac{1+\xi^2}{1-\xi}\ln\frac{\xi}{\xi-1}+1\Big],\qquad
+\xi<0:\ \tilde q^{(1)}=a\Big[-\frac{1+\xi^2}{1-\xi}\ln\frac{-\xi}{1-\xi}-1\Big].
+\end{equation}% VF-LAM-7
+这与\cite[附录~B]{IzubuchiEtAl2018}在 $\varepsilon=0$ 处的结果一致，也与坐标空间核中 $\ln(-z^2)$ 项的 Fourier 变换一致。\emph{教训}：有限 $P^z$ 下准 PDF 支撑在整个实轴上，匹配是对 $y\in\mathbb R$ 的卷积；$|\xi|\to\infty$ 时 $\tilde q^{(1)}\to-\frac{3a}{2|\xi|}$（\cref{prop:lamet-tails}）。历史上的横动量截断计算\cite{XiongEtAl2014}含有线性发散 $\propto\Lambda_{\mathrm{UV}}/((1-y)^2P^z)$，破坏 $1/P_z^2$ 的幂次计数（据\cite{JiEtAl2021}的讨论）。
+\uses{def:lattice-quasi,prop:prelim-wilson-rules}
+\end{example}
+
+\section{类空 Wilson 线算符的重整化}\label{sec:lamet-renorm}
+
+非定域算符 $\bar\psi(z)\Gamma W[z,0]\psi(0)$ 能否像定域算符那样重整化？直 Wilson 线有线性发散的自能（试探粒子的“质量”重整化），端点有对数发散，线上的胶子顶点由耦合常数重整化吸收\cite{Polyakov1980,Dotsenko:1979wb,BrandtNeriSato1981,Craigie:1980qs}；把 Wilson 线写成辅助静态色源的传播子，问题化为扩展理论中定域复合算符的重整化\cite{Dorn:1986dt}。格点上的算符几何见\cref{fig:lamet-lattice-geometries}(a)。
+
+\begin{assumption}[含类空辅助静态色源的 QCD 的可重整性 \tagA]\label{asm:lamet-aux-renorm}
+\begin{enumerate}[label=(AX\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 在 QCD 中加入一个色三重态、无自旋的 Grassmann 场 $Q$，$\mathcal L_Q=\bar Q\,\ii\hat n\cdot D\,Q$（对截断正规化另加 $\delta m\,\bar QQ$），$\hat n=\hat e_z$。在背景场中其传播子为 $S_Q(x,y)=\theta(x^z-y^z)\delta(x^0-y^0)\delta^2(\mathbf x_\perp-\mathbf y_\perp)W[x,y]$，因而 $O_\Gamma(z)=\langle\bar\psi(z)\Gamma Q(z)\,\bar Q(0)\psi(0)\rangle_Q$ 是扩展理论中两个定域复合算符 $\bar J=\bar\psi Q$、$J=\bar Q\psi$ 之积。
+\item 扩展理论只需抵消项 $Z_Q$、$Z_1^{QQg}$（由 Slavnov--Taylor 恒等式与 $Z_g$ 相联系）与 $\delta m$ 即可重整化，并保持 BRST 不变性。
+\item 在所用的正规化（维数正规化）中，$Q$ 圈的行列式 $\det(\ii\hat n\cdot D)$ 是常数。
+\end{enumerate}
+地位：全阶论证级——文献\cite{Ji:2017oey}断言 HQET 可重整性论证可推广到类空方向，但没有写出；格点上的辅助场构造\cite{Green:2017xeu}与坐标空间的发散度计数\cite{Ishikawa:2017faj}（只到表观发散度与“簿记森林”，不是 BPHZ 证明）支持它；显式检验：两圈\cite{Ji:2015jwa}，三圈反常维度\cite{Braun:2020ymy}，重—轻流到三圈\cite{Chetyrkin:2003vi}。本书把类空 Wilson 线算符的乘法可重整性定为 \tagA。
+文献：\cite{Ji:2017oey,Green:2017xeu,Ishikawa:2017faj,Dorn:1986dt,Dotsenko:1979wb,Braun:2020ymy,Chetyrkin:2003vi}。
+被使用于：\cref{prop:lattice-renormalizability}、\cref{asm:lamet-ope}、\cref{asm:lamet-gap}、\cref{conj:lamet-decay-qcd}、\cref{asm:lamet-staple}、\cref{thm:yzliu-soft-hqet}。
+解除途径：写出 QCD$+$类空静态源的 BRST 不变重整化证明（用传播子 $\theta(x^z)\delta(x^0)\delta^2(x_\perp)$ 的各向异性幂次计数作 Zimmermann/BPHZ 分析，或用流方程方法，参见\cite{Frob:2015uqy}），包括 $\det(\ii\hat n\cdot D)$ 与 $\delta(0)$ 型项的处理。
+\uses{def:prelim-qcd,def:prelim-brst,def:prelim-wilson}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：(AX2) 只有断言与表观发散度层次的计数（误差类型 E-S），没有写出的证明；它是本章全部共线匹配定理的第一个前提。
+
+\begin{proposition}[Wilson 线夸克双线性算符的乘法可重整性 \tagA]\label{prop:lattice-renormalizability}
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 设裸算符为 $O^B_\Gamma(z)=\bar\psi_0(z\hat n)\,\Gamma\, W_0[z\hat n,0]\,\psi_0(0)$，其中 $\hat n$ 类空，$z\neq0$，味非单态或单态，$\Gamma$ 任意。用规范不变的正规化，存在与 $z$、$\Gamma$ 及外态都无关的常数 $Z_j$，以及（对截断正规化）线性发散的 $\delta m$，使
+\begin{equation}\label{eq:lamet-multren}
+O^R_\Gamma(z,\mu)=Z_j^{-2}\,\ee^{-\delta m|z|}\,O^B_\Gamma(z)
+\end{equation}
+与基本场的 Green 函数在每一阶都有限；$Z_j=Z_\psi^{1/2}Z_Q^{1/2}Z_V$ 是重—轻流 $\bar Q\psi$ 的重整化常数；不与胶子算符或其他味道的算符混合。（$\delta m$ 的符号约定：$\ee^{-\delta m|z|}$ 消去裸算符的 $\ee^{+\delta m|z|}$ 增长；各文献的符号不同。）% VF-LAM-2
+\item 格点上，对手征不严格对称的费米子，$O^R_\Gamma(z)=Z_\phi^2\ee^{-m|z|}O_{\Gamma'}(z)$，$\Gamma'=\Gamma+r_{\rm mix}\,{\rm sgn}(z)\{\sla n,\Gamma\}+r_{\rm mix}^2\,\sla n\Gamma\sla n$，共三个参数：线性发散的 $m$、对数发散的 $Z_\phi$ 与有限的 $r_{\rm mix}=\order{g^2}$。$\Gamma=\gamma^0$ 时 $\{\gamma^z,\gamma^0\}=0$ 且 $\sla n\gamma^0\sla n=\gamma^0$，因而在 $\order{a^0}$ 没有混合，只有整体的重新标度。
+\item 胶子算符 $O_g(z)=g_\perp^{\mu\nu}F^{n_1}{}_\mu(\tfrac z2)W^{ab}F^{n_2}{}_\nu(-\tfrac z2)$，$n_i\in\{\hat e_z,\hat e_t\}$：$z\neq0$ 且指标为横向时，相关的组合乘法可重整（非极化四个、螺旋度三个关联函数）；胶子与单态夸克的准 PDF 算符在重整化下不混合，混合只出现在匹配中。在辅助场表述中 $O_g$ 化为“重—胶流” $J^{n\mu}=F^{n\mu}_aQ^a$（$Q$ 为伴随表示的辅助场）之积；文献\cite[第~III.A~节]{JiEtAl2021}给出的单圈常数为 $Z_{J^{n_ti}}=1+\frac{\as}{4\pi}\big(\frac76C_A-\frac43n_fT_F\big)\frac1{\varepsilon_{\rm UV}}$、$Z_{J^{n_z\nu}}=1+\frac{\as}{4\pi}\big(\frac16C_A-\frac43n_fT_F\big)\frac1{\varepsilon_{\rm UV}}$（$n_t=\hat e_t$，$n_z=\hat e_z$，$i$ 为横向指标），两圈反常维度见\cite{Braun:2020ymy}。
+\item （单圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在维数正规化中，单圈 $\delta m=0$，
+\begin{equation}\label{eq:lamet-Zj}
+Z_j=1+\frac{\as C_F}{4\pi}\frac3{2\varepsilon},\qquad Z_O=Z_j^2=1+\frac{\as C_F}{4\pi}\frac3\varepsilon,\qquad\frac{\dd\ln O^R}{\dd\ln\mu^2}=\frac{3\as C_F}{4\pi}+\order{\as^2}=\frac32a .
+\end{equation}
+\end{enumerate}
+（本命题只涉及算符与部分子 Green 函数。）
+\uses{asm:lamet-aux-renorm,def:prelim-wilson,def:prelim-msbar,thm:prelim-composite-renorm}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+\emph{路线 A（辅助场\cite{Ji:2017oey,Green:2017xeu}）。}(1) \cref{asm:lamet-aux-renorm}：扩展理论可重整。(2) 重—轻流 $J=\bar Q\psi$ 按定域算符的论证（\cref{thm:prelim-composite-renorm}，\tagR，$R_{\mathrm{PT}}$）乘法重整化：没有量子数相同、量纲更低的算符；胶子的 $F^{\mu\nu}_aQ^a$ 与 $J_2^{\mu\nu}=(n^\nu F^{\mu n}-n^\mu F^{\nu n})Q/n^2$ 及一个运动方程算符混合\cite{Dorn:1986dt}，对 $z\neq0$ 与横向指标不起作用。(3) 积掉 $Q$ 得 $O^B_\Gamma(z)=Z_j^2\ee^{\delta m|z|}O^R_\Gamma(z)$。格点上 $Q$ 是静态夸克型的场，作用量 $\frac1{1+am_0}\bar\zeta(\nabla_n+m_0)\zeta$，传播子 $\theta(\xi)\ee^{-m\xi}W$，$m=a^{-1}\ln(1+am_0)$；质量项不被任何对称性禁止，给出 (b) 中的 $m$；手征破缺时 $\phi_R=Z_\phi(\phi+r_{\rm mix}\sla n\phi)$，代入两个流之积即得 $\Gamma'$\cite{Green:2017xeu}，与单圈格点微扰论\cite{Constantinou:2017sej}及对称性分析\cite{Chen:2017mie}一致。
+\emph{路线 B（图形法\cite{Ishikawa:2017faj}）。}坐标空间中，Wilson 线上的胶子插入改变三维与四维圈积分的表观发散度；“规范链不可约”的图在三维子积分上没有整体紫外发散。紫外发散因而是定域的，只来自：(i) Wilson 线自能，其线性部分按 $1+c\int\dd r_1+c^2\int\!\!\int\cdots=P\ee^{cr}$ 指数化；(ii) 胶子—Wilson 线顶点，由耦合常数重整化吸收\cite{Dotsenko:1979wb}；(iii) 夸克—Wilson 线端点，给出常数抵消项。胶子算符见\cite{Li:2018tpe,Zhang:2018diq}（据其摘要）。
+(c) 由路线 A 对 $F^{\mu\nu}_aQ^a$ 的分析：横向指标下 $J_2$ 与运动方程算符的混合消失，重—胶流与重—轻夸克流量子数不同，所以胶子与单态夸克算符在重整化下不混合\cite{JiEtAl2021,Zhang:2018diq}；所列单圈常数来自\cite[第~III.A~节]{JiEtAl2021}的显式计算，其中 Wilson 线顶点图的线性发散在图与图之间相消。
+(d) 单圈紫外极点逐图分解（Feynman 规范、维数正规化、在壳无质量夸克，各图见\cite[第~III~节]{IzubuchiEtAl2018}；单位 $a/\varepsilon_{\rm UV}$）：顶点图在 $z\neq0$ 时有限（$0$）；两个帆图合计 $1$；Wilson 线自能 $1$——坐标空间中它等于 $a\,\ee^{\varepsilon\gamma_E}(\mu|z|/2)^{2\varepsilon}\Gamma(1-\varepsilon)/[\varepsilon(1-2\varepsilon)]$，线性发散对应 $\varepsilon=\frac12$ 处的极点，故 $\delta m=0$；夸克场重整化 $2\times\frac12\delta Z_\psi$ 贡献 $-\frac12$。总和 $\frac32$，即 $Z_O=1+\frac{3a}{2\varepsilon}$。按重—轻流分解：Wilson 线自能相当于两个静态源的场重整化，每个帆图相当于一个重—轻顶点修正，于是 $Z_j=1+\frac{\as C_F}{4\pi}\frac3{2\varepsilon}$、$Z_O=Z_j^2$，与 HQET 重—轻流的 $\gamma_0=-3C_F$ 一致。由 $O^R=O^B/Z_O$ 与 $\mu^2\frac{\dd\as}{\dd\mu^2}=-\varepsilon\as+\order{\as^2}$，$\frac{\dd\ln O^R}{\dd\ln\mu^2}=\varepsilon\as\frac{C_F}{4\pi}\frac3\varepsilon=\frac{3\as C_F}{4\pi}$，正是单圈 $\MSbar$ 矩阵元 $C_0=1+a(\frac32L_z+\frac52)$ 中 $\ln\mu^2$ 的系数（见下节）。
+显式检验：两圈\cite{Ji:2015jwa}，三圈反常维度\cite{Braun:2020ymy}，重—轻流到三圈\cite{Chetyrkin:2003vi}；格点混合\cite{Constantinou:2017sej,Chen:2017mie}，改进\cite{Green:2020xco}。完整论证见\cite{Ji:2017oey,Ishikawa:2017faj}与\cite[第~III.A~节]{JiEtAl2021}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA：(i) HQET/BRST 可重整性证明向类空方向的推广只是断言（\cref{asm:lamet-aux-renorm}，这是本命题的瓶颈）；(ii) 图形法的计数停留在表观发散度与“簿记森林”的层次，不是 BPHZ/Zimmermann 意义下的证明（此步只给出 E-S 型陈述）；(iii) $z=0$ 时算符是定域流，重整化不同（$Q$ 的运动方程产生接触项）——本命题的全部陈述都只对 $z\neq0$。关于 (b)：文献\cite{Ji:2017oey}所说“没有更低维的算符可以混合”是正确的，但对手征不严格对称的格点费米子还存在 $\order{a^0}$ 的同维混合 $\Gamma\to\Gamma'$\cite{Green:2017xeu,Constantinou:2017sej,Chen:2017mie}；对 $\gamma^t$，$r_{\rm mix}^2$ 项只是重新标度；与四维算符的 $\order{a}$ 混合对每个 $\Gamma$ 都存在。提高到 \tagR 需要\cref{asm:lamet-aux-renorm}的解除途径中所说的完整证明。
+
+\begin{proposition}[类空与类时 Wilson 线算符的反常维度相同 \tagA]\label{prop:lamet-ad-spacelike}
+带类空 Wilson 线与带类时 Wilson 线的非定域夸克算符，其 Green 函数由一条明确的代换规则（对 $v^2$ 的解析延拓）相联系；二者的重整化常数与反常维度在所有阶相同，$\gamma_O=2\gamma_{hl}$（$\gamma_{hl}$：重—轻流的反常维度），与 $z$ 无关。（三圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）到三圈，夸克算符的 $\gamma_O$ 已显式算出，类空与类时的结果一致（\cite[附录~A]{Braun:2020ymy}，归一化 $a_s=\as/(4\pi)$、$\mu^2\dd/\dd\mu^2$）。
+（本命题只涉及算符与部分子 Green 函数。）
+\uses{prop:lattice-renormalizability}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 由\cref{prop:lattice-renormalizability}，两种算符都化为重—轻流之积，$\gamma_O=2\gamma_{hl}$。(2) 重—轻流的 Feynman 积分只通过 $v^2$ 与 $v\cdot k$ 依赖于静态源的方向；被积函数层次上把类时结果对 $v^2$ 解析延拓到 $v^2<0$ 即得类空结果\cite{Braun:2020ymy}。(3) 紫外极点与 $v^2$ 无关，在延拓下不变。(4) 三圈的显式计算验证了这一点。第~23~章的解析延拓技术是同一思想的推广。完整论证见\cite{Braun:2020ymy}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA：代换规则（被积函数层次对 $v^2$ 的解析延拓）是逐阶论证的，但没有写成重整化 Green 函数之间的恒等式；它继承\cref{prop:lattice-renormalizability}的瓶颈\cref{asm:lamet-aux-renorm}；到三圈有显式的一致性（\cite[附录~A]{Braun:2020ymy}；胶子到两圈）。提高途径：在辅助场表述中证明这一延拓。
+
+\begin{definition}[准关联函数的重整化方案]\label{def:lamet-schemes}
+一个重整化方案 $X$ 由重整化因子 $Z_X$ 定义；按文献\cite{IzubuchiEtAl2018}，它与 $\MSbar$ 之间的换算因子 $Z'_X$ 由下面第二式定义：
+\[
+\tilde h^X=\lim_{a\to0}\frac{\tilde h(z,a)}{Z_X(z,a)},\qquad \tilde h^X=Z'_X\big(z^2\mu_R^2,\mu_R/\mu\big)\,\tilde h^{\MSbar}.
+\]
+常用方案如下（一览见本章后文的方案表）：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{Wilson 线质量减除}：$Z_X=\ee^{\delta m|z|}Z_{\log}$；换算因子与 $z$ 无关\cite{Chen:2016fxx,Ishikawa:2016znu,Green:2017xeu}（\cite{Ishikawa:2016znu}为预印本）。
+\item \emph{RI/MOM}：$Z^{-1}\tilde h_{\rm quark}(z,p)|_{p^2=-\mu_R^2,\,p^z=p^z_R}=$ 树图值；换算因子依赖于 $z$，含 $\ln z^2\mu_R^2$，并依赖于规范与投影的选择\cite{Constantinou:2017sej,Stewart:2017tvs,Alexandrou:2017huk,Chen:2017mzz,LatticeParton:2018gjr}。
+\item \emph{比值（约化 ITD）}：$\tilde h(\lambda,z^2)/\tilde h(0,z^2)$（或除以真空矩阵元）；换算因子 $1/C_0(-z^2\mu^2)$\cite{Radyushkin2017,Orginos:2017kos,Braun:2018brg}。
+\item \emph{混合方案}：$|z|\le z_S$ 用比值方案；$|z|>z_S$ 用 $\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$，$Z_{\rm hyb}=\ee^{\delta mz_S}/\tilde h(0,z_S^2)$ 由 $z_S$ 处的连续性确定；换算因子为 $1/C_0(\min(|z|,z_S))$，对所有 $z$ 都是微扰的\cite{Ji:2020brr}。于是对 $|z|>z_S$，
+\begin{equation}\label{eq:lamet-hybrid-conv}
+\tilde h_{\rm hyb}=\frac{\tilde h_{\MSbar}}{C_0(z_S)}=\tilde h_{\rm ratio}\,\frac{C_0(z)}{C_0(z_S)} .
+\end{equation}% VF-LAM-3
+\item \emph{自重整化}：把 $\ln Z(a)$ 拟合成 $m_{-1}(a)/a+m_0$、离散化项与短距离 $\MSbar$ 形状之和\cite{LatticePartonLPC:2021gpi}（据该文摘要）。
+\item \emph{Coulomb 规范}：不带规范链的 Coulomb 规范夸克双线性算符，没有线性发散，$Z$ 与 $z$ 无关\cite{Gao:2023lny,Zhao:2023ptv}（据其摘要）。
+\end{enumerate}
+\uses{def:lattice-quasi,prop:lattice-renormalizability,def:prelim-msbar}
+\end{definition}
+
+\cref{eq:lamet-hybrid-conv}的推导：部分子态、领头扭度下 $\tilde h_{\MSbar}(0,z^2)=C_0(-z^2\mu^2)$；$|z|>z_S$ 处，裸的 $\tilde h\,\ee^{-\delta m|z|}$ 与 $\tilde h(0,z_S^2)\ee^{-\delta mz_S}$ 的对数因子相同，比值为 $\tilde h_{\MSbar}(\lambda,z^2)/C_0(z_S)$；再用 $\tilde h_{\rm ratio}=\tilde h_{\MSbar}/C_0(z)$。这里假定线性发散被完全减去；残余 $\ee^{-m_0|z|}$ 的效应如下。
+
+\begin{lemma}[残余线性项 $\ee^{-m_0|z|}$ 的 Lorentz 抹平]\label{lem:lamet-lorentzian}
+设 $\tilde h_1(\lambda)=\ee^{-m_0|\lambda|/P^z}\tilde h_2(\lambda)$，$\tilde q_{1,2}$ 为按\cref{eq:lamet-quasi-itd}得到的准 PDF，$\delta=m_0/P^z$。则
+\begin{equation}\label{eq:lamet-lorentzian}
+\tilde q_1(y)-\tilde q_2(y)=\frac1\pi\int\dd y'\,\frac{\delta}{\delta^2+(y-y')^2}\big[\tilde q_2(y')-\tilde q_2(y)\big];
+\end{equation}
+若 $\tilde q_2$ 有界且二阶导数有界，则 $\sup_y|\tilde q_1-\tilde q_2|\le\frac\delta\pi\big(\|\tilde q_2''\|_\infty+4\|\tilde q_2\|_\infty\big)$：这是 $m_0/P^z$ 的\emph{线性}修正。
+\uses{def:lattice-quasi}
+\end{lemma}
+
+\begin{proof}
+$\int\frac{\dd\lambda}{2\pi}\ee^{-\ii u\lambda}\ee^{-\delta|\lambda|}=\frac1{2\pi}\frac{2\delta}{\delta^2+u^2}=L_\delta(u)$，$\int L_\delta=1$；由卷积定理 $\tilde q_1=L_\delta*\tilde q_2$，减去 $\tilde q_2(y)\int L_\delta$ 即得\cref{eq:lamet-lorentzian}（此恒等式见\cite{Ji:2020brr}）。令 $u=y'-y$。$|u|<1$：$\tilde q_2(y+u)-\tilde q_2(y)=u\tilde q_2'(y)+\frac{u^2}2\tilde q_2''(\eta)$，线性项在对称区间上积分为零，由 $\frac{u^2}{\delta^2+u^2}\le1$，余下部分不超过 $\frac1\pi\cdot\frac{\|\tilde q_2''\|_\infty}2\int_{-1}^1\delta\,\dd u=\frac\delta\pi\|\tilde q_2''\|_\infty$。$|u|\ge1$：$|\tilde q_2(y+u)-\tilde q_2(y)|\le2\|\tilde q_2\|_\infty$，$\int_{|u|\ge1}\frac{\delta\,\dd u}{\delta^2+u^2}\le\int_{|u|\ge1}\frac{\delta}{u^2}\dd u=2\delta$，这部分不超过 $\frac4\pi\delta\|\tilde q_2\|_\infty$。相加即得。
+\end{proof}
+
+\begin{proposition}[Wilson 线自能的线性重整子与领头重整子重求和 \tagP]\label{prop:lamet-lrr}
+（大 $\beta_0$ 泡链近似中的陈述。）
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 格点上 $\delta m=m_{-1}(a)/a+m_0$；$m_{-1}=\order{\as}$ 是普适的，$m_0=\order{\Lambda}$ 依赖于固定 $\delta m$ 的条件（静态势、大 $z$ 衰减、辅助场传播子、RI/MOM）。
+\item 线性发散自能的微扰级数在 $u=\frac12$ 处有极点质量型的重整子（\cref{def:power-borel}）；在 $n\sim1/\as$ 处截断，$\delta m$ 留有 $\order{\Lambda}$ 的模糊度。
+\item 残余的 $\ee^{-m_0|z|}$ 使 $\tilde q$ 被宽度为 $m_0/P^z$ 的 Lorentz 分布抹平（\cref{lem:lamet-lorentzian}）：线性幂次修正 $\order{\Lambda/(xP^z)}$。
+\item 在 $\MSbar$ 中，准 ITD 的 Wilson 系数 $C_k(\as,z^2\mu^2)$ 带有相应的 $u=\frac12$ 重整子，其模糊度与 $|z|$ 成线性、与自旋无关；领头重整子重求和（LRR）——在 $C_k$ 与 $m_0$ 中用同一个主值处方，并由短距离处 $P^z=0$ 的矩阵元确定 $m_0$——消去 $\order{\Lambda/P^z}$ 修正；归一化（比值）方案中没有 $u=\frac12$ 项。
+\end{enumerate}
+（本命题是泡链近似中关于微扰级数与算符重整化的陈述。）
+\uses{lem:lamet-lorentzian,def:lamet-schemes,def:power-borel,prop:power-renormalon-examples,prop:lattice-renormalizability}
+\end{proposition}
+
+\begin{proofsketch}
+(a) 见\cite{Ji:2020brr}。(b) 是极点质量重整子\cite{Beneke:1994sw,Bigi:1994em}（参见\cref{prop:power-renormalon-examples}，\tagP）：线性发散 $\propto\as/a$ 的级数系数阶乘增长，截断模糊度 $\order{\Lambda}$。(c) 是\cref{lem:lamet-lorentzian}。(d) 文献\cite{Braun:2018brg}在泡链中算出坐标空间系数函数的 Borel 变换，在 $u=\frac12$ 处有奇点（该文称之为紫外重整子，因为它来自 Wilson 线自能的线性紫外发散；按\cref{def:power-borel}的约定它位于正半轴），模糊度 $\propto\Lambda|z|$，归一化后消失；文献\cite{Zhang:2023bxs}提出 LRR，并用格点微扰论到二十圈交叉检验了极点质量归一化；另见\cite{Holligan:2023rex}（据其摘要）。完整论证见所引文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagP：只是关于泡链的严格陈述；处方是一种方案选择；$m_0(\tau)$ 在不同矩阵元之间是否普适尚未解决（它依赖于外态\cite{Zhang:2023bxs}）；具体格点系综上的数值（$m_0$ 的值、“改进 3--5 倍”）不作为一般事实。超出大 $\beta_0$ 的重整子结构是\cref{conj:power-renormalon-ht}型的猜想。
+
+\begin{proposition}[欧氏格点矩阵元与 Minkowski 矩阵元的等同 \tagA]\label{prop:lamet-euclid-minkowski}
+据该文摘要\cite{Briceno:2017cpo}：欧氏格点 QCD 中算出的等时矩阵元与 Minkowski（LSZ）矩阵元相同，这一等同在微扰论的所有阶唯一。有限体积效应对空间非定域算符是指数小的，但随 $|z|$ 增大（据\cite{Briceno:2018lfj}摘要）。（本命题是关于等时矩阵元的欧氏与 Minkowski 表示之间关系的陈述。）
+\uses{def:lattice-quasi}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagA：这里只依据该文摘要，把它作为作者的陈述给出，不提供超出其思想的证明。思想是：等时算符不需要对算符本身作欧氏延拓，欧氏时间只用来投影出外态。所以它不同于需要实时演化的量（例如强子张量），后者的欧氏化本身就是一个逆问题。
+
+%%% BEGIN fig:lamet-lattice-geometries
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 grid/.style={draw=gray!30,line width=0.3pt},
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 site/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=5pt},
+  fd2 osite/.style={circle,draw=black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5pt},
+  fd2 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lab/.style={font=\small,fill=white,inner sep=1pt},
+  fd2 note/.style={font=\footnotesize,fill=white,inner sep=1pt}]
+  % ======================= (a) quasi-PDF operator =======================
+  \begin{scope}
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.4,1.8);
+    \draw[wilson plain] (0,0) -- (1.8,0);
+    \path[fd2 warrow=0.56] (0,0) -- (1.8,0);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (1.8,0) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=north] at (1.8,-0.12) {$\bar\psi(z\hat e_z)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$z$} (1.8,0.36);
+    \draw[fd2 dim] (2.1,1.32) -- node[fd2 note,above=1pt] {$a$} (2.4,1.32);
+    \draw[fd2 ax] (-0.45,1.05) -- (0.2,1.05) node[fd2 note,right=0pt] {$\hat z$};
+    \draw[fd2 ax] (-0.45,1.05) -- (-0.45,1.62) node[fd2 note,right=1pt] {$\vec b_\perp$};
+    \node[font=\small] at (0.9,-1.15) {$\bar\psi(z\hat e_z)\,\Gamma\,W[z\hat e_z,0]\,\psi(0)$};
+    \node[font=\small] at (0.9,-1.75) {(a)\ 准 PDF：直 Wilson 线};
+  \end{scope}
+  % ======================= (b) quasi-TMD operator: space-like staple =======================
+  \begin{scope}[xshift=4.4cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.7,1.8);
+    \draw[wilson plain] (0,0) -- (2.1,0) -- (2.1,1.2) -- (0.9,1.2);
+    \path[fd2 warrow=0.52] (0,0) -- (2.1,0);
+    \path[fd2 warrow=0.55] (2.1,0) -- (2.1,1.2);
+    \path[fd2 warrow=0.6] (2.1,1.2) -- (0.9,1.2);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (0.9,1.2) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=south] at (0.75,1.33) {$\bar\psi(z\hat e_z+\vec b_\perp)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$L$} (2.1,0.36);
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \draw[red!60!black,line width=0.6pt,-{Stealth[length=4.5pt,width=3.8pt]}] (2.25,0.6) -- (2.85,0.6) node[font=\footnotesize,text=red!55!black,right=1pt] {$L\to\infty$};
+    \node[font=\small] at (1.05,-1.15) {$\bar\psi(z\hat e_z+\vec b_\perp)\,\Gamma\,\mathcal W_z\,\psi(0)$};
+    \node[font=\small] at (1.05,-1.75) {(b)\ 准 TMD：类空订书钉};
+  \end{scope}
+  % ======================= (c) rectangular Wilson loop =======================
+  \begin{scope}[xshift=9.45cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (4.8,1.8);
+    \draw[wilson plain] (0,0) rectangle (4.2,1.2);
+    \path[fd2 warrow=0.5] (0,0) -- (4.2,0);
+    \path[fd2 warrow=0.55] (4.2,0) -- (4.2,1.2);
+    \path[fd2 warrow=0.5] (4.2,1.2) -- (0,1.2);
+    \path[fd2 warrow=0.55] (0,1.2) -- (0,0);
+    \draw[fd2 dim] (0,-0.36) -- (4.2,-0.36);
+    \node[fd2 note] at (2.1,-0.36) {$2L$};
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \node[font=\small,fill=white,inner sep=1.2pt] at (2.1,0.6) {$Z_E(2L,b_\perp)$};
+    \node[font=\small] at (2.1,-1.15) {$\frac1{N_c}\Tr\langle0|W_\perp\,\mathcal W_z(\vec b_\perp;2L)|0\rangle$};
+    \node[font=\small] at (2.1,-1.75) {(c)\ 矩形 Wilson 圈};
+  \end{scope}
+\end{tikzpicture}
+\caption{格点上的算符几何（等时面 $t=0$，晶格间距 $a$；实心点为 $\psi$、空心点为 $\bar\psi$ 所在格点，双线为规范链，箭头为路径方向，即 $W[b,a]$ 由 $a$ 指向 $b$）：
+(a)~准 PDF 算符的直 Wilson 线 $W[z\hat e_z,0]$；(b)~准 TMD 算符的订书钉形 Wilson 线 $\mathcal W_z$：自 $\psi$ 沿 $+\hat z$ 走长度 $L$，经横向连接（间隔 $b_\perp$），再沿 $-\hat z$ 回到 $\bar\psi$（图示为 DY 型；SIDIS 型沿 $-\hat z$）；
+(c)~矩形 Wilson 圈 $Z_E(2L,b_\perp)$，$\sqrt{Z_E}$ 除去订书钉的线性发散、尖点发散与捏点奇点，使 $L\to\infty$ 的极限存在。手征对称性不严格的格点费米子还引起同维混合 $\Gamma\to\Gamma'$（见正文）。
+注意：这里的订书钉是类空的，与\cref{fig:tmd-staple}中 Collins TMD 的类光订书钉不同。}
+\label{fig:lamet-lattice-geometries}
+\end{figure}
+%%% END fig:lamet-lattice-geometries
+
+\section{单圈与两圈匹配核}\label{sec:lamet-oneloop}
+
+显式的定阶结果在所述的阶上是严格的；它们检验全阶匹配定理（\cref{sec:lattice-matching}），也是格点分析的输入。单圈图见\cref{fig:lamet-oneloop}，记号见\cref{tab:lamet-conventions}（$D=[0,1]$ 上的加号分布简记为 $[g]_+$）。
+
+%%% BEGIN fig:lamet-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 light/.style={draw=gray!60},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs/\wpos/\ttl in {a/0/0.5/{(a)\ 顶点}, b/3.1/0.32/{(b)\ 帆}, c/6.2/0.68/{(c)\ 帆（镜像）}, d/9.3/0.5/{(d)\ Wilson 线自能}, e/12.4/0.5/{(e)\ 外线自能}} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (O1) at (-0.85,0);   \coordinate (O2) at (0.85,0);
+    \coordinate (I) at (-1.35,-1.35); \coordinate (F) at (1.35,-1.35);
+    \coordinate (i1) at ($(I)!0.5!(O1)$); \coordinate (f1) at ($(O2)!0.5!(F)$);
+    \if a\panel \draw[gluon] (i1) -- (f1); \fi
+    \if b\panel \draw[gluon] (i1) to[bend right=28] (0.32,0); \fi
+    \if c\panel \draw[gluon] (-0.32,0) to[bend right=28] (f1); \fi
+    \if d\panel \draw[gluon] (-0.48,0) arc[start angle=180,end angle=360,radius=0.48]; \fi
+    \if e\panel
+      \draw[gluon,fd2 light] ($(I)!0.22!(O1)$) to[bend left=80] ($(I)!0.78!(O1)$);
+    \fi
+    \draw[wilson=\wpos] (O1) -- (O2);
+    \if e\panel
+      \draw[quark=0.88,fd2 light] (I) -- (O1);
+    \else
+      \draw[quark=0.3] (I) -- (O1);
+    \fi
+    \draw[quark=0.7] (O2) -- (F);
+    \if a\panel \node[vertex] at (i1) {}; \node[vertex] at (f1) {}; \fi
+    \if b\panel \node[vertex] at (i1) {}; \node[vertex] at (0.32,0) {}; \fi
+    \if c\panel \node[vertex] at (-0.32,0) {}; \node[vertex] at (f1) {}; \fi
+    \if d\panel \node[vertex] at (-0.48,0) {}; \node[vertex] at (0.48,0) {}; \fi
+    \if e\panel
+      \node[vertex,fill=gray!60] at ($(I)!0.22!(O1)$) {}; \node[vertex,fill=gray!60] at ($(I)!0.78!(O1)$) {};
+    \fi
+    \node[opvertex] at (O1) {};  \node[opvertex] at (O2) {};
+    \node[fd2 note,above=2pt] at (O1) {$0$};
+    \node[fd2 note,above=1pt] at (O2) {$z\hat e_z$};
+    \node[fd2 lab] at (0,-1.78) {\ttl};
+  \end{scope}}
+  % external momenta (same in all panels)
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.24] (-1.35,-1.35) -- (-0.85,0);
+  \path[mom={$p$},mom sep=0.22cm,mom length=0.4cm,mom pos=0.76] (0.85,0) -- (1.35,-1.35);
+  % unphysical-region contributions (xi > 1), VF-LAM-7
+  \node[fd2 lab] at (0,-2.62) {$a\displaystyle\int_0^1\!\dd y\,\frac{1-y}{|\xi-y|}$};
+  \draw[fd2 bracket] (1.75,-2.08) -- (1.75,-2.16) -- (7.75,-2.16) -- (7.75,-2.08);
+  \node[fd2 lab] at (4.65,-2.62) {(b)+(c)：$\dfrac{a}{1-\xi}\displaystyle\int_0^1\!\dd y\,\frac{\xi+y}{|\xi-y|}$};
+  \node[fd2 lab] at (9.3,-2.62) {$-\dfrac{a}{|1-\xi|}$};
+  \node[fd2 note,text=gray!45!black] at (12.4,-2.62) {（只出现在 $\delta(1-\xi)$ 中）};
+\end{tikzpicture}
+\caption{准 PDF 的单圈图（Feynman 规范，在壳无质量夸克 $p=(p^z,0,0,p^z)$，$\Gamma=\gamma^0$；入射与出射夸克动量同为 $p$，前向矩阵元，无割线）。双线为等时、沿 $\hat z$ 的类空 Wilson 线 $W[z\hat e_z,0]$（箭头为路径方向），$\otimes$ 为算符端点 $\psi(0)$、$\bar\psi(z\hat e_z)$：
+(a)~顶点图，(b)(c)~“帆”图，(d)~Wilson 线自能，(e)~外线自能。图下为非物理区 $\xi>1$ 中各图的贡献（$y$ 为 Feynman 参数，$a=\frac{\alpha_sC_F}{2\pi}$），在 $d=4$ 中都有限，其和为
+$\tilde q^{(1)}=a\big[\frac{1+\xi^2}{1-\xi}\ln\frac{\xi}{\xi-1}+1\big]$（VF-LAM-7，与\cite{IzubuchiEtAl2018}附录 B 一致）；维数正规化中 Wilson 线自能没有线性发散。}
+\label{fig:lamet-oneloop}
+\end{figure}
+%%% END fig:lamet-oneloop
+\begin{proposition}[准 PDF 匹配的单圈结果 \tagR]\label{prop:lamet-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈、味非单态、算符按 $\MSbar$ 重整化（单圈抵消项在此计算，它就是\cref{prop:lattice-renormalizability}(d) 的单圈内容）、部分子态以维数正规化为红外正规子时：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=2pt,topsep=2pt]
+\item 坐标空间核（$\Gamma=\gamma^0$：$\sigma=0$；$\Gamma=\gamma^z$：$\sigma=1$）
+\begin{equation}\label{eq:lamet-coord-kernel}
+\begin{split}
+\mathcal C(\alpha,L_z)={}&\Big[1+a\Big(\frac32L_z+\frac32\Big)\Big]\delta(1-\alpha)\\
+&+a\Big\{\Big[\frac{1+\alpha^2}{1-\alpha}\Big]_+(-L_z-1)-\Big[\frac{4\ln(1-\alpha)}{1-\alpha}\Big]_++2(1+\sigma)(1-\alpha)\Big\}\theta(\alpha)\theta(1-\alpha),
+\end{split}
+\end{equation}% VF-LAM-4
+其矩为 $C_n=\int\dd\alpha\,\alpha^n\mathcal C=1+a\big[\big(\frac{3+2n}{2+3n+n^2}+2H_n\big)L_z+\frac{5+2n}{2+3n+n^2}+2(1-H_n)H_n-2H^{(2)}_n\big]$（$\gamma^z$ 另加 $\frac{2a}{2+3n+n^2}$；$H_n=\sum_{i\le n}\frac1i$，$H^{(2)}_n=\sum_{i\le n}\frac1{i^2}$），特别地 $C_0=1+a(\frac32L_z+\frac52)$（$\gamma^z$：$\frac72$）；重整化群方程 $\frac{\dd\mathcal C}{\dd\ln\mu^2}=a[\frac32\delta(1-\alpha)-B(\alpha)]$，$B=[\frac{1+\alpha^2}{1-\alpha}]_+$。
+\item 比值核 $\mathcal C^{\rm ratio}\equiv\mathcal C/C_0$：在单圈 $\mathcal C^{\rm ratio}=\mathcal C-\delta(1-\alpha)(C_0-1)=\delta(1-\alpha)+a\big\{B(-L_z-1)-[\frac{4\ln(1-\alpha)}{1-\alpha}]_++(1+\sigma)[2(1-\alpha)]_+\big\}$，它的单圈部分全是加号分布；它与 Radyushkin 的约化 ITD 关系相同（他的 $\nu=-\lambda$）。% VF-LAM-5 (the O(a) part of VF-LAM-5 is written with the tree-level delta added)
+\item 非物理区的准 PDF 即\cref{ex:lattice-quasi-tree}(b) 的\cref{eq:lamet-unphysical}。
+\item 动量空间核（在固定部分子动量下分别是 (a)(b) 的分布意义下的 Fourier 变换；$\xi=\pm\infty$ 处的 $\delta$ 函数已略去，它们对 $f(y)\sim y^{-1+a'}$、$a'>0$ 不起作用）：
+\begin{equation}\label{eq:lamet-CMS}
+\begin{split}
+C^{\MSbar}(\xi)={}&\delta(1-\xi)\Big[1+a\Big(\frac32\ell_p+\frac52\Big)\Big]\\
+&+a\begin{cases}\big[\frac{1+\xi^2}{1-\xi}\ln\frac\xi{\xi-1}+1+\frac3{2\xi}\big]^{[1,\infty]}_{+(1)}-\frac3{2\xi},&\xi>1\\[3pt]\big[\frac{1+\xi^2}{1-\xi}\big(-\ell_p+\ln(\xi(1-\xi))\big)-\frac{\xi(1+\xi)}{1-\xi}\big]^{[0,1]}_{+(1)},&0<\xi<1\\[3pt]\big[-\frac{1+\xi^2}{1-\xi}\ln\frac{-\xi}{1-\xi}-1+\frac3{2(1-\xi)}\big]^{[-\infty,0]}_{+(1)}-\frac3{2(1-\xi)},&\xi<0\end{cases},
+\end{split}
+\end{equation}
+\begin{equation}\label{eq:lamet-Cratio}
+C^{\rm ratio}(\xi)=\delta(1-\xi)+a\begin{cases}\big[\frac{1+\xi^2}{1-\xi}\ln\frac\xi{\xi-1}+1-\frac3{2(1-\xi)}\big]^{[1,\infty]}_{+(1)},&\xi>1\\[3pt]\big[\frac{1+\xi^2}{1-\xi}\big(-\ell_p+\ln(\xi(1-\xi))-1\big)+1+\frac3{2(1-\xi)}\big]^{[0,1]}_{+(1)},&0<\xi<1\\[3pt]\big[-\frac{1+\xi^2}{1-\xi}\ln\frac{-\xi}{1-\xi}-1+\frac3{2(1-\xi)}\big]^{[-\infty,0]}_{+(1)},&\xi<0\end{cases}
+\end{equation}% VF-LAM-8
+对 $\gamma^z$，$\MSbar$ 核加 $2a(1-\xi)\theta(0<\xi<1)$，比值核加 $a[2(1-\xi)]^{[0,1]}_{+(1)}$。
+\item 端点结构（第~23~章阈值因子化的输入）：$0<\xi<1$ 时 $C^{\MSbar}\supset\frac{2a}{1-\xi}\big(L_\zeta+\ln(1-\xi)-1\big)$，$\xi>1$ 时 $C^{\MSbar}\supset\frac{2a\ln(\xi-1)}{\xi-1}$，合起来是
+$a(L_\zeta-1)\big[\mathcal P\frac1{1-\xi}+\mathcal P\frac1{|1-\xi|}\big]+a\,\mathcal P\frac{\ln(1-\xi)^2}{|1-\xi|}$，其中 $L_\zeta=\ln(4p_z^2/\mu^2)$，$\mathcal P$ 表示 $\xi=1$ 处的减除处方。
+\item 动量重整化群：$P^z\frac{\dd\tilde q}{\dd P^z}=\frac{\as C_F}\pi\big[\big[\frac{1+y^2}{1-y}\big]_+-\frac32\delta(1-y)\big]\otimes f+\order{\as^2}$。
+\end{enumerate}
+\uses{def:lattice-quasi,def:lamet-schemes,def:prelim-msbar,prop:pdf-partonic-dr,prop:pdf-lo-kernels,def:prelim-plus,ex:lattice-quasi-tree}
+\end{proposition}
+
+\begin{proof}
+(c)(e)(f) 的证明是完整的；(a)(b)(d) 只给出计算的结构与关键恒等式（概要），完整的单圈积分见\cite[第~III~节与附录~B]{IzubuchiEtAl2018}与\cite{Radyushkin:2018cvn}。
+
+(a) 夸克靶的裸单圈 ITD（各图见\cref{ex:lattice-quasi-tree}与\cite[第~III~节]{IzubuchiEtAl2018}）等于 $a(\mu|z|/2)^{2\varepsilon}\ee^{\varepsilon\gamma_E}$ 乘以：紫外极点 $\frac32\frac1{\varepsilon_{\rm UV}}\ee^{\ii\lambda}$（\cref{prop:lattice-renormalizability}(d) 的分解），加上只含红外极点与有限部分的项。按 $\MSbar$ 减去紫外极点后，红外极点正好是 $\MSbar$ 部分子分布 $f_{q/q}=\delta(1-y)-\frac{\as}{2\pi}\frac1{\varepsilon}P_{qq}$（\cref{prop:pdf-partonic-dr}，\tagR，$R_{\mathrm{PT}}$；$P_{qq}=C_F B$，\cref{prop:pdf-lo-kernels}）的 Ioffe 时间变换，二者相减即得\cref{eq:lamet-coord-kernel}；这是\cite{IzubuchiEtAl2018,Radyushkin:2018cvn,Zhang:2018ggy}的计算。矩由逐项积分得出：$\int_0^1\alpha^nB=-\frac{3+2n}{2+3n+n^2}-2H_n+\frac32$、$\int_0^1[\frac{4\ln(1-\alpha)}{1-\alpha}]_+\alpha^n=2(H_n^2+H_n^{(2)})$ 等（我们对 $n\le12$ 逐一核对了闭式）。因 $\dd L_z/\dd\ln\mu^2=1$，\cref{eq:lamet-coord-kernel}给出重整化群方程；它与 DGLAP $\frac{\dd I}{\dd\ln\mu^2}=a\,B\otimes I$ 合起来给出 $\frac{\dd\tilde h}{\dd\ln\mu^2}=\frac32a\,\tilde h+\order{a^2}$，正是\cref{prop:lattice-renormalizability}(d) 的算符反常维度。
+
+(b) 约化 ITD $\tilde h(\lambda,z^2)/\tilde h(0,z^2)$ 的核是 $\mathcal C/C_0$（部分子靶 $\tilde h(0,z^2)=C_0$），单圈即 $\mathcal C-\delta(1-\alpha)(C_0-1)$。(a) 的 $\delta$ 项系数 $a(\frac32L_z+\frac32)$ 减去 $C_0-1=a(\frac32L_z+\frac52+\sigma)$ 得 $-a(1+\sigma)$，与 $2(1+\sigma)(1-\alpha)$ 合成 $(1+\sigma)[2(1-\alpha)]_+$（因 $\int_0^12(1-\alpha)=1$）。Radyushkin 的关系\cite{Radyushkin:2018cvn}是 $\mathcal I(\nu,\mu^2)=\mathfrak M(\nu,z_3^2)+a\int_0^1\dd w\,\mathfrak M(w\nu)\{B(w)[L_z+1]+[4\frac{\ln(1-w)}{1-w}-2(1-w)]_+\}$，在单圈求逆即得 $\sigma=0$ 的 $\mathcal C^{\rm ratio}$；核是实的，$\nu=-\lambda$ 只翻转相位。
+
+(c) 见\cref{ex:lattice-quasi-tree}。
+
+(d) 对夸克靶，由\cref{def:lattice-quasi}，动量空间核是夸克的单圈准 PDF 减去 $f^{(1)}_{q/q}$，也就是 (a)（相应地 (b)）在 $z^2=-\lambda^2/p_z^2$ 的射线上的 Fourier 变换。所需的分布 Fourier 变换是 $\int\frac{\dd\lambda}{2\pi}\ee^{-\ii u\lambda}\ln\lambda^2=-2\gamma_E\delta(u)-[1/|u|]_{\rm reg}$，以及 $\int_0^1\dd\alpha\,g(\alpha)\ee^{\ii\alpha\lambda}$ 型项的变换；结果是\cite[第~III~节]{IzubuchiEtAl2018}所给的\cref{eq:lamet-CMS,eq:lamet-Cratio}。区域 $\xi>1$ 与 $\xi<0$ 上被积函数与\cref{eq:lamet-unphysical}一致；$\pm\frac3{2\xi}$、$\pm\frac3{2(1-\xi)}$ 的移入移出使加号分布内的函数在 $|\xi|\to\infty$ 时可积。我们用 Gauss 型检验函数核对了\cref{eq:lamet-CMS,eq:lamet-Cratio}（两种 $\Gamma$）与 (a)(b) 的 Fourier 变换的配对，二者在数值精度内相同。
+
+(e) $0<\xi<1$：$\frac{1+\xi^2}{1-\xi}=\frac2{1-\xi}-(1+\xi)$，$\ln\xi=\order{1-\xi}$，$\frac{\xi(1+\xi)}{1-\xi}=\frac2{1-\xi}-(2+\xi)$，故方括号中的函数为 $\frac2{1-\xi}(L_\zeta+\ln(1-\xi)-1)+\order{1}$（用 $-\ell_p=L_\zeta$）。$\xi>1$：$\ln\frac\xi{\xi-1}=-\ln(\xi-1)+\order{\xi-1}$，故 $\frac{1+\xi^2}{1-\xi}\ln\frac\xi{\xi-1}=\frac{2\ln(\xi-1)}{\xi-1}+\order{1}$。两侧的奇异项合起来，$\xi<1$ 时 $a(L_\zeta-1)\cdot\frac2{1-\xi}+a\frac{\ln(1-\xi)^2}{1-\xi}$，$\xi>1$ 时 $a(L_\zeta-1)\cdot0+a\frac{\ln(\xi-1)^2}{\xi-1}$，正是所写的统一形式。
+
+(f) $\ell_p=\ln\frac{\mu^2}{4y^2P_z^2}$，$P^z\frac{\dd\ell_p}{\dd P^z}=-2$；\cref{eq:lamet-CMS}只通过 $a\{[\frac{1+\xi^2}{1-\xi}(-\ell_p)]^{[0,1]}_{+(1)}+\frac32\ell_p\delta(1-\xi)\}$ 依赖于 $\ell_p$，故 $P^z\frac{\dd C^{\MSbar}}{\dd P^z}=2a\{[\frac{1+\xi^2}{1-\xi}]_+-\frac32\delta(1-\xi)\}$；代入 $\tilde q=\int\frac{\dd y}{|y|}C\big(\frac xy,\frac\mu{|y|P^z}\big)f(y)$（$f$ 与 $P^z$ 无关）并用 $2a=\as C_F/\pi$ 即得。比值方案中没有 $-\frac32\delta$ 项。
+\end{proof}
+
+上述卷积何时收敛？准 PDF 的矩是否存在？（下面 (iii) 中的 $\MSbar$ 条件已见于\cite{IzubuchiEtAl2018}；混合方案与物理夸克分布的部分是本书给出的推导。）
+
+\begin{proposition}[单圈准 PDF 的尾部、矩与卷积定义域 \tagR]\label{prop:lamet-tails}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈，记 $C_{\rm fn}$ 为 $\xi\ne1$ 处作为函数的核，则当 $\xi\to\pm\infty$ 时
+\begin{equation}\label{eq:lamet-tails}
+C^{\MSbar}_{\rm fn}(\xi)=-\frac{3a}{2|\xi|}-\frac{17a}{6}\frac{{\rm sgn}(\xi)}{\xi^2}+\order{|\xi|^{-3}},\qquad C^{\rm ratio}_{\rm fn}(\xi)=-\frac{4a}{3}\frac{{\rm sgn}(\xi)}{\xi^2}+\order{|\xi|^{-3}}.
+\end{equation}% VF-LAM-9
+因此：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item $\MSbar$ 准 PDF 在大 $|x|$ 处为 $-\frac{3a}{2|x|}\int f+\order{x^{-2}}$——当 $\int f\neq0$ 时没有零阶矩；这是 $z\to0$ 处 $\ln z^2$ 奇异性的反映。
+\item 比值方案中 $\int\dd x\,\tilde q=\int f$ 精确成立（对所有阶，由构造），但 $\tilde q\to-\frac{4a}3\frac{{\rm sgn}(x)}{x^2}\langle y\rangle$，$\langle y\rangle=\int_{-1}^1y\,f(y)\,\dd y=\int_0^1y\,(q+\bar q)\,\dd y$，故一阶矩对数发散，更高阶矩按幂次计数发散。
+\item 固定 $x\neq0$，在 $y\to0$ 附近卷积 $\int\frac{\dd y}{|y|}C(\frac xy)f(y)$ 的被积函数为：$\MSbar$，$-\frac{3a}{2|x|}f(y)(1+\order{y})$；混合方案（其参数是 $\lambda_S=z_S|y|P^z$，所以括号在固定 $\lambda_S$ 下的衰减在 $y\to0$ 时没有帮助），$\frac{3a}{2|x|}\big[\frac2\pi{\rm Si}(|x|z_SP^z)-1\big]f(y)(1+\order{y})$；比值方案，$\order{|yf(y)|}$。因此 $\MSbar$ 与混合方案的卷积绝对收敛当且仅当 $\int_{|y|<\epsilon}|f|<\infty$（混合方案除去使方括号为零的孤立的 $|x|z_SP^z$），比值方案只需 $\int|yf|<\infty$。对物理的夸克分布（$y<0$ 处 $f(y)=-\bar q(-y)$），$\order1$ 项合成 $q-\bar q$：只要 $q-\bar q$ 与 $y(q+\bar q)$ 在小 $y$ 处可积，三种方案都给出有限的夸克准 PDF（卷积按对称地挖去 $|y|<\delta$、$\delta\to0^+$ 定义）——包括 Regge 型海夸克 $q,\bar q\sim y^{-\alpha_{\mathbb P}}$、$1\le\alpha_{\mathbb P}<2$ 的情形。胶子核不在本命题范围内。
+\end{enumerate}
+（本命题只涉及单圈部分子匹配核；$f$ 是任意给定的分布。）
+\uses{prop:lamet-oneloop,def:lamet-schemes}
+\end{proposition}
+
+\begin{proof}
+\emph{第 1 步（化归）。}对固定 $x\neq0$，令 $\xi=x/y$，则 $\frac{\dd y}{|y|}=\frac{\dd\xi}{|\xi|}$，$y\to0$ 对应于 $|\xi|\to\infty$。把核写成 $\delta(1-\xi)c_\delta+\sum_D[g_D]^D_{+(1)}+h$（$h$ 为加号分布之外的函数项）。$\delta$ 项只在 $y=x$ 处起作用；加号分布作用在 $\phi(\xi)=f(x/\xi)/|\xi|$ 上，给出 $\int_Dg_D(\xi)\phi(\xi)\dd\xi-f(x)\int_Dg_D\dd\xi$，后一项是有限常数（\cref{eq:lamet-CMS,eq:lamet-Cratio}中加号分布内的函数在 $|\xi|\to\infty$ 时为 $\order{\xi^{-2}}$，见下）。所以收敛性只取决于 $\int\frac{\dd y}{|y|}C_{\rm fn}(\frac xy)f(y)$ 在 $y\to0$ 附近的行为。
+
+\emph{第 2 步（尾部）。}$\xi>1$：$\ln\frac\xi{\xi-1}=\frac1\xi+\frac1{2\xi^2}+\frac1{3\xi^3}+\cdots$，$\frac{1+\xi^2}{1-\xi}=-(\xi+1+\frac2\xi+\frac2{\xi^2}+\cdots)$，乘积为 $-1-\frac3{2\xi}-\frac{17}{6\xi^2}+\order{\xi^{-3}}$；于是 $\MSbar$ 加号分布内的函数是 $-\frac{17}{6\xi^2}+\order{\xi^{-3}}$，加上外面的 $-\frac3{2\xi}$ 得 $C^{\MSbar}_{\rm fn}=-\frac3{2\xi}-\frac{17}{6\xi^2}+\cdots$。$\xi=-t\to-\infty$：$\frac{1+t^2}{1+t}\ln\frac{1+t}t=1-\frac3{2t}+\frac{17}{6t^2}+\cdots$，加号分布内的函数是 $1-\frac3{2t}+\frac{17}{6t^2}-1+\frac3{2(1+t)}=\frac4{3t^2}+\cdots$，加上外面的 $-\frac3{2(1+t)}$ 得 $-\frac3{2t}+\frac{17}{6t^2}+\cdots$。两侧合起来即\cref{eq:lamet-tails}的第一式。比值核中 $\xi>1$ 的函数为 $-1-\frac3{2\xi}-\frac{17}{6\xi^2}+1+\frac3{2(\xi-1)}=-\frac4{3\xi^2}+\cdots$，$\xi<0$ 为 $+\frac4{3t^2}+\cdots$，即第二式。在坐标空间看：$-\frac{3}{2|\xi|}$ 是 $\frac32\ln\lambda^2\,\delta(1-\alpha)$ 的 Fourier 变换（$\ln\lambda^2\to-1/|u|$），即 $C_0$ 中 $\frac32L_z$ 项的反映；比值核没有 $\delta(1-\alpha)\ln\lambda^2$ 项，其尾部系数 $-\frac43=\int_0^1(\alpha-1)\frac{1+\alpha^2}{1-\alpha}\dd\alpha$ 来自 $-L_zB$ 的一阶矩。
+
+\emph{第 3 步（$y\to0$ 的被积函数）。}由第 2 步，$\frac1{|y|}C_{\rm fn}(\frac xy)$ 中 ${\rm sgn}(\frac xy)\frac{y^2}{|y|}={\rm sgn}(x)\,y$，故 $\MSbar$：$\frac1{|y|}C^{\MSbar}_{\rm fn}=-\frac{3a}{2|x|}-\frac{17a}6\frac{{\rm sgn}(x)}{x^2}y+\order{y^2}$；比值：$-\frac{4a}3\frac{{\rm sgn}(x)}{x^2}y+\order{y^2}$。混合方案：由\cref{eq:lamet-hybrid-conv}与 $C_0=1+a(\frac32L_z+\frac52)$，$|z|>z_S$ 处 $\tilde h_{\rm hyb}-\tilde h_{\rm ratio}=\tilde h_{\rm ratio}[C_0(z)/C_0(z_S)-1]=\frac{3a}2\ln\frac{z^2}{z_S^2}\,\tilde h_{\rm ratio}+\order{a^2}$，即坐标核多出 $\frac{3a}2\delta(1-\alpha)\ln\frac{z^2}{z_S^2}\theta(|z|-z_S)$。沿准 PDF 的射线 $z^2=-\lambda^2/P_z^2$，$\ln\frac{z^2}{z_S^2}=\ln\frac{\lambda^2}{\Lambda_S^2}$，$\Lambda_S\equiv z_SP^z$ \emph{与 $y$ 无关}；因此单圈修正是 $\frac{3a}2\int\dd y\,f(y)\,G(x-y)$，
+\[
+G(u)=\int\frac{\dd\lambda}{2\pi}\,\ee^{-\ii u\lambda}\ln\frac{\lambda^2}{\Lambda_S^2}\,\theta(|\lambda|-\Lambda_S)=\frac2\pi\int_{\Lambda_S}^\infty\dd\lambda\,\cos(u\lambda)\ln\frac\lambda{\Lambda_S}=-\frac1{|u|}+\frac{2\,{\rm Si}(u\Lambda_S)}{\pi u}\qquad(u\neq0),
+\]
+最后一步分部积分并用 $\int_0^\infty\frac{\sin(u\lambda)}\lambda\dd\lambda=\frac\pi2{\rm sgn}(u)$；$u=0$ 处的减除由 $\lambda=0$ 处修正为零（$\int G\,\dd u=0$）固定，与 $y\to0$ 无关。即混合方案的修正在强子变量下是平移不变的核 $G(x-y)$（偶函数）。$y\to0$ 时 $G(x-y)\to G(x)=\frac1{|x|}\big[\frac2\pi{\rm Si}(|x|z_SP^z)-1\big]$，一般不为零（它只在 ${\rm Si}(v)=\frac\pi2$ 的孤立点 $v=|x|z_SP^z\approx1.93,\,4.89,\,7.97,\dots$ 为零）。这就是 (iii) 中的三个被积函数。
+
+\emph{第 4 步（收敛性）。}被积函数写成 $k(y)f(y)$，$k$ 在 $y=0$ 的两侧连续。若 $k(0)=c_0\neq0$（$\MSbar$：$c_0=-\frac{3a}{2|x|}$；混合：$c_0=\frac{3a}2G(x)$），则 $kf$ 在零点附近绝对可积当且仅当 $f$ 绝对可积；若 $k(y)=\order{|y|}$（比值），则 $\int|yf|<\infty$ 足够。
+
+\emph{第 5 步（物理夸克分布）。}设 $k(t)=c_0+c_1^+t+\order{t^2}$、$k(-t)=c_0-c_1^-t+\order{t^2}$（$t>0$；两侧斜率可以不同，但 $c_0$ 相同——$\MSbar$ 尾部为偶函数，$G$ 在 $y=0$ 连续）。把 $y=t$ 与 $y=-t$ 的贡献合并，
+\[
+k(t)q(t)-k(-t)\bar q(t)=c_0\,(q-\bar q)(t)+t\,\big(c_1^+q(t)+c_1^-\bar q(t)\big)+\order{t^2}(|q|+|\bar q|),
+\]
+它在 $(0,\epsilon)$ 上可积，只要 $q-\bar q$ 与 $t\,q$、$t\,\bar q$ 可积（$q,\bar q\ge0$ 时即 $t(q+\bar q)$ 可积）。于是 $\lim_{\delta\to0^+}\int_{\delta<|y|<\epsilon}$ 存在。对 $q=\bar q\sim y^{-\alpha_{\mathbb P}}$，$y(q+\bar q)\sim y^{1-\alpha_{\mathbb P}}$ 在 $\alpha_{\mathbb P}<2$ 时可积，价分布 $q-\bar q\sim y^{-1/2}$ 可积。这与光锥 ITD $I(\lambda)=\int_0^1\dd t[\cos(t\lambda)(q-\bar q)+\ii\sin(t\lambda)(q+\bar q)]$ 存在的条件相同。胶子与混合核有不同的结构（并作用于 $yg(y)$），这里不作断言。
+
+\emph{第 6 步（(i)(ii)）。}$|x|>1$ 时对所有 $y\in[-1,1]$ 都有 $|\xi|\ge|x|>1$，加号分布的减除项 $\propto f(x)=0$，$\delta(1-\xi)$ 也不起作用，故 $\tilde q^{(1)}(x)=\int\frac{\dd y}{|y|}C_{\rm fn}(\frac xy)f(y)$；第 2 步的展开对 $y$ 一致（余项 $\order{y^2/|x|^3}$），代入得 $\tilde q^{\MSbar}=-\frac{3a}{2|x|}\int f-\frac{17a}6\frac{{\rm sgn}(x)}{x^2}\langle y\rangle+\order{|x|^{-3}}$ 与 $\tilde q^{\rm ratio}=-\frac{4a}3\frac{{\rm sgn}(x)}{x^2}\langle y\rangle+\order{|x|^{-3}}$；$\int_{-1}^1yf\,\dd y=\int_0^1y(q+\bar q)\dd y$ 来自 $f(-t)=-\bar q(t)$。于是 $\MSbar$ 的零阶矩、比值方案的一阶矩都以对数方式发散。比值方案中 $\int\dd x\,\tilde q=\int\dd\xi\,C^{\rm ratio}(\xi)\int\dd y\,f(y)$（Fubini，此时一切绝对收敛），而单圈的修正全是加号分布，$\int C^{\rm ratio}=1$；对所有阶，$\mathfrak M(0,z^2)=1$ 恒成立，故 $\int\tilde q=1$（按价夸克数归一化）。
+\end{proof}
+
+用部分子变量 $\xi=x/y$，$G(x-y)=\frac1{|y|}\mathcal B(\xi)$，$\mathcal B(\xi)=-\frac1{|1-\xi|}+\frac{2\,{\rm Si}((1-\xi)\lambda_S)}{\pi(1-\xi)}$，$\lambda_S=z_S|y|P^z$，正是下一节混合核中的括号；$\lambda_S\to0$ 时括号的 $1/u^2$ 衰减消失，所以混合方案与 $\MSbar$ 需要同样的小 $y$ 条件。
+
+\begin{proposition}[非单态准 PDF 匹配核的两圈结果 \tagR]\label{prop:lamet-twoloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在两圈，非单态坐标空间系数函数以及相应的准 PDF 与赝 PDF 匹配核已由两个小组独立算出\cite{Li:2020xml,Chen:2020ody}（味非对角部分\cite{Chen:2020arf}，主积分\cite{Chen:2020iqi}；据其摘要）；按文献\cite{Chen:2020ody}摘要的说法，这一计算“在这一阶显式地建立了非平凡的因子化”。两圈核满足重整化群方程，并与第~23~章的阈值因子化在两圈相容。
+（本命题只涉及部分子态。）
+\uses{prop:lamet-oneloop}
+\end{proposition}
+
+\begin{proof}
+这是文献中的显式计算\cite{Li:2020xml,Chen:2020ody}，两组结果一致；公式不在此重复。重整化群相容性：两圈核的 $\ln\mu^2$ 依赖由两圈 DGLAP 核与两圈算符反常维度决定（后者见\cite{Braun:2020ymy}）。与阈值因子化的比较见第~23~章；那里有两个常数是由与两圈结果的比较定出的，所以这一比较是相容性检验，不是独立验证。
+\end{proof}
+
+更高阶：非单态 Wilson 线夸克关联函数的完整 N$^3$LO 匹配也已算出\cite{Cheng:2024wyu}（文献\cite{Ji:2024hit}把它用作 Mellin 空间中的三圈结果）；三圈反常维度已知\cite{Braun:2020ymy}；带重求和的 NNLO 匹配已用于格点分析\cite{Gao:2021dbh,Su:2022fiu}。
+
+\begin{proposition}[极化、横度与扭度 3 准分布的匹配 \tagP]\label{prop:lamet-polarized}
+螺旋度（$\gamma^z\gamma_5$）与横度（$\gamma^0\gamma^\perp\gamma_5$）准 PDF 在单圈与相应的光锥分布匹配（截断方案\cite{XiongEtAl2014}；RI/MOM 方案\cite{Lin:2018pvv,Liu:2018hxv}，后者为预印本；据其摘要）。扭度 3：$g_T$\cite{Bhattacharya:2020xlt}；$e$ 与 $h_L$，其中有正比于 $\delta(x)$ 的本质零模贡献\cite{Bhattacharya:2020jfj}；轴矢\cite{Braun:2021aon}与手征奇\cite{Braun:2021gvv}准、赝分布中扭度 2 与扭度 3 的分离借助 Jaffe--Ji 型关系（均据其摘要）。
+（本命题只涉及部分子态。）
+\uses{def:lattice-quasi,def:pdf-polarized,prop:lattice-renormalizability}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagP：只有单圈匹配；包括零模在内的扭度 3 全阶匹配尚未建立；以上引述均据各文摘要（\cite{Liu:2018hxv}为预印本）；$\gamma_5$ 的方案按\cref{def:prelim-gamma5}处理。一般的陈述——极化准分布满足与\cref{thm:lattice-lamet}同样的全阶匹配——是自然的推广，但没有在文献中写出。
+
+\section{匹配定理：假设、三条证明路线与依赖结构}\label{sec:lattice-matching}
+
+匹配定理被拆成一条蕴含链：编号假设 $\Rightarrow$ 坐标空间因子化 $\Rightarrow$ 动量空间因子化；每一步的证明是完整的，链的强度由最弱的假设决定（\cref{tab:lamet-dependency}与\cref{fig:lamet-dependency}；格点量与光锥量之间的总体关系见\cref{fig:lattice-matching}）。三条证明路线是 Izubuchi--Ji--Jin--Stewart--Zhao 的 OPE 路线\cite{IzubuchiEtAl2018}、Ma--Qiu 的共线减除路线\cite{Ma:2014jla}与“好的格点截面”\cite{MaQiu2018}。
+
+%%% BEGIN fig:lattice-matching
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 qty/.style={draw=black!70,fill=white,rounded corners=2pt,line width=0.6pt,
+      minimum width=4.3cm,minimum height=0.95cm,align=center,font=\small},
+  fd2 frame/.style={draw=#1!60!black,fill=#1!4,rounded corners=4pt,line width=0.6pt},
+  fd2 match/.style={draw=black!80,line width=1.0pt,{Stealth[length=7pt,width=6pt]}-{Stealth[length=7pt,width=6pt]}},
+  fd2 ft/.style={draw=gray!55!black,line width=0.6pt,{Stealth[length=4.5pt,width=3.8pt]}-{Stealth[length=4.5pt,width=3.8pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % column frames
+  \draw[fd2 frame=gray] (-7.45,-2.85) rectangle (-1.85,2.45);
+  \draw[fd2 frame=blue] (1.85,-2.85) rectangle (7.45,2.45);
+  \node[fd2 lab,font=\small\bfseries] at (-4.6,2.12) {格点：等时（欧氏）矩阵元};
+  \node[fd2 lab,font=\small\bfseries] at (4.6,2.12) {光锥分布（$\MSbar$）};
+  % quantities
+  \node[fd2 qty] (q)  at (-4.6,1.05)  {准 PDF $\tilde q_\Gamma(x,P^z)$\\[-1pt]{\footnotesize 固定 $P^z$}};
+  \node[fd2 qty] (h)  at (-4.6,-1.05) {准 ITD $\tilde h(\lambda,z^2)$\\[-1pt]{\footnotesize $\propto\langle P|\bar\psi(z\hat e_z)\Gamma W[z\hat e_z,0]\psi(0)|P\rangle_R$}};
+  \node[fd2 qty] (f)  at (4.6,1.05)   {光锥 PDF $f(y,\mu)$\\[-1pt]{\footnotesize 支集 $[-1,1]$}};
+  \node[fd2 qty] (I)  at (4.6,-1.05)  {光锥 ITD $I(\lambda,\mu)$\\[-1pt]{\footnotesize $\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x,\mu)$}};
+  \draw[fd2 ft] (q) -- node[fd2 note,right=2pt,align=left] {Fourier：沿射线\\$z=-\lambda/P^z$} (h);
+  \draw[fd2 ft] (f) -- node[fd2 note,left=2pt] {Fourier} (I);
+  \node[fd2 note,align=center,text=gray!30!black] at (-4.65,-2.2) {非微扰重整化（除去线性发散 $\ee^{-\delta m|z|}$）\\[-1pt]与方案选择，见\cref{fig:lamet-hybrid}};
+  % matching arrows
+  \draw[fd2 match] (q.east) -- node[fd2 lab,above=2pt] {LaMET 匹配} node[fd2 lab,below=1pt] {$C\big(\frac xy,\frac{\mu}{|y|P^z}\big)$} (f.west);
+  \draw[fd2 match] (h.east) -- node[fd2 lab,above=2pt] {SDF 匹配} node[fd2 lab,below=1pt] {$\mathcal C(\alpha,-z^2\mu^2)$} (I.west);
+  % formulas
+  \node[fd2 lab] at (0,-3.55) {LaMET：$\tilde q(x,P^z)=\displaystyle\int_{-1}^{1}\frac{\dd y}{|y|}\,C\Big(\frac xy,\frac{\mu}{|y|P^z}\Big)f(y,\mu)+\order{\frac{\Lambda^2}{x^2P_z^2},\frac{\Lambda^2}{(1-x)^{2-\delta}P_z^2}}$};
+  \node[fd2 lab] at (0,-4.65) {SDF：$\tilde h(\lambda,z^2)=\displaystyle\int_{-1}^{1}\!\dd\alpha\,\mathcal C(\alpha,-z^2\mu^2)\,I(\alpha\lambda,\mu)+\order{z^2\Lambda^2}$\quad（$|z|\lesssim0.2$--$0.3$ fm）};
+  % status footer
+  \node[draw=gray!60,fill=gray!5,rounded corners=2pt,inner sep=4pt,font=\small] at (0,-5.6)
+    {微扰匹配：全阶论证\hspace{0.25em}{\color{RoyalBlue!80!black}\textbf{[A]}}；强子层次：依赖编号假设\hspace{0.25em}{\color{Plum!80!black}\textbf{[C]}}};
+\end{tikzpicture}
+\caption{LaMET 与短距离因子化（SDF）的结构。格点可计算的等时关联函数（左）经微扰匹配与光锥 PDF（右）相联系：准 PDF 与准 ITD 是同一矩阵元的两种 Fourier 表示，LaMET 在固定 $P^z$ 下作动量空间匹配，匹配核的宗量是部分子动量 $|y|P^z$（而非强子动量 $P^z$）；
+SDF 在固定 $z^2$ 的短距离处作坐标空间匹配（VF-LAM-6）。误差为幂次修正：动量空间中在两端点分别按 $\Lambda^2/(x^2P_z^2)$ 与 $\Lambda^2/((1-x)^{2-\delta}P_z^2)$ 增大（$\delta$ 由扭度 4 分布的端点行为决定）。
+部分子态的匹配定理是全阶论证（\cref{thm:lattice-lamet}），强子层次的陈述依赖于编号假设 \cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}（\cref{thm:lamet-hadronic}）。}
+\label{fig:lattice-matching}
+\end{figure}
+%%% END fig:lattice-matching
+\begin{assumption}[类空 Wilson 线算符的短距离 OPE（重整化微扰论） \tagA]\label{asm:lamet-ope}
+\begin{enumerate}[label=(OP\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 当 $z^2\to0$（固定 $\lambda$）时，在重整化微扰论中，对 $\Gamma=\gamma^\alpha\in\{\gamma^0,\gamma^z\}$，
+\begin{equation}\label{eq:lamet-ope}
+\begin{split}
+O^R_{\Gamma}(z,\mu)=\sum_{n\ge0}\frac{\ii^n}{n!}\,z_{\mu_1}\cdots z_{\mu_n}\Big[&C^\Gamma_n(-z^2\mu^2)\,O_1^{\alpha\mu_1\cdots\mu_n}(\mu)\\
+&+C'^\Gamma_n(-z^2\mu^2)\,O_2^{\alpha\mu_1\cdots\mu_n}(\mu)\Big]+(\text{扭度}\ge4),
+\end{split}
+\end{equation}
+其中 $O_1^{\alpha\mu_1\cdots\mu_n}=\mathcal S\,\bar\psi\gamma^\alpha\ii D^{\mu_1}\cdots\ii D^{\mu_n}\psi-\text{迹}$ 与 $O_2$ 是无迹对称的扭度 2 夸克与胶子算符（\cref{def:dis-twist}），$C_n=1+\order{\as}$，$C'_n=\order{\as}$（非单态为零）；对 $\Gamma=\gamma^z$，同为扭度 2 的结构 $(z^\alpha/z^2)z_{\mu_0}\cdots z_{\mu_n}O_1^{\mu_0\cdots\mu_n}$ 的前向矩阵元与第一项同形，已并入 $C^{\gamma^z}_n$。在本书约定（$D=\partial-\ii gA$）下 Taylor 展开的相位是 $\ii^n$，前向矩阵元为 $\sum_nC_n\frac{(\ii\lambda)^n}{n!}a_{n+1}$；用 $D=\partial+\ii gA$ 的文献写作 $(-\ii)^n$。
+\item 对无质量在壳的部分子态没有别的标度：逐阶地，领头扭度的表达式对所有 $z$ 成立。
+\end{enumerate}
+地位：全阶论证——文献\cite[第~II~节]{IzubuchiEtAl2018}由辅助场的定域化（非定域算符化为扩展理论中定域算符之积）加上通常的 OPE 论证得出，并称 OPE 对 QCD“被广泛假定成立”；据我们截至 2026 年 10 月的文献检索（INSPIRE），尚未见 Wilson 线算符的 Zimmermann 级 OPE 定理。证明所需见\cref{tab:lamet-dependency}下的说明。
+文献：\cite[第~II~节]{IzubuchiEtAl2018}，\cite{Radyushkin2017,Braun:2007wv,Ji:2017oey}。
+被使用于：\cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum}、\cref{prop:lamet-tmc}、\cref{prop:lamet-sdf}、\cref{thm:lamet-quasi-gpd}。
+解除途径：对扩展理论用带各向异性幂次计数的 Zimmermann 森林公式；或把流方程方法的 OPE 定理（参见\cite{Frob:2016mzv}，预印本）推广到带静态辅助场的理论。
+\uses{prop:lattice-renormalizability,asm:lamet-aux-renorm,def:dis-twist}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：论证依赖\cref{asm:lamet-aux-renorm}与扩展理论中尚未写出的 OPE 定理（缺口见\cref{tab:lamet-dependency}下的说明）；本章全部坐标空间与动量空间的匹配定理的内容等级由它决定。
+
+\begin{theorem}[坐标空间因子化（赝分布形式） \tagR]\label{thm:lamet-coordinate}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{prop:lattice-renormalizability}）。对部分子态，在领头扭度、对 $\as$ 的所有阶，
+\begin{equation}\label{eq:lamet-coord-fact}
+\begin{gathered}
+\tilde h(\lambda,z^2;\mu_R)=\int_{-1}^1\dd\alpha\,\mathcal C\Big(\alpha,-z^2\mu^2,\frac{\mu_R}\mu\Big)I(\alpha\lambda,\mu),\\
+\mathcal C(\alpha,-z^2\mu^2)\equiv\int\frac{\dd\lambda}{2\pi}\ee^{-\ii\alpha\lambda}\sum_nC_n(-z^2\mu^2)\frac{(\ii\lambda)^n}{n!},\qquad{\rm supp}\,\mathcal C\subset[-1,1];
+\end{gathered}
+\end{equation}% VF-LAM-6
+等价地 $\mathcal P(x,-z^2)=\int_{-1}^1\frac{\dd y}{|y|}\mathcal C(\frac xy,-z^2\mu^2)f(y,\mu)$，且 $\int_{-1}^1\dd x\,x^n\mathcal P(x,-z^2)=C_n(-z^2\mu^2)\,a_{n+1}(\mu)$，$a_{n+1}=\int\dd y\,y^nf(y,\mu)$。单圈与两圈的 $\mathcal C$ 见\cref{sec:lamet-oneloop}。（本定理只涉及部分子态；强子情形见本章后文。）
+\uses{asm:lamet-ope,prop:lattice-renormalizability,prop:lamet-support,cor:lamet-entire,def:lattice-quasi,def:pdf-lightray,thm:pdf-moments-local}
+\end{theorem}
+
+\begin{proof}
+仿\cite[第~II--III~节]{IzubuchiEtAl2018}。(1) 由\cref{prop:lattice-renormalizability}（\tagA），$z\neq0$ 处 $O^R_\Gamma(z,\mu)$ 有定义，其矩阵元有限。
+(2) 把 (OP1) 代入前向部分子矩阵元。对无质量部分子 $\langle p|O_1^{\mu_0\cdots\mu_n}|p\rangle=2a_{n+1}(p^{\mu_0}\cdots p^{\mu_n}-\text{迹})$，迹项 $\propto p^2=0$，$a_{n+1}=\int\dd y\,y^nf(y)$ 由\cref{thm:pdf-moments-local}（\tagR，$R_{\mathrm{PT}}$）给出（对部分子态）；于是 $z_{\mu_1}\cdots z_{\mu_n}\langle p|O_1^{\alpha\mu_1\cdots\mu_n}|p\rangle=2p^\alpha(p\cdot z)^na_{n+1}$，由 (OP2)，对所有 $z$，
+\[
+\tilde h(\lambda,z^2)=\sum_nC_n(-z^2\mu^2)\frac{(\ii\lambda)^n}{n!}a_{n+1}\qquad(\text{单态情形另加 }C'_n\text{ 与胶子矩}).
+\]
+(3) 系数函数的支撑。在每一阶，部分子态的 $\tilde h$ 是有限个 Feynman 图（含算符的 $\MSbar$ 抵消项图）之和，由\cref{prop:lamet-support}其 $\lambda$-Fourier 变换 $\mathcal P$ 支撑在 $[-1,1]$；部分子分布 $f_{i/j}$ 在维数正规化中是 $\delta_{ij}\delta(1-y)$ 加上支撑在 $[-1,1]$ 中的纯极点项。令 $\mathcal C$ 为 $\mathcal P=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$ 的逐阶解：在 $\as$ 的第 $k$ 阶，$\mathcal C^{(k)}=\mathcal P^{(k)}-\sum_{l<k}\mathcal C^{(l)}\otimes f^{(k-l)}$。由\cref{cor:lamet-entire}，${\rm supp}\,\mathcal C\subset[-1,1]$（两个分别支撑在 $[-1,1]$ 中的分布在乘法卷积 $x=\alpha y$ 下的像仍支撑在 $[-1,1]$ 中）；红外极点在差中相消，$\mathcal C$ 在 $\varepsilon\to0$ 时有限。
+(4) 重求和。比较 $\lambda=0$ 处的 Taylor 系数：由 (2)，$\tilde h$ 的第 $n$ 个系数是 $\frac{\ii^n}{n!}C_na_{n+1}$；由 $\mathcal P=\mathcal C\otimes f$，它又等于 $\frac{\ii^n}{n!}\big(\int\dd\alpha\,\alpha^n\mathcal C\big)a_{n+1}$。对夸克靶 $a_{n+1}=1+\order{\as}\neq0$，故逐阶 $C_n=\int\dd\alpha\,\alpha^n\mathcal C(\alpha)$，从而 $\sum_nC_n\frac{(\ii\lambda)^n}{n!}=\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\mathcal C(\alpha)$，它是指数型 $\le1$ 的整函数（\cref{cor:lamet-entire}），也就是“所有 $a_{n+1}=1$ 的靶”的赝 PDF。于是对任一部分子靶
+\[
+\sum_n\frac{(\ii\lambda)^n}{n!}\int\dd\alpha\,\alpha^n\mathcal C(\alpha)\int\dd y\,y^nf(y)=\int\dd\alpha\,\mathcal C(\alpha)\int\dd y\,f(y)\,\ee^{\ii\alpha y\lambda}=\int\dd\alpha\,\mathcal C(\alpha)\,I(\alpha\lambda),
+\]
+求和与积分的交换是允许的：$\mathcal C$ 与 $f$ 是紧支撑分布，而 $\sum_n(\ii\alpha y\lambda)^n/n!$ 在 $|\alpha y|\le1$ 上连同各阶导数一致收敛于 $\ee^{\ii\alpha y\lambda}$。这就是\cref{eq:lamet-coord-fact}（$I$ 由\cref{def:pdf-lightray}的光线算符给出）。
+(5) 在固定 $z^2$ 下对 $\lambda$ 作 Fourier 变换：$\mathcal P(x)=\int\dd y\,f(y)\int\dd\alpha\,\mathcal C(\alpha)\delta(x-\alpha y)=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$；矩是 $\lambda=0$ 处的 Taylor 系数，$\int\dd x\,x^n\mathcal P=(-\ii\partial_\lambda)^n\tilde h|_{\lambda=0}=C_na_{n+1}$。
+\end{proof}
+
+内容等级为 \tagA（来自\cref{asm:lamet-ope}与\cref{prop:lattice-renormalizability}）。赝 PDF 的矩存在，因为求矩时 $z^2$ 固定；准 PDF 的矩涉及 $C_n(\lambda^2\mu^2/P_z^2)$ 对 $\lambda$ 的导数，含 $\ln\lambda^2$，所以不存在（\cref{prop:lamet-tails}）。短距离因子化在 $|z|\lesssim0.2$--$0.3$ fm 处使用这个定理（\cref{sec:lamet-sdf}）。
+
+\begin{theorem}[动量空间形式与部分子动量 \tagR]\label{thm:lamet-parton-momentum}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{thm:lamet-coordinate}、\cref{prop:lattice-renormalizability}）。设 $\int_{-1}^1|f(y)|\dd y<\infty$（对比值核，$\int|yf(y)|\dd y<\infty$ 即足够；混合核与 $\MSbar$ 需要同样的小 $y$ 条件；对物理的夸克分布，$\order1$ 项合成 $q-\bar q$，见\cref{prop:lamet-tails}）。则
+\begin{equation}\label{eq:lamet-mom-fact}
+\begin{gathered}
+\tilde q(x,P^z;\mu_R)=\int_{-1}^1\frac{\dd y}{|y|}\,C\Big(\frac xy,\frac{\mu_R}\mu,\frac\mu{|y|P^z}\Big)f(y,\mu),\\
+C\Big(\xi,\frac\mu{p^z}\Big)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii\xi\lambda}\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\,\mathcal C\Big(\alpha,\frac{\lambda^2\mu^2}{p_z^2}\Big);
+\end{gathered}
+\end{equation}% VF-LAM-6
+匹配核的宗量是\emph{部分子}动量 $p^z=|y|P^z$；准 PDF 与赝 PDF 是同一函数的两种 Fourier 表示：$\tilde q(x,P^z)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\int_{-1}^1\dd y\,\ee^{\ii y\lambda}\mathcal P\big(y,\frac{\lambda^2}{P_z^2}\big)$。
+（本定理只涉及部分子态；强子情形见本章后文。）
+\uses{thm:lamet-coordinate,asm:lamet-ope,prop:lattice-renormalizability,def:lattice-quasi,prop:lamet-tails}
+\end{theorem}
+
+\begin{proof}
+记 $\hat{\mathcal C}(\tau,\rho)=\int\dd\alpha\,\ee^{\ii\alpha\tau}\mathcal C(\alpha,\rho)$。由\cref{thm:lamet-coordinate}，$\tilde h(\lambda,z^2)=\int\dd y\,f(y)\,\hat{\mathcal C}(y\lambda,-z^2\mu^2)$。按\cref{def:lattice-quasi}，沿射线 $z^2=-\lambda^2/P_z^2$ 作 Fourier 变换；对检验函数 $\varphi$，记 $\hat\varphi(\lambda)=\int\dd x\,\ee^{-\ii x\lambda}\varphi(x)$，则
+\[
+\int\dd x\,\varphi(x)\tilde q(x)=\int\frac{\dd\lambda}{2\pi}\hat\varphi(\lambda)\int\dd y\,f(y)\,\hat{\mathcal C}\Big(y\lambda,\frac{\lambda^2\mu^2}{P_z^2}\Big).
+\]
+对每个 $y\neq0$ 作代换 $\lambda'=y\lambda$：$\dd\lambda=\dd\lambda'/|y|$，$\lambda^2/P_z^2=\lambda'^2/(yP^z)^2$，$\hat\varphi(\lambda'/y)=\int\dd x\,\ee^{-\ii(x/y)\lambda'}\varphi(x)$，于是内层积分化为 $\int\dd x\,\varphi(x)\frac1{|y|}C\big(\frac xy,\frac\mu{|y|P^z}\big)$，$C$ 如\cref{eq:lamet-mom-fact}所定义（作为分布）。交换 $y$ 与 $\lambda$ 积分的次序是允许的：$\hat\varphi$ 速降；在每一阶，$\hat{\mathcal C}(\tau,\rho)$ 对 $\tau$ 至多多项式增长，对 $\rho$ 至多按 $\ln\rho$ 的幂次增长；被积函数中的 $\rho=\lambda^2\mu^2/P_z^2$ 与 $y$ 无关，$y\to0$ 时 $\hat{\mathcal C}(y\lambda,\rho)\to\hat{\mathcal C}(0,\rho)=C_0(\rho)$，故 $\int|f|<\infty$ 时二重积分绝对收敛。比值方案中 $\hat{\mathcal C}^{\rm ratio}(0,\rho)=1$ 恒成立：树图项 $\ee^{\ii y\lambda}$ 给出 $f$ 本身，而树图以外的部分在 $\tau=y\lambda\to0$ 时为 $\order{|y\lambda|}$（乘以 $\ln\rho$ 的幂），所以 $\int|yf|<\infty$ 即足够；物理夸克分布的情形把 $y$ 与 $-y$ 的贡献合并，见\cref{prop:lamet-tails}。代换中 $\lambda^2/P_z^2\to\lambda'^2/(yP^z)^2$ 说明 $\mathcal C$ 的第二个宗量变成 $\lambda'^2\mu^2/p_z^2$，$p^z=|y|P^z$。最后一式由 $\tilde h(\lambda,z^2)=\int\dd y\,\ee^{\ii y\lambda}\mathcal P(y,-z^2)$（\cref{thm:lamet-coordinate}）在射线上取值得出。
+\end{proof}
+
+内容等级为 \tagA；在单圈，\cref{eq:lamet-CMS,eq:lamet-Cratio}正是\cref{eq:lamet-coord-kernel}与比值核的这一变换。
+
+\begin{remark}[以强子动量为变量的早期匹配形式不成立 \tagV]\label{rem:lamet-early-form}
+文献\cite[式~(11)]{Ji2013}中的早期形式
+\[
+\tilde q(x,\mu,P^z)=\int_x^1\frac{\dd y}y\,Z\Big(\frac xy,\frac\mu{P^z}\Big)q(y,\mu)
+\]
+在 $\order{\as}$ 是错的：由\cref{thm:lamet-parton-momentum}，核依赖于 $\mu/(|y|P^z)$；把 $|y|P^z$ 换成 $P^z$ 使 $\ell_p=\ln\frac{\mu^2}{4y^2P_z^2}$ 改变 $\ln y^2$，由\cref{eq:lamet-CMS}，
+\begin{equation}\label{eq:lamet-early-diff}
+\begin{split}
+C\Big(\xi,\frac\mu{P^z}\Big)-C\Big(\xi,\frac\mu{|y|P^z}\Big)&=-\frac{\as C_F}\pi\ln|y|\,\frac{1+\xi^2}{(1-\xi)_+}\,\theta(0<\xi<1)\\
+&=-\frac{\as}\pi\ln|y|\Big[P_{qq}(\xi)-\frac32C_F\delta(1-\xi)\Big],
+\end{split}
+\end{equation}% VF-LAM-19
+比值方案中为 $-\frac{\as}\pi\ln|y|\,P_{qq}(\xi)$。它对 $\tilde q$ 的贡献 $-\frac{\as}\pi\int\frac{\dd y}{|y|}\ln|y|[P_{qq}-\frac32C_F\delta](\frac xy)f(y)$ 对一般的 $f$ 不为零（只有 $f$ 集中在 $|y|=1$ 时才为零）。早期的积分范围 $\int_x^1$ 也太小：它漏掉了 $|y|<|x|$ 与 $y<0$。
+\uses{thm:lamet-parton-momentum,prop:lamet-oneloop}
+\end{remark}
+
+\cref{eq:lamet-early-diff}的推导：$C^{\MSbar}$ 只通过 $a\{-\ell_p[\frac{1+\xi^2}{1-\xi}]_++\frac32\ell_p\delta(1-\xi)\}$ 依赖于 $\ell_p$，$\Delta\ell_p=2\ln|y|$，故差为 $-2a\ln|y|\{[\frac{1+\xi^2}{1-\xi}]_+-\frac32\delta\}=-2a\ln|y|\frac{1+\xi^2}{(1-\xi)_+}$，后一等号用到 $\frac{1+\xi^2}{(1-\xi)_+}=[\frac{1+\xi^2}{1-\xi}]_+-\frac32\delta(1-\xi)$（以检验函数直接验证）与 $P_{qq}=C_F[\frac{1+\xi^2}{1-\xi}]_+$。
+
+\paragraph{地位与缺口}
+\tagV，证据类型：显式的单圈计算\cite{IzubuchiEtAl2018}。这一更正来自原作者参与的后续工作：\cite[式~(27)]{IzubuchiEtAl2018}及其后的讨论明确指出匹配系数依赖于 $p^z=|y|P^z$ 而不是早期文献所取的 $P^z$；准 GPD 的情形更早见于\cite{Ji:2015qla}（附录~Q 第~17~条）。正确形式就是\cref{thm:lamet-parton-momentum}（\tagR，$R_{\mathrm{cond}}$，内容 \tagA）。
+
+\begin{proposition}[光锥规范下的共线减除路线（Ma--Qiu） \tagA]\label{prop:lamet-cfp}
+在光锥规范 $n_B\cdot A=A^+=0$ 中，在壳无质量夸克的准 PDF 有 2PI 梯形分解 $\tilde f=C_0\sum_iK^i$，算符及其重整化完全包含在顶层核 $C_0$ 中；用共线投影算子（光锥 PDF 的割顶点）
+$\hat{\mathcal P}W\equiv\int\frac{\dd^4k}{(2\pi)^4}\delta\big(x-\frac{n_B\cdot k}{n_B\cdot p}\big)\frac{\Tr[\sla n_BW\sla p]}{4\,n_B\cdot p}+\text{UVCT}$，
+\begin{equation}\label{eq:lamet-cfp}
+\tilde f^{\rm ren}=\Big[C_{\rm ren}\frac1{1-(1-\hat{\mathcal P})K}\Big]\Big[\frac1{1-\hat{\mathcal P}K}\Big]=f_{q/q}\otimes C+\order{(\tilde xP^z)^{-2}},
+\end{equation}
+第二个因子是夸克的光锥 PDF，第一个因子是共线（红外）安全的；这独立于\cref{asm:lamet-ope}地给出\cref{thm:lamet-parton-momentum}的动量空间形式。（本命题只涉及部分子态。）
+\uses{def:lattice-quasi,prop:lattice-renormalizability,def:pdf-quark,thm:pdf-dglap}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+\cite{Ma:2014jla}，\cite[第~III.B~节]{JiEtAl2021}：(1) 把夸克的准 PDF 写成前向“割顶点”图，顶点为 $\frac{\gamma^z}{2P^z}\delta(\tilde x-k^z/P^z)$（或 $\gamma^0$）；软发散在实发射与虚修正之间相消（$[\delta(1-\tilde x-y)-\delta(1-\tilde x)]$ 结构，流守恒）。(2) 在 $A^+=0$ 规范中，领头共线区域是 2PI 核的梯形\cite{EllisEtAl1979,CurciFurmanskiPetronzio1980}，带类空 Wilson 线的算符及其乘法重整化（\cref{prop:lattice-renormalizability}）都在顶层核 $C_0$ 中。(3) 反复插入 $\hat{\mathcal P}+(1-\hat{\mathcal P})$，$(1-\hat{\mathcal P})K$ 共线有限，得\cref{eq:lamet-cfp}；第二个因子按\cref{def:pdf-quark}的割顶点就是光锥 PDF，其重整化给出 DGLAP（\cref{thm:pdf-dglap}）。(4) Feynman 规范中：共线区域 $k^z\simeq k^+/\sqrt2$，$\gamma^z\to\gamma^+/\sqrt2$，准顶点化为光锥顶点；纵向极化的 $A^+$ 胶子附着在类空 Wilson 线上时带有 $1/P^z$ 的压低，被推动因子补偿——在 $A^+=0$ 中它们不出现；含 $k_1,\dots,k_i$ 共线的区域 $R_i$ 以“类似 BPHZ 关系”的方式递归减除\cite[第~III.B~节]{JiEtAl2021}。（幂次计数步骤只给出 E-S 型陈述。）完整论证见\cite{Ma:2014jla}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA（CFP/Collins 式的共线因子化，参见\cref{thm:method-template}与第~9~章的方法）。只停留在概要层次的几点是：类空 Wilson 线存在时光锥规范的伪极点 $1/(n_B\cdot k)$；$C_0$ 不含共线发散这一断言；等时算符的割顶点表示。若在 Feynman 规范中进行，$A^+$ 胶子的处理需要\cref{lem:method-ward-multi}型的多胶子 Ward 恒等式，其中被明确假定的一步是\cref{asm:appN-brst-nonlocal}（\tagC）。\emph{这里不存在 Glauber 问题或末态相互作用问题}：只有一个强子、没有被测量的末态、场位于类空间隔上，第~12~章 Drell--Yan 中的 Glauber 障碍不可能出现（准 TMD 的情形见\cref{sec:lattice-tmd}）。文献\cite{JiEtAl2021}写道：“虽然证明只针对微扰的自由夸克态，因子化公式被广泛相信在非微扰层次也成立”——后一半正是本章\cref{sec:lamet-power}中三个 \tagC 假设所表达的内容。
+
+\begin{theorem}[“好的格点截面”的因子化（Ma--Qiu） \tagA]\label{thm:lamet-lcs}
+对\cref{def:lattice-quasi}(iv) 意义下好的格点截面，
+\begin{equation}\label{eq:lamet-lcs}
+\begin{gathered}
+\sigma_n(\omega,\eta^2,P^2)=\sum_a\int_{-1}^1\frac{\dd x}x\,f_a(x,\mu)\,K^a_n(x\omega,\eta^2,x^2P^2,\mu)+\order{\eta^2\Lambda^2},\\
+K^a_n=\sum_J\frac2{S_a}W^{(J,a)}_n\Sigma_J(x\omega,x^2P^2\eta^2),
+\end{gathered}
+\end{equation}
+其中 $\Sigma_J(\omega,P^2\eta^2)=\sum_i\binom{J-i}i\omega^{J-2i}\big(-\frac{P^2\eta^2}4\big)^i$ 是精确的靶质量求和（$S_a$ 为自旋自由度，$W^{(J,a)}_n$ 为第 $J$ 个定域算符的 Wilson 系数）；对部分子态，系数函数是 $\omega$ 的整函数（\cref{cor:lamet-entire}），所以逐阶地陈述对所有 $\omega$ 成立。领头阶的例子：Wilson 线双线性算符 $K^{q(0)}_q=2x\omega\,\ee^{\ii x\omega}$（$\int\frac{\dd x}x f\,K^{q(0)}_q=2\omega I(\omega)$，即\cref{eq:lamet-lc-itd}）；标量流 $K^{q(0)}_S=\frac{\ii}{\pi^2}x\omega(\ee^{\ii x\omega}-\ee^{-\ii x\omega})$（按\cite{MaQiu2018}的归一化），其动量空间形式在 $\tilde\omega^2>1$ 处有割线，所以只在 $\tilde\omega^2<1$ 时是“好的”。（本定理只涉及部分子态。）
+\uses{thm:dis-ope,thm:pdf-moments-local,cor:lamet-entire,def:lattice-quasi}
+\end{theorem}
+
+\begin{proofsketch}
+(1) $|\omega|\ll1$ 时作两个定域流的 OPE（\cref{thm:dis-ope}，\tagA）；(2) 定域算符的前向矩阵元由\cref{thm:pdf-moments-local}给出 PDF 的矩，迹项按\cref{eq:lamet-ji-moments}的同一 Gegenbauer 结构求和，给出 $\Sigma_J$；(3) 关于 $\omega$ 的解析性：文献\cite{MaQiu2018}指出，在短距离固定 $\eta$ 而增大 $\omega$ 时“不会引入新的微扰发散”，$\sigma_n$ 保持解析，唯一可能的奇点在 $\omega=\infty$；其精确形式是\cref{cor:lamet-entire}。完整论证见\cite{MaQiu2018}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA：这条路线只需要普通 QCD 中定域流的 OPE，不需要\cref{asm:lamet-ope}；对部分子态，沿\cref{thm:dis-moments}的路线可以把它写成以 OPE 为前提的陈述。强子剩余项 $\order{\eta^2\Lambda^2}$ 从 $|\omega|\ll1$ 推广到有限 $\omega$ 需要\cref{asm:lamet-uniform}的 (UI-a)（\tagC）。相关的做法（证据，均据其摘要）：重夸克 Compton 张量\cite{DetmoldLin2006}，NNLO 加扭度 4 的位置空间流关联函数（DA）\cite{Braun:2007wv}，Feynman--Hellmann 方法\cite{ChambersEtAl2017}，欧氏强子张量\cite{Liu:1993cv}，以及用流—流关联函数的 LaMET\cite{Zhang:2026lle}（预印本；据其摘要）——“重整化性质简单、没有线性幂次发散”，代价是需要四点函数。
+
+\begin{theorem}[LaMET 匹配定理（部分子态、领头幂次、全阶） \tagA]\label{thm:lattice-lamet}
+对部分子态、在领头幂次、对所有阶，$\tilde q_\Gamma(x,P^z;\mu_R)=\int_{-1}^1\frac{\dd y}{|y|}C_\Gamma\big(\frac xy,\frac{\mu_R}\mu,\frac\mu{|y|P^z}\big)f(y,\mu)$，核 $C_\Gamma$ 红外安全、可微扰计算；这一陈述由两条独立路线得出：OPE 路线（\cref{thm:lamet-parton-momentum}，内容 \tagA）与共线减除路线（\cref{prop:lamet-cfp}）。（本定理只涉及部分子态；强子层次见本章后文，其内容等级为 [C]。）
+\uses{thm:lamet-parton-momentum,prop:lamet-cfp,prop:lattice-renormalizability,prop:lamet-tails}
+\end{theorem}
+
+\begin{proofsketch}
+任一条路线都给出所述的形式：(A) OPE 路线，即\cref{thm:lamet-parton-momentum}（其前提见该定理的前提句；它的内容等级 \tagA 来自 OPE 假设）；(B) 共线减除路线，即\cref{prop:lamet-cfp}。两条路线中算符的重整化都由\cref{prop:lattice-renormalizability}处理；卷积的定义域由\cref{prop:lamet-tails}给出。文献：\cite{IzubuchiEtAl2018,Ma:2014jla,MaQiu2018,JiEtAl2021}，综述\cite{Constantinou:2020hdm}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA；瓶颈：路线 A 是\cref{asm:lamet-ope}（及其前提\cref{asm:lamet-aux-renorm}），路线 B 是光锥规范中只有概要的几步（\cref{prop:lamet-cfp}的地位段）。幂次计数各步只给出 E-S 型陈述。两条路线的弱点不同，这是本定理可信度的主要来源，但两者都不是 Zimmermann 级的证明。不要写“准 PDF 匹配定理对强子严格成立”：强子层次的陈述是\cref{thm:lamet-hadronic}，其内容等级为 \tagC。
+
+\begin{proposition}[单态夸克与胶子准 PDF：带混合的匹配 \tagA]\label{prop:lamet-gluon-singlet}
+逆匹配形式\cite{JiEtAl2021}：$q_i(x)=\int\frac{\dd y}{|y|}\big[\sum_j\tilde C_{q_iq_j}\tilde q_j(y)+\tilde C_{qg}\tilde g(y)\big]$，$g(x)=\int\frac{\dd y}{|y|}\big[\sum_j\tilde C_{gq}\tilde q_j(y)+\tilde C_{gg}\tilde g(y)\big]$（核的宗量为 $\frac xy$ 与 $\frac\mu{|y|P^z}$），加上幂次修正；算符在重整化下不混合（\cref{prop:lattice-renormalizability}(c)），混合只出现在匹配中。动量空间卷积的小 $y$ 收敛性：对夸克核由\cref{prop:lamet-tails}(iii) 给出（$\MSbar$ 与混合方案需要同样的小 $y$ 条件，比值方案只需 $\int|yf|<\infty$，物理夸克分布的 $\order1$ 项合成 $q-\bar q$）；胶子核与混合核不在其范围内。
+（本命题只涉及部分子态；强子层次的处理与非单态情形相同。）
+\uses{thm:lattice-lamet,prop:lattice-renormalizability,prop:lamet-tails,prop:pdf-lo-kernels}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagA（继承\cref{thm:lattice-lamet}；混合结构与\cref{prop:pdf-lo-kernels}的单态 DGLAP 一致）。单圈核：带混合的 RI/MOM 核\cite{Wang:2019tgg}，赝胶子分布\cite{Balitsky:2019krf}，统一的前向/非前向单态核\cite{Yao:2022vtp}（均据其摘要）——我们的材料中没有独立的核对，所以不列 \tagR 的单圈条目。不能说“对 Regge 型单态分布只有比值或混合型方案收敛”：对夸克核这是错的（\cref{prop:lamet-tails}），对胶子核则没有分析。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\caption{LaMET 匹配定理的依赖结构（仿 Lean 的蓝图；行为\cref{sec:lamet-renorm}至\cref{sec:lattice-matching}的陈述以及后文用到的结点）。“蕴含”：由所列直接前提推出该陈述的那一步的地位（[R]：本书给出完整证明；“概要”：只有全阶论证；“文献”：文献中的显式计算；“数学”：纯数学）。“等级”：陈述本身的等级，条件定理给出内容等级。“最弱前提”：决定该等级的输入。定义与第~2、3、8~章的定义性前提从略。}
+\label{tab:lamet-dependency}
+\begin{tabularx}{\textwidth}{@{}p{1.75cm}Xp{3.85cm}p{0.95cm}p{1.15cm}p{2.45cm}@{}}
+\toprule
+陈述 & 内容 & 直接前提 & 蕴含 & 等级 & 最弱前提 \\
+\midrule
+\cref{asm:lamet-aux-renorm} & QCD$+$类空静态辅助场可重整 & — & — & [A] & 自身（只有断言） \\
+\cref{prop:lattice-renormalizability} & $z\neq0$ 的乘法可重整性 & \cref{asm:lamet-aux-renorm}、\cref{thm:prelim-composite-renorm} & 概要 & [A] & \cref{asm:lamet-aux-renorm} \\
+\cref{prop:lamet-ad-spacelike} & 类空与类时反常维度相同 & \cref{prop:lattice-renormalizability} & 概要 & [A] & \cref{asm:lamet-aux-renorm} \\
+\cref{lem:lamet-lorentzian} & 残余线性项的 Lorentz 抹平 & — & 数学 & — & — \\
+\cref{prop:lamet-lrr} & 线性重整子与 LRR & \cref{lem:lamet-lorentzian}、\cref{prop:power-renormalon-examples}、\cref{prop:lattice-renormalizability} & 概要 & [P] & 只对泡链成立 \\
+\cref{prop:lamet-euclid-minkowski} & 欧氏与 Minkowski 矩阵元等同 & — & 概要 & [A] & 文献的论证 \\
+\cref{prop:lamet-support} & 逐图支撑在 $[-1,1]$ & — & [R] & [R] & — \\
+\cref{cor:lamet-entire} & ITD 是指数型整函数 & \cref{prop:lamet-support}、\cref{thm:pdf-support-pt} & [R] & [R] & — \\
+\cref{prop:lamet-oneloop} & 单圈匹配核 & \cref{prop:pdf-partonic-dr}、\cref{prop:pdf-lo-kernels} & [R] & [R] & — \\
+\cref{prop:lamet-tails} & 尾部、矩与卷积定义域 & \cref{prop:lamet-oneloop} & [R] & [R] & — \\
+\cref{prop:lamet-twoloop} & 两圈非单态核 & \cref{prop:lamet-oneloop} & 文献 & [R] & — \\
+\cref{prop:lamet-polarized} & 极化、横度与扭度 3 & \cref{prop:lattice-renormalizability} & 文献 & [P] & 只有单圈 \\
+\cref{asm:lamet-ope} & 类空 OPE（重整化微扰论） & \cref{prop:lattice-renormalizability}、\cref{asm:lamet-aux-renorm} & — & [A] & 自身（无 Zimmermann 级定理） \\
+\cref{thm:lamet-coordinate} & 坐标空间因子化（部分子） & \cref{asm:lamet-ope}、\cref{prop:lattice-renormalizability}、\cref{cor:lamet-entire} & [R] & 内容 [A] & \cref{asm:lamet-ope} \\
+\cref{thm:lamet-parton-momentum} & 动量空间形式，宗量 $|y|P^z$ & \cref{thm:lamet-coordinate}、\cref{prop:lamet-tails} & [R] & 内容 [A] & \cref{asm:lamet-ope} \\
+\cref{rem:lamet-early-form} & 早期形式不成立 & \cref{thm:lamet-parton-momentum}、\cref{prop:lamet-oneloop} & [R] & [V] & — \\
+\cref{prop:lamet-cfp} & 光锥规范中的共线减除路线 & \cref{prop:lattice-renormalizability}、\cref{thm:pdf-dglap} & 概要 & [A] & 光锥规范中的减除 \\
+\cref{thm:lamet-lcs} & 好的格点截面 & \cref{thm:dis-ope}、\cref{cor:lamet-entire} & 概要 & [A] & \cref{thm:dis-ope} \\
+\cref{thm:lattice-lamet} & 部分子匹配（全阶） & \cref{thm:lamet-parton-momentum} 或\cref{prop:lamet-cfp} & — & [A] & 两条路线各自的瓶颈 \\
+\cref{prop:lamet-gluon-singlet} & 单态夸克与胶子：带混合的匹配 & \cref{thm:lattice-lamet}、\cref{prop:pdf-lo-kernels} & — & [A] & 同上 \\
+\cref{prop:lamet-tmc} & 精确靶质量修正 & \cref{asm:lamet-ope}、\cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum} & [R] & 内容 [A] & \cref{asm:lamet-ope} \\
+\cref{lem:lamet-fourier} & $z^2\leftrightarrow\partial_x^2$ & \cref{cor:lamet-entire} & 数学 & — & — \\
+\cref{asm:lamet-uniform}、\cref{asm:lamet-twist4}、\cref{asm:lamet-large-z} & 对 Ioffe 时间一致、扭度 4 的结构、大距离控制 & \cref{thm:lamet-coordinate}、\cref{prop:lamet-tmc}、\cref{prop:lamet-support} & — & [C] & 自身（非微扰） \\
+\cref{thm:lamet-hadronic} & 强子匹配与 $\Lambda^2/P_z^2$ 修正 & \cref{thm:lattice-lamet}、\cref{prop:lamet-tmc}、\cref{lem:lamet-fourier} 与三个 [C] 假设 & [R] & 内容 [C] & 三个 [C] 假设 \\
+\cref{prop:lamet-scheme-validity} & 方案 $X$ 中的动量空间匹配 & \cref{thm:lattice-lamet}、\cref{prop:lamet-hybrid-kernel} & 概要 & [A]（混合） & \cref{asm:lamet-ope}；比值与 RI/MOM 在大 $|z|$ 处另需 $Z'_X$ 微扰（[C]） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%%% BEGIN fig:lamet-dependency
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 node/.style={rectangle,rounded corners=1.5pt,draw=black!65,line width=0.5pt,font=\tiny\ttfamily,
+      inner sep=1.5pt,minimum height=0.62cm,minimum width=2.05cm,align=center},
+  fd2 R/.style={fd2 node,fill=OliveGreen!15,draw=OliveGreen!65!black},
+  fd2 A/.style={fd2 node,fill=RoyalBlue!15,draw=RoyalBlue!65!black},
+  fd2 math/.style={fd2 node,fill=white},
+  fd2 cond/.style={fd2 node,fill=OliveGreen!15,draw=OliveGreen!65!black,dash pattern=on 2.2pt off 1.4pt},
+  fd2 asm/.style={fd2 node,draw=orange!65!black,fill=orange!8,dash pattern=on 2.2pt off 1.4pt},
+  fd2 asmC/.style={fd2 node,draw=red!60!black,fill=red!9,dash pattern=on 2.2pt off 1.4pt,line width=0.7pt},
+  fd2 grade/.style={font=\tiny\sffamily\bfseries,text=#1!75!black,inner sep=0.6pt,anchor=north east},
+  fd2 use/.style={draw=gray!60,line width=0.5pt,-{Stealth[length=3.4pt,width=2.8pt]}},
+  fd2 prem/.style={draw=orange!65!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt,-{Stealth[length=3.6pt,width=3pt]}},
+  fd2 neck/.style={draw=red!60!black,line width=1.3pt,-{Stealth[length=4.5pt,width=4pt]}}]
+  % ---------------- nodes (layers left to right) ----------------
+  \node[fd2 asm]  (aux) at (0,2.0)     {lamet-aux-renorm};
+  \node[fd2 R]    (sup) at (0,-1.0)    {lamet-support};
+  \node[fd2 A]    (ren) at (2.3,2.0)   {lattice-\\renormalizability};
+  \node[fd2 R]    (ent) at (2.3,-1.0)  {lamet-entire};
+  \node[fd2 A]    (cfp) at (4.6,3.2)   {lamet-cfp};
+  \node[fd2 asm]  (ope) at (4.6,2.0)   {lamet-ope};
+  \node[fd2 asmC] (tw4) at (4.6,-0.6)  {lamet-twist4};
+  \node[fd2 math] (fou) at (4.6,-1.7)  {lamet-fourier};
+  \node[fd2 A]    (lcs) at (4.6,-2.8)  {lamet-lcs};
+  \node[fd2 cond] (coo) at (6.9,1.0)   {lamet-coordinate};
+  \node[fd2 cond] (pmo) at (9.2,2.0)   {lamet-parton-\\momentum};
+  \node[fd2 cond] (tmc) at (9.2,0.95)  {lamet-tmc};
+  \node[fd2 asmC] (lgz) at (9.2,-0.6)  {lamet-large-z};
+  \node[fd2 A]    (lat) at (11.5,2.6)  {lattice-lamet};
+  \node[fd2 asmC] (uni) at (11.5,0.75) {lamet-uniform};
+  \node[fd2 cond] (had) at (13.8,1.0)  {lamet-hadronic};
+  % grade letters: tags of the assumptions, content grades of the R_cond theorems
+  \foreach \n/\g/\c in {aux/A/RoyalBlue,ope/A/RoyalBlue,tw4/C/Plum,lgz/C/Plum,uni/C/Plum,
+                        coo/A/RoyalBlue,pmo/A/RoyalBlue,tmc/A/RoyalBlue,had/C/Plum}
+    \node[fd2 grade=\c] at ($(\n.north east)+(-0.03,-0.02)$) {\g};
+  % ---------------- edges (transitive reduction; premise -> dependent) ----------------
+  \begin{scope}[on background layer]
+    \draw[fd2 neck] (aux) -- (ren);
+    \draw[fd2 use] (ren) -- (ope);
+    \draw[fd2 use] (ren.north east) -- (cfp.west);
+    \draw[fd2 use] (sup) -- (ent);
+    \draw[fd2 use] (ent.north east) .. controls (3.4,0.15) and (5.1,0.45) .. (coo.south west);
+    \draw[fd2 use] (ent.east) -- (tw4.west);
+    \draw[fd2 use] (ent.east) -- (fou.west);
+    \draw[fd2 use] (ent.south east) -- (lcs.west);
+    \draw[fd2 prem] (ope.south east) -- (coo.north west);
+    \draw[fd2 prem] (ope) -- (pmo);
+    \draw[fd2 prem] (ope.east) .. controls (6.6,1.85) and (7.9,1.62) .. (tmc.north west);
+    \draw[fd2 use] (coo.north east) -- (pmo.south west);
+    \draw[fd2 use] (coo) -- (tmc);
+    \draw[fd2 use] (coo.south east) -- (lgz.north west);
+    \draw[fd2 use] (tw4) -- (lgz);
+    \draw[fd2 use] (pmo.east) -- (lat.south west);
+    \draw[fd2 use] (cfp.east) -- (lat.north west);
+    \draw[fd2 use] (tmc.east) -- (uni.west);
+    \draw[fd2 use] (lat.south east) -- (had.north);
+    \draw[fd2 prem] (uni) -- (had.west);
+    \draw[fd2 prem] (lgz.east) -- (had.south west);
+    \draw[fd2 prem] (tw4.south east) .. controls (7.6,-1.45) and (12.6,-1.35) .. (had.south);
+    \draw[fd2 use] (fou.east) .. controls (8.6,-2.05) and (13.9,-1.95) .. (had.south east);
+  \end{scope}
+  % ---------------- legend ----------------
+  \begin{scope}[shift={(0.2,-3.85)}]
+    \node[fd2 R,minimum width=0.5cm,minimum height=0.3cm] at (-0.9,0) {};    \node[font=\scriptsize,anchor=west] at (-0.6,0) {[R]};
+    \node[fd2 A,minimum width=0.5cm,minimum height=0.3cm] at (0.3,0) {};     \node[font=\scriptsize,anchor=west] at (0.6,0) {[A]};
+    \node[fd2 math,minimum width=0.5cm,minimum height=0.3cm] at (1.5,0) {};  \node[font=\scriptsize,anchor=west] at (1.8,0) {纯数学};
+    \node[fd2 cond,minimum width=0.5cm,minimum height=0.3cm] at (3.3,0) {};  \node[font=\scriptsize,anchor=west] at (3.6,0) {$R_{\mathrm{cond}}$（角标：内容等级）};
+    \node[fd2 asm,minimum width=0.5cm,minimum height=0.3cm] at (7.6,0) {};   \node[font=\scriptsize,anchor=west] at (7.9,0) {[A] 级假设};
+    \node[fd2 asmC,minimum width=0.5cm,minimum height=0.3cm] at (9.85,0) {}; \node[font=\scriptsize,anchor=west] at (10.15,0) {[C] 级假设（强子层次的前提）};
+    \draw[fd2 use] (-1.2,-0.55) -- (-0.6,-0.55);   \node[font=\scriptsize,anchor=west] at (-0.5,-0.55) {\texttt{\string\uses} 依赖};
+    \draw[fd2 prem] (2.1,-0.55) -- (2.7,-0.55);    \node[font=\scriptsize,anchor=west] at (2.8,-0.55) {假设作为 $R_{\mathrm{cond}}$ 定理的前提};
+    \draw[fd2 neck] (7.6,-0.55) -- (8.2,-0.55);    \node[font=\scriptsize,anchor=west] at (8.3,-0.55) {[A] 陈述的瓶颈假设};
+  \end{scope}
+\end{tikzpicture}
+\caption{LaMET 匹配定理的依赖结构（\cref{tab:lamet-dependency} 的图示）。节点为去掉类型前缀的规范标签，箭头由前提指向依赖者，只画传递约化后的边（可由其他路径推出的依赖从略，假设到条件定理的前提边一律保留）；
+填充色为严格性标签（绿 [R]、蓝 [A]，白色为纯数学引理），绿色虚线框为 $R_{\mathrm{cond}}$ 条件定理，右上角字母为其内容等级；橙色与红色虚线框分别为 [A] 级与 [C] 级编号假设。
+第~7、8~章的前提（\cref{thm:dis-ope,thm:pdf-moments-local,thm:pdf-dglap}）未画出。
+部分子态的链 \cref{thm:lamet-coordinate}$\,\to\,$\cref{thm:lamet-parton-momentum}$\,\to\,$\cref{thm:lattice-lamet} 只依赖 [A] 级输入；强子层次的陈述 \cref{thm:lamet-hadronic} 另需三个 [C] 级假设（红色节点），其内容等级因而为 [C]。}
+\label{fig:lamet-dependency}
+\end{figure}
+%%% END fig:lamet-dependency
+\paragraph{完整证明\cref{asm:lamet-ope}需要什么。}
+对可重整标量理论中定域算符的 T 积，短距离展开是重整化微扰论的定理（Wilson\cite{Wilson1969}，Zimmermann\cite{Zimmermann1973}）。非定域算符是扩展理论（\cref{asm:lamet-aux-renorm}）中两个定域复合算符之积 $\bar J(z)J(0)$，所以\cref{asm:lamet-ope}可由扩展理论的一个 OPE 定理推出。缺口有二：(i) $Q$ 的传播子 $\theta(x^z)\delta(x^0)\delta^2(x_\perp)$ 不是 Lorentz 协变的，Zimmermann 森林公式的幂次计数须改用各向异性的发散度重做（图形法的“三维/四维”计数只为重整化写出）；(ii) $\det(\ii n\cdot D)$ 取为常数在维数正规化中合法，但非协变传播子的 $\delta(0)$ 型项需要小心。两者都是技术性的，没有已知反例，两圈与三圈计算与 OPE 结构一致——这是把\cref{asm:lamet-ope}定为 \tagA 而不是 \tagC 的理由。
+
+\section{重整化方案与动量空间匹配：混合方案}\label{sec:lamet-schemes}
+
+格点上 $z$ 的取值从 $\order{a}$ 一直到 $\sim1$ fm，任何方案都必须在整个范围内给出可用的重整化因子；动量空间匹配又要求方案与 $\MSbar$ 之间的换算在所有贡献于 Fourier 变换的 $z$ 上都是微扰的。各方案见\cref{tab:lamet-schemes}，混合方案的结构见\cref{fig:lamet-hybrid}。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{1.8cm}Xp{2.75cm}p{2.6cm}p{2.1cm}@{}}
+\toprule
+方案 & 定义 & 到 $\MSbar$ 的换算 & 动量空间匹配 & 文献 \\
+\midrule
+Wilson 线质量减除 & $\ee^{\delta m|z|}$ 与对数因子 $Z_{\log}$ & 与 $z$ 无关 & $\MSbar$ 核 & \cite{Chen:2016fxx,Ishikawa:2016znu,Green:2017xeu} \\
+RI/MOM & $Z^{-1}\tilde h_{\rm quark}(z,p)|_{p^2=-\mu_R^2,p^z=p^z_R}=$ 树图 & 依赖于 $z$（含 $\ln z^2\mu_R^2$），依赖规范与投影 & $C^{\rm OM}=\bar Z'_{\rm OM}\circledast C$；大 $|z|$ 处无依据 & \cite{Constantinou:2017sej,Stewart:2017tvs,Alexandrou:2017huk,Chen:2017mzz,LatticeParton:2018gjr} \\
+比值（约化 ITD） & $\tilde h(\lambda,z^2)/\tilde h(0,z^2)$（或真空矩阵元） & $1/C_0(-z^2\mu^2)$ & $C^{\rm ratio}$；大 $|z|$ 处无依据 & \cite{Radyushkin2017,Orginos:2017kos,Braun:2018brg} \\
+混合 & $|z|\le z_S$：比值；$|z|>z_S$：$\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$ & $1/C_0(\min(|z|,z_S))$，处处微扰 & $C^{\rm hyb}$（\cref{prop:lamet-hybrid-kernel}） & \cite{Ji:2020brr} \\
+自重整化 & 拟合 $\ln Z(a)$ 的 $\delta m/a$ 型项、离散化项与短距离 $\MSbar$ 形状 & 同混合方案 & 同混合方案 & \cite{LatticePartonLPC:2021gpi} \\
+Coulomb 规范 & 不带规范链的 Coulomb 规范双线性算符 & 无线性发散，$Z$ 与 $z$ 无关 & 自己的单圈核 & \cite{Gao:2023lny,Zhao:2023ptv} \\
+\bottomrule
+\end{tabularx}
+\caption{准关联函数的重整化方案一览（定义见\cref{def:lamet-schemes}；$\circledast$ 为 $\xi$ 上的普通卷积，$\bar Z'_X$ 为换算因子在固定部分子动量下的 Fourier 变换）。“无依据”的含义见\cref{rem:lamet-ratio-large-z}。}
+\label{tab:lamet-schemes}
+\end{table}
+
+\begin{proposition}[混合方案的单圈匹配核 \tagR]\label{prop:lamet-hybrid-kernel}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈，对 $\Gamma=\gamma^0$、$Z_X$ 取零动量矩阵元的混合方案：$\mathcal C_{\rm hyb}(\alpha,z)=\mathcal C_{\rm ratio}(\alpha,z)+\frac{3a}2\delta(1-\alpha)\ln\frac{z^2}{z_S^2}\theta(|z|-z_S)$，其在固定部分子动量下的精确 Fourier 变换为
+\begin{equation}\label{eq:lamet-hybrid-kernel}
+C_{\rm hyb}(\xi)=C_{\rm ratio}(\xi)+\frac{3a}2\Big[-\frac1{|1-\xi|}+\frac{2\,{\rm Si}((1-\xi)\lambda_S)}{\pi(1-\xi)}\Big]^{[-\infty,\infty]}_{+(1)},\qquad\lambda_S=z_Sp^z,\qquad\int\dd\xi\,C_{\rm hyb}=1 .
+\end{equation}% VF-LAM-3, VF-LAM-10; E01
+（本命题只涉及部分子态。）
+\uses{prop:lamet-oneloop,def:lamet-schemes}
+\end{proposition}
+
+\begin{proof}
+坐标形式：由\cref{eq:lamet-hybrid-conv}与 $C_0=1+a(\frac32L_z+\frac52)$（\cref{prop:lamet-oneloop}），$|z|>z_S$ 时 $C_0(z)/C_0(z_S)=1+\frac{3a}2\ln\frac{z^2}{z_S^2}+\order{a^2}$。Fourier 变换：沿射线 $z^2=-\lambda^2/p_z^2$，修正项是 $\frac{3a}2\ln\frac{\lambda^2}{\lambda_S^2}\theta(|\lambda|-\lambda_S)$ 乘以 $\alpha=1$ 处的 $\ee^{\ii\lambda}$；对 $u=\xi-1\neq0$，分部积分并用 $\int_0^\infty\frac{\sin(u\zeta)}\zeta\dd\zeta=\frac\pi2{\rm sgn}(u)$，
+\[
+\int\frac{\dd\zeta}{2\pi}\ee^{\ii u\zeta}\ln\frac{\zeta^2}{\lambda_S^2}\theta(|\zeta|-\lambda_S)=\frac2\pi\int_{\lambda_S}^\infty\dd\zeta\,\cos(u\zeta)\ln\frac\zeta{\lambda_S}=-\frac2{\pi u}\int_{\lambda_S}^\infty\frac{\sin(u\zeta)}\zeta\dd\zeta=-\frac1{|u|}+\frac{2\,{\rm Si}(u\lambda_S)}{\pi u}
+\]
+（在 $\zeta\to\infty$ 处的边界项按分布意义为零），由 ${\rm Si}$ 的奇性它等于方括号中的函数。由 ${\rm Si}(v)=\frac\pi2{\rm sgn}(v)-\frac{\cos v}v+\order{v^{-2}}$，固定 $\lambda_S$ 时方括号在 $|u|\to\infty$ 处为 $-\frac{2\cos(u\lambda_S)}{\pi\lambda_Su^2}$，可积；所以只有 $u=0$ 处的 $-1/|u|$ 奇点需要处方。由于坐标空间的修正在 $\zeta=0$ 处为零（混合方案在短距离就是比值方案，保持矢量流守恒），其 Fourier 变换对 $u$ 的积分为零，这唯一地确定了 $\delta(u)$ 的系数：方括号是 $\mathbb R$ 上的加号分布。于是 $\int\dd\xi\,C_{\rm hyb}=\int\dd\xi\,C_{\rm ratio}=1$。（在卷积中 $\lambda_S=z_S|y|P^z$ 随 $y\to0$ 而趋于零，见\cref{prop:lamet-tails}(iii)。）
+\end{proof}
+
+\begin{example}[混合核的归一化]\label{ex:lamet-hybrid-normalization}
+设方括号为 $\mathcal B(u)$。在 $|u|\le U$ 上积分并令 $U\to\infty$：$\int_{\beta\le|u|\le U}\frac{-\dd u}{|u|}=-2\ln\frac U\beta$；$\int_{|u|\le U}\frac{2{\rm Si}(u\lambda_S)}{\pi u}\dd u=\frac4\pi\int_0^{U\lambda_S}\frac{{\rm Si}(v)}v\dd v=2\ln(U\lambda_S)+2\gamma_E+o(1)$，这里用到分部积分与 $\int_0^\infty\frac{\sin v}v\ln v\,\dd v=-\frac\pi2\gamma_E$：
+\[
+\int_0^V\frac{{\rm Si}(v)}v\dd v={\rm Si}(V)\ln V-\int_0^V\frac{\sin v}v\ln v\,\dd v=\frac\pi2(\ln V+\gamma_E)+o(1).
+\]
+所以对称挖去 $|u|<\beta$ 后 $\int\mathcal B=2\ln(\lambda_S\ee^{\gamma_E})+2\ln\beta$；$\mathbb R$ 上的加号处方减去这一常数，使 $\int[\mathcal B]_+=0$。文献\cite[式~(33)--(34)]{Ji:2020brr}与\cite[式~(120)--(121)]{JiEtAl2021}用的是 $\frac1{|u|_+}\equiv\lim_{\beta\to0^+}[\theta(|u|-\beta)/|u|+2\delta(u)\ln\beta]$，它只抵消 $2\ln\beta$，因而 $\int\dd\xi\,C_{\rm hyb}=1+3a\ln(\lambda_S\ee^{\gamma_E})$——比精确的 Fourier 变换多出 $3a\ln(\lambda_S\ee^{\gamma_E})\delta(1-\xi)$，在 $\lambda_S=1$、$\as=0.25$–$0.3$ 时约为 $9$–$11\%$（附录~Q 第~8~条）。首个发表的更正是\cite[式~(35)]{Chou:2022drv}，另见\cite[式~(A.14)]{Su:2022fiu}，那里 $\lambda_S=z_S|y|P^z$。
+\uses{prop:lamet-hybrid-kernel}
+\end{example}
+
+%%% BEGIN fig:lamet-hybrid
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 ratio/.style={draw=red!65!black,line width=1.1pt},
+  fd2 hyb/.style={draw=blue!60!black,line width=1.6pt},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % x(z) = 10 z  (|z| in fm);  y = 2.4 (f - 0.4),  f(z) = 1 + 0.25 ln(z/0.2) + 0.5 max(0,z-0.45)^2  (schematic)
+  % ======================= (a) the two |z| intervals =======================
+  \begin{scope}[yshift=5.1cm]
+    \fill[blue!12] (0,0) rectangle (2.5,0.62);
+    \fill[orange!14] (2.5,0) rectangle (12,0.62);
+    \draw[gray!60!black,line width=0.5pt] (0,0) rectangle (12,0.62);
+    \node[fd2 lab] at (1.25,0.31) {比值方案};
+    \node[fd2 lab] at (7.25,0.31) {Wilson 线质量减除：$\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$};
+    \node[fd2 note,anchor=south] at (1.25,0.7) {$\tilde h(\lambda,z^2)/\tilde h(0,z^2)$};
+    \node[fd2 note,anchor=south] at (7.25,0.7) {$Z_{\rm hyb}=\ee^{\delta m z_S}/\tilde h(0,z_S^2)$ 由 $z_S$ 处的连续性确定};
+    \draw[fd2 ax] (0,-0.02) -- (12.7,-0.02) node[right,font=\small] {$|z|$};
+    \foreach \t/\l in {0/0,12/1.2\,\mathrm{fm}} {\draw[gray!60!black,line width=0.45pt] (\t,-0.1) -- (\t,0.06); \node[fd2 note,below=2pt] at (\t,-0.06) {$\l$};}
+    \draw[gray!60!black,line width=0.45pt] (2.5,-0.1) -- (2.5,0.06);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.3) -- (3.0,-0.3);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.36) -- (2.0,-0.24) (3.0,-0.36) -- (3.0,-0.24);
+    \node[fd2 note,anchor=west] at (3.08,-0.31) {$z_S\approx0.2$--$0.3$ fm};
+    \node[fd2 lab] at (-1.25,0.31) {(a)};
+  \end{scope}
+  % ======================= (b) conversion factor to MS-bar (schematic) =======================
+  \fill[gray!14] (4.5,0) rectangle (12,4.0);
+  \node[fd2 note,align=center,text=gray!35!black] at (9.6,0.38) {非微扰区：$\alpha_s(1/|z|)$ 不再小};
+  \draw[gray!65!black,line width=0.5pt,dash pattern=on 3pt off 2pt] (2.5,0) -- (2.5,5.1);
+  \draw[fd2 ratio] plot[domain=0.03:0.45,samples=60,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))});
+  \draw[fd2 ratio,dash pattern=on 4pt off 2pt] plot[domain=0.45:1.2,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2)+0.5*(\x-0.45)^2)});
+  \draw[fd2 hyb] plot[domain=0.03:0.25,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))}) -- (12,{2.4*(0.6+0.25*ln(1.25))});
+  \fill[black] (2.5,{2.4*(0.6+0.25*ln(1.25))}) circle[radius=1.8pt];
+  \draw[fd2 ax] (0,0) -- (12.7,0) node[right,font=\small] {$|z|/\mathrm{fm}$};
+  \draw[fd2 ax] (0,0) -- (0,4.25);
+  \node[fd2 note,rotate=90,anchor=south] at (-0.12,2.1) {到 $\MSbar$ 的换算因子（示意）};
+  \foreach \t/\l in {0/0,2/0.2,4/0.4,6/0.6,8/0.8,10/1.0,12/1.2} {\draw[gray!60!black,line width=0.45pt] (\t,-0.06) -- (\t,0.06); \node[font=\scriptsize,below=2pt] at (\t,-0.04) {$\l$};}
+  \node[fd2 note,text=red!55!black,anchor=south east] at (11.6,3.25) {比值方案、RI/MOM：依赖 $\ln(z^2\mu^2)$};
+  \node[fd2 note,text=blue!50!black,anchor=north west] at (4.65,1.42) {混合方案：$|z|>z_S$ 时保持在 $z_S$ 处的值（处处微扰）};
+  \node[fd2 lab] at (-1.25,2.1) {(b)};
+\end{tikzpicture}
+\caption{混合重整化方案（示意）。(a)~$|z|\le z_S$ 用比值方案，紫外发散（包括 Wilson 线的线性发散）在比值中相消；$|z|>z_S$ 只减去 Wilson 线的线性发散与对数因子（$\delta m$ 的符号约定同 \cref{prop:lattice-renormalizability}：$O^R=Z_j^{-2}\ee^{-\delta m|z|}O^B$）。
+(b)~到 $\MSbar$ 的换算因子：混合方案中它等于 $z_S$ 处的值，在所有 $|z|$ 上都是微扰的，因此动量空间匹配成立；比值方案与 RI/MOM 方案的换算因子依赖于 $\ln(z^2\mu^2)$，在大 $|z|$ 处含 $\alpha_s(1/|z|)$（灰色区），动量空间匹配没有依据（\cref{rem:lamet-ratio-large-z}）。
+单圈混合核满足 $\int\dd\xi\,C_{\rm hyb}=1$（\cref{prop:lamet-hybrid-kernel}，VF-LAM-10）。}
+\label{fig:lamet-hybrid}
+\end{figure}
+%%% END fig:lamet-hybrid
+\begin{proposition}[动量空间匹配在何种重整化方案中成立 \tagA]\label{prop:lamet-scheme-validity}
+设方案 $X$ 的换算为 $\tilde h^X=Z'_X(z^2\mu_R^2,\mu_R/\mu)\tilde h^{\MSbar}$。若 $Z'_X(z)$ 在所有贡献于 Fourier 变换的 $z$ 上都是微扰的，则\cref{thm:lattice-lamet}的动量空间匹配在方案 $X$ 中成立，$C^X=\bar Z'_X\circledast C$：在固定部分子动量下 $\hat{\mathcal C}^X(\lambda)=Z'_X(\lambda^2\mu_R^2/p_z^2)\hat{\mathcal C}(\lambda)$，$\circledast$ 为 $\xi\in\mathbb R$ 上的普通卷积，$\bar Z'_X$ 为 $Z'_X$ 的 Fourier 变换。混合方案按构造满足这一条件（\cref{prop:lamet-hybrid-kernel}）。
+（本命题只涉及部分子态。）
+\uses{thm:lattice-lamet,def:lamet-schemes,prop:lamet-hybrid-kernel}
+\end{proposition}
+
+\begin{proofsketch}
+由\cref{def:lamet-schemes}，坐标核乘以 $Z'_X$；沿射线作 Fourier 变换，乘积变为卷积。只有当 $Z'_X$ 在所有相关的 $z$ 上可展开为 $\as(\mu)$ 的级数时，$C^X$ 才是红外安全、可微扰计算的核，\cref{thm:lattice-lamet}的结论才转移到方案 $X$。见\cite{JiEtAl2021,Ji:2020brr}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA，继承\cref{thm:lattice-lamet}（瓶颈\cref{asm:lamet-ope}）。条件“$Z'_X$ 处处微扰”对混合方案按构造成立（换算因子在 $|z|>z_S$ 处冻结在短距离值 $C_0(z_S)$）。
+
+\begin{remark}[比值与 RI/MOM 方案在大 $|z|$ 处的动量空间匹配 \tagC]\label{rem:lamet-ratio-large-z}
+在纯比值或 RI/MOM 方案中、用 $|z|\sim1/\Lambda$ 处的格点数据作动量空间匹配是没有依据的：$Z'_X$ 含有 $\as(1/|z|)$ 的对数，在那里是非微扰的；文献\cite{JiEtAl2021}写道，对任何与 $\MSbar$ 相差非微扰因子的方案使用动量空间因子化都“是不合法的”。由此产生的误差是非微扰的，不受微扰匹配控制。坐标空间（短距离因子化）在小 $z$ 处的使用不受影响。
+\uses{prop:lamet-scheme-validity}
+\end{remark}
+
+\paragraph{地位与缺口}
+\tagC：没有任何推导支持这种做法的有效性；这一做法是缺乏依据，而不是被证明为错。补救办法是改用混合方案，或只在短距离使用坐标空间匹配（\cref{sec:lamet-sdf}）。
+
+\section{Fourier 步骤：长程行为、解析带与可恢复的自由度}\label{sec:lamet-fourier}
+
+准 PDF 需要沿整条射线 $z^2=-\lambda^2/P_z^2$ 的 $\tilde h$，而格点数据只到 $|z|\le z_L$，即 $|\lambda|\le\lambda_L=z_LP^z$，且信号随 $|z|$ 迅速变差。本节回答三个数学问题：大 $|z|$ 处的衰减从何而来（\cref{thm:lamet-exp-decay}）；衰减意味着什么（\cref{lem:lamet-strip,prop:lamet-truncation}）；没有衰减信息时数据能确定什么（\cref{prop:lamet-slepian}）。数值示意见\cref{fig:lamet-fourier}。
+
+\begin{assumption}[谱隙与边界值正则性 \tagC]\label{asm:lamet-gap}
+设 $\phi$ 为 Hermite 标量场，$|\vec p\rangle$ 为质量 $m$ 的单粒子态，$\sqrt Z=\langle\Omega|\phi(0)|\vec p\rangle$；零动量态之间的矩阵元按对称极限理解：$\langle\vec 0|A|\vec 0\rangle\equiv\frac12\lim_{\vec p\to0}\big(\langle\vec p|A|-\vec p\rangle+\langle-\vec p|A|\vec p\rangle\big)$\cite[第~5.1~节]{Ji:2026vir}。
+\begin{enumerate}[label=(GP\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 外态是孤立的单粒子态；在 $\phi(0)|\vec 0\rangle$ 的谱分解中分出真空 $P_\Omega$ 与交叉真空道 $|\vec p;-\vec p\rangle\langle\vec p;-\vec p|$（两粒子态，其中一个粒子是由 $\phi$ 自真空产生的，$\vec p\to0$ 时能量为 $2m$）之后，其余中间态 $P'$ 的能量满足 $E-m\ge\Delta m>0$：谱分布 $\rho_{\vec z}(E)=\langle\vec 0|\phi(0,\vec z)\delta(H-E)P'\phi(0)|\vec 0\rangle$ 与 $\tilde\rho_{\vec z}(E)=\langle\vec 0|\phi(0)\delta(H-E)P'\phi(0,\vec z)|\vec 0\rangle$ 是支撑在 $E\ge m+\Delta m$ 中的缓增分布（不含单粒子中间态；单粒子中间态的处理见第~23~章）。
+\item 由此定义的 $G_>(w,\vec z)=\int\dd E\,\rho_{\vec z}(E)\ee^{-\ii(E-m)w}$（$\Imag w<0$）与 $G_<(w,\vec z)=\int\dd E\,\tilde\rho_{\vec z}(E)\ee^{\ii(E-m)w}$（$\Imag w>0$）在割线 $\{\Imag w=0,\ |\Real w|\ge|\vec z|\}$ 的某个邻域内满足 $|G_\gtrless(w,\vec z)|\le C_b(1+|w|)^N|w^2-\vec z^{\,2}|^{-k}$（$C_b$ 至多多项式地依赖于 $|\vec z|$），并在割线上（端点 $\pm|\vec z|$ 除外）有连续的边界值（Fredenhagen 型的适度正则性）。
+\item （QCD 中的应用）Wilson 线算符在非微扰层次化为 QCD$+$静态源中的定域算符 $\bar Q\Gamma\psi$（参见\cref{asm:lamet-aux-renorm}），重—轻扇区在静态阈值之上有能隙 $\Lambda_X=m_X-m_Q>0$（禁闭；由 $B^{(*)}$ 质量估计 $\Lambda_X\approx0.5$ GeV，$m_Q(\tau)+\Lambda(\tau)$ 的分割依赖于重整子方案）。
+\end{enumerate}
+地位：对 QCD 为 \tagC——(GP1)(GP2) 是所考虑的道中标准的公理化假设；(GP3) 需要重—轻扇区的禁闭与\cref{asm:lamet-aux-renorm}的非微扰形式；格点数值（$\Lambda_X\approx0.5$ GeV）只是证据。
+文献：\cite[第~5~节]{Ji:2026vir}（预印本），\cite{Fredenhagen:1984bz}。
+被使用于：\cref{thm:lamet-exp-decay}、\cref{conj:lamet-decay-qcd}。
+解除途径：在构造性或公理化框架中对所考虑的道证明 (GP1)(GP2)；(GP3) 需要对禁闭的控制，超出现有方法。
+\uses{asm:lamet-aux-renorm}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC。决定等级的是 (GP3)：它要求带静态色源的扩展理论中重—轻扇区有能隙（禁闭），并要求\cref{asm:lamet-aux-renorm}在非微扰层次成立；(GP1)(GP2) 是对所考虑的道的标准公理化要求，在四维相互作用理论中同样没有证明（来源\cite[第~5~节]{Ji:2026vir}为预印本）。这一假设是\cref{thm:lamet-exp-decay}的前提；提高等级需要 (GP3) 的非微扰证明，超出现有方法。
+
+\begin{theorem}[局域性蕴含类空关联函数的指数衰减（Ji--Liu--Su） \tagR]\label{thm:lamet-exp-decay}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:intro-wightman}、\cref{asm:lamet-gap}。设 Hermite 定域标量场 $\phi$ 满足 Wightman 公理中的定域性、谱条件与缓增性（即以 $\phi$ 代替 QCD 复合场的\cref{asm:intro-wightman}(W1)--(W3)），并满足 (GP1)(GP2)。则对零动量单粒子态，当 $|\vec z|\to\infty$ 时
+\begin{equation}\label{eq:lamet-expdecay}
+f(\vec z)\equiv\langle\vec 0|\phi(0,\vec z)\phi(0)|\vec 0\rangle=2Z+\order{P(|\vec z|)\,\ee^{-\Delta m|\vec z|}},
+\end{equation}% VF-LAM-18
+其中零动量矩阵元按\cref{asm:lamet-gap}中的对称极限定义，$P$ 是多项式（其次数由 (GP2) 中的指数决定；若 (GP2) 中 $N=k=0$ 且 $C_b$ 与 $|\vec z|$ 无关，它是常数），$Z$ 由 $\sqrt Z=\langle\Omega|\phi(0)|\vec p\rangle$ 给出（真空道与交叉真空道各贡献 $Z$）。在这些假设下衰减率 $\Delta m$ 不能改进。
+（本定理是关于满足所列公理的标量场论的陈述；对 QCD 的应用是后面的猜想。）
+\uses{asm:intro-wightman,asm:lamet-gap}
+\end{theorem}
+
+\begin{proof}
+记 $R=|\vec z|$，$w=t-\ii t_E$。
+
+\emph{第 1 步（分离与延拓）。}在 $\langle\vec 0|\phi(t,\vec z)\phi(0)|\vec 0\rangle=\ee^{\ii mt}\langle\vec 0|\phi(0,\vec z)\ee^{-\ii Ht}\phi(0)|\vec 0\rangle$ 中插入 $P_\Omega+P_1+P_{n\ge2}$，并按 (GP1) 把交叉真空道从 $P_{n\ge2}$ 中分出：真空道给出 $Z\ee^{\ii mt}$，交叉道（能量 $2m$）给出 $Z\ee^{-\ii mt}$；另一种次序 $\langle\vec 0|\phi(0)\phi(t,\vec z)|\vec 0\rangle$ 中两者互换。于是两种次序都写成 $2Z\cos(mw)+G_\gtrless(w)$，$2Z\cos(mw)$ 是整函数。由谱条件 (W2) 与 (GP1)，$\rho_{\vec z}$ 支撑在 $E-m\ge\Delta m$，而 $\Imag w<0$ 时 $|\ee^{-\ii(E-m)w}|=\ee^{-(E-m)|\Imag w|}\le\ee^{-\Delta m|\Imag w|}$；由缓增性 (W3)，支撑在半直线上的缓增分布的 Laplace 变换给出：$G_>$ 在下半平面全纯，且 $|G_>(w)|\le C(1+|w|)^{N}(1+|\Imag w|^{-k})\ee^{-\Delta m|\Imag w|}$（参见\cite{Vladimirov2002,Streater:1989vi}）；$G_<$ 在上半平面有同样的性质。$C$ 至多多项式地依赖于 $R$。
+
+\emph{第 2 步（定域性与楔边定理）。}当 $|t|<R$ 时 $(t,\vec z)$ 是类空的，由定域性 (W1)，$[\phi(t,\vec z),\phi(0)]=0$，两种次序的边界值相等；减去公共的 $2Z\cos(mt)$ 得 $G_>(t-\ii0)=G_<(t+\ii0)$（作为 $(-R,R)$ 上的分布）。边界值存在，因为第 1 步的界只以 $|\Imag w|$ 的幂次发散。一元的楔边定理（Painlevé 型定理；参见\cite{Streater:1989vi}）把 $G_>$ 与 $G_<$ 粘合成一个在
+$\Omega=\mathbb C\setminus\{t\in\mathbb R:|t|\ge R\}$ 上全纯的函数 $G$。$f(\vec z)=2Z+G(0)$。
+
+\emph{第 3 步（Phragmén--Lindelöf）。}令 $S(w)=\sqrt{R^2-w^2}$（主支）。$R^2-w^2\in(-\infty,0]$ 当且仅当 $w$ 为实数且 $|w|\ge R$，所以 $S$ 在 $\Omega$ 上全纯，$\Real S>0$，$S(0)=R$；在割线上 $S=\mp\ii\,{\rm sgn}(t)\sqrt{t^2-R^2}$ 为纯虚数，$|R+S|=|t|$；在 $\Omega$ 中 $|\Imag w|\le\Real S\le|\Imag w|+R$（由 $(\Real S)^2-(\Imag S)^2=R^2-t^2+t_E^2$ 与 $\Real S\cdot\Imag S=tt_E$ 直接得出：若 $\Real S<|t_E|$ 则 $|\Imag S|>|t|$，从而 $(\Real S)^2>R^2+t_E^2$，矛盾；若 $\Real S\ge|t_E|$ 则 $(\Imag S)^2\le t^2$，从而 $(\Real S)^2\le R^2+t_E^2$）。考虑
+\[
+\Phi(w)=G(w)\,\ee^{\Delta m\,S(w)}\,\frac{S(w)^{2k}}{(R+S(w))^{N'}},\qquad N'\ge N,
+\]
+它在 $\Omega$ 中全纯（$R+S\neq0$）。在割线上 $|\ee^{\Delta mS}|=1$，由 (GP2)，$|\Phi|\le C_b(1+|t|)^N|t^2-R^2|^{-k}|t^2-R^2|^k|t|^{-N'}\le C_b\,(1+R^{-1})^N R^{N-N'}\equiv M$；在端点 $\pm R$ 附近 $\Phi$ 有界。在 $|\Imag w|\ge1$ 处，由第 1 步与 $\Real S\le|\Imag w|+R$，$|\Phi|\le2C\ee^{\Delta mR}(1+|w|)^{N+2k}$；在其余有界区域，$\Phi$ 或由 (GP2) 控制，或在 $\Omega$ 的紧子集上连续。所以 $\Phi$ 至多多项式增长。共形映射 $\zeta=\arcsin(w/R)$ 把 $\Omega$ 映为带形 $|\Real\zeta|<\frac\pi2$，割线映为两条边，$|w|\le R\cosh(\Imag\zeta)$；多项式增长化为 $\ee^{N''|\Imag\zeta|}$，远低于宽度为 $\pi$ 的带形中 Phragmén--Lindelöf 原理所允许的 $\exp(\ee^{c|\Imag\zeta|})$（$c<1$）\cite{Titchmarsh1939}。因此在 $\Omega$ 中 $|\Phi|\le M$（两个端点是有界的例外边界点，不影响结论）。
+
+\emph{第 4 步（$w=0$ 处的值）。}$\Phi(0)=G(0)\ee^{\Delta mR}R^{2k}/(2R)^{N'}$，故 $|G(0)|\le M\,2^{N'}R^{N'-2k}\ee^{-\Delta mR}$；$C_b$ 至多多项式地依赖于 $R$，即得\cref{eq:lamet-expdecay}。最后，$G(w)=\ee^{-\Delta mS(w)}$ 满足第 1 步的界（$\Real S\ge|\Imag w|$）与 (GP2)（割线上 $|G|=1$），且 $G(0)=\ee^{-\Delta mR}$，所以仅凭这些假设衰减率不能改进；在物理关联函数中，这一衰减率由前向奇异性的贡献饱和\cite{Ji:2026vir}。
+\end{proof}
+
+第 3 步的思想来自 Fredenhagen 对真空两点函数的聚类定理\cite{Fredenhagen:1984bz}：$\log|G|$ 是次调和的，$-\Delta m\Real S$ 是在割线上为零、在原点为 $-\Delta mR$ 的调和函数，指数衰减就从虚轴方向“搬运”到原点。原文\cite[第~5.1~节]{Ji:2026vir}（预印本）用共形映射与 Jensen 公式完成这一步，并只说明在割线附近与大实时间处需要“非常温和的正则性假设”；这里把这些假设明确写成 (GP2)，并用 Phragmén--Lindelöf 原理给出完整的论证。内容等级为 \tagC（来自\cref{asm:lamet-gap}）。该文的推广——单粒子中间态、任意外动量、$\varphi^3/\varphi^4$ 理论中各阶微扰论的谱表示——见\cref{prop:yzliu-decay-extensions}（第~23~章）。
+
+\begin{conjecture}[QCD 准分布矩阵元的长程渐近形式 \tagC]\label{conj:lamet-decay-qcd}
+QCD 中强子的准 PDF 矩阵元以重—轻束缚能 $\Lambda$ 指数衰减；对 $\pi$ 介子的价夸克分布，领头渐近形式为
+\begin{equation}\label{eq:lamet-LA}
+\tilde h^{\rm LA}(z,P^z)=\big[A_2\ee^{\ii\,{\rm sgn}(z)\phi_2}+A_1\ee^{\ii\,{\rm sgn}(z)\phi_1}\ee^{-\ii P^zz}+A_3\ee^{\ii\,{\rm sgn}(z)\phi_3}\ee^{\ii P^zz}\big]\ee^{-\Lambda|z|},
+\end{equation}% VF-LAM-18
+次领头渐近形式 $\propto\ee^{-\Lambda|z|}/|z|$；核子的非极化分布为 $A_2\ee^{\ii\phi_2{\rm sgn}z}\ee^{-\Lambda|z|}(1+A_2'/|z|+\cdots)$；螺旋度、横度分布、DA 与 GPD 有类似形式。
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{thm:lamet-exp-decay,asm:lamet-gap,asm:lamet-aux-renorm,def:lattice-quasi}
+\end{conjecture}
+
+\paragraph{地位与缺口}
+\tagC：依赖于禁闭（(GP3)）、非微扰的 HQET 约化，以及把标量场的定理推广到带 Wilson 线的规范理论；支持它的有色散分析、Lorentz 对称性与重味谱\cite[第~2--3~节]{Ji:2026vir}（预印本），以及 $\varphi^3$ 理论中的两圈检验（第~23~章）。实际上它被用来外推格点数据\cite{Gao:2021dbh,Su:2022fiu}。不能说“指数衰减定理在 QCD 中成立”：在 QCD 中被证明的只是\cref{thm:lamet-exp-decay}这一条件定理，其前提 (GP3) 是猜想。
+
+\begin{lemma}[准 PDF 的解析带]\label{lem:lamet-strip}
+若对所有实 $\lambda$ 有 $|\tilde h(\lambda,-\lambda^2/P_z^2)|\le A(1+|\lambda|)^k\ee^{-m|\lambda|/P^z}$，则 $\tilde q(x,P^z)$ 全纯地延拓到带形 $|\Imag x|<m/P^z$；特别地它在 $\mathbb R$ 上实解析：有限 $P^z$ 下在 $x=0,\pm1$ 处没有端点奇异性；PDF 的 $x^a(1-x)^b$ 行为只能在 $m/P^z\to0$ 时出现。% VF-LAM-17
+\uses{def:lattice-quasi}
+\end{lemma}
+
+\begin{proof}
+对 $x=x_R+\ii x_I$，$|\ee^{-\ii x\lambda}|=\ee^{x_I\lambda}\le\ee^{|x_I||\lambda|}$。在 $|x_I|\le m/P^z-\epsilon$ 上，\cref{eq:lamet-quasi-itd}的被积函数被 $A(1+|\lambda|)^k\ee^{-\epsilon|\lambda|}$ 控制，积分一致绝对收敛；故 $\tilde q$ 在带内连续，由 Fubini 定理它沿任一三角形回路的积分为零，由 Morera 定理它全纯。宽度是最优的：$\ee^{-m|\lambda|/P^z}$ 的 Fourier 变换是在 $\pm\ii m/P^z$ 处有极点的 Lorentz 函数。
+\end{proof}
+
+这把文献\cite{Ji:2024oka}中“有限 $P^z$ 下准 PDF 在 $y=0,1$ 处解析”的说法精确化；它是 Paley--Wiener 型的经典事实，同样的应用也见于\cite{Monahan:2026skv}（预印本）。
+
+\begin{proposition}[Fourier 截断误差界]\label{prop:lamet-truncation}
+在\cref{lem:lamet-strip}的假设下，若 $|\lambda|>\lambda_L$ 时 $k=0$，则
+\begin{equation}\label{eq:lamet-truncation}
+\Big|\tilde q(x)-\int_{|\lambda|\le\lambda_L}\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h\Big|\le\frac{AP^z}{\pi m}\ee^{-mz_L},\qquad z_L=\lambda_L/P^z .
+\end{equation}% VF-LAM-17
+对 $m=0.5$ GeV（$\hbar c=0.1973$ GeV\,fm），$z_L=1$ fm 时 $\ee^{-mz_L}=0.079$，$z_L=1.5$ fm 时 $0.022$：对现有的 $z_L$ 并不是参数上小的。
+\uses{lem:lamet-strip}
+\end{proposition}
+
+\begin{proof}
+差等于 $\int_{|\lambda|>\lambda_L}\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h$，其绝对值不超过 $\frac A{2\pi}\cdot2\int_{\lambda_L}^\infty\ee^{-m\lambda/P^z}\dd\lambda=\frac{AP^z}{\pi m}\ee^{-m\lambda_L/P^z}$；数值：$mz_L=0.5\times1/0.1973=2.534$，$\ee^{-2.534}=0.079$；$z_L=1.5$ fm 时 $mz_L=3.801$，$\ee^{-3.801}=0.022$。对 $x=0$ 与正的尾部，界是可以达到的。
+\end{proof}
+
+\begin{proposition}[有限 Ioffe 时间窗口内可稳定恢复的自由度]\label{prop:lamet-slepian}
+对支撑在 $[-1,1]$ 中的分布 $\mathcal P$，数据 $\tilde h(\lambda)$（$|\lambda|\le\lambda_L$）唯一确定 $\mathcal P$（\cref{cor:lamet-entire}），但反演不稳定：$L^2[-1,1]$ 上的时频限制算子
+\[
+(Kf)(x)=\int_{-1}^1\frac{\sin\lambda_L(x-y)}{\pi(x-y)}\,f(y)\,\dd y
+\]
+的本征值位于 $(0,1)$ 中，迹为 $2\lambda_L/\pi$；约有 $2\lambda_L/\pi$ 个本征值接近 $1$，其余超指数地衰减，这是 Slepian 与 Pollak 的结果\cite{SlepianPollak1961}；按 Landau 与 Widom\cite{LandauWidom1980}，本征值大于 $\epsilon$ 的个数为
+\[
+N(\epsilon)=\frac{2\lambda_L}\pi+\frac1{\pi^2}\ln\frac{1-\epsilon}\epsilon\,\ln\lambda_L+o(\ln\lambda_L);
+\]
+数值上，本征值大于 $\frac12$ 的个数在 $\lambda_L=5,10,15,25$ 时分别为 $3,6,10,16$。% VF-LAM-17
+\uses{cor:lamet-entire}
+\end{proposition}
+
+\begin{proof}
+唯一性：由\cref{cor:lamet-entire}，$\tilde h$ 是整函数，在一个区间上的值决定它（唯一性定理）。记 $\chi_I$ 为区间 $I$ 的特征函数，$\mathcal F$ 为 Fourier 变换，则
+\[
+K=\chi_{[-1,1]}\,\mathcal F^{-1}\chi_{[-\lambda_L,\lambda_L]}\mathcal F\,\chi_{[-1,1]},\qquad K(x,y)=\int_{-\lambda_L}^{\lambda_L}\frac{\dd\lambda}{2\pi}\ee^{\ii\lambda(x-y)}=\frac{\sin\lambda_L(x-y)}{\pi(x-y)},
+\]
+它是正的紧算子，范数小于 $1$，迹为 $\int_{-1}^1K(x,x)\,\dd x=\int_{-1}^1\frac{\lambda_L}\pi\dd x=\frac{2\lambda_L}\pi$。本征函数是长椭球函数，本征值分布见\cite{SlepianPollak1961,LandauWidom1980}；所列数值是对 $K$ 离散化后的数值对角化（$\lambda_L=5,10,15,25$ 时迹为 $3.18,6.37,9.55,15.92$）。“约有 $2\lambda_L/\pi$ 个可恢复的模式”是对这些事实的标准诠释，不是定理：带误差 $\epsilon$ 的数据只确定沿本征值大于 $\sim\epsilon$ 的本征函数的分量。
+\end{proof}
+
+\begin{example}[截断误差与可恢复模式数的数值]\label{ex:lamet-fourier-numbers}
+取 $m=0.5$ GeV。$z_L=1$ fm 时 $\ee^{-mz_L}=0.079$，$z_L=1.5$ fm 时 $0.022$。对 $P^z=2$ GeV、$z_L=1$ fm，$\lambda_L=z_LP^z/\hbar c=10.14$，截断误差界为 $\frac{AP^z}{\pi m}\ee^{-mz_L}=0.10\,A$；时频限制算子的迹为 $6.45$，本征值大于 $\frac12$ 的有 $6$ 个、大于 $0.99$ 的只有 $4$ 个——数据大约携带 $[-1,1]$ 上 $\mathcal P$ 的六个独立“模式”，其余必须来自先验信息（函数形式、正定性、渐近行为）。
+\uses{prop:lamet-truncation,prop:lamet-slepian}
+\end{example}
+
+%%% BEGIN fig:lamet-fourier
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{semilogyaxis}[name=main,width=0.67\textwidth,height=6.6cm,xmin=0,xmax=20,ymin=4e-3,ymax=1.6,
+  log origin=infty,axis lines=left,axis line style={gray!60!black},
+  xlabel={Ioffe 时间 $\lambda$},ylabel={$|\tilde h(\lambda,-\lambda^2/P_z^2)|/A$},
+  xtick={0,5,10,15,20},
+  tick label style={font=\scriptsize},label style={font=\small}]
+  % data window lambda <= lambda_L = z_L P^z = 10.14
+  \fill[blue!9] (axis cs:0,4e-3) rectangle (axis cs:10.14,1.6);
+  \draw[blue!55!black,line width=0.6pt,dash pattern=on 3pt off 2pt] (axis cs:10.14,4e-3) -- (axis cs:10.14,1.6);
+  % truncated tail
+  \addplot[draw=none,pattern=north east lines,pattern color=red!60!black,domain=10.14:20,samples=60] {exp(-0.25*x)} \closedcycle;
+  % the bound |h| <= A exp(-m lambda/P^z), m = 0.5 GeV, P^z = 2 GeV
+  \addplot[black,line width=1.1pt,domain=0:20,samples=120] {exp(-0.25*x)};
+  \node[font=\footnotesize,anchor=south west] at (axis cs:2.0,0.64) {$A\,\ee^{-m\lambda/P^z}$};
+  \node[font=\footnotesize,text=blue!45!black,align=center] at (axis cs:5.0,0.02) {数据窗 $|\lambda|\le\lambda_L$\\$\lambda_L=z_LP^z\approx10.1$\\（$z_L=1$ fm）};
+  \node[font=\footnotesize,text=red!55!black,align=center] at (axis cs:15.2,0.42) {截断的尾部（斜线）：\\误差 $\le\dfrac{AP^z}{\pi m}\,\ee^{-mz_L}$\\$\ee^{-mz_L}=0.079$};
+  \draw[red!55!black,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}] (axis cs:14.6,0.115) -- (axis cs:13.4,0.016);
+\end{semilogyaxis}
+% ---------------- inset: analyticity strip in the complex x plane ----------------
+\begin{scope}[shift={($(main.outer east)+(2.05,0.35)$)},fd]
+  \fill[white] (-1.85,-0.95) rectangle (2.1,1.05);
+  \draw[gray!55,line width=0.4pt,rounded corners=2pt] (-1.85,-0.95) rectangle (2.1,1.05);
+  \fill[orange!20] (-1.6,-0.32) rectangle (1.6,0.32);
+  \draw[orange!60!black,line width=0.5pt,dash pattern=on 2.5pt off 1.5pt] (-1.6,0.32) -- (1.6,0.32) (-1.6,-0.32) -- (1.6,-0.32);
+  \draw[lcaxis,gray!60!black] (-1.7,0) -- (1.75,0) node[right,font=\scriptsize] {$\Real x$};
+  \draw[lcaxis,gray!60!black] (0,-0.5) -- (0,0.88) node[right,font=\scriptsize] {$\Imag x$};
+  \foreach \t/\l in {-1/-1,1/1} {\draw[gray!60!black,line width=0.4pt] (\t,-0.05) -- (\t,0.05); \node[font=\scriptsize,fill=orange!20,inner sep=0.5pt] at (\t,-0.17) {$\l$};}
+  \node[font=\scriptsize,anchor=west] at (0.05,0.5) {$\Imag x=m/P^z$};
+  \node[font=\scriptsize,align=center] at (0.12,-0.7) {$\tilde q(x,P^z)$ 在带内全纯};
+\end{scope}
+\end{tikzpicture}
+\caption{Fourier 步骤的截断误差与解析带（示意，数值取自 VF-LAM-17）。若准 ITD 沿射线满足 $|\tilde h(\lambda,-\lambda^2/P_z^2)|\le A\,\ee^{-m|\lambda|/P^z}$（指数衰减假设），则准 PDF 在带形 $|\Imag x|<m/P^z$ 中全纯（内插图，\cref{lem:lamet-strip}），在有限 $P^z$ 下没有端点奇异性；
+只用数据窗 $|\lambda|\le\lambda_L=z_LP^z$（蓝色；图中 $m=0.5$ GeV，$P^z=2$ GeV）作 Fourier 变换时，截去的尾部（斜线）引起的误差不超过 $\frac{AP^z}{\pi m}\ee^{-mz_L}$（\cref{prop:lamet-truncation}）。对 $m=0.5$ GeV、$z_L=1$ fm，$\ee^{-mz_L}=0.079$：对现有的 $z_L$ 这一压低并不是参数上小的。QCD 中这种衰减本身是猜想（\cref{conj:lamet-decay-qcd}）。}
+\label{fig:lamet-fourier}
+\end{figure}
+%%% END fig:lamet-fourier
+
+\section{幂次修正、强子层次的匹配与适用域}\label{sec:lamet-power}
+
+准 PDF 的幂次修正有三个来源：扭度 2 算符迹项给出的靶质量修正——可以精确算出；动力学高扭度（扭度 4 多部分子关联函数，坐标空间中的 $\order{z^2\Lambda^2}$）；以及与 Wilson 线自能的重整子相联系的线性修正 $\order{\Lambda/P^z}$（\cref{prop:lamet-lrr}）。本节依次处理前两者，然后把强子层次的匹配写成一个条件定理，其非微扰内容恰好是三个编号假设。记 $c\equiv M^2/(4P_z^2)$。
+
+\begin{proposition}[靶质量修正的精确形式 \tagR]\label{prop:lamet-tmc}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum}、\cref{prop:lattice-renormalizability}）。记 $q^\Gamma_M$ 为满足 $\int\dd x\,x^{N-1}q^\Gamma_M=K^\Gamma_N\,a_N$ 的紧支撑分布（领头扭度的靶质量变换；它是纯运动学的，与 $\as$ 无关），$a_N=\int x^{N-1}q$。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item $\Gamma=\gamma^z$：$K_N=\sum_i\binom{N-i}ic^i$；令 $f_\pm=\sqrt{1+4c}\pm1$，
+\begin{equation}\label{eq:lamet-tmc-z}
+q^{\gamma^z}_M(x)=\frac1{\sqrt{1+4c}}\Big[\frac{f_+}2\,q\Big(\frac{2x}{f_+}\Big)-\frac{f_-}2\,q\Big(-\frac{2x}{f_-}\Big)\Big],
+\end{equation}% VF-LAM-11
+其逆为 $q(x)=\sqrt{1+4c}\sum_{n\ge0}\frac{f_-^n}{f_+^{n+1}}\big[(1+(-1)^n)q^{\gamma^z}_M(\frac{f_+^{n+1}x}{2f_-^n})+(1-(-1)^n)q^{\gamma^z}_M(-\frac{f_+^{n+1}x}{2f_-^n})\big]$；粒子数守恒；对支撑在 $[0,1]$ 中的夸克分布，支撑变为 $[-\frac{f_-}2,\frac{f_+}2]\simeq[-c,1+c]$（含反夸克时为 $[-\frac{f_+}2,\frac{f_+}2]$）。
+\item $\Gamma=\gamma^0$：$K^\perp_N=\sum_i\binom{N-i}i\frac{N-2i}Nc^i=K_N-\frac{2c}N\frac{\dd K_N}{\dd c}$，
+\begin{equation}\label{eq:lamet-tmc-0}
+q^{\gamma^0}_M(x;c)=q^{\gamma^z}_M(x;c)-2c\int_0^1\frac{\dd y}y\,\partial_c q^{\gamma^z}_M\Big(\frac xy;c\Big);
+\end{equation}
+$K^\perp_1=K^\perp_2=1$（归一化与 $\langle x\rangle$ 没有靶质量修正），$K^\perp_3=1+\frac23c$，$K^\perp_4=1+\frac32c$。
+\item 到 $\order{c}$：$q^{\gamma^z}_M=q-c\,(xq'+q)$，$q^{\gamma^0}_M=q-c\,(xq'+3q)+2c\int_{|x|}^1\frac{\dd y}yq(\frac xy)$。
+\item 因为在固定 $P^z$ 下 $c$ 与 $\lambda$ 无关，领头扭度的准 PDF 对 $\as$ 的所有阶为 $\tilde q_\Gamma=C_\Gamma\otimes q^\Gamma_M$：无质量的匹配核作用在靶质量变换后的 PDF 上。对赝 PDF，靶质量参数 $-M^2z^2/(4\lambda^2)$ 随 $\lambda$ 变化，修正为 $\order{z^2M^2}$。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{asm:lamet-ope,thm:lamet-coordinate,prop:lattice-renormalizability,def:lattice-quasi,thm:lamet-parton-momentum}
+\end{proposition}
+
+\begin{proof}
+\emph{迹项。}$T_N(z)\equiv z_{\mu_1}\cdots z_{\mu_N}(P^{\mu_1}\cdots P^{\mu_N}-\text{迹})$ 是 $z$ 的 $N$ 次齐次多项式，首项为 $(P\cdot z)^N$，且是调和的：$\Box_zT_N=N(N-1)\times(\text{张量的迹})=0$。设 $T_N=\sum_k\beta_k(P^2z^2)^k(P\cdot z)^{N-2k}$，$\beta_0=1$。在四维中 $\Box_z[(z^2)^k(P\cdot z)^{N-2k}]=4k(N-k+1)(z^2)^{k-1}(P\cdot z)^{N-2k}+(N-2k)(N-2k-1)P^2(z^2)^k(P\cdot z)^{N-2k-2}$，故 $\Box_zT_N=0$ 等价于 $\beta_k=-\beta_{k-1}\frac{(N-2k+2)(N-2k+1)}{4k(N-k+1)}$，解为 $\beta_k=\binom{N-k}k(-\frac14)^k$：
+\[
+T_N(z)=(P\cdot z)^N\sum_{i}\binom{N-i}i\Big(-\frac{P^2z^2}{4(P\cdot z)^2}\Big)^i ,
+\]
+即 Chebyshev $U$（Gegenbauer $C^{(1)}$）多项式。对 $z=z\hat e_z$，$-\frac{P^2z^2}{4(P\cdot z)^2}=\frac{M^2z_3^2}{4P_z^2z_3^2}=c$，\emph{与 $z$ 无关}。
+
+\emph{(a) 的矩。}由 (OP1)，$\Gamma=\gamma^\alpha$ 的前向矩阵元中 $O_1^{\alpha\mu_1\cdots\mu_{N-1}}$ 的贡献为 $2a_N\frac1N\frac{\partial T_N}{\partial z_\alpha}$。对 $\alpha=z$（$z^3=-(P\cdot z)/P^z$），用 $\partial(z^2)^i/\partial z_\alpha=2iz^\alpha(z^2)^{i-1}$、$\partial(P\cdot z)/\partial z_\alpha=P^\alpha$ 与 $(P\cdot z)^2/(P_z^2z^2)=-1$，除以 $2P^z(P\cdot z)^{N-1}$ 后两部分分别给出 $\binom{N-i}ic^i$ 乘 $2i$ 与 $N-2i$，合计 $\frac1N\sum_i\binom{N-i}i(2i+N-2i)c^i=K_N$；(OP1) 中并入的 $(z^\alpha/z^2)T_N$ 结构同样给出 $K_N$。$\Gamma=\gamma^0$：$u=\hat e_t$，$u\cdot z=0$，$u\cdot\partial_z(z^2)=0$，$u\cdot\partial_z(P\cdot z)=P^0$，除以 $2P^0(P\cdot z)^{N-1}$ 得 $\frac1N\sum_i\binom{N-i}i(N-2i)c^i=K^\perp_N$（只有第二部分）；$K^\perp_N=K_N-\frac{2c}NK_N'$ 来自 $\sum_ii\binom{N-i}ic^i=cK_N'$。$N=2$：$\gamma^0$ 对应 $T^{0z}$，迹项 $\propto g^{0z}=0$，故 $K^\perp_2=1$。
+
+\emph{(a) 的 $x$ 空间形式。}令 $r_\pm=\frac{1\pm\sqrt{1+4c}}2$（$r^2=r+c$ 的根，$r_+=\frac{f_+}2$，$r_-=-\frac{f_-}2$）；$K_N$ 满足 $K_N=K_{N-1}+cK_{N-2}$、$K_0=K_1=1$，故 $K_N=\frac{r_+^{N+1}-r_-^{N+1}}{r_+-r_-}$。\cref{eq:lamet-tmc-z}右边的 $N-1$ 阶矩为 $a_N\frac{(f_+/2)^{N+1}+(-1)^N(f_-/2)^{N+1}}{\sqrt{1+4c}}=K_Na_N$（变量代换 $t=2x/f_+$ 与 $t=-2x/f_-$）。紧支撑分布由其矩唯一确定（其 Fourier 变换是整函数，Taylor 系数正比于矩），故\cref{eq:lamet-tmc-z}成立；逆级数可直接代入验证\cite[附录~B]{Chen:2016utp}。$N=1$ 给出粒子数守恒。支撑：$q(2x/f_+)$ 与 $q(-2x/f_-)$ 分别在 $x\in[0,\frac{f_+}2]$ 与 $x\in[-\frac{f_-}2,0]$ 处非零（$q$ 支撑在 $[0,1]$ 时）。
+
+\emph{(b)。}算子 $A[g](x)=\int_0^1\frac{\dd y}yg(\frac xy)$ 把 $N-1$ 阶矩除以 $N$：令 $x=yt$，
+\[
+\int\dd x\,x^{N-1}A[g](x)=\int_0^1\dd y\,y^{N-1}\int\dd t\,t^{N-1}g(t)=\frac1N\int\dd t\,t^{N-1}g(t).
+\]
+故\cref{eq:lamet-tmc-0}右边的矩为 $K_Na_N-\frac{2c}NK_N'a_N=K^\perp_Na_N$。
+
+\emph{(c)。}$K_N=1+(N-1)c+\order{c^2}$，$K^\perp_N=1+\frac{(N-1)(N-2)}Nc+\order{c^2}$。用 $\int x^Nq'\,\dd x=-Na_N$，$-(xq'+q)$ 的矩为 $(N-1)a_N$；$-(xq'+3q)+2A[q]$ 的矩为 $(N-3+\frac2N)a_N=\frac{(N-1)(N-2)}Na_N$；$A[q](x)=\int_{|x|}^1\frac{\dd y}yq(\frac xy)$（$q$ 支撑在 $[-1,1]$）。这正是\cite{Braun:2018brg}的结果（取 $v^2=-1$、$(p\cdot v)^2=P_z^2$），构成 (b) 的独立检验。
+
+\emph{(d)。}代入 (OP1)：$\tilde h_\Gamma(\lambda,z^2)=\sum_nC^\Gamma_n(-z^2\mu^2)\frac{(\ii\lambda)^n}{n!}K^\Gamma_{n+1}(c)a_{n+1}+(\text{高扭度})$。固定 $P^z$ 时 $c$ 为常数，所以 $K^\Gamma_{n+1}a_{n+1}$ 就是 $q^\Gamma_M$ 的矩；把\cref{thm:lamet-coordinate}的证明中的 $a_{n+1}$ 换成它们，再作\cref{thm:lamet-parton-momentum}的变量代换，即得 $\tilde q_\Gamma=C_\Gamma\otimes q^\Gamma_M$。对赝 PDF，$z^2$ 固定，迹项给出 $(P\cdot z)^{N-2i}(M^2z_3^2/4)^i$，即 $\order{z^2M^2}$ 的修正。
+\end{proof}
+
+关于“靶质量修正与匹配可交换”的确切含义：(d) 说的是先作靶质量变换、再用无质量的核匹配。反过来的次序不同：对伸缩 $D_sq(x)=sq(x/s)$，变量代换给出 $C\otimes_{P^z}D_sq=D_s(C\otimes_{sP^z}q)$，而核通过 $\ln(\mu^2/(4y^2P_z^2))$ 依赖于 $P^z$，$s_+=f_+/2=1+c+\order{c^2}$，所以两种次序相差 $\order{\as c}$。(a) 的 $\gamma^z$ 形式见\cite[附录~B]{Chen:2016utp}；那里指出更早的公式\cite{Alexandrou:2015rja}不保持粒子数。(b) 中的比 $K^\perp_N$ 与 $x$ 空间形式和\cite{Chen:2016utp}中螺旋度分布的靶质量变换在数学上相同（只是把 $\Delta q$ 换成 $q$），$\gamma^0$ 前两阶矩与 $P^z$ 无关已见于\cite{Bhattacharya:2019cme}，(d) 可由\cite{Braun:2018brg}所引的 Balitsky--Braun 恒等式推出；把它明确识别为非极化 $\gamma^0$ 准 PDF 的靶质量修正以及 $\partial_c$ 表示，是本书给出的推导。修正的大小见\cite{Radyushkin:2017ffo}（据其摘要）。
+
+\begin{example}[$K_N$ 与 $K^\perp_N$（$N\le4$）]\label{ex:lamet-tmc-moments}
+由定义，$K_1=1$，$K_2=1+c$，$K_3=1+2c$，$K_4=1+3c+c^2$；$K^\perp_1=1$，$K^\perp_2=\binom20\frac22+\binom11\frac02c=1$；$K^\perp_3=1+\binom21\frac13c=1+\frac23c$；$K^\perp_4=1+\binom31\frac24c+\binom22\frac04c^2=1+\frac32c$。检验 $K^\perp_N=K_N-\frac{2c}NK_N'$：$N=4$ 时 $1+3c+c^2-\frac{2c}4(3+2c)=1+\frac32c$。$\order{c}$ 形式的矩：$\gamma^z$ 给出 $1+(N-1)c$，$\gamma^0$ 给出 $1+\frac{(N-1)(N-2)}Nc$，$N=1,2$ 时为零。$\gamma^0$ 下 $\langle x\rangle$ 没有靶质量修正的原因是：$N=2$ 的算符是 $T^{0z}$，而 Lorentz 结构 $P^0P^z-\frac14g^{0z}M^2$ 中 $g^{0z}=0$。对 $P^z=2M$（$c=\frac1{16}$），$\langle x\rangle$ 的靶质量修正对 $\gamma^z$ 为 $6.3\%$、对 $\gamma^0$ 为零；$\langle x^2\rangle$ 的修正分别为 $12.5\%$ 与 $4.2\%$。
+\uses{prop:lamet-tmc}
+\end{example}
+
+\begin{lemma}[Fourier 引理：$z^2\leftrightarrow\partial_x^2$]\label{lem:lamet-fourier}
+设 $\rho$ 是支撑在 $[-1,1]$ 中的分布，$r(\lambda)=\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\rho(\alpha)$。在固定 $P^z$ 下（$z^2=-\lambda^2/P_z^2$），作为 $\mathbb R$ 上的分布，
+\begin{equation}\label{eq:lamet-fourier-lemma}
+\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\big[z^2\Lambda^2\,r(\lambda)\big]=+\frac{\Lambda^2}{P_z^2}\,\rho''(x),
+\end{equation}% VF-LAM-12
+在 $\rho\in C^2$ 的开区间上逐点成立；若 $\rho\sim x^a$（$x\to0^+$）、$\sim(1-x)^b$（$x\to1^-$），则 $\rho''/\rho\to a(a-1)/x^2$ 与 $b(b-1)/(1-x)^2$。
+\uses{cor:lamet-entire}
+\end{lemma}
+
+\begin{proof}
+$\lambda^2\ee^{-\ii x\lambda}=-\partial_x^2\ee^{-\ii x\lambda}$，而 $\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}r(\lambda)=\rho(x)$（$r$ 是指数型整函数、在实轴上多项式有界，\cref{cor:lamet-entire}，所以变换在分布意义下存在）；因 $z^2\Lambda^2r=-\frac{\Lambda^2}{P_z^2}\lambda^2r$，其变换为 $-\frac{\Lambda^2}{P_z^2}(-\rho'')$。端点比值是初等的。
+\end{proof}
+
+若扭度 4 系数对 $z^2$ 有对数依赖（扭度 4 反常维度），则另外出现与 $\ln\lambda^2$ 的变换（$-2\gamma_E\delta(x)-[1/|x|]_{\rm reg}$）的卷积，只改变端点幂次的对数修正。文献中每一个“$\Lambda^2/(x^2P_z^2)$”型陈述背后都是这一机制：坐标空间中 $z^2$ 压低的余项在动量空间成为对 $x$ 的二阶导数；这一恒等式在\cite{Braun:2018brg}中被隐含地使用。
+
+\begin{corollary}[端点二分]\label{cor:lamet-endpoint}
+设在 $x\to1$ 附近 $q=(1-x)^bg_q(x)$、$\rho_4=(1-x)^{b+\delta}g_4(x)$，$g_q,g_4$ 在 $x=1$ 附近为 $C^2$，$g_q(1),g_4(1)\neq0$，$(b+\delta)(b+\delta-1)\neq0$。则相对修正 $\frac{\Lambda^2}{P_z^2}\rho_4''/q=\frac{\Lambda^2}{P_z^2}(b+\delta)(b+\delta-1)\frac{g_4(1)}{g_q(1)}(1-x)^{\delta-2}(1+\order{1-x})$：$\delta=1$ 给出 $\Lambda^2/((1-x)P_z^2)$（\cref{prop:lamet-bvz}的重整子模型），$\delta=0$ 给出 $\Lambda^2/((1-x)^2P_z^2)$（文献\cite{JiEtAl2021}按“旁观者动量 $(1-x)P^z$”的计数）；在 $x\to0$ 处若 $q\sim\rho_4\sim x^a$，则为 $\Lambda^2/(x^2P_z^2)$。两种已发表的大 $x$ 计数规则因此是关于 $\rho_4$ 未知端点行为的不同陈述，并不矛盾。% VF-LAM-12
+\uses{lem:lamet-fourier}
+\end{corollary}
+
+\begin{proof}
+$\rho_4''=(b+\delta)(b+\delta-1)(1-x)^{b+\delta-2}g_4-2(b+\delta)(1-x)^{b+\delta-1}g_4'+(1-x)^{b+\delta}g_4''$，除以 $q=(1-x)^bg_q$；后两项相对于第一项为 $\order{1-x}$。$x\to0$ 同理（\cref{lem:lamet-fourier}）。
+\end{proof}
+
+$P=0$ 归一化项及其 $1/(1-x)^2$ 增强见\cite{Braun:2018brg}，两种计数规则都写在\cite{JiEtAl2021}中；这里把它们统一为一个初等的二分。QCD 中 $\delta$ 的值是开放问题（\cref{rem:lamet-open}）。
+
+\begin{proposition}[扭度 4 修正的重整子模型（大 $\beta_0$） \tagP]\label{prop:lamet-bvz}
+在大 $\beta_0$（泡链）近似中，坐标空间系数函数的 Borel 变换（Borel 变量 $w$ 与\cref{def:power-borel}的 $u$ 相同）在 $w=\frac12$ 处有奇点，$B[H]\to\frac{-4C_F}{w-1/2}\sqrt X$，它就是 Wilson 线的线性发散（归一化后消失）；领头的红外重整子在 $w=1$，$B[H^\parallel]\to\frac{-4C_F}{1-w}[\alpha+\bar\alpha\ln\bar\alpha]X$，$B[H^\perp]\to\frac{-4C_F}{1-w}[\alpha+\bar\alpha\ln\bar\alpha+\alpha\bar\alpha]X$（$\parallel/\perp$ 即 $\Gamma=\gamma^z/\gamma^0$，$\bar\alpha=1-\alpha$）。若模糊度由同一函数形式的扭度 4 项抵消，则 $\mathcal I^\parallel(\lambda)=I(\lambda)+\kappa z^2\Lambda^2\int_0^1\dd\alpha\,(\alpha+\bar\alpha\ln\bar\alpha)I(\alpha\lambda)$，$|\kappa|\simeq\frac{\pi\ee^{5/3+2\gamma_E}}{4\beta_0}\simeq1.5$（示意性，符号不定），由\cref{lem:lamet-fourier}，
+\begin{equation}\label{eq:lamet-bvz}
+\mathcal Q^\parallel(x)=q(x)+\frac{\kappa\Lambda^2}{x^2P_z^2}\Big\{\int_{|x|}^1\frac{\dd y}y\frac{y^2}{[1-y]_+}q\Big(\frac xy\Big)+q(x)-x\,q'(x)\Big\},
+\end{equation}% VF-LAM-13; E03
+其中 $[\,\cdot\,]_+$ 是 $[0,1]$ 上的加号分布（写成 $[|x|,1]$ 上的积分时出现 $q(x)\ln(1-|x|)$ 项）。因此 $\mathcal Q=q\{1+\order{\frac{\Lambda^2}{x^2(1-x)P_z^2}}\}$，而 $\mathcal P(x,z)=q\{1+\order{z^2\Lambda^2(1-x)}\}$；以 $P=0$ 的矩阵元归一化使 $R^\parallel$ 增加 $-\frac14\bar xx^2q''/q$（$\perp$：$-\frac5{12}$），即 $\Lambda^2/((1-x)^2P_z^2)$ 型的项（$[k]_+$ 含 $-\frac14\delta(\bar\alpha)$，$\int_0^1k=\frac14$）。
+\uses{lem:lamet-fourier,cor:lamet-endpoint,def:power-borel,prop:power-renormalon-examples}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 把系数函数中的跑动耦合换成泡链，算出其 Borel 变换\cite{Braun:2018brg}；文献的约定为 $H=\delta(1-\alpha)+\frac1{\beta_0}\int_0^\infty\dd w\,\ee^{-w/(\beta_0a_s)}B[H](w)$，$a_s=\as/(4\pi)$，$\beta_0$ 即本书的 $\beta_0$，故 $\ee^{-w/(\beta_0a_s)}=\ee^{-4\pi w/(\beta_0\as)}$，$w=u$。(2) 设模糊度被同形的扭度 4 项抵消，得 $\kappa$ 的估计。(3) 动量空间：由\cref{lem:lamet-fourier}，$\mathcal Q^\parallel-q=\frac{\kappa\Lambda^2}{P_z^2}\rho''$，$\rho(x)=\int_x^1\frac{\dd t}tk(\frac xt)q(t)$（$x>0$），$k(y)=y+\bar y\ln\bar y$，$k(1)=1$，$k''(y)=\frac1{1-y}$；逐次求导时 $k'(y)=-\ln(1-y)$ 在 $y\to1$ 处的对数发散与 $\int k''$ 的端点发散相消，合起来正是 $[0,1]$ 上的加号分布，并留下 $q(x)\ln(1-x)$——即\cref{eq:lamet-bvz}（$x<0$ 时同样的推导给出 $-xq'(x)$）。(4) 端点行为由\cref{cor:lamet-endpoint}读出：$\rho\sim(1-x)^{b+1}$，即 $\delta=1$；$[k]_+$ 的 $-\frac14\delta(\bar\alpha)$ 给出 $\delta=0$ 型的项。完整论证见\cite{Braun:2018brg}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagP：只是关于泡链的陈述；模型与真实扭度 4 矩阵元的等同（函数形式、$\kappa$）是一个猜想（\cref{conj:power-renormalon-ht}）。关于印刷形式：\cite[式~(63)--(64)]{Braun:2018brg}（$x>0$）的 $R^{\parallel,\perp}_{\mathcal Q}$ 漏掉了方括号中的 $q(x)\ln(1-x)$，而该文式~(61)--(62) 是正确的（附录~Q 第~9~条）；正确的 $R$ 等于印刷形式加 $(1-x)\ln(1-x)$；$x<0$ 时 \cref{eq:lamet-bvz} 中的项为 $-xq'(x)$ 而非 $-|x|q'(x)$。该文给出的 $30\%$ 与 $24\%$ 的大小是针对其模型 PDF 的。推广到准、赝 GPD 及特殊点 $x=\pm\xi$ 见\cite{Braun:2024snf}（据其摘要）与\cref{conj:yzliu-gpd-xi}（第~23~章）。
+
+以下三个编号假设是强子层次匹配的全部非微扰输入。记 $\tilde h_{\rm tw2}$ 为领头扭度部分（\cref{thm:lamet-coordinate}，带有\cref{prop:lamet-tmc}的靶质量补全），$\tilde h_{\rm tw4}$ 为\cref{asm:lamet-twist4}的扭度 4 项。
+
+\begin{assumption}[扭度展开对 Ioffe 时间的一致性 \tagC]\label{asm:lamet-uniform}
+\begin{enumerate}[label=(UI-\alph*),leftmargin=3.4em,itemsep=1pt,topsep=2pt]
+\item （坐标形式，短距离因子化与\cref{thm:lamet-lcs}的强子诠释使用）对强子态与 $0<-z^2\le z_0^2$，$|\tilde h(\lambda,z^2)-\tilde h_{\rm tw2}(\lambda,z^2)|\le K(-z^2)\Lambda^2(1+|\ln(-z^2\mu^2)|)^k$，对 $\lambda\in\mathbb R$ 一致。
+\item （射线形式，\cref{thm:lamet-hadronic}使用）沿准 PDF 的射线 $z^2=-\lambda^2/P_z^2$，余项 $R\equiv\tilde h-\tilde h_{\rm tw2}-\tilde h_{\rm tw4}$ 限制在 $|\lambda|\le z_0P^z$ 上的 Fourier 变换在固定 $x\in(0,1)$ 处为 $o(P_z^{-2})$。
+\end{enumerate}
+（逐点界 (UI-a) 本身不能给出受 $P^z$ 压低的 Fourier 变换，因为 $\int_{|\lambda|\le z_0P^z}\lambda^2\dd\lambda/P_z^2\sim z_0^3P^z$；扭度 4 项只是由于其结构（\cref{lem:lamet-fourier}）才贡献 $\order{P_z^{-2}}$，所以需要单独的射线形式 (UI-b)。）
+地位：\tagC——没有全阶论证；证据来自重整子模型（\cref{prop:lamet-bvz}）与可解模型；Liu 关于 Gross--Neveu 模型的定理只覆盖虚的 Ioffe 时间（\cref{thm:yzliu-gn-convergence}，第~23~章）。
+文献：\cite{IzubuchiEtAl2018,Braun:2018brg,JiEtAl2021}。
+被使用于：\cref{thm:lamet-hadronic}。
+解除途径：对 $\lambda$ 一致的、带余项界的非微扰 OPE（参见\cref{asm:intro-np-ope}）；作为第一步，在一个模型中对实 Ioffe 时间证明它。
+\uses{thm:lamet-coordinate,prop:lamet-tmc}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC：没有任何全阶论证；它是\cref{thm:lamet-hadronic}最弱的前提之一，并决定\cref{thm:lamet-lcs}的强子诠释能否从 $|\omega|\ll1$ 推广到有限 $\omega$。可解模型中的证据只覆盖虚的 Ioffe 时间（第~23~章）。
+
+\begin{assumption}[领头幂次修正的结构（扭度 4） \tagC]\label{asm:lamet-twist4}
+\begin{enumerate}[label=(TW\arabic*),leftmargin=3.4em,itemsep=1pt,topsep=2pt]
+\item 强子 ITD 的 $\order{z^2}$ 项具有形式 $\tilde h_{\rm tw4}=z^2\Lambda^2\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\rho_4(\alpha,z^2)$，$\rho_4$ 是支撑在 $[-1,1]$ 中、内部光滑的分布。
+\item $\rho_4$ 对 $z^2$ 的依赖至多是对数的（扭度 4 反常维度）。
+\end{enumerate}
+地位：\tagC——这一形式由微扰论中的扭度 4 OPE 提示（支撑同\cref{prop:lamet-support}），强子结构是假设的。
+文献：\cite{Braun:2018brg,Radyushkin2017,JiEtAl2021}。
+被使用于：\cref{asm:lamet-large-z}、\cref{thm:lamet-hadronic}。
+解除途径：对强子矩阵元、能控制 $z^2$ 依赖的扭度 4 OPE（非微扰 OPE）。
+\uses{prop:lamet-support,cor:lamet-entire}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC：(TW1) 的支撑性质在微扰论中由\cref{prop:lamet-support}的同一论证给出，但把强子的 $\order{z^2}$ 项写成这种形式需要非微扰的扭度 4 算符乘积展开；(TW2) 依赖于扭度 4 反常维度的结构。它是\cref{thm:lamet-hadronic}的前提，$\rho_4$ 的端点行为（\cref{cor:lamet-endpoint}中的 $\delta$）也由它决定而未知。
+
+\begin{assumption}[大距离区域的控制 \tagC]\label{asm:lamet-large-z}
+\begin{enumerate}[label=(LZ\arabic*),leftmargin=3.4em,itemsep=1pt,topsep=2pt]
+\item 在固定 $x\in(0,1)$ 处，当 $P^z\to\infty$ 时 $\int_{|\lambda|>z_0P^z}\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}[\tilde h-\tilde h_{\rm tw2}](\lambda,-\lambda^2/P_z^2)=o(1)$。
+\item 同样的积分，被积函数换成 $\tilde h-\tilde h_{\rm tw2}-\tilde h_{\rm tw4}$，为 $o(P_z^{-2})$。
+\end{enumerate}
+地位：\tagC——需要强子 Wilson 线关联函数在大距离处、常数对 $P^z$ 一致的控制；\cref{thm:lamet-exp-decay}在\cref{asm:lamet-gap}之下给出衰减，但没有可用的常数；见\cref{conj:lamet-decay-qcd}。
+文献：\cite{Ji:2026vir}（预印本），\cite{JiEtAl2021,Gao:2021dbh}。
+被使用于：\cref{thm:lamet-hadronic}。
+解除途径：强子矩阵元的定量指数衰减，常数对 $P^z$ 一致。
+\uses{thm:lamet-coordinate,asm:lamet-twist4}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC：需要强子 Wilson 线关联函数在大距离处的定量衰减，且常数对 $P^z$ 一致；\cref{thm:lamet-exp-decay}只在\cref{asm:lamet-gap}（\tagC）之下给出固定 $P^z$ 的衰减，没有可用的常数，QCD 中的渐近形式只是\cref{conj:lamet-decay-qcd}。它是\cref{thm:lamet-hadronic}的前提，也是 Fourier 逆问题之争（\cref{rem:lamet-inverse-problem}）的数学核心。
+
+\begin{theorem}[强子层次的 LaMET 匹配与幂次修正 \tagR]\label{thm:lamet-hadronic}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-uniform}、\cref{asm:lamet-twist4}、\cref{asm:lamet-large-z}（及 \cref{thm:lattice-lamet}、\cref{prop:lamet-tmc}）。对强子态、固定 $x\in(0,1)$ 与 $P^z\to\infty$，
+\begin{equation}\label{eq:lamet-hadronic}
+\tilde q_\Gamma(x,P^z)=\int_{-1}^1\frac{\dd y}{|y|}C_\Gamma\Big(\frac xy,\frac\mu{|y|P^z}\Big)q^\Gamma_M(y,\mu)+\frac{\Lambda^2}{P_z^2}\rho_4''(x)+o(P_z^{-2}),
+\end{equation}
+其中 $q^\Gamma_M=f+\order{M^2/P_z^2}$ 是靶质量变换后的 PDF（\cref{prop:lamet-tmc}）；在 (TW2) 下 $\rho_4''$ 另附与 $\ln\lambda^2$ 的变换的卷积（只有对数修正）。因此相对修正在小 $x$ 处为 $\order{\Lambda^2/(x^2P_z^2)}$，在大 $x$ 处若 $\rho_4/f\sim(1-x)^\delta$ 则为 $\order{\Lambda^2/((1-x)^{2-\delta}P_z^2)}$；在领头幂次（只需 (LZ1)）$\tilde q=C\otimes q_M+o(1)$。
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z,thm:lattice-lamet,prop:lamet-tmc,lem:lamet-fourier,cor:lamet-endpoint}
+\end{theorem}
+
+\begin{proof}
+把\cref{eq:lamet-quasi-itd}的被积函数分成四部分：$\tilde q={\rm FT}[\tilde h_{\rm tw2}]+{\rm FT}[\tilde h_{\rm tw4}]+{\rm FT}[R\,\theta(|\lambda|\le z_0P^z)]+{\rm FT}[R\,\theta(|\lambda|>z_0P^z)]$，FT 表示沿射线的 Fourier 变换。第一项是匹配公式：由\cref{thm:lattice-lamet}（部分子态的全阶匹配，核与靶无关）与\cref{prop:lamet-tmc}(d)，它等于 $C_\Gamma\otimes q^\Gamma_M$。第二项恰为 $\frac{\Lambda^2}{P_z^2}\rho_4''$（\cref{lem:lamet-fourier}；$\rho_4$ 紧支撑，故 $\tilde h_{\rm tw4}$ 沿射线是缓增的）。第三项由 (UI-b) 为 $o(P_z^{-2})$，第四项由 (LZ2) 为 $o(P_z^{-2})$（领头幂次只需 (LZ1)：把 $\tilde h_{\rm tw4}$ 并入余项）。端点行为由\cref{cor:lamet-endpoint}读出。
+\end{proof}
+
+内容等级为 \tagC。假设的证据：重整子模型（\cref{prop:lamet-bvz}）、可解模型（第~23~章）、固定 $P^z$ 下的指数衰减（\cref{thm:lamet-exp-decay}，\cref{conj:lamet-decay-qcd}）。这一蕴含用到\cref{prop:lamet-tmc}与\cref{lem:lamet-fourier}（本书给出的推导）。
+
+\begin{remark}[LaMET 预言的适用域]\label{rem:lamet-domain}
+展开参数在小 $x$ 处是 $\Lambda/(|x|P^z)$，在大 $x$ 处是 $\Lambda/(|1-x|P^z)$；匹配本身涉及 $\as(2|x|P^z)$。在 $Q_{\rm eff}=2xP^z$ 处作重整化群改进\cite{Su:2022fiu}：$2xP^z\gtrsim1.5$ GeV 时固定阶与改进结果一致，$0.7\lesssim2xP^z\lesssim1.5$ GeV 时改进是重要的，$2xP^z\lesssim0.7$ GeV 时微扰匹配失效（这些是经验数值，不是定理）；坐标空间中重整化群改进的系数在 $z\approx0.2$--$0.3$ fm 以外失效。区域 $x\lesssim\Lambda/P^z$ 与 $1-x\lesssim\Lambda/P^z$ 必须排除或借助其他输入（矩，\cref{sec:lamet-sdf}）。在固定阶，匹配只在 $[x_0,1-x_0]$（$x_0P^z\gg\Lambda$）上一致成立；有阈值重求和时，大 $x$ 的边界变为 $(1-x)P^z\gg\Lambda$（\cref{thm:yzliu-threshold}，第~23~章）。这是定理适用域的一部分，不是缺陷（\cref{fig:lamet-validity}）。
+\end{remark}
+
+%%% BEGIN fig:lamet-validity
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{semilogyaxis}[width=0.8\textwidth,height=6.4cm,xmin=0,xmax=1,ymin=5e-3,ymax=2,
+  axis lines=left,axis line style={gray!60!black},clip=false,
+  xlabel={$x$},ylabel={相对幂次修正（示意）},
+  xtick={0,0.2,0.5,0.8,1},
+  xticklabels={$0$,$x_0$,$0.5$,$1-x_0$,$1$},
+  extra x ticks={0.1,0.9},extra x tick labels={$\frac{\Lambda}{P^z}$,$1-\frac{\Lambda}{P^z}$},
+  extra x tick style={tick label style={yshift=-9pt}},
+  ytick={0.01,0.1,1},yticklabels={$10^{-2}$,$10^{-1}$,$1$},
+  tick label style={font=\scriptsize},label style={font=\small},
+  legend style={font=\scriptsize,draw=gray!40,fill=white,at={(0.5,0.97)},anchor=north},
+  legend cell align=left]
+  % excluded end-point strips (Lambda/P^z = 0.1 in this sketch)
+  \fill[gray!22] (axis cs:0,5e-3) rectangle (axis cs:0.1,2);
+  \fill[gray!22] (axis cs:0.9,5e-3) rectangle (axis cs:1,2);
+  \draw[gray!60!black,line width=0.4pt,dash pattern=on 2pt off 2pt] (axis cs:0,1) -- (axis cs:1,1);
+  \addplot[blue!60!black,line width=1.1pt,domain=0.0708:0.9,samples=120] {0.01/x^2};
+  \addlegendentry{$\Lambda^2/(x^2P_z^2)$}
+  \addplot[red!65!black,line width=1.1pt,dashed,domain=0.1:0.9293,samples=120] {0.01/(1-x)^2};
+  \addlegendentry{$\Lambda^2/((1-x)^2P_z^2)$（$\delta=0$）}
+  \addplot[red!65!black,line width=1.3pt,dotted,domain=0.1:0.995,samples=160] {0.01/(1-x)};
+  \addlegendentry{$\Lambda^2/((1-x)P_z^2)$（$\delta=1$）}
+  \node[font=\scriptsize,align=center,rotate=90] at (axis cs:0.05,0.06) {$xP^z\lesssim\Lambda$：不适用};
+  \node[font=\scriptsize,align=center,rotate=90] at (axis cs:0.95,0.022) {$(1-x)P^z\lesssim\Lambda$};
+  % fixed-order domain and its extension by threshold resummation
+  \draw[gray!50!black,line width=0.5pt] (axis cs:0.2,2.6) -- (axis cs:0.2,3.0) -- (axis cs:0.8,3.0) -- (axis cs:0.8,2.6);
+  \node[font=\scriptsize,anchor=south] at (axis cs:0.5,3.0) {固定阶匹配一致成立：$[x_0,1-x_0]$，$x_0P^z\gg\Lambda$};
+  \draw[red!55!black,line width=0.7pt,-{Stealth[length=4.5pt,width=3.8pt]}] (axis cs:0.8,2.75) -- (axis cs:0.9,2.75);
+  \node[font=\scriptsize,text=red!50!black,anchor=south west,align=left] at (axis cs:0.82,3.05) {阈值重求和：大 $x$ 边界推到\\$(1-x)P^z\gg\Lambda$};
+\end{semilogyaxis}
+\end{tikzpicture}
+\caption{LaMET 预言的适用范围（示意，图中取 $\Lambda/P^z=0.1$）。端点区要求硬标度 $2xP^z$ 与旁观者动量 $(1-x)P^z$ 都远大于 $\Lambda$（灰色带不适用）。相对幂次修正在小 $x$ 处按 $\Lambda^2/(x^2P_z^2)$ 增大；在大 $x$ 处，两种计数规则 $\Lambda^2/((1-x)^{2-\delta}P_z^2)$（$\delta=0$ 虚线，$\delta=1$ 点线）对应扭度 4 分布 $\rho_4/q\sim(1-x)^\delta$ 的不同端点行为（\cref{cor:lamet-endpoint}，VF-LAM-12），$\delta$ 在 QCD 中未知。
+固定阶匹配只在 $[x_0,1-x_0]$ 上一致成立；阈值重求和（\cref{thm:yzliu-threshold}）把大 $x$ 边界推到 $(1-x)P^z\gg\Lambda$（\cref{rem:lamet-domain}）。}
+\label{fig:lamet-validity}
+\end{figure}
+%%% END fig:lamet-validity
+
+\section{LaMET 与短距离因子化}\label{sec:lamet-sdf}
+
+LaMET 与短距离因子化（SDF）常被当作两种竞争的方法。下面的命题说明：在 $P^z=\infty$ 时二者是同一函数的两种表示；在有限 $P^z$ 时它们是对同一组数据的两种不同展开，各自依赖不同的假设（\cref{fig:lamet-ioffe}）。
+
+\begin{proposition}[LaMET 与短距离因子化：同一函数的两种展开 \tagR]\label{prop:lamet-sdf}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum}、\cref{prop:lattice-renormalizability}）。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 准 PDF（固定 $P^z$）与赝 PDF（固定 $z^2$）是同一函数 $\tilde h(\lambda,z^2)$ 沿不同直线的 Fourier 变换（这一部分由定义直接推出）；在领头扭度，二者的核对所有阶由\cref{thm:lamet-parton-momentum}相联系。
+\item 在有限 $P^z$ 下它们是不同的展开：LaMET 在固定 $x$ 下按 $\Lambda/(x(1-x)P^z)$ 展开，给出 $[x_{\min},1-x_{\min}]$（$x_{\min}\sim\Lambda/P^z$）上的 $f(x)$；SDF 在固定 $\lambda$ 下按 $z^2\Lambda^2$ 展开，给出 $[0,\lambda_{\max}]$ 上的领头扭度 ITD，$\lambda_{\max}=z_{\max}P^z$（$P^z=3$ GeV、$z_{\max}\approx0.2$ fm 时约为 $3$）。
+\item 若 ITD 数据只到 $\lambda_L$，则能稳定恢复的 $\mathcal P$ 的模式约为 $2\lambda_L/\pi$ 个（\cref{prop:lamet-slepian}）；由 SDF 数据对 $f(x)$ 作任何锐利的重建都包含额外的假设。
+\end{enumerate}
+（(a) 中核的关系只涉及部分子态；(b)(c) 是对强子数据分析的说明，其误差控制见本章的强子层次定理。）
+\uses{def:lattice-quasi,thm:lamet-coordinate,asm:lamet-ope,thm:lamet-parton-momentum,prop:lattice-renormalizability,prop:lamet-slepian}
+\end{proposition}
+
+\begin{proof}
+(a) 由\cref{def:lattice-quasi}，$\tilde q(x,P^z)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h(\lambda,-\lambda^2/P_z^2)$，$\mathcal P(x,-z^2)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h(\lambda,z^2)$：两者都是同一个二元函数的 Fourier 变换，分别沿射线 $z^2=-\lambda^2/P_z^2$ 与水平线 $z^2=$ 常数。核之间的关系就是\cref{thm:lamet-parton-momentum}中 $C$ 与 $\mathcal C$ 的关系（在\cref{asm:lamet-ope}之下对所有阶成立）。(b) 只是对两种展开的描述，不断言超出其他陈述的内容（这里的引用是指针）：前者的误差项由\cref{thm:lamet-hadronic}在其假设之下控制，后者由\cref{thm:lamet-coordinate}与\cref{asm:lamet-uniform}(UI-a) 控制；数值 $\lambda_{\max}=0.2\,{\rm fm}\times3\,{\rm GeV}/(0.1973\,{\rm GeV\,fm})=3.04$。(c) 是\cref{prop:lamet-slepian}应用于 SDF 给出的 $\mathcal P$（支撑在 $[-1,1]$ 中，由\cref{thm:lamet-coordinate}）。
+\end{proof}
+
+内容等级：$P^z=\infty$ 处的等价为 \tagA；“LaMET 的 Fourier 变换在固定 $x$ 下自动滤去高扭度”这一说法\cite{Ji:2022ezo}，其精确形式就是\cref{thm:lamet-hadronic}（\tagR，$R_{\mathrm{cond}}$，内容 \tagC）。文献\cite{Ji:2022ezo}（正式发表的标题与 arXiv 标题不同）认为，LaMET 合理地利用了比短距离 OPE 所允许的更多的格点数据，尽管扭度展开本身在 $z\sim0.4$ fm 以外失效；二者互补：SDF 数据（矩、小 $\lambda$ 的 ITD）加上端点渐近行为约束 LaMET 不能预言的 $x\in[0,x_{\min}]\cup[x_{\max},1]$。SDF 纲领见\cite{Radyushkin2017,Radyushkin:2017lvu,Radyushkin:2018cvn,Orginos:2017kos,Karpie:2018zaz,Joo:2019jct,Joo:2020spy}，综述\cite{Radyushkin:2019mye}；二者的关系见\cite{IzubuchiEtAl2018}。
+
+\begin{remark}[逆问题之争：数学陈述与经验问题]\label{rem:lamet-inverse-problem}
+文献\cite{Dutrieux:2025jed}（据其摘要）认为，对现实的数据，逆问题带来的不确定性“若不作非常限制性的假设仍然显著”，关键在 $\lambda\sim5$--$15$ 的区域；文献\cite{Chen:2025cxr}（据其摘要）认为 LaMET 在固定 $x$ 下“在理论上解决了不适定的逆问题”，部分现有数据可以作渐近外推；文献\cite{Ji:2026vir}（预印本）给出渐近形式与误差估计；Bayes 与神经网络重建见\cite{Karpie:2019eiq}（据其摘要）。我们的评估是：\cref{lem:lamet-strip}与\cref{prop:lamet-truncation}表明，\emph{给定}一个常数已知的定理级尾部界，固定 $x$ 处的准 PDF 是适定的，截断误差指数地小——但在 QCD 中这样的界只是猜想（\cref{conj:lamet-decay-qcd}，\tagC）；\cref{prop:lamet-slepian}表明，\emph{没有}这样的信息时，数据只确定约 $2\lambda_L/\pi$ 个模式。双方的数学陈述是相容的；分歧在于对现有数据而言 $\ee^{-mz_L}$ 型效应有多大，这是一个经验问题，而不是理论问题。不能说“格点直接计算了 PDF 的 $x$ 依赖”。
+\end{remark}
+
+\section{非前向与遍举量：准 GPD、准 DA 及其他}\label{sec:lamet-offforward}
+
+同样的构造适用于非前向矩阵元与真空到强子的矩阵元。GPD 与 DA 的光锥定义见\cref{def:excl-gpd,def:excl-da}；本书的偏斜度 $\xi=\frac{p^+-p'^+}{p^++p'^+}$（Ji 的 $\xi_{\rm Ji}=2\xi$）。
+
+\begin{definition}[准 GPD 与准 DA]\label{def:lamet-quasi-gpd}
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{准 GPD}（对称参考系：入射 $P$、出射 $P'$，$\bar P=\frac{P+P'}2=(\bar P^0,0,0,\bar P^z)$，$\Delta=P'-P$，$t=\Delta^2$，$\tilde\xi=-\Delta^z/(2\bar P^z)$）：对 $\Gamma=\gamma^\alpha$，$\alpha\in\{0,z\}$，
+\begin{equation}\label{eq:lamet-quasi-gpd}
+\begin{split}
+&\int\frac{\dd z}{4\pi}\,\ee^{\ii y\bar P^zz}\,\langle P'|\big[\bar\psi(\tfrac z2\hat e_z)\,\Gamma\, W[\tfrac z2\hat e_z,-\tfrac z2\hat e_z]\,\psi(-\tfrac z2\hat e_z)\big]_R|P\rangle\\
+&\qquad=\frac1{2\bar P^z}\Big[\tilde H_\Gamma\,\bar u(P')\Gamma u(P)+\tilde E_\Gamma\,\bar u(P')\frac{\ii\sigma^{\alpha\nu}\Delta_\nu}{2M}u(P)\Big],
+\end{split}
+\end{equation}
+$\tilde H_\Gamma=\tilde H_\Gamma(y,\tilde\xi,t,\bar P^z)$ 等。前向极限 $\tilde H_\Gamma(y,0,0,P^z)=\tilde q_\Gamma(y,P^z)$。对称系中 $\bar P\cdot\Delta=0$，故 $\xi=-\Delta^+/(2\bar P^+)=\tilde\xi\,\bar P^z/\bar P^0\to\tilde\xi$（$\bar P^z\to\infty$）。
+\item \emph{准 DA}：$\langle0|\bar d(z\hat e_z)\gamma^z\gamma_5W[z\hat e_z,0]u(0)|\pi^+(P)\rangle_R=\ii f_\pi P^z\int\dd x\,\ee^{\ii(1-x)P^zz}\tilde\phi(x,P^z)$，$x$ 为 $u$ 夸克的动量分数；由定域极限 $\langle0|\bar d\gamma^\mu\gamma_5u|\pi^+(P)\rangle=\ii f_\pi P^\mu$，$\int\dd x\,\tilde\phi=1$。
+\end{enumerate}
+\uses{def:lattice-quasi,def:excl-gpd,def:excl-da}
+\end{definition}
+
+前向极限的检验：$P'=P$ 时把算符平移 $z/2$，左边化为 $\tilde q_\Gamma/N_\Gamma$；右边为 $\frac1{2P^z}\tilde H_\Gamma\cdot2P^\Gamma$；由 $N_\Gamma=P^z/P^\Gamma$ 得 $\tilde H_\Gamma=\tilde q_\Gamma$。准 DA 的相位：把\cref{def:excl-da}中以 $\pm z$ 为端点的算符平移 $z$，相位变为 $\ee^{-\ii(1-x)p\cdot(2z)}$；对类空间隔 $p\cdot z=-p^zz$，这就是 $\ee^{\ii(1-x)P^zz}$；对 $\ee^{\ii(1-x)P^zz}$ 积分 $\int\frac{\dd z}{2\pi}$ 给出 $\delta((1-x)P^z)$，由此得 $\int\tilde\phi=1$。不对称参考系与与参考系无关的 Lorentz 振幅定义见\cite{Bhattacharya:2022aob}（据其摘要，后者“可能给出更小的幂次修正”）；本节的参考系约定同\cite{Su:2026eta}（预印本）。
+
+\begin{theorem}[准 GPD 与准 DA 的匹配 \tagA]\label{thm:lamet-quasi-gpd}
+$\tilde H(y,\xi,t,\bar P^z)=\int_{-1}^1\frac{\dd x}{|x|}\tilde C\big(\frac yx,\frac\xi x,\frac\mu{|x|\bar P^z}\big)H(x,\xi,t,\mu)+$ 幂次修正（$\tilde E$ 同样），$\tilde C$ 与 $t$ 无关（至少在单圈），在 $\xi=0$ 处等于 PDF 的核；$\tilde\phi(x,P^z)=\int_0^1\dd y\,C(x,y,\mu/P^z)\phi(y,\mu)+$ 幂次修正。LaMET 预言在 $[-1+x_0,-\xi-x_0]\cup[-\xi+x_0,\xi-x_0]\cup[\xi+x_0,1-x_0]$ 上可靠，$x_0$ 由硬部分子动量决定\cite{Holligan:2025baj}（阈值研究，据其摘要）。（本定理只涉及部分子态；强子层次的处理与前向情形（\cref{sec:lamet-power}）相同，未对 GPD 单独表述条件定理。）
+\uses{def:lamet-quasi-gpd,asm:lamet-ope,prop:lattice-renormalizability,prop:lamet-support}
+\end{theorem}
+
+\begin{proofsketch}
+OPE 路线：(1) 乘法重整化（\cref{prop:lattice-renormalizability}）；(2) 非前向的\cref{asm:lamet-ope}，算符为共形扭度 2 算符，其非前向矩阵元是 $H$、$E$ 的矩（多项式性）；(3) 支撑与解析性的论证（\cref{prop:lamet-support}）推广到非前向运动学，重求和给出坐标空间匹配，再作 Fourier 变换；部分子动量的论证与前向情形相同。单圈（均据其摘要）：非极化与螺旋度\cite{Ji:2015qla}（单圈领头幂次下 $E$（$\tilde E$）“不需要匹配”），横度\cite{Xiong:2015nua}，RI/MOM\cite{Liu:2019urm}，包括胶子与任意自旋的全部准 GPD\cite{Ma:2022ggj}，坐标空间\cite{Radyushkin:2019owq}，统一的 NLO\cite{Yao:2022vtp}；介子 DA 的单圈见 GPD 文献，RI/MOM\cite{Liu:2018tox}（准 PDF 的重整化因子可以使用，“只要在格点与微扰论中以同样方式实施”），格点\cite{Zhang:2017bzy,LatticeParton:2022zqc,Holligan:2023rex}；非单态 GPD 与介子 DA 的 NNLO 坐标核\cite{Ji:2025mvk}（预印本，单一小组）。完整论证见\cite{JiEtAl2021}及其所引文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA；瓶颈是非前向形式的\cref{asm:lamet-ope}。保证平移不变性所需的运动学扭度 3 贡献按对数增强，并在 $x=\pm\xi$ 处不连续\cite{Braun:2023alc}（据其摘要）；$x=\pm\xi$ 这一点的状况见\cref{conj:yzliu-gpd-xi}（第~23~章）。没有 \tagR 条目：本书没有独立核对其中任何定阶结果（以上引述均据各文摘要）。
+
+\begin{proposition}[其他准分布：重子与重介子 LCDA、$\Delta G$、双部分子分布 \tagP]\label{prop:lamet-other-objects}
+（以下各项都只在单圈或在结构层次上建立。）(i) 重子 LCDA：准 DA 的单圈因子化“在单圈层次被显式证明”，给出 $\MSbar$ 与 RI/MOM 核\cite{Deng:2023csv}。(ii) 重介子 LCDA：两步因子化——QCD LCDA $=$ 微扰的类喷注函数 $\otimes$ HQET LCDA\cite{Beneke:2023nmj}；HQET LCDA 可通过带快速运动重夸克的等时关联函数由 LaMET 获得\cite{Han:2024fkr}，要求层次 $\Lambda\ll m_Q\ll P^z$。(iii) $\Delta G$ 是规范不变、依赖参考系的胶子自旋 $\vec E\times\vec A_\perp$ 的大动量极限\cite{Ji:2013fga}，其普适类只有 $\order{1/P_z^n}$（$n\ge2$）的修正\cite{Hatta:2013gta}。(iv) 双部分子分布：对所有味、自旋与色结构的 DPD 与准 DPD 的匹配，给出单圈夸克—夸克系数\cite{Jaarsma:2023woo}；色单态非极化夸克 DPD 的因子化公式\cite{Zhang:2023wea}（预印本）。以上均据其摘要。
+（本命题只涉及部分子态与匹配系数。）
+\uses{def:lattice-quasi,thm:lattice-lamet}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagP：单圈或结构性陈述；色非单态 DPD 的全阶软/快度结构与多规范链重子算符的重整化都没有建立；重介子的两步链合起来是 \tagP（每一步单圈显式）。一般的断言——这些量都满足与\cref{thm:lattice-lamet}同类的全阶匹配——是 LaMET 原理（\cref{conj:lamet-principle}）的特例。
+
+\section{格点 TMD：准 TMD 因子化与 Collins--Soper 核}\label{sec:lattice-tmd}
+
+TMD 的光锥定义（\cref{def:tmd-collins}）含有类光的订书钉形 Wilson 线与快度发散，格点无法直接计算。LaMET 的做法是用沿 $\hat z$ 的类空订书钉代替类光订书钉（\cref{fig:lamet-lattice-geometries}(b)(c)；注意\cref{fig:tmd-staple}画的是 Collins TMD 的类光订书钉），用有限的 $P^z$ 作为离光锥的快度正规子。与共线情形不同，这里的匹配是乘法的，但需要一个非微扰的软因子 $S_r$。
+
+\begin{assumption}[订书钉形类空 Wilson 线算符的重整化与 $L\to\infty$ 极限 \tagA]\label{asm:lamet-staple}
+\begin{enumerate}[label=(ST\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 对 $z\neq0$、$b_{\mathrm T}\neq0$，订书钉算符 $\bar\psi(\frac z2\hat e_z+\frac{\vec b_{\mathrm T}}2)\Gamma\mathcal W_z(\cdots;L)\psi(-\frac z2\hat e_z-\frac{\vec b_{\mathrm T}}2)$ 除以 $\sqrt{Z_E(2L,b_{\mathrm T},\mu)}$ 后乘法可重整，重整化因子只依赖于端点（重—轻流、夸克场）：$\propto L$ 的线性发散与订书钉的尖点发散在比值中相消。
+\item 在微扰论的每一阶，比值的 $L\to\infty$ 极限存在：无穷长类空规范链的捏点奇异性在订书钉的自相互作用与 $\sqrt{Z_E}$ 之间相消；超软模式在偶极自相互作用重求和后相消。
+\item 格点上 $\sqrt{Z_E}$ 加上短距离的强子矩阵元可除去全部紫外发散（RI/MOM 不能除去全部线性发散）；同维混合同\cref{prop:lattice-renormalizability}(b)。
+\end{enumerate}
+地位：全阶论证级——对 (ST2) 的全阶论证见第~23~章\cref{prop:yzliu-pinch-ultrasoft}（其本身为 \tagA，超软相消是论证而非证明）；有单圈的显式检验与格点重整化研究。
+文献：\cite{Ji:2019ewn}，\cite[第~3--4~节]{Liu:2022nnk}，\cite{Ebert:2022fmh,Ebert:2019tvc,Constantinou:2019vyb,Alexandrou:2023ucc}；用矩形回路除去订书钉自相互作用的做法可追溯到\cite{Collins:2008ht,Ji:2018hvs}（据其摘要）。
+被使用于：\cref{def:lamet-quasi-tmd}、\cref{thm:lamet-quasi-tmd}、\cref{prop:yzliu-qtmd-powercount}。
+解除途径：对带尖点的订书钉作辅助场重整化证明（同\cref{asm:lamet-aux-renorm}），并对超软与“超超软”模式作全阶处理。
+\uses{asm:lamet-aux-renorm,def:prelim-wilson}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：(ST1) 是辅助场论证向带尖点的订书钉的推广，与\cref{asm:lamet-aux-renorm}一样只有断言；(ST2) 中超软模式的相消是论证而不是证明（\cref{prop:yzliu-pinch-ultrasoft}，第~23~章）；幂次计数只给出 E-S 型陈述。它是\cref{thm:lamet-quasi-tmd}的前提之一。
+
+\begin{definition}[准 TMD]\label{def:lamet-quasi-tmd}
+在本书约定下（\cite{Ji:2019ewn}，\cite[第~3~节]{Liu:2022nnk}，\cite{Ebert:2022fmh}，已换算），
+\begin{equation}\label{eq:lamet-quasi-tmd}
+\tilde f_\Gamma(x,b_{\mathrm T},\mu,\zeta_z)=\lim_{L\to\infty}N_\Gamma\int\frac{\dd z}{4\pi}\,\ee^{\ii xP^zz}\,\frac{\langle P|\bar\psi(z_+)\,\Gamma\,\mathcal W_z(z_+,z_-;L)\,\psi(z_-)|P\rangle}{\sqrt{Z_E(2L,b_{\mathrm T},\mu)}},\qquad\zeta_z=(2xP^z)^2,
+\end{equation}
+其中 $z_\pm\equiv\pm(\frac z2\hat e_z+\frac{\vec b_{\mathrm T}}2)$ 是两个夸克场的位置，$\mathcal W_z$ 是订书钉：自 $z_-$ 沿 $+\hat e_z$ 到 $L\hat e_z-\frac{\vec b_{\mathrm T}}2$，横向连到 $L\hat e_z+\frac{\vec b_{\mathrm T}}2$，再沿 $-\hat e_z$ 回到 $z_+$（DY 型；SIDIS 型订书钉朝 $-\hat z$）；$Z_E(2L,b_{\mathrm T},\mu)=\frac1{N_c}\Tr\langle0|W_\perp\mathcal W_z(\vec b_{\mathrm T};2L)|0\rangle$ 是 $2L\times b_{\mathrm T}$ 的矩形 Wilson 圈；$\Gamma=\gamma^0$ 或 $\gamma^z$（除 $\gamma^0-\gamma^z$ 外的任意组合）。准 TMD \emph{没有快度发散}：$P^z$ 起离光锥快度正规子的作用。
+\uses{asm:lamet-staple,def:lattice-quasi,def:prelim-wilson}
+\end{definition}
+
+文献\cite{Ebert:2022fmh}还定义了包含 $S_r$ 的“正当的”准 TMD，以及覆盖准、Collins、大快度（LR）、JMY 与 MHENS 方案的一个 Lorentz 不变关联函数 $\Omega(b,P,\epsilon,\eta v,\delta)$；下面的证明路线 (B) 正是利用这一点。
+
+\begin{definition}[离光锥软函数（Ji--Liu--Liu 归一化）]\label{def:lamet-soft-offlc}
+在 $(t,z,\vec b_\perp)$ 中取类时矢量 $v=\gamma(1,\beta,\vec0_\perp)$、$v'=\gamma'(1,-\beta',\vec0_\perp)$，$\beta=\tanh Y$，$\beta'=\tanh Y'$；$W_v(\xi;t)=W[\xi,\xi-\frac t\gamma v]$（本书约定），订书钉 $\mathcal W_v(\vec b_\perp,t)=W_v(0;t)W_\perp W_v^\dagger(\vec b_\perp;t)$。令
+\begin{equation}\label{eq:lamet-soft-offlc}
+\begin{gathered}
+W(t,t',b_\perp,Y,Y')=\tfrac1{N_c}\Tr\langle\Omega|T[\mathcal W^\dagger_{v'}(\vec b_\perp,t')\mathcal W_v(\vec b_\perp,t)]|\Omega\rangle,\qquad Z(2t,b_\perp,Y)=W(t,t,b_\perp,Y,-Y),\\
+S(b_\perp,\mu,Y,Y')=\lim_{t,t'\to\infty}\frac{W(t,t',b_\perp,Y,Y')}{\sqrt{Z(2t,b_\perp,Y)\,Z(2t',b_\perp,Y')}},
+\end{gathered}
+\end{equation}
+按 $\MSbar$ 重整化。由推动不变性，$S$ 只依赖于 $Y+Y'$。单圈 $S^{(1)}=a[2-2(Y+Y')]L_b+\order{\ee^{-(Y+Y')}}$。% VF-YZL-2
+\uses{def:prelim-wilson,def:tmd-soft,lem:tmd-soft-oneloop}
+\end{definition}
+
+单圈值是\cref{lem:tmd-soft-oneloop}(b)（\tagR，$R_{\mathrm{PT}}$）中类时、包含自能（$\sigma=1$）的情形：两条线的快度差为 $Y_{\rm t}=Y+Y'$，重整化后的单圈软函数为 $-\frac{\as C_F}\pi(Y_{\rm t}\coth Y_{\rm t}-1)L_b$，而 $Y_{\rm t}\coth Y_{\rm t}-Y_{\rm t}=2Y_{\rm t}/(\ee^{2Y_{\rm t}}-1)$，所以它等于 $-2a(Y_{\rm t}-1)L_b+\order{Y_{\rm t}\ee^{-2Y_{\rm t}}}$。\footnote{若用 Collins 的类空 Wilson 线并排除自相互作用（\cref{def:tmd-soft}），单圈中与快度无关的常数为零（$\sigma=0$）。单个软函数依赖于正规子，只有它们的组合才有物理意义（批评 C10）。}
+
+\begin{assumption}[离光锥软函数的大快度结构 \tagA]\label{asm:lamet-soft-rapidity}
+\begin{enumerate}[label=(SR),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 当 $Y+Y'\to\infty$ 时，$\ln S(b_\perp,\mu,Y,Y')=(Y+Y')\tilde K(b_\perp,\mu)+\mathcal D(b_\perp,\mu)+\order{\ee^{-(Y+Y')}}$，$\tilde K$ 是\cref{prop:tmd-evolution}的 Collins--Soper 核，$\mathcal D$ 有限。
+\end{enumerate}
+地位：全阶论证级——全阶论证见\cref{prop:yzliu-rapidity-linear}（第~23~章；除快度切片中一个被明确假定的红外步骤外是完整的）；文献\cite{CollinsSoper1981}已断言这一结构；类光正规子的共形映射重整化定理见\cite{Vladimirov:2017ksc}与\cref{prop:front-rapidity-renorm}（第~24~章）；三圈软函数的显式结果\cite{Li:2016axz}。
+文献：\cite{Ji:2019sxk}，\cite[附录~E]{Liu:2022nnk}，\cite{CollinsSoper1981,Vladimirov:2017ksc,Li:2016axz}。
+被使用于：\cref{def:lamet-reduced-soft}、\cref{thm:lamet-quasi-tmd}。
+解除途径：证明快度切片论证中的红外控制步骤（第~23~章）。
+\uses{def:lamet-soft-offlc,prop:tmd-evolution}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：全阶论证中被明确假定的一步是快度切片中的红外控制（第~23~章\cref{prop:yzliu-rapidity-linear}）；单圈由\cref{def:lamet-soft-offlc}后的计算直接验证，三圈有显式结果\cite{Li:2016axz}。它决定约化软函数（\cref{def:lamet-reduced-soft}）的存在，并是\cref{thm:lamet-quasi-tmd}的前提之一。
+
+\begin{definition}[约化软函数 $S_r$]\label{def:lamet-reduced-soft}
+$S_r(b_\perp,\mu)\equiv\ee^{-\mathcal D(b_\perp,\mu)}=\lim_{Y+Y'\to\infty}\ee^{(Y+Y')\tilde K(b_\perp,\mu)}/S(b_\perp,\mu,Y,Y')$；单圈 $S_r=1-\frac{\as C_F}\pi L_b$。% VF-YZL-2
+\uses{def:lamet-soft-offlc,asm:lamet-soft-rapidity}
+\end{definition}
+
+由\cref{def:lamet-soft-offlc}的单圈值，$\tilde K^{(1)}=-2aL_b$、$\mathcal D^{(1)}=2aL_b$，故 $S_r^{(1)}=-2aL_b$，$\mu^2\frac{\dd\ln S_r}{\dd\mu^2}=-2a=-\frac{\as C_F}\pi=\gamma^{(1)}_{HH}$（本书只用 $\gamma_{HH}$；Liu 等人的 $\Gamma_S$ 有两种相反的符号约定）。第~23~章把它称为本征软函数 $S_I$，并在那里建立其光锥定义、方案无关性与反常维度（\cref{thm:yzliu-intrinsic-soft}）。$S_r$ 不等于 $\ee^{-\mathcal D_{\rm Collins}}$（上面的注意）。
+
+\begin{assumption}[极限次序 \tagA]\label{asm:lamet-order-limits}
+\begin{enumerate}[label=(OL\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 对比值 $\Omega/\sqrt S$，$\varepsilon\to0$ 与 $L\to\infty$ 以及离光锥快度正规子的极限 $\tilde\eta\to\infty$ 可交换（自能相消，因为 $\Omega$ 的订书钉是 $S$ 的一半；两半之间的交换按指数压低；类光程函极点 $1/(n_B\cdot k)$ 在两种正规子下给出相同结果——单圈已验证）。
+\item 大快度方案与 Collins 方案只在 $\varepsilon\to0$ 与 $y_B\to-\infty$ 的次序上不同；由渐近自由这是紫外效应：$f^{\rm LR}=C_q(\sqrt{\zeta_{\rm LR}}/2,\mu)f^{\rm TMD}+\order{y_B^k\ee^{y_B}}$，且 $C_q$ 与 $y_n-y_B$ 无关（否则非微扰的 CS 核会进入）。
+\end{enumerate}
+地位：全阶论证——文献\cite{Ebert:2022fmh}对所有阶给出论证（(OL1) 在单圈验证，(OL2) 依据渐近自由），不是逐图的证明。
+文献：\cite{Ebert:2022fmh}。
+被使用于：\cref{thm:lamet-quasi-tmd}。
+解除途径：对 (OL1) 给出超出单圈的图形证明，并证明 (OL2)。
+\uses{def:lamet-quasi-tmd,def:tmd-collins}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：(OL1) 只在单圈逐图验证；(OL2) 依据渐近自由的一般论证，不是逐图的减除证明\cite{Ebert:2022fmh}。这是\cref{thm:lamet-quasi-tmd}的瓶颈；提高等级需要 (OL1) 超出单圈的图形证明与 (OL2) 的证明。
+
+\begin{theorem}[准 TMD 因子化 \tagA]\label{thm:lamet-quasi-tmd}
+(a) 对 $b_{\mathrm T}\gg1/(xP^z)$、$\zeta_z\gg\Lambda^2$，在领头幂次，
+\begin{equation}\label{eq:lamet-qtmd}
+\begin{split}
+\tilde f(x,b_{\mathrm T},\mu,\zeta_z)\sqrt{S_r(b_{\mathrm T},\mu)}={}&H\Big(\frac{\zeta_z}{\mu^2}\Big)\exp\Big[\frac12\tilde K(b_{\mathrm T},\mu)\ln\frac{\zeta_z}\zeta\Big]f^{\rm TMD}(x,b_{\mathrm T},\mu,\zeta)\\
+&\times\Big\{1+\order{\frac{\Lambda^2}{\zeta_z},\frac{M^2}{\zeta_z},\frac1{b_{\mathrm T}^2\zeta_z}}\Big\},
+\end{split}
+\end{equation}% VF-LAM-15; E02
+$f^{\rm TMD}$ 为 Collins TMD（\cref{def:tmd-collins}），$2\zeta\partial_\zeta\ln f^{\rm TMD}=\tilde K$。这一关系对 $x$ 是\emph{乘法}的（没有卷积）、味对角（没有夸克—胶子或味的混合）、与自旋无关（$H$ 只依赖于色表示），对夸克与胶子都成立。动量演化 $2\zeta_z\partial_{\zeta_z}\ln\tilde f=\tilde K+G$，$G=2\zeta_z\partial_{\zeta_z}\ln H$。等价的 ESSZ 形式：$\tilde f^{[s]}_{i/h}(x,\vec b_{\mathrm T},\mu,\tilde\zeta,x\tilde P^z)=C_i(x\tilde P^z,\mu)\exp[\frac12\gamma^i_\zeta\ln\frac{\tilde\zeta}\zeta]f^{[s]}_{i/h}(x,\vec b_{\mathrm T},\mu,\zeta)\{1+\order{\frac1{(x\tilde P^zb_{\mathrm T})^2},\frac{\Lambda^2}{(x\tilde P^z)^2}}\}$，$\gamma_\zeta=\tilde K$（其正当的准 TMD 已包含 $S_r$）。
+(b)（单圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈 $H=1+a(-2+\frac{\pi^2}{12}-\frac12L_\zeta^2+L_\zeta)$，$G^{(1)}=\frac{\as C_F}\pi(1-L_\zeta)$，$\tilde K\ln(\zeta_z/\zeta)$ 的系数被单圈表达式唯一地固定为 $\frac12$。
+(c)（两圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在两圈，$H$ 的 NNLO 系数\cite{delRio:2023pse}与 Ji--Liu--Su 的两圈重—轻 Sudakov 核一致（数值见第~23~章）。
+非微扰地位：\cref{asm:intro-bridge}、\cref{asm:intro-composite}（MA0、MA1、MA2）。
+\uses{def:lamet-quasi-tmd,def:lamet-reduced-soft,def:tmd-collins,prop:tmd-evolution,asm:lamet-staple,asm:lamet-soft-rapidity,asm:lamet-order-limits,lem:tmd-soft-oneloop,prop:tmd-evolution-oneloop,prop:lattice-renormalizability}
+% errtype: E-S
+\end{theorem}
+
+\begin{proofsketch}
+几条独立的路线。\emph{(A) 领头区域}（Ji--Liu--Liu\cite{Ji:2019ewn}，该文称之为“数学证明的概要”，细节“留待以后发表”）：共线子图与光前 TMD 相同（取 $P^z\to\infty$）；快速色荷与订书钉之间的软辐射由离光锥软函数刻画；$\zeta_z$ 处的硬子图局限于两个夸克—规范链顶点附近，因为任何在 $0$ 与 $\vec b_{\mathrm T}$ 之间流动的硬动量都要付出 $1/P^z$ 的代价——因此没有卷积，这与共线准 PDF 截然不同。\emph{(B) Ebert--Schindler--Stewart--Zhao}\cite{Ebert:2022fmh}（对所有阶，详细处理非极化夸克，胶子与自旋“只需作少量直接的修改”）：(1) 准、LR 与 Collins 束函数都是同一个 Lorentz 不变关联函数 $\Omega$ 的 Fourier 变换，领头幂次只保留 $P^\mu\Omega$ 结构；(2) 以快度 $y_B$ 推动准关联函数的参数：$\tilde b^+=-b^-\ee^{2y_B}\to0$，$\tilde b^z\to0$，$y_{\tilde P}=y_P-y_B\to\infty$，于是它等于有限长规范链的 LR 关联函数，差别在大质子快度下压低；(3) (OL1)；(4) (OL2) 给出 $C_q=C_q(\zeta_{\rm LR}/\mu^2,\as)$；(5) 不混合：夸克场始终保持类空分离，$y_B\to-\infty$ 不能产生缩并味指标的紫外抵消项（对比共线准 PDF：那里场趋近光锥，混合确实出现）；通过 JMY 方案（类空与类时之间的解析延拓）交叉检验。\emph{(C) SCET}\cite{Vladimirov:2020ofp}（据其摘要）：给出用物理 TMD 与一个“与格点有关的非微扰因子”表示的因子化形式，该因子在适当的比值中相消；这是带单圈检验的 SCET$_{\rm II}$ 推导。\emph{(D) Coulomb 规范准 TMD}\cite{Zhao:2023ptv}（据其摘要）：在主值处方下化为标准的 TMD 关联函数；只适用于 T 偶 TMD。\emph{(E)} Liu 的 Collins 式幂次计数：\cref{prop:yzliu-qtmd-powercount}（第~23~章）。（幂次计数各步只给出 E-S 型陈述。）(b) 由单圈表达式直接验证，逐项计算见下面的例；(c) 见\cite{delRio:2023pse}与第~23~章。完整论证见\cite{Ji:2019ewn}与\cite{Ebert:2022fmh}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA（几个独立的论证）；决定性的一步 (OL2) 是关于极限次序的论证，而不是逐图的减除证明（\cref{asm:lamet-order-limits}，这是瓶颈；另有\cref{asm:lamet-staple}、\cref{asm:lamet-soft-rapidity}）；幂次计数各步只给出 E-S 型陈述；据我们截至 2026 年 10 月的文献检索（INSPIRE 标题检索），尚未见专门针对有限长订书钉的 Glauber/软交换分析；强子层次的陈述需要\cref{asm:intro-bridge}。不能说“准 TMD 因子化已严格证明”。关于印刷形式：\cite[式~(22)]{Ji:2019ewn}、\cite[式~(209)--(210)]{JiEtAl2021}、\cite[式~(53)、(75)]{Liu:2022nnk}与\cite{Ji:2021znw}的 arXiv 第一版把指数印作 $\ee^{\tilde K\ln(\zeta_z/\zeta)}$，差一个因子 $2$（附录~Q 第~11~条）。对\cite{JiEtAl2021}，作者们在\cite{Ji:2021znw}的期刊版（脚注~1）中指出了这一遗漏，该期刊版本身是正确的；对\cite[式~(22)]{Ji:2019ewn}与\cite[式~(53)、(75)]{Liu:2022nnk}未见更正。正确的指数更早见于\cite[式~(24)、(27)]{EbertStewartZhao2019}，亦见\cite{Ebert:2022fmh}与\cite[式~(52)]{Liu:2022nnk}。$H$ 的位置：本书按\cref{eq:lamet-qtmd}写作 $\tilde f\sqrt{S_r}=H\,\ee^{\cdots}f^{\rm TMD}$，\cite[式~(209)]{JiEtAl2021}写作 $f^{\rm TMD}=H\,\ee^{\cdots}\tilde f\sqrt{S_r}$，即彼处的 $H$ 是此处的倒数。
+
+\begin{example}[单圈检验：指数中的因子 $\frac12$]\label{ex:lamet-qtmd-oneloop}
+取 $a=\as C_F/(2\pi)$，$L_\zeta=\ln(\zeta_z/\mu^2)$，$L_b=\ln(\mu^2b_{\mathrm T}^2/b_0^2)$。夸克靶的单圈准 TMD 与 Collins TMD 都是“$aF(x,\varepsilon_{\rm IR},b_{\mathrm T},\mu)\theta(x)\theta(1-x)$ 加 $\delta(1-x)$ 项”，其中共线项 $F$（含红外极点）两者相同\cite{JiEtAl2021}；$\delta(1-x)$ 的系数为
+\[
+\tilde f^{(1)}=a\Big[-\frac12L_b^2+L_b\Big(\frac52-L_\zeta\Big)-\frac32-\frac12L_\zeta^2+L_\zeta\Big],\qquad
+f^{{\rm TMD}(1)}=a\Big[-\frac12L_b^2+\Big(\frac32-\ln\frac\zeta{\mu^2}\Big)L_b+\frac12-\frac{\pi^2}{12}\Big],
+\]% VF-LAM-15
+$S_r^{(1)}=\tilde K^{(1)}=-2aL_b$。代入 $\ln\tilde f+\frac12\ln S_r-\ln H-c\tilde K\ln\frac{\zeta_z}\zeta-\ln f^{\rm TMD}=0$ 的 $\order{a}$ 项：$L_b^2$ 项相消；$L_b$ 的一次项 $\frac52-1-\frac32=0$；$L_bL_\zeta$ 项为 $(-1+2c)aL_bL_\zeta$，$L_b\ln\frac\zeta{\mu^2}$ 项为 $(1-2c)aL_b\ln\frac\zeta{\mu^2}$，二者为零当且仅当 $c=\frac12$；常数给出 $H^{(1)}=a(-\frac32-\frac12+\frac{\pi^2}{12}-\frac12L_\zeta^2+L_\zeta)$，即 $-2=-\frac32-\frac12$。若取印刷的 $c=1$，则留下 $aL_b(L_\zeta-\ln\frac\zeta{\mu^2})\neq0$。动量演化：$2\zeta_z\partial_{\zeta_z}\tilde f^{(1)}=2a(1-L_b-L_\zeta)=\tilde K^{(1)}+G^{(1)}$，$G^{(1)}=2\partial_{L_\zeta}H^{(1)}=2a(1-L_\zeta)$。\cref{prop:lattice-cs-kernel}的比值公式：$L_{\zeta,1}-L_{\zeta,2}=2\ln(P^z_1/P^z_2)$，$\ln\tilde f(P^z_1)-\ln\tilde f(P^z_2)+\ln C(xP^z_2)-\ln C(xP^z_1)=-aL_b(L_{\zeta,1}-L_{\zeta,2})$，除以 $\ln(P^z_1/P^z_2)$ 得 $\tilde K^{(1)}=-2aL_b$。
+\uses{thm:lamet-quasi-tmd}
+\end{example}
+
+\begin{proposition}[格点 Collins--Soper 核 \tagA]\label{prop:lattice-cs-kernel}
+在固定的 $x$、$b_{\mathrm T}$ 与两个动量 $P_1^z,P_2^z$ 下，
+\begin{equation}\label{eq:lamet-cs}
+\tilde K(b_{\mathrm T},\mu)=\frac1{\ln(P_1^z/P_2^z)}\ln\frac{C(\mu,xP_2^z)\,\tilde f(x,b_{\mathrm T},\mu,P_1^z)}{C(\mu,xP_1^z)\,\tilde f(x,b_{\mathrm T},\mu,P_2^z)}+\text{幂次修正},\qquad C(\mu,xP^z)\equiv H\Big(\frac{(2xP^z)^2}{\mu^2}\Big),
+\end{equation}% VF-LAM-16
+等价地 $\frac{\tilde f(\zeta_{z,1})}{\tilde f(\zeta_{z,2})}=\frac{H_1}{H_2}\big(\frac{\zeta_{z,1}}{\zeta_{z,2}}\big)^{\tilde K/2}=\frac{H_1}{H_2}\big(\frac{P^z_1}{P^z_2}\big)^{\tilde K}$；$S_r$ 以及一切与 $\Gamma$、味、自旋无关的因子都相消；右边与 $x$ 无关是对领头幂次的检验。（单圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈，此公式精确地给出 $\tilde K^{(1)}=-2aL_b$。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{thm:lamet-quasi-tmd,prop:tmd-evolution}
+\end{proposition}
+
+\begin{proofsketch}
+把\cref{eq:lamet-qtmd}分别写在 $P_1^z$ 与 $P_2^z$（同一 $x$、$b_{\mathrm T}$、$\zeta$）并相除：$S_r$ 与 $f^{\rm TMD}$ 相消，$\frac{\tilde f(P_1^z)}{\tilde f(P_2^z)}=\frac{H_1}{H_2}\exp[\frac12\tilde K\ln\frac{\zeta_{z,1}}{\zeta_{z,2}}]$；$\zeta_{z,i}=(2xP^z_i)^2$ 给出 $(P_1^z/P_2^z)^{\tilde K}$；取对数即得\cref{eq:lamet-cs}。在单圈，代入上例中的 $\tilde f^{(1)}$ 与 $H^{(1)}$ 即得 $\tilde K^{(1)}=-2aL_b$。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA，继承\cref{thm:lamet-quasi-tmd}（瓶颈\cref{asm:lamet-order-limits}）。原始提议见\cite{EbertStewartZhao2019}；带订书钉的 RI$'$/MOM 重整化与位置空间的做法见\cite{Ebert:2019tvc}（据其摘要）。$b_{\mathrm T}\sim1/\Lambda$ 处的 $\tilde K$ 是非微扰的（误解 M17：CS 核并不总是微扰的）；格点只通过这个 \tagA 定理提供它。格点测定（证据）：\cite{Shanahan:2020zxr,Shanahan:2021tst,Schlemmer:2021aij,LatticePartonLPC:2022eev,LatticePartonLPC:2023pdv,Avkhadiev:2023poz,Avkhadiev:2024mgd,Bollweg:2024zet,Tan:2025ofx}；据我们所知（INSPIRE 检索，2026 年 10 月），最早的格点测定是\cite{Shanahan:2020zxr}；文献\cite{Avkhadiev:2024mgd}称其结果是“首个系统控制了夸克质量、算符混合与离散化效应的测定”（该文自己的说法，据其摘要）。基于准 TMD 波函数的提取中虚部收敛缓慢，可由重—轻核的线性重整子解释（\cref{prop:yzliu-linear-renormalon}，第~23~章）。
+
+\begin{proposition}[准 TMD 之比与 TMD 之比 \tagA]\label{prop:lamet-tmd-ratios}
+在固定的 $(x,b_{\mathrm T},P^z)$ 下，自旋普适类中不同 $\Gamma$、不同味或不同靶极化的准 TMD 之比，在领头幂次等于相应的 TMD 之比（$S_r$、$H$ 与 CS 因子相消，因为 $H$ 与自旋、味无关，而 $S_r$、$\tilde K$ 只依赖于 $b_{\mathrm T}$）；这在大动量极限下为早期的订书钉“比值”格点纲领\cite{Hagler:2009mb,Musch:2010ka,Musch:2011er,Yoon:2017qzo}提供了依据\cite{Ebert:2022fmh,Vladimirov:2020ofp}。（以下据其摘要：）自旋普适性——螺旋度与横度准 TMD 的单圈系数与非极化的相同，并被论证对 pretzelosity 与所有阶成立\cite{Ebert:2020gxr}；胶子准 TMD 的单圈硬核与捏点处方无关\cite{Zhu:2022bja}；次领头幂次的准 TMD 涉及扭度 2、扭度 3 TMD 与一个格点特有的非微扰函数\cite{Rodini:2022wic}。\emph{不同} $b_{\mathrm T}$ 处的比值中 $S_r$ 与 CS 因子不相消。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{thm:lamet-quasi-tmd}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagA，继承\cref{thm:lamet-quasi-tmd}；摘要层次的条目已注明。Sivers 型比值的处理见第~23~章。
+
+\section{地位、批评、状态表与开放问题}\label{sec:lattice-status}
+
+本节把全章的结论汇总为一个推论、一份批评与回应、一张状态表和一份开放问题清单。
+
+\begin{corollary}[LaMET 原理的微扰内容 \tagA]\label{cor:lamet-principle-pt}
+对部分子外态、在领头幂次，\cref{sec:lamet-principle}中 LaMET 原理所断言的展开在重整化微扰论中逐阶成立，适用于：非单态夸克准 PDF（\cref{thm:lattice-lamet}）；带混合的单态夸克与胶子准 PDF（\cref{prop:lamet-gluon-singlet}）；准 GPD 与准 DA（\cref{thm:lamet-quasi-gpd}）；带约化软函数的准 TMD（\cref{thm:lamet-quasi-tmd}）。在单圈这些关系都是显式的（\cref{sec:lamet-oneloop}与\cref{thm:lamet-quasi-tmd}(b)）；在两圈，非单态 PDF 的匹配核与准 TMD 的硬核也是显式的（\cref{sec:lamet-oneloop}与\cref{thm:lamet-quasi-tmd}(c)）。（本推论只涉及部分子态。）
+\uses{thm:lattice-lamet,prop:lamet-gluon-singlet,thm:lamet-quasi-gpd,thm:lamet-quasi-tmd}
+\end{corollary}
+
+\begin{proofsketch}
+四类准量的陈述分别就是所引的四个结果，它们有共同的形式：准量等于微扰匹配核与光锥量的卷积（TMD 情形为乘积，并带 $\sqrt{S_r}$），加上按 $\Lambda/(xP^z)$、$M/P^z$（TMD 情形还有 $1/(b_{\mathrm T}xP^z)$）压低的幂次修正。这正是 LaMET 原理对部分子态的微扰内容。显式的单圈与两圈结果见所引各节。完整论证见所引的四个结果及其文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA，继承四个结果中最弱的一步：共线情形的瓶颈是\cref{asm:lamet-ope}（及\cref{asm:lamet-aux-renorm}），TMD 情形是\cref{asm:lamet-order-limits}（及\cref{asm:lamet-staple}、\cref{asm:lamet-soft-rapidity}）；幂次计数各步只给出 E-S 型陈述。常说的“极限次序只改变紫外、红外物理不变”是启发性的图像；实际的论证是 OPE 路线、共线减除路线与推动／大快度路线（\cref{sec:lattice-matching}与\cref{sec:lattice-tmd}）。升级途径见\cref{rem:lamet-open}第~(1)、(2)、(7)~项。
+
+\begin{remark}[批评与回应]\label{rem:lattice-critiques}
+(a)~\emph{幂次发散的混合。}Rossi 与 Testa 指出\cite{Rossi:2017muf,Rossi:2018zkn}：在格点上 DIS 算符的高阶矩与低维算符发生幂次发散的混合，他们认为这影响等时关联函数、约化 ITD 与流—流 T 乘积三种做法。回应：非定域算符唯一的幂次发散是 Wilson 线自能，它可以因子化出去（\cite{Ji:2017rah}，据其摘要；\cref{prop:lattice-renormalizability}）；在固定 $z\neq0$ 下取连续极限后，由非定域矩阵元得到的矩是有限的，并与定域扭度 2 矩一致（\cite{Karpie:2018zaz}，据其摘要，淬火近似下的数值检验）。先在固定 $z$ 下取 $a\to0$、再在 OPE 中取 $z\to0$，这一极限次序避开了问题。这一解决方案在 2017--2018 年间有争议，双方都有正式发表的交锋：Rossi 与 Testa 称上述反驳“站不住脚”\cite[第~3.1~节]{Rossi:2018zkn}；他们随后的会议报告承认原则上可以从格点数据提取单个的矩，但坚持认为直接计算完整的 PDF 存在障碍\cite{Rossi:2018stq}（据其摘要）；回应见\cite{Karpie:2018zaz,Radyushkin:2018nbf}。据我们截至 2026 年 10 月的文献检索（INSPIRE 作者检索），未见二人此后讨论这一问题的论文。在本章的框架中争论的一部分可以说得精确：$\MSbar$ 准 PDF 的矩确实发散（\cref{prop:lamet-tails}，与\cite{Radyushkin:2018nbf}一致），但匹配定理不用这些矩，PDF 的矩由固定 $z\neq0$ 处的坐标空间因子化给出（\cref{thm:lamet-coordinate}）。
+
+(b)~\emph{欧氏与 Minkowski。}见\cref{prop:lamet-euclid-minkowski}。
+
+(c)~\emph{逆问题。}见\cref{rem:lamet-inverse-problem}。
+
+(d)~\emph{格点与截面因子化（批评 C12）。}格点结果提供的是强子矩阵元，不是对截面因子化的检验。
+\end{remark}
+
+\cref{tab:lamet-status}列出本章的全部规范陈述：带等级的陈述、数学结果与编号假设逐条列出，定义、例与不带标签的注在表末分组列出。
+
+\begin{table}[htbp]
+\centering\footnotesize
+\renewcommand{\arraystretch}{1.08}
+\caption{第~22~章状态表。“等级”一栏对 $R_{\mathrm{cond}}$ 同时给出内容等级；“误差类型”只对最弱一步是幂次计数的陈述填写（\cref{def:intro-error-types}）；“来源”一栏：“是”表示主要来源已正式发表，“本书”表示证明在本书中完整写出，“预印本”表示主要来源只有预印本。}
+\label{tab:lamet-status}
+\begin{tabularx}{\textwidth}{@{}p{1.45cm}Xp{2.35cm}p{3.5cm}p{0.75cm}p{0.85cm}@{}}
+\toprule
+标签 & 陈述 & 等级 & 前提／瓶颈 & 误差类型 & 来源 \\
+\midrule
+\cref{conj:lamet-principle} & LaMET 原理（非微扰） & \tagC & 非微扰 OPE 与因子化 & --- & 是 \\
+\cref{prop:lattice-moments} & 格点可计算的矩 & \tagR\ $R_{\mathrm{OPE}}$ & $n<n_0$ 时\cref{asm:intro-growth} & --- & 是 \\
+\cref{prop:lamet-support} & 支撑性质（逐图） & \tagR\ $R_{\mathrm{PT}}$ & --- & --- & 是 \\
+\cref{cor:lamet-entire} & ITD 为指数型整函数 & \tagR\ $R_{\mathrm{PT}}$ & --- & --- & 是 \\
+\cref{asm:lamet-aux-renorm} & QCD 加静态源可重整 & \tagA & 写出的 BRST 重整化证明 & --- & 是 \\
+\cref{prop:lattice-renormalizability} & 乘法可重整性 & \tagA & \cref{asm:lamet-aux-renorm} & E-S & 是 \\
+\cref{prop:lamet-ad-spacelike} & 类空与类时反常维度相同 & \tagA & \cref{asm:lamet-aux-renorm} & --- & 是 \\
+\cref{lem:lamet-lorentzian} & 线性项的 Lorentz 抹平 & 数学 & --- & --- & 本书 \\
+\cref{prop:lamet-lrr} & 线性重整子与 LRR & \tagP & 大 $\beta_0$；$m_0(\tau)$ 的普适性 & --- & 是 \\
+\cref{prop:lamet-euclid-minkowski} & 欧氏与 Minkowski 等同 & \tagA & 作者的论证（据摘要） & --- & 是 \\
+\cref{prop:lamet-oneloop} & 单圈匹配 & \tagR\ $R_{\mathrm{PT}}$ & --- & --- & 是 \\
+\cref{prop:lamet-tails} & 尾部、矩与卷积定义域 & \tagR\ $R_{\mathrm{PT}}$ & --- & --- & 本书 \\
+\cref{prop:lamet-twoloop} & 两圈非单态核 & \tagR\ $R_{\mathrm{PT}}$ & --- & --- & 是 \\
+\cref{prop:lamet-polarized} & 极化、横度、扭度 3 & \tagP & 单圈；扭度 3 零模 & --- & 是 \\
+\cref{asm:lamet-ope} & 类空 Wilson 线 OPE & \tagA & Zimmermann 级证明 & --- & 是 \\
+\cref{thm:lamet-coordinate} & 坐标空间因子化 & \tagR\ $R_{\mathrm{cond}}$；内容 \tagA & \cref{asm:lamet-ope}，\cref{prop:lattice-renormalizability} & --- & 是 \\
+\cref{thm:lamet-parton-momentum} & 动量空间形式 & \tagR\ $R_{\mathrm{cond}}$；内容 \tagA & 同上 & --- & 是 \\
+\cref{rem:lamet-early-form} & 早期形式不成立 & \tagV & 显式单圈计算 & --- & 是 \\
+\cref{prop:lamet-cfp} & Ma--Qiu 共线减除 & \tagA & 光锥规范中的减除 & E-S & 是 \\
+\cref{thm:lamet-lcs} & 好的格点截面 & \tagA & \cref{thm:dis-ope} & --- & 是 \\
+\cref{thm:lattice-lamet} & LaMET 匹配定理 & \tagA & \cref{asm:lamet-ope} & --- & 是 \\
+\cref{prop:lamet-gluon-singlet} & 单态与胶子 & \tagA & \cref{asm:lamet-ope} & --- & 是 \\
+\cref{prop:lamet-hybrid-kernel} & 混合方案单圈核 & \tagR\ $R_{\mathrm{PT}}$ & --- & --- & 是 \\
+\cref{prop:lamet-scheme-validity} & 方案的适用条件 & \tagA & \cref{asm:lamet-ope} & --- & 是 \\
+\cref{rem:lamet-ratio-large-z} & 比值方案大 $|z|$ 匹配 & \tagC & 非微扰的 $Z'_X$ & --- & 是 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering\footnotesize
+\renewcommand{\arraystretch}{1.08}
+\caption{第~22~章状态表（续）。}
+\begin{tabularx}{\textwidth}{@{}p{1.45cm}Xp{2.35cm}p{3.5cm}p{0.75cm}p{0.85cm}@{}}
+\toprule
+标签 & 陈述 & 等级 & 前提／瓶颈 & 误差类型 & 来源 \\
+\midrule
+\cref{asm:lamet-gap} & 谱隙与边界值正则性 & \tagC & 禁闭（(GP3)） & --- & 预印本 \\
+\cref{thm:lamet-exp-decay} & 指数衰减（公理化） & \tagR\ $R_{\mathrm{cond}}$；内容 \tagC & \cref{asm:intro-wightman}，\cref{asm:lamet-gap} & --- & 本书 \\
+\cref{conj:lamet-decay-qcd} & QCD 中的长程形式 & \tagC & 禁闭 & --- & 预印本 \\
+\cref{lem:lamet-strip} & 解析带 & 数学 & --- & --- & 本书 \\
+\cref{prop:lamet-truncation} & 截断误差界 & 数学 & --- & --- & 本书 \\
+\cref{prop:lamet-slepian} & 可恢复的自由度 & 数学 & --- & --- & 是 \\
+\cref{prop:lamet-tmc} & 靶质量修正 & \tagR\ $R_{\mathrm{cond}}$；内容 \tagA & \cref{asm:lamet-ope} & --- & 是 \\
+\cref{lem:lamet-fourier} & Fourier 引理 & 数学 & --- & --- & 本书 \\
+\cref{cor:lamet-endpoint} & 端点二分 & 数学 & --- & --- & 本书 \\
+\cref{prop:lamet-bvz} & 扭度 4 重整子模型 & \tagP & 大 $\beta_0$ 模型 & --- & 是 \\
+\cref{asm:lamet-uniform} & Ioffe 时间一致性 & \tagC & 非微扰 OPE & --- & --- \\
+\cref{asm:lamet-twist4} & 扭度 4 的结构 & \tagC & 强子扭度 4 OPE & --- & --- \\
+\cref{asm:lamet-large-z} & 大距离控制 & \tagC & 定量的指数衰减 & --- & --- \\
+\cref{thm:lamet-hadronic} & 强子层次匹配 & \tagR\ $R_{\mathrm{cond}}$；内容 \tagC & \cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z} & --- & 本书 \\
+\cref{prop:lamet-sdf} & LaMET 与 SDF & \tagR\ $R_{\mathrm{cond}}$；内容 \tagA & \cref{asm:lamet-ope} & --- & 本书 \\
+\cref{thm:lamet-quasi-gpd} & 准 GPD 与准 DA & \tagA & 非前向的\cref{asm:lamet-ope} & --- & 是 \\
+\cref{prop:lamet-other-objects} & 其他准分布 & \tagP & 单圈或结构层次 & --- & 部分 \\
+\cref{asm:lamet-staple} & 订书钉算符 & \tagA & 超软模式 & --- & 是 \\
+\cref{asm:lamet-soft-rapidity} & 软函数的快度结构 & \tagA & 快度切片的红外步骤 & --- & 是 \\
+\cref{asm:lamet-order-limits} & 极限次序 & \tagA & (OL2)；(OL1) 只验证到单圈 & --- & 是 \\
+\cref{thm:lamet-quasi-tmd} & 准 TMD 因子化 & \tagA & \cref{asm:lamet-order-limits}，\cref{asm:lamet-staple}，\cref{asm:lamet-soft-rapidity} & E-S & 是 \\
+\cref{prop:lattice-cs-kernel} & 格点 CS 核 & \tagA & 同上 & E-S & 是 \\
+\cref{prop:lamet-tmd-ratios} & 准 TMD 之比 & \tagA & 同上 & E-S & 是 \\
+\cref{cor:lamet-principle-pt} & 原理的微扰内容 & \tagA & \cref{asm:lamet-ope}，\cref{asm:lamet-order-limits} & E-S & 是 \\
+\midrule
+\multicolumn{6}{@{}p{\linewidth}@{}}{\emph{无标签的规范陈述。}定义：\cref{def:lattice-quasi,def:lamet-schemes,def:lamet-quasi-gpd,def:lamet-quasi-tmd,def:lamet-soft-offlc,def:lamet-reduced-soft}；显式计算的例（证明在本书中完整写出）：\cref{ex:lattice-quasi-tree,ex:lamet-hybrid-normalization,ex:lamet-fourier-numbers,ex:lamet-tmc-moments,ex:lamet-qtmd-oneloop}；说明性的注：\cref{rem:lamet-formulations,rem:lamet-domain,rem:lamet-inverse-problem,rem:lattice-critiques,rem:lamet-open}。} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{remark}[开放问题]\label{rem:lamet-open}
+(1) 类空 Wilson 线算符的 Zimmermann 级 OPE 定理（\cref{asm:lamet-ope}）。(2) 写出 QCD 加类空静态色源的可重整性证明（\cref{asm:lamet-aux-renorm}）。(3) 扭度展开对 Ioffe 时间的一致性，哪怕只在一个可解模型中（\cref{asm:lamet-uniform}；Liu 的 Gross--Neveu 定理只覆盖虚 Ioffe 时间，第~23~章）。(4) 规范理论中强子 Wilson 线关联函数的指数衰减，且常数可用（\cref{asm:lamet-large-z}，\cref{asm:lamet-gap}）。(5) $\rho_4$ 的端点指数 $\delta$（\cref{cor:lamet-endpoint}）。(6) $x=\pm\xi$ 处的 GPD（第~23~章）。(7) 超出论证层次的准 TMD 因子化：(OL1) 超出单圈的图形证明与 (OL2) 的证明，有限长订书钉的 Glauber 分析，以及用来确定 $S_r$ 的大动量介子形状因子的因子化（第~23~章）。(8) 维数正规化 Wightman 函数的坐标空间解析性（第~23~章\cref{asm:yzliu-wightman-pt}）。(9) 更高阶：NNLO 单态与胶子核、动量空间准 GPD 的 NNLO 核、三圈重—轻核（非单态 N$^3$LO 核已有\cite{Cheng:2024wyu}，见\cref{prop:lamet-twoloop}）。(10) 带零模的扭度 3 全阶因子化。(11) 重整子处方：$m_0(\tau)$ 的普适性。(12) 对格点拟合中所用的高阶混合核检验 $\int\dd\xi\,C_{\rm hyb}=1$。(13) 动量空间幂次展开的渐近（不收敛）性质（第~23~章的 O($N$) 模型）。(14) 色非单态 DPD 与重介子 LCDA 的两步链。
+\end{remark}
+
+\begin{tcolorbox}[enhanced,breakable,title=本章澄清的常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{“格点计算检验了截面的因子化定理。”}不对：格点提供强子矩阵元——矩、准分布、Collins--Soper 核——它们是 LaMET 匹配定理的输入与证据；截面的因子化不由格点检验（批评 C12；\cref{rem:lattice-critiques}(d)）。\par
+\textbf{“Collins--Soper 核是微扰的。”}不对（误解 M17）：$b_{\mathrm T}\sim1/\Lambda$ 处的 $\tilde K$ 是非微扰的，格点只能通过全阶论证级的\cref{prop:lattice-cs-kernel}（\tagA）提供它。\par
+\textbf{“格点直接计算了 PDF 的 $x$ 依赖。”}不对：从有限 Ioffe 时间窗口内的数据到 $f(x)$ 要经过 Fourier 逆问题；有限窗口只确定约 $2\lambda_L/\pi$ 个模式（\cref{prop:lamet-slepian}），固定 $x$ 处的可控性依赖尾部界（\cref{prop:lamet-truncation}），而 QCD 中的尾部界是猜想（\cref{conj:lamet-decay-qcd}）。\par
+\textbf{“LaMET 原理已被非微扰地证明。”}不对：\cref{conj:lamet-principle}是 \tagC；部分子态的微扰内容是 \tagA（\cref{cor:lamet-principle-pt}）。\par
+\textbf{“准 PDF 的矩等于 PDF 的矩。”}不对：$\MSbar$ 准 PDF 有 $1/|x|$ 尾部，没有矩；赝 PDF 有矩，由坐标空间因子化与 PDF 的矩相联系（\cref{prop:lamet-tails}，\cref{thm:lamet-coordinate}）。\par
+\textbf{“匹配核依赖强子动量 $P^z$。”}不对：核的宗量是部分子动量 $|y|P^z$（\cref{thm:lamet-parton-momentum}；以强子动量为变量的早期形式不成立，\cref{rem:lamet-early-form}）。\par
+\textbf{“比值方案可以直接用于动量空间匹配。”}不对：大 $|z|$ 处比值与 RI/MOM 方案的换算因子是非微扰的（\cref{rem:lamet-ratio-large-z}，\tagC）；动量空间匹配应使用混合方案（\cref{prop:lamet-scheme-validity}）。
+\end{tcolorbox}

@@ -1,0 +1,202 @@
+%%% BEGIN fig:heavy-bdpi
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 heavy/.style={draw,solid,line width=1.3pt,fd arrow=#1},
+  fd2 heavy/.default=0.5,
+  fd2 meson/.style={bound state,line cap=butt},
+  fd2 weak/.style={rectangle,fill=black,draw=none,inner sep=0pt,minimum size=5.6pt},
+  fd2 soft/.style={gluon,draw=green!45!black},
+  fd2 cross/.pic={\draw[red!75!black,line width=1.1pt,line cap=round] (-0.12,-0.12)--(0.12,0.12) (-0.12,0.12)--(0.12,-0.12);},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  \coordinate (W) at (0,0.45);
+  \coordinate (dq) at (1.449,2.820);   % end of the d line (inside the pion blob)
+  \coordinate (uq) at (1.851,2.558);   % end of the u-bar line (inside the pion blob)
+  % ---- mesons (double lines) ----
+  \draw[fd2 meson] (-5.15,0) -- (-3.9,0);
+  \draw[fd2 meson] (3.9,0) -- (5.15,0);
+  \draw[fd2 meson] (2.36,3.78) -- (2.84,4.51);
+  % ---- soft gluons from the B-D system to the pion pair (decouple) ----
+  \coordinate (sd) at ($(W)!0.42!(dq)$);
+  \coordinate (su) at ($(W)!0.36!(uq)$);
+  \draw[fd2 soft] (-3.42,0.72) -- (sd);
+  \draw[fd2 soft] (3.42,0.72) -- (su);
+  \pic at ($(-3.42,0.72)!0.5!(sd)$) {fd2 cross};
+  \pic at ($(3.42,0.72)!0.5!(su)$) {fd2 cross};
+  % ---- quark lines (arrows = fermion-number flow) ----
+  \draw[fd2 heavy=0.55] (-3.4,0.45) -- (W);
+  \draw[fd2 heavy=0.55] (W) -- (3.4,0.45);
+  \draw[quark] (3.4,-0.45) -- (-3.4,-0.45);
+  \draw[quark=0.72] (W) -- (dq);
+  \draw[quark=0.6] (uq) -- (W);
+  % ---- blobs on top ----
+  \node[hadron blob,ellipse,minimum width=0.8cm,minimum height=1.8cm,inner sep=0pt] at (-3.6,0) {};
+  \node[hadron blob,ellipse,minimum width=0.8cm,minimum height=1.8cm,inner sep=0pt] at (3.6,0) {};
+  \node[jet blob,ellipse,minimum width=1.6cm,minimum height=0.72cm,inner sep=0pt,rotate=57] at (1.95,3.15) {};
+  \node[fd2 weak] at (W) {};
+  % ---- labels ----
+  \node[fd2 lab,left] at (-5.15,0) {$\bar B^0$};
+  \node[fd2 lab,right] at (5.15,0) {$D^+$};
+  \node[fd2 lab,anchor=south west] at (2.78,4.45) {$\pi^-(p)$};
+  \node[fd2 lab] at (-1.9,0.2) {$b$};
+  \node[fd2 lab] at (1.9,0.2) {$c$};
+  \node[fd2 lab] at (-1.9,-0.72) {$\bar d$};
+  \path[mom={$xp$},mom sep=0.25cm,mom length=0.5cm,mom pos=0.8] (W) -- (dq);
+  \path[mom'={$(1-x)p$},mom sep=0.25cm,mom length=0.5cm,mom pos=0.84] (W) -- (uq);
+  \node[fd2 lab,anchor=east] at (1.28,3.42) {$\phi_\pi(x)$};
+  \node[fd2 note,anchor=north west] at (0.14,0.36) {$T(x,\mu)$};
+  \node[fd2 note,anchor=south west,align=left] at (3.7,0.98) {软胶子在领头幂次\\退耦（色透明性）};
+  % ---- the soft B -> D transition ----
+  \draw[fd2 bracket] (-4.02,-1.05) -- (-4.02,-1.15) -- (4.02,-1.15) -- (4.02,-1.05);
+  \node[fd2 note,below=1pt] at (0,-1.15) {软的 $B\to D$ 跃迁（含旁观者）：形状因子 $F^{B\to D}(0)$};
+  \node[fd2 lab] at (0,-2.2) {$\langle D^+\pi^-|O_{\mathbf 0}|\bar B^0\rangle=N\,F^{B\to D}(0)\displaystyle\int_0^1\!\dd x\,T(x,\mu)\,\phi_\pi(x,\mu)\,\big[1+\order{\Lambda/m_b}\big]$};
+\end{tikzpicture}
+\caption{$\bar B^0\to D^+\pi^-$ 的因子化（\cref{thm:heavy-bdpi}，全阶论证 [A]）。黑方块为弱作用四夸克算符 $O_{\mathbf 0}=[\bar c\gamma^\mu P_Lb][\bar d\gamma_\mu P_Lu]$ 的顶点，粗线为重夸克 $b$、$c$，双线为介子；细线上的箭头为费米子数流向（反夸克 $\bar d$、$\bar u$ 的箭头逆着动量）。
+旁观者 $\bar d$ 自 $\bar B^0$ 进入 $D^+$，这一软的跃迁由形状因子 $F^{B\to D}(0)$ 描述；发射的 $\pi^-$ 由弱顶点直接产生的共线 $d\bar u$ 对构成（蓝色团，分布振幅 $\phi_\pi(x)$，$x$ 为 $d$ 夸克的动量分数），它是快速运动的色单态小偶极子：
+软胶子与 $d$、$\bar u$ 的程函耦合在领头幂次相消（打叉的绿色胶子，色透明性），硬胶子交换归入短程系数 $T(x,\mu)$。
+$N=\frac{\ii}{2}m_BE_\pi f_\pi$；修正被 $\Lambda/m_b$、$\Lambda/m_c$、$\Lambda/E_\pi$ 压低（VF-BQ-6）；$B^-\to D^0\pi^-$ 同理。证明还用到分布振幅端点压低的假设（见正文）。}
+\label{fig:heavy-bdpi}
+\end{figure}
+%%% END fig:heavy-bdpi
+
+%%% BEGIN fig:heavy-qcdf
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 heavy/.style={draw,solid,line width=1.3pt,fd arrow=#1},
+  fd2 heavy/.default=0.5,
+  fd2 meson/.style={bound state,line cap=butt},
+  fd2 weak/.style={rectangle,fill=black,draw=none,inner sep=0pt,minimum size=5.6pt},
+  fd2 halo/.style={preaction={draw=white,line width=3.4pt}},
+  fd2 endpoint/.style={draw=red!80!black,line width=3.2pt,opacity=0.45,line cap=butt},
+  fd2 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  fd2 lab/.style={font=\small},
+  fd2 note/.style={font=\footnotesize}]
+  % ------------- common skeleton: B (left), M1 (right), M2 (emitted, top) -------------
+  \foreach \panel/\xs in {a/0, b/8.0} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (W) at (-0.5,0.42);
+    \coordinate (q2) at (0.352,2.160);   % quark of M2 (inside the blob)
+    \coordinate (a2) at (0.698,1.960);   % antiquark of M2 (inside the blob)
+    \draw[fd2 meson] (-3.3,0) -- (-2.75,0);
+    \draw[fd2 meson] (2.75,0) -- (3.3,0);
+    \draw[fd2 meson] (1.08,3.03) -- (1.43,3.64);
+    \if a\panel
+      % hard gluon of a vertex correction: M2 antiquark -- light quark q
+      \coordinate (g1) at (1.2,0.42);  \coordinate (g2) at ($(W)!0.58!(a2)$);
+      \draw[gluon] (g1) -- (g2);
+      \draw[fd2 heavy=0.5] (-2.3,0.42) -- (W);
+      \draw[quark=0.78] (W) -- (2.3,0.42);
+      \draw[quark] (2.3,-0.42) -- (-2.3,-0.42);
+      \node[vertex] at (g1) {};  \node[vertex] at (g2) {};
+    \else
+      % hard-collinear gluon from the spectator to the emitted pair
+      \coordinate (g1) at (0.85,-0.42);  \coordinate (g2) at ($(W)!0.52!(q2)$);
+      \draw[fd2 endpoint] (0.9,-0.42) -- (2.2,-0.42);
+      \draw[gluon] (g1) -- (g2);
+      \draw[fd2 heavy=0.5] (-2.3,0.42) -- (W);
+      \draw[quark=0.8,fd2 halo] (W) -- (2.3,0.42);
+      \draw[quark=0.55] (2.3,-0.42) -- (g1);
+      \draw[quark=0.45] (g1) -- (-2.3,-0.42);
+      \node[vertex] at (g1) {};  \node[vertex] at (g2) {};
+    \fi
+    \draw[quark=0.33] (W) -- (q2);
+    \draw[quark=0.6] (a2) -- (W);
+    \node[hadron blob,ellipse,minimum width=0.66cm,minimum height=1.56cm,inner sep=0pt] at (-2.45,0) {};
+    \node[jetB blob,ellipse,minimum width=0.66cm,minimum height=1.56cm,inner sep=0pt] at (2.45,0) {};
+    \node[jet blob,ellipse,minimum width=1.35cm,minimum height=0.62cm,inner sep=0pt,rotate=60] at (0.75,2.45) {};
+    \node[fd2 weak] at (W) {};
+    \node[fd2 lab,left] at (-3.3,0) {$\bar B$};
+    \node[fd2 lab,right] at (3.3,0) {$M_1$};
+    \node[fd2 lab,anchor=south west] at (1.36,3.55) {$M_2$};
+    \node[fd2 lab] at (-1.45,0.66) {$b$};
+    \node[fd2 lab] at (1.5,0.66) {$q$};
+    \node[fd2 lab,anchor=east] at (0.3,2.72) {$\phi_{M_2}(x)$};
+  \end{scope}}
+  % ------------- panel (a): labels -------------
+  \node[fd2 lab] at (-1.45,-0.66) {$\bar q_s$};
+  \node[fd2 note,anchor=west] at (1.05,1.25) {$T^{\rm I}$：硬胶子};
+  \draw[fd2 bracket] (-2.82,-1.0) -- (-2.82,-1.1) -- (2.82,-1.1) -- (2.82,-1.0);
+  \node[fd2 note,below=1pt] at (0,-1.1) {软的 $B\to M_1$ 跃迁：$F^{B\to M_1}(0)$};
+  \node[fd2 lab,align=center] at (0,-2.3) {(a)\ 顶点项\\[2pt]$F^{B\to M_1}(0)\displaystyle\int\!\dd x\,T^{\rm I}(x)\,\phi_{M_2}(x)$};
+  % ------------- panel (b): labels -------------
+  \begin{scope}[xshift=8.0cm]
+    \path[mom={$\xi p_B$},mom sep=0.2cm,mom length=0.5cm,mom pos=0.4] (-2.2,-0.42) -- (0.85,-0.42);
+    \path[mom={$\bar y\,p_1$},mom sep=0.2cm,mom length=0.45cm,mom pos=0.52] (0.85,-0.42) -- (2.2,-0.42);
+    \node[fd2 note,anchor=south east] at (-0.12,1.06) {$T^{\rm II}$};
+    \node[fd2 note,anchor=west] at (0.56,1.02) {$k^2\sim m_b\Lambda$};
+    \node[fd2 note] at (-2.45,-1.1) {$\phi_B(\xi)$};
+    \node[fd2 note] at (2.6,-1.12) {$\phi_{M_1}(y)$};
+    \node[fd2 note,text=red!70!black] at (1.05,-0.74) {端点区 $\bar y\to0$};
+    \node[fd2 lab,align=center] at (0,-2.3) {(b)\ 硬旁观者散射\\[2pt]$\displaystyle\int\!\dd\xi\,\dd x\,\dd y\,T^{\rm II}(\xi,x,y)\,\phi_B(\xi)\,\phi_{M_1}(y)\,\phi_{M_2}(x)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{无粲两体衰变 $\bar B\to M_1M_2$ 的 QCD 因子化（BBNS；\cref{prop:heavy-qcdf-lp}，部分 [P]），各只画一个代表图。黑方块为弱作用四夸克算符的顶点，粗线为 $b$ 夸克，箭头为费米子数流向；
+$M_2$（蓝）为由弱顶点发射的介子，$M_1$（橙）为接收旁观反夸克 $\bar q_s$ 的介子。(a)~形状因子项：硬胶子连接发射对与 $b\to q$ 线（顶点修正），软的跃迁由 $F^{B\to M_1}(0)$ 描述。
+(b)~硬旁观者散射：旁观者（动量 $\xi p_B$，$\xi\sim\Lambda/m_b$）放出一个硬共线胶子（虚度 $\sim m_b\Lambda$），以动量分数 $\bar y=1-y$ 进入 $M_1$。
+红色标出端点区 $\bar y\to0$（旁观反夸克以趋于零的动量分数进入 $M_1$）：扭度 3 的硬旁观者项在此对数发散，$X_H=\int_0^1\frac{\dd y}{1-y}\Phi_p(y)$；弱湮灭项（未画出）有同类端点发散 $X_A=\int_0^1\frac{\dd y}{y}$（VF-BQ-3）。
+这些幂次修正的标准共线因子化不成立（\cref{prop:heavy-qcdf-endpoint}，[V]），$X_{A,H}$ 的参数化只是模型。}
+\label{fig:heavy-qcdf}
+\end{figure}
+%%% END fig:heavy-qcdf
+
+%%% BEGIN fig:nrqcd
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 heavy/.style={draw,solid,line width=1.3pt,fd arrow=#1},
+  t3 heavy/.default=0.5,
+  t3 soft/.style={gluon,draw=green!45!black},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ===================== (a) colour-singlet channel =====================
+  \begin{scope}
+    \node[hard blob,circle,minimum size=1.0cm,inner sep=0pt] (H) at (-3.4,0) {};
+    \node[soft blob,ellipse,minimum width=2.6cm,minimum height=1.3cm,inner sep=0pt] (L) at (0.8,0) {};
+    \draw[gluon] (-5.0,0.85) -- (H.150);  \draw[gluon] (-5.0,-0.85) -- (H.210);
+    \draw[gluon] (H.45) -- (-2.15,1.3);
+    \draw[t3 heavy] (-2.92,0.17) -- (-0.4,0.17);
+    \draw[t3 heavy] (-0.4,-0.17) -- (-2.92,-0.17);
+    \draw[bound state] (L.east) -- (3.55,0);
+    \node[soft blob,ellipse,minimum width=2.6cm,minimum height=1.3cm,inner sep=0pt] at (0.8,0) {};
+    \node[hard blob,circle,minimum size=1.0cm,inner sep=0pt] at (-3.4,0) {};
+    \node[t3 lab,left] at (-5.0,0.85) {$g$};  \node[t3 lab,left] at (-5.0,-0.85) {$g$};
+    \node[t3 lab,right] at (-2.15,1.3) {$g$};
+    \node[t3 lab] at (-1.38,0.5) {$Q\bar Q[{}^3S_1^{[1]}]$};
+    \node[t3 note,align=center] at (0.8,0) {$\langle\mathcal O^{H}({}^3S_1^{[1]})\rangle$};
+    \node[t3 lab,right] at (3.55,0) {$H\ (J/\psi)$};
+    \node[t3 note] at (-3.4,-0.78) {$\sim1/m_Q$};
+    \node[t3 note] at (0.8,-0.92) {$\sim1/(m_Qv)$};
+    \node[t3 lab,anchor=west] at (-5.6,-1.45) {(a)\ 色单态：短距离过程须多放出一个硬胶子};
+  \end{scope}
+  % ===================== (b) colour-octet channel =====================
+  \begin{scope}[yshift=-3.6cm]
+    \node[hard blob,circle,minimum size=1.0cm,inner sep=0pt] (H) at (-3.4,0) {};
+    \node[soft blob,ellipse,minimum width=2.6cm,minimum height=1.3cm,inner sep=0pt] (L) at (0.8,0) {};
+    \draw[plain] (-5.0,0.85) -- (H.150);  \draw[plain] (-5.0,-0.85) -- (H.210);
+    \draw[t3 heavy] (-2.92,0.17) -- (-0.4,0.17);
+    \draw[t3 heavy] (-0.4,-0.17) -- (-2.92,-0.17);
+    \draw[t3 soft] (1.25,0.55) -- (2.1,1.45);
+    \draw[t3 soft] (1.25,-0.55) -- (2.1,-1.45);
+    \draw[bound state] (L.east) -- (3.55,0);
+    \node[soft blob,ellipse,minimum width=2.6cm,minimum height=1.3cm,inner sep=0pt] at (0.8,0) {};
+    \node[hard blob,circle,minimum size=1.0cm,inner sep=0pt] at (-3.4,0) {};
+    \node[t3 lab,left] at (-5.0,0.85) {$i$};  \node[t3 lab,left] at (-5.0,-0.85) {$j$};
+    \node[t3 lab] at (-1.38,0.5) {$Q\bar Q[n^{[8]}]$};
+    \node[t3 note,align=center] at (0.8,0) {$\langle\mathcal O^{H}(n^{[8]})\rangle$};
+    \node[t3 lab,right] at (3.55,0) {$H$};
+    \node[t3 note,right,text=green!35!black] at (2.1,1.45) {软胶子，$E\sim m_Qv^2$};
+    \node[t3 note] at (-3.4,-0.78) {$\sim1/m_Q$};
+    \node[t3 lab,anchor=west] at (-5.6,-1.75) {(b)\ 色八重态：颜色在长距离上由软胶子带走};
+  \end{scope}
+\end{tikzpicture}
+\caption{重夸克偶素产生的 NRQCD 因子化图像。灰色团为短距离过程：在距离 $\sim1/m_Q$ 上产生处于确定色、自旋与轨道角动量态 $n={}^{2S+1}L_J^{[1,8]}$ 的 $Q\bar Q$ 对（粗线；箭头为费米子数），
+其截面 $\dd\hat\sigma(ij\to Q\bar Q[n]+X)$ 可按 $\alpha_s(m_Q)$ 微扰计算；绿色团为长距离矩阵元 $\langle\mathcal O^{H}(n)\rangle$，描述 $Q\bar Q[n]$（相对速度 $v$，尺度 $\sim1/(m_Qv)$）演化为强子 $H$ 的概率，按 $v$ 的幂次计数（$c\bar c$：$v^2\approx0.3$；$b\bar b$：$v^2\approx0.1$）。
+(a)~色单态：例如 $gg\to Q\bar Q[{}^3S_1^{[1]}]+g$，在 $v$ 的领头阶 $Q\bar Q$ 直接成为 $J/\psi$；为满足色与 $C$ 宇称守恒，短距离过程必须多放出一个硬胶子。
+(b)~色八重态（如 ${}^1S_0^{[8]}$、${}^3S_1^{[8]}$、${}^3P_J^{[8]}$）：$Q\bar Q$ 对须放出能量 $\sim m_Qv^2$ 的软胶子才能成为色单态强子，相应矩阵元相对于 (a) 有额外的 $v$ 压低。
+产生截面的因子化形式 $\dd\sigma(H)=\sum_n\dd\hat\sigma(Q\bar Q[n])\,\langle\mathcal O^H(n)\rangle$ 是猜想（[C]），对衰变的类似公式有全阶论证（[A]）；八重态算符须以 Wilson 线补全规范不变性（见正文）。}
+\label{fig:nrqcd}
+\end{figure}
+%%% END fig:nrqcd

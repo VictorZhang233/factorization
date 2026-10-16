@@ -1,0 +1,72 @@
+\section{重整化方案与动量空间匹配：混合方案}\label{sec:lamet-schemes}
+
+格点上 $z$ 的取值从 $\order{a}$ 一直到 $\sim1$ fm，任何方案都必须在整个范围内给出可用的重整化因子；动量空间匹配又要求方案与 $\MSbar$ 之间的换算在所有贡献于 Fourier 变换的 $z$ 上都是微扰的。各方案见\cref{tab:lamet-schemes}，混合方案的结构见\cref{fig:lamet-hybrid}。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.75cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.1cm}@{}}
+\toprule
+方案 & 定义 & 到 $\MSbar$ 的换算 & 动量空间匹配 & 文献 \\
+\midrule
+Wilson 线质量减除 & $\ee^{\delta m|z|}$ 与对数因子 $Z_{\log}$ & 与 $z$ 无关 & $\MSbar$ 核 & \cite{Chen:2016fxx,Ishikawa:2016znu,Green:2017xeu} \\
+RI/MOM & $Z^{-1}\tilde h_{\rm quark}(z,p)|_{p^2=-\mu_R^2,p^z=p^z_R}=$ 树图 & 依赖于 $z$（含 $\ln z^2\mu_R^2$），依赖规范与投影 & $C^{\rm OM}=\bar Z'_{\rm OM}\circledast C$；大 $|z|$ 处无依据 & \cite{Constantinou:2017sej,Stewart:2017tvs,Alexandrou:2017huk,Chen:2017mzz,LatticeParton:2018gjr} \\
+比值（约化 ITD） & $\tilde h(\lambda,z^2)/\tilde h(0,z^2)$（或真空矩阵元） & $1/C_0(-z^2\mu^2)$ & $C^{\rm ratio}$；大 $|z|$ 处无依据 & \cite{Radyushkin2017,Orginos:2017kos,Braun:2018brg} \\
+混合 & $|z|\le z_S$：比值；$|z|>z_S$：$\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$ & $1/C_0(\min(|z|,z_S))$，处处微扰 & $C^{\rm hyb}$（\cref{prop:lamet-hybrid-kernel}） & \cite{Ji:2020brr} \\
+自重整化 & 拟合 $\ln Z(a)$ 的 $\delta m/a$ 型项、离散化项与短距离 $\MSbar$ 形状 & 同混合方案 & 同混合方案 & \cite{LatticePartonLPC:2021gpi} \\
+Coulomb 规范 & 不带规范链的 Coulomb 规范双线性算符 & 无线性发散，$Z$ 与 $z$ 无关 & 自己的单圈核 & \cite{Gao:2023lny,Zhao:2023ptv} \\
+\bottomrule
+\end{tabularx}
+\caption{准关联函数的重整化方案一览（定义见\cref{def:lamet-schemes}；$\circledast$ 为 $\xi$ 上的普通卷积，$\bar Z'_X$ 为换算因子在固定部分子动量下的 Fourier 变换）。“无依据”的含义见\cref{rem:lamet-ratio-large-z}。}
+\label{tab:lamet-schemes}
+\end{table}
+
+\begin{proposition}[混合方案的单圈匹配核 \tagR]\label{prop:lamet-hybrid-kernel}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈，对 $\Gamma=\gamma^0$、$Z_X$ 取零动量矩阵元的混合方案：$\mathcal C_{\rm hyb}(\alpha,z)=\mathcal C_{\rm ratio}(\alpha,z)+\frac{3a}2\delta(1-\alpha)\ln\frac{z^2}{z_S^2}\theta(|z|-z_S)$，其在固定部分子动量下的精确 Fourier 变换为
+\begin{equation}\label{eq:lamet-hybrid-kernel}
+C_{\rm hyb}(\xi)=C_{\rm ratio}(\xi)+\frac{3a}2\Big[-\frac1{|1-\xi|}+\frac{2\,{\rm Si}((1-\xi)\lambda_S)}{\pi(1-\xi)}\Big]^{[-\infty,\infty]}_{+(1)},\qquad\lambda_S=z_Sp^z,\qquad\int\dd\xi\,C_{\rm hyb}=1 .
+\end{equation}% VF-LAM-3, VF-LAM-10; E01
+（本命题只涉及部分子态。）
+\uses{prop:lamet-oneloop, def:lamet-schemes}
+\end{proposition}
+
+\begin{proof}
+坐标形式：由\cref{eq:lamet-hybrid-conv}与 $C_0=1+a(\frac32L_z+\frac52)$（\cref{prop:lamet-oneloop}），$|z|>z_S$ 时 $C_0(z)/C_0(z_S)=1+\frac{3a}2\ln\frac{z^2}{z_S^2}+\order{a^2}$。Fourier 变换：沿射线 $z^2=-\lambda^2/p_z^2$，修正项是 $\frac{3a}2\ln\frac{\lambda^2}{\lambda_S^2}\theta(|\lambda|-\lambda_S)$ 乘以 $\alpha=1$ 处的 $\ee^{\ii\lambda}$；对 $u=\xi-1\neq0$，分部积分并用 $\int_0^\infty\frac{\sin(u\zeta)}\zeta\dd\zeta=\frac\pi2{\rm sgn}(u)$，
+\[
+\int\frac{\dd\zeta}{2\pi}\ee^{\ii u\zeta}\ln\frac{\zeta^2}{\lambda_S^2}\theta(|\zeta|-\lambda_S)=\frac2\pi\int_{\lambda_S}^\infty\dd\zeta\,\cos(u\zeta)\ln\frac\zeta{\lambda_S}=-\frac2{\pi u}\int_{\lambda_S}^\infty\frac{\sin(u\zeta)}\zeta\dd\zeta=-\frac1{|u|}+\frac{2\,{\rm Si}(u\lambda_S)}{\pi u}
+\]
+（在 $\zeta\to\infty$ 处的边界项按分布意义为零），由 ${\rm Si}$ 的奇性它等于方括号中的函数。由 ${\rm Si}(v)=\frac\pi2{\rm sgn}(v)-\frac{\cos v}v+\order{v^{-2}}$，固定 $\lambda_S$ 时方括号在 $|u|\to\infty$ 处为 $-\frac{2\cos(u\lambda_S)}{\pi\lambda_Su^2}$，可积；所以只有 $u=0$ 处的 $-1/|u|$ 奇点需要处方。由于坐标空间的修正在 $\zeta=0$ 处为零（混合方案在短距离就是比值方案，保持矢量流守恒），其 Fourier 变换对 $u$ 的积分为零，这唯一地确定了 $\delta(u)$ 的系数：方括号是 $\mathbb R$ 上的加号分布。于是 $\int\dd\xi\,C_{\rm hyb}=\int\dd\xi\,C_{\rm ratio}=1$。（在卷积中 $\lambda_S=z_S|y|P^z$ 随 $y\to0$ 而趋于零，见\cref{prop:lamet-tails}(iii)。）
+\end{proof}
+
+\begin{example}[混合核的归一化]\label{ex:lamet-hybrid-normalization}
+设方括号为 $\mathcal B(u)$。在 $|u|\le U$ 上积分并令 $U\to\infty$：$\int_{\beta\le|u|\le U}\frac{-\dd u}{|u|}=-2\ln\frac U\beta$；$\int_{|u|\le U}\frac{2{\rm Si}(u\lambda_S)}{\pi u}\dd u=\frac4\pi\int_0^{U\lambda_S}\frac{{\rm Si}(v)}v\dd v=2\ln(U\lambda_S)+2\gamma_E+o(1)$，这里用到分部积分与 $\int_0^\infty\frac{\sin v}v\ln v\,\dd v=-\frac\pi2\gamma_E$：
+\[
+\int_0^V\frac{{\rm Si}(v)}v\dd v={\rm Si}(V)\ln V-\int_0^V\frac{\sin v}v\ln v\,\dd v=\frac\pi2(\ln V+\gamma_E)+o(1).
+\]
+所以对称挖去 $|u|<\beta$ 后 $\int\mathcal B=2\ln(\lambda_S\ee^{\gamma_E})+2\ln\beta$；$\mathbb R$ 上的加号处方减去这一常数，使 $\int[\mathcal B]_+=0$。文献\cite[式~(33)--(34)]{Ji:2020brr}与\cite[式~(120)--(121)]{JiEtAl2021}用的是 $\frac1{|u|_+}\equiv\lim_{\beta\to0^+}[\theta(|u|-\beta)/|u|+2\delta(u)\ln\beta]$，它只抵消 $2\ln\beta$，因而 $\int\dd\xi\,C_{\rm hyb}=1+3a\ln(\lambda_S\ee^{\gamma_E})$——比精确的 Fourier 变换多出 $3a\ln(\lambda_S\ee^{\gamma_E})\delta(1-\xi)$，在 $\lambda_S=1$、$\as=0.25$–$0.3$ 时约为 $9$–$11\%$（附录~Q 第~8~条）。首个发表的更正是\cite[式~(35)]{Chou:2022drv}，另见\cite[式~(A.14)]{Su:2022fiu}，那里 $\lambda_S=z_S|y|P^z$。
+\uses{prop:lamet-hybrid-kernel}
+\end{example}
+
+%%% FIGBLOCK fig:lamet-hybrid
+
+\begin{proposition}[动量空间匹配在何种重整化方案中成立 \tagA]\label{prop:lamet-scheme-validity}
+设方案 $X$ 的换算为 $\tilde h^X=Z'_X(z^2\mu_R^2,\mu_R/\mu)\tilde h^{\MSbar}$。若 $Z'_X(z)$ 在所有贡献于 Fourier 变换的 $z$ 上都是微扰的，则\cref{thm:lattice-lamet}的动量空间匹配在方案 $X$ 中成立，$C^X=\bar Z'_X\circledast C$：在固定部分子动量下 $\hat{\mathcal C}^X(\lambda)=Z'_X(\lambda^2\mu_R^2/p_z^2)\hat{\mathcal C}(\lambda)$，$\circledast$ 为 $\xi\in\mathbb R$ 上的普通卷积，$\bar Z'_X$ 为 $Z'_X$ 的 Fourier 变换。混合方案按构造满足这一条件（\cref{prop:lamet-hybrid-kernel}）。
+（本命题只涉及部分子态。）
+\uses{thm:lattice-lamet, def:lamet-schemes, prop:lamet-hybrid-kernel}
+\end{proposition}
+
+\begin{proofsketch}
+由\cref{def:lamet-schemes}，坐标核乘以 $Z'_X$；沿射线作 Fourier 变换，乘积变为卷积。只有当 $Z'_X$ 在所有相关的 $z$ 上可展开为 $\as(\mu)$ 的级数时，$C^X$ 才是红外安全、可微扰计算的核，\cref{thm:lattice-lamet}的结论才转移到方案 $X$。见\cite{JiEtAl2021,Ji:2020brr}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA，继承\cref{thm:lattice-lamet}（瓶颈\cref{asm:lamet-ope}）。条件“$Z'_X$ 处处微扰”对混合方案按构造成立（换算因子在 $|z|>z_S$ 处冻结在短距离值 $C_0(z_S)$）。
+
+\begin{remark}[比值与 RI/MOM 方案在大 $|z|$ 处的动量空间匹配 \tagC]\label{rem:lamet-ratio-large-z}
+在纯比值或 RI/MOM 方案中、用 $|z|\sim1/\Lambda$ 处的格点数据作动量空间匹配是没有依据的：$Z'_X$ 含有 $\as(1/|z|)$ 的对数，在那里是非微扰的；文献\cite{JiEtAl2021}写道，对任何与 $\MSbar$ 相差非微扰因子的方案使用动量空间因子化都“是不合法的”。由此产生的误差是非微扰的，不受微扰匹配控制。坐标空间（短距离因子化）在小 $z$ 处的使用不受影响。
+\uses{prop:lamet-scheme-validity}
+\end{remark}
+
+\paragraph{地位与缺口}
+\tagC：没有任何推导支持这种做法的有效性；这一做法是缺乏依据，而不是被证明为错。补救办法是改用混合方案，或只在短距离使用坐标空间匹配（\cref{sec:lamet-sdf}）。

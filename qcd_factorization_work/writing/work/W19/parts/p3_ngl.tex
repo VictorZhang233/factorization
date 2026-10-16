@@ -1,0 +1,159 @@
+%% =====================================================================================
+\section{非全局对数}\label{sec:jets-ngl}
+
+推力是\emph{全局的}：两个半球的软辐射以同样方式被测量，大对数在指数中组织（\cref{prop:scet-ll}，全阶论证，[A]）。
+只约束相空间一部分的可观测量——单个半球的质量、流入远离喷注区域的能量、喷注否决——称为\emph{非全局的}（non-global）。对它们，软因子不再化为 $1$
+（\cref{lem:method-soft-unitarity}要求软动量不受约束），且出现新的机制（\cref{fig:jets-ngl}）：发射到未测量区域的较硬胶子 $k_1$ 成为色源，向测量区域辐射较软的胶子 $k_2$；
+$k_2$ 的实辐射被否决而虚修正不受限制，二者不再相消，留下从 $\as^2$ 开始的单对数 $\as^nL^n$，它们不能由主偶极子的独立发射生成\cite{DasguptaSalam2001}。
+图中受否决的“R 中的总能量”指 R 中\emph{软辐射}的能量（R 还含沿推力轴的夸克）；否决 R 的半球质量给出同一系数（\cref{prop:jets-ngl}）。
+
+%%% BEGIN fig:jets-ngl
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ray/.style={draw,solid,line width=0.9pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc veto/.style={fill=orange!12,draw=none},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  \def\fcR{2.3}
+  % hemispheres: R (measured, energy veto) shaded, L (unmeasured) blank
+  \fill[fc veto] (0,-\fcR) arc[start angle=-90,end angle=90,radius=\fcR] -- cycle;
+  \draw[line width=0.6pt,gray!60!black] (0,0) circle[radius=\fcR];
+  \draw[line width=0.7pt,gray!60!black] (0,-\fcR-0.25) -- (0,\fcR+0.25);
+  % thrust axis
+  \draw[gray!60!black,line width=0.45pt,dash pattern=on 3pt off 2pt] (-\fcR-0.6,0) -- (\fcR+0.6,0);
+  \node[fc note,anchor=north west,text=gray!35!black] at (\fcR+0.05,-0.08) {推力轴};
+  % primary q qbar pair
+  \draw[fc ray] (0,0) -- (2.15,0);
+  \draw[fc ray] (0,0) -- (-2.15,0);
+  \node[fc lab,anchor=north] at (1.95,-0.05) {$q$};
+  \node[fc lab,anchor=north] at (-1.95,-0.05) {$\bar q$};
+  % harder gluon k1 into L, softer gluon k2 radiated by it into R
+  \draw[gluon] (0,0) -- (-1.2,1.44);
+  \draw[fc soft] (-0.6,0.72) -- (1.05,1.42);
+  \node[vertex] at (0,0) {};  \node[vertex] at (-0.6,0.72) {};
+  \node[fc lab,anchor=east] at (-1.25,1.3) {$k_1$};
+  \node[fc lab,anchor=west,text=green!35!black] at (1.12,1.38) {$k_2$};
+  \node[fc note,anchor=north west] at (0.55,1.1) {$\omega_2\ll\omega_1$};
+  % hemisphere labels
+  \node[fc lab,align=center] at (-1.1,-1.0) {L\\[-1pt]\scriptsize（不测量）};
+  \node[fc lab,align=center] at (1.05,-1.0) {R\\[-1pt]\scriptsize（$E_R<E_{\rm cut}$）};
+  % order and colour factor
+  \node[fc note,draw=gray!60!black,rounded corners=2pt,inner sep=3pt,anchor=west] at (\fcR+0.9,1.55) {$\order{\alpha_s^2}$：$C_FC_A$};
+  \node[fc note,anchor=west,align=left] at (\fcR+0.9,0.75) {$k_1\in\mathrm L$：不受限制\\$k_2\in\mathrm R$：受否决};
+\end{tikzpicture}
+\caption{非全局对数的来源（$e^+e^-$质心系，示意）。垂直于推力轴的平面把事例分为半球 L 与 R，只对 R 中的总能量施加否决$E_R<E_{\rm cut}$（阴影）；$q$、$\bar q$沿推力轴。
+未被测量的 L 中的较硬胶子$k_1$（能量$\omega_1$）向被否决的 R 辐射较软的胶子$k_2$（$\omega_2\ll\omega_1$）：$k_2$由$k_1$参与的相干发射给出，其实辐射被否决而虚修正不受限制，二者不再相消，产生非全局对数；
+首项出现在$\order{\alpha_s^2}$，色因子为$C_FC_A$（\cref{prop:jets-ngl}）。}
+\label{fig:jets-ngl}
+\end{figure}
+%%% END fig:jets-ngl
+
+\begin{proposition}[非全局对数的存在 \tagR]\label{prop:jets-ngl}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+在 $\order{\as^2}$、领头对数精度上：设推力轴把 $e^+e^-\to q\bar q+X$ 的事例分成含夸克的半球 R 与含反夸克的半球 L，只测量 R 的半球质量 $\rho=M_{\rm R}^2/Q^2$，L 不受约束，$L\equiv\ln(1/\rho)$。
+把累积分布写成 $\Sigma(\rho)=\Sigma_{\rm P}(\rho)\,S(\rho)$，$\Sigma_{\rm P}$ 由主偶极子 $q\bar q$ 的独立软—共线发射生成（通常的全局型重求和）。则
+\begin{equation}\label{eq:jets-S2}
+S(\rho)=1+S_2\Big(\frac{\as L}{2\pi}\Big)^2+\order{\as^3L^3},\qquad S_2=-C_FC_A\,\frac{\pi^2}{3}:
+\end{equation}
+非全局对数从 $\order{\as^2}$ 开始，色因子为 $C_FC_A$，系数含 $\pi^2$；它来自双胶子矩阵元中较硬胶子在 L、较软胶子在 R 的关联部分，该构型在全局可观测量（如重半球质量）中相消。
+若改为测量 R 中软辐射的总能量 $E_{\rm R}<E_{\rm cut}$（$L=\ln\frac{Q}{2E_{\rm cut}}$），$S_2$ 不变，只改变 $\order{\as^2L}$ 项。（本命题只涉及部分子截面。）
+\uses{def:jets-algorithms,prop:qcd-soft-collinear-limits}
+\end{proposition}
+
+\begin{proofsketch}
+记 $p_a$（$q$，沿 $+z$）、$p_b$（$\bar q$），$W_{ij}(k)\equiv\frac{p_i\cdot p_j}{(p_i\cdot k)(p_j\cdot k)}$。
+(1) 由\cref{prop:qcd-soft-collinear-limits}(a)，色单态 $q\bar q$ 的单胶子发射因子为 $2g^2C_FW_{ab}(k)$，乘以相空间 $\frac{E\,\dd E\,\dd\Omega}{16\pi^3}$ 得 $\dd P_1=\frac{\as}{2\pi^2}C_FW_{ab}(k)E\,\dd E\,\dd\Omega$。
+(2) 能量强序（$E_2\ll E_1$）时把同一软极限用于含 $k_1$ 的振幅：$q,\bar q,k_1$ 组成色单态，$\bm T_a+\bm T_1+\bm T_b=0$，故 $-2\bm T_a\cdot\bm T_1=-2\bm T_1\cdot\bm T_b=C_A$、$-2\bm T_a\cdot\bm T_b=2C_F-C_A$，
+\[
+\dd P_2=\Big(\frac{\as}{2\pi^2}\Big)^2C_FW_{ab}(1)\Big[C_FW_{ab}(2)+\frac{C_A}{2}\big(W_{a1}(2)+W_{1b}(2)-W_{ab}(2)\big)\Big]E_1\dd E_1\dd\Omega_1\,E_2\dd E_2\dd\Omega_2 ;
+\]
+$C_F^2$ 项是独立发射，属于 $\Sigma_{\rm P}$，$C_FC_A$ 项是关联发射。(3) 固定实胶子 $k_1\in$ L，不受约束的 $k_2$ 的实辐射与虚修正之和为零；否决去掉 $k_2\in$ R、$E_2>E_{\rm cut}$ 的实辐射而保留其虚修正；
+$k_1\in$ R 已计入 $\Sigma_{\rm P}$，$k_1,k_2$ 同在 L 时实—虚相消。故 $S-1\supset-\int_{k_1\in{\rm L},\,k_2\in{\rm R},\,E_1>E_2>E_{\rm cut}}\dd P_2^{C_FC_A}$。
+(4) $\int_{E_{\rm cut}}^{Q/2}\frac{\dd E_2}{E_2}\int_{E_2}^{Q/2}\frac{\dd E_1}{E_1}=\frac{L^2}{2}$；质量否决下 $\rho=\frac{E_2}{Q}(1-\cos\theta_2)$ 只把 $L$ 移动有限量 $\ln\frac{1-\cos\theta_2}{2}$，不改变 $L^2$ 的系数。
+(5) 以快度 $\eta=\operatorname{artanh}\cos\theta$ 与方位角 $\phi$，直接计算得 $E_1^2W_{ab}(1)\dd\Omega_1=2\,\dd\eta_1\dd\phi_1$ 与
+\[
+E_2^2\big[W_{a1}+W_{1b}-W_{ab}\big](2)\,\dd\Omega_2=\frac{2\cos(\phi_1-\phi_2)}{\cosh(\eta_1-\eta_2)-\cos(\phi_1-\phi_2)}\,\dd\eta_2\dd\phi_2 ;
+\]
+由 $\int_0^{2\pi}\frac{\cos\phi\,\dd\phi}{A-\cos\phi}=2\pi(\frac{A}{\sqrt{A^2-1}}-1)$，方位角积分给出 $4\pi^2(\coth|\eta_1-\eta_2|-1)$；在 $\eta_1<0<\eta_2$ 上快度差为 $\Delta$ 的构型测度是 $\Delta$，
+$\int_0^\infty\Delta(\coth\Delta-1)\dd\Delta=\sum_{n\ge1}2\int_0^\infty\Delta\,\ee^{-2n\Delta}\dd\Delta=\sum_{n\ge1}\frac{1}{2n^2}=\frac{\pi^2}{12}$。
+(6) 合成：$S-1\supset-\big(\frac{\as}{2\pi^2}\big)^2\frac{C_FC_A}{2}(2\cdot2\cdot4\pi^2)\frac{\pi^2}{12}\frac{L^2}{2}=-\frac{C_FC_A}{12}\as^2L^2=-C_FC_A\frac{\pi^2}{3}(\frac{\as L}{2\pi})^2$，
+与\cite[式~(11)]{DasguptaSalam2001}一致（其方位角平均后的角度积分为 $\frac{\pi^2}{6}=2\times\frac{\pi^2}{12}$）。
+$\as^2L^2$ 项只来自两胶子都软且能量强序的区域，其余区域至多给出 $\as^2L$。完整计算及与 $\order{\as^2}$ 数值结果的比较见\cite[第~2、4~节]{DasguptaSalam2001}。
+\end{proofsketch}
+
+\begin{theorem}[BMS 方程 \tagA]\label{thm:jets-bms}
+在领头（单）对数精度与大 $N_c$ 极限下，考虑 $e^+e^-$ 湮灭中流入远离两喷注的角区域 $C_{\rm out}$ 的能量，$C_{\rm in}$ 为其补集（含两喷注方向）。对方向为 $a$、$b$ 的色偶极子，
+记 $G_{ab}(\Delta)$ 为偶极子及其全部软辐射流入 $C_{\rm out}$ 的能量小于 $E_0$ 的概率，$\Delta=\frac{N_c}{\pi}\int_{E_0}^{E}\frac{\dd\omega}{\omega}\as(\omega)$（固定耦合时 $\frac{N_c\as}{\pi}\ln\frac{E}{E_0}$，$E\simeq Q/2$）。则
+\begin{equation}\label{eq:jets-bms}
+\partial_\Delta G_{ab}(\Delta)=-r_{ab}\,G_{ab}(\Delta)+\int_{C_{\rm in}}\frac{\dd\Omega_k}{4\pi}\,w_{ab}(k)\big[G_{ak}(\Delta)\,G_{kb}(\Delta)-G_{ab}(\Delta)\big],
+\end{equation}
+$G_{ab}(0)=1$，其中 $w_{ab}(k)=\frac{1-\cos\theta_{ab}}{(1-\cos\theta_{ak})(1-\cos\theta_{kb})}$，$r_{ab}=\int_{C_{\rm out}}\frac{\dd\Omega_k}{4\pi}w_{ab}(k)$；能量流的累积分布是 $G_{q\bar q}(\Delta)$。
+写成 $G_{ab}=\ee^{-r_{ab}\Delta}g_{ab}$，$\ee^{-r_{ab}\Delta}$ 是主偶极子的韧致辐射 Sudakov 因子，$g_{ab}$ 重求和全部非全局（单）对数。（本定理只涉及部分子截面。）
+% errtype: E-S
+\uses{prop:jets-ngl,prop:qcd-soft-collinear-limits}
+\end{theorem}
+
+\begin{proofsketch}
+(1) 大 $N_c$、能量强序下，$n$ 个软胶子的辐射概率是偶极子天线之积\cite[式~(3.3)、(3.4)]{Banfi:2002hw}：每次发射把偶极子 $(a,b)$ 分裂为 $(a,k)$、$(k,b)$，概率为 $\frac{N_c\as}{\pi}\frac{\dd\omega}{\omega}\frac{\dd\Omega_k}{4\pi}w_{ab}(k)$（\cref{prop:jets-ngl}证明第 (1)、(2) 步在 $C_F\to N_c/2$ 时对每个偶极子的形式）。
+(2) 追踪最硬的发射 $k$：$k\in C_{\rm out}$（能量 $>E_0$）时事例被否决；$k\in C_{\rm in}$ 时两个子偶极子此后独立演化（大 $N_c$），给出 $G_{ak}G_{kb}$；虚修正给出 $-G_{ab}\int\frac{\dd\Omega_k}{4\pi}w_{ab}$，
+其 $C_{\rm out}$ 部分即 $-r_{ab}G_{ab}$。对 $\ln E$ 求导，并注意单对数精度下 $G$ 只经由 $\Delta$ 依赖 $E$、$E_0$，即得\cref{eq:jets-bms}。
+(3) $k\to a$ 时 $G_{ak}\to1$、$G_{kb}\to G_{ab}$，方括号为零，抵消 $w_{ab}$ 的共线奇异性；$C_{\rm out}$ 不含 $a,b$，$r_{ab}$ 有限：不出现共线对数，领头项是单对数。
+(4) 二阶检验：$g_{ab}$ 满足把 $G_{ak}G_{kb}$ 换成 $\ee^{-\Delta(r_{ak}+r_{kb}-r_{ab})}g_{ak}g_{kb}$ 的方程，展开得
+$g_{ab}=1-\frac{\Delta^2}{2}\int_{C_{\rm in}}\frac{\dd\Omega_k}{4\pi}w_{ab}(k)\int_{C_{\rm out}}\frac{\dd\Omega_q}{4\pi}[w_{ak}+w_{kb}-w_{ab}](q)+\order{\Delta^3}$，其角度积分正是\cref{prop:jets-ngl}证明第 (5) 步的积分。
+半球几何给出 $g=1-\frac{\pi^2}{24}\Delta^2$（即\cref{eq:jets-S2}在 $C_FC_A\to N_c^2/2$ 时的值）；对称快度片 $|\eta|<\eta_{\rm in}$ 给出
+$1-g=\Delta^2[\frac{\pi^2}{12}-\frac12\mathrm{Li}_2(\ee^{-4\eta_{\rm in}})]$，$\ee^{-\eta_{\rm in}}=\tan\frac{\theta_{\rm in}}{2}$，与\cite[式~(5.5)]{Banfi:2002hw}一致——非全局对数是\emph{边界效应}。完整推导见\cite[第~4~节]{Banfi:2002hw}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}
+本定理只在领头（单）对数精度与大 $N_c$ 下成立。最弱的一步是“领头单对数恰由能量强序的软发射给出，且在每一阶如此”：这是全阶论证而非定理，幂次计数是标度陈述（E-S 型）；
+耦合常数的标度在这一精度内不能确定，Banfi、Marchesini 与 Smye 指出须由更精细的分析固定为相对偶极子的横动量\cite[第~4~节]{Banfi:2002hw}。
+有限 $N_c$ 时偶极子不再独立演化（Weigert 的推广，据其摘要与小 $x$ 物理的 JIMWLK 方程形式相似\cite{Weigert:2003mm}，见\cref{prop:jets-ngl-beyond}）；
+与 BFKL、Balitsky--JIMWLK 演化的关系见\cite{Caron-Huot:2015bja}（据其摘要，经共形变换后颜色密度矩阵的演化等价于激波散射的 Regge 演化）。升级途径：把“领头对数精度”写成对所有阶成立的余项估计并证明之。
+
+\begin{proposition}[超出领头对数与有限 $N_c$ \tagP]\label{prop:jets-ngl-beyond}
+在有限 $N_c$ 或超出领头对数精度时，$e^+e^-$ 非全局可观测量的非全局对数只有部分的与数值的结果：(a) 有限 $N_c$ 的领头对数重求和由 Weigert 的演化方程给出\cite{Weigert:2003mm}，
+其 Langevin 表述已被数值求解\cite{Hatta:2013iba}；(b) $\order{\as^2}$ 的领头非全局系数是精确的（\cref{prop:jets-ngl}），与精确的 $\order{\as^2}$ 数值计算相符\cite[第~4~节]{DasguptaSalam2001}，
+更高阶只有部分系数；(c) 次领头对数的完整重求和只在大 $N_c$ 下完成。（本命题只涉及部分子截面。）
+\uses{thm:jets-bms,prop:jets-ngl}
+\end{proposition}
+
+\paragraph{地位与缺口。}
+[P] 指有限 $N_c$ 与固定阶的结果：有限 $N_c$ 的领头对数结果是数值的（据\cite{Hatta:2013iba}的摘要，与大 $N_c$ 平均场结果接近，但逐事例涨落很大）；据我们截至 2026 年 10 月对本书所列文献的了解，没有解析解。
+大 $N_c$ 下的次领头对数重求和是另一个范围更窄的前沿陈述\cref{prop:front-ngl}（全阶论证，[A]；前向指引），二者互不重叠。证据类型：数值解与显式固定阶计算。
+升级途径：全色次领头对数重求和及其全阶论证。
+
+\begin{theorem}[喷注过程的有效场论因子化 \tagA]\label{thm:jets-ngl-factorization}
+考虑 $e^+e^-$ 中以推力轴为锥轴的 Sterman--Weinberg 型锥喷注截面 $\sigma(\beta,\delta)$：取推力轴为 $+z$ 轴，无质量粒子 $p$ 按 $p^-<\delta^2p^+$ 或 $p^+<\delta^2p^-$ 归入两个锥
+（锥的半张角为 $2\arctan\delta$），锥外总能量 $2E_{\rm out}<\beta Q$，$\beta\ll1$（$\beta=2\epsilon$，比较\cref{def:jets-algorithms}(a)），$\delta=\order1$（宽角喷注）。在 $\beta$ 的领头幂次，
+\begin{equation}\label{eq:jets-bnrs}
+\begin{gathered}
+\sigma(\beta,\delta)=\sum_{m\ge2}\big\langle\mathcal H_m(\{n\},Q,\delta,\mu)\otimes\mathcal S_m(\{n\},Q\beta,\delta,\mu)\big\rangle,\\
+\mathcal S_m=\sum_{X_s}\langle0|S_1^\dagger\cdots S_m^\dagger|X_s\rangle\langle X_s|S_1\cdots S_m|0\rangle\,\Theta\big(Q\beta-2E_{\rm out}(X_s)\big),
+\end{gathered}
+\end{equation}
+% VF-FRO-14
+其中 $\{n\}$ 是锥内 $m$ 个硬部分子的方向，$S_i=W[\infty n_i,0]$ 是沿 $n_i$ 的未来指向 Wilson 线（\cref{def:prelim-wilson}），取部分子 $i$ 的色表示；$\mathcal H_m$ 是 $m$ 部分子振幅的平方
+在固定方向下对能量积分、带锥内约束所得的硬函数（色空间矩阵），$\otimes$ 表示对这些方向积分（$\prod_i\int\frac{\dd\Omega(n_i)}{4\pi}$），$\langle\cdots\rangle=\frac{1}{N_c}\Trc(\cdots)$。两类函数满足多重度空间的矩阵重整化群方程
+\begin{equation}\label{eq:jets-bnrs-rg}
+\frac{\dd}{\dd\ln\mu}\mathcal H_m=-\sum_{l=2}^{m}\mathcal H_l\,\Gamma^H_{lm},\qquad
+\frac{\dd}{\dd\ln\mu}\mathcal S_l=\sum_{m\ge l}\Gamma^H_{lm}\,\hat\otimes\,\mathcal S_m ,
+\end{equation}
+其中 $\hat\otimes$ 表示对 $\mathcal S_m$ 比 $\mathcal S_l$ 多出的 $m-l$ 个方向积分；其解重求和全部非全局对数。窄锥（$\delta\ll1$）还需要同时软而共线的（coft）模式。非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+% errtype: E-S
+\uses{thm:scet-thrust,prop:jets-ngl,asm:intro-bridge,def:prelim-wilson,def:jets-algorithms}
+\end{theorem}
+
+\begin{proofsketch}
+（$\mathcal S_m$ 在 $(g,A)\to(-g,-A)$ 下不变，与原文\cite{Becher:2016mmh}的 $g$ 符号约定无关。）
+(1) $\delta=\order1$ 时只有硬（$p\sim Q$）与软（$p\sim Q\beta$）模式；软模式只感受硬部分子的方向与色荷，经\cref{thm:scet-thrust}的退耦论证（推广到 $m$ 个方向）通过 Wilson 线耦合。
+(2) 测量只约束锥外的软辐射，锥内任意多个硬部分子都贡献领头幂次，软函数须带全部 $m$ 条 Wilson 线——非全局对数的来源（\cref{prop:jets-ngl}的 $k_1$ 即第三条线）。
+(3) 截面与 $\mu$ 无关，而实发射只增加多重度，故 $\overline{\mathrm{MS}}$ 重整化的反常维数 $\Gamma^H_{lm}$ 是上三角矩阵（$l\le m$），即\cref{eq:jets-bnrs-rg}。
+(4) $e^+e^-$ 中的线都是出射的，与\cref{thm:scet-thrust}相同，没有 Glauber 钳夹。第 (1)、(4) 步只给出 E-S 型陈述。完整论证见\cite[第~2~节]{Becher:2016mmh}与\cite{Becher:2015hka}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}
+这是有效场论内部的全阶论证（[A]），继承\cref{thm:scet-thrust}（全阶论证，[A]）的前提：模式完备性（即区域完备性，\cref{asm:intro-bridge}(Br1) 与\cref{asm:appN-envelope}）、
+零箱减除的一致性与 Glauber 模式的缺席（$e^+e^-$ 中成立）。证据：两圈的全部对数增强项与数值定阶计算一致\cite{Becher:2016mmh}；单圈再现推力轴锥喷注的全 QCD 结果，
+所引原始 Sterman--Weinberg 喷注的常数 $c_0=10-\frac{4\pi^2}{3}$ 与\cref{prop:jets-sw}一致\cite[式~(1)]{Becher:2015hka}；最低阶重整化群方程在大 $N_c$ 下等价于 BMS 方程（\cref{thm:jets-bms}）\cite[第~5~节]{Becher:2016mmh}。升级途径：对多 Wilson 线软函数证明区域完备性——与\cref{thm:scet-thrust}所需的是同一个缺口。

@@ -1,0 +1,42 @@
+%%% BEGIN fig:power-borel-plane
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1.3cm,y=1cm,
+  fd2 pole/.pic={\draw[line width=1.05pt,line cap=round] (-0.09,-0.09)--(0.09,0.09) (-0.09,0.09)--(0.09,-0.09);},
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 contour/.style={draw=#1,line width=1.0pt,postaction={decorate,decoration={markings,
+      mark=at position 0.5 with {\arrow{Stealth[length=5.5pt,width=4.6pt]}}}}},
+  fd2 pointer/.style={draw=#1,line width=0.45pt,-{Stealth[length=3.5pt,width=3pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % axes
+  \draw[fd2 ax] (-3.75,0) -- (6.05,0) node[right] {$\Real u$};
+  \draw[fd2 ax] (0,-0.75) -- (0,1.75) node[left] {$\Imag u$};
+  \foreach \u in {-3,-2,-1,1,2,3,4,5} \draw[gray!60!black,line width=0.4pt] (\u,-0.05) -- (\u,0.05);
+  \foreach \u in {-3,-2,-1,1,2,3,4,5} \node[fd2 note] at (\u,-0.5) {$\u$};
+  \node[fd2 note,anchor=north east] at (-0.03,-0.04) {$0$};
+  % Borel integration paths above and below the positive axis
+  \draw[fd2 contour=blue!60!black] (0,0) .. controls (0.3,0.22) and (0.55,0.24) .. (0.9,0.24) -- (5.5,0.24);
+  \draw[fd2 contour=blue!60!black] (0,0) .. controls (0.3,-0.22) and (0.55,-0.24) .. (0.9,-0.24) -- (5.5,-0.24);
+  \node[fd2 lab,text=blue!50!black,anchor=west] at (5.5,0.28) {$C_+$};
+  \node[fd2 lab,text=blue!50!black,anchor=west] at (5.5,-0.28) {$C_-$};
+  % IR renormalons (u = 2,3,...), UV renormalons (u = -1,-2,...), no pole at u = 1
+  \foreach \u in {2,3,4,5} \pic[red!70!black] at (\u,0) {fd2 pole};
+  \foreach \u in {-1,-2,-3} \pic[gray!55!black] at (\u,0) {fd2 pole};
+  \draw[line width=0.9pt,fill=white] (1,0) circle[radius=0.085];
+  % annotations
+  \node[fd2 note,text=red!60!black] at (3.5,0.72) {红外重整化子：$u=2,3,\dots$};
+  \node[fd2 note,align=center,text=gray!40!black] at (-1.95,0.82) {紫外重整化子：$u=-1,-2,\dots$\\（符号交错，不在积分路径上）};
+  \draw[fd2 pointer=gray!60!black] (0.78,-1.02) -- (0.97,-0.12);
+  \node[fd2 note,anchor=north east] at (0.95,-0.98) {无 $u=1$ 极点：不存在量纲为 2 的规范不变算符};
+  \draw[fd2 pointer=red!60!black] (2.12,-1.0) -- (2.02,-0.12);
+  \node[fd2 note,align=left,anchor=north west,text=red!50!black] at (1.75,-0.96) {$u=2$：沿 $C_+$ 与 $C_-$ 积分之差 $\propto(\Lambda^2/Q^2)^2$，\\对应 OPE 中的凝聚项 $\langle\frac{\alpha_s}{\pi}G^2\rangle/Q^4$};
+  \node[fd2 lab] at (1.15,-2.7) {$D(Q^2)=\displaystyle\int_0^\infty\!\dd t\,\ee^{-t/\alpha_s(Q)}B[D](t)$，\quad $u=\dfrac{\beta_0t}{4\pi}$，\quad $\ee^{-t/\alpha_s(Q)}=\Big(\dfrac{\Lambda^2}{Q^2}\Big)^{u}$};
+\end{tikzpicture}
+\caption{大 $\beta_0$（泡链）近似下 Adler 函数 $D(Q^2)$ 的 Borel 平面（\cref{prop:power-adler-large-beta0}，部分 [P]；Borel 变换按\cref{def:power-borel}：$R=\sum_nr_n\alpha_s^{n+1}$，$B[R](t)=\sum_nr_nt^n/n!$，$u=\beta_0t/(4\pi)$，单圈跑动下 $\ee^{-t/\alpha_s(Q)}=(\Lambda^2/Q^2)^u$）。
+红外重整化子极点位于正实轴 $u=2,3,\dots$（红叉），使沿正实轴的 Borel 积分不确定：绕到极点上方（$C_+$）或下方（$C_-$）的两种积分之差在 $u=u_0$ 处正比于 $(\Lambda^2/Q^2)^{u_0}$。
+$u=1$ 处没有极点（空心圆），这与不存在量纲为 2 的规范不变算符相一致；$u=2$ 的极点与 OPE 中的胶子凝聚项 $\langle\frac{\alpha_s}{\pi}G^2\rangle/Q^4$ 相对应。紫外重整化子位于 $u=-1,-2,\dots$（灰叉）。
+只有大 $\beta_0$ 极限中的这一结构是确立的；红外重整化子与高扭度之间的一般对应是猜想（\cref{conj:power-renormalon-ht}，[C]）。}
+\label{fig:power-borel-plane}
+\end{figure}
+%%% END fig:power-borel-plane

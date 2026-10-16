@@ -1,0 +1,64 @@
+%%% BEGIN fig:disall-ladder-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb kern/.style={font=\scriptsize,inner sep=1pt,text=gray!25!black},
+  fb R2/.style={region,draw=blue!60!black,line width=0.7pt},
+  fb R1/.style={region,draw=orange!75!black,line width=0.7pt},
+  fb RH/.style={region,draw=gray!55!black,line width=0.7pt}]
+  \def\fbX{1.2}
+  % ======================= the two-rung ladder (cut graph; amplitude on the left) =======================
+  % left rail (amplitude): p -> rung K_1 -> k_1 -> rung K_2 -> k_2 -> photon vertex
+  \draw[quark] (-\fbX,0) -- (-\fbX,1.1);
+  \draw[quark] (-\fbX,1.1) -- (-\fbX,2.3);
+  \draw[quark] (-\fbX,2.3) -- (-\fbX,3.5);
+  % right rail (conjugate amplitude)
+  \draw[quark] (\fbX,3.5) -- (\fbX,2.3);
+  \draw[quark] (\fbX,2.3) -- (\fbX,1.1);
+  \draw[quark] (\fbX,1.1) -- (\fbX,0);
+  % struck quark and photons (H_0)
+  \draw[quark=0.25] (-\fbX,3.5) -- (\fbX,3.5);
+  \draw[photon] (-1.62,4.72) -- (-\fbX,3.5);
+  \draw[photon] (\fbX,3.5) -- (1.62,4.72);
+  % rungs: real gluons crossing the cut
+  \foreach \y in {1.1,2.3} {
+    \draw[gluon] (-\fbX,\y) -- (\fbX,\y);
+    \node[vertex] at (-\fbX,\y) {}; \node[vertex] at (\fbX,\y) {};}
+  \node[vertex] at (-\fbX,3.5) {}; \node[vertex] at (\fbX,3.5) {};
+  \draw[cut] (0,-0.35) -- (0,4.75);
+  % momenta and kernels
+  \path[mom'={$k_1$},mom sep=0.25cm,mom length=0.45cm] (-\fbX,1.1) -- (-\fbX,2.3);
+  \path[mom'={$k_2$},mom sep=0.25cm,mom length=0.45cm,mom pos=0.42] (-\fbX,2.3) -- (-\fbX,3.5);
+  \node[fb lab,anchor=north] at (-\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north] at (\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north,text=gray!30!black] at (0,-0.42) {$p^2=-m^2$};
+  \node[fb lab,anchor=south east] at (-1.62,4.72) {$q$};
+  \node[fb kern,anchor=south] at (0.6,1.25) {$K_1$};
+  \node[fb kern,anchor=south] at (0.6,2.45) {$K_2$};
+  \node[fb kern,anchor=south] at (-0.6,3.53) {$\mathsf H_0$};
+  % nested hard subgraphs of the three regions
+  \draw[fb R2] (-1.55,3.24) rectangle (1.55,3.98);
+  \draw[fb R1] (-1.78,2.04) rectangle (1.78,4.14);
+  \draw[fb RH] (-2.01,0.84) rectangle (2.01,4.3);
+  \node[font=\scriptsize,text=blue!55!black,anchor=south,inner sep=1pt] at (0.72,3.25) {$R_2$};
+  \node[font=\scriptsize,text=orange!65!black,anchor=south east,inner sep=1pt] at (1.76,2.06) {$R_1$};
+  \node[font=\scriptsize,text=gray!35!black,anchor=south east,inner sep=1pt] at (1.99,0.86) {$R_H$};
+  % ======================= the regions and the grouped remainder =======================
+  \node[anchor=north west,align=left,font=\footnotesize] (T) at (2.65,4.3) {%
+    区域链 $R_2<R_1<R_H$（虚线框为硬子图）：\\[3pt]
+    {\color{blue!55!black}$R_2$}：两级横档都与 $p$ 共线；\\[1pt]
+    {\color{orange!65!black}$R_1$}：上级横档为硬，下级横档共线；\\[1pt]
+    {\color{gray!35!black}$R_H$}：全部为硬——给出两圈系数函数。\\[6pt]
+    分组余项：\\[2pt]
+    \quad$r=(1-T_H)(1-T_1)(1-T_2)\,\Gamma=\Delta\mathsf H_0\,\Delta K_2\,\Delta K_1$};
+  \node[anchor=north west,align=left,font=\footnotesize,text width=6.1cm,draw=red!50!black,line width=0.5pt,
+        rounded corners=2pt,fill=red!3,inner sep=4pt] at ($(T.south west)+(0.05,-0.2)$)
+    {单个链项 $T_H(1-T_2)\Gamma$ 在 $U_{R_2}$ 上不可积（在 $k_1\parallel\hat p$ 处有无质量共线奇点），因而分组是必要的。};
+\end{tikzpicture}
+\caption{DIS 两级梯形图（外夸克离壳 $p^2=-m^2$，内线无质量；竖直红色虚线为末态割线，左侧为振幅）的三个区域 $R_2<R_1<R_H$ 与分组余项。
+$\Gamma=\mathsf H_0(k_2)\,K_2(k_2,k_1)\,K_1(k_1,p)$，$\mathsf H_0$ 为含两个光子顶点的顶端夸克线，$K_2$、$K_1$ 为上、下两级横档；虚线框依次为 $R_2$、$R_1$、$R_H$ 的硬子图。
+分组余项 $r=\Delta\mathsf H_0\Delta K_2\Delta K_1$（$\Delta$ 表示相应因子减去其共线近似）；包含全硬区域 $R_H$ 才能得到两圈系数函数（\cref{ex:disall-ladder}）。}
+\label{fig:disall-ladder-regions}
+\end{figure}
+%%% END fig:disall-ladder-regions

@@ -1,0 +1,132 @@
+% =====================================================================
+%  appC_dimreg.tex —— 附录 C  维数正规化积分与相空间（writer W06）
+%  公式核对脚本：writing/work/W06/w06_appC_checks.py、w06_twoloop_cut.py、w06_twoloop_diagrams.py、
+%  w06_ee_oneloop.py（日志 writing/work/W06/logs/）
+% =====================================================================
+\chapter{维数正规化积分与相空间}\label{app:appC}
+
+本附录给出正文反复使用的维数正规化工具及其完整证明：单圈主公式与无标度积分（\cref{lem:prelim-scaleless}的解析延拓细节），单圈两点积分与张量公式（\cref{lem:appC-bubble}），两圈传播子型积分的三角规则（\cref{lem:appC-ibp}），$D$ 维相空间（\cref{lem:appC-phase-space}），以及精确到 $\varepsilon$ 一切阶的无质量夸克形状因子（\cref{sec:appC-formfactor}）。它们是数学或固定阶的计算，不带严格性标签，用于\cref{prop:sudakov-oneloop,prop:ee-oneloop,prop:ee-twoloop,prop:disall-nlo,prop:dy-nlo}。约定：$D=4-2\varepsilon$，常规维数正规化（$\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}$，$g^\mu{}_\mu=D$，$\TrD\mathbb 1=4$），$g_0^2=4\pi\as\mu_0^{2\varepsilon}$，$c_\Gamma\equiv\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)/\Gamma(1-2\varepsilon)$。
+
+% ---------------------------------------------------------------------
+\section{$\overline{\rm MS}$ 约定与 $D$ 维劈裂核}\label{sec:appC-msbar}
+
+按\cref{def:prelim-msbar}，$g_0^2=4\pi\as(\mu)\mu^{2\varepsilon}S_\varepsilon^{-1}Z_g^2$，$S_\varepsilon=(4\pi)^\varepsilon\ee^{-\varepsilon\gamma_E}$：单圈结果中的 $(4\pi\mu_0^2)^\varepsilon$ 换成 $\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}$。由 $\ln\Gamma(1+x)=-\gamma_Ex+\sum_{k\ge2}\frac{(-1)^k\zeta_k}kx^k$，
+\begin{equation}\label{eq:appC-expansions}
+\ee^{\varepsilon\gamma_E}c_\Gamma=1-\frac{\pi^2}{12}\varepsilon^2-\frac73\zeta_3\varepsilon^3+\order{\varepsilon^4},\qquad
+\Gamma(1-\varepsilon)\,c_\Gamma=1+\order{\varepsilon^3}.
+\end{equation}
+
+\begin{remark}[$S_\varepsilon$ 约定的影响]\label{rem:appC-Seps}
+Collins\cite{Collins2011}采用 $S^{\rm C}_\varepsilon=(4\pi)^\varepsilon/\Gamma(1-\varepsilon)$，两者之比为 $S_\varepsilon/S^{\rm C}_\varepsilon=\ee^{-\varepsilon\gamma_E}\Gamma(1-\varepsilon)=1+\frac{\pi^2}{12}\varepsilon^2+\order{\varepsilon^3}$。单极点的减除不受影响，但凡减除 $1/\varepsilon^2$ 双极点之处，有限常数相差 $\frac{\pi^2}{12}\times$（双极点系数）。例如单圈形状因子在 $\mu^2=Q^2$ 处的方括号，用本书的 $S_\varepsilon$ 是 $[-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\zeta_2]$，用 $S^{\rm C}_\varepsilon$ 是 $[-\frac2{\varepsilon^2}-\frac3\varepsilon-8]$（\cref{eq:appC-expansions}第二式），差 $-2\cdot\frac{\pi^2}{12}=-\zeta_2$。TMD 的硬因子与小 $b$ 系数中的常数因此相差 $\pi^2$ 的倍数（\cref{rem:tmd-scheme-constants}），这些差别在截面中相消：物理截面与 $S_\varepsilon$ 的选取无关。引用 Collins 的常数时必须换算。
+\end{remark}
+
+\begin{remark}[$D$ 维劈裂核与平均约定]\label{rem:appC-d-kernels}
+在 CDR 中对胶子的 $D-2=2(1-\varepsilon)$ 个物理极化、夸克的 $2$ 个自旋态取平均，对色取 $\frac1{N_c^2-1}$、$\frac1{N_c}$ 平均（\cref{def:prelim-dr-conventions}）。对母部分子的自旋取平均后，末态劈裂 $i\to jk$ 的共线极限为 $|\mathcal M_{n+1}|^2\to\frac{8\pi\as\mu_0^{2\varepsilon}}{s_{jk}}\hat P(z)|\mathcal M_n|^2$（$z$ 为部分子 $j$ 的动量分数；母部分子为胶子而不对其极化平均时，还有方位角关联），其中
+\begin{equation}\label{eq:appC-kernels}
+\begin{gathered}
+\hat P_{qq}=C_F\Big[\frac{1+z^2}{1-z}-\varepsilon(1-z)\Big],\qquad
+\hat P_{gq}=C_F\Big[\frac{1+(1-z)^2}z-\varepsilon z\Big],\\
+\hat P_{qg}=T_F\Big[1-\frac{2z(1-z)}{1-\varepsilon}\Big],\qquad
+\hat P_{gg}=2C_A\Big[\frac z{1-z}+\frac{1-z}z+z(1-z)\Big]
+\end{gathered}
+\end{equation}
+% VF-PDF-6 (Catani--Seymour)
+（核的形式与\cite{CataniSeymour1997}一致）。$\hat P_{qq}$ 可由 $e^+e^-$ 的实辐射矩阵元（\cref{prop:ee-oneloop}的证明）读出：$y_{13}\to0$、$y_{12}\to z$、$y_{23}\to1-z$ 时方括号趋于 $y_{13}^{-1}[(1-\varepsilon)(1-z)+\frac{2z}{1-z}]=y_{13}^{-1}\hat P_{qq}/C_F$；$\hat P_{gq}(z)=\hat P_{qq}(1-z)$。$\hat P_{qg}$ 来自 $g\to q\bar q$：用光样方向 $\tilde p$ 与参考矢量 $n$ 的物理极化求和 $d^{\mu\nu}(\tilde p,n)=-g^{\mu\nu}+\frac{\tilde p^\mu n^\nu+n^\mu\tilde p^\nu}{\tilde p\cdot n}$ 与 Sudakov 分解，$\frac1{D-2}d_{\mu\nu}\TrD[\sla p_1\gamma^\mu\sla p_2\gamma^\nu]=4p_1\cdot p_2\big[1-\frac{4z(1-z)}{D-2}\big]$；$\hat P_{gg}$ 由三胶子顶点与物理极化求和同样得到，不含 $\varepsilon$ 项（我们用符号计算核对了四个核及其与 $n$ 无关）。若对初态胶子只按 $2$ 个极化平均，胶子引起的部分子截面乘以 $1-\varepsilon$，共线极点 $-\frac1\varepsilon\hat P_{qg}$ 产生额外有限项 $+P_{qg}=T_F[z^2+(1-z)^2]$，于是 $C_2^g\to C_2^g+P_{qg}$、$\Delta_{qg}\to\Delta_{qg}+P_{qg}$。% VF-CONV-6
+$\frac1{D-2}$ 的平均是本书 $\overline{\rm MS}$ 约定的一部分；这些核用于\cref{prop:pdf-lo-kernels,prop:disall-nlo,prop:dy-nlo}。
+\end{remark}
+
+% ---------------------------------------------------------------------
+\section{单圈与两圈传播子型积分}\label{sec:appC-integrals}
+
+\paragraph{主公式与无标度积分。}对 $\Delta>0$、$\Real a>D/2$，Wick 转动（$k^0=\ii k_E^D$）后用径向积分与 Beta 函数得
+\begin{equation}\label{eq:appC-master}
+\int\frac{\dd^Dk}{\ii\pi^{D/2}}\,\frac{1}{(-k^2+\Delta-\ii0)^a}=\int\frac{\dd^Dk_E}{\pi^{D/2}}\,\frac1{(k_E^2+\Delta)^a}=\frac{\Gamma(a-\frac D2)}{\Gamma(a)}\,\Delta^{\frac D2-a} ,
+\end{equation}
+对 $D$ 解析延拓即定义维数正规化（\cref{def:qcd-dimreg}）。无标度积分为零（\cref{lem:prelim-scaleless}）的确切含义以 $a=2$ 为例：在 $|k_E|=\Lambda$ 处分开，$\int_{|k|<\Lambda}\frac{\dd^Dk_E}{\pi^{D/2}}k_E^{-4}=\frac2{\Gamma(D/2)}\frac{\Lambda^{D-4}}{D-4}$ 只对 $D>4$ 收敛（$\varepsilon_{\rm IR}<0$），$\int_{|k|>\Lambda}$ 给出其负值，只对 $D<4$ 收敛（$\varepsilon_{\rm UV}>0$）；各自延拓后相加得 $\frac{\Lambda^{-2\varepsilon}}{\Gamma(2-\varepsilon)}(\frac1{\varepsilon_{\rm UV}}-\frac1{\varepsilon_{\rm IR}})$，两个 $\varepsilon$ 是同一个数，和为零：它把一个紫外极点与一个红外极点等同起来。
+
+\begin{lemma}[单圈两点函数]\label{lem:appC-bubble}
+(a)~对欧氏外动量 $q$（$Q^2=-q^2>0$），
+\begin{equation}\label{eq:appC-bubble}
+\begin{gathered}
+\int\frac{\dd^Dk}{\ii\pi^{D/2}}\,\frac{1}{(-k^2-\ii0)^a\big(-(k-q)^2-\ii0\big)^b}=(-q^2-\ii0)^{\frac D2-a-b}\,G(a,b),\\
+G(a,b)=\frac{\Gamma(a+b-\frac D2)\,\Gamma(\frac D2-a)\,\Gamma(\frac D2-b)}{\Gamma(a)\,\Gamma(b)\,\Gamma(D-a-b)},
+\end{gathered}
+\end{equation}
+并解析延拓到 $q^2\in\mathbb C\setminus[0,\infty)$；$a$ 或 $b$ 为非正整数时积分为零。$G(1,1)=\frac{\Gamma(\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(2-2\varepsilon)}=\frac{c_\Gamma}{\varepsilon(1-2\varepsilon)}$，$G(1+\varepsilon,1)=\frac{\Gamma(2\varepsilon)\Gamma(1-2\varepsilon)\Gamma(1-\varepsilon)}{\Gamma(1+\varepsilon)\Gamma(2-3\varepsilon)}$。
+(b)~（张量公式，欧氏度规）
+\begin{equation}\label{eq:appC-tensor}
+\int\frac{\dd^Dk_E}{\pi^{D/2}}\frac{k^{\mu_1}\cdots k^{\mu_m}}{(k^2)^\alpha((p-k)^2)^\beta}=\sum_{t=0}^{\lfloor m/2\rfloor}A_t\,(p^2)^{\frac D2+t-\alpha-\beta}\{g^tp^{m-2t}\}^{\mu_1\cdots\mu_m},
+\end{equation}
+$A_t=\frac{\Gamma(\alpha+\beta-\frac D2-t)\Gamma(\frac D2-\alpha+m-t)\Gamma(\frac D2-\beta+t)}{2^t\Gamma(\alpha)\Gamma(\beta)\Gamma(D-\alpha-\beta+m)}$，$\{g^tp^{m-2t}\}$ 是 $t$ 个度规与 $m-2t$ 个 $p$ 组成的全部 $\frac{m!}{2^tt!(m-2t)!}$ 个不同对称项之和。
+\uses{def:prelim-dr-conventions}
+\end{lemma}
+\begin{proof}
+(a)~用 Feynman 参数 $\frac1{A^aB^b}=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\int_0^1\dd x\frac{x^{a-1}(1-x)^{b-1}}{[xA+(1-x)B]^{a+b}}$（$A=k_E^2$，$B=(k-q)_E^2$），平移后分母为 $k_E^2+x(1-x)Q^2$，由\cref{eq:appC-master}得 $\frac{\Gamma(a+b-\frac D2)}{\Gamma(a)\Gamma(b)}(Q^2)^{\frac D2-a-b}\int_0^1\dd x\,x^{\frac D2-b-1}(1-x)^{\frac D2-a-1}$，$x$ 积分为 $\frac{\Gamma(\frac D2-b)\Gamma(\frac D2-a)}{\Gamma(D-a-b)}$。Minkowski 形式中参数积分含 $(-q^2x(1-x)-\ii0)^{\frac D2-a-b}$，由 $x(1-x)\ge0$ 在 $q^2\in\mathbb C\setminus[0,\infty)$ 上解析。$1/\Gamma(a)$ 在非正整数处为零。
+(b)~同样平移 $k=l+xp$（$x$ 为 $(p-k)^2$ 的参数），$l$ 的奇次项为零，偶次项用 $l^{\nu_1}\cdots l^{\nu_{2t}}\to\frac{(l^2)^t}{2^t(D/2)_t}\{g^t\}$；由\cref{eq:appC-master}，$\int\frac{\dd^Dl}{\pi^{D/2}}\frac{(l^2)^t}{2^t(D/2)_t(l^2+\Delta)^{\alpha+\beta}}=\frac{\Gamma(\alpha+\beta-\frac D2-t)}{2^t\Gamma(\alpha+\beta)}\Delta^{\frac D2+t-\alpha-\beta}$，$\Delta=x(1-x)p^2$；乘以 $\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{m-2t}$ 后，$x$ 积分为 $\frac{\Gamma(\frac D2-\alpha+m-t)\Gamma(\frac D2-\beta+t)}{\Gamma(D-\alpha-\beta+m)}$，即 $A_t$。我们还对 $m\le4$ 用标量约化（$2k\cdot p=k^2+p^2-(p-k)^2$）核对了\cref{eq:appC-tensor}。
+\end{proof}
+
+\begin{lemma}[分部积分（三角规则）]\label{lem:appC-ibp}
+对 $\hat I(a_1,\dots,a_5)\equiv\int\!\!\int\frac{\dd^Dk\,\dd^Dr}{\pi^D}\prod_{i=1}^5D_i^{-a_i}$（欧氏，$D_1=k^2$，$D_2=(k-q)^2$，$D_3=r^2$，$D_4=(r-q)^2$，$D_5=(k-r)^2$，结果乘以 $(Q^2)^{D-\sum a_i}$），
+\begin{equation}\label{eq:appC-ibp}
+(D-a_1-a_2-2a_5)\,\hat I=a_1\big[\hat I(1^+5^-)-\hat I(1^+3^-)\big]+a_2\big[\hat I(2^+5^-)-\hat I(2^+4^-)\big],
+\end{equation}
+$\hat I(1^+5^-)$ 表示 $a_1\to a_1+1$、$a_5\to a_5-1$，余类推。特别地 $\hat I(1,1,1,1,1)=-\frac1\varepsilon G(1,1)[G(2,1)-G(2,1+\varepsilon)]=6\zeta_3+\order{\varepsilon}$。
+% VF-EE-7 context
+\uses{lem:appC-bubble}
+\end{lemma}
+\begin{proof}
+全导数的积分为零：$\int\dd^Dk\,\partial_\mu[(k-r)^\mu D_1^{-a_1}D_2^{-a_2}D_5^{-a_5}]=0$。由 $\partial_\mu(k-r)^\mu=D$，$2k\cdot(k-r)=D_1+D_5-D_3$，$2(k-q)\cdot(k-r)=D_2+D_5-D_4$，$(k-r)\cdot\partial_kD_5^{-a_5}=-2a_5D_5^{-a_5}$，被积函数为 $[D-a_1\frac{D_1+D_5-D_3}{D_1}-a_2\frac{D_2+D_5-D_4}{D_2}-2a_5]\prod D_i^{-a_i}$，即\cref{eq:appC-ibp}。对 $a=(1,1,1,1,1)$，$D-4=-2\varepsilon$；$\hat I(2,1,1,1,0)=G(2,1)G(1,1)$；$\hat I(2,1,0,1,1)$ 中先做 $r$ 积分 $\int_r\frac1{D_4D_5}=G(1,1)D_2^{-\varepsilon}$，再做 $k$ 积分得 $G(1,1)G(2,1+\varepsilon)$；另两项由 $k\to q-k$、$r\to q-r$ 的对称性相同。故 $-2\varepsilon\hat I=2G(1,1)[G(2,1)-G(2,1+\varepsilon)]$；方括号是 $\order{\varepsilon}$ 的，展开给出 $6\zeta_3$\cite{ChetyrkinTkachov1981,Tkachov1981}。
+\end{proof}
+三角规则每用一次把 $a_3,a_4,a_5$ 之一减一，故任何正指标的 $\hat I$ 都约化为某个 $a_i\le0$ 的情形，即两个单圈积分之积或嵌套的单圈积分（分子由\cref{lem:appC-bubble}(b) 处理）。这正是\cref{prop:ee-twoloop}的计算方法。
+
+% ---------------------------------------------------------------------
+\section{$D$ 维相空间}\label{sec:appC-phase-space}
+
+\begin{lemma}[$D$ 维相空间]\label{lem:appC-phase-space}
+设总动量 $P$，$P^2=\hat s$，$\dd\Phi_n\equiv\prod_i\frac{\dd^{D-1}p_i}{(2\pi)^{D-1}2E_i}(2\pi)^D\delta^D(P-\sum_ip_i)$。
+(a)~（两体）末态为一个无质量部分子与一个质量平方为 $z\hat s$（$0\le z<1$）的粒子；在质心系中以 $v=\frac12(1-\cos\theta)$ 表示无质量部分子相对于固定轴的极角，并对其余 $D-3$ 个角积分，则
+\begin{equation}\label{eq:appC-PS2}
+\dd\Phi_2=\frac1{8\pi}\Big(\frac{4\pi}{\hat s}\Big)^{\varepsilon}\frac{(1-z)^{1-2\varepsilon}}{\Gamma(1-\varepsilon)}\,\big[v(1-v)\big]^{-\varepsilon}\dd v .
+\end{equation}
+% VF-DY-4
+Drell--Yan 的 $q\bar q\to\gamma^*g$ 取 $z=Q^2/\hat s$，$\hat t=-\hat s(1-z)v$；DIS 的 $\gamma^*q\to qg$ 取 $z=0$，$\hat s=Q^2(1-\hat x)/\hat x$。无质量两体相空间的总体积为 $\Phi_2=\frac1{8\pi}(\frac{4\pi}{\hat s})^\varepsilon\frac{\Gamma(1-\varepsilon)}{\Gamma(2-2\varepsilon)}$。
+(b)~（三体，无质量）以 $y_{ij}=2p_i\cdot p_j/\hat s$（$y_{12}+y_{13}+y_{23}=1$）表示，对方位角积分后
+\begin{equation}\label{eq:appC-PS3}
+\dd\Phi_3=\frac{(4\pi)^{2\varepsilon-3}\,\hat s^{1-2\varepsilon}}{2\,\Gamma(2-2\varepsilon)}\,\dd y_{13}\,\dd y_{23}\,\big(y_{12}y_{13}y_{23}\big)^{-\varepsilon},
+\end{equation}
+% VF-EE-5
+单纯形上的 Dirichlet 积分为 $\int[\dd y]\,y_{12}^{a-1}y_{13}^{b-1}y_{23}^{c-1}=\frac{\Gamma(a)\Gamma(b)\Gamma(c)}{\Gamma(a+b+c)}$（对 $a,b,c$ 解析延拓）。
+\uses{def:prelim-dr-conventions}
+\end{lemma}
+\begin{proof}
+(a)~积掉质量粒子的动量，$\dd\Phi_2=\frac{1}{(2\pi)^{D-2}}\frac{\dd^{D-1}k}{4E_kE'}\delta(\sqrt{\hat s}-E_k-E')$，$E_k=\kappa$，$E'=\sqrt{\kappa^2+z\hat s}$；$\delta$ 函数给出 $\kappa_0=\frac{\sqrt{\hat s}}2(1-z)$，Jacobi 因子 $\sqrt{\hat s}/E'$，故 $\dd\Phi_2=\frac{\kappa_0^{D-3}\dd\Omega_{D-1}}{4\sqrt{\hat s}(2\pi)^{D-2}}$。由 $\sin^2\theta=4v(1-v)$、$\sin\theta\,\dd\theta=2\dd v$，$\dd\Omega_{D-1}=2^{1-2\varepsilon}[v(1-v)]^{-\varepsilon}\dd v\,\dd\Omega_{D-2}$，$\int\dd\Omega_{D-2}=\frac{2\pi^{1-\varepsilon}}{\Gamma(1-\varepsilon)}$；代入 $\kappa_0^{1-2\varepsilon}=2^{2\varepsilon-1}\hat s^{\frac12-\varepsilon}(1-z)^{1-2\varepsilon}$ 与 $\frac{\pi^{1-\varepsilon}}{2(2\pi)^{2-2\varepsilon}}=\frac{(4\pi)^\varepsilon}{8\pi}$ 即得\cref{eq:appC-PS2}。对 DY，$\hat t=-2p_a\cdot k=-\sqrt{\hat s}\kappa_0(1-\cos\theta)=-\hat s(1-z)v$。$z=0$ 时 $\int_0^1[v(1-v)]^{-\varepsilon}\dd v=\Gamma^2(1-\varepsilon)/\Gamma(2-2\varepsilon)$ 给出总体积。
+(b)~$\dd\Phi_3=\frac{\dd M^2}{2\pi}\dd\Phi_2(P;p_1,P_{23})\dd\Phi_2(P_{23};p_2,p_3)$，$M^2=\hat sy_{23}$。第一个因子取 (a) 的 $z=y_{23}$ 并对 $p_1$ 的方向积分，得 $\frac1{8\pi}(\frac{4\pi}{\hat s})^\varepsilon(1-y_{23})^{1-2\varepsilon}\frac{\Gamma(1-\varepsilon)}{\Gamma(2-2\varepsilon)}$；第二个在 $P_{23}$ 静止系中取 $z=0$、$\hat s\to M^2$，其极角变量 $u$ 满足 $y_{13}=(1-y_{23})u$、$y_{12}=(1-y_{23})(1-u)$。相乘后 $(1-y_{23})$ 的幂次 $(1-2\varepsilon)+2\varepsilon-1=0$，$\Gamma(1-\varepsilon)$ 相消，即\cref{eq:appC-PS3}（$\varepsilon=0$ 时三体体积为 $\hat s/(256\pi^3)$）。Dirichlet 积分令 $y_{13}=(1-y_{12})t$ 化为两个 Beta 函数之积。
+\end{proof}
+
+% ---------------------------------------------------------------------
+\section{无质量夸克形状因子}\label{sec:appC-formfactor}
+
+$\bar u(p_1)\Gamma^\mu v(p_2)=F(q^2)\bar u(p_1)\gamma^\mu v(p_2)$，$s\equiv q^2=(p_1+p_2)^2$。Feynman 规范的单圈顶点为
+\[
+\Lambda^\mu=-\ii g_0^2C_F\int\frac{\dd^Dl}{(2\pi)^D}\frac{\gamma^\alpha(\sla p_1-\sla l)\gamma^\mu(-\sla p_2-\sla l)\gamma_\alpha}{l^2(p_1-l)^2(p_2+l)^2},\qquad F^{(1)}=\frac{\TrD[\sla p_1\Lambda^\mu\sla p_2\gamma_\mu]}{\TrD[\sla p_1\gamma^\mu\sla p_2\gamma_\mu]},
+\]
+后者对无质量在壳旋量是精确的投影（手征守恒只允许 $\gamma^\mu$ 结构）。把标量积写成 $D_a=l^2$、$D_b=(p_1-l)^2$、$D_c=(p_2+l)^2$ 的组合（$l\cdot p_1=\frac12(D_a-D_b)$，$l\cdot p_2=\frac12(D_c-D_a)$），除 $J(1,1,1)$ 与 $J(0,1,1)$ 外均为无标度积分，且 $J(-1,1,1)=-\frac s2J(0,1,1)$，于是在 $D$ 维中精确地
+\begin{equation}\label{eq:appC-ffred}
+F^{(1)}=\ii g_0^2C_F\big[2s\,J(1,1,1)+(7-D)\,J(0,1,1)\big],\qquad J(a,b,c)\equiv\int\frac{\dd^Dl}{(2\pi)^D}\frac1{D_a^aD_b^bD_c^c}
+\end{equation}
+（各分母带 $+\ii0$）。由 Feynman 参数，$J(1,1,1)=-\frac{\ii}{(4\pi)^{D/2}}\frac{\Gamma(1+\varepsilon)\Gamma^2(-\varepsilon)}{\Gamma(1-2\varepsilon)}(-s-\ii0)^{-1-\varepsilon}$（两条外线在壳，$\mathcal F=-s\,x_bx_c$，参数积分是 Dirichlet 积分）；由\cref{lem:appC-bubble}，$J(0,1,1)=\frac{\ii}{(4\pi)^{D/2}}G(1,1)(-s-\ii0)^{-\varepsilon}$。用 $G(1,1)=\frac{c_\Gamma}{\varepsilon(1-2\varepsilon)}$ 与 $\frac{\Gamma(1+\varepsilon)\Gamma^2(-\varepsilon)}{\Gamma(1-2\varepsilon)}=\frac{c_\Gamma}{\varepsilon^2}$，方括号化为 $c_\Gamma[\frac2{\varepsilon^2}+\frac{3+2\varepsilon}{\varepsilon(1-2\varepsilon)}]$，故精确到 $\varepsilon$ 的一切阶
+\begin{equation}\label{eq:appC-FF}
+F^{(1)}(q^2)=-\frac{\as C_F}{4\pi}\Big(\frac{4\pi\mu_0^2}{-q^2-\ii0}\Big)^{\varepsilon}c_\Gamma\,\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)} .
+\end{equation}
+% VF-EE-4, VF-SUD-1
+对类空 $Q^2=-q^2>0$，在 $\overline{\rm MS}$ 中
+\begin{equation}\label{eq:appC-FFMS}
+F=1+\frac{\as}{4\pi}C_F\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\Big[-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\zeta_2+\varepsilon\Big(-16+\frac32\zeta_2+\frac{14}3\zeta_3\Big)+\order{\varepsilon^2}\Big].
+\end{equation}
+% VF-SUD-1
+这与文献中的单圈系数一致\cite{MochVermaserenVogt2005}。外线自能为零（无标度），顶点图的紫外极点被在壳 LSZ 因子的紫外部分抵消（$Z_1=Z_2$），守恒流不需要重整化：$F$ 的全部极点都是红外的（$1/\varepsilon^2$ 软—共线，$1/\varepsilon$ 软或共线）。类时延拓 $q^2=s+\ii0$ 时 $(\mu^2/Q^2)^\varepsilon\to(\mu^2/s)^\varepsilon\ee^{\ii\pi\varepsilon}$，
+\begin{equation}\label{eq:appC-FFtime}
+2\Real F^{(1)}(s+\ii0)=\frac{\as C_F}{2\pi}\Big(\frac{\mu^2}{s}\Big)^{\varepsilon}\cos(\pi\varepsilon)\,\ee^{\varepsilon\gamma_E}c_\Gamma\Big[-\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)}\Big] ,
+\end{equation}
+% VF-SUD-2
+类时值比同一 $|q^2|$ 处的类空值多出 $\frac{\as C_F}{2\pi}\pi^2$，这是 $e^+e^-$ 与 Drell--Yan 中 $\pi^2$ 项的一个来源（\cref{prop:ee-oneloop,prop:dy-nlo}）。我们用独立的 Feynman 参数计算与上述约化两种方法核对了\cref{eq:appC-FF}及其展开。

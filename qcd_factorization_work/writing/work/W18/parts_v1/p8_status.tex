@@ -1,0 +1,58 @@
+% -------------------------------------------------------------------------------------
+\section{SCET 证明的前提与地位}\label{sec:scet-status}
+
+\begin{remark}[SCET 证明的前提]\label{rem:scet-assumptions}
+SCET 中的全阶因子化“证明”（例如\cref{thm:scet-thrust}）依赖以下前提，每一条都必须在具体过程中单独论证：
+(1) \emph{模式完备}：所选模式（硬、共线、软或超软，必要时 Glauber）再现 QCD 在给定观测量下的全部领头红外区域。这\emph{就是}第~4~章的区域分析（\cref{thm:ir-leading-regions}）；SCET 本身不能证明它，而在 Minkowski 运动学中区域方法本身也没有一般证明（\cref{prop:ir-regions-minkowski}）。
+(2) \emph{零箱减除的自洽}：重复计数只有在零箱减除被自洽实施时才被避免（\cref{def:scet-zero-bin}）。
+(3) \emph{Glauber 模式相消或不出现}：对只有出射共线粒子的 $e^+e^-$ 过程，Glauber 区不形成钳夹；对强子—强子碰撞，这是证明中最困难的一步（\cref{sec:scet-glauber}）。
+(4) \emph{领头幂次}：退耦与算符基都只在领头幂次成立；在次领头幂次，卷积可以出现端点发散，因子化的形式本身需要修改（第~21~章）。
+前三条与图形方法（第~9~章）的三处困难一一对应：
+\begin{center}\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lll@{}}
+\toprule
+SCET 的前提 & 图形方法的困难 & 本书中的编号假设 \\
+\midrule
+模式完备 & 区域完备与幂次计数 & \cref{asm:intro-bridge}(Br1)，\cref{asm:appN-envelope} \\
+零箱减除的自洽 & 减除的组合学 & \cref{asm:appN-collins} \\
+Glauber 拉氏量与快度正规子 & Glauber 区的围道变形 & \cref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs} \\
+\bottomrule
+\end{tabular}
+\end{center}
+在这些前提下，图形证明与 SCET 证明的内容相同：二者都以领头区域为出发点，前者用 Ward 恒等式与减除，后者用规范对称性、场重定义与零箱减除；两者的全阶陈述都是 [A]。SCET 证明并不比 Collins 的图形证明更严格，二者是互补的：SCET 把区域的组合学变成拉氏量的对称性，并使重求和变成 RG 方程的求解；图形方法则把每个前提落实到具体的被积函数与围道上。Collins 在其专著中写道：“I have not been able to penetrate the SCET literature to properly understand its rationale”（我未能深入 SCET 文献以充分理解其逻辑依据）\cite[第~15.9~节]{Collins2011}；本章的对照表正是为了在两种语言之间建立逐条的对应。第~24~章把前提 (1) 与 (3) 写成前沿章节使用的编号假设（\cref{asm:front-scet-modes}）。
+\end{remark}
+
+\begin{table}[htbp]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}p{0.36\textwidth}lp{0.4\textwidth}c@{}}
+\toprule
+陈述 & 地位 & 依据或瓶颈 & 误差类型 \\
+\midrule
+模式的完备性（\cref{def:scet-modes}） & [A] & 区域分析；\cref{asm:intro-bridge}(Br1)，\cref{asm:appN-envelope} & E-S \\
+\cref{prop:scet-scalings,prop:scet-gauge,thm:scet-decoupling} & [R, $R_{\mathrm{def}}$] & 两点函数；规范与 BRST 结构；拉氏量恒等式 & — \\
+\cref{prop:scet-lagrangian,prop:scet-wilson,prop:scet-scet2} & [R, $R_{\mathrm{PT}}$] & 树图层次的精确消去与程函求和 & — \\
+\cref{prop:scet-rapidity-rg} & [A] & 方案等价逐阶成立；\cref{asm:appN-tmd} & — \\
+\cref{prop:scet-glauber-operators} & [A] & 匹配与幂次计数；相消只在低阶与梯形图中显式 & E-S \\
+\cref{prop:scet-hard-matching,prop:scet-thrust-oneloop} & [R, $R_{\mathrm{PT}}$] & 单圈显式计算，与全 QCD 一致 & — \\
+\cref{thm:scet-thrust,prop:scet-ll}(a) & [A] & 模式完备（同第一行） & E-S \\
+\cref{prop:scet-ll}(b) & [R, $R_{\mathrm{def}}$] & RG 方程的代数推论 & — \\
+$\Lambda/Q$ 平移在事件形状间的普适性 & [C] & 第~21~章 & — \\
+\bottomrule
+\end{tabular}
+\caption{第~15~章结论的地位一览。“误差类型”指最弱的幂次计数步骤所给出的估计（E-S：标度陈述）。}
+\label{tab:scet-status}
+\end{table}
+
+\begin{tcolorbox}[enhanced,breakable,title=常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{“SCET 独立于区域分析证明了因子化。”}不对。SCET 预设了模式的内容——那正是区域分析——还需要零箱减除并必须处理 Glauber 模式；它的全阶陈述与图形论证一样是 [A]（\cref{rem:scet-assumptions}）。\par
+\textbf{“区域方法是定理，因此模式的选择不成问题。”}对欧氏的大动量、大质量极限，区域展开有证明\cite{Smirnov:1990rz}；对 Minkowski 极限没有一般证明（\cref{prop:ir-regions-minkowski}），可能需要解析正规子，并且“区域等于 Newton 多面体的下表面”在 Minkowski 运动学中不成立\cite{Gardi:2024axt}（第~24~章）。SCET 的模式必须由钳夹分析而不是区域方法本身来论证。\par
+\textbf{“零箱减除自动消除了重复计算。”}只有在每个共线因子中都自洽地实施时才如此；它是 Collins 减除在有效理论中的对应，与软减除的等价性是在用维数正规化处理红外发散时在低阶显式验证的（\cref{def:scet-zero-bin}）。\par
+\textbf{“Rothstein--Stewart 的 Glauber 拉氏量证明了强子对撞（例如 Drell--Yan）的因子化。”}不对。作者明确说旁观者相位的相消单独来看“远不是因子化的证明”；完整的 SCET 证明尚未发表（\cref{prop:scet-glauber-operators}）。
+\end{tcolorbox}
+
+\paragraph{本章小结。}
+SCET 把领头区域写成场，把区域近似写成多极展开后的领头阶拉氏量，把 Ward 恒等式写成共线规范不变性：在树图层次，积掉 $\phi_{\bar n}$ 与离壳模式是精确的，共线 Wilson 线 $W_n$ 由程函因子按次序求和得到；领头阶拉氏量具有共线与超软规范对称性，BPS 场重定义使超软胶子在领头幂次只出现于算符中的 $Y_n$ 线（这些都是 [R]）。在 SCET$_{\rm II}$ 中软 Wilson 线由积掉硬共线模式产生，快度发散需要额外的正规子，三种处理方式给出等价的 TMD 因子化（[A]）。Glauber 模式由 Rothstein--Stewart 的算符描述，它们与附录~O 的光锥序证明一一对应，但其相消在强子对撞中没有完整证明（[A]）。推力分布 $H\,J\otimes J\otimes S$ 的因子化是 [A]，其单圈因子、RG 一致性与对全 QCD 奇异项的再现是 [R]，LL 指数是 RG 方程的代数推论，作为 QCD 陈述继承 [A]。全章的结论是：SCET 证明与 Collins 的图形证明依赖同样的三条前提，二者互补而非一者更严格。这些工具在后文的用途：事件形状、喷注与非全局对数（第~16~章）；因子化的破坏与 Glauber 有效理论的状态（第~18~章）；$B\to D\pi$ 与重夸克偶素中的 SCET 与 NRQCD（第~20~章）；次领头幂次与端点发散（第~21~章）；前沿进展（第~24~章）。

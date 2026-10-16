@@ -1,0 +1,22 @@
+% =====================================================================
+%  第 14 章  横动量依赖（TMD）因子化                   （ch14_tmd.tex，writer W17）
+%  约定：本书约定（WRITER_SPEC_v2 §3）；n_A=(1^+,0^-,0_T)，n_B=(0^+,1^-,0_T)；
+%  D_mu = d_mu - i g A_mu^a t^a；D = 4-2 eps，S_eps=(4 pi)^eps e^{-eps gamma_E}；
+%  TMD 的 Fourier 约定 f~(x,b_T)=int d^{2-2eps}k_T e^{-i k_T.b_T} f(x,k_T)；a = alpha_s C_F/(2 pi)。
+%  核验脚本：writing/work/W17/s01--s11（日志 writing/work/W17/logs/，全部 PASS）。
+% =====================================================================
+\chapter{横动量依赖（TMD）因子化}\label{ch:tmd}
+
+当 Drell--Yan 轻子对的横动量 $q_T$ 远小于其质量 $Q$ 时，第~12~章的共线因子化不再适用：$\order{\as^n}$ 的截面含有 $\as^n\ln^{2n-1}(Q^2/q_T^2)/q_T^2$ 型的 Sudakov 对数，固定阶展开失效；而 $q_T$ 本身来自两个入射部分子的“内禀”横动量与软胶子辐射的反冲，必须在因子化公式里保留。这时有四件事同时改变。第一，软因子不再等于 $1$：软辐射携带 $q_T$ 量级的横动量，它对测量量有贡献。第二，共线子图保留横动量，部分子分布变成横动量依赖的（transverse-momentum-dependent，TMD）分布。第三，在固定横动量下，软区与共线区只在快度上区分，类光 Wilson 线产生维数正规化无法处理的快度发散（rapidity divergence），需要新的正规化与新的演化变量 $\zeta$。第四，Wilson 线指向未来还是指向过去成为物理的：两种订书钉形（staple）Wilson 线给出符号相反的 Sivers 函数。本章给出 TMD 分布的算符定义、Collins 的组合定义及其“平方根恒等式”、“零箱减除即软因子”的陈述、Drell--Yan 的 TMD 因子化定理及其地位、Collins--Soper（CS）与重整化群演化、小 $b$ 展开与 CSS 解、过程依赖（Sivers 函数的符号反转与 Collins 函数的普适性），以及与扭度 3 共线因子化的匹配。
+
+按本书的标签体系，本章的结果如下。在重整化微扰论中对部分子态严格（$R_{\mathrm{PT}}$，单圈陈述）的有：未减除 TMD 的单圈图（\cref{lem:tmd-unsub-oneloop}，含类时与类空正规子线的顶角图之差）、单圈软因子（\cref{lem:tmd-soft-oneloop}）与单圈演化系数及硬因子的 RG 相容性（\cref{prop:tmd-evolution-oneloop}）。由定义直接推出（$R_{\mathrm{def}}$）的有：平方根构造是恒等式（\cref{lem:tmd-sqrt-identity}）与 Sivers 函数在算符层面的符号反转（\cref{thm:tmd-sivers-sign}）。在编号假设之下证明完整的（$R_{\mathrm{cond}}$）有：零箱减除等于除以软因子（\cref{prop:tmd-zero-bin-soft}，前提\cref{asm:appN-ward-product}与\cref{asm:appN-tmd}；其单圈部分无条件成立）。领头区域、Glauber 相消、模板假设的验证、TMD 因子化定理本身、演化方程、小 $b$ 展开、CSS 解、可观测不对称的符号反转与 Collins 函数的普适性都是全阶论证（\tagA），瓶颈是\cref{asm:appN-tmd}、\cref{asm:appO-rewritten-cs}与\cref{asm:appO-mixing}。与扭度 3 的匹配只在单圈与特定过程中成立（\tagP）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:tmd-unsub-oneloop,lem:tmd-soft-oneloop,prop:tmd-evolution-oneloop}（\tagR，$R_{\mathrm{PT}}$，单圈）；\cref{lem:tmd-sqrt-identity,thm:tmd-sivers-sign}（\tagR，$R_{\mathrm{def}}$）；\cref{prop:tmd-zero-bin-soft}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-ward-product}、\cref{asm:appN-tmd}；其中 (a) 单圈无条件）。\par
+\textbf{给出全阶论证：}\cref{prop:tmd-regions,lem:tmd-glauber,prop:tmd-h1h5,thm:tmd-factorization,prop:tmd-evolution,prop:tmd-small-b,prop:tmd-css,cor:tmd-sivers-observable,prop:tmd-collins-universality}（\tagA；瓶颈\cref{asm:appN-tmd}、\cref{asm:appO-rewritten-cs}、\cref{asm:appO-mixing}）。\par
+\textbf{没有证明：}快度正规化方案之间的全阶等价（只逐阶验证）；大 $b_T$ 区（非微扰，须拟合或格点输入）；$W+Y$ 在 $q_T\sim Q$ 与 $q_T\sim\Lambda$ 处的一致衔接（需修正的截断）；与扭度 3 共线因子化的全阶匹配（\cref{prop:tmd-twist3-matching}，\tagP）。
+\end{tcolorbox}
+
+本章的结构如下。\cref{sec:tmd-kinematics}固定小 $q_T$ 的运动学并展示 Sudakov 对数。\cref{sec:tmd-regions}列出领头区域，说明为什么起作用的是软区而不是超软区。\cref{sec:tmd-definitions}定义订书钉形 Wilson 线、未减除 TMD、软因子与 Collins 的 TMD，并在单圈上把每一步算出来。\cref{sec:tmd-subtraction}证明零箱减除即软因子。\cref{sec:tmd-theorem}陈述因子化定理并逐层说明其地位。\cref{sec:tmd-evolution}与\cref{sec:tmd-small-b}给出演化方程、单圈检验、小 $b$ 展开与 CSS 解，并用 $\order{\as}$ 的精确截面检验它们。\cref{sec:tmd-universality}讨论过程依赖，\cref{sec:tmd-twist3}讨论与扭度 3 的匹配和 $k_T$ 积分。章末的\cref{tab:tmd-correspondence}列出本章陈述与\cref{app:appN}、\cref{app:appO}中精确形式的对应。本章的全部单圈公式都在本书的约定下重新推导，并用符号与数值计算逐一核对过。

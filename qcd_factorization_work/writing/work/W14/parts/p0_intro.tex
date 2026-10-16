@@ -1,0 +1,20 @@
+% =====================================================================
+%  第 12 章  Drell--Yan 过程与强子—强子碰撞            （ch12_dy.tex，writer W14）
+%  约定：本书约定（WRITER_SPEC_v2 §3）；n_A=(1^+,0^-,0_T)，n_B=(0^+,1^-,0_T)；
+%  D_mu = d_mu - i g A_mu^a t^a；D = 4-2 eps，S_eps=(4pi)^eps e^{-eps gamma_E}；a=alpha_s/(2pi)。
+% =====================================================================
+\chapter{Drell--Yan 过程与强子—强子碰撞}\label{ch:dy}
+
+在 Drell--Yan 过程 $A(P_A)+B(P_B)\to\gamma^*(q)+X\to\ell^+\ell^-+X$ 中，两个高能强子各提供一个部分子，二者湮灭成一个大质量的虚光子，我们只测量其衰变产生的轻子对。这是两个强子初态的硬过程中最简单的一个，也是因子化理论中最微妙的一个。它与前几章的过程有两点本质区别。第一，它不是 OPE 可及的量：截面不是单个强子态上流算符乘积的前向矩阵元，\cref{thm:dis-moments}（\tagR，$R_{\mathrm{OPE}}$）所依赖的色散关系与矩方法在这里都不适用，证明只能在动量空间中逐图进行（“因子化就是 OPE”是一个常见的误解）。第二，两个强子的旁观者（spectator）在硬碰撞之前与之后都存在，它们之间可以交换 Glauber 胶子；在单个割图中这些交换的积分围道被钳住（钳夹，pinch），软近似在实轴上失效。全阶论证的核心正是如何处理这一 Glauber 区。
+
+本章在本书的标签体系中给出如下结果。在重整化微扰论中严格（$R_{\mathrm{PT}}$）的有：Born 截面（\cref{prop:dy-born}）、单个割图中的单圈 Glauber 钳夹（\cref{prop:dy-glauber-pinch}）、光锥序中间态的取向与 $k^-$ 极点（\cref{lem:dy-poles-orientation}）、两条程函线（eikonal line）之间的双胶子交换及其 $\order{g^4}$ 幺正性（\cref{prop:dy-eikonal-twogluon}）、$\order{\as}$ 的 $\MSbar$ 系数函数与 $\mu_F$ 无关性（\cref{prop:dy-nlo,prop:dy-scale}）。由定义直接推出（$R_{\mathrm{def}}$）的有：单个割图给出指向未来的 Wilson 线（\cref{ex:dy-future-vs-past}），以及 DY 与 DIS 的共线部分子分布是同一个算符矩阵元（\cref{prop:dy-universality}）。在阿贝尔程函模型中，我们完整地证明了旁观者 Glauber 相位的相消（\cref{prop:dy-abelian-model}，作为 QCD 陈述为 \tagP）。对单举 DY 的共线因子化（\cref{thm:dy-factorization}）以及色单态末态、极化 DY 与 $1/Q^2$ 处的广义因子化，本章给出全阶论证（\tagA），并以四个层次说明其地位：文献中的论证；\cref{app:appO}与\cref{app:appN}中把它写成的精确条件定理链；以标签列出的、尚未证明的输入；以及“没有已知的领头幂次反例”。有色末态的因子化只是猜想（\tagC），$1/Q^2$ 之外的幂次修正上因子化被破坏（\tagV）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:dy-born,prop:dy-glauber-pinch,lem:dy-poles-orientation,prop:dy-eikonal-twogluon,prop:dy-nlo,prop:dy-scale}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:dy-universality,ex:dy-future-vs-past}（\tagR，$R_{\mathrm{def}}$）；\cref{thm:appO-main,prop:appN-dy}（\tagR，$R_{\mathrm{cond}}$，证明在\cref{app:appO}与\cref{app:appN}，前提为\cref{asm:appO-lcopt}等编号假设）；\cref{prop:dy-abelian-model}（\tagP：阿贝尔程函模型中的完整证明）。\par
+\textbf{给出全阶论证：}\cref{prop:dy-regions,lem:dy-fsi,prop:dy-deformation,lem:dy-soft,thm:dy-factorization,thm:dy-colour-singlet,thm:dy-polarized,thm:dy-higher-twist}（\tagA；瓶颈\cref{asm:appO-mixing}(c)、\cref{asm:appO-deformation}(b)--(d)、\cref{asm:appO-rewritten-cs}）。\par
+\textbf{没有证明：}非程函（复合、相互作用）旁观者与活动部分子的 Glauber--软--共线混合（\cref{asm:appO-mixing}(c)）；余项的幂次 $p$（\tagC）；有色末态（\cref{conj:dy-coloured-final}，\tagC）；$1/Q^2$ 以外的幂次（\cref{prop:dy-twist6-failure}，\tagV）。
+\end{tcolorbox}
+
+本章的结构如下。\cref{sec:dy-born}固定运动学与 Born 截面。\cref{sec:dy-regions}列出领头区域，并在单圈上显式地展示 Glauber 钳夹。\cref{sec:dy-orientation}把“极点在哪一侧”化为光锥序中间态的一个性质。\cref{sec:dy-glauber}给出单举 DY 中 Glauber 问题的解决：割图求和的幺正性、单个割图中指向未来的 Wilson 线、同时变形、软因子与部分子分布的普适性。\cref{sec:dy-model}在阿贝尔模型中把这一切算到底，并计算两条程函线之间的双胶子交换。\cref{sec:dy-theorem}陈述主定理并说明其地位。\cref{sec:dy-nlo}推导 $\order{\as}$ 系数函数。\cref{sec:dy-other}与\cref{sec:dy-twist}讨论其他强子—强子过程与高扭度。章末的\cref{tab:dy-correspondence}列出本章陈述与\cref{app:appO}、\cref{app:appN}中精确形式的对应。

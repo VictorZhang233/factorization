@@ -1,0 +1,135 @@
+% ---------------------------------------------------------------------
+\section{重夸克偶素：NRQCD}\label{sec:heavy-nrqcd}
+
+重夸克偶素有三个标度：$m_Q$、相对动量 $m_Qv$ 与结合能 $m_Qv^2$，$v^2\approx0.3$（$c\bar c$）、$0.1$（$b\bar b$）\cite[第~II.A~节]{BodwinBraatenLepage1995}。湮灭发生在距离 $\sim1/m_Q$ 上。非相对论 QCD（NRQCD）积出标度 $m_Q$，按 $v$ 与 $\as(m_Q)$ 双重展开\cite{CaswellLepage1986,BodwinBraatenLepage1995}；衰变的因子化有全阶论证，产生的因子化是猜想（\cref{fig:nrqcd}）。
+
+\begin{definition}[NRQCD 及其幂次计数]\label{def:heavy-nrqcd}
+NRQCD 的拉氏量为
+\begin{equation}\label{eq:heavy-LNRQCD}
+\mathcal L_{\rm NRQCD}=\mathcal L_{\rm light}+\psi^\dagger\Big(\ii D_t+\frac{\bm D^2}{2m_Q}\Big)\psi+\chi^\dagger\Big(\ii D_t-\frac{\bm D^2}{2m_Q}\Big)\chi+\delta\mathcal L_{\rm bilinear}+\delta\mathcal L_{\rm 4f},
+\end{equation}
+其中 $\mathcal L_{\rm light}$ 是轻夸克与胶子的 QCD 拉氏量（\cref{def:prelim-qcd}），$\psi$（$\chi$）是湮灭重夸克（产生重反夸克）的二分量 Pauli 场，$D_t=\partial_t-\ii gA^0$、$\bm D=\bm\nabla+\ii g\bm A$ 是 $D_\mu=\partial_\mu-\ii gA_\mu$ 的分量（$\bm A$ 为 $A^\mu$ 的空间分量）。$\delta\mathcal L_{\rm bilinear}$ 是 $\frac{1}{8m_Q^3}\psi^\dagger\bm D^4\psi$、Darwin 项、自旋—轨道项与 Fermi 项 $\frac{c_F}{2m_Q}\psi^\dagger\bm\sigma\cdot(\ii\bm D\times\bm D)\psi$ 等双线性修正（及 $\chi$ 的对应项，系数 $=1+\order{\as}$；Fermi 项来自 $(\bm\sigma\cdot\bm D)^2=\bm D^2+\bm\sigma\cdot(\ii\bm D\times\bm D)$）。$\delta\mathcal L_{\rm 4f}=\sum_n\frac{f_n(\Lambda)}{m_Q^{d_n-4}}\mathcal O_n$ 为四费米子算符项（$\Lambda$ 为截断标度，$d_n$ 为算符量纲），如 $d_n=6$ 的
+\begin{equation}\label{eq:heavy-4f}
+\begin{aligned}
+&\mathcal O_1({}^1S_0)=\psi^\dagger\chi\,\chi^\dagger\psi,&\qquad&\mathcal O_1({}^3S_1)=\psi^\dagger\bm\sigma\chi\cdot\chi^\dagger\bm\sigma\psi,\\
+&\mathcal O_8({}^1S_0)=\psi^\dagger t^a\chi\,\chi^\dagger t^a\psi,&\qquad&\mathcal O_8({}^3S_1)=\psi^\dagger\bm\sigma t^a\chi\cdot\chi^\dagger\bm\sigma t^a\psi,
+\end{aligned}
+\end{equation}
+以及含 $\overleftrightarrow{\bm D}$ 的 $P$ 波算符（$d_n=8$）；电磁算符把中间态投影到 QCD 真空，如 $\mathcal O^{\rm EM}_1({}^3S_1)=\psi^\dagger\bm\sigma\chi|0\rangle\cdot\langle0|\chi^\dagger\bm\sigma\psi$。$\Imag f_n$ 描述距离 $\sim1/m_Q$ 上的湮灭。\emph{速度标度规则}：设 $v$ 为典型相对速度，$\as(m_Qv)\sim v$，则
+\begin{equation}\label{eq:heavy-vscaling}
+\psi,\chi\sim(m_Qv)^{3/2},\qquad \bm D\sim m_Qv,\qquad D_t\sim m_Qv^2,\qquad g\bm E\sim m_Q^2v^3,\qquad g\bm B\sim m_Q^2v^4
+\end{equation}
+% VF-NRQ-1
+（$g\bm E$、$g\bm B$ 指 $\ii[D_t,\bm D]$ 与 $\ii\bm D\times\bm D$），故 $\delta\mathcal L_{\rm bilinear}$ 相对领头项为 $\order{v^2}$。BBL 用 $D=\partial+\ii gA$，其 $c_{2,3,4}$ 项写成本书约定下的 $\bm E$、$\bm B$ 时须变号。
+\uses{def:prelim-qcd}
+\end{definition}
+
+\cref{eq:heavy-vscaling}来自归一化 $\int\dd^3x\,\psi^\dagger\psi\simeq1$（体积 $(m_Qv)^{-3}$）、Schr\"odinger 方程以及 Gauss 与 Amp\`ere 定律\cite[第~II.C~节]{BodwinBraatenLepage1995}\cite{Lepage:1992tx}。由此 $S$ 波色单态衰变 $\sim\langle\mathcal O_1\rangle/m_Q^2\sim m_Qv^3$，$P$ 波色单态（量纲 8）$\sim(m_Qv)^5/m_Q^4=m_Qv^5$，$\chi_{QJ}$ 中概率 $\sim v^2$ 的色八重态 ${}^3S_1$ 成分也 $\sim m_Qv^5$：$P$ 波衰变中色八重态不可缺少（脚本 \texttt{s4\_\allowbreak nrqcd\_lo.py}）。
+
+\begin{theorem}[衰变的 NRQCD 因子化 \tagA]\label{thm:heavy-nrqcd-decay}
+设 $H$ 为重夸克偶素（态取非相对论归一化 $\langle H(\bm P')|H(\bm P)\rangle=(2\pi)^3\delta^3(\bm P-\bm P')$，在其静止系中取矩阵元），$m_Q$ 为重夸克的极点质量。则对 $\as(m_Q)$ 的所有阶、对 $v$ 逐阶，
+\begin{equation}\label{eq:heavy-nrqcd-decay}
+\begin{gathered}
+\Gamma(H\to\text{轻强子})=\sum_n\frac{2\Imag f_n(\Lambda)}{m_Q^{d_n-4}}\,\langle H|\mathcal O_n(\Lambda)|H\rangle,\\
+\Gamma(H\to\text{电磁末态})=\sum_n\frac{2\Imag f_{{\rm EM},n}(\Lambda)}{m_Q^{d_n-4}}\,\langle H|\mathcal O^{\rm EM}_n(\Lambda)|H\rangle,
+\end{gathered}
+\end{equation}
+求和遍历\cref{def:heavy-nrqcd}的四费米子算符；$\Lambda$ 依赖在系数与矩阵元之间相消；$\Imag f_n$ 由在壳 $Q\bar Q$ 振幅的匹配确定，与 $H$ 无关，可按 $\as(m_Q)$ 展开；到 $v$ 的任一给定阶只有有限个算符贡献。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）；非微扰地还需局域对偶（\cref{conj:ee-duality}(b)）。
+% errtype: E-S
+\uses{def:heavy-nrqcd, asm:intro-bridge}
+\end{theorem}
+
+\begin{proofsketch}
+(1)~衰变率是态的能量虚部的 $-2$ 倍，湮灭对它的贡献来自 $-\delta\mathcal L_{\rm 4f}$ 的期待值，故 $\Gamma=2\Imag\langle H|\delta\mathcal L_{\rm 4f}|H\rangle$，即\cref{eq:heavy-nrqcd-decay}\cite[式~(2.13)--(2.14)]{BodwinBraatenLepage1995}；湮灭产生至少两个能量 $\sim m_Q$ 的部分子，因而是局域的\cite[第~II.E~节]{BodwinBraatenLepage1995}。(2)~系数由在壳 $Q\bar Q$ 振幅的匹配逐阶确定，与偶素态无关。(3)~拓扑因子化\cite[第~V.A~节]{BodwinBraatenLepage1995}：末态部分子辐射的软、共线发散在对轻强子末态求和时按 Kinoshita--Lee--Nauenberg（KLN）定理相消；接到重夸克线上的软胶子，若所接传播子离壳 $\order{m_Q}$，红外发散被这一“控制动量”截断，故红外发散部分可沿离壳 $\ll m_Q$ 的重夸克传播子与短程部分分开，吸收进 NRQCD 矩阵元。例如色单态计算中 $\chi_{QJ}$ 衰变的结合能对数\cite{Barbieri:1975am}被同阶的色八重态矩阵元吸收\cite{Bodwin:1992ye}。(4)~每阶 $v$ 只有有限个算符（此步只给出 E-S 型陈述）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+在微扰论中为全阶论证（[A]）：拓扑因子化的全阶形式只以概要给出，截断标度依赖要在 $f_n$ 与 $\langle\mathcal O_n\rangle$ 之间逐阶相消（E-S 型陈述）。BBL 认为其严格程度与“the proofs of factorization in deep-inelastic lepton-hadron scattering”（深度非弹散射中的因子化证明）相当\cite[第~VI.A~节]{BodwinBraatenLepage1995}；就微扰内容而言这与 [A] 一致，在强子层次上则不然：DIS 的矩经色散关系与欧氏区的 OPE 相联系（\cref{ch:dis}），而偶素衰变率是固定物理点上的 Minkowski 量，没有可向欧氏区延拓的变量，BBL 也指出对能量抹平的办法“is not available to us in the case of quarkonium annihilation”（对偶素湮灭不可用）\cite[第~II.E~节]{BodwinBraatenLepage1995}。因此非微扰应用需要局域对偶（\cref{conj:ee-duality}(b)，[C]），不能说“NRQCD 衰变因子化与 OPE 同样严格”。升级途径：证明拓扑因子化的全阶形式；非微扰地控制局域对偶。
+
+\begin{proposition}[匹配系数 \tagR]\label{prop:heavy-nrqcd-matching}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在树图与单圈（$\order{\as}$）阶，电磁衰变的匹配系数如下（本命题只涉及部分子态与微扰的 $Q\bar Q$ 态）。
+(a)~（树图）$\Imag f_{ee}({}^3S_1)=\frac{\pi e_Q^2\alpha^2}{3}$，$\Imag f_{\gamma\gamma}({}^1S_0)=\pi e_Q^4\alpha^2$。对相对波函数在原点的值为 $\psi(0)=R(0)/\sqrt{4\pi}$ 的色单态 $S$ 波 $Q\bar Q$ 态，领头阶 $\langle\mathcal O_1\rangle=2N_c|\psi(0)|^2$，于是
+\begin{equation}\label{eq:heavy-EMwidths}
+\begin{gathered}
+\Gamma({}^3S_1\to e^+e^-)=\frac{16\pi N_c}{3}\,\frac{e_Q^2\alpha^2|\psi(0)|^2}{M^2}=\frac{N_ce_Q^2\alpha^2|R(0)|^2}{3m_Q^2},\\
+\Gamma({}^1S_0\to\gamma\gamma)=16\pi N_c\,\frac{e_Q^4\alpha^2|\psi(0)|^2}{M^2}=\frac{4N_ce_Q^4\alpha^2|R(0)|^2}{M^2},\qquad M=2m_Q .
+\end{gathered}
+\end{equation}
+% VF-NRQ-2, VF-NRQ-3
+(b)~（单圈）阈值处矢量流 $\bar Q\gamma^iQ$ 匹配到 $c_v\,\chi^\dagger\sigma^i\psi$，
+\begin{equation}\label{eq:heavy-cv}
+c_v=1-2C_F\frac{\as}{\pi}+\order{\as^2},\qquad
+\Imag f_{ee}({}^3S_1)=\frac{\pi e_Q^2\alpha^2}{3}\Big(1-4C_F\frac{\as}{\pi}\Big),
+\end{equation}
+% VF-NRQ-4
+故 $\Gamma(V\to e^+e^-)\propto1-\frac{16\as}{3\pi}$（$N_c=3$）。
+\uses{def:heavy-nrqcd, def:prelim-msbar}
+\end{proposition}
+
+\begin{proof}
+(a)~在阈值 $p=\bar p=(m_Q,\bm0)$ 处，入射 $Q(p)\bar Q(\bar p)$ 的自旋投影 $\sum_{s\bar s}\langle\frac12s\,\frac12\bar s|SS_z\rangle\,u(p,s)\bar v(\bar p,\bar s)$ 为
+$\Pi_S=\frac{1}{2\sqrt2\,m_Q}(\sla p+m_Q)\,\Gamma_S\,(\sla p-m_Q)$（$\Gamma_0=\gamma_5$，$\Gamma_1=\sla\varepsilon$；$\bar uu=2m_Q$），$\Tr[\bar\Pi_S\Pi_S]=-4m_Q^2$。以相对论归一化的束缚态与色单态波函数 $\delta_{ij}/\sqrt{N_c}$ 组合自由 $Q\bar Q$ 态，领头阶振幅为 $\mathcal M=\frac{\sqrt{2M}}{2m_Q}\sqrt{N_c}\,\psi(0)\Tr[\Gamma_f\Pi_S]$（$\frac{1}{2m_Q}$ 来自两个 $1/\sqrt{2E}$）。对 ${}^3S_1\to\gamma^*\to\ell^+\ell^-$，$\Tr[\gamma^\mu\Pi_1]=-2\sqrt2\,m_Q\varepsilon^\mu$；轻子张量对偶素极化平均为 $\frac13(-g_{\mu\nu}+\frac{P_\mu P_\nu}{M^2})\Tr[\sla k_1\gamma^\mu\sla k_2\gamma^\nu]=\frac43M^2$；乘以 $e^4e_Q^2$、光子传播子的平方 $1/M^4$、两体相空间 $\frac1{8\pi}$ 与 $\frac{1}{2M}$，得 $\Gamma=\frac{N_ce^4e_Q^2|\psi(0)|^2}{3\pi M^2}$，即\cref{eq:heavy-EMwidths}第一式。对 ${}^1S_0\to\gamma\gamma$，两个 Compton 型图之和为 $\Tr[(\gamma^\nu S_Q(p-k_1)\gamma^\mu+\gamma^\mu S_Q(p-k_2)\gamma^\nu)\Pi_0]=\ii\sqrt2\,\epsilon^{\mu\nu\alpha\beta}k_{1\alpha}k_{2\beta}/m_Q^2$（$S_Q$ 为去掉因子 $\ii$ 的夸克传播子），对光子极化求和给出 $4(k_1\cdot k_2)^2/m_Q^4$，计入全同光子的 $\frac12$ 即得第二式。选择定则也直接成立：自旋单态不与单光子耦合，自旋三重态不衰变为两个光子。由 $\Gamma=2\Imag f\,\langle\mathcal O_1\rangle/m_Q^2$ 读出 $\Imag f$，与\cite[式~(A31)、(A34)]{BodwinBraatenLepage1995}一致（BBL 的“$M$”是 $m_Q$，不是偶素质量）；QED 极限 $N_c=e_Q=1$ 给出仲正电子素的 $\alpha^5m/2$。
+
+(b)~严格阈值处 NRQCD 一侧的单圈修正是无标度积分，为零；QCD 一侧取 Feynman 规范，维数正规化同时正规化紫外与红外发散，故 $c_v-1=\delta_V+\delta Z_2^{\rm OS}$（两条外线各贡献 $\frac12\delta Z_2^{\rm OS}$）。顶点修正为
+\begin{equation}\label{eq:heavy-vertex}
+\Lambda^\mu=-\ii g^2C_F\int\frac{\dd^Dk}{(2\pi)^D}\,\frac{\gamma^\alpha(-\sla p-\sla k+m_Q)\gamma^\mu(\sla p-\sla k+m_Q)\gamma_\alpha}{k^2\,[(p-k)^2-m_Q^2]\,[(p+k)^2-m_Q^2]} ,
+\end{equation}
+因子 $-\ii g^2C_F$ 来自两个顶点 $(\ii g\gamma t^a)^2$、两个夸克传播子的 $\ii^2$、胶子传播子的 $-\ii$ 与 $t^at^a=C_F$。由 $p^2=m_Q^2$，三个分母为 $k^2$、$k^2\mp2p\cdot k$；Feynman 参数化后令 $k=l+ap$（$a=x_1-x_2$ 为两个夸克分母的参数之差，测度化为 $\int_{-1}^1\dd a\,(1-|a|)$），分母化为 $(l^2-a^2m_Q^2)^3$。用 $\Pi_1$ 投影并作张量约化 $l^\mu l^\nu\to l^2g^{\mu\nu}/D$ 后，分子等于树图的迹乘以 $r_0+r_2l^2$，$r_0=-2m_Q^2[2-(1-\varepsilon)a^2]$，$r_2=\frac{2(1-\varepsilon)^2}{2-\varepsilon}$。做 $D$ 维动量积分，再用 $\int_{-1}^1\dd a\,(1-|a|)|a|^{p}=\frac{2}{(p+1)(p+2)}$ 并按 $\MSbar$ 记 $a_s\equiv\frac{\as C_F}{4\pi}$，得到对 $\varepsilon$ 精确的
+\begin{align}
+\delta_V&=a_s\,\ee^{\varepsilon\gamma_E}\Big(\frac{\mu^2}{m_Q^2}\Big)^{\varepsilon}\Big\{\Gamma(\varepsilon)\frac{1-\varepsilon}{1-2\varepsilon}+\Gamma(1+\varepsilon)\Big[\frac{2}{\varepsilon(1+2\varepsilon)}-\frac{1}{1-2\varepsilon}\Big]\Big\}\notag\\
+&=a_s\Big(\frac3\varepsilon-4+3\ln\frac{\mu^2}{m_Q^2}\Big)+\order{\varepsilon},\label{eq:heavy-dV}\\
+\delta Z_2^{\rm OS}&=-a_s\,\ee^{\varepsilon\gamma_E}\Big(\frac{\mu^2}{m_Q^2}\Big)^{\varepsilon}\Gamma(\varepsilon)\,\frac{3-2\varepsilon}{1-2\varepsilon}
+=-a_s\Big(\frac3\varepsilon+4+3\ln\frac{\mu^2}{m_Q^2}\Big)+\order{\varepsilon},\label{eq:heavy-dZ2}
+\end{align}
+% VF-NRQ-4
+其中 $\delta_V$ 的第一项来自 $r_2l^2$、第二项来自 $r_0$，$\delta Z_2^{\rm OS}$ 由自能在 $\sla p=m_Q$ 处的导数得到。二者之和精确地为
+\begin{equation}\label{eq:heavy-cv-exact}
+c_v-1=-\frac{8a_s\,\Gamma(1+\varepsilon)\,\ee^{\varepsilon\gamma_E}}{1-4\varepsilon^2}\Big(\frac{\mu^2}{m_Q^2}\Big)^{\varepsilon}\ \xrightarrow{\ \varepsilon\to0\ }\ -8a_s=-2C_F\frac{\as}{\pi},
+\end{equation}
+有限且与 $\mu$ 无关。由\cref{eq:heavy-EMwidths}，$\Gamma\propto|c_v|^2=1-4C_F\frac{\as}{\pi}+\order{\as^2}$，与\cite[式~(A37)]{BodwinBraatenLepage1995}一致（BBL 引用\cite{Barbieri:1975ki,Celmaster:1978yz}）。迹、张量约化与参数积分均由符号计算完成并与显式 $4\times4$ 矩阵核对（脚本 \texttt{s5\_\allowbreak cv.py}、\texttt{s7\_\allowbreak extra.py}、\texttt{s8\_\allowbreak review.py}）。
+\end{proof}
+
+\begin{example}[阈值处的单圈 $c_v$]\label{ex:heavy-cv}
+\cref{eq:heavy-dV,eq:heavy-dZ2}的极点来源不同：顶点的 $\frac3\varepsilon$ 中，$r_2l^2$ 项给出 $\frac1{\varepsilon_{\rm UV}}+1$（取 $\mu=m_Q$），$r_0$ 项给出 $\frac{2}{\varepsilon_{\rm IR}}-5$，后者来自 $a\to0$，即胶子动量趋于零、两条重夸克线同时近壳的区域；$\delta Z_2^{\rm OS}$ 的极点为 $-\frac1{\varepsilon_{\rm UV}}-\frac2{\varepsilon_{\rm IR}}$。紫外极点相消体现 Ward 恒等式 $Z_1=Z_2$；红外极点也相消，且\cref{eq:heavy-cv-exact}与 $\mu$ 无关，说明 NRQCD 矢量流在单圈没有反常维数。稍高于阈值（每个重夸克在质心系中的速度为 $\beta$），完整顶点还含势区域的 Coulomb 奇异性：以胶子质量作红外正规化数值计算单圈阿贝尔顶点（$\alpha\to C_F\as$），在 $\beta=0.01$--$0.08$ 上拟合，振幅修正为 $\frac{C_F\as}{\pi}K(\beta)$，
+\begin{equation}\label{eq:heavy-Kbeta}
+K(\beta)=\frac{\pi^2}{4\beta}-2+\order{\beta}\qquad(\text{拟合值 }2.46740/\beta-2.0003,\ \pi^2/4=2.46740).
+\end{equation}
+第一项是 Coulomb 交换，由 NRQCD 的 Coulomb 势复现（平方后即 Sommerfeld 因子 $1+\frac{\pi C_F\as}{2\beta}+\cdots$）；常数 $-2$ 恰为硬区域的 $(c_v-1)/(C_F\as/\pi)$（脚本 \texttt{s6\_\allowbreak threshold.py}）。修正很大：$\as=0.25$ 时 $16\as/(3\pi)\approx0.42$。
+\uses{prop:heavy-nrqcd-matching}
+\end{example}
+
+%%INSERT fig_nrqcd.tex
+
+\begin{conjecture}[产生的 NRQCD 因子化 \tagC]\label{conj:heavy-nrqcd-production}
+对一切以 $m_Q$ 为硬标度的单举重夸克偶素产生过程，对 $v$ 逐阶，
+\begin{equation}\label{eq:heavy-nrqcd-prod}
+\sigma(H+X)=\sum_n\frac{F_n(\Lambda)}{m_Q^{d_n-4}}\,\langle0|\mathcal O^H_n(\Lambda)|0\rangle,\qquad
+\mathcal O^H_n=\chi^\dagger\mathcal K_n\psi\Big(\sum_X\sum_{m_J}|H+X\rangle\langle H+X|\Big)\psi^\dagger\mathcal K'_n\chi ,
+\end{equation}
+其中 $F_n$ 是产生 $Q\bar Q[n]$ 的短程截面（可按 $\as(m_Q)$ 计算，与 $H$ 无关），$\mathcal K_n$、$\mathcal K'_n$ 为色与自旋矩阵（高维算符中含协变导数），长程矩阵元普适，且到 $v$ 的任一给定阶只有有限个\cite[第~VI.A~节，式~(6.4)]{BodwinBraatenLepage1995}。
+\uses{def:heavy-nrqcd}
+\end{conjecture}
+
+\paragraph{地位与缺口}
+猜想（[C]），不能说“NRQCD 产生的因子化已证明”。指定末态含 $H$ 使 KLN 求和中缺了一些割；BBL 论证两端都接在重夸克线上的软胶子属于矩阵元，而连接与偶素同向的部分子和其他喷注的软胶子“至少在微扰论中”相消，对强子引起的过程则“merely assume that the Glauber divergences cancel”（仅仅假设 Glauber 发散相消），并认为产生的论证不如衰变严格，与 Drell--Yan 相当\cite[第~VI.A~节]{BodwinBraatenLepage1995}。Nayak、Qiu、Sterman（NQS）在大 $\pT$ 胶子碎裂中发现 NNLO（两圈）有正比于 $\as^2v^2/\varepsilon$ 的不相消红外极点，常规八重态矩阵元不能匹配；规范不变性要求把八重态产生算符的色指标用延伸到无穷远的伴随 Wilson 线 $\Phi_l$ 补全（NQS 为确定起见取 $l$ 为类光矢量，在这一阶结果与 $l$ 的方向无关），补全后的矩阵元恰好产生同样的极点，因子化在 NNLO、$\order{v^2}$ 恢复\cite{NayakQiuSterman2005a,NayakQiuSterman2005b}，对八重态到单态的跃迁推广到 $v$ 的所有阶\cite{NayakQiuSterman2006}（[P]）；若无特殊相消，更高阶可能需要速度展开之外的非局域算符\cite{NayakQiuSterman2005a}。因此不能说“NQS 的规范完备 Wilson 线在 NNLO 不改变结果”：它们在 NNLO 是必需的。两圈协变计算与新进展见第~24~章的\cref{prop:front-nrqcd-ir}（[P]）与\cref{sec:front-quarkonium}。矩阵元的普适性与偏振在唯象上存在长期张力\cite{Butenschoen:2010rq,Butenschoen:2011yh,Butenschoen:2012px,Chao:2012iv}（综述\cite{BrambillaEtAl2011,Lansberg:2019adr}），本书不作裁断。升级途径：全阶证明或显式反例。
+
+\begin{proposition}[大 $\pT$ 重夸克偶素产生 \tagA]\label{prop:heavy-quarkonium-fragmentation}
+在硬碰撞中产生横动量 $\pT\gg m_Q$ 的重夸克偶素 $H$，其单举截面在 $m_Q^2/\pT^2$ 的领头与次领头幂次因子化为
+\begin{equation}\label{eq:heavy-frag}
+\dd\sigma_{H}=\sum_f\dd\hat\sigma_{f}\Big(\frac{\pT}{z},\mu\Big)\otimes D_{H/f}(z,\mu)
++\sum_{[Q\bar Q(\kappa)]}\dd\hat\sigma_{[Q\bar Q(\kappa)]}\Big(\frac{\pT}{z},\mu\Big)\otimes\mathcal D_{H/[Q\bar Q(\kappa)]}(z,\mu)
++\order{\frac{m_Q^4}{\pT^4}}\dd\sigma_H .
+\end{equation}
+第一项（领头幂次）是单部分子碎裂，$D_{H/f}$ 是\cref{def:pdf-ff}意义下的碎裂函数，$\dd\hat\sigma_f$ 是产生部分子 $f$ 的短程截面（初态部分子分布已含在内）；第二项（相对 $m_Q^2/\pT^2$ 压低）是硬碰撞中直接产生的、处于色与自旋态 $\kappa$ 的共线 $Q\bar Q$ 对的碎裂，$\mathcal D$ 为重夸克对（双部分子）碎裂函数，$\otimes$ 还包含对对内两个夸克光锥动量分数的卷积。碎裂函数不作进一步展开，特别是不作 NRQCD 展开。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+% errtype: E-S
+\uses{def:pdf-ff, asm:intro-bridge}
+\end{proposition}
+
+\begin{proofsketch}
+(1)~领头区域是高能部分子碎裂产生 $H$：标准的共线因子化，截面 $\propto\pT^{-4}$。(2)~在次领头幂次，另一个区域是 $Q\bar Q$ 对在硬碰撞中直接产生且彼此共线；它相对 $m_Q^2/\pT^2$ 压低，但可被 $v$ 的负幂次增强\cite{Fleming:2012wy}，在 NRQCD 中估计其碎裂函数可以重现色单态模型 NLO 计算中的大部分增强\cite{Kang:2011mg}。(3)~对每个区域给出红外安全硬部分的投影算符、碎裂函数的算符定义与演化方程\cite{Kang:2014tta}，在 SCET 中以双部分子碎裂函数写出对所有阶的因子化定理\cite{Fleming:2012wy}（此步只给出 E-S 型陈述）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+全阶论证（[A]），在所引文献\cite{Kang:2011mg,Kang:2014tta,Fleming:2012wy}的层次上。最弱的环节：在强子对撞中，它与一切有色末态的单举截面一样依赖于\cref{conj:dy-coloured-final}（[C]）所涉及的 Glauber 相消（没有初态强子的 $e^+e^-$ 湮灭见\cref{thm:coll-sia}，[A]）。碎裂函数的 NRQCD 因子化与\cref{conj:heavy-nrqcd-production}同为猜想（[C]），不属于本命题。升级途径：对有色末态证明 Glauber 相消。新进展见\cref{sec:front-quarkonium}。

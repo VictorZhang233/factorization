@@ -1,0 +1,47 @@
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 dot/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=3.2pt},
+         t1 boost/.style={draw,line width=1.1pt,-{Stealth[length=7pt,width=6pt]}}}
+\begin{tikzpicture}[fd]
+  % ---------------- hadron in its rest frame ----------------
+  \begin{scope}[shift={(-5.5,0)}]
+    \draw[hadron blob] (0,0) circle[radius=1.0];
+    \coordinate (r1) at (-0.52,0.42); \coordinate (r2) at (0.4,0.5);
+    \coordinate (r3) at (0.02,-0.1);  \coordinate (r4) at (-0.5,-0.52);
+    \coordinate (r5) at (0.5,-0.45);
+    \draw[gluon] (r1) -- (r2);
+    \draw[gluon] (r4) -- (r3);
+    \draw[gluon] (r3) -- (r5);
+    \foreach \c in {r1,r2,r3,r4,r5} \node[t1 dot] at (\c) {};
+    \node[font=\footnotesize] at (0,-1.4) {强子静止系};
+  \end{scope}
+  \draw[t1 boost] (-4.15,0) -- node[above,font=\footnotesize]{推动} (-2.75,0);
+  % ---------------- fast hadron: Lorentz-contracted pancake ----------------
+  \foreach \y in {-0.2,-0.55,-0.9} \draw[plain] (0,\y) -- (4.4,\y);
+  \draw[hadron blob] (0,0) ellipse[x radius=0.3,y radius=1.5];
+  \foreach \p in {(-0.05,1.15),(-0.08,0.35),(0.06,-0.05),(-0.06,-0.45),(0.07,-0.85),(-0.03,-1.2)}
+    \node[t1 dot] at \p {};
+  % struck parton -> hard scattering
+  \coordinate (H) at (3.05,0.75);
+  \draw[quark=0.47] (0.08,0.75) -- ($(H)+(180:0.4)$);
+  \node[t1 dot] at (0.08,0.75) {};
+  \draw[photon] (2.05,2.3) -- ($(H)+(122:0.4)$);
+  \draw[quark] ($(H)+(35:0.4)$) -- (4.4,1.7);
+  \draw[hard blob] (H) circle[radius=0.4];
+  \node at (H) {$H$};
+  % labels
+  \path[mom={$\xi P$},mom pos=0.8] (0.3,0.75) -- ($(H)+(180:0.4)$);
+  \node[font=\small] at (0.95,0.43) {$f(\xi)$};
+  \node[above left,inner sep=1pt] at (2.05,2.3) {$\gamma^*(q)$};
+  \node[right] at (4.4,1.7) {$\xi P+q$};
+  \node[right,align=left,font=\small] at (4.4,-0.55) {剩余部分\\$(1-\xi)P$};
+  \draw[mom arrow] (-0.45,1.85) -- node[above,inner sep=1.5pt]{$P$} (0.45,1.85);
+  \node[font=\footnotesize] at (0,-1.9) {无穷动量系};
+\end{tikzpicture}
+\caption{部分子模型的物理图像。左：强子静止系中部分子之间不断相互作用。右：在强子沿 $+z$ 快速运动的参考系
+（无穷动量系或 Breit 系）中，强子因 Lorentz 收缩成为“薄饼”，其中的部分子几乎共线地沿 $+z$ 运动，
+且因时间膨胀，部分子之间的相互作用在硬散射的时间尺度 $\sim1/Q$ 内被“冻结”。
+虚光子 $\gamma^*(q)$ 只与一个携带动量 $\xi P$ 的部分子发生硬散射 $H$，（在部分子模型的意义下）找到该部分子的数密度为 $f(\xi)$；
+其余部分子构成剩余部分，带走动量 $(1-\xi)P$，不参与硬散射。}
+\label{fig:parton-model}
+\end{figure}

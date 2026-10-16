@@ -1,0 +1,164 @@
+\section{幂次修正、强子层次的匹配与适用域}\label{sec:lamet-power}
+
+准 PDF 的幂次修正有三个来源：扭度 2 算符迹项给出的靶质量修正——可以精确算出；动力学高扭度（扭度 4 多部分子关联函数，坐标空间中的 $\order{z^2\Lambda^2}$）；以及与 Wilson 线自能的重整子相联系的线性修正 $\order{\Lambda/P^z}$（\cref{prop:lamet-lrr}）。本节依次处理前两者，然后把强子层次的匹配写成一个条件定理，其非微扰内容恰好是三个编号假设。记 $c\equiv M^2/(4P_z^2)$。
+
+\begin{proposition}[靶质量修正的精确形式 \tagR]\label{prop:lamet-tmc}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum}、\cref{prop:lattice-renormalizability}）。记 $q^\Gamma_M$ 为满足 $\int\dd x\,x^{N-1}q^\Gamma_M=K^\Gamma_N\,a_N$ 的紧支撑分布（领头扭度的靶质量变换；它是纯运动学的，与 $\as$ 无关），$a_N=\int x^{N-1}q$。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item $\Gamma=\gamma^z$：$K_N=\sum_i\binom{N-i}ic^i$；令 $f_\pm=\sqrt{1+4c}\pm1$，
+\begin{equation}\label{eq:lamet-tmc-z}
+q^{\gamma^z}_M(x)=\frac1{\sqrt{1+4c}}\Big[\frac{f_+}2\,q\Big(\frac{2x}{f_+}\Big)-\frac{f_-}2\,q\Big(-\frac{2x}{f_-}\Big)\Big],
+\end{equation}% VF-LAM-11
+其逆为 $q(x)=\sqrt{1+4c}\sum_{n\ge0}\frac{f_-^n}{f_+^{n+1}}\big[(1+(-1)^n)q^{\gamma^z}_M(\frac{f_+^{n+1}x}{2f_-^n})+(1-(-1)^n)q^{\gamma^z}_M(-\frac{f_+^{n+1}x}{2f_-^n})\big]$；粒子数守恒；对支撑在 $[0,1]$ 中的夸克分布，支撑变为 $[-\frac{f_-}2,\frac{f_+}2]\simeq[-c,1+c]$（含反夸克时为 $[-\frac{f_+}2,\frac{f_+}2]$）。
+\item $\Gamma=\gamma^0$：$K^\perp_N=\sum_i\binom{N-i}i\frac{N-2i}Nc^i=K_N-\frac{2c}N\frac{\dd K_N}{\dd c}$，
+\begin{equation}\label{eq:lamet-tmc-0}
+q^{\gamma^0}_M(x;c)=q^{\gamma^z}_M(x;c)-2c\int_0^1\frac{\dd y}y\,\partial_c q^{\gamma^z}_M\Big(\frac xy;c\Big);
+\end{equation}
+$K^\perp_1=K^\perp_2=1$（归一化与 $\langle x\rangle$ 没有靶质量修正），$K^\perp_3=1+\frac23c$，$K^\perp_4=1+\frac32c$。
+\item 到 $\order{c}$：$q^{\gamma^z}_M=q-c\,(xq'+q)$，$q^{\gamma^0}_M=q-c\,(xq'+3q)+2c\int_{|x|}^1\frac{\dd y}yq(\frac xy)$。
+\item 因为在固定 $P^z$ 下 $c$ 与 $\lambda$ 无关，领头扭度的准 PDF 对 $\as$ 的所有阶为 $\tilde q_\Gamma=C_\Gamma\otimes q^\Gamma_M$：无质量的匹配核作用在靶质量变换后的 PDF 上。对赝 PDF，靶质量参数 $-M^2z^2/(4\lambda^2)$ 随 $\lambda$ 变化，修正为 $\order{z^2M^2}$。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{asm:lamet-ope, thm:lamet-coordinate, prop:lattice-renormalizability, def:lattice-quasi, thm:lamet-parton-momentum}
+\end{proposition}
+
+\begin{proof}
+\emph{迹项。}$T_N(z)\equiv z_{\mu_1}\cdots z_{\mu_N}(P^{\mu_1}\cdots P^{\mu_N}-\text{迹})$ 是 $z$ 的 $N$ 次齐次多项式，首项为 $(P\cdot z)^N$，且是调和的：$\Box_zT_N=N(N-1)\times(\text{张量的迹})=0$。设 $T_N=\sum_k\beta_k(P^2z^2)^k(P\cdot z)^{N-2k}$，$\beta_0=1$。在四维中 $\Box_z[(z^2)^k(P\cdot z)^{N-2k}]=4k(N-k+1)(z^2)^{k-1}(P\cdot z)^{N-2k}+(N-2k)(N-2k-1)P^2(z^2)^k(P\cdot z)^{N-2k-2}$，故 $\Box_zT_N=0$ 等价于 $\beta_k=-\beta_{k-1}\frac{(N-2k+2)(N-2k+1)}{4k(N-k+1)}$，解为 $\beta_k=\binom{N-k}k(-\frac14)^k$：
+\[
+T_N(z)=(P\cdot z)^N\sum_{i}\binom{N-i}i\Big(-\frac{P^2z^2}{4(P\cdot z)^2}\Big)^i ,
+\]
+即 Chebyshev $U$（Gegenbauer $C^{(1)}$）多项式。对 $z=z\hat e_z$，$-\frac{P^2z^2}{4(P\cdot z)^2}=\frac{M^2z_3^2}{4P_z^2z_3^2}=c$，\emph{与 $z$ 无关}。
+
+\emph{(a) 的矩。}由 (OP1)，$\Gamma=\gamma^\alpha$ 的前向矩阵元中 $O_1^{\alpha\mu_1\cdots\mu_{N-1}}$ 的贡献为 $2a_N\frac1N\frac{\partial T_N}{\partial z_\alpha}$。对 $\alpha=z$（$z^3=-(P\cdot z)/P^z$），用 $\partial(z^2)^i/\partial z_\alpha=2iz^\alpha(z^2)^{i-1}$、$\partial(P\cdot z)/\partial z_\alpha=P^\alpha$ 与 $(P\cdot z)^2/(P_z^2z^2)=-1$，除以 $2P^z(P\cdot z)^{N-1}$ 后两部分分别给出 $\binom{N-i}ic^i$ 乘 $2i$ 与 $N-2i$，合计 $\frac1N\sum_i\binom{N-i}i(2i+N-2i)c^i=K_N$；(OP1) 中并入的 $(z^\alpha/z^2)T_N$ 结构同样给出 $K_N$。$\Gamma=\gamma^0$：$u=\hat e_t$，$u\cdot z=0$，$u\cdot\partial_z(z^2)=0$，$u\cdot\partial_z(P\cdot z)=P^0$，除以 $2P^0(P\cdot z)^{N-1}$ 得 $\frac1N\sum_i\binom{N-i}i(N-2i)c^i=K^\perp_N$（只有第二部分）；$K^\perp_N=K_N-\frac{2c}NK_N'$ 来自 $\sum_ii\binom{N-i}ic^i=cK_N'$。$N=2$：$\gamma^0$ 对应 $T^{0z}$，迹项 $\propto g^{0z}=0$，故 $K^\perp_2=1$。
+
+\emph{(a) 的 $x$ 空间形式。}令 $r_\pm=\frac{1\pm\sqrt{1+4c}}2$（$r^2=r+c$ 的根，$r_+=\frac{f_+}2$，$r_-=-\frac{f_-}2$）；$K_N$ 满足 $K_N=K_{N-1}+cK_{N-2}$、$K_0=K_1=1$，故 $K_N=\frac{r_+^{N+1}-r_-^{N+1}}{r_+-r_-}$。\cref{eq:lamet-tmc-z}右边的 $N-1$ 阶矩为 $a_N\frac{(f_+/2)^{N+1}+(-1)^N(f_-/2)^{N+1}}{\sqrt{1+4c}}=K_Na_N$（变量代换 $t=2x/f_+$ 与 $t=-2x/f_-$）。紧支撑分布由其矩唯一确定（其 Fourier 变换是整函数，Taylor 系数正比于矩），故\cref{eq:lamet-tmc-z}成立；逆级数可直接代入验证\cite[附录~B]{Chen:2016utp}。$N=1$ 给出粒子数守恒。支撑：$q(2x/f_+)$ 与 $q(-2x/f_-)$ 分别在 $x\in[0,\frac{f_+}2]$ 与 $x\in[-\frac{f_-}2,0]$ 处非零（$q$ 支撑在 $[0,1]$ 时）。
+
+\emph{(b)。}算子 $A[g](x)=\int_0^1\frac{\dd y}yg(\frac xy)$ 把 $N-1$ 阶矩除以 $N$：令 $x=yt$，
+\[
+\int\dd x\,x^{N-1}A[g](x)=\int_0^1\dd y\,y^{N-1}\int\dd t\,t^{N-1}g(t)=\frac1N\int\dd t\,t^{N-1}g(t).
+\]
+故\cref{eq:lamet-tmc-0}右边的矩为 $K_Na_N-\frac{2c}NK_N'a_N=K^\perp_Na_N$。
+
+\emph{(c)。}$K_N=1+(N-1)c+\order{c^2}$，$K^\perp_N=1+\frac{(N-1)(N-2)}Nc+\order{c^2}$。用 $\int x^Nq'\,\dd x=-Na_N$，$-(xq'+q)$ 的矩为 $(N-1)a_N$；$-(xq'+3q)+2A[q]$ 的矩为 $(N-3+\frac2N)a_N=\frac{(N-1)(N-2)}Na_N$；$A[q](x)=\int_{|x|}^1\frac{\dd y}yq(\frac xy)$（$q$ 支撑在 $[-1,1]$）。这正是\cite{Braun:2018brg}的结果（取 $v^2=-1$、$(p\cdot v)^2=P_z^2$），构成 (b) 的独立检验。
+
+\emph{(d)。}代入 (OP1)：$\tilde h_\Gamma(\lambda,z^2)=\sum_nC^\Gamma_n(-z^2\mu^2)\frac{(\ii\lambda)^n}{n!}K^\Gamma_{n+1}(c)a_{n+1}+(\text{高扭度})$。固定 $P^z$ 时 $c$ 为常数，所以 $K^\Gamma_{n+1}a_{n+1}$ 就是 $q^\Gamma_M$ 的矩；把\cref{thm:lamet-coordinate}的证明中的 $a_{n+1}$ 换成它们，再作\cref{thm:lamet-parton-momentum}的变量代换，即得 $\tilde q_\Gamma=C_\Gamma\otimes q^\Gamma_M$。对赝 PDF，$z^2$ 固定，迹项给出 $(P\cdot z)^{N-2i}(M^2z_3^2/4)^i$，即 $\order{z^2M^2}$ 的修正。
+\end{proof}
+
+关于“靶质量修正与匹配可交换”的确切含义：(d) 说的是先作靶质量变换、再用无质量的核匹配。反过来的次序不同：对伸缩 $D_sq(x)=sq(x/s)$，变量代换给出 $C\otimes_{P^z}D_sq=D_s(C\otimes_{sP^z}q)$，而核通过 $\ln(\mu^2/(4y^2P_z^2))$ 依赖于 $P^z$，$s_+=f_+/2=1+c+\order{c^2}$，所以两种次序相差 $\order{\as c}$。(a) 的 $\gamma^z$ 形式见\cite[附录~B]{Chen:2016utp}；那里指出更早的公式\cite{Alexandrou:2015rja}不保持粒子数。(b) 中的比 $K^\perp_N$ 与 $x$ 空间形式和\cite{Chen:2016utp}中螺旋度分布的靶质量变换在数学上相同（只是把 $\Delta q$ 换成 $q$），$\gamma^0$ 前两阶矩与 $P^z$ 无关已见于\cite{Bhattacharya:2019cme}，(d) 可由\cite{Braun:2018brg}所引的 Balitsky--Braun 恒等式推出；把它明确识别为非极化 $\gamma^0$ 准 PDF 的靶质量修正以及 $\partial_c$ 表示，是本书给出的推导。修正的大小见\cite{Radyushkin:2017ffo}（据其摘要）。
+
+\begin{example}[$K_N$ 与 $K^\perp_N$（$N\le4$）]\label{ex:lamet-tmc-moments}
+由定义，$K_1=1$，$K_2=1+c$，$K_3=1+2c$，$K_4=1+3c+c^2$；$K^\perp_1=1$，$K^\perp_2=\binom20\frac22+\binom11\frac02c=1$；$K^\perp_3=1+\binom21\frac13c=1+\frac23c$；$K^\perp_4=1+\binom31\frac24c+\binom22\frac04c^2=1+\frac32c$。检验 $K^\perp_N=K_N-\frac{2c}NK_N'$：$N=4$ 时 $1+3c+c^2-\frac{2c}4(3+2c)=1+\frac32c$。$\order{c}$ 形式的矩：$\gamma^z$ 给出 $1+(N-1)c$，$\gamma^0$ 给出 $1+\frac{(N-1)(N-2)}Nc$，$N=1,2$ 时为零。$\gamma^0$ 下 $\langle x\rangle$ 没有靶质量修正的原因是：$N=2$ 的算符是 $T^{0z}$，而 Lorentz 结构 $P^0P^z-\frac14g^{0z}M^2$ 中 $g^{0z}=0$。对 $P^z=2M$（$c=\frac1{16}$），$\langle x\rangle$ 的靶质量修正对 $\gamma^z$ 为 $6.3\%$、对 $\gamma^0$ 为零；$\langle x^2\rangle$ 的修正分别为 $12.5\%$ 与 $4.2\%$。
+\uses{prop:lamet-tmc}
+\end{example}
+
+\begin{lemma}[Fourier 引理：$z^2\leftrightarrow\partial_x^2$]\label{lem:lamet-fourier}
+设 $\rho$ 是支撑在 $[-1,1]$ 中的分布，$r(\lambda)=\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\rho(\alpha)$。在固定 $P^z$ 下（$z^2=-\lambda^2/P_z^2$），作为 $\mathbb R$ 上的分布，
+\begin{equation}\label{eq:lamet-fourier-lemma}
+\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\big[z^2\Lambda^2\,r(\lambda)\big]=+\frac{\Lambda^2}{P_z^2}\,\rho''(x),
+\end{equation}% VF-LAM-12
+在 $\rho\in C^2$ 的开区间上逐点成立；若 $\rho\sim x^a$（$x\to0^+$）、$\sim(1-x)^b$（$x\to1^-$），则 $\rho''/\rho\to a(a-1)/x^2$ 与 $b(b-1)/(1-x)^2$。
+\uses{cor:lamet-entire}
+\end{lemma}
+
+\begin{proof}
+$\lambda^2\ee^{-\ii x\lambda}=-\partial_x^2\ee^{-\ii x\lambda}$，而 $\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}r(\lambda)=\rho(x)$（$r$ 是指数型整函数、在实轴上多项式有界，\cref{cor:lamet-entire}，所以变换在分布意义下存在）；因 $z^2\Lambda^2r=-\frac{\Lambda^2}{P_z^2}\lambda^2r$，其变换为 $-\frac{\Lambda^2}{P_z^2}(-\rho'')$。端点比值是初等的。
+\end{proof}
+
+若扭度 4 系数对 $z^2$ 有对数依赖（扭度 4 反常维度），则另外出现与 $\ln\lambda^2$ 的变换（$-2\gamma_E\delta(x)-[1/|x|]_{\rm reg}$）的卷积，只改变端点幂次的对数修正。文献中每一个“$\Lambda^2/(x^2P_z^2)$”型陈述背后都是这一机制：坐标空间中 $z^2$ 压低的余项在动量空间成为对 $x$ 的二阶导数；这一恒等式在\cite{Braun:2018brg}中被隐含地使用。
+
+\begin{corollary}[端点二分]\label{cor:lamet-endpoint}
+设在 $x\to1$ 附近 $q=(1-x)^bg_q(x)$、$\rho_4=(1-x)^{b+\delta}g_4(x)$，$g_q,g_4$ 在 $x=1$ 附近为 $C^2$，$g_q(1),g_4(1)\neq0$，$(b+\delta)(b+\delta-1)\neq0$。则相对修正 $\frac{\Lambda^2}{P_z^2}\rho_4''/q=\frac{\Lambda^2}{P_z^2}(b+\delta)(b+\delta-1)\frac{g_4(1)}{g_q(1)}(1-x)^{\delta-2}(1+\order{1-x})$：$\delta=1$ 给出 $\Lambda^2/((1-x)P_z^2)$（\cref{prop:lamet-bvz}的重整子模型），$\delta=0$ 给出 $\Lambda^2/((1-x)^2P_z^2)$（文献\cite{JiEtAl2021}按“旁观者动量 $(1-x)P^z$”的计数）；在 $x\to0$ 处若 $q\sim\rho_4\sim x^a$，则为 $\Lambda^2/(x^2P_z^2)$。两种已发表的大 $x$ 计数规则因此是关于 $\rho_4$ 未知端点行为的不同陈述，并不矛盾。% VF-LAM-12
+\uses{lem:lamet-fourier}
+\end{corollary}
+
+\begin{proof}
+$\rho_4''=(b+\delta)(b+\delta-1)(1-x)^{b+\delta-2}g_4-2(b+\delta)(1-x)^{b+\delta-1}g_4'+(1-x)^{b+\delta}g_4''$，除以 $q=(1-x)^bg_q$；后两项相对于第一项为 $\order{1-x}$。$x\to0$ 同理（\cref{lem:lamet-fourier}）。
+\end{proof}
+
+$P=0$ 归一化项及其 $1/(1-x)^2$ 增强见\cite{Braun:2018brg}，两种计数规则都写在\cite{JiEtAl2021}中；这里把它们统一为一个初等的二分。QCD 中 $\delta$ 的值是开放问题（\cref{rem:lamet-open}）。
+
+%%% FIGBLOCK fig:lamet-validity
+
+\begin{proposition}[扭度 4 修正的重整子模型（大 $\beta_0$） \tagP]\label{prop:lamet-bvz}
+在大 $\beta_0$（泡链）近似中，坐标空间系数函数的 Borel 变换（Borel 变量 $w$ 与\cref{def:power-borel}的 $u$ 相同）在 $w=\frac12$ 处有奇点，$B[H]\to\frac{-4C_F}{w-1/2}\sqrt X$，它就是 Wilson 线的线性发散（归一化后消失）；领头的红外重整子在 $w=1$，$B[H^\parallel]\to\frac{-4C_F}{1-w}[\alpha+\bar\alpha\ln\bar\alpha]X$，$B[H^\perp]\to\frac{-4C_F}{1-w}[\alpha+\bar\alpha\ln\bar\alpha+\alpha\bar\alpha]X$（$\parallel/\perp$ 即 $\Gamma=\gamma^z/\gamma^0$，$\bar\alpha=1-\alpha$）。若模糊度由同一函数形式的扭度 4 项抵消，则 $\mathcal I^\parallel(\lambda)=I(\lambda)+\kappa z^2\Lambda^2\int_0^1\dd\alpha\,(\alpha+\bar\alpha\ln\bar\alpha)I(\alpha\lambda)$，$|\kappa|\simeq\frac{\pi\ee^{5/3+2\gamma_E}}{4\beta_0}\simeq1.5$（示意性，符号不定），由\cref{lem:lamet-fourier}，
+\begin{equation}\label{eq:lamet-bvz}
+\mathcal Q^\parallel(x)=q(x)+\frac{\kappa\Lambda^2}{x^2P_z^2}\Big\{\int_{|x|}^1\frac{\dd y}y\frac{y^2}{[1-y]_+}q\Big(\frac xy\Big)+q(x)-x\,q'(x)\Big\},
+\end{equation}% VF-LAM-13; E03
+其中 $[\,\cdot\,]_+$ 是 $[0,1]$ 上的加号分布（写成 $[|x|,1]$ 上的积分时出现 $q(x)\ln(1-|x|)$ 项）。因此 $\mathcal Q=q\{1+\order{\frac{\Lambda^2}{x^2(1-x)P_z^2}}\}$，而 $\mathcal P(x,z)=q\{1+\order{z^2\Lambda^2(1-x)}\}$；以 $P=0$ 的矩阵元归一化使 $R^\parallel$ 增加 $-\frac14\bar xx^2q''/q$（$\perp$：$-\frac5{12}$），即 $\Lambda^2/((1-x)^2P_z^2)$ 型的项（$[k]_+$ 含 $-\frac14\delta(\bar\alpha)$，$\int_0^1k=\frac14$）。
+\uses{lem:lamet-fourier, cor:lamet-endpoint, def:power-borel, prop:power-renormalon-examples}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 把系数函数中的跑动耦合换成泡链，算出其 Borel 变换\cite{Braun:2018brg}；文献的约定为 $H=\delta(1-\alpha)+\frac1{\beta_0}\int_0^\infty\dd w\,\ee^{-w/(\beta_0a_s)}B[H](w)$，$a_s=\as/(4\pi)$，$\beta_0$ 即本书的 $\beta_0$，故 $\ee^{-w/(\beta_0a_s)}=\ee^{-4\pi w/(\beta_0\as)}$，$w=u$。(2) 设模糊度被同形的扭度 4 项抵消，得 $\kappa$ 的估计。(3) 动量空间：由\cref{lem:lamet-fourier}，$\mathcal Q^\parallel-q=\frac{\kappa\Lambda^2}{P_z^2}\rho''$，$\rho(x)=\int_x^1\frac{\dd t}tk(\frac xt)q(t)$（$x>0$），$k(y)=y+\bar y\ln\bar y$，$k(1)=1$，$k''(y)=\frac1{1-y}$；逐次求导时 $k'(y)=-\ln(1-y)$ 在 $y\to1$ 处的对数发散与 $\int k''$ 的端点发散相消，合起来正是 $[0,1]$ 上的加号分布，并留下 $q(x)\ln(1-x)$——即\cref{eq:lamet-bvz}（$x<0$ 时同样的推导给出 $-xq'(x)$）。(4) 端点行为由\cref{cor:lamet-endpoint}读出：$\rho\sim(1-x)^{b+1}$，即 $\delta=1$；$[k]_+$ 的 $-\frac14\delta(\bar\alpha)$ 给出 $\delta=0$ 型的项。完整论证见\cite{Braun:2018brg}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagP：只是关于泡链的陈述；模型与真实扭度 4 矩阵元的等同（函数形式、$\kappa$）是一个猜想（\cref{conj:power-renormalon-ht}）。关于印刷形式：\cite[式~(63)--(64)]{Braun:2018brg}（$x>0$）的 $R^{\parallel,\perp}_{\mathcal Q}$ 漏掉了方括号中的 $q(x)\ln(1-x)$，而该文式~(61)--(62) 是正确的（附录~Q 第~9~条）；正确的 $R$ 等于印刷形式加 $(1-x)\ln(1-x)$；$x<0$ 时 \cref{eq:lamet-bvz} 中的项为 $-xq'(x)$ 而非 $-|x|q'(x)$。该文给出的 $30\%$ 与 $24\%$ 的大小是针对其模型 PDF 的。推广到准、赝 GPD 及特殊点 $x=\pm\xi$ 见\cite{Braun:2024snf}（据其摘要）与\cref{conj:yzliu-gpd-xi}（第~23~章）。
+
+以下三个编号假设是强子层次匹配的全部非微扰输入。记 $\tilde h_{\rm tw2}$ 为领头扭度部分（\cref{thm:lamet-coordinate}，带有\cref{prop:lamet-tmc}的靶质量补全），$\tilde h_{\rm tw4}$ 为\cref{asm:lamet-twist4}的扭度 4 项。
+
+\begin{assumption}[扭度展开对 Ioffe 时间的一致性 \tagC]\label{asm:lamet-uniform}
+\begin{enumerate}[label=(UI-\alph*),leftmargin=3.4em,itemsep=1pt,topsep=2pt]
+\item （坐标形式，短距离因子化与\cref{thm:lamet-lcs}的强子诠释使用）对强子态与 $0<-z^2\le z_0^2$，$|\tilde h(\lambda,z^2)-\tilde h_{\rm tw2}(\lambda,z^2)|\le K(-z^2)\Lambda^2(1+|\ln(-z^2\mu^2)|)^k$，对 $\lambda\in\mathbb R$ 一致。
+\item （射线形式，\cref{thm:lamet-hadronic}使用）沿准 PDF 的射线 $z^2=-\lambda^2/P_z^2$，余项 $R\equiv\tilde h-\tilde h_{\rm tw2}-\tilde h_{\rm tw4}$ 限制在 $|\lambda|\le z_0P^z$ 上的 Fourier 变换在固定 $x\in(0,1)$ 处为 $o(P_z^{-2})$。
+\end{enumerate}
+（逐点界 (UI-a) 本身不能给出受 $P^z$ 压低的 Fourier 变换，因为 $\int_{|\lambda|\le z_0P^z}\lambda^2\dd\lambda/P_z^2\sim z_0^3P^z$；扭度 4 项只是由于其结构（\cref{lem:lamet-fourier}）才贡献 $\order{P_z^{-2}}$，所以需要单独的射线形式 (UI-b)。）
+地位：\tagC——没有全阶论证；证据来自重整子模型（\cref{prop:lamet-bvz}）与可解模型；Liu 关于 Gross--Neveu 模型的定理只覆盖虚的 Ioffe 时间（\cref{thm:yzliu-gn-convergence}，第~23~章）。
+文献：\cite{IzubuchiEtAl2018,Braun:2018brg,JiEtAl2021}。
+被使用于：\cref{thm:lamet-hadronic}。
+解除途径：对 $\lambda$ 一致的、带余项界的非微扰 OPE（参见\cref{asm:intro-np-ope}）；作为第一步，在一个模型中对实 Ioffe 时间证明它。
+\uses{thm:lamet-coordinate, prop:lamet-tmc}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC：没有任何全阶论证；它是\cref{thm:lamet-hadronic}最弱的前提之一，并决定\cref{thm:lamet-lcs}的强子诠释能否从 $|\omega|\ll1$ 推广到有限 $\omega$。可解模型中的证据只覆盖虚的 Ioffe 时间（第~23~章）。
+
+\begin{assumption}[领头幂次修正的结构（扭度 4） \tagC]\label{asm:lamet-twist4}
+\begin{enumerate}[label=(TW\arabic*),leftmargin=3.4em,itemsep=1pt,topsep=2pt]
+\item 强子 ITD 的 $\order{z^2}$ 项具有形式 $\tilde h_{\rm tw4}=z^2\Lambda^2\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\rho_4(\alpha,z^2)$，$\rho_4$ 是支撑在 $[-1,1]$ 中、内部光滑的分布。
+\item $\rho_4$ 对 $z^2$ 的依赖至多是对数的（扭度 4 反常维度）。
+\end{enumerate}
+地位：\tagC——这一形式由微扰论中的扭度 4 OPE 提示（支撑同\cref{prop:lamet-support}），强子结构是假设的。
+文献：\cite{Braun:2018brg,Radyushkin2017,JiEtAl2021}。
+被使用于：\cref{asm:lamet-large-z}、\cref{thm:lamet-hadronic}。
+解除途径：对强子矩阵元、能控制 $z^2$ 依赖的扭度 4 OPE（非微扰 OPE）。
+\uses{prop:lamet-support, cor:lamet-entire}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC：(TW1) 的支撑性质在微扰论中由\cref{prop:lamet-support}的同一论证给出，但把强子的 $\order{z^2}$ 项写成这种形式需要非微扰的扭度 4 算符乘积展开；(TW2) 依赖于扭度 4 反常维度的结构。它是\cref{thm:lamet-hadronic}的前提，$\rho_4$ 的端点行为（\cref{cor:lamet-endpoint}中的 $\delta$）也由它决定而未知。
+
+\begin{assumption}[大距离区域的控制 \tagC]\label{asm:lamet-large-z}
+\begin{enumerate}[label=(LZ\arabic*),leftmargin=3.4em,itemsep=1pt,topsep=2pt]
+\item 在固定 $x\in(0,1)$ 处，当 $P^z\to\infty$ 时 $\int_{|\lambda|>z_0P^z}\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}[\tilde h-\tilde h_{\rm tw2}](\lambda,-\lambda^2/P_z^2)=o(1)$。
+\item 同样的积分，被积函数换成 $\tilde h-\tilde h_{\rm tw2}-\tilde h_{\rm tw4}$，为 $o(P_z^{-2})$。
+\end{enumerate}
+地位：\tagC——需要强子 Wilson 线关联函数在大距离处、常数对 $P^z$ 一致的控制；\cref{thm:lamet-exp-decay}在\cref{asm:lamet-gap}之下给出衰减，但没有可用的常数；见\cref{conj:lamet-decay-qcd}。
+文献：\cite{Ji:2026vir}（预印本），\cite{JiEtAl2021,Gao:2021dbh}。
+被使用于：\cref{thm:lamet-hadronic}。
+解除途径：强子矩阵元的定量指数衰减，常数对 $P^z$ 一致。
+\uses{thm:lamet-coordinate, asm:lamet-twist4}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagC：需要强子 Wilson 线关联函数在大距离处的定量衰减，且常数对 $P^z$ 一致；\cref{thm:lamet-exp-decay}只在\cref{asm:lamet-gap}（\tagC）之下给出固定 $P^z$ 的衰减，没有可用的常数，QCD 中的渐近形式只是\cref{conj:lamet-decay-qcd}。它是\cref{thm:lamet-hadronic}的前提，也是 Fourier 逆问题之争（\cref{rem:lamet-inverse-problem}）的数学核心。
+
+\begin{theorem}[强子层次的 LaMET 匹配与幂次修正 \tagR]\label{thm:lamet-hadronic}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-uniform}、\cref{asm:lamet-twist4}、\cref{asm:lamet-large-z}（及 \cref{thm:lattice-lamet}、\cref{prop:lamet-tmc}）。对强子态、固定 $x\in(0,1)$ 与 $P^z\to\infty$，
+\begin{equation}\label{eq:lamet-hadronic}
+\tilde q_\Gamma(x,P^z)=\int_{-1}^1\frac{\dd y}{|y|}C_\Gamma\Big(\frac xy,\frac\mu{|y|P^z}\Big)q^\Gamma_M(y,\mu)+\frac{\Lambda^2}{P_z^2}\rho_4''(x)+o(P_z^{-2}),
+\end{equation}
+其中 $q^\Gamma_M=f+\order{M^2/P_z^2}$ 是靶质量变换后的 PDF（\cref{prop:lamet-tmc}）；在 (TW2) 下 $\rho_4''$ 另附与 $\ln\lambda^2$ 的变换的卷积（只有对数修正）。因此相对修正在小 $x$ 处为 $\order{\Lambda^2/(x^2P_z^2)}$，在大 $x$ 处若 $\rho_4/f\sim(1-x)^\delta$ 则为 $\order{\Lambda^2/((1-x)^{2-\delta}P_z^2)}$；在领头幂次（只需 (LZ1)）$\tilde q=C\otimes q_M+o(1)$。
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{asm:lamet-uniform, asm:lamet-twist4, asm:lamet-large-z, thm:lattice-lamet, prop:lamet-tmc, lem:lamet-fourier, cor:lamet-endpoint}
+\end{theorem}
+
+\begin{proof}
+把\cref{eq:lamet-quasi-itd}的被积函数分成四部分：$\tilde q={\rm FT}[\tilde h_{\rm tw2}]+{\rm FT}[\tilde h_{\rm tw4}]+{\rm FT}[R\,\theta(|\lambda|\le z_0P^z)]+{\rm FT}[R\,\theta(|\lambda|>z_0P^z)]$，FT 表示沿射线的 Fourier 变换。第一项是匹配公式：由\cref{thm:lattice-lamet}（部分子态的全阶匹配，核与靶无关）与\cref{prop:lamet-tmc}(d)，它等于 $C_\Gamma\otimes q^\Gamma_M$。第二项恰为 $\frac{\Lambda^2}{P_z^2}\rho_4''$（\cref{lem:lamet-fourier}；$\rho_4$ 紧支撑，故 $\tilde h_{\rm tw4}$ 沿射线是缓增的）。第三项由 (UI-b) 为 $o(P_z^{-2})$，第四项由 (LZ2) 为 $o(P_z^{-2})$（领头幂次只需 (LZ1)：把 $\tilde h_{\rm tw4}$ 并入余项）。端点行为由\cref{cor:lamet-endpoint}读出。
+\end{proof}
+
+内容等级为 \tagC。假设的证据：重整子模型（\cref{prop:lamet-bvz}）、可解模型（第~23~章）、固定 $P^z$ 下的指数衰减（\cref{thm:lamet-exp-decay}，\cref{conj:lamet-decay-qcd}）。这一蕴含用到\cref{prop:lamet-tmc}与\cref{lem:lamet-fourier}（本书给出的推导）。
+
+\begin{remark}[LaMET 预言的适用域]\label{rem:lamet-domain}
+展开参数在小 $x$ 处是 $\Lambda/(|x|P^z)$，在大 $x$ 处是 $\Lambda/(|1-x|P^z)$；匹配本身涉及 $\as(2|x|P^z)$。在 $Q_{\rm eff}=2xP^z$ 处作重整化群改进\cite{Su:2022fiu}：$2xP^z\gtrsim1.5$ GeV 时固定阶与改进结果一致，$0.7\lesssim2xP^z\lesssim1.5$ GeV 时改进是重要的，$2xP^z\lesssim0.7$ GeV 时微扰匹配失效（这些是经验数值，不是定理）；坐标空间中重整化群改进的系数在 $z\approx0.2$--$0.3$ fm 以外失效。区域 $x\lesssim\Lambda/P^z$ 与 $1-x\lesssim\Lambda/P^z$ 必须排除或借助其他输入（矩，\cref{sec:lamet-sdf}）。在固定阶，匹配只在 $[x_0,1-x_0]$（$x_0P^z\gg\Lambda$）上一致成立；有阈值重求和时，大 $x$ 的边界变为 $(1-x)P^z\gg\Lambda$（\cref{thm:yzliu-threshold}，第~23~章）。这是定理适用域的一部分，不是缺陷（\cref{fig:lamet-validity}）。
+\end{remark}

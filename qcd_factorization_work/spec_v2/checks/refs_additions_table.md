@@ -1,0 +1,52 @@
+## 5. spec-v2 additions (INSPIRE / Crossref)
+
+Fetched 2026-10-10 by `spec_v2/checks/fetch_additions.py` (one INSPIRE hit per query; the record, the query and the metadata used for the check are in `spec_v2/checks/inspire_additions/`). These are classic or reference works added for Ch2 `qcd`, App M/N/O and the open items of refdoc S60. Their content has **not** been read for this spec: cite them only for their standard attribution (the purpose column) or for content documented elsewhere (frontier reports, refdoc notes); anything more needs `(verify)`. Two queries returned records that were already present (`Andrasi:1980qw` in v1, `Hamberg:1991qt` in others.bib).
+
+| key | readable alias | first author | publication | title | INSPIRE query | purpose |
+|---|---|---|---|---|---|---|
+| `Andrasi:1980qw` | `AndrasiEtAl1981` | Andrasi, A. | Nucl.Phys.B 182 (1981) 104 | Soft Divergences in Perturbative {QCD} | `j Nucl.Phys.B,182,104` | S60/Ch12: two-loop soft-gluon effects in DY — already in v1 |
+| `Baikov:2016tgj` | `BaikovChetyrkinKuhn2017` | Baikov, P.A. | Phys.Rev.Lett. 118 (2017) 082002 | Five-Loop Running of the QCD Coupling Constant | `j Phys.Rev.Lett.,118,082002` | Ch2 qcd: five-loop beta function |
+| `Beneke:1998eq` | `BenekeBraunKivel1998` | Beneke, M. | Phys.Lett.B 443 (1998) 308 | The Operator product expansion, nonperturbative couplings and the Landau pole: L | `j Phys.Lett.B,443,308` | S60/Ch21: O(N) sigma model renormalons |
+| `Bostelmann:2005rr` | `Bostelmann2005` | Bostelmann, Henning | J.Math.Phys. 46 (2005) 082304 | Operator product expansions as a consequence of phase space properties | `j J.Math.Phys.,46,082304` | S60/App M: OPE from phase-space properties (AQFT) |
+| `Brodsky:1997de` | `BrodskyPauliPinsky1998` | Brodsky, Stanley J. | Phys.Rept. 301 (1998) 299 | Quantum chromodynamics and other field theories on the light cone | `j Phys.Rept.,301,299` | S60/App O: light-cone quantization review |
+| `Callan:1970yg` | `Callan1970` | Callan, Curtis G., Jr. | Phys.Rev.D 2 (1970) 1541 | Broken scale invariance in scalar field theory | `j Phys.Rev.D,2,1541` | Ch2 qcd: Callan-Symanzik equation |
+| `Chang:1973qi` | `ChangYan1973` | Chang, Shau-Jin | Phys.Rev.D 7 (1973) 1147 | Quantum field theories in the infinite momentum frame. 2. Scattering matrices of | `j Phys.Rev.D,7,1147` | S60/App O: Feynman rules at infinite momentum |
+| `Chay:2003ju` | `ChayKim2004` | Chay, Junegone | Nucl.Phys.B 680 (2004) 302 | Nonleptonic B decays into two light mesons in soft collinear effective theory | `j Nucl.Phys.B,680,302` | S60/Ch20: B->pi pi in SCET |
+| `Cheng:1969eh` | `ChengWu1969` | Cheng, Hung | Phys.Rev.Lett. 22 (1969) 666 | High-energy elastic scattering in quantum electrodynamics | `j Phys.Rev.Lett.,22,666` | S60/App O: eikonal high-energy scattering in QED |
+| `Chetyrkin:1982zq` | `ChetyrkinGorishnyTkachov1982` | Chetyrkin, K.G. | Phys.Lett.B 119 (1982) 407 | OPERATOR PRODUCT EXPANSION IN THE MINIMAL SUBTRACTION SCHEME | `j Phys.Lett.B,119,407` | S19/App M: OPE in minimal subtraction |
+| `Collins:2018aqt` | `Collins2018LF` | Collins, John | arXiv:1801.03960 | The non-triviality of the vacuum in light-front quantization: An elementary trea | `eprint 1801.03960` | S60/App O: light-front vacuum |
+| `Collins:2016hqq` | `CollinsGambergEtAl2016` | Collins, J. | Phys.Rev.D 94 (2016) 034014 | Relating Transverse Momentum Dependent and Collinear Factorization Theorems in a | `j Phys.Rev.D,94,034014` | S60/Ch14: W+Y matching |
+| `Czakon:2004bu` | `Czakon2005` | Czakon, M. | Nucl.Phys.B 710 (2005) 485 | The Four-loop QCD beta-function and anomalous dimensions | `j Nucl.Phys.B,710,485` | Ch2 qcd: four-loop beta function (check) |
+| `David:1982qv` | `David1982` | David, F. | Nucl.Phys.B 209 (1982) 433 | Nonperturbative Effects and Infrared Renormalons Within the 1/$N$ Expansion of t | `j Nucl.Phys.B,209,433` | S60/Ch21: sigma-model IR renormalons |
+| `Faddeev:1967fc` | `FaddeevPopov1967` | Faddeev, L.D. | Phys.Lett.B 25 (1967) 29 | Feynman Diagrams for the Yang-Mills Field | `j Phys.Lett.B,25,29` | Ch2 qcd: gauge fixing, ghosts |
+| `Feldman:1986ax` | `FeldmanEtAl1986` | Feldman, J. | Commun.Math.Phys. 103 (1986) 67 | A Renormalizable Field Theory: The Massive {Gross-Neveu} Model in Two-dimensions | `j Commun.Math.Phys.,103,67` | S60/Ch21: massive Gross-Neveu model constructed |
+| `Fritzsch:1973pi` | `FritzschGellMannLeutwyler1973` | Fritzsch, H. | Phys.Lett.B 47 (1973) 365 | Advantages of the Color Octet Gluon Picture | `j Phys.Lett.B,47,365` | Ch2 qcd: colour octet gluon picture |
+| `Gawedzki:1985ez` | `GawedzkiKupiainen1985` | Gawedzki, K. | Commun.Math.Phys. 102 (1985) 1 | GROSS-NEVEU MODEL THROUGH CONVERGENT PERTURBATION EXPANSIONS | `j Commun.Math.Phys.,102,1` | S60/Ch21: Gross-Neveu model constructed |
+| `Gell-Mann:1964ewy` | `GellMann1964` | Gell-Mann, Murray | Phys.Lett. 8 (1964) 214 | A Schematic Model of Baryons and Mesons | `j Phys.Lett.,8,214` | Ch2 qcd: quark model |
+| `Gell-Mann:1954yli` | `GellMannLow1954` | Gell-Mann, Murray | Phys.Rev. 95 (1954) 1300 | Quantum electrodynamics at small distances | `j Phys.Rev.,95,1300` | Ch2 qcd: renormalization group |
+| `Greenberg:1964pe` | `Greenberg1964` | Greenberg, O.W. | Phys.Rev.Lett. 13 (1964) 598 | Spin and Unitary Spin Independence in a Paraquark Model of Baryons and Mesons | `j Phys.Rev.Lett.,13,598` | Ch2 qcd: parastatistics / colour |
+| `Haag:1958vt` | `Haag1958` | Haag, R. | Phys.Rev. 112 (1958) 669 | Quantum field theories with composite particles and asymptotic conditions | `j Phys.Rev.,112,669` | App M: Haag-Ruelle scattering |
+| `Hamberg:1991qt` | `HambergVanNeerven1992` | Hamberg, R. | Nucl.Phys.B 379 (1992) 143 | The Correct renormalization of the gluon operator in a covariant gauge | `j Nucl.Phys.B,379,143` | S60/App M: gluon operator renormalization in covariant gauge — already in others.bib |
+| `Han:1965pf` | `HanNambu1965` | Han, M.Y. | Phys.Rev. 139 (1965) B1006 | Three Triplet Model with Double SU(3) Symmetry | `j Phys.Rev.,139,B1006` | Ch2 qcd: colour |
+| `Herzog:2017ohr` | `HerzogEtAl2017` | Herzog, F. | JHEP 02 (2017) 090 | The five-loop beta function of Yang-Mills theory with fermions | `j JHEP,1702,090` | Ch2 qcd: five-loop beta function, general gauge group |
+| `Itzykson:1980rh` | `ItzyksonZuber1980` | Itzykson, C. |  | Quantum Field Theory | `texkey Itzykson:1980rh` | Ch2 qcd: textbook |
+| `Jost:1965yxu` | `Jost1965` | Jost, Res | Lectures Appl.Math. 4 (1965) 1 | The general theory of quantized fields | `t general theory of quantized fields and a Jost` | App M: axiomatic QFT textbook |
+| `Kogut:1969xa` | `KogutSoper1970` | Kogut, John B. | Phys.Rev.D 1 (1970) 2901 | Quantum Electrodynamics in the Infinite Momentum Frame | `j Phys.Rev.D,1,2901` | S60/App O: light-front QED |
+| `Korchemskaya:1994qp` | `KorchemskayaKorchemsky1995` | Korchemskaya, I.A. | Nucl.Phys.B 437 (1995) 127 | High-energy scattering in QCD and cross singularities of Wilson loops | `j Nucl.Phys.B,437,127` | S60/App O: Wilson-loop cross singularities, Regge |
+| `Korchemsky:1993hr` | `Korchemsky1994` | Korchemsky, Gregory P. | Phys.Lett.B 325 (1994) 459 | On Near forward high-energy scattering in QCD | `j Phys.Lett.B,325,459` | S60/App O: near-forward high-energy scattering |
+| `Larin:1993tp` | `LarinVermaseren1993` | Larin, S.A. | Phys.Lett.B 303 (1993) 334 | The Three loop QCD Beta function and anomalous dimensions | `j Phys.Lett.B,303,334` | Ch2 qcd: three-loop beta function (check) |
+| `Ligterink:1994tm` | `LigterinkBakker1995` | Ligterink, N.E. | Phys.Rev.D 52 (1995) 5954 | Equivalence of light front and covariant field theory | `j Phys.Rev.D,52,5954` | S60/App O: equivalence of light-front and covariant PT |
+| `Nielsen:1980sx` | `Nielsen1981` | Nielsen, N.K. | Am.J.Phys. 49 (1981) 1171 | ASYMPTOTIC FREEDOM AS A SPIN EFFECT | `j Am.J.Phys.,49,1171` | Ch2 qcd: asymptotic freedom as a spin effect (pedagogical) |
+| `Novikov:1984ac` | `NovikovEtAl1984` | Novikov, V.A. | Phys.Rept. 116 (1984) 103 | Two-Dimensional Sigma Models: Modeling Nonperturbative Effects of Quantum Chromo | `j Phys.Rept.,116,103` | S60/Ch21: two-dimensional sigma models |
+| `ParticleDataGroup:2024cfk` | `PDG2024` | Navas, S. | Phys.Rev.D 110 (2024) 030001 | Review of particle physics | `j Phys.Rev.D,110,030001` | Ch2 qcd: alpha_s(M_Z) world average |
+| `Symanzik:1970rt` | `Symanzik1970` | Symanzik, K. | Commun.Math.Phys. 18 (1970) 227 | Small distance behavior in field theory and power counting | `j Commun.Math.Phys.,18,227` | Ch2 qcd: Callan-Symanzik equation |
+| `Tarasov:1980au` | `TarasovVladimirovZharkov1980` | Tarasov, O.V. | Phys.Lett.B 93 (1980) 429 | The Gell-Mann-Low Function of QCD in the Three Loop Approximation | `j Phys.Lett.B,93,429` | Ch2 qcd: three-loop beta function |
+| `Wilson:1974sk` | `Wilson1974` | Wilson, Kenneth G. | Phys.Rev.D 10 (1974) 2445 | Confinement of Quarks | `j Phys.Rev.D,10,2445` | Ch2/Ch22: lattice gauge theory |
+| `Yang:1954ek` | `YangMills1954` | Yang, Chen-Ning | Phys.Rev. 96 (1954) 191 | Conservation of Isotopic Spin and Isotopic Gauge Invariance | `j Phys.Rev.,96,191` | Ch2 qcd: Yang-Mills gauge theory |
+| `vanRitbergen:1997va` | `vanRitbergenVermaserenLarin1997` | van Ritbergen, T. | Phys.Lett.B 400 (1997) 379 | The Four loop beta function in quantum chromodynamics | `j Phys.Lett.B,400,379` | Ch2 qcd: four-loop beta function |
+| `Zweig:1964jf` | `Zweig1964` | Zweig, G. | CERN-TH-412 (1964), DOI 10.17181/CERN-TH-412 | An SU(3) model for strong interaction symmetry and its breaking. Version 2 | `texkey Zweig:1964jf` | Ch2 qcd: quark (aces) model (re-typed as @techreport; reprint in Lichtenberg–Rosen, Vol. 1, pp. 22–101) |
+| `Epstein1960` | — | Epstein, H. | J. Math. Phys. 1 (1960) 524–531, DOI 10.1063/1.1703688 (Crossref) | Generalization of the "Edge-of-the-Wedge" Theorem | Crossref DOI | App M §M.8: edge-of-the-wedge step of `prop:dis-dispersion-np` |
+| `Markoff1916` | — | Markoff, W. | Math. Ann. 77 (1916) 213–258, DOI 10.1007/BF01456902 (Crossref; also lists J. Grossmann) | Über Polynome, die in einem gegebenen Intervalle möglichst wenig von Null abweichen | Crossref DOI | App K `lem:appK-markov` (V. A. Markov coefficient inequality) |
+
+Not found in INSPIRE (cite through textbooks instead): D. Ruelle, Helv. Phys. Acta 35 (1962) 147 (Haag–Ruelle theory: use `Haag:1958vt`, `Jost:1965yxu`, `Streater:1989vi`); V. S. Vladimirov's monograph on several complex variables (for the Vladimirov bound: use `Streater:1989vi` or report 「文献待补」).
+

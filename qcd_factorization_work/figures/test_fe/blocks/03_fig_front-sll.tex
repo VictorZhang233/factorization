@@ -1,0 +1,72 @@
+%%% BEGIN fig:front-sll
+\begin{figure}[htbp]
+\centering
+% (a) operator order of the SLL colour traces (Becher-Neubert-Shao 2021, eq. (13), as read in
+% research/c_glauber/DERIVATION.md Sec. 4.5): C_rn = < H (G^c)^r V^G (G^c)^(n-r) V^G Gbar (x) 1 >,
+% i.e. scale ordering Q (left, next to H) -> Q_0 (right, next to W); the soft part Gbar is the
+% last (lowest-scale) insertion; per insertion G^c ~ a_s L^2, V^G ~ a_s L, Gbar ~ a_s L
+% => a_s^(n+3) L^(2n+3) (VF-FRO-7).  Drawn: r = 2, n-r = 2 (dots = further insertions).
+% (b) data: VF-FRO-7, 2F2(1,1;2,5/2;-w) = sum_k (-w)^k/((k+1)(5/2)_k), computed with mpmath hyp2f2
+% (dps=30) at w=10^(k/4), k=-8..16; asymptote (3/2) ln(w)/w (w*2F2/ln w = 1.497 at w=1e8).
+\begin{tikzpicture}[fd,
+  fe band/.style={draw=gray!45,line width=3.2pt,line cap=round},
+  fe ins/.style={circle,draw=#1,fill=white,line width=0.9pt,inner sep=0pt,minimum size=7pt},
+  fe brace/.style={draw=gray!50!black,line width=0.5pt},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) iterated one-loop anomalous dimension =======================
+  \begin{scope}
+    \draw[fe band] (0.4,0) -- (7.3,0);
+    \draw[hard blob] (0,0) circle[radius=0.42]; \node at (0,0) {$\mathcal H_m$};
+    \draw[soft blob] (7.7,0) circle[radius=0.42]; \node at (7.7,0) {$\mathcal W_m$};
+    % collinear insertions: r of them, then n-r of them
+    \foreach \x in {0.95,2.05,3.85,4.95} {
+      \node[fe ins=blue!60!black] at (\x,0) {};
+      \node[fe lab,text=blue!50!black,anchor=south,inner sep=3pt] at (\x,0.1) {$\Gamma^{\mathrm c}$};
+    }
+    \foreach \x in {1.5,4.4} \node[fill=white,inner sep=1pt,font=\scriptsize] at (\x,0) {$\cdots$};
+    % the two Glauber phases
+    \foreach \x in {2.95,5.85} {
+      \node[fe ins=red!60!black] at (\x,0) {};
+      \node[fe lab,text=red!55!black,anchor=south,inner sep=3pt] at (\x,0.1) {$\ii\pi$};
+    }
+    % soft wide-angle part: the last (lowest-scale) insertion
+    \draw[gluon,green!45!black] (6.75,0) -- (6.75,1.15);
+    \node[fe ins=green!45!black] at (6.75,0) {};
+    \node[fe lab,text=green!35!black,anchor=south,align=center,inner sep=2pt] at (6.75,1.18) {软发射 $\bar\Gamma$};
+    % hand-drawn braces under the two groups of collinear insertions
+    % (the midpoint is precomputed: a `to' target loses one brace level)
+    \foreach \a/\b/\feT in {0.8/2.2/{$r$ 次},3.7/5.1/{$n-r$ 次}} {
+      \pgfmathsetmacro\feM{(\a+\b)/2}
+      \draw[fe brace] (\a,-0.2) to[out=-90,in=180] (\a+0.12,-0.3) -- (\feM-0.12,-0.3)
+        to[out=0,in=90] (\feM,-0.4) to[out=90,in=180] (\feM+0.12,-0.3)
+        -- (\b-0.12,-0.3) to[out=0,in=-90] (\b,-0.2);
+      \node[fe lab,anchor=north,inner sep=1.5pt] at (\feM,-0.4) {\feT};
+    }
+    \draw[lcaxis] (0.55,-1.05) -- (7.15,-1.05);
+    \node[fe lab,anchor=east] at (0.5,-1.05) {$Q$};
+    \node[fe lab,anchor=west] at (7.2,-1.05) {$Q_0$};
+    \node[fe lab,anchor=north] at (3.85,-1.1) {重整化群演化：迭代插入单圈反常维度};
+    \node[fe lab,align=left,anchor=north west,inner sep=0pt] at (0.05,-1.62)
+      {{\color{blue!50!black}$\Gamma^{\mathrm c}$}：共线部分，每次插入 $\sim\alpha_sL^2$；{\color{red!55!black}$\ii\pi$}：Glauber 相位\\[1pt]
+       {\color{green!35!black}$\bar\Gamma$}：软宽角部分，演化的最后一步（最低标度）\\[1pt]
+       $\ii\pi$ 与软、共线部分不对易 $\Rightarrow$ $\alpha_s^3L^3(\alpha_sL^2)^n$，$L=\ln(Q/Q_0)$};
+    \node at (3.85,-3.55) {(a)\ 超领头对数塔的来源};
+  \end{scope}
+  % ======================= (b) closed form for q qbar singlet exchange =======================
+  \begin{axis}[name=feP,at={(10.05cm,-2.2cm)},anchor=south west,width=0.41\textwidth,height=4.9cm,
+    xmode=log,ymode=log,xmin=0.01,xmax=1e4,ymin=1e-3,ymax=1.6,
+    xlabel={$w=N_c\alpha_sL^2/\pi$},ylabel={${}_2F_2(1,1;2,\frac52;-w)$},
+    tick label style={font=\scriptsize},label style={font=\small},
+    legend style={font=\scriptsize,draw=none,fill=none,at={(0.03,0.03)},anchor=south west},legend cell align=left]
+  \addplot[thick,black,smooth] coordinates {(0.01,0.998004) (0.0177828,0.996455) (0.0316228,0.993713) (0.0562341,0.988873) (0.1,0.980375) (0.177828,0.965604) (0.316228,0.940372) (0.562341,0.898536) (1.0,0.832563) (1.77828,0.736598) (3.16228,0.612776) (5.62341,0.475998) (10.0,0.347626) (17.7828,0.242111) (31.6228,0.162857) (56.2341,0.106749) (100.0,0.0686054) (177.828,0.0434168) (316.228,0.0271397) (562.341,0.0167954) (1000.0,0.0103076) (1778.28,0.0062818) (3162.28,0.00380551) (5623.41,0.00229353) (10000.0,0.00137609)};
+  \addlegendentry{${}_2F_2(1,1;2,\frac52;-w)$}
+  \addplot[thick,dashed,red!60!black,domain=3:1e4,samples=60]{1.5*ln(x)/x};
+  \addlegendentry{$\frac32\ln w/w$}
+  \end{axis}
+  \node at (feP.south |- 0,-3.55) {(b)\ $q\bar q$ 单态交换的闭式};
+\end{tikzpicture}
+\caption{超领头对数的来源（示意）：(a)~在 $Q$ 到 $Q_0$ 的演化中迭代插入单圈反常维度：$r$ 次与 $n-r$ 次共线插入 $\Gamma^{\mathrm c}$ 之间夹着两个 Glauber 相位 $\ii\pi$，最后一步（最低标度）为软宽角部分 $\bar\Gamma$；$\ii\pi$ 与软、共线部分在色空间中不对易，产生 $\alpha_s^3L^3(\alpha_sL^2)^n$ 的超领头对数塔\cite{Becher:2021zkk}，每多一次共线插入多一个 $\alpha_sL^2$。
+(b)~对 $q\bar q$ 单态交换的求和给出 $\Delta\hat\sigma^{(S)}=-\hat\sigma_B\frac{4C_F}{3\pi}\alpha_s^3L^3\Delta Y\,{}_2F_2(1,1;2,\frac52;-w)$，$w=N_c\alpha_sL^2/\pi$（$\Delta Y$ 为间隙的快度宽度）；它在大 $w$ 处按 $\frac32\ln w/w$ 只有幂次式衰减，而非 Sudakov 式的指数衰减（VF-FRO-7）。}
+\label{fig:front-sll}
+\end{figure}
+%%% END fig:front-sll

@@ -1,0 +1,392 @@
+% =====================================================================
+%  dis_oneloop.tex —— DIS 的 O(alpha_s) 完整计算（第 8 章一圈检验 / 附录 G 用）
+%  研究目录：research/c_dis；全部公式由 DERIVATION.md 所列 python 脚本逐项核对。
+%  依赖：preamble_fact.tex 中的宏（\as \MSbar \order \dd \ee \ii \sla \tagR）与费曼图样式。
+% =====================================================================
+\section{DIS 的 \texorpdfstring{$\order{\as}$}{O(alpha_s)} 修正：维数正规化下的完整计算}
+\label{sec:dis1l}
+
+本节在 $D=4-2\varepsilon$ 维的常规维数正规化（CDR）中，完整计算夸克靶与胶子靶的部分子结构函数
+$\hat F_2$、$\hat F_L$ 至 $\order{\as}$：虚修正（一圈形状因子）、实辐射（$D$ 维两体相空间）
+以及光子—胶子聚合。我们将看到软—共线双极点在实、虚修正之和中相消，末态共线极点亦相消，
+剩下的初态共线极点恰好由 $\MSbar$ 部分子分布的重整化吸收，从而得到 $\MSbar$ 系数函数。
+结果用三种彼此独立的方式检验：与文献的 $x$ 空间及 Mellin 空间表达式逐项比较；
+由前向 Compton 振幅的算符乘积展开（OPE）直接计算 Wilson 系数；验证因子化标度无关性。
+
+\subsection{约定与归一化}
+
+电磁流 $J^\mu=\sum_q e_q\bar\psi_q\gamma^\mu\psi_q$（以 $e$ 为单位），强子张量取
+\begin{align}
+W^{\mu\nu}&=\frac{1}{4\pi}\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[J^\mu(z),J^\nu(0)]|P\rangle\nonumber\\
+&=\frac{1}{4\pi}\sum_X(2\pi)^4\delta^4(P+q-p_X)\,\langle P|J^\mu(0)|X\rangle\langle X|J^\nu(0)|P\rangle\qquad(q^0>0),
+\label{eq:dis1l-W}
+\end{align}
+对靶自旋平均，态归一化为 $\langle P'|P\rangle=(2\pi)^32E\,\delta^3(\vec P'-\vec P)$。
+因子 $1/4\pi$ 恰使部分子模型给出 $F_2=\sum_qe_q^2x(q+\bar q)$（见 \cref{eq:dis1l-born}）。
+结构函数的分解与 $F_L=F_2-2xF_1$ 见本书记号约定。领头幂次的因子化公式
+$W^{\mu\nu}(P,q)=\sum_j\int_x^1\frac{\dd\xi}{\xi}f_j(\xi,\mu)\hat W_j^{\mu\nu}(\xi P,q;\mu)$
+对部分子张量作同样的分解后给出
+\begin{equation}\label{eq:dis1l-fact}
+\frac{F_{2,L}(x,Q^2)}{x}=\sum_j\int_x^1\frac{\dd\xi}{\xi}\,f_j(\xi,\mu)\,
+\left[\frac{\hat F_{2,L}^{\,j}(z,Q^2/\mu^2)}{z}\right]_{z=x/\xi},\qquad z=\frac{Q^2}{2p\cdot q},
+\end{equation}
+其中用到了 $p=\xi P$ 时 $\tilde p^\mu\tilde p^\nu/(p\cdot q)=\xi\,\tilde P^\mu\tilde P^\nu/(P\cdot q)$。
+系数函数按如下方式归一化（$\mu_F=\mu_R=\mu$）：
+\begin{align}
+\frac{F_2}{x}&=\sum_q e_q^2\Big\{q+\bar q+\frac{\as(\mu)}{2\pi}\Big[C_2^q\otimes(q+\bar q)+2\,C_2^g\otimes g\Big]\Big\}+\order{\as^2},
+\label{eq:dis1l-norm2}\\
+\frac{F_L}{x}&=\sum_q e_q^2\,\frac{\as(\mu)}{2\pi}\Big[C_L^q\otimes(q+\bar q)+2\,C_L^g\otimes g\Big]+\order{\as^2},
+\label{eq:dis1l-normL}
+\end{align}
+$(C\otimes f)(x)=\int_x^1\frac{\dd\xi}{\xi}C(x/\xi)f(\xi)$。胶子项前的因子 $2$ 计入了
+$\gamma^*g\to q\bar q$ 中同时产生的夸克与反夸克：$C^g_{2,L}$ 是“每味、每个（反）夸克”的系数函数。
+
+\paragraph{维数正规化的约定。}
+$\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}$，$g^\mu{}_\mu=D$，$\Tr 1=4$（本节不出现 $\gamma_5$）；
+裸耦合 $g_0^2=4\pi\as(\mu)\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}(4\pi)^{-\varepsilon}$，$\MSbar$ 即在此归一化下扣除纯极点。
+初态平均：夸克自旋 $1/2$、颜色 $1/N_c$；胶子极化 $1/(D-2)=1/[2(1-\varepsilon)]$、颜色 $1/(N_c^2-1)$。
+胶子极化求和取 $-g_{\rho\sigma}$：本节振幅只含一个胶子，满足 $k^\rho M_\rho=0$，故此替换精确成立。
+部分子运动学：$p^2=0$，$q^2=-Q^2$，$\hat s=(p+q)^2=Q^2(1-z)/z$；两体末态在 $\gamma^*$—部分子
+质心系中以 $y=(1-\cos\theta)/2$ 参数化，$\theta$ 为出射胶子（$\gamma^*q$ 道）或出射夸克
+（$\gamma^*g$ 道）与 $\vec p$ 的夹角，于是 $\hat t=-Q^2y/z$，$\hat u=-Q^2(1-y)/z$，$\hat s+\hat t+\hat u=-Q^2$。
+
+\subsection{\texorpdfstring{$D$}{D} 维投影算符与 Born 项}
+
+对无质量的 $P$，收缩张量分解得
+$-g_{\mu\nu}W^{\mu\nu}=(D-1)F_1-F_2/(2x)$，$P_\mu P_\nu W^{\mu\nu}=Q^2F_L/(8x^3)$，于是
+\begin{equation}\label{eq:dis1l-proj}
+\frac{F_L}{x}=\frac{8x^2}{Q^2}\,P_\mu P_\nu W^{\mu\nu},\qquad
+\frac{F_2}{x}=\frac{1}{1-\varepsilon}\Big[-g_{\mu\nu}+(3-2\varepsilon)\frac{4x^2}{Q^2}P_\mu P_\nu\Big]W^{\mu\nu}.
+\end{equation}
+（靶有质量 $M$ 时须定义 $F_L=\rho^2F_2-2xF_1$，$\rho^2=1+4x^2M^2/Q^2$，相应地
+$F_L/x=\frac{8x^2}{Q^2\rho^2}PWP$，$\rho^2F_2/x=[2(-gW)+(D-1)F_L/x]/(D-2)$。）
+Born 项 $\hat W^{\mu\nu}_{(0)}=\frac{1}{4\pi}2\pi\delta((p+q)^2)\cdot\frac12e_q^2\Tr[\sla p\gamma^\mu(\sla p+\sla q)\gamma^\nu]$，
+利用 $\gamma^\mu\sla a\gamma_\mu=-(D-2)\sla a$ 与 $\delta((p+q)^2)=\delta(1-z)/Q^2$，在任意 $D$ 下精确地有
+\begin{equation}\label{eq:dis1l-born}
+\frac{\hat F_2^{q(0)}}{z}=e_q^2\,\delta(1-z),\qquad \hat F_L^{q(0)}=0 .
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \coordinate (pin) at (-1.6,0); \coordinate (v) at (0,0); \coordinate (pout) at (1.6,0);
+  \coordinate (gam) at (-1.0,1.25);
+  \draw[photon] (gam) -- (v);
+  \draw[quark] (pin) -- (v); \draw[quark] (v) -- (pout);
+  \node[vertex] at (v) {};
+  \node[left] at (pin) {$p$}; \node[right] at (pout) {$p'$}; \node[left] at (gam) {$q$};
+\end{tikzpicture}
+\caption{Born}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \coordinate (pin) at (-1.8,0); \coordinate (a) at (-0.9,0); \coordinate (v) at (0,0);
+  \coordinate (b) at (0.9,0); \coordinate (pout) at (1.8,0); \coordinate (gam) at (-0.7,1.25);
+  \draw[photon] (gam) -- (v);
+  \draw[quark] (pin) -- (a); \draw[quark] (a) -- (v); \draw[quark] (v) -- (b); \draw[quark] (b) -- (pout);
+  \draw[gluon] (a) arc[start angle=180,end angle=360,radius=0.9];
+  \foreach \c in {a,v,b} \node[vertex] at (\c) {};
+  \node[left] at (pin) {$p$}; \node[right] at (pout) {$p'$}; \node[left] at (gam) {$q$};
+  \node at (0,-1.15) {$l$};
+\end{tikzpicture}
+\caption{顶点修正}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \coordinate (pin) at (-1.8,0); \coordinate (v1) at (-0.6,0); \coordinate (v2) at (0.6,0);
+  \coordinate (pout) at (1.8,0.75); \coordinate (gout) at (1.8,-0.75); \coordinate (gam) at (-1.3,1.25);
+  \draw[photon] (gam) -- (v1);
+  \draw[quark] (pin) -- (v1); \draw[quark] (v1) -- (v2); \draw[quark] (v2) -- (pout);
+  \draw[gluon] (v2) -- (gout);
+  \foreach \c in {v1,v2} \node[vertex] at (\c) {};
+  \node[left] at (pin) {$p$}; \node[right] at (pout) {$p'$}; \node[right] at (gout) {$k$};
+  \node[left] at (gam) {$q$};
+\end{tikzpicture}
+\caption{实辐射（$\hat s$ 道）}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \coordinate (pin) at (-1.8,0); \coordinate (v1) at (-0.6,0); \coordinate (v2) at (0.6,0);
+  \coordinate (pout) at (1.8,0); \coordinate (gout) at (1.6,-1.05); \coordinate (gam) at (-0.1,1.25);
+  \draw[photon] (gam) -- (v2);
+  \draw[quark] (pin) -- (v1); \draw[quark] (v1) -- (v2); \draw[quark] (v2) -- (pout);
+  \draw[gluon] (v1) -- (gout);
+  \foreach \c in {v1,v2} \node[vertex] at (\c) {};
+  \node[left] at (pin) {$p$}; \node[right] at (pout) {$p'$}; \node[right] at (gout) {$k$};
+  \node[left] at (gam) {$q$};
+\end{tikzpicture}
+\caption{实辐射（$\hat t$ 道）}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \coordinate (gin) at (-1.6,-0.7); \coordinate (gam) at (-1.6,0.7);
+  \coordinate (v1) at (0,-0.7); \coordinate (v2) at (0,0.7);
+  \coordinate (q1) at (1.6,0.7); \coordinate (q2) at (1.6,-0.7);
+  \draw[gluon] (gin) -- (v1); \draw[photon] (gam) -- (v2);
+  \draw[quark] (q2) -- (v1); \draw[quark] (v1) -- (v2); \draw[quark] (v2) -- (q1);
+  \foreach \c in {v1,v2} \node[vertex] at (\c) {};
+  \node[left] at (gin) {$p$}; \node[left] at (gam) {$q$};
+  \node[right] at (q1) {$k_1$}; \node[right] at (q2) {$k_2$};
+\end{tikzpicture}
+\caption{光子—胶子聚合}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \coordinate (gin) at (-1.6,0.7); \coordinate (gam) at (-1.6,-0.7);
+  \coordinate (v1) at (0,-0.7); \coordinate (v2) at (0,0.7);
+  \coordinate (q1) at (1.6,0.7); \coordinate (q2) at (1.6,-0.7);
+  \draw[gluon] (gin) -- (v2); \draw[photon] (gam) -- (v1);
+  \draw[quark] (q2) -- (v1); \draw[quark] (v1) -- (v2); \draw[quark] (v2) -- (q1);
+  \foreach \c in {v1,v2} \node[vertex] at (\c) {};
+  \node[left] at (gin) {$p$}; \node[left] at (gam) {$q$};
+  \node[right] at (q1) {$k_1$}; \node[right] at (q2) {$k_2$};
+\end{tikzpicture}
+\caption{光子—胶子聚合（交换）}
+\end{subfigure}
+\caption{DIS 在 $\order{\as}$ 的振幅图。(b) 中外线自能图在维数正规化下无标度而为零，未画出。
+结构函数由振幅与其复共轭之积（割图）在 $D$ 维相空间上积分得到。}
+\label{fig:dis1l-diagrams}
+\end{figure}
+
+\subsection{虚修正：一圈夸克形状因子}
+
+费曼规范下顶点图（\cref{fig:dis1l-diagrams}(b)），$p'=p+q$：
+\begin{gather}
+\Lambda^\mu=-\ii g_0^2C_F\int\frac{\dd^Dl}{(2\pi)^D}
+\frac{\gamma^\alpha(\sla p'-\sla l)\gamma^\mu(\sla p-\sla l)\gamma_\alpha}{(l^2+\ii0)\,[(p-l)^2+\ii0]\,[(p'-l)^2+\ii0]},
+\nonumber\\
+\bar u(p')\Lambda^\mu u(p)=F^{(1)}\,\bar u(p')\gamma^\mu u(p).
+\end{gather}
+对在壳无质量夸克只有 $\gamma^\mu$ 一种结构，$F^{(1)}=\Tr[\sla p'\Lambda^\mu\sla p\gamma_\mu]/\Tr[\sla p'\gamma^\mu\sla p\gamma_\mu]$。
+引入 Feynman 参数 $l=L+x_1p+x_2p'$，$\Delta=x_1x_2Q^2$，积分后得到对 $\varepsilon$ 精确的结果
+\begin{align}
+F(Q^2)&=1+\frac{\as}{4\pi}C_F\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}
+\frac{\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)}
+\Big[-\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)}\Big]\label{eq:dis1l-ff}\\
+&=1+\frac{\as}{4\pi}C_F\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}
+\Big[-\frac{2}{\varepsilon^2}-\frac{3}{\varepsilon}-8+\zeta_2+\varepsilon\Big(-16+\frac32\zeta_2+\frac{14}{3}\zeta_3\Big)+\order{\varepsilon^2}\Big].
+\nonumber
+\end{align}
+顶点图含紫外极点 $+\frac{\as}{4\pi}C_F\frac{1}{\varepsilon_{\rm UV}}$；外线的在壳波函数因子
+$Z_2^{\rm OS}-1=\frac{\as}{4\pi}C_F(\frac{1}{\varepsilon_{\rm IR}}-\frac{1}{\varepsilon_{\rm UV}})$ 无标度，
+在单一 $\varepsilon$ 下为零，其紫外部分正好抵消顶点的紫外极点（$Z_1=Z_2$，守恒流），
+故 \cref{eq:dis1l-ff} 中剩下的全是红外极点；此阶亦无需耦合常数重整化。
+$Q^2>0$（类空）时 $F$ 为实数。虚修正对 $F_2$ 的贡献为 $e_q^2\,2F^{(1)}\delta(1-z)$，对 $F_L$ 无贡献。
+
+\subsection{实辐射 \texorpdfstring{$\gamma^*q\to qg$}{gamma* q -> q g} 与 \texorpdfstring{$D$}{D} 维两体相空间}
+
+振幅（\cref{fig:dis1l-diagrams}(c)(d)）为
+$M^\mu=e_q\,g\,t^a\,\bar u(p')\big[\gamma^\rho\frac{\sla p+\sla q}{\hat s}\gamma^\mu+\gamma^\mu\frac{\sla p-\sla k}{\hat t}\gamma^\rho\big]u(p)\,\varepsilon^*_\rho(k)$。
+以 $\Tr1=4$ 及极化求和 $-g_{\rho\sigma}$，两个投影后的 Dirac 迹为
+\begin{align}
+(-g_{\mu\nu})\,{\textstyle\sum}\,M^\mu M^{\nu*}\big|_{\rm Dirac}
+&=8(1-\varepsilon)\Big[(1-\varepsilon)\Big(-\frac{\hat t}{\hat s}-\frac{\hat s}{\hat t}\Big)+\frac{2\hat uQ^2}{\hat s\hat t}+2\varepsilon\Big],
+\nonumber\\
+(p_\mu p_\nu)\,{\textstyle\sum}\,M^\mu M^{\nu*}\big|_{\rm Dirac}&=-4(1-\varepsilon)\hat u ,\label{eq:dis1l-meq}
+\end{align}
+再乘以 $e_q^2g_0^2$ 与平均后的色因子 $\frac12\cdot\frac1{N_c}\Tr(t^at^a)=C_F/2$。
+$D$ 维两体相空间（被积函数只依赖于 $\theta$ 时）为
+\begin{align}
+\int\dd\Phi_2&\equiv\int\frac{\dd^{D-1}p'}{(2\pi)^{D-1}2E'}\frac{\dd^{D-1}k}{(2\pi)^{D-1}2E_k}(2\pi)^D\delta^D(p+q-p'-k)
+\nonumber\\
+&=\frac{1}{8\pi}\Big(\frac{4\pi}{\hat s}\Big)^{\varepsilon}\frac{1}{\Gamma(1-\varepsilon)}\int_0^1\dd y\,[y(1-y)]^{-\varepsilon},
+\label{eq:dis1l-ps}
+\end{align}
+其总体积为 $\frac{1}{8\pi}(4\pi/\hat s)^\varepsilon\Gamma(1-\varepsilon)/\Gamma(2-2\varepsilon)$。
+总前因子为 $\frac{1}{4\pi}\cdot\frac{C_F}{2}g_0^2\cdot\frac{1}{8\pi}(\frac{4\pi}{\hat s})^\varepsilon\frac{1}{\Gamma(1-\varepsilon)}
+=\frac{\as}{2\pi}C_F\cdot\frac18\big(\frac{\mu^2}{\hat s}\big)^{\varepsilon}\frac{\ee^{\varepsilon\gamma_E}}{\Gamma(1-\varepsilon)}$，
+而 $(\mu^2/\hat s)^\varepsilon=(\mu^2/Q^2)^\varepsilon z^\varepsilon(1-z)^{-\varepsilon}$。$y$ 积分均为 Beta 函数，
+记 $\hat F_a^{q,\rm R}/(ze_q^2)=\frac{\as}{2\pi}C_F(\frac{\mu^2}{Q^2})^\varepsilon R_a^q$，对 $\varepsilon$ 精确地得到
+\begin{equation}\label{eq:dis1l-Rq}
+R_2^q=\frac{\ee^{\varepsilon\gamma_E}\Gamma(-\varepsilon)}{2\Gamma(2-2\varepsilon)}\,z^{\varepsilon}(1-z)^{-1-\varepsilon}
+\big[2(1+z^2)-\varepsilon(7-2z)+\varepsilon^2\big],\qquad
+R_L^q=\frac{\ee^{\varepsilon\gamma_E}\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}\,2z\Big(\frac{z}{1-z}\Big)^{\varepsilon}.
+\end{equation}
+利用分布展开
+$(1-z)^{-1-\varepsilon}=-\frac{1}{\varepsilon}\delta(1-z)+\sum_{k\ge0}\frac{(-\varepsilon)^k}{k!}\mathcal D_k(z)$，
+$\mathcal D_k\equiv\big[\frac{\ln^k(1-z)}{1-z}\big]_+$，
+\begin{align}
+R_2^q={}&\frac{2\delta(1-z)}{\varepsilon^2}+\frac{1}{\varepsilon}\Big[-2\mathcal D_0+1+z+\frac32\delta(1-z)\Big]
++2\mathcal D_1-\frac32\mathcal D_0\nonumber\\
+&-(1+z)\ln(1-z)-\frac{1+z^2}{1-z}\ln z+3+2z+\Big(\frac72-3\zeta_2\Big)\delta(1-z)+\order{\varepsilon},
+\label{eq:dis1l-Rqexp}
+\end{align}
+而 $R_L^q=2z+\order{\varepsilon}$ 有限：$F_L$ 投影压低了共线区域。
+
+\subsection{光子—胶子聚合 \texorpdfstring{$\gamma^*g\to q\bar q$}{gamma* g -> q qbar}}
+
+$M^\mu=e_q\,g\,t^a\,\bar u(k_1)\big[\gamma^\mu\frac{\sla k_1-\sla q}{\hat u}\gamma^\rho+\gamma^\rho\frac{\sla k_1-\sla p}{\hat t}\gamma^\mu\big]v(k_2)\,\varepsilon_\rho(p)$，
+其中 $\hat t=(p-k_1)^2$，$\hat u=(p-k_2)^2$。投影后的 Dirac 迹为
+\begin{align}
+(-g_{\mu\nu})\,{\textstyle\sum}\,M^\mu M^{\nu*}\big|_{\rm Dirac}
+&=8(1-\varepsilon)\Big[(1-\varepsilon)\Big(\frac{\hat u}{\hat t}+\frac{\hat t}{\hat u}\Big)-\frac{2\hat sQ^2}{\hat t\hat u}-2\varepsilon\Big],
+\nonumber\\
+(p_\mu p_\nu)\,{\textstyle\sum}\,M^\mu M^{\nu*}\big|_{\rm Dirac}&=8\hat s ,\label{eq:dis1l-meg}
+\end{align}
+平均因子为 $\frac{1}{2(1-\varepsilon)}\cdot\frac{1}{N_c^2-1}\Tr(t^at^a)=\frac{T_F}{2(1-\varepsilon)}$。
+记 $\hat F_a^{g}/(ze_q^2)=\frac{\as}{2\pi}T_F(\frac{\mu^2}{Q^2})^\varepsilon R_a^g$（一味夸克，末态 $q$ 与 $\bar q$ 均计入），
+\begin{align}
+R_2^g&=\frac{2\ee^{\varepsilon\gamma_E}\Gamma(-\varepsilon)}{\Gamma(2-2\varepsilon)}\Big(\frac{z}{1-z}\Big)^{\varepsilon}
+\frac{z^2+(1-z)^2-3\varepsilon+4\varepsilon^2-2\varepsilon^3}{(1-\varepsilon)^2},\nonumber\\
+R_L^g&=\frac{\ee^{\varepsilon\gamma_E}\Gamma(1-\varepsilon)}{\Gamma(2-2\varepsilon)}\frac{8z(1-z)}{1-\varepsilon}\Big(\frac{z}{1-z}\Big)^{\varepsilon},
+\label{eq:dis1l-Rg}
+\end{align}
+\begin{align}
+R_2^g&=-\frac{2}{\varepsilon}\big[z^2+(1-z)^2\big]+2\Big\{\big[z^2+(1-z)^2\big]\ln\frac{1-z}{z}-8z^2+8z-1\Big\}+\order{\varepsilon},
+\nonumber\\
+R_L^g&=8z(1-z)+\order{\varepsilon}.\label{eq:dis1l-Rgexp}
+\end{align}
+极点出现两次：$y\to0$（夸克平行于胶子）与 $y\to1$（反夸克平行于胶子）。
+
+\subsection{共线极点与 \texorpdfstring{$\MSbar$}{MS-bar} 质量因子化}
+
+把 \cref{eq:dis1l-Rqexp} 与虚修正 $2F^{(1)}\delta(1-z)$ 相加：$1/\varepsilon^2$ 项 $2\delta-2\delta=0$（软—共线相消）；
+$1/\varepsilon$ 项 $-2\mathcal D_0+1+z+(\frac32-3)\delta(1-z)=-P_{qq}(z)/C_F$——末态共线奇异性与软奇异性
+在实、虚修正之和中相消（对末态求和的 KLN 机制），剩下的初态共线极点的系数恰为领头阶 DGLAP 核，
+其端点项 $\frac32\delta(1-z)$ 来自虚修正。于是（对任意 $\mu$）
+\begin{align}
+\frac{\hat F_2^q}{ze_q^2}&=\delta(1-z)+\frac{\as}{2\pi}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\Big[-\frac{1}{\varepsilon}P_{qq}(z)+C_2^q(z)+\order{\varepsilon}\Big],
+\label{eq:dis1l-Fq}\\
+\frac{\hat F_2^g}{ze_q^2}&=\frac{\as}{2\pi}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\Big[-\frac{2}{\varepsilon}P_{qg}(z)+2C_2^g(z)+\order{\varepsilon}\Big],
+\label{eq:dis1l-Fg}
+\end{align}
+$P_{qq}=C_F\big[\frac{1+z^2}{1-z}\big]_+=C_F\big\{2\mathcal D_0-1-z+\frac32\delta(1-z)\big\}$，$P_{qg}=T_F[z^2+(1-z)^2]$；$\hat F_L$ 有限。
+
+在纯维数正规化中，在壳无质量部分子的裸 PDF 是 $f^{\rm bare}_{i/j}=\delta_{ij}\delta(1-z)$（各阶圈修正均无标度，
+$\propto1/\varepsilon_{\rm UV}-1/\varepsilon_{\rm IR}=0$）；光锥算符的 $\MSbar$ 重整化（纯紫外极点、四维核）给出
+\begin{equation}\label{eq:dis1l-partonpdf}
+f_{i/j}(z,\mu)=\delta_{ij}\delta(1-z)-\frac{\as(\mu)}{2\pi}\frac{1}{\varepsilon}P_{ij}(z)+\order{\as^2},
+\end{equation}
+此处剩下的 $1/\varepsilon$ 已是红外（共线）极点。把因子化公式用于部分子靶，
+$\hat F_a^j/z=\sum_kC_a^k\otimes f_{k/j}$：夸克靶的极点被 $f_{q/q}$ 抵消，胶子靶的极点被
+$f_{q/g}+f_{\bar q/g}=-\frac{\as}{2\pi}\frac{2}{\varepsilon}P_{qg}$ 抵消，系数函数即有限余项。
+因为裸的 $\order{\as}$ 结果整体带有 $(\mu^2/Q^2)^\varepsilon$ 而抵消项与 $\mu$ 无关，得
+\begin{equation}\label{eq:dis1l-mu}
+C_2^i(z,Q^2/\mu^2)=C_2^i(z)+\ln\frac{Q^2}{\mu^2}\,P_{qi}(z)\quad(i=q,g),\qquad C_L^{q,g}\ \text{在此阶与 }\mu\text{ 无关}.
+\end{equation}
+
+\subsection{结果}
+
+\begin{proposition}[DIS 的 $\order{\as}$ $\MSbar$ 系数函数]\label{prop:dis1l-coef}
+\tagR\quad 在 \cref{eq:dis1l-norm2,eq:dis1l-normL} 的归一化、$D=4-2\varepsilon$ 常规维数正规化、
+胶子极化按 $D-2$ 个态平均的 $\MSbar$ 方案中，$\mu=Q$ 时
+\begin{align}
+C_2^q(z)={}&C_F\Big[2\Big(\frac{\ln(1-z)}{1-z}\Big)_+-\frac32\Big(\frac{1}{1-z}\Big)_+-(1+z)\ln(1-z)\nonumber\\
+&\qquad-\frac{1+z^2}{1-z}\ln z+3+2z-\Big(\frac92+\frac{\pi^2}{3}\Big)\delta(1-z)\Big]\nonumber\\
+={}&C_F\Big[\frac{1+z^2}{1-z}\Big(\ln\frac{1-z}{z}-\frac34\Big)+\frac{9+5z}{4}\Big]_+ ,\label{eq:dis1l-C2q}\\
+C_2^g(z)={}&T_F\Big[\big(z^2+(1-z)^2\big)\ln\frac{1-z}{z}-8z^2+8z-1\Big],\label{eq:dis1l-C2g}\\
+C_L^q(z)={}&2C_F\,z,\qquad C_L^g(z)=4T_F\,z(1-z);\label{eq:dis1l-CL}
+\end{align}
+一般 $\mu$ 下由 \cref{eq:dis1l-mu} 给出。\cref{eq:dis1l-C2q} 第二种写法中加号作用于整个方括号；
+两种写法在 $z<1$ 处相同，且在 $[0,1]$ 上的积分都为零，故为同一分布。
+\end{proposition}
+
+\begin{remark}[胶子极化平均]
+若把入射胶子按 $2$ 个而非 $D-2$ 个极化态平均，$R_2^g$ 乘以 $(1-\varepsilon)$，极点项产生有限移动
+$C_2^g\to C_2^g+P_{qg}=T_F\big[(z^2+(1-z)^2)\ln\frac{1-z}{z}+6z(1-z)\big]$，$C_L^g$ 不变。
+标准 $\MSbar$ 胶子分布（树图 $f_{g/g}=\delta(1-x)$ 以同样的 $D-2$ 平均归一化）对应 \cref{eq:dis1l-C2g}。
+\end{remark}
+
+\subsection{因子化标度与重整化标度无关性}
+
+记 $a=\as(\mu)/2\pi$，$L=\ln(Q^2/\mu^2)$。由 DGLAP 方程
+$\partial(q+\bar q)/\partial\ln\mu^2=a[P_{qq}\otimes(q+\bar q)+2P_{qg}\otimes g]$ 与 $\partial L/\partial\ln\mu^2=-1$，
+\begin{align}
+\frac{\partial}{\partial\ln\mu_F^2}\frac{F_2}{x}
+&=a\sum_qe_q^2\Big\{\big[P_{qq}\otimes(q+\bar q)+2P_{qg}\otimes g\big]-\big[P_{qq}\otimes(q+\bar q)+2P_{qg}\otimes g\big]\Big\}+\order{a^2}
+\nonumber\\
+&=\order{a^2};
+\end{align}
+重整化标度只通过 $a(\mu_R)$ 进入，$\partial a/\partial\ln\mu_R^2=-\frac{\beta_0}{2}a^2$，亦只产生 $\order{a^2}$ 的变化；
+$F_L$ 在此阶与 $\mu$ 无关。数值上（领头阶单态演化的精确解与一圈跑动耦合，$n_f=4$），
+$F_{2}$ 的 Mellin 矩在 $\mu=Q/2$ 与 $\mu=2Q$ 之差除以 $\as^2(Q)$ 在 $\as(Q)=0.2\to0.025$ 时趋于常数，
+即剩余标度依赖为 $\order{\as^2}$。
+
+\subsection{DIS 方案}
+
+DIS 方案要求 $F_2/x=\sum_qe_q^2(q+\bar q)^{\rm DIS}$ 在各阶成立。在 $\order{\as}$，
+\begin{gather}
+q_i^{\rm DIS}=q_i+a\big[C_2^q\otimes q_i+C_2^g\otimes g\big],\qquad
+\bar q_i^{\rm DIS}=\bar q_i+a\big[C_2^q\otimes\bar q_i+C_2^g\otimes g\big],\nonumber\\
+g^{\rm DIS}=g-a\big[C_2^q\otimes\Sigma+2n_fC_2^g\otimes g\big],\qquad \Sigma=\sum_i(q_i+\bar q_i),
+\label{eq:dis1l-DIS}
+\end{gather}
+各量取在同一 $\mu$（通常 $\mu^2=Q^2$）。胶子的变换并不由 $F_2$ 唯一确定，上式是保持动量求和规则
+$\int_0^1\dd x\,x(\Sigma+g)$ 不变的常用选择。于是 $C_2^{q,\rm DIS}=C_2^{g,\rm DIS}=0$，
+$C_L^{q,g}$ 在 $\order{\as}$ 不变，领头阶核不变；对一般的变换 $f'=(1+aZ)\otimes f$，
+次领头阶核按 $P'^{(1)}=P^{(1)}+Z\otimes P^{(0)}-P^{(0)}\otimes Z-\frac{\beta_0}{2}Z$ 变换（$P=P^{(0)}+aP^{(1)}$），
+其中在 $(\Sigma,g)$ 基中 $Z=\bigl(\begin{smallmatrix}C_2^q&2n_fC_2^g\\-C_2^q&-2n_fC_2^g\end{smallmatrix}\bigr)$；
+非单态部分 $P^{(1),\rm DIS}_{\rm NS}=P^{(1),\MSbar}_{\rm NS}-\frac{\beta_0}{2}C_2^q$。
+
+\subsection{Mellin 矩与 OPE 检验}
+
+记 $X_N=\int_0^1\dd z\,z^{N-1}X(z)$，$S_k\equiv S_k(N)=\sum_{j=1}^Nj^{-k}$：
+\begin{align}
+C^q_{2,N}&=C_F\Big[S_1^2-S_2+\frac32S_1-\frac{S_1}{N(N+1)}+\frac{3}{2N}+\frac{2}{N+1}+\frac{1}{N^2}-\frac92\Big],\label{eq:dis1l-C2qN}\\
+C^g_{2,N}&=T_F\Big[-\frac{N^2+N+2}{N(N+1)(N+2)}S_1+\frac{1}{N^2}-\frac{1}{N}+\frac{6}{(N+1)(N+2)}\Big],\label{eq:dis1l-C2gN}\\
+C^q_{L,N}&=\frac{2C_F}{N+1},\qquad C^g_{L,N}=\frac{4T_F}{(N+1)(N+2)},\nonumber\\
+P_{qq,N}&=C_F\Big[\frac32+\frac{1}{N(N+1)}-2S_1\Big],\qquad P_{qg,N}=T_F\frac{N^2+N+2}{N(N+1)(N+2)}.\nonumber
+\end{align}
+$C^q_{2,1}=0$ 即 Adler 求和规则不受 $\order{\as}$ 修正；由 $2F_1=F_2/x-F_L/x$，$C^q_{2,1}-C^q_{L,1}=-C_F$ 给出
+$\int_0^1\dd x\,(F_1^{\bar\nu}-F_1^{\nu})=2\big(1-\frac23\frac{\as}{\pi}\big)$（Bjorken 求和规则）。两者都与
+Bardeen、Buras、Duke、Muta 的结果（T.~Muta 在 1978 年东京高能物理会议上的报告所引述）一致
+（在 $\order{\as}$，带电流的 $F_2$、$F_1$ 系数函数与电磁流的相同）。
+
+另一方面，在壳无质量部分子的前向 Compton 振幅按 $p$ 作 Taylor 展开（硬区展开）：$p^2=0$ 时其余区域均无标度，
+$\omega^N$（$\omega=2p\cdot q/Q^2$）的系数就是 Wilson 系数乘以树图的算符矩阵元，并由对 $\omega$ 的色散关系等于部分子结构函数的
+第 $N$ 阶矩。夸克靶取盒图、两个顶点图与自能图，胶子靶取夸克盒图的全部 $3!=6$ 种排列（交叉偶，奇数阶矩为零）。
+我们验证了：(i) 对 $N\le8$（夸克靶全部 $N$，胶子靶偶数 $N$），这些 Taylor 系数作为 $\varepsilon$ 的有理函数
+与上面割图结果（实+虚）的精确矩逐一相等；
+(ii) 扣除 $\MSbar$ 极点后的有限部分正是 \cref{eq:dis1l-C2qN,eq:dis1l-C2gN} 及 $C^{q,g}_{L,N}$，
+极点的留数为 $-P_{qq,N}$、$-P_{qg,N}$（领头阶反常量纲），且不出现 $1/\varepsilon^2$。
+这是“由局域 OPE 得到的矩因子化”与“由割图和 $\MSbar$ 部分子分布得到的 $x$ 空间因子化”在一圈的直接一致性检验。
+
+\begin{table}[htbp]
+\centering
+\caption{$\order{\as}$ 系数函数与领头阶分裂函数的 Mellin 矩（$\as/2\pi$ 归一化）。}
+\label{tab:dis1l-moments}
+\begin{tabular}{ccccccc}
+\toprule
+$N$ & $C^q_{2,N}/C_F$ & $C^g_{2,N}/T_F$ & $C^q_{L,N}/C_F$ & $C^g_{L,N}/T_F$ & $P_{qq,N}/C_F$ & $P_{qg,N}/T_F$\\
+\midrule
+1 & $0$ & $1/3$ & $1$ & $2/3$ & $0$ & $2/3$\\
+2 & $1/6$ & $-1/4$ & $2/3$ & $1/3$ & $-4/3$ & $1/3$\\
+3 & $29/24$ & $-7/20$ & $1/2$ & $1/5$ & $-25/12$ & $7/30$\\
+4 & $91/40$ & $-133/360$ & $2/5$ & $2/15$ & $-157/60$ & $11/60$\\
+5 & $589/180$ & $-23/63$ & $1/3$ & $2/21$ & $-91/30$ & $16/105$\\
+6 & $5281/1260$ & $-1777/5040$ & $2/7$ & $1/14$ & $-709/210$ & $11/84$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{与文献的比较}
+
+许多文献以 $a_s=\as/4\pi$ 展开，并把 $F_2$ 写成
+$x^{-1}F_2=C_{\rm ns}\otimes q_{\rm ns}+\langle e^2\rangle(C_q\otimes q_s+C_g\otimes g)$，
+$q_s=\sum_{i=1}^{n_f}(q_i+\bar q_i)$，$\langle e^2\rangle=\frac1{n_f}\sum_ie_i^2$。与本节归一化的换算为
+\begin{equation}
+c^{(1)}_{2,\rm ns}=2C_2^q,\quad c^{(1)}_{2,g}=4n_fC_2^g,\quad c^{(1)}_{L,\rm ns}=2C_L^q=4C_Fx,\quad c^{(1)}_{L,g}=4n_fC_L^g=8n_fx(1-x)
+\end{equation}
+（$T_F=\frac12$）。在此换算下，本节结果与 Vermaseren、Vogt、Moch 给出的一阶结果（他们归功于 Bardeen、Buras、Duke、Muta）
+在 $x$ 空间（作为分布）与 Mellin 空间（$N=1,\dots,20$ 精确有理数）完全一致，$F_L$ 的一阶系数函数亦一致；
+由 $C_L^{q,g}$ 立即得到 Altarelli—Martinelli 关系
+$F_L=\frac{\as}{4\pi}x^2\int_x^1\frac{\dd\xi}{\xi^3}\big[\frac{16}{3}F_2(\xi)+8\sum_qe_q^2(1-\frac{x}{\xi})\xi g(\xi)\big]$（$\order{\as}$，
+$\sum_q$ 只对味求和）。
+% ---------------------------------------------------------------------
+% 文献（供参考文献表；核对状态见 research/c_dis/DERIVATION.md 第 12 节）：
+%  W. A. Bardeen, A. J. Buras, D. W. Duke, T. Muta, Phys. Rev. D 18 (1978) 3998.
+%      [未直接打开原文；经下两条间接核对]
+%  T. Muta, in Proc. 19th Int. Conf. on High Energy Physics (Tokyo 1978), pp. 234--236（求和规则见 p. 235）[已核对：
+%      Adler 求和规则无修正；int dx (F_1^nubar - F_1^nu) = 2(1 - 8/((33-2f) ln(Q^2/Lambda^2)))]
+%  J. A. M. Vermaseren, A. Vogt, S. Moch, Nucl. Phys. B 724 (2005) 3 [hep-ph/0504242],
+%      式 (4.1)--(4.4)、(A.3)--(A.4)、(B.3)--(B.4) [已核对]
+%  S. Moch, J. A. M. Vermaseren, A. Vogt, Phys. Lett. B 606 (2005) 123 [hep-ph/0411112], 式 (3) [已核对]
+%  G. Altarelli, G. Martinelli, Phys. Lett. B 76 (1978) 89 [凭记忆，未核对原文]
+%  W. Furmanski, R. Petronzio, Z. Phys. C 11 (1982) 293 [未核对]
+%  R. K. Ellis, W. J. Stirling, B. R. Webber, QCD and Collider Physics (CUP 1996), 式 (4.80) 起 [未核对]
+%  M. Diemoz, F. Ferroni, E. Longo, G. Martinelli, Z. Phys. C 39 (1988) 21 (DIS 方案的胶子) [凭记忆，未核对]
+%  G. Altarelli, R. K. Ellis, G. Martinelli, Nucl. Phys. B 157 (1979) 461 (DIS 方案) [凭记忆，未核对]
+% ---------------------------------------------------------------------

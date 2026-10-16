@@ -1,0 +1,63 @@
+%%% BEGIN fig:method-neighbourhoods
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize},
+  fb dim/.style={draw=black!75,line width=0.5pt,{Stealth[length=3.6pt,width=3pt]}-{Stealth[length=3.6pt,width=3pt]}},
+  fb lead/.style={draw=black!60,line width=0.4pt}]
+  \def\fbw{0.42}   % half-width lambda^{beta_C} of the collinear tubes
+  \def\fbr{1.15}   % radius lambda^{beta_S} of the soft ball (beta_S < beta_C: fatter)
+  % ---------------- the domain Omega and the dominance sets ----------------
+  \begin{scope}
+    \clip[rounded corners=9pt] (-3.75,-2.45) rectangle (3.75,2.45);
+    \fill[gray!12] (-3.8,-2.5) rectangle (3.8,2.5);
+    \fill[blue!15] (-3.8,-\fbw) rectangle (3.8,\fbw);
+    \fill[orange!20] (-\fbw,-2.5) rectangle (\fbw,2.5);
+    \draw[blue!55!black,line width=0.5pt,dash pattern=on 2pt off 1.5pt] (-3.8,-\fbw) -- (3.8,-\fbw) (-3.8,\fbw) -- (3.8,\fbw);
+    \draw[orange!75!black,line width=0.5pt,dash pattern=on 2pt off 1.5pt] (-\fbw,-2.5) -- (-\fbw,2.5) (\fbw,-2.5) -- (\fbw,2.5);
+    \fill[green!20] (0,0) circle[radius=\fbr];
+    \draw[green!45!black,line width=0.6pt] (0,0) circle[radius=\fbr];
+    \draw[blue!60!black,line width=1.1pt] (-3.8,0) -- (3.8,0);
+    \draw[orange!80!black,line width=1.1pt] (0,-2.5) -- (0,2.5);
+  \end{scope}
+  \draw[gray!55!black,line width=0.7pt,rounded corners=9pt] (-3.75,-2.45) rectangle (3.75,2.45);
+  \fill (0,0) circle[radius=1.8pt];
+  % pinch sets
+  \node[fb lab,text=blue!50!black,anchor=south west] at (-3.62,\fbw+0.02) {$\pi_{C_1}$（$k\parallel p_1$）};
+  \draw[fb lead,blue!50!black] (-3.15,\fbw+0.07) -- (-3.0,0.04);
+  \node[fb lab,text=orange!60!black,anchor=north west] at (\fbw+0.06,2.36) {$\pi_{C_2}$（$k\parallel p_2$）};
+  \draw[fb lead,orange!60!black] (\fbw+0.1,2.12) -- (0.04,1.95);
+  \node[fb lab,anchor=south west,inner sep=1.5pt] at (0.05,0.03) {$\pi_S$};
+  % dominance sets
+  \node[font=\small,text=green!30!black] at (-0.66,-0.7) {$U_S$};
+  \node[font=\small,text=blue!45!black] at (2.35,-0.21) {$U_{C_1}$};
+  \node[font=\small,text=blue!45!black] at (-2.35,-0.21) {$U_{C_1}$};
+  \node[font=\small,text=orange!55!black,fill=orange!20,inner sep=1pt] at (0,-1.78) {$U_{C_2}$};
+  \node[font=\small,text=orange!55!black,fill=orange!20,inner sep=1pt] at (0,1.55) {$U_{C_2}$};
+  \node[font=\small,text=gray!35!black] at (-2.35,1.55) {$U_{\mathrm H}$};
+  \node[font=\small,text=gray!35!black] at (2.35,-1.55) {$U_{\mathrm H}$};
+  \node[fb lab,anchor=south east,text=gray!30!black] at (3.68,-2.4) {$\Omega$};
+  % dimensions
+  \draw[fb dim] (0,0) -- (-45:\fbr);
+  \draw[fb lead] (-45:0.62) -- (1.45,-1.12);
+  \node[fb lab,anchor=west,inner sep=1pt] at (1.45,-1.12) {$\lambda^{\beta_S}$};
+  \draw[fb dim] (3.05,0) -- (3.05,\fbw);
+  \draw[fb lead] (3.05,0.3) -- (3.3,0.75);
+  \node[fb lab,anchor=south,inner sep=1pt] at (3.3,0.75) {$\lambda^{\beta_C}$};
+  % ---------------- definitions ----------------
+  \node[anchor=north west,align=left,font=\footnotesize,text width=6.3cm] at (4.05,2.42) {%
+    $N_R=\{\sigma_{R(j)}(l_j)\le\lambda^{\beta_R}\ \ \forall j:\ R(j)\neq\mathrm H\}$\\[2pt]
+    $\sigma_A=|l^-|+|\mathbf l_T|$，\ $\sigma_B=|l^+|+|\mathbf l_T|$，\ $\sigma_S=\|l\|$\\[6pt]
+    $U_R=N_R\setminus\bigcup_{R'<R}N_{R'}$：\\[2pt]
+    \quad$U_S=N_S$，\ \ $U_{C_i}=N_{C_i}\setminus N_S$，\\[2pt]
+    \quad$U_{\mathrm H}=\Omega\setminus(N_S\cup N_{C_1}\cup N_{C_2})$\\[6pt]
+    $\beta_R=3^{h(R)-h_*}$：较小区域的邻域较“胖”\\[2pt]
+    （本例 $\beta_S=\frac19<\beta_C=\frac13$，$\lambda^{\beta_S}>\lambda^{\beta_C}$）\\[6pt]
+    $\bigcup_RU_R=\Omega$（\cref{lem:method-covering}）};
+\end{tikzpicture}
+\caption{依赖于 $\lambda$ 的邻域 $N_R=\{\sigma_{R(j)}(l_j)\le\lambda^{\beta_R}\}$ 与支配集 $U_R=N_R\setminus\bigcup_{R'<R}N_{R'}$（\cref{def:method-neighbourhoods}；示意：单圈离壳三角图的胶子动量 $k$ 在 $\mathbf k_T=0$ 处的 $(k^+,k^-)$ 截面，以 $Q$ 为单位）。
+共线钳夹集 $\pi_{C_1}$、$\pi_{C_2}$ 相交于软钳夹点 $\pi_S$（$k=0$）；$N_{C_i}$ 是半宽 $\lambda^{\beta_C}$ 的管道，$N_S$ 是半径 $\lambda^{\beta_S}$ 的球，
+由于 $\beta_S<\beta_C$ 而比管道“胖”。绿、蓝、橙、灰色区域分别为 $U_S$、$U_{C_1}$、$U_{C_2}$、$U_{\mathrm H}$，它们覆盖整个积分域（\cref{lem:method-covering}）。}
+\label{fig:method-neighbourhoods}
+\end{figure}
+%%% END fig:method-neighbourhoods

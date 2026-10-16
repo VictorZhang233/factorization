@@ -1,0 +1,269 @@
+% =====================================================================
+\section{阿贝尔模型、光锥序表示与程函线间的双胶子交换}\label{sec:dy-model}
+% =====================================================================
+
+上一节的论证有许多步骤只在附录中以编号假设为前提而完成。为了看清每一步在做什么，本节先在一个可以算到底的模型中检验它们：阿贝尔规范理论、有质量的矢量玻色子（质量 $m$ 只作红外正规子）、程函（eikonal）旁观者。然后转向非阿贝尔情形中最常被误解的一点——两次 Glauber 交换的色结构——并精确计算两条程函线之间的双胶子交换。
+
+\begin{proposition}[阿贝尔模型中旁观者 Glauber 相位的相消 \tagP]\label{prop:dy-abelian-model}
+本命题是关于如下阿贝尔程函模型的陈述，在领头幂次下成立。模型：质量为 $m$ 的阿贝尔矢量玻色子，Feynman 规范传播子 $-\ii g_{\mu\nu}/(k^2-m^2+\ii0)$；带电标量部分子，$D_\mu=\partial_\mu-\ii g_jA_\mu$，顶点 $+\ii g_j(p+p')^\mu$；强子 $A$（$B$）在点顶点处分裂为活动部分子 $a$（$b$）与旁观者 $s_A$（$s_B$），$a$、$b$ 在硬顶点湮灭为一个质量为 $Q$ 的中性态；需要时把旁观者近似为沿 $n_A$（$n_B$）的无限长类光程函线 $x_j(\lambda)=\boldsymbol b_j+\lambda n_j$，荷为 $g_A$（$g_B$），横向间距 $\boldsymbol b=\boldsymbol b_A-\boldsymbol b_B$。
+\begin{enumerate}[label=(G-\roman*),leftmargin=3em,itemsep=1pt,topsep=2pt]
+\item 程函旁观者之间全部交换之和为 $\langle{\rm T}\,W_AW_B\rangle=\ee^{\ii\chi(\boldsymbol b)}$，$W_j=\exp\big(\ii g_j\int_{-\infty}^\infty\dd\lambda\,n_j\cdot A(x_j(\lambda))\big)$，
+\begin{equation}\label{eq:dy-chi}
+\chi(\boldsymbol b)=-\frac{g_Ag_B}{2\pi}\,K_0(m|\boldsymbol b|)\qquad(\text{实数}).
+\end{equation}
+% VF-DY-13
+对末态动量为 $p'_A$、$p'_B$ 的在壳有限能量旁观者，单圈 Glauber 区的贡献为
+$\mathcal M_1(p'_A,p'_B)=\int\frac{\dd^2\mathbf k_T}{(2\pi)^2}\,\frac{-\ii g_Ag_B}{\mathbf k_T^2+m^2}\,\mathcal M_0(p'_A-\mathbf k_T,p'_B+\mathbf k_T)$，即在与旁观者相对横动量共轭的冲击参数空间中 $\tilde{\mathcal M}_1=\ii\chi\,\tilde{\mathcal M}_0$。
+\item 对任何关于旁观者相对横动量单举的截面，这一相位逐阶相消（$\order{g^{2n}}$ 的各割线位置之和 $\sum_{j=0}^n\frac{(\ii\chi)^j}{j!}\frac{(-\ii\chi)^{n-j}}{(n-j)!}=0$，$n\ge1$），也全阶相消（$|\ee^{\ii\chi}|^2=1$），包括领头幂次下的 $q_T$ 谱。
+\item 旁观者—旁观者交换的 Glauber 区被钳住：$k^-$ 被 $s_A$ 与 $a$ 钳住，$k^+$ 被 $s_B$ 与 $b$ 钳住，不能用围道形变代替 (G-ii)。
+\item $B$ 的活动部分子 $b$ 与 $A$ 的旁观者 $s_A$ 之间的交换（玻色子动量 $k$ 由 $s_A$ 流入 $b$，$b$ 携带 $l_b+k$，$l_b^->0$）在 $k^+$ 上不被钳住：
+\begin{equation}\label{eq:dy-Ias}
+I_{as}(k^-)\equiv\int\dd k^+\,\frac{1}{(2l_b^-k^++c_b+\ii0)(2k^+k^--K^2+\ii0)}=\frac{2\pi\ii\,\theta(-k^-)}{2l_b^-K^2+2k^-c_b},
+\end{equation}
+其中 $K^2=\mathbf k_T^2+m^2$，
+它由 $k^+=K^2/(2k^-)$、即 $|k^+|\sim Q$ 处的玻色子极点给出；这一交换属于 $A$ 的共线子图，$b$ 可以换成指向过去的程函线 $\ii/(2l_b^-k^++\ii0)$，相对误差为 $\order{\lambda^2}$。
+\end{enumerate}
+本模型没有给出：非阿贝尔情形、全阶的区域分析、幂次修正，以及测量末态强子的可观测量。
+\uses{prop:method-glauber-oneloop,lem:prelim-eikonal-identity,prop:dy-glauber-pinch}
+\end{proposition}
+
+\begin{proof}
+(G-i) 对自由阿贝尔场，${\rm T}$ 乘积的 Gauss 积分给出 $\langle{\rm T}\,\ee^{\ii\int J\cdot A}\rangle=\ee^{-\frac12\int\!\!\int J^\mu J^\nu D_{\mu\nu}}$，其中 $J^\mu(x)=\sum_jg_j\int\dd\lambda\,n_j^\mu\delta^4(x-x_j(\lambda))$。自身项正比于 $n_j^2=0$，在 Feynman 规范中为零。交叉项为
+\[
+-g_Ag_B\,n_A\cdot n_B\int\frac{\dd^4k}{(2\pi)^4}\frac{-\ii\,\ee^{-\ii k\cdot(\boldsymbol b_A-\boldsymbol b_B)}}{k^2-m^2+\ii0}\,2\pi\delta(k^-)\,2\pi\delta(k^+)
+=-\ii g_Ag_B\int\frac{\dd^2\mathbf k_T}{(2\pi)^2}\frac{\ee^{\ii\mathbf k_T\cdot\boldsymbol b}}{\mathbf k_T^2+m^2}=\ii\chi(\boldsymbol b),
+\]
+这里 $n_A\cdot n_B=1$，$\int\dd\lambda\,\ee^{-\ii\lambda n_A\cdot k}=2\pi\delta(k^-)$，最后用了 $\int\frac{\dd^2\mathbf k}{(2\pi)^2}\frac{\ee^{\ii\mathbf k\cdot\boldsymbol b}}{\mathbf k^2+m^2}=\frac{K_0(m|\boldsymbol b|)}{2\pi}$。无限长线迫使 $k^\pm=0$，交换是纯 Glauber 的。对有限能量的旁观者，取\cref{prop:dy-glauber-pinch}的路径：$k^-$ 的被积函数随 $|k^-|^{-2}$ 衰减，在上半平面闭合只包围 $s_A$ 的极点，$\int\frac{\dd k^-}{2\pi}\frac{\ii}{-2p'^+_A(k^--k_1)+\ii0}F(k^-)=F(k_1)/(2p'^+_A)$，即把内线的旁观者置于在壳，$F$ 中余下的因子成为动量平移后的树图振幅；$k^+$ 同理给出 $1/(2p'^-_B)$。两个顶点在领头幂次为 $\ii g_A\,2p'^+_A$ 与 $\ii g_B\,2p'^-_B$，Glauber 区的玻色子传播子为 $-\ii/(-\mathbf k_T^2-m^2)$，合起来
+$\frac{1}{2p'^+_A}\frac{1}{2p'^-_B}(\ii g_A2p'^+_A)(\ii g_B2p'^-_B)\frac{-\ii}{-\mathbf k_T^2-m^2}=\frac{-\ii g_Ag_B}{\mathbf k_T^2+m^2}$，即所述的 $\mathcal M_1$。交换只把旁观者的相对横动量 $\boldsymbol p=\frac12(\mathbf p'_A-\mathbf p'_B)$ 平移 $\mathbf k_T$；以 $\mathcal M(\boldsymbol p)=\int\dd^2\boldsymbol b\,\ee^{-\ii\boldsymbol p\cdot\boldsymbol b}\tilde{\mathcal M}(\boldsymbol b)$ 表示，卷积变为乘积，$\tilde{\mathcal M}_1(\boldsymbol b)=\tilde{\mathcal M}_0(\boldsymbol b)\int\frac{\dd^2\mathbf k}{(2\pi)^2}\frac{-\ii g_Ag_B\,\ee^{\ii\mathbf k\cdot\boldsymbol b}}{\mathbf k^2+m^2}=\ii\chi(\boldsymbol b)\tilde{\mathcal M}_0(\boldsymbol b)$。$n$ 次交换的梯形图与全部交叉梯形图之和为 $(\ii\chi)^n/n!$：对程函线这是 Gauss 公式的展开，对有限能量的旁观者则由程函恒等式 $\sum_{\pi}\prod_j(w_{\pi(1)}+\dots+w_{\pi(j)})^{-1}=\prod_jw_j^{-1}$（\cref{lem:prelim-eikonal-identity}）保证。
+
+(G-ii) 交换不改变旁观者的总横动量 $\boldsymbol P=\mathbf p'_A+\mathbf p'_B=-\mathbf q_T$，$q^\pm$ 的改变是 $\order{\lambda^2}$。对不依赖于 $\boldsymbol p$ 的可观测量，用 Parseval 恒等式，
+$\int\dd^2\boldsymbol p\,|\mathcal M|^2=(2\pi)^2\int\dd^2\boldsymbol b\,|\tilde{\mathcal M}_0|^2\,|\ee^{\ii\chi}|^2=\int\dd^2\boldsymbol p\,|\mathcal M_0|^2$。逐阶地，$\order{g^{2n}}$ 中 $j$ 次交换在割线左侧（振幅）、$n-j$ 次在右侧（共轭振幅），其和为 $\sum_j\frac{(\ii\chi)^j}{j!}\frac{(-\ii\chi)^{n-j}}{(n-j)!}=\frac{(\ii\chi-\ii\chi)^n}{n!}=0$（二项式定理）。
+
+(G-iii) 这是\cref{prop:dy-glauber-pinch}(b)(c) 的特例：$s_A$ 与 $a$ 的 $k^-$ 零点分居两侧，$s_B$ 与 $b$ 的 $k^+$ 零点分居两侧，围道的任何离开实轴附近的形变都改变积分值。
+
+(G-iv) 按所述路径，$b$ 的分母为 $(l_b+k)^2-m_b^2+\ii0=2l_b^-k^++c_b+\ii0+\order{\lambda^4Q^2}$，$c_b=l_b^2-m_b^2-2\mathbf l_{bT}\cdot\mathbf k_T-\mathbf k_T^2$ 为实数、$\order{\lambda^2Q^2}$，零点 $k^+=-c_b/(2l_b^-)-\ii0$ 在下半平面；$s_A$ 与 $a$ 只在次领头幂次依赖 $k^+$。玻色子极点 $k^+=(K^2-\ii0)/(2k^-)$ 对 $k^->0$ 在下半平面，对 $k^-<0$ 在上半平面。被积函数衰减为 $|k^+|^{-2}$，在上半平面闭合：$k^->0$ 时上半平面无极点，积分为零；$k^-<0$ 时只包围玻色子极点，得 $2\pi\ii/[(2l_b^-K^2/(2k^-)+c_b)\,2k^-]=2\pi\ii/(2l_b^-K^2+2k^-c_b)$。该极点在 $|k^+|=K^2/(2|k^-|)\sim\lambda^2Q^2/(\lambda^2Q)=Q$ 处：动量 $k$ 是 $A$ 共线的，不是 Glauber 的。把 $b$ 的分母换成 $2l_b^-k^++\ii0$，结果变为 $2\pi\ii\theta(-k^-)/(2l_b^-K^2)$，相对改变为 $k^-c_b/(l_b^-K^2)=\order{\lambda^2}$；$\ii/(2l_b^-k^++\ii0)=\frac{1}{2l_b^-}\,\ii/(n_B\cdot k+\ii0)$ 正是指向过去的 Wilson 线 $W[0,-\infty n_B]$ 的程函因子（\cref{prop:method-glauber-oneloop}的规则），它属于 $f_{q/A}$ 的 Wilson 线。
+\end{proof}
+
+\paragraph{地位与缺口}\tagP。作为 QCD 陈述，“旁观者之间的 Glauber 相位在单举截面中相消”只在这个模型中被证明（\cref{lem:dy-fsi}、\cref{prop:dy-deformation}给出一般情形的全阶论证）。模型与 QCD 的差别正是论证的难点：非阿贝尔情形中相位成为不与硬过程的颜色流、也彼此不对易的色矩阵；有限能量的复合旁观者不是程函线；区域之间有重叠与减除。阿贝尔理论中、只含非重合连接的阶上，对任意的 $J_A$、$J_B$ 与任意多个旁观者，族求和后的相消在\cref{asm:appO-lcopt}之下成立（\cref{prop:appO-ss-cancel}，本模型的推广）；非阿贝尔的重合连接需要\cref{asm:appO-mixing}(c)。这些结果是已知结果的推导，见\cite[第~14.3~节，式~(14.11)--(14.16)，第~14.3.3--14.3.4~节]{Collins2011}；一个显式的阿贝尔相位见\cite[式~(14)]{AybatSterman2009}，SCET 中旁观者—旁观者 Glauber 相位在对 $\Delta p_\perp$ 积分后相消见\cite[式~(11.12)--(11.13)]{RothsteinStewart2016}。
+
+\cref{fig:dy-abelian-model}画出了 (G-i)(G-ii)：$n$ 次交换之和是冲击参数空间中的相位，两种割线位置在对相对横动量单举的截面中相消。
+
+%%% BEGIN fig:dy-abelian-model
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc amp/.style={hadron blob,ellipse,minimum width=0.95cm,minimum height=1.9cm,inner sep=0pt,font=\footnotesize}]
+  % =====================================================================
+  % (a) n exchanges between the two eikonal spectator lines
+  % =====================================================================
+  \begin{scope}
+    \node[fc lab] at (-3.15,0) {$\displaystyle\sum_{n\ge0}$};
+    \draw[wilson=0.1] (-2.5,0.75) -- (1.9,0.75);
+    \draw[wilson=0.1] (-2.5,-0.75) -- (1.9,-0.75);
+    \foreach \x in {-1.35,-0.55,1.05} {
+      \draw[glauber] (\x,-0.75) -- (\x,0.75);
+      \node[vertex] at (\x,0.75) {};  \node[vertex] at (\x,-0.75) {}; }
+    \node[fc lab] at (0.25,0) {$\cdots$};
+    \node[fc note,anchor=south west] at (-2.5,0.86) {$s_A$：沿$n_A$，荷$g_A$};
+    \node[fc note,anchor=north west] at (-2.5,-0.86) {$s_B$：沿$n_B$，荷$g_B$};
+    \draw[gray!60!black,line width=0.5pt,{Stealth[length=3.5pt,width=3pt]}-{Stealth[length=3.5pt,width=3pt]}] (2.2,0.7) -- (2.2,-0.7);
+    \node[fc lab,anchor=west] at (2.25,0) {$\boldsymbol b$};
+    \draw[line width=0.5pt] (-1.45,-1.43) -- (-1.45,-1.55) -- (1.15,-1.55) -- (1.15,-1.43) (-0.15,-1.55) -- (-0.15,-1.65);
+    \node[fc note] at (-0.15,-1.93) {$n$次交换（含全部交叉排列）};
+    \node[fc lab,anchor=west] at (2.85,0.3) {$\displaystyle=\sum_{n\ge0}\frac{\big(\ii\chi(\boldsymbol b)\big)^n}{n!}=\ee^{\ii\chi(\boldsymbol b)}$};
+    \node[fc lab,anchor=west] at (2.85,-0.75) {$\displaystyle\chi(\boldsymbol b)=-\frac{g_Ag_B}{2\pi}\,K_0(m|\boldsymbol b|)$};
+    \node[fc lab] at (2.3,-2.6) {(a)\ 程函旁观者之间$n$次有质量阿贝尔玻色子交换之和为相位};
+  \end{scope}
+  % =====================================================================
+  % (b) the two cut placements at O(g^2)
+  % =====================================================================
+  \begin{scope}[yshift=-4.95cm]
+    \begin{scope}[xshift=-1.2cm]
+      \draw[wilson=0.76] (-1.6,0.5) -- (1.6,0.5);
+      \draw[wilson=0.76] (-1.6,-0.5) -- (1.6,-0.5);
+      \node[fc amp] at (-1.6,0) {$\mathcal M^{(0)}$};
+      \node[fc amp] at (1.6,0) {$\mathcal M^{(0)*}$};
+      \draw[glauber] (-0.62,-0.5) -- (-0.62,0.5);
+      \node[vertex] at (-0.62,0.5) {};  \node[vertex] at (-0.62,-0.5) {};
+      \draw[cut] (0,-1.15) -- (0,1.15);
+      \node[fc note] at (-0.62,0.78) {$s_A$};  \node[fc note] at (-0.62,-0.8) {$s_B$};
+      \node[fc lab] at (0,-1.55) {$+\ii\chi(\boldsymbol b)\,|\tilde{\mathcal M}^{(0)}(\boldsymbol b)|^2$};
+    \end{scope}
+    \node[fc lab] at (1.55,0) {$+$};
+    \begin{scope}[xshift=4.3cm]
+      \draw[wilson=0.3] (-1.6,0.5) -- (1.6,0.5);
+      \draw[wilson=0.3] (-1.6,-0.5) -- (1.6,-0.5);
+      \node[fc amp] at (-1.6,0) {$\mathcal M^{(0)}$};
+      \node[fc amp] at (1.6,0) {$\mathcal M^{(0)*}$};
+      \draw[glauber] (0.62,-0.5) -- (0.62,0.5);
+      \node[vertex] at (0.62,0.5) {};  \node[vertex] at (0.62,-0.5) {};
+      \draw[cut] (0,-1.15) -- (0,1.15);
+      \node[fc note] at (0.62,0.78) {$s_A$};  \node[fc note] at (0.62,-0.8) {$s_B$};
+      \node[fc lab] at (0,-1.55) {$-\ii\chi(\boldsymbol b)\,|\tilde{\mathcal M}^{(0)}(\boldsymbol b)|^2$};
+    \end{scope}
+    \node[fc lab,anchor=west] at (6.55,0) {$=0$};
+    \node[fc lab] at (2.3,-2.3) {$\order{g^{2n}}$：$\displaystyle\sum_{j=0}^{n}\frac{(\ii\chi)^j}{j!}\,\frac{(-\ii\chi)^{n-j}}{(n-j)!}=0\ (n\ge1)$；全阶：$|\ee^{\ii\chi(\boldsymbol b)}|^2=1$};
+    \node[fc lab] at (2.3,-3.2) {(b)\ 割线位置之和（对旁观者相对横动量$\boldsymbol\Delta$积分，即在$\boldsymbol b$空间中）};
+  \end{scope}
+\end{tikzpicture}
+\caption{阿贝尔模型中旁观者之间的 Glauber 交换（\cref{prop:dy-abelian-model}）。两个旁观者$s_A$、$s_B$近似为沿$n_A$、$n_B$（方向相反）的无限长程函线，荷为$g_A$、$g_B$，横向间距为$\boldsymbol b$；暗红色螺线为质量为$m$的阿贝尔矢量玻色子（Feynman 规范）；时间自左向右，双线上的箭头为荷的流向。
+(a)~对$n$次交换（含全部交叉排列）求和给出冲量参数空间的相位：$n$次项为$(\ii\chi)^n/n!$，总和为$\ee^{\ii\chi(\boldsymbol b)}$，$\chi(\boldsymbol b)=-\frac{g_Ag_B}{2\pi}K_0(m|\boldsymbol b|)$为实数（$m\to0$时红外发散，但始终是相位）。
+(b)~$\order{g^2}$的两个割图：交换位于割线左侧（振幅）给出$+\ii\chi$，位于右侧（共轭振幅）给出$-\ii\chi$；对旁观者相对横动量$\boldsymbol\Delta$单举的截面中（Parseval 恒等式化为$\boldsymbol b$空间）二者逐阶相消，全阶时$|\ee^{\ii\chi}|^2=1$，但对固定的$\boldsymbol\Delta$逐点并不相消（VF-DY-13，VF-GLA-3）。}
+\label{fig:dy-abelian-model}
+\end{figure}
+%%% END fig:dy-abelian-model
+
+\begin{example}[旁观者模型的光锥序表示]\label{ex:dy-spectator-lcopt}
+把\cref{lem:dy-poles-orientation}用到\cref{prop:dy-glauber-pinch}的旁观者模型。去掉与 $k^-$ 无关的因子 $1/(2p'^+\,2l^+)$，$J_A$ 对一个附着于 $s_A$ 的软插入的依赖为
+\begin{equation}\label{eq:dy-JA-two-orderings}
+J_A(k^-)=\frac{\ii}{k^--d+\ii0}\cdot\frac{\ii}{c-k^-+\ii0}
+=\frac{\ii}{c-d}\Big[\underbrace{\frac{\ii}{k^--d+\ii0}}_{\text{插入在 }V_H\text{ 之前}}+\underbrace{\frac{\ii}{c-k^-+\ii0}}_{\text{插入在 }V_H\text{ 之后}}\Big],
+\end{equation}
+第二个等号是部分分式 $\frac{1}{(x-d)(c-x)}=\frac{1}{c-d}\big[\frac{1}{x-d}+\frac{1}{c-x}\big]$。左边是两个协变传播子之积，右边是两个光锥序项之和：$\ii/(c-d)$ 是插入之前初态 $(a,s_A)$ 的能量分母 $D_1=c-d$，第一项是插入在 $V_H$ 之前的初态分母（零点在下半平面），第二项是插入在 $V_H$ 之后的末态分母（零点在上半平面）。记 $J^{\rm in}$、$J^{\rm fi}$ 为这两项，二者在 $|k^-|\gg|c|,|d|$ 时分别趋于 $\ii\mathcal J_-/k^-$ 与 $-\ii\mathcal J_+/k^-$，且 $\mathcal J_-=\mathcal J_+=\ii/(c-d)$：旁观者插入在 $V_H$ 两侧的等时值相等。设外因子 $R(k^-)=r/(k^--z)$ 只有一个远处的极点（连接线的 $k^-$ 极点，$|z|\gg|c|,|d|$）。若 $\Imag z<0$，$J^{\rm in}R$ 在上半平面解析且衰减为 $|k^-|^{-2}$，其积分为零；$J^{\rm fi}R$ 在下半平面闭合只包围 $z$，得 $\ii r/[(c-d)(c-z)]=R(0)\,\frac{\ii}{c-d}\,[1+\order{c/z}]$。$\Imag z>0$ 时角色互换。所以
+$\int\frac{\dd k^-}{2\pi}J_A(k^-)R(k^-)=R(0)\,\frac{\ii}{c-d}\,\big[1+\order{\max(|c|,|d|)/|z|}\big]$：
+没有额外的能量分母，交换发生在 $\tau=0$，只转移横动量——这就是等光锥时刻局域化（\cref{prop:dy-deformation}第 (2) 步）的最简单形式。单个光锥序项则依赖于正规化：若把连接线换成严格的 Glauber 传播子 $-1/\mathbf k_T^2$ 并在 $|k^-|<K$ 处对称截断，每一项各给出权重 $\frac12$；若保留完整传播子（$k^+>0$ 时极点在下半平面），末态项给出全部权重、初态项给出零，即权重 $\theta(\pm k^+)$。两项之和与正规化无关。数值上，取 $d=-0.011$、$c=0.017$ 与三个远处极点 $z$，积分与 $R(0)\ii/(c-d)$ 的相对偏差为 $0.7\%$--$1.9\%$，与 $\max(|c|,|d|)/|z|$ 相符；对称截断 $K=50$ 时两项的权重都等于 $0.5000$。与\cref{prop:dy-abelian-model}的核 $\chi(\boldsymbol b)$ 合起来，每次交换在冲击参数空间中贡献一个因子 $\ii\chi(\boldsymbol b)$，对相对横动量积分后相消。
+\uses{lem:appO-lcopt,lem:dy-poles-orientation,prop:dy-abelian-model}
+\end{example}
+
+\begin{example}[阿贝尔 Glauber 模型的数值演示]\label{ex:dy-glauber-model}
+\cref{prop:dy-abelian-model}(G-ii) 中的相消只发生在对旁观者相对横动量 $\boldsymbol\Delta$ 积分之后，逐点并不成立。取一个复的玩具振幅（$\boldsymbol\Delta$ 以其宽度为单位）
+$\mathcal M_0(\boldsymbol\Delta)=\ee^{-[(\Delta_x-0.4)^2+\Delta_y^2]/2}\,(1+0.9\ii\Delta_x+0.3\Delta_y^2)\,\ee^{0.7\ii\Delta_y}$，
+$g_Ag_B=2$、$m=0.3$，在 $512\times512$ 的网格（边长 $40$）上用快速 Fourier 变换实现 $\boldsymbol\Delta\leftrightarrow\boldsymbol b$，于是 $\tilde{\mathcal M}_1=\ii\chi\tilde{\mathcal M}_0$、$\tilde{\mathcal M}_2=\frac12(\ii\chi)^2\tilde{\mathcal M}_0$。结果：
+(i) $\order{g^2}$ 的两个割图之和 $2\Real[\mathcal M_1\mathcal M_0^*](\boldsymbol\Delta)$ 逐点不为零，其绝对值的积分是两个割图各自绝对值积分之和的 $21\%$，而其积分本身为 $4\times10^{-17}$（以同一量为单位）；
+(ii) $\order{g^4}$ 的割线位置之和 $|\mathcal M_1|^2+2\Real[\mathcal M_0^*\mathcal M_2]$ 的积分为 $\int|\mathcal M_1|^2$ 的 $1.5\times10^{-16}$，逐点则为其 $18\%$；
+(iii) 全阶，$\int|\ee^{\ii\chi}\otimes\mathcal M_0|^2/\int|\mathcal M_0|^2=1.000000000000000$；
+(iv) 然而相对横动量的分布确实被改变：$\langle\boldsymbol\Delta^2\rangle$ 由 $1.738$ 变为 $1.874$。
+这说明相消不是平凡的：它要求对旁观者的末态求和；任何约束旁观者相对横动量的测量都会看到 Glauber 相位的效应。
+\uses{prop:dy-abelian-model}
+\end{example}
+
+\paragraph{非阿贝尔情形：两次交换的色结构。}在非阿贝尔理论中，一次旁观者—旁观者交换的振幅是 $-\ii\chi X$，$X=\mathbf T_A\cdot\mathbf T_B$ 是 Hermite 的色算符。两次交换时，非交叉图（梯形）与交叉图的色因子分别是 $X^2$ 与 $X^2+\frac{C_A}2X$，二者不同，阿贝尔情形中把两者在被积函数层次合并为 $\delta(k^+)\delta(k^-)$ 的做法不再可用\cite[第~5.2.1~节]{RothsteinStewart2016}。若两个喷注中两次插入的次序以权重 $p_{\rm same}$、$p_{\rm opp}$（$p_{\rm same}+p_{\rm opp}=1$）相同或相反，二阶振幅为 $\mathcal A_2=\frac{(-\ii\chi)^2}2\big[X^2+p_{\rm opp}\frac{C_A}2X\big]$，幺正性的残差为 $\mathcal A_2+\mathcal A_2^\dagger+\mathcal A_1^\dagger\mathcal A_1=-\frac12C_A\chi^2(\Real p_{\rm opp})X$（\cref{lem:appO-glauber-operator}，\tagR，$R_{\mathrm{def}}$）。如果像“严格 Glauber 窗口”那样把连接线换成 $-1/\mathbf k_T^2$ 并对称截断，每个喷注的次序各以 $\frac12$ 的权重独立出现，$p_{\rm opp}=\frac12$，残差为 $-\frac14C_A\chi^2X$，于是一个色单态 $q\bar q$ 对（$X=-C_F$）的“概率”是 $1+\frac14C_AC_F\chi^2>1$。下面的命题表明，这个残差是截断的假象。
+
+\begin{proposition}[两条程函线之间的双胶子交换：$O(g^4)$ 幺正性与 Regge 相位 \tagR]\label{prop:dy-eikonal-twogluon}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本命题是 $\order{g^4}$ 的显式陈述，只涉及程函线模型。两条无限长的类时 Wilson 线，速度 $v_A$、$v_B$（$v^2=1$，$v_A\cdot v_B=\cosh Y$，快度差 $Y>0$），横向间距 $\boldsymbol b$，色生成元 $\mathbf T_A$、$\mathbf T_B$（任意表示），交换两个质量为 $m$（红外正规子）的胶子，使用完整的 Feynman 规范传播子（保留 $k^+k^-$），横动量固定；记 $a=\mathbf k_T^2+m^2$、$b=(\mathbf K-\mathbf k)_T^2+m^2$（$\mathbf K$ 为总横动量转移），$x_A=v_A\cdot k$、$x_B=v_B\cdot k$，$\mathcal Q\equiv k_\parallel^2=\big(2\cosh Y\,x_Ax_B-x_A^2-x_B^2\big)/\sinh^2Y$，$g(\mathcal Q)=[(\mathcal Q-a+\ii0)(\mathcal Q-b+\ii0)]^{-1}$。
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item 纵向积分
+\begin{equation}\label{eq:dy-Jbox}
+\begin{aligned}
+J_{\rm box}&\equiv\int\dd x_A\dd x_B\,\frac{\ii}{x_A+\ii0}\,\frac{\ii}{-x_B+\ii0}\,g=\frac{2\pi}{ab}(\pi+\ii Y),\\
+J_{\rm cross}&\equiv\int\dd x_A\dd x_B\,\frac{\ii}{x_A+\ii0}\,\frac{\ii}{x_B+\ii0}\,g=-\frac{2\pi\ii Y}{ab};
+\end{aligned}
+\end{equation}
+以 $X=\mathbf T_A\cdot\mathbf T_B$，非交叉图与交叉图的色因子为 $c_{\rm box}=X^2$、$c_{\rm cross}=X^2+\frac{C_A}2X$，于是
+$J_{\rm box}c_{\rm box}+J_{\rm cross}c_{\rm cross}=\frac{2\pi}{ab}\big[\pi X^2-\ii Y\frac{C_A}2X\big]$。
+% VF-REF-9
+\item 以单胶子交换 $\mathcal A_1=-\ii\chi X$，$\chi(\boldsymbol b)=g^2\coth Y\int\frac{\dd^2\mathbf k_T}{(2\pi)^2}\frac{\ee^{\ii\mathbf k_T\cdot\boldsymbol b}}{\mathbf k_T^2+m^2}=\frac{g^2\coth Y}{2\pi}K_0(m|\boldsymbol b|)$，在横向积分之后双胶子交换为
+$\mathcal A_2=\frac12(-\ii\chi X)^2+(-\ii\chi X)\big(-\frac{C_AY}{4\pi}\chi\big)$：第一项是指数化项，第二项是 $\ii\times$实数$\times$Hermite 色矩阵，即正比于 $C_AY$ 的单圈 Regge 化相位。
+\item 在\cref{lem:appO-glauber-operator}的参数化 $\mathcal A_2=\frac{(-\ii\chi)^2}{2}\big[X^2+p_{\rm opp}\frac{C_A}2X\big]$ 中，$p_{\rm opp}=-\ii Y/\pi$，$\Real p_{\rm opp}=0$，因而 $\mathcal A_2+\mathcal A_2^\dagger+\mathcal A_1^\dagger\mathcal A_1=0$：双胶子交换图给出 $\mathcal V^\dagger\mathcal V=1+\order{\chi^3}$，且没有实发射（对无限长直线，实割线从 $\order{g^6}$ 才开始）。
+\end{enumerate}
+\uses{prop:prelim-wilson-rules,lem:qcd-colour-identities,lem:appO-glauber-operator}
+\end{proposition}
+
+\begin{proof}
+完整的计算见\cref{sec:appO-wilson}；这里写出它的四个步骤与全部关键中间式。
+
+\emph{(1) 化为纵向积分。}把两条线的路径排序指数各展开到 $\order{g^2}$，四个场两两缩并到不同的线上：$A$ 上较晚的顶点与 $B$ 上较晚的顶点相连（非交叉）或与较早的相连（交叉）。直线的参数积分给出 $(2\pi)^2\delta(v_A\cdot K)\delta(v_B\cdot K)$ 与两个程函传播子（\cref{prop:prelim-wilson-rules}），即\cref{eq:dy-Jbox}中的程函因子；$K$ 是纯横向的，故两条胶子传播子给出 $g(\mathcal Q)$。由 $\dd k^0\dd k^3=\dd x_A\dd x_B/\sinh Y$、$\int\dd^2K_\parallel\,\delta(v_A\cdot K)\delta(v_B\cdot K)=1/\sinh Y$ 与 $(\ii g)^4(v_A\cdot v_B)^2(-\ii)^2=-g^4\cosh^2Y$，
+\[
+\mathcal A_2=-g^4\coth^2Y\int\frac{\dd^2\mathbf K}{(2\pi)^2}\ee^{\ii\mathbf K\cdot\boldsymbol b}\int\frac{\dd^2\mathbf k_T}{(2\pi)^4}\big[J_{\rm box}c_{\rm box}+J_{\rm cross}c_{\rm cross}\big].
+\]
+非交叉配对的色因子是 $\sum_{a,b}T^a_AT^b_A\otimes T^a_BT^b_B=X^2$；交叉配对是 $X^2+\sum T^a_AT^b_A\otimes[T^b_B,T^a_B]=X^2+\ii f^{bac}T^a_AT^b_AT^c_B$，而 $\ii f^{bac}T^a_AT^b_A=\frac\ii2f^{bac}[T^a_A,T^b_A]=\frac{C_A}2T^c_A$（\cref{lem:qcd-colour-identities}），故 $c_{\rm cross}=X^2+\frac{C_A}2X$。
+
+\emph{(2) $x_B$ 的留数。}作为 $x_B$ 的函数，$g=\sinh^4Y\big/\prod_{c=a,b}(x_B-x^c_+)(x_B-x^c_-)$，$x^c_\pm=\cosh Y\,x_A\pm\sinh Y\,R_c$，$R_c=\sqrt{x_A^2-c+\ii0}$（$\Imag R_c\ge0$），$x^c_+$ 在上半平面、$x^c_-$ 在下半平面；又 $(x^a_+-x^b_+)(x^a_+-x^b_-)=(b-a)\sinh^2Y$。交叉图（程函极点在下半平面）在上半平面闭合，非交叉图在下半平面闭合：
+\[
+\begin{aligned}
+I_{\rm cross}(x_A)&\equiv\int\dd x_B\frac{\ii\,g}{x_B+\ii0}=\frac{\pi\sinh Y}{a-b}\big[h^+_a-h^+_b\big],\\
+I_{\rm box}(x_A)&\equiv\int\dd x_B\frac{\ii\,g}{-x_B+\ii0}=\frac{\pi\sinh Y}{a-b}\big[h^-_b-h^-_a\big],
+\end{aligned}
+\]
+其中 $h^\pm_c\equiv\frac{1}{R_cx^c_\pm}=\frac{\cosh Y\,x_A}{R_c(x_A^2+c\sinh^2Y)}\mp\frac{\sinh Y}{x_A^2+c\sinh^2Y}$。
+
+\emph{(3) $x_A$ 积分。}以 $\frac{\ii}{x_A+\ii0}=\ii\,{\rm PV}\frac1{x_A}+\pi\delta(x_A)$，$J=\ii\,{\rm PV}\!\int\frac{I(x_A)}{x_A}\dd x_A+\pi I(0)$。$h^\pm_c$ 的第二项为偶函数，主值积分为零；第一项给出唯一需要的积分
+\[
+{\rm PV}\!\int\frac{h^\pm_c}{x_A}\dd x_A=\frac{\cosh Y}{c}\int_{-\infty}^{\infty}\frac{\dd u}{\sqrt{u^2-1+\ii0}\,(u^2+\sinh^2Y)}=\frac{2Y-\ii\pi}{c\sinh Y},
+\]
+其中 $|u|<1$ 段（$u=\sin\varphi$）给出 $-\frac{\ii\pi}{\sinh Y\cosh Y}$，$|u|>1$ 段（$u=\cosh t$，$w=\tanh t$）给出 $\frac{2Y}{\sinh Y\cosh Y}$；又 $h^\pm_c(0)=\mp\frac1{c\sinh Y}$。代入得
+\[
+J_{\rm cross}=-\frac{\pi(2\ii Y+\pi)}{ab}+\frac{\pi^2}{ab}=-\frac{2\pi\ii Y}{ab},\qquad
+J_{\rm box}=\frac{\pi(2\ii Y+\pi)}{ab}+\frac{\pi^2}{ab}=\frac{2\pi(\pi+\ii Y)}{ab},
+\]
+即 (a)。作为检验，$J_{\rm box}+J_{\rm cross}=2\pi^2/(ab)$ 正是阿贝尔情形所要求的：$\frac{\ii}{-x_B+\ii0}+\frac{\ii}{x_B+\ii0}=2\pi\delta(x_B)$。
+
+\emph{(4) 横向积分与幺正性。}单胶子交换同样给出
+\[
+\mathcal A_1=(\ii g)^2(v_A\cdot v_B)\frac{1}{\sinh Y}\int\frac{\dd^2\mathbf k_T}{(2\pi)^2}\,\ee^{\ii\mathbf k_T\cdot\boldsymbol b}\,\frac{-\ii}{-\mathbf k_T^2-m^2}\,X=-\ii\chi X ;
+\]
+由卷积定理，$g^4\coth^2Y\int\frac{\dd^2\mathbf K}{(2\pi)^2}\ee^{\ii\mathbf K\cdot\boldsymbol b}\int\frac{\dd^2\mathbf k_T}{(2\pi)^2}\frac{1}{ab}=\chi^2$，于是 $\mathcal A_2=-\frac12\chi^2X^2+\frac{\ii C_AY}{4\pi}\chi^2X$，即 (b)；与参数化比较，$-\frac{\chi^2}{2}p_{\rm opp}\frac{C_A}{2}=\frac{\ii C_AY}{4\pi}\chi^2$，$p_{\rm opp}=-\ii Y/\pi$。$\chi$ 为实数、$X$ 为 Hermite 矩阵，故 $\mathcal A_2+\mathcal A_2^\dagger=-\chi^2X^2=-\mathcal A_1^\dagger\mathcal A_1$。最后，一条无限长直线只吸收或放出满足 $v\cdot k=0$ 的动量，而质量为 $m$ 的在壳胶子在 $v$ 的静止系中 $k^0\ge m>0$，故 $\order{g}$ 与 $\order{g^2}$ 的实发射振幅为零，实割线最早出现在 $\order{g^3}$ 振幅的平方即 $\order{g^6}$。
+\end{proof}
+
+我们独立地核对了证明中的每一个公式：$u$ 积分的闭式与数值积分在 $Y=0.3,1,2.5,5$ 处相差小于 $3\times10^{-17}$；第 (2) 步的留数公式与对 $x_B$ 的直接数值积分（以 $\ii\varepsilon$、$\varepsilon=10^{-7}$ 正规化）在六个 $x_A$ 值上相差 $\order{\varepsilon}$；第 (3) 步的外层积分数值计算在四组 $(a,b,Y)$ 上重现 (a) 的闭式到 $2\times10^{-16}$；在全部分母中保留有限 $\ii\varepsilon$ 的二维直接积分外推到 $\varepsilon\to0$，与闭式相差 $3\times10^{-4}$；色因子在 SU(2)、SU(3) 的基础、反基础与伴随表示的各种组合中精确成立。
+
+这一结果是已知的：Meggiolaro 计算了两条程函线之间的 $\order{g^4}$ 振幅\cite[第~3~节，式~(3.23)--(3.26)、(3.34)、(3.36)]{Meggiolaro:1996hf}，Giordano 与 Meggiolaro 给出了逐图的形式\cite[式~(4.24)]{Giordano:2006vv}；上面是本书给出的推导。高能极限下的盒图与交叉盒图（$\ln(-s)$ 与 $\ln s$）是经典结果\cite{Cheng:1969eh,Korchemskaya:1994qp,Korchemsky:1993hr,Caron-Huot:2013fea}。$\order{g^4}$ 的其余程函图（单胶子交换的单圈修正）给出树图振幅的实数倍，其形状因子对 $t<0$ 为实数\cite[式~(3.28)--(3.34)]{Meggiolaro:1996hf}；它们对 $\mathcal A+\mathcal A^\dagger$ 没有贡献，所以对完整的程函振幅 $\order{g^4}$ 的幺正性也成立——这一部分依据所引的计算，本书没有重新推导。\cref{fig:dy-two-gluon-exchange}画出了两个图及其纵向积分与色因子。
+
+%%% BEGIN fig:dy-two-gluon-exchange
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc tiny/.style={font=\scriptsize}]
+  % =====================================================================
+  % (a) box: the two gluons are attached in the same order on both lines
+  % =====================================================================
+  \begin{scope}
+    \draw[gluon] (-0.8,-0.85) -- (-0.8,0.85);
+    \draw[gluon] (0.8,-0.85) -- (0.8,0.85);
+    \draw[wilson=0.14] (-2.1,0.85) -- (2.1,0.85);
+    \draw[wilson=0.14] (-2.1,-0.85) -- (2.1,-0.85);
+    \foreach \p in {(-0.8,0.85),(0.8,0.85),(-0.8,-0.85),(0.8,-0.85)} \node[vertex] at \p {};
+    \path[mom={$k$},mom sep=0.27cm] (-0.8,-0.85) -- (-0.8,0.85);
+    \path[mom'={$K-k$},mom sep=0.27cm] (0.8,-0.85) -- (0.8,0.85);
+    \node[fc lab,anchor=east] at (-2.15,0.85) {$v_A,\,\mathbf T_A$};
+    \node[fc lab,anchor=east] at (-2.15,-0.85) {$v_B,\,\mathbf T_B$};
+    \node[fc tiny] at (0,1.33) {$\dfrac{\ii}{x_A+\ii0}$};
+    \node[fc tiny] at (0,-1.35) {$\dfrac{\ii}{-x_B+\ii0}$};
+    \node[fc lab] at (0,-2.25) {$J_{\rm box}=\dfrac{2\pi}{ab}\,(\pi+\ii Y)$};
+    \node[fc lab] at (0,-3.15) {$c_{\rm box}=X^2$};
+    \node[fc lab] at (0,-3.95) {(a)\ 非交叉图（box）};
+  \end{scope}
+  \node[fc lab] at (3.35,0) {$+$};
+  % =====================================================================
+  % (b) crossed box
+  % =====================================================================
+  \begin{scope}[xshift=6.7cm]
+    \draw[gluon] (-0.8,-0.85) -- (0.8,0.85);
+    % the gluon k passes over the gluon K-k
+    \draw[white,line width=7.5pt] (0.2,-0.21) -- (-0.2,0.21);
+    \draw[gluon] (0.8,-0.85) -- (-0.8,0.85);
+    \draw[wilson=0.14] (-2.1,0.85) -- (2.1,0.85);
+    \draw[wilson=0.14] (-2.1,-0.85) -- (2.1,-0.85);
+    \foreach \p in {(-0.8,0.85),(0.8,0.85),(-0.8,-0.85),(0.8,-0.85)} \node[vertex] at \p {};
+    \path[mom={$k$},mom pos=0.78,mom sep=0.27cm] (0.8,-0.85) -- (-0.8,0.85);
+    \path[mom'={$K-k$},mom pos=0.78,mom sep=0.27cm] (-0.8,-0.85) -- (0.8,0.85);
+    \node[fc lab,anchor=east] at (-2.15,0.85) {$v_A,\,\mathbf T_A$};
+    \node[fc lab,anchor=east] at (-2.15,-0.85) {$v_B,\,\mathbf T_B$};
+    \node[fc tiny] at (0,1.33) {$\dfrac{\ii}{x_A+\ii0}$};
+    \node[fc tiny] at (0,-1.35) {$\dfrac{\ii}{x_B+\ii0}$};
+    \node[fc lab] at (0,-2.25) {$J_{\rm cross}=-\dfrac{2\pi\ii Y}{ab}$};
+    \node[fc lab] at (0,-3.15) {$c_{\rm cross}=X^2+\dfrac{C_A}{2}\,X$};
+    \node[fc lab] at (0,-3.95) {(b)\ 交叉图（crossed box）};
+  \end{scope}
+  % =====================================================================
+  % sum
+  % =====================================================================
+  \node[fc lab] at (3.35,-5.15) {$J_{\rm box}\,c_{\rm box}+J_{\rm cross}\,c_{\rm cross}
+     =\dfrac{2\pi}{ab}\Big[\underbrace{\pi X^2}_{\mbox{\footnotesize 指数化项}}\;\underbrace{-\,\ii Y\,\tfrac{C_A}{2}\,X}_{\mbox{\footnotesize Regge 相位}}\Big]$};
+\end{tikzpicture}
+\caption{两条程函线之间的双胶子交换（\cref{prop:dy-eikonal-twogluon}）。两条无限长类时 Wilson 线的速度为$v_A$、$v_B$（快度差$Y>0$，$v_A\cdot v_B=\cosh Y$），色生成元为$\mathbf T_A$、$\mathbf T_B$，时间自左向右；两个胶子取质量$m$（红外正规子）并保留完整传播子，横动量$\mathbf k_T$、$(\mathbf K-\mathbf k)_T$固定，$a=\mathbf k_T^2+m^2$，$b=(\mathbf K-\mathbf k)_T^2+m^2$。
+线段旁为两顶点之间的程函传播子（$x_{A,B}=v_{A,B}\cdot k$），其下为纵向积分$J$与色因子$c$（$X=\mathbf T_A\cdot\mathbf T_B$）。
+全部$s$道权重在非交叉图中，交叉图只贡献单圈 Regge 相位$\propto C_AY$：横向积分后第一项是指数化项$\frac12(-\ii\chi)^2X^2$，第二项是$\ii\times$实数$\times$厄米色矩阵；因而$p_{\rm opp}=-\ii Y/\pi$，${\rm Re}\,p_{\rm opp}=0$，$\order{g^4}$的幺正性没有残差（VF-REF-9，VF-REF-10）。}
+\label{fig:dy-two-gluon-exchange}
+\end{figure}
+%%% END fig:dy-two-gluon-exchange
+
+\begin{remark}[共同时序是物理结果]\label{rem:dy-common-ordering}
+(i) 精确的图把全部 $s$ 道权重（$J_{\rm box}$ 中的 $\pi$）放进非交叉图，交叉图只携带 Regge 化相位。“严格窗口”去掉了连接线近质壳 $2k^+k^-\simeq\mathbf k_T^2$ 的区域，而正是这一区域把两个喷注中插入的次序关联起来；去掉它之后，两个喷注中的次序彼此独立，剩下的权重只由正规子决定：对称正规子给出 $p_{\rm opp}=\frac12$，一般形状给出 $p_{\rm opp}=\frac12+2\delta_A\delta_B$（\cref{prop:appO-strict-window-shape}，\tagR，$R_{\mathrm{PT}}$）。所以 $\frac12$ 不是普适值，残差 $-\frac14C_A\chi^2X$ 是截断的产物。Rothstein 与 Stewart 的快度正规子与精确结果一致：交叉的 Glauber 盒图为零，梯形图指数化为一个 Hermite 的色相位\cite[式~(5.30)、(9.1)、(9.18)、(9.19)]{RothsteinStewart2016}，即共同时序 $p_{\rm opp}=0$。
+(ii) 对任意阶的程函旁观者，幺正性来自 ${\rm T}\exp\{\ii g\int\dd t\,[v_A\cdot A(v_At)\mathbf T_A+v_B\cdot A(v_Bt+\boldsymbol b)\mathbf T_B]\}$ 的幺正性，其形式水平与\cref{lem:method-soft-unitarity}相同；它在所有阶没有作为定理写出。
+(iii) 真正开放的问题是非程函（复合的、相互作用的）旁观者与活动部分子的 Glauber、软、共线模式之间的相互作用（\cref{asm:appO-mixing}(c)）。对复合旁观者，附录~O 在一个全局两时模型中证明了：在两个喷注的末态能量差都为负的构型上逐点地、$\order{g^4}$，完全重合的模式中\emph{未割}直接线的侧求和相消（\cref{prop:appO-twoexch-spectator}，模型定理，作为 QCD 陈述为 \tagP；其物理解读还依赖共线端点的匹配假设\cref{asm:appO-collinear-ends}）；被割的直接线（\cref{rem:appO-cut-ss}）与 $\order{g^6}$（\cref{prop:appO-g6-ladder}，\tagA）仍然开放。所以，“非阿贝尔双 Glauber 交换留下非幺正残差”是对严格截断的误读，而不是 DY 因子化的障碍。
+\end{remark}

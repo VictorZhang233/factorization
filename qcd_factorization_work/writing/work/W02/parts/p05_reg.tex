@@ -1,0 +1,42 @@
+% -------------------------------------------------------------------------------------
+\section{紫外发散与维数正规化}\label{sec:qcd-regularization}
+
+圈图中的积分在大圈动量处可以发散。例如胶子自能的夸克圈 $\int\dd^4l\,\Tr[\gamma^\mu\sla l\gamma^\nu(\sla l+\sla k)]/(l^2(l+k)^2)$ 的被积函数在 $l\to\infty$ 时像 $l^0$，按幂次计数是二次发散的。为了给这些积分以意义，先要\emph{正规化}，再通过\emph{重整化}把发散吸收进拉氏量参数的重新定义。本书使用维数正规化：它保持规范对称性与 BRST 对称性（对不含 $\gamma_5$ 的矢量型理论），并且同时正规化紫外与红外发散。
+
+\begin{definition}[维数正规化]\label{def:qcd-dimreg}
+圈积分在 $D=4-2\varepsilon$ 维中计算，定义为解析延拓：对 $\Real a>D/2$ 收敛的积分
+\begin{equation}\label{eq:qcd-master}
+\int\frac{\dd^Dk}{\ii\pi^{D/2}}\,\frac1{(-k^2+\Delta-\ii0)^a}=\frac{\Gamma(a-D/2)}{\Gamma(a)}\,\Delta^{D/2-a}
+\end{equation}
+作为 $D$ 的亚纯函数延拓到整个复平面（附录~C）；带张量分子的积分由 Lorentz 协变性化为这一形式。Dirac 代数采用常规维数正规化（CDR）：$\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}$，$g^\mu{}_\mu=D$，$\Tr\mathbb 1=4$。为使作用量无量纲，裸耦合带质量量纲 $\varepsilon$：$g_0=\mu_0^\varepsilon\hat g_0$，$\hat g_0$ 无量纲。不含 $\gamma_5$ 的矢量型理论中，维数正规化保持规范不变性与 BRST 不变性；$\gamma_5$ 的处理（HVBM 方案加 Larin 处方）另行规定。
+% uses: none
+\end{definition}
+
+$\gamma_5$ 的约定见第~3~章的\cref{def:prelim-gamma5}与附录~I；$\varepsilon_{\mathrm{UV}}$ 与 $\varepsilon_{\mathrm{IR}}$ 的标注、无标度积分与极化平均等技术约定由第~3~章的\cref{def:prelim-dr-conventions}规定。\cref{eq:qcd-master}由 Wick 转动 $k^0=\ii k_4$（$\dd^Dk=\ii\dd^Dk_E$，$-k^2=k_E^2$）与欧氏积分 $\int\frac{\dd^Dk_E}{\pi^{D/2}}(k_E^2+\Delta)^{-a}=\frac{\Gamma(a-D/2)}{\Gamma(a)}\Delta^{D/2-a}$ 得到。$a=2$ 时右边是 $\Gamma(\varepsilon)\Delta^{-\varepsilon}=\frac1\varepsilon-\gamma_E-\ln\Delta+\order{\varepsilon}$：四维中的对数发散变成了 $1/\varepsilon$ 极点。
+
+哪些 Green 函数会紫外发散？对单粒子不可约（1PI）图，计数大圈动量的幂次即可回答。
+
+\begin{proposition}[紫外超表观发散度 \tagR]\label{prop:qcd-superficial-degree}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $G$ 是 QCD（\cref{def:prelim-feynman-rules}）中的一个连通 1PI 图，有 $E_A$ 条外胶子线、$E_c$ 条外鬼场线与 $E_\psi$ 条外夸克线。其四维超表观发散度（全部圈动量同时放大时被积函数的总幂次加上积分测度的幂次）为
+\begin{equation}\label{eq:qcd-omega}
+\omega=4-E_A-E_c-\tfrac32E_\psi ,
+\end{equation}
+与圈数无关。因此 $\omega\ge0$ 的 1PI 函数是：胶子、鬼场、夸克的两点函数（$\omega=2,2,1$），三胶子、四胶子、鬼场--胶子、夸克--胶子顶点（$\omega=1,0,1,0$），以及两鬼场--两胶子函数与四鬼场函数（$\omega=0$）。鬼场--胶子顶点的导数作用在反鬼场 $\bar c$ 上，与外部出射鬼场相连的顶点因此总给出一个外动量因子，实际发散度为 $\omega-\frac12E_c$：鬼场两点函数的发散正比于 $p^2$（对数型），鬼场--胶子顶点的发散正比于出射鬼场的动量（对数型），两鬼场--两胶子函数与四鬼场函数紫外收敛。（本命题是关于 Feynman 图的组合陈述。）
+\uses{def:prelim-feynman-rules}
+\end{proposition}
+
+\begin{proof}
+设 $G$ 有 $L$ 个圈，$I_A$、$I_c$、$I_\psi$ 条胶子、鬼场、夸克内线，$V_3$、$V_4$、$V_{\mathrm{gh}}$、$V_{qg}$ 个三胶子、四胶子、鬼场--胶子、夸克--胶子顶点。每个圈积分贡献 $\dd^4l$（幂次 $4$），每条胶子与鬼场传播子贡献 $-2$，每条夸克传播子贡献 $-1$，三胶子顶点与鬼场--胶子顶点各含一个动量（$+1$），其余顶点不含动量。于是
+\[
+\omega=4L-2I_A-2I_c-I_\psi+V_3+V_{\mathrm{gh}}.
+\]
+拓扑关系为 $L=I_A+I_c+I_\psi-(V_3+V_4+V_{\mathrm{gh}}+V_{qg})+1$，以及每个顶点上的线端计数
+\[
+3V_3+4V_4+V_{\mathrm{gh}}+V_{qg}=2I_A+E_A,\qquad 2V_{\mathrm{gh}}=2I_c+E_c,\qquad 2V_{qg}=2I_\psi+E_\psi .
+\]
+用后三式解出 $I_A$、$I_c$、$I_\psi$，代入 $L$ 再代入 $\omega$，全部顶点数相消，得到\cref{eq:qcd-omega}。% s13_superficial_degree.py
+枚举 $\omega\ge0$ 且 $E_c$、$E_\psi$ 为偶数（鬼数与费米子数守恒）的组合即得所列各函数。关于实际发散度：$\mathcal L_{\mathrm{gh}}=gf^{abc}(\partial^\mu\bar c^a)A^b_\mu c^c$ 中导数作用于 $\bar c$；在 1PI 函数中，每条外部出射鬼场线都由某个顶点的 $\bar c$ 与之缩并，该顶点的导数于是作用在外线上，给出外动量而不是圈动量。这样的外线有 $\frac12E_c$ 条，故圈积分的实际发散度降低 $\frac12E_c$。对鬼场两点函数，提出外动量 $p^\mu$ 后剩下的矢量积分发散度为 $1$，由 Lorentz 协变性它正比于 $p_\mu$，发散部分因而正比于 $p^2$，是对数型的。
+\end{proof}
+
+于是可能出现的局域发散只对应于有限个算符结构；可重整性（\cref{thm:qcd-renormalizability}）断言，它们恰好可以由拉氏量中已有各项的重新标度吸收。超表观收敛（$\omega<0$）的图也可能因其子图发散而发散；子发散由较低阶的抵消项逐层消去，其组合由 Zimmermann 的森林公式描述（\cref{sec:prelim-renorm}）。
+

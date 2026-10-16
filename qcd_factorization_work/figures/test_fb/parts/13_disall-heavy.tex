@@ -1,0 +1,57 @@
+%%% BEGIN fig:disall-heavy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb heavy/.style={draw,solid,line width=1.5pt,postaction={decorate,solid,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.6pt,line width=0.8pt]{Stealth[length=7pt,width=6pt]}}}}},
+  fb heavy/.default=0.5]
+  % ======================= (a) LO photon--gluon fusion with massive quarks =======================
+  \begin{scope}
+    \coordinate (B) at (0,0.75); \coordinate (A) at (0,-0.75);
+    \draw[photon] (-1.6,0.75) -- (B);
+    \draw[gluon] (-1.6,-0.75) -- (A);
+    \draw[fb heavy] (B) -- (1.55,0.75);
+    \draw[fb heavy] (A) -- (B);
+    \draw[fb heavy] (1.55,-0.75) -- (A);
+    \node[vertex] at (A) {}; \node[vertex] at (B) {};
+    \path[mom={$q$},mom sep=0.26cm] (-1.6,0.75) -- (B);
+    \path[mom'={$k$},mom sep=0.3cm] (-1.6,-0.75) -- (A);
+    \path[mom={$p_1$},mom sep=0.28cm] (B) -- (1.55,0.75);
+    \path[mom'={$p_2$},mom sep=0.3cm] (A) -- (1.55,-0.75);
+    \node[fb lab,anchor=east] at (-1.62,0.75) {$\gamma^*$};
+    \node[fb lab,anchor=east] at (-1.62,-0.75) {$g$};
+    \node[fb lab,anchor=west] at (1.57,0.75) {$Q$};
+    \node[fb lab,anchor=west] at (1.57,-0.75) {$\bar Q$};
+    \node[fb lab,anchor=west,align=left] at (2.3,0) {$+$\ 交叉图\\\phantom{$+$\ }（$p_1\leftrightarrow p_2$）};
+    \node[font=\small,anchor=north] at (0.85,-1.45) {(a)\ 领头阶 $\gamma^*g\to Q\bar Q$（保留 $m$）};
+  \end{scope}
+  % ======================= (b) ACOT/CWZ subtraction term =======================
+  \begin{scope}[xshift=8.15cm]
+    \coordinate (B) at (0,0.75);
+    \node[jet blob,ellipse,minimum width=1.55cm,minimum height=0.9cm,inner sep=0pt] (F) at (0,-0.75) {};
+    \draw[gluon] (-1.75,-0.75) -- (F.west);
+    \draw[photon] (-1.6,0.75) -- (B);
+    \draw[fb heavy=0.55] (F.north) -- (B);
+    \draw[fb heavy] (B) -- (1.55,0.75);
+    \draw[fb heavy=0.6] (1.6,-1.25) -- (F.-25);
+    \node[vertex] at (B) {};
+    \node[font=\footnotesize] at (F) {$f_{Q/g}$};
+    \path[mom={$q$},mom sep=0.26cm] (-1.6,0.75) -- (B);
+    \path[mom'={$k$},mom sep=0.3cm] (-1.75,-0.75) -- (F.west);
+    \node[fb lab,anchor=east] at (-1.62,0.75) {$\gamma^*$};
+    \node[fb lab,anchor=east] at (-1.77,-0.75) {$g$};
+    \node[fb lab,anchor=west] at (1.57,0.75) {$Q$};
+    \node[fb lab,anchor=west] at (1.62,-1.25) {$\bar Q$};
+    \node[fb lab,anchor=east] at (-0.06,0.02) {$Q$};
+    \node[fb lab,anchor=west,text=gray!30!black] at (0.14,0.38) {$\hat\sigma(\gamma^*Q\to Q)$};
+    \node[font=\small,anchor=north] at (0,-1.45) {(b)\ 减除项 $f_{Q/g}\otimes\hat\sigma(\gamma^*Q\to Q)$};
+  \end{scope}
+  \node[font=\Large] at (5.45,0) {$-$};
+\end{tikzpicture}
+\caption{含重夸克质量的 DIS（粗线为质量 $m$ 的重夸克 $Q$）。(a)~领头阶的光子—胶子融合，保留完整的质量依赖，两图之和的平方给出领头阶的胶子道系数；
+(b)~变味（ACOT/CWZ）方案中的减除项 ${f_{Q/g}\otimes\hat\sigma(\gamma^*Q\to Q)}$：胶子先在重夸克分布 $f_{Q/g}$（蓝色，靶共线）中分裂为 $Q\bar Q$，其中的 $Q$ 再发生领头阶散射 $\gamma^*Q\to Q$。
+二者之差在 $m\to0$ 时抵消 (a) 中的共线对数 $\ln(Q^2/m^2)P_{qg}$，给出对 $m/Q$ 一致有效的系数函数（\cref{thm:disall-heavy}，\cref{ex:disall-heavy-lo}）。}
+\label{fig:disall-heavy}
+\end{figure}
+%%% END fig:disall-heavy

@@ -1,0 +1,60 @@
+%%% BEGIN fig:renormalon-chain
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 bubble/.pic={\draw[quark=0.55] (-0.25,0) arc[start angle=180,end angle=0,radius=0.25];
+                  \draw[quark=0.55] (0.25,0) arc[start angle=0,end angle=-180,radius=0.25];
+                  \node[t3 sv] at (-0.25,0) {}; \node[t3 sv] at (0.25,0) {};},
+  t3 sv/.style={circle,fill,draw=none,inner sep=0pt,minimum size=2.8pt},
+  t3 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ============ (a) one-loop vertex with a dressed gluon ============
+  \begin{scope}
+    \coordinate (V) at (0,1.7);  \coordinate (Pin) at (-3.4,-1.0);  \coordinate (Pout) at (3.4,-1.0);
+    \coordinate (A) at (-2.38,-0.19);  \coordinate (B) at (2.38,-0.19);
+    \draw[photon] (0,2.95) -- (V);
+    \draw[quark] (Pin) -- (A);  \draw[quark] (A) -- (V);  \draw[quark] (V) -- (B);  \draw[quark] (B) -- (Pout);
+    \draw[gluon] (A) -- (-1.83,-0.19);  \pic at (-1.58,-0.19) {t3 bubble};
+    \draw[gluon] (-1.33,-0.19) -- (-0.78,-0.19);  \pic at (-0.53,-0.19) {t3 bubble};
+    \node[font=\small] at (0,-0.19) {$\cdots$};
+    \pic at (0.53,-0.19) {t3 bubble};  \draw[gluon] (0.78,-0.19) -- (1.33,-0.19);
+    \pic at (1.58,-0.19) {t3 bubble};  \draw[gluon] (1.83,-0.19) -- (B);
+    \foreach \p in {V,A,B} \node[vertex] at (\p) {};
+    \draw[t3 bracket] (-1.83,-0.6) -- (-1.83,-0.7) -- (1.83,-0.7) -- (1.83,-0.6);
+    \node[t3 note,below=1pt] at (0,-0.7) {$n$ 个费米子泡};
+    \node[t3 lab,right=1pt] at (0,2.75) {$\gamma^*$};
+    \path[mom={$k$},mom sep=0.3cm,mom pos=0.5] (A) -- (-1.83,-0.19);
+    \node[t3 lab] at (0,-1.65) {(a)};
+  \end{scope}
+  % ============ (b) Adler function: vacuum polarization with a dressed gluon ============
+  \begin{scope}[xshift=7.6cm]
+    \coordinate (L) at (-1.7,0); \coordinate (R) at (1.7,0);
+    \coordinate (T) at (0,1.55); \coordinate (Bm) at (0,-1.55);
+    \draw[photon] (-3.0,0) -- (L);  \draw[photon] (R) -- (3.0,0);
+    \draw[quark] (L) arc[start angle=180,end angle=90,x radius=1.7,y radius=1.55];
+    \draw[quark] (T) arc[start angle=90,end angle=0,x radius=1.7,y radius=1.55];
+    \draw[quark] (R) arc[start angle=0,end angle=-90,x radius=1.7,y radius=1.55];
+    \draw[quark] (Bm) arc[start angle=-90,end angle=-180,x radius=1.7,y radius=1.55];
+    \draw[gluon] (T) -- (0,1.1);  \pic[rotate=90] at (0,0.85) {t3 bubble};
+    \draw[gluon] (0,0.6) -- (0,0.22);
+    \node[font=\small] at (0,0) {$\vdots$};
+    \draw[gluon] (0,-0.22) -- (0,-0.6);  \pic[rotate=90] at (0,-0.85) {t3 bubble};
+    \draw[gluon] (0,-1.1) -- (Bm);
+    \foreach \p in {L,R,T,Bm} \node[vertex] at (\p) {};
+    \node[t3 lab,above=1pt] at (-2.45,0.08) {$j^\mu$};
+    \node[t3 lab,above=1pt] at (2.45,0.08) {$j^\nu$};
+    \path[mom'={$q$},mom sep=0.3cm,mom length=0.45cm] (-3.0,0) -- (L);
+    \node[t3 note,anchor=west] at (0.25,0) {$n$ 个泡};
+    \node[t3 lab] at (0,-2.1) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{重整化子链图（大 $\beta_0$ 近似）。胶子传播子插入 $n$ 个费米子泡：(a)~夸克--光子顶点的单圈修正；(b)~Adler 函数（流--流关联函数）中的相应图（另有两个自能型图，未画出）。
+在 $\MSbar$ 方案中每个泡给出因子 $\frac{\alpha_sT_Fn_f}{3\pi}\big[\ln\frac{-k^2}{\mu^2}-\frac53\big]$（相对于裸胶子传播子）；
+保留 $n_f$ 的最高次幂后作替换 $\frac43T_Fn_f\to-\beta_0$（“朴素非阿贝尔化”）并对 $n$ 求和，相当于把胶子两端的耦合换成以 $-k^2\ee^{-5/3}$ 为标度的单圈跑动耦合
+$\alpha_s(\mu)\big/\big[1+\frac{\beta_0\alpha_s(\mu)}{4\pi}\ln\frac{-k^2\ee^{-5/3}}{\mu^2}\big]$。
+固定 $n$ 时，圈积分中 $|k^2|\ll Q^2$ 的区域给出随 $n$ 阶乘增长的系数 $\sim n!\,\big(\frac{\beta_0}{4\pi p}\big)^n\alpha_s^{n+1}$（红外重整化子，$p=1,2,\dots$），相应 Borel 积分的不确定性 $\propto(\Lambda^2/Q^2)^p$，与高扭度贡献的量级相同；
+$|k^2|\gg Q^2$ 的区域给出符号交错的紫外重整化子（见正文）。}
+\label{fig:renormalon-chain}
+\end{figure}
+%%% END fig:renormalon-chain

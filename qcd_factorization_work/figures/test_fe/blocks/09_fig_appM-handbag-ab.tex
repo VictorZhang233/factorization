@@ -1,0 +1,76 @@
+%%% BEGIN fig:appM-handbag-ab
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe hadron/.style={draw,solid,line width=1.5pt,line cap=butt},
+  fe reg/.style={region,line width=0.8pt},
+  fe map/.style={draw=gray!60!black,line width=0.7pt,-{Stealth[length=5pt,width=4pt]}},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) handbag as an AB part =======================
+  \begin{scope}
+    \coordinate (VA) at (-1.15,2.05); \coordinate (VB) at (1.15,2.05);
+    \coordinate (BL) at (-0.62,0.36); \coordinate (BR) at (0.62,0.36);
+    \draw[fe hadron] (-2.3,0) -- (-0.8,0);
+    \draw[fe hadron] (0.8,0) -- (2.3,0);
+    \draw[quark=0.55] (BL) -- (VA);
+    \draw[quark=0.55] (VA) -- (VB);
+    \draw[quark=0.55] (VB) -- (BR);
+    \draw[photon] (-2.25,3.15) -- (VA);
+    \draw[photon] (VB) -- (2.25,3.15);
+    \draw[hadron blob] (0,0) ellipse[x radius=0.95,y radius=0.45];
+    \node[vertex] at (VA) {}; \node[vertex] at (VB) {};
+    \draw[fe reg,red!60!black] (-1.5,1.72) rectangle (1.5,2.72);
+    \path[mom'={$q$},mom sep=0.22cm] (-2.25,3.15) -- (VA);
+    \path[mom={$q$},mom sep=0.22cm] (VB) -- (2.25,3.15);
+    \path[mom={$k$},mom pos=0.45] (BL) -- (VA);
+    \path[mom={$k$},mom pos=0.55] (VB) -- (BR);
+    \path[mom={$k+q$},mom pos=0.5,mom sep=0.2cm] (VA) -- (VB);
+    \path[mom={$P$},mom sep=0.28cm] (-2.3,0) -- (-1.15,0);
+    \path[mom={$P$},mom sep=0.28cm] (1.15,0) -- (2.3,0);
+    \node[fe lab,text=red!55!black,anchor=north,align=center] at (0,1.66) {AB 部分 $\gamma$\\（$q$ 冻结）};
+    \node[fe lab,text=red!55!black,anchor=west,inner sep=2pt] at (1.5,2.05) {$\to C^{(n)}(q)$};
+    \node[fe lab,anchor=north,align=center] at (0,-0.55) {其余部分 $\to\langle P|O^{(n)}|P\rangle$};
+    % contraction of gamma: local operator vertex
+    \draw[fe map] (2.45,1.2) -- node[above,fe lab,inner sep=2pt] {收缩 $\gamma$} (3.6,1.2);
+    \begin{scope}[shift={(4.65,0)}]
+      \coordinate (O) at (0,1.7);
+      \draw[quark=0.55] (-0.45,0.33) -- (O);
+      \draw[quark=0.55] (O) -- (0.45,0.33);
+      \draw[fe hadron] (-1.0,0) -- (-0.55,0);
+      \draw[fe hadron] (0.55,0) -- (1.0,0);
+      \draw[hadron blob] (0,0) ellipse[x radius=0.65,y radius=0.36];
+      \node[opvertex,minimum size=8pt] at (O) {};
+      \node[fe lab,anchor=south,inner sep=3pt] at (O) {$O^{(n)}$};
+      \node[fe lab,anchor=north,align=center] at (0,-0.55) {$\propto A^{(n)}$};
+    \end{scope}
+    \node at (1.4,-1.5) {(a)\ AB 部分（正规乘积的语言）};
+  \end{scope}
+  % ======================= (b) handbag as a reduced graph =======================
+  \begin{scope}[xshift=10.1cm]
+    \coordinate (H) at (0,2.05);
+    \draw[fe hadron] (-2.3,0) -- (-1.0,0);
+    \draw[fe hadron] (1.0,0) -- (2.3,0);
+    \draw[quark=0.5] (-0.42,0.38) -- ($(H)+(-0.3,-0.3)$);
+    \draw[quark=0.5] ($(H)+(0.3,-0.3)$) -- (0.42,0.38);
+    \draw[photon] (-2.05,3.05) -- ($(H)+(-0.38,0.18)$);
+    \draw[photon] ($(H)+(0.38,0.18)$) -- (2.05,3.05);
+    \draw[jet blob] (0,0) ellipse[x radius=1.1,y radius=0.45];
+    \draw[hard blob] (H) circle[radius=0.42];
+    \node at (H) {$H$};
+    \node at (0,0) {$J_A$};
+    \path[mom'={$q$},mom sep=0.22cm] (-2.05,3.05) -- ($(H)+(-0.38,0.18)$);
+    \path[mom={$q$},mom sep=0.22cm] ($(H)+(0.38,0.18)$) -- (2.05,3.05);
+    \path[mom={$P$},mom sep=0.28cm] (-2.3,0) -- (-1.3,0);
+    \path[mom={$P$},mom sep=0.28cm] (1.3,0) -- (2.3,0);
+    \node[fe lab,anchor=west,inner sep=2pt] at (0.45,2.05) {硬顶点 $\to C^{(n)}$};
+    \node[fe lab,anchor=west,align=left,text=blue!50!black] at (0.55,1.0) {共线线\\（平行于 $n_A$）};
+    \node[fe lab,anchor=north,align=center] at (0,-0.55) {靶的共线子图 $\to A^{(n)}$};
+    \node at (0,-1.5) {(b)\ 约化图（区域的语言）};
+  \end{scope}
+\end{tikzpicture}
+\caption{手提包图（前向 Compton 振幅，未切割）的两种读法：(a)~作为正规乘积展开中的 AB 部分——含两个流顶点的子图 $\gamma$（$q$ 冻结在其中）给出系数 $C^{(n)}(q)$，把 $\gamma$ 收缩为一点后其余部分给出局域算符 $O^{(n)}$ 的矩阵元（$\propto A^{(n)}$）；
+(b)~作为区域分析中的约化图——硬顶点 $H$ 与靶（沿 $+z$ 运动）的共线子图 $J_A$ 由平行于 $n_A$ 的共线线相连。
+在有质量模型中两种读法的重叠由超减除分开；无质量 QCD 中还需要红外抵消项（\cref{sec:appM-massless}）。}
+\label{fig:appM-handbag-ab}
+\end{figure}
+%%% END fig:appM-handbag-ab

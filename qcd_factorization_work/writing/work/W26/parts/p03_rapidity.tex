@@ -1,0 +1,116 @@
+\section{快度发散的因子化、本征软函数与普适类}\label{sec:yzliu-rapidity}
+
+CSS 理论要求 $\ln S$ 对总快度线性增长、斜率为 Collins--Soper 核 $\tilde K$，余下的有限部分即约化软函数；第~22~章把这一性质列为假设（\cref{asm:lamet-soft-rapidity}）。本节给出其全阶论证与本征软函数的性质。
+
+\begin{proposition}[离光锥软函数中快度发散的因子化（线性性） \tagA]\label{prop:yzliu-rapidity-linear}
+在微扰论各阶，当 $Y+Y'\to\infty$ 时
+\begin{equation}\label{eq:yzliu-rapidity-linear}
+\ln S(b_\perp,\mu,Y,Y')=(Y+Y')\,\tilde K(b_\perp,\mu)+\mathcal D(b_\perp,\mu)+\order{\ee^{-(Y+Y')}} ,
+\end{equation}
+$\tilde K$ 为 Collins--Soper 核（\cref{prop:tmd-evolution}）。等价地，$S=\Psi^\dagger(b_\perp,\mu,Y')\Psi(b_\perp,\mu,Y)$，$\Psi$ 是快度为 $Y$ 的静态 $Q\bar Q$ 对经快度重整化的光锥波函数\cite[式~(116)]{Liu:2022nnk}，$|\Psi(b_\perp,\mu,Y)|=\ee^{\tilde KY+\mathcal D_1-\frac12\mathcal D_2}$，从而 $\mathcal D=2\mathcal D_1-\mathcal D_2$；这里 $\mathcal D_2$、$\mathcal D_1$ 分别是两侧都在光锥上（$\delta$ 正规化）与一半在光锥上的软函数中与快度无关的部分。（本命题只涉及真空中的 Wilson 线关联函数。）
+% errtype: E-S
+\uses{def:lamet-soft-offlc,prop:tmd-evolution,lem:yzliu-partial-exp,prop:appB-webs}
+\end{proposition}
+
+\begin{proofsketch}
+（1）区域分析\cite[第~4.4~节]{Liu:2022nnk}：幂次计数参数为 $\ee^{-(Y+Y')/2}$，领头区域是分别与 $v$、$v'$ 共线的两个子图加一个软子图，硬部分平凡（在壳程函外线，无硬标度）。（2）轴规范 $n\cdot A=0$，$n=\hat z+\vec n_\perp$（无 Glauber 问题，共线 $A^\pm$ 不进入硬部分）\cite[附录~E]{Liu:2022nnk}：由\cref{lem:yzliu-partial-exp}与\cref{prop:appB-webs}，web 分为自相互作用 web 与顶点 web；软因子化与复制技巧（web 对复制数线性）表明顶点 web 对图求和后没有领头共线贡献，故发散部分满足 $\mathrm{div}_1(Y+Y')=\mathrm{div}_2(Y)+\mathrm{div}_2(Y')$。\emph{Cauchy 一步}：令 $f(t)\equiv\mathrm{div}_2(Y_0+t)-\mathrm{div}_2(Y_0)$，分别取 $(Y,Y')=(Y_0+t,Y_0+t')$ 与 $(Y_0+t+t',Y_0)$，左边相同，相减得 $f(t+t')=f(t)+f(t')$；于是 $f(m/n)=\frac mnf(1)$，由连续性 $f(t)=tf(1)$，发散部分对快度线性，斜率只依赖于 $b_\perp$、$\mu$；无硬标度，故硬区不产生额外的 $Y$ 依赖。（3）固定阶 $n$ 的快度切片：快度轴分成宽 $nY_0$ 的薄片，逐片积掉最高快度的胶子群，每步误差 $\order{\ee^{-Y_0}}$，得 $|V(Y)-V(Y')|\lesssim(Y-Y')\ee^{-Y'/n}$\cite[式~(E.1)--(E.13)]{Liu:2022nnk}。$|\Psi|$ 的形式来自对色源对光锥波函数的同样分析\cite[式~(116)--(122)]{Liu:2022nnk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]，也是\cref{asm:lamet-soft-rapidity}(SR) 的全阶论证。有一步是明确假定的：积掉最高快度胶子群时需要控制其红外行为（典型标度 $k^+k^-\sim k_\perp^2\sim1/b_\perp^2$）——“This can be non-trivial, of course. Assuming this can be done”\cite[附录~E]{Liu:2022nnk}。这是最弱的一步（误差类型 E-S）。结论与 Collins--Soper 的断言\cite{CollinsSoper1981}一致；Liu 指出文献\cite{Collins:2011ca}没有说明共线模式如何被压低到足以消除单圈以上的快度发散，而他对\cite{CollinsSoper1981}的批评是另一回事——其红外安全性论证是启发式的，对线性发散留有漏洞\cite[第~4.4~节、附录~D]{Liu:2022nnk}。类光正规子的共形映射重整化定理见\cite{Vladimirov:2017ksc}（推广见第~24~章\cref{prop:front-rapidity-renorm}），三圈软函数\cite{Li:2016axz}与\cref{eq:yzliu-rapidity-linear}相容。升级途径：证明这一红外控制步骤。
+
+\begin{definition}[本征软函数的光锥定义]\label{def:yzliu-intrinsic-soft-lc}
+令 $S(b_\perp,\mu,\delta^+,\delta^-)$ 为两条类光订书钉都用 $\delta$ 正规子（\cref{rem:tmd-schemes}）的软函数，$S(b_\perp,\mu,\delta^+,\hat z)$ 为一条 $\delta$ 正规化的类光订书钉与一条沿 $\hat z$ 的类空订书钉组成、以 $\sqrt{Z_E}$（\cref{def:lamet-quasi-tmd}）减除自相互作用的软函数（\cref{def:tmd-soft}）。本征软函数定义为\cite[式~(72)、(76)]{Liu:2022nnk} % VF-YZL-2
+\begin{equation}\label{eq:yzliu-SI-lc}
+\sqrt{S_I(b_\perp,\mu)}=\lim_{\delta^+\to0}\frac{\sqrt{S(b_\perp,\mu,\delta^+,\delta^-=\delta^+)}}{S(b_\perp,\mu,\delta^+,\hat z)} .
+\end{equation}
+\uses{def:lamet-quasi-tmd,def:tmd-soft,rem:tmd-schemes}
+\end{definition}
+
+\begin{theorem}[本征软函数：定义的等价、方案无关性与反常维度 \tagA]\label{thm:yzliu-intrinsic-soft}
+在微扰论各阶：(a) $S_I=S_r=\ee^{-\mathcal D}$（\cref{def:lamet-reduced-soft}）；(b) 记 $S_1(b_\perp,\delta,Y')=\ee^{(Y'-\ln\delta)\tilde K+\mathcal D_1}$、$S_2(b_\perp,\delta,\delta')=\ee^{-\ln(\delta\delta')\tilde K+\mathcal D_2}$，则 $\mathcal D=2\mathcal D_1-\mathcal D_2$，$S_I$ 与快度正规化方案无关，尽管 $\mathcal D$、$\mathcal D_1$、$\mathcal D_2$ 各自与方案有关；(c) $S_I$ 是间隔 $b_\perp$ 的静态 $Q\bar Q$ 对的光锥波函数（的平方）；(d) 在所有阶
+\begin{equation}\label{eq:yzliu-SI-rge}
+\mu^2\frac{\dd\ln S_I(b_\perp,\mu)}{\dd\mu^2}=\gamma_{HH}(\alpha_s),
+\end{equation}
+单圈 $S_I=1-\frac{\alpha_sC_F}{\pi}L_b$。（本定理只涉及真空中的 Wilson 线关联函数。）% VF-YZL-2, VF-YZL-3
+\uses{def:yzliu-intrinsic-soft-lc,def:lamet-reduced-soft,prop:yzliu-rapidity-linear,thm:yzliu-analyticity,def:sudakov-cusp,prop:appB-cusp-oneloop}
+\end{theorem}
+
+\begin{proofsketch}
+（b）把 $S_1$、$S_2$ 代入 $S_I=S_2(\delta,\delta')/[S_1(\delta,Y'=0)\,S_1(Y=0,\delta')]$\cite[式~(19)]{Ji:2019sxk}，$\tilde K$ 项 $-\ln(\delta\delta')+\ln\delta+\ln\delta'=0$，正规子相消，$\ln S_I=\mathcal D_2-2\mathcal D_1$；由\cref{prop:yzliu-rapidity-linear}，$\mathcal D=2\mathcal D_1-\mathcal D_2$。光锥定义\cref{eq:yzliu-SI-lc}同样给出 $\mathcal D_1=\frac12(\mathcal D+\mathcal D_2)$。（a）两种一半在光锥上的软函数（类空 $\hat z$ 与类时订书钉）由\cref{thm:yzliu-analyticity}(ii) 相联系，只差一个在 $S_I$ 中相消的相位；结合区域分析即得\cite[式~(19)--(21)]{Ji:2019sxk}，\cite[式~(18)--(21)]{Ji:2019ewn}，\cite[式~(76)--(81)、(120)--(122)]{Liu:2022nnk}，\cite[式~(46)--(48)]{Ji:2021znw}。（c）来自 $S=\Psi^\dagger\Psi$。（d）$S_I$ 是乘法重整化的带尖点 Wilson 回路之比；软函数有两个夹角为 $Y+Y'$ 的尖点，$\mu^2\frac{\dd\ln S}{\dd\mu^2}=-\Gamma_{\mathrm{cusp}}(\alpha_s,Y+Y')$（\cref{def:sudakov-cusp}），代入大角展开 $\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)=\theta\Gamma_{\mathrm{cusp}}(\alpha_s)+\gamma_{HH}+\order{\ee^{-\theta}}$ 并与\cref{eq:yzliu-rapidity-linear}比较：$\mu^2\frac{\dd\tilde K}{\dd\mu^2}=-\Gamma_{\mathrm{cusp}}$，$\mu^2\frac{\dd\mathcal D}{\dd\mu^2}=-\gamma_{HH}$；单圈值由\cref{prop:appB-cusp-oneloop}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全阶论证 [A]：(a)--(c) 是\cref{prop:yzliu-rapidity-linear}（最弱的一步是快度切片的红外控制）与区域分析的推论；(d) 依赖带尖点 Wilson 回路的全阶乘法可重整性与同一光锥极限。两圈值见\cref{prop:yzliu-sI-twoloop}。归属：$S_I$ 由 Ji、Liu 与 Liu 作为有算符定义、与快度方案无关、可欧氏计算的对象引入\cite{Ji:2019sxk,Ji:2019ewn}；此前 Ebert、Stewart 与 Zhao 已引入一个未定的非微扰软失配因子 $g^S_q$\cite{EbertStewartZhao2019}。
+
+\begin{proposition}[$S_I$ 的两圈结构 \tagR]\label{prop:yzliu-sI-twoloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本命题是两圈阶的显式陈述：$S_I$（\cref{def:yzliu-intrinsic-soft-lc}）是乘法重整化的带尖点 Wilson 回路之比，其两圈反常维度是两圈角依赖尖点反常维度的大角常数（所有阶的 RGE 是\cref{thm:yzliu-intrinsic-soft}(d)，此处只作指引）。取 $\mu^2\frac{\dd\alpha_s}{\dd\mu^2}=-\frac{\beta_0}{4\pi}\alpha_s^2$，% VF-YZL-3
+\begin{gather}
+\gamma_{HH}=-\frac{\alpha_sC_F}{\pi}+\frac{\alpha_s^2}{\pi^2}\,C_F\Big[C_A\Big(-\frac{49}{36}+\frac{\pi^2}{12}-\frac{\zeta_3}{2}\Big)+\frac59T_Fn_f\Big]+\order{\alpha_s^3},\label{eq:yzliu-gammaHH}\\
+\ln S_I=-\frac{\alpha_sC_F}{\pi}L_b+\alpha_s^2\Big[-\frac{C_F\beta_0}{8\pi^2}L_b^2+\hat\gamma_{HH}L_b+c_2\Big]+\order{\alpha_s^3},\label{eq:yzliu-lnSI-2loop}
+\end{gather}
+$\hat\gamma_{HH}$ 为\cref{eq:yzliu-gammaHH}中 $\alpha_s^2$ 的系数，常数 $c_2$ 不由 RGE 确定。（本命题只涉及真空中的 Wilson 线关联函数。）
+\uses{def:yzliu-intrinsic-soft-lc,def:sudakov-cusp,prop:appB-cusp-oneloop}
+\end{proposition}
+% Verification (claims E08, E09, E11; App Q rows 12, 13, 15): the printed two-loop Gamma_S of Liu:2022nnk (81) and Ji:2021znw
+% (73) [= (72) of arXiv v1] has the wrong sign; JiEtAl2021 (205)-(206) have inconsistent RGE signs; the L_b^2 coefficient of
+% Liu:2022nnk (81) and JiEtAl2021 (208) is a factor 2 too large; the single log of Liu:2022nnk (81) has the wrong sign.
+% Correct forms printed here; scripts s03, s04, s13 (W26).
+
+\begin{proof}
+（1）RGE。每个尖点乘法重整化，反常维度为 $\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)$（\cref{def:sudakov-cusp}），两圈时这是显式计算\cite{KorchemskyRadyushkin1987}。软函数两个尖点的夹角为 $Y+Y'$，$\mu^2\frac{\dd\ln S}{\dd\mu^2}=-\Gamma_{\mathrm{cusp}}(\alpha_s,Y+Y')$；把大角展开代入 $\ln S=(Y+Y')\tilde K+\mathcal D$，常数项给出 $\mu^2\frac{\dd\ln S_I}{\dd\mu^2}=\gamma_{HH}$。两圈阶这一步只用到显式的两圈尖点反常维度。（2）$\gamma^{(2)}_{HH}$。按单个尖点 $\frac{\dd}{\dd\ln\mu}$ 的归一化\cite[式~(13)--(15)]{Becher:2009kw}（单圈部分即\cref{prop:appB-cusp-oneloop}）：
+\begin{equation}\label{eq:yzliu-cusp-2loop}
+\begin{aligned}
+\Gamma_{\mathrm{cusp}}(\alpha_s,\theta)={}&\frac{\alpha_s}{\pi}C_F(\theta\coth\theta-1)+\frac{\alpha_s^2}{\pi^2}C_F\Big\{\Big[C_A\Big(\frac{67}{36}-\frac{\pi^2}{12}\Big)-\frac59T_Fn_f\Big]\theta\coth\theta+\frac{C_A}{2}B(\theta)\\
+&+C_A\Big(\frac{\pi^2}{12}-\frac{49}{36}-\frac{\zeta_3}{2}\Big)+\frac59T_Fn_f\Big\}+\order{\alpha_s^3},\\
+B(\theta)={}&\coth^2\theta\Big[\mathrm{Li}_3(\ee^{-2\theta})+\theta\,\mathrm{Li}_2(\ee^{-2\theta})-\zeta_3+\frac{\pi^2\theta}{6}+\frac{\theta^3}{3}\Big]+\frac{\pi^2}{6}+\zeta_3+\theta^2\\
+&+\coth\theta\Big[\mathrm{Li}_2(\ee^{-2\theta})-2\theta\ln(1-\ee^{-2\theta})-\frac{\pi^2}{6}(1+\theta)-\theta^2-\frac{\theta^3}{3}\Big].
+\end{aligned}
+\end{equation}
+检验：$B(0)=\zeta_3-1$，故 $\Gamma_{\mathrm{cusp}}(\alpha_s,0)=0$（直线无尖点）。$\theta\to\infty$ 时 $\coth\theta=1+\order{\ee^{-2\theta}}$、$\mathrm{Li}_n(\ee^{-2\theta})\to0$，方括号中的 $\theta^3$、$\theta^2$、$\pi^2\theta$、$\zeta_3$ 项两两相消，$B(\theta)=\order{\theta^3\ee^{-2\theta}}$。于是 $\theta\coth\theta$ 的系数是两圈类光尖点反常维度（与\cref{def:sudakov-cusp}的 $\Gamma_1$ 相同），常数项即\cref{eq:yzliu-gammaHH}的两圈系数。$n_f$ 项也可独立得到：它等于 $-\frac59T_Fn_f\frac{\alpha_s}{\pi}$ 乘以单圈函数（跑动耦合效应），大角常数为 $+\frac59T_Fn_fC_F\frac{\alpha_s^2}{\pi^2}$。（3）对数结构：对 $\ln S_I=-\frac{\alpha_s(\mu)C_F}{\pi}L_b+\alpha_s^2[cL_b^2+\hat\gamma L_b+c_2]$ 用 $\mu^2\frac{\dd L_b}{\dd\mu^2}=1$ 与跑动耦合（见下例），$\mu^2\frac{\dd\ln S_I}{\dd\mu^2}=-\frac{\alpha_sC_F}{\pi}+\alpha_s^2[(\frac{C_F\beta_0}{4\pi^2}+2c)L_b+\hat\gamma]$；与 $b_\perp$ 无关的 $\gamma_{HH}$ 相等要求 $c=-\frac{C_F\beta_0}{8\pi^2}$、$\hat\gamma=\hat\gamma_{HH}$，$c_2$ 不受约束。
+\end{proof}
+
+这一结构与\cite[式~(A.6)]{Ji:2023pba}及 RMP\cite{JiEtAl2021}的 $\Gamma_S^{(2)}$（按\cref{tab:yzliu-conventions}换算）一致；部分文献中的两圈反常维度与 $L_b^2$ 系数有印刷错误（附录~Q 第~12、13、15~条）。三圈常数本书不引用。
+
+\begin{example}[由 RGE 确定两圈 $L_b^2$ 系数]\label{ex:yzliu-sI-rge}
+对 $\ln S_I=-\frac{\alpha_s(\mu)C_F}{\pi}L_b+\alpha_s^2[cL_b^2+\hat\gamma L_b+c_2]$ 作用 $\mu^2\frac{\dd}{\dd\mu^2}$：单圈项中的跑动给出 $-\frac{C_F}{\pi}(-\frac{\beta_0}{4\pi}\alpha_s^2)L_b=\frac{C_F\beta_0}{4\pi^2}\alpha_s^2L_b$，二次项给出 $2c\,\alpha_s^2L_b$；$\gamma_{HH}$ 与 $L_b$ 无关，故 $c=-\frac{C_F\beta_0}{8\pi^2}$。取 $n_f=4$（$\beta_0=\frac{25}{3}$），$c=-0.1407$；对 $\gamma^{(1)}_{HH}$ 用单圈跑动精确积分、在 $\alpha_s=0.002$ 处提取 $\alpha_s^2L_b^2$ 系数得 $-0.1408$。在 Liu 等人的约定 (a) 下 $c=\beta_0^{(a)}C_F/(4\pi)$。
+\uses{prop:yzliu-sI-twoloop}
+\end{example}
+
+\begin{assumption}[光锥极限对 ${\rm Im}\,\theta$ 的一致性 \tagP]\label{asm:yzliu-lightcone-uniform}
+(UL) 单一时序软函数的光锥极限 $Y\to\infty$ 对 $\Imag\theta\in[-\pi,\pi]$ 一致，因而光锥形式 $\ee^{(Y+Y')\tilde K+\mathcal D}$ 越过整个带形延拓。地位：[P]——只在 $\Imag\theta\in\{0,\pm\frac\pi2,\pm\pi\}$（实闵氏空间可实现的构型）处得到微扰验证。文献：\cite[第~4.5--4.7~节、第~6~节]{Liu:2022nnk}。被使用于：\cref{prop:yzliu-universality-classes}。解除途径：在每一阶给出 $\order{\ee^{-\theta}}$ 余项在带形内的一致界。
+\uses{def:yzliu-hyperbolic-angle,thm:yzliu-analyticity}
+\end{assumption}
+
+\paragraph{地位与缺口。}[P]：只在带形内五条可实现的直线上成立；以它为前提的普适类陈述至多为 [P]。
+
+\begin{proposition}[软函数的普适类 \tagP]\label{prop:yzliu-universality-classes}
+在光锥极限下只剩三个独立对象：静态 $Q\bar Q$ 对的光锥波函数 $\Psi$、单个重夸克态的 TMD 分布 $f^{\mathrm{TMD}}$、重夸克的 TMD 碎裂函数 $D^{\mathrm{TMD}}$；分类见\cref{tab:yzliu-classes}。类时双重时序软函数之间（重夸克 TMD 分布与碎裂函数之间）的普适性不被断言。（本命题只涉及真空中的 Wilson 线关联函数与重夸克态。）
+\uses{thm:yzliu-analyticity,prop:yzliu-rapidity-linear,asm:yzliu-lightcone-uniform}
+\end{proposition}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+类型 & 时序 & $v_1$（指向） & $v_2$（指向） & 超软模式 & 光锥因子化 & 欧氏表示 \\
+\midrule
+形状因子 & 单一 & 任意 & 任意 & 有 & $\Psi^\dagger\Psi$ & 有 \\
+类空 DY & 双重 & 类空（过去） & 类空（过去） & 有 & $\Psi^\dagger\Psi$ & 有 \\
+类时 DY & 双重 & 类时（过去） & 类时（过去） & 无 & $f^{\mathrm{TMD}\dagger}f^{\mathrm{TMD}}$ & 有 \\
+$\gamma^*\to\bar QQ+$强子 & 双重 & 类时（未来） & 类时（未来） & 无 & $D^{\mathrm{TMD}\dagger}D^{\mathrm{TMD}}$ & 无 \\
+类时 SIDIS & 双重 & 类时（过去） & 类时（未来） & 无 & $D^{\mathrm{TMD}}f^{\mathrm{TMD}}$ & 无 \\
+类空 SIDIS & 双重 & 类空（过去） & 类空（未来） & 有 & $\Psi^\dagger\Psi$ & 有 \\
+准 TMD & 双重 & 类时（过去） & 类空（任意） & 有 & $\Psi^\dagger f^{\mathrm{TMD}}$ & 有 \\
+准碎裂 & 双重 & 类空（任意） & 类时（未来） & 有 & $D^{\mathrm{TMD}}\Psi$ & 无 \\
+\bottomrule
+\end{tabular}
+\caption{离光锥软函数在光锥极限下的普适类（按\cite[表~2]{Liu:2022nnk}的印刷页转录）。只有 $\Psi$ 与 $f^{\mathrm{TMD}}$ 类有欧氏表示。}
+\label{tab:yzliu-classes}
+\end{table}
+
+\begin{proofsketch}
+单一时序软函数由\cref{thm:yzliu-analyticity}表示为同一 $S(\theta)$ 的边界值；在 (UL) 下光锥形式越过整个带形，故所有单一时序（以及只含类空间隔、因而与时序无关的）软函数在光锥极限下化为 $\Psi^\dagger\Psi$（\cref{prop:yzliu-rapidity-linear}）。含类时方向的双重时序软函数不在这一解析结构内：类时线代表实时间传播的重夸克，可以区分它在初态（TMD 分布）还是末态喷注（碎裂函数），光锥正规子给出 $S_{\mathrm{mix}}(v,v')=f^{\mathrm{TMD}}D^{\mathrm{TMD}}$、$S_{\mathrm{mix}}(v,-v')=f^{\mathrm{TMD}}f^{\mathrm{TMD}\dagger}$\cite[第~4.6--4.7~节，式~(139)--(142)]{Liu:2022nnk}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}部分 [P]：等级由\cref{asm:yzliu-lightcone-uniform}决定。对类时双重时序的情形，作者写道“we are not clear at this moment whether the heavy-quark TMDPDF and fragmentation functions are equal to all orders”\cite[第~6~节]{Liu:2022nnk}。这张表把“正规化方式无关紧要”的说法变成明确的分类，并指出普适性可能失效之处：类时双重时序、碎裂型以及 $e^+e^-$ 软因子——软因子的时序并非“总是无关紧要”。升级途径：带形内余项的一致界，以及双重时序软函数的解析结构（\cref{rem:yzliu-open}第~(3)、(4)~项）。

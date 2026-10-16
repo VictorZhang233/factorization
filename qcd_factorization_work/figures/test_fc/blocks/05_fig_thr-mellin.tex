@@ -1,0 +1,37 @@
+%%% BEGIN fig:thr-mellin
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ax/.style={lcaxis,gray!60!black},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc pole/.pic={\draw[line width=0.9pt,line cap=round] (-0.08,-0.08)--(0.08,0.08) (-0.08,0.08)--(0.08,-0.08);},
+  fc contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position 0.2 with {\arrow{Stealth[length=6pt,width=5pt]}},
+      mark=at position 0.66 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  fc cut/.style={draw=black!80,line width=0.9pt,decorate,decoration={zigzag,segment length=4pt,amplitude=1.6pt}}]
+  % axes
+  \draw[fc ax] (-3.4,0) -- (7.6,0) node[below left,fc lab,text=black] {$\Real N$};
+  \draw[fc ax] (0,-2.75) -- (0,2.95) node[left,fc lab,text=black] {$\Imag N$};
+  % singularities of the PDF moments (schematic)
+  \foreach \x in {-2.6,-1.75,-0.9,0.75} \pic at (\x,0) {fc pole};
+  \draw[fc cut] (-3.3,0) -- (-2.68,0);
+  \node[fc note,align=center,anchor=north] at (-1.75,-0.22) {部分子分布矩\\$f_{A,N}\,f_{B,N}$的奇点};
+  \draw[gray!60!black,line width=0.45pt] (0.75,0.12) -- (1.05,0.62) node[above,fc note,text=black] {最右奇点};
+  % Landau branch point and cut of the resummed exponent
+  \draw[fc cut] (5.45,0) -- (7.35,0);
+  \fill (5.45,0) circle[radius=1.9pt];
+  \node[fc note,anchor=north] at (5.45,-0.18) {$N_L$};
+  \draw[gray!60!black,line width=0.45pt] (5.6,0.12) -- (5.95,0.68) node[above,fc note,text=black] {Landau 支点};
+  % minimal-prescription contour: Re N = c, bending to the left at large |Im N|
+  \draw[fc contour] (1.35,-2.6) -- (2.35,-1.45) .. controls (2.75,-1.0) and (2.75,-0.8) .. (2.75,-0.45)
+      -- (2.75,0.45) .. controls (2.75,0.8) and (2.75,1.0) .. (2.35,1.45) -- (1.35,2.6);
+  \fill (2.75,0) circle[radius=1.5pt];
+  \node[fc note,anchor=north west] at (2.78,-0.04) {$c$};
+  \node[fc lab,text=blue!55!black,anchor=west] at (2.85,1.25) {$C_{\rm MP}$};
+\end{tikzpicture}
+\caption{Mellin 反演与 Landau 极点（示意）。反演积分$\int_C\frac{\dd N}{2\pi\ii}\,\tau^{-N}f_{A,N}f_{B,N}\Delta_N$（截面的归一化见正文）的围道$C$自下而上。在固定对数精度下，阈值指数按$\alpha_s\ln\bar N$组织；当有效标度$Q^2/\bar N^2$降到跑动耦合$\alpha_s(q^2)$的 Landau 极点时，$\ln\Delta_N$在正实轴远处的$N_L$出现支点（及向右的割线）；
+最小处方\cite{CataniEtAl1996}的围道$C_{\rm MP}$与实轴交于$c$，$c$位于部分子分布矩的奇点与$N_L$之间（其余奇点都在围道左侧，$N_L$及其割线在右侧），在$|\Imag N|$大处向左弯折以改善收敛。处方是定义，不是定理（\cref{rem:thr-prescriptions}）。}
+\label{fig:thr-mellin}
+\end{figure}
+%%% END fig:thr-mellin

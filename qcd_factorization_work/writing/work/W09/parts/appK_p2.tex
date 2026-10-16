@@ -1,0 +1,52 @@
+% -----------------------------------------------------------------------------------------------------
+\section{整函数与多项式系数的估计}\label{sec:appK-entire}
+
+以下两个引理用于\cref{ch:dis}强子层次的论证（证明在\cref{app:appM}）：前者把“实轴外的受控增长”化为“多项式”，用于有限减除的色散关系（\cref{prop:dis-dispersion-np}）；后者把“多项式在短线段上很小”化为“系数很小”——OPE 只在长度为 $\order{M/Q}$ 的欧氏线段上控制前向 Compton 振幅（\cref{lem:dis-ope-segment}），提取固定 $n$ 的 Taylor 系数（\cref{thm:dis-fixed-n}）要付出因子 $h^{-k}$。
+
+\begin{lemma}[受控增长的整函数]\label{lem:appK-entire}
+设 $f$ 是整函数，存在 $C>0$ 与 $A,B\ge0$，使 $|f(z)|\le C(1+|z|)^A|\Imag z|^{-B}$ 对一切 $\Imag z\ne0$ 成立。则 $|f(z)|\le C(3+|z|)^A$ 对一切 $z\in\mathbb C$ 成立；因此 $f$ 是次数不超过 $A$ 的多项式。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+对整函数 $f$ 与 $r>0$，Jensen 公式（允许圆周上有零点）\cite[第~15.16--15.20~节]{Rudin1987}为 $\log|f(z_0)|+\sum_{|a_l-z_0|\le r}\log\frac{r}{|a_l-z_0|}=\frac1{2\pi}\int_0^{2\pi}\log|f(z_0+r\ee^{\ii\theta})|\,\dd\theta$（$a_l$ 为零点，$f(z_0)\ne0$），左边的和非负，故 $\log|f(z_0)|\le\frac1{2\pi}\int_0^{2\pi}\log|f(z_0+r\ee^{\ii\theta})|\,\dd\theta$（$f(z_0)=0$ 时平凡）。取 $r=2$，$z_0=x_0+\ii y_0$；圆周上除至多两点外 $\Imag(z_0+2\ee^{\ii\theta})=y_0+2\sin\theta\ne0$，且 $|z_0+2\ee^{\ii\theta}|\le|z_0|+2$，所以
+\[
+\log|f(z_0)|\le\log C+A\log(3+|z_0|)-B\,J(y_0),\qquad J(y)\equiv\frac1{2\pi}\int_0^{2\pi}\log|y+2\sin\theta|\,\dd\theta .
+\]
+令 $w=\ee^{\ii\theta}$，则 $|y+2\sin\theta|=|\ii w(y+2\sin\theta)|=|w^2+\ii yw-1|$。对 $p(w)=w^2+\ii yw-1$ 在单位圆上用 Jensen 公式：$p(0)=-1$，两根之积为 $-1$，故 $J(y)=\sum_{|w_l|\le1}\log\frac1{|w_l|}=\log\max(|w_1|,|w_2|)=\log\max\big(1,\frac{|y|+\sqrt{y^2-4}}2\big)\ge0$（$|y|\le2$ 时两根都在单位圆上，$J=0$）。于是 $|f(z_0)|\le C(3+|z_0|)^A$。由 Cauchy 估计 $|f^{(k)}(0)|/k!\le C(3+R)^A/R^k\to0$（$R\to\infty$，$k>A$），$f$ 是次数不超过 $A$ 的多项式。
+\end{proof}
+% J(y) closed form, Jensen identity and the sub-mean inequality checked numerically in v7 (b).
+
+\begin{lemma}[V. A. Markov 系数不等式]\label{lem:appK-markov}
+设 $p(x)=\sum_{k=0}^Na_kx^k$ 是实系数多项式，$h>0$，$\|p\|_h=\max_{|x|\le h}|p(x)|$；Chebyshev 多项式记为 $T_m(x)=\cos(m\arccos x)=\sum_kt_{m,k}x^k$。则对 $0\le k\le N$
+\begin{equation}\label{eq:appK-markov}
+|a_k|\le c_{N,k}\,\|p\|_h\,h^{-k},\qquad
+c_{N,k}=\begin{cases}|t_{N,k}|,&N-k\ \text{为偶数},\\|t_{N-1,k}|,&N-k\ \text{为奇数},\end{cases}
+\end{equation}
+界由 $T_N(x/h)$ 或 $T_{N-1}(x/h)$ 取到。初等的较弱界 $|a_k|\le c'_{N,k}\|p\|_hh^{-k}$，$c'_{N,k}=2\sum_{m=k}^N|t_{m,k}|$，有完整证明；后文的定理只用到“存在只依赖于 $N$、$k$ 的常数”。复系数情形：对 $u(\omega)=\sum_{k\le N}b_k\omega^k$，记 $\|u\|=\max_{|y|\le r}|u(\ii y)|$，则 $|b_k|\le\sqrt2\,c_{N,k}\|u\|r^{-k}$（以 $c'_{N,k}$ 代替 $c_{N,k}$ 亦然）。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+$\tilde p(x)=p(hx)=\sum_ka_kh^kx^k$ 满足 $\max_{[-1,1]}|\tilde p|=\|p\|_h$，故只需 $h=1$。展开 $\tilde p=\sum_{m=0}^Nc_mT_m$；由 $\int_0^\pi\cos m\theta\cos m'\theta\,\dd\theta=\frac\pi2(1+\delta_{m0})\delta_{mm'}$，$c_m=\frac{2-\delta_{m0}}{\pi}\int_0^\pi\tilde p(\cos\theta)\cos m\theta\,\dd\theta$，$|c_m|\le2\|p\|_h$。比较 $x^k$ 的系数（$T_m$ 的次数为 $m$），$a_kh^k=\sum_{m=k}^Nc_mt_{m,k}$，即得初等界。精确常数\cref{eq:appK-markov}是 V. A. Markov 在 1892 年的俄文专著中得到的，德译本见\cite{Markoff1916}；$T_N(x/h)$ 在 $[-h,h]$ 上以 $1$ 为界，$x^k$ 系数为 $t_{N,k}h^{-k}$，故 $N-k$ 为偶数时界可取到，奇数时 $t_{N,k}=0$，由 $T_{N-1}$ 取到。复系数：$u(\ii y)=\sum_k(\ii^kb_k)y^k$ 的实部与虚部是在 $|y|\le r$ 上以 $\|u\|$ 为界的实系数多项式，故 $|\Real(\ii^kb_k)|,|\Imag(\ii^kb_k)|\le c_{N,k}\|u\|r^{-k}$，$|b_k|\le\sqrt2\,c_{N,k}\|u\|r^{-k}$。
+\end{proof}
+% sharp constants: LP check N <= 9 (v7 (a)); elementary bound and |c_m| <= 2||p|| (v11 (a)).
+% Parity form attributed to V. A. Markov (1892; German transl. Math. Ann. 77 (1916)) as in Milovanovic-Marinkovic,
+% Facta Univ. Ser. Math. Inform. 5 (1990) 25, eq. (1.1) (read 2026-10-14); location inside Markoff1916 not checked.
+
+例如 $N=4$：由 $T_4=8x^4-8x^2+1$、$T_3=4x^3-3x$ 得 $(c_{4,0},\dots,c_{4,4})=(1,3,8,4,8)$，初等界为 $(6,8,20,8,16)$。常数随 $N$ 指数增长（$c_{N,N}=2^{N-1}$），所以这样的系数估计只对固定的 $N$、$k$ 有意义。
+
+% -----------------------------------------------------------------------------------------------------
+\section{反例与稳定性}\label{sec:appK-counterexamples}
+
+\begin{remark}[反例与稳定性]\label{rem:appK-counterexamples}
+(i) \emph{分布可以逃过偶数矩：}$\langle\delta',x^{2k}\rangle=-\frac{\dd}{\dd x}x^{2k}|_{x=0}=0$（$k\ge0$），但 $\langle\delta',x\rangle=-1$，$\delta'\ne0$。所以\cref{thm:appK-even-moments}中“$g$ 是加权可积函数”的条件不能去掉；在 $[-1,1]$ 的表述中，这类不确定性恰是\cref{lem:appK-compact}中 $\xi=0$ 处的 $\delta$ 导数。
+
+(ii) \emph{矩的 $\order{1/Q^2}$ 不蕴含逐点的 $\order{1/Q^2}$。}取 $R_Q(x)=\sin(Q^2x)$。对 $n\ge1$，分部积分得 $Q^2\int_0^1x^nR_Q\,\dd x=-\cos Q^2+n\int_0^1x^{n-1}\cos(Q^2x)\,\dd x$，其绝对值不超过 $1+n\cdot\frac1n=2$（$n=0$ 时等于 $1-\cos Q^2\in[0,2]$）：每个矩都是 $\order{1/Q^2}$，且对 $n$ 一致；但 $Q^2\ge\pi/2$ 时 $\sup_x|R_Q|=1$。所以由矩只能得到弱收敛（\cref{lem:appA-weak-convergence}、\cref{cor:dis-weak-xspace}），\cref{thm:pdf-dis-xspace}的余项的逐点大小不受控制（\cref{rem:dis-nonuniform}）。
+% VF-MISC-3; checked for n <= 40, Q^2 in [1, 1e6] (v11 (d)).
+
+(iii) \emph{唯一不等于稳定：}由前 $K$ 个矩重构 $h\in L^2(0,1)$ 时，Gram 矩阵是 Hilbert 矩阵 $(\frac1{i+j+1})_{0\le i,j<K}$，谱条件数为 $4.8\times10^5$（$K=5$）、$1.6\times10^{13}$（$K=10$）、$2.5\times10^{28}$（$K=20$），约按 $\ee^{3.5K}$ 增长：矩的微小误差被指数放大，由有限个带误差的矩直接重构函数是指数病态的。实际计算中先在 $N$ 平面上解析延拓（\cref{prop:appK-continuation}），再沿竖直围道作 Mellin 反变换。
+% VF-MISC-2 (K = 5, 20); K = 10 writer-computed, 1.6026e13 (v11 (d)).
+
+(iv) \emph{存在性（Hausdorff 矩问题）：}实序列 $(\mu_n)_{n\ge0}$ 是 $[0,1]$ 上正 Borel 测度的矩序列，当且仅当它完全单调，即 $(-1)^k(\Delta^k\mu)_n\ge0$ 对一切 $n,k\ge0$ 成立，$(\Delta\mu)_n=\mu_{n+1}-\mu_n$\cite{Hausdorff1921a,Hausdorff1921b}（必要性：$(-1)^k(\Delta^k\mu)_n=\int t^n(1-t)^k\,\dd\mu$）；由 Jordan 分解，它是有限带号测度的矩序列当且仅当它是两个完全单调序列之差。\cref{cor:dis-weak-xspace}的假设 (Φ) 要求存在测度 $\Phi_Q$，其偶数阶（$n\ge n_0$）矩恰为扭度 2 的矩 $\sum_iC^{(n)}_{2,i}A^{(n)}_i$——经代换 $t=x^2$ 是一个 Hausdorff 矩问题；对截断的微扰系数，这个序列不必满足上述条件，所以 (Φ) 是真正的假设。
+\end{remark}

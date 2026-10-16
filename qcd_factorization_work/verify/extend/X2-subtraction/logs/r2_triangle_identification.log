@@ -1,0 +1,56 @@
+PART A: fibered values (kappa-integral exactly, then Beta-type x-integrals)
+   C_S  (x>0)      alpha = m2*x/P,  beta = -   reduced integrand: symbolically equal
+   C_C1 (0<x<P)    alpha = m2*x/P,  beta = m2*x*(P - x)/P**2   reduced integrand: spot check |diff| = 1.0853314206470105e-165
+   C_C1 (x>P)      alpha = m2*x/P,  beta = -   reduced integrand: symbolically equal
+   C_C2 (x>0)      alpha = 2*Pp*x + m2,  beta = -   reduced integrand: symbolically equal
+   C_C2 (sliver)   alpha = m2*u,  beta = m2*u*(1 - u)   reduced integrand: spot check |diff| = 1.0853314206470105e-165
+   C_H  (0<x<P)    alpha = 2*Pp*x,  beta = 2*Pp*x*(P - x)/P   reduced integrand: spot check |diff| = 1.3566642758087631e-166
+   C_H  (x>P)      alpha = 2*Pp*x,  beta = -   reduced integrand: symbolically equal
+   J0(eps=0.05): quadrature 0.08857626027542444389570818   B(-eps,1-eps)+1/eps 0.08857626027542444389570818
+   J0(eps=0.1): quadrature 0.1912200871497009928627668   B(-eps,1-eps)+1/eps 0.1912200871497009928627668
+   J0(eps=0.3): quadrature 0.8012827551013081382794474   B(-eps,1-eps)+1/eps 0.8012827551013081382794474
+   J0(eps=0.7): quadrature 4.862642104989054564771574   B(-eps,1-eps)+1/eps 4.862642104989151276632337
+
+PART B: covariant values from the whole-integrand parametric representation
+   C_S : Delta = 2*P*Pp*lambda1*lambda2 + lambda1*m2 + lambda2*m2
+   C_S : int = 2**(epsilon - 1)*pi*P**(epsilon - 1)*Pp**(epsilon - 1)*gamma(epsilon)/(m2**(2*epsilon)*sin(pi*epsilon))
+   C_C1: Delta = -(lambda2 + x_F)*(-2*P*Pp*lambda1 + m2*x_F - m2)
+   C_C1: even part of numerator = l^2 + ( -(lambda2 + x_F)*(-2*P*Pp*lambda1 + m2*x_F - m2) ),  equals l^2 + Delta: True
+   C_C1: 6*int d^dl (l^2+D)/(-l^2+D)^4 = D^{-1-eps} * (2*epsilon - 1)*gamma(epsilon + 1)
+   C_C1: int = -2**(2*epsilon - 1)*pi**(3/2)/(P*Pp*epsilon*m2**epsilon*sin(pi*epsilon)*gamma(1/2 - epsilon))
+   C_H : Delta = V^2 = 2*P*Pp*(lambda1 + x_F)*(lambda2 - x_F + 1)
+   C_H : 6*int d^dl (-l^2-D)/(-l^2+D)^4 = D^{-1-eps} * -(2*epsilon - 1)*gamma(epsilon + 1)
+   C_H : int = 2**(epsilon - 1)*pi**(3/2)*P**(-epsilon - 1)*Pp**(-epsilon - 1)/(epsilon*sin(pi*epsilon)*gamma(1/2 - epsilon))
+
+PART C: fibered (A) = covariant (B) = closed form, symbolically
+   C_S  : fibered - covariant:                        exact;   covariant - claimed: exact
+          covariant closed form = 2**(epsilon - 1)*pi*P**(epsilon - 1)*Pp**(epsilon - 1)*gamma(epsilon)/(m2**(2*epsilon)*sin(pi*epsilon))
+   C_C1 : fibered - covariant:                        exact;   covariant - claimed: exact
+          covariant closed form = -2**(2*epsilon - 1)*pi**(3/2)/(P*Pp*epsilon*m2**epsilon*sin(pi*epsilon)*gamma(1/2 - epsilon))
+   C_C2 : fibered - covariant:                        exact;   covariant - claimed: exact
+          covariant closed form = -2**(2*epsilon - 1)*pi**(3/2)/(P*Pp*epsilon*m2**epsilon*sin(pi*epsilon)*gamma(1/2 - epsilon))
+   C_H  : fibered - covariant:                        exact;   covariant - claimed: exact
+          covariant closed form = 2**(epsilon - 1)*pi**(3/2)*P**(-epsilon - 1)*Pp**(-epsilon - 1)/(epsilon*sin(pi*epsilon)*gamma(1/2 - epsilon))
+
+PART D: independent numerics (no kappa formula; no lambda formulas)
+   P=0.8 P'=1.3 m2=0.1 eps=0.3
+      C_S  : closed form      27.697904662109742753   fibered 2D quadrature rel.dev   2.43e-7   covariant parametric quadrature rel.dev 4.2e-06
+      C_C1 : closed form     -7.2662119878542590395   fibered 2D quadrature rel.dev   9.27e-7   covariant parametric quadrature rel.dev 6.5e-06
+      C_C2 : closed form     -7.2662119878542590395   fibered 2D quadrature rel.dev   1.32e-7
+      C_H  : closed form      2.9234055258314283461   fibered 2D quadrature rel.dev   3.29e-7   covariant parametric quadrature rel.dev 9.2e-06
+   P=0.7071 P'=0.7071 m2=0.01 eps=0.2
+      C_S  : closed form      154.81879951180771025   fibered 2D quadrature rel.dev   3.12e-6
+      C_C1 : closed form     -52.479429343827743294   fibered 2D quadrature rel.dev    9.2e-6
+      C_C2 : closed form     -52.479429343827743294   fibered 2D quadrature rel.dev   1.02e-5
+      C_H  : closed form      20.892437128333439714   fibered 2D quadrature rel.dev   2.55e-5
+
+PART E: Lemma 2.7 hypothesis (I2) fails for C_C1 = T1 + T2 (sum of moduli of its two residue pieces)
+   int_delta^P dx int dkap kap^-eps (|1/(A h2)| + |1/(B h2)|), delta=0.0001: 462.71768
+   int_delta^P dx int dkap kap^-eps (|1/(A h2)| + |1/(B h2)|), delta=1.0e-8: 1644.8481
+   int_delta^P dx int dkap kap^-eps (|1/(A h2)| + |1/(B h2)|), delta=1.0e-12: 4614.224
+   int_delta^P dx int dkap kap^-eps (|1/(A h2)| + |1/(B h2)|), delta=1.0e-16: 12072.959
+   -> grows like delta^-eps/eps: G is not integrable, (I2) fails; the identification above is by direct computation.
+
+PART F: identification of Gamma itself (numerical; Lemma 2.7 needs (I1), not verified)
+   P=0.8 P'=1.3 m2=0.1 eps=0.3: fibered 15.5610705037585  covariant 15.5610705037585  rel.dev 3.28e-17
+   P=0.7071 P'=0.7071 m2=0.01 eps=0.1: fibered 40.3386417978396  covariant 40.3386417978396  rel.dev 3.39e-21

@@ -1,0 +1,1040 @@
+% =====================================================================================================
+% ch05_sudakov.tex —— 第 5 章  Sudakov 形状因子与振幅的红外结构（writer W05）
+% 源：FINAL_OUTLINE_v2 Ch5；VERIFIED_FORMULAS_v2 (VF-SUD-1..5, VF-REG-10/11/12/14, VF-REF-2, VF-EE-4,
+%     VF-CONV-23, VF-SCET-8/16, VF-WL-1/3/6)；验证脚本 writing/work/W05/s1--s7（日志 logs/）。
+% =====================================================================================================
+\chapter{Sudakov 形状因子与振幅的红外结构}\label{ch:sudakov}
+
+一个带色（或带电）的粒子以很大的动量转移 $Q$ 被弹性散射、而不辐射任何胶子（光子），这件事的振幅随 $Q$ 怎样变化？
+经典图像给出一个定性的回答：电荷被突然改变方向，必然辐射，“什么都不辐射”的概率应当很小。
+Sudakov 在 QED 中发现\cite{Sudakov1956}，这一抑制在微扰级数中表现为每一圈出现两个大对数的项 $\alpha\ln^2(Q^2/m^2)$；
+把这些项求和，弹性形状因子比 $Q$ 的任何负幂次都下降得更快。
+这种\emph{双对数}（double logarithm）结构及其在 QCD 中的推广，是一切硬过程红外结构的原型：
+\cref{ch:ee}的总截面中它被实辐射完全抵消，在\cref{ch:dy}与\cref{ch:tmd}的 Drell--Yan 与横动量分布中它留下必须重求和的大对数。
+
+本章研究部分子层次上最简单的硬过程——无质量夸克的矢量形状因子。它不含强子与部分子分布，却已包含\cref{ch:method}中一般方法的全部要素：
+区域分解、共线与软近似、Ward 恒等式把纵向胶子收集为 Wilson 线、减除、演化方程与重求和。按本书的严格性词汇：单圈形状因子（对 $\varepsilon$ 精确）、
+单圈 Coulomb 相位以及 $K+G$ 方程与 web 指数化的单圈内容被完整证明（$[R]$），区域分析各例是一圈的精确计算；全阶因子化 $F=H\,J_1J_2/S$、演化与指数化、
+多腿振幅红外极点的因子化与振幅的硬—软—共线因子化是全阶论证（$[A]$）；偶极子公式作为全阶公式与类空严格共线因子化都已知失效（$[V]$）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:sudakov-oneloop}（\tagR，$R_{\mathrm{PT}}$，对 $\varepsilon$ 的所有阶精确）；\cref{prop:sudakov-coulomb}（\tagR，$R_{\mathrm{PT}}$，单圈）；
+\cref{prop:sudakov-kg}(b)（\tagR，$R_{\mathrm{PT}}$，单圈）与\cref{prop:sudakov-webs}(b)（\tagR，$R_{\mathrm{def}}$，$O(g^2)$）；
+区域分析各例的单圈精确计算（\cref{ex:sudakov-onshell-hard,ex:sudakov-offshell,ex:sudakov-massive,ex:sudakov-ll}）。\par
+\textbf{给出全阶论证：}\cref{thm:sudakov-factorization}（\tagA；瓶颈：减除步骤即\cref{asm:appN-collins}的内容（指针），以及非阿贝尔多胶子 Ward 恒等式）；
+\cref{prop:sudakov-kg}、\cref{cor:sudakov-exponentiation}、\cref{prop:sudakov-webs}、\cref{thm:sudakov-ir-poles}、\cref{prop:sudakov-amplitude-factorization}（均为\tagA）。\par
+\textbf{没有证明：}偶极子公式作为全阶精确公式（\cref{prop:sudakov-dipole-violation}，\tagV，三圈失效）；
+类空共线极限中的严格共线因子化（\cref{rem:sudakov-spacelike}，\tagV，详见\cref{ch:break}）；
+区域方法在本章 Minkowski 多侧面情形的一般证明（\cref{prop:ir-regions-minkowski}，\tagP）。
+\end{tcolorbox}
+
+本章所有陈述都只涉及部分子态与 Wilson 线算符，因而没有「非微扰地位」一行。记号沿用全书约定（\cref{tab:front-notation}）：
+度规 $(+,-,-,-)$，$v^\pm=(v^0\pm v^3)/\sqrt2$，$n_A\cdot v=v^-$，$n_B\cdot v=v^+$；夸克—胶子顶点 $\ii g\gamma^\mu t^a$（\cref{def:prelim-feynman-rules}）；
+$D=4-2\varepsilon$ 与 $\MSbar$（\cref{def:qcd-dimreg,def:prelim-msbar}）；$W[b,a]=P\exp(\ii g\int_a^b\dd z\cdot A)$（\cref{def:prelim-wilson}）。
+Collins 的专著\cite{Collins2011}中 $g_{\mathrm{Collins}}=-g$（\cref{sec:appB-definition}）。
+% -----------------------------------------------------------------------------------------------------
+\section{一圈形状因子}\label{sec:sudakov-oneloop}
+
+一圈结果显示了双极点 $1/\varepsilon^2$ 的来源（既软又共线的胶子），给出了后面全部全阶结构在最低阶的具体内容，
+并通过向类时区的解析延拓暴露出 $\pi^2$ 增强。
+
+\begin{definition}[夸克形状因子]\label{def:sudakov-ff}
+令 $j^\mu=\bar\psi\gamma^\mu\psi$ 为单一无质量夸克味的矢量流（单位电荷）。对动量为 $p_1$ 的入射在壳夸克与动量为 $p_2$ 的出射在壳夸克，
+$p_1^2=p_2^2=0$，定义顶点函数 $\Gamma^\mu$ 与\emph{类空形状因子} $F$：
+\begin{equation}\label{eq:sudakov-ff-def}
+\begin{gathered}
+\langle q(p_2)|\,j^\mu(0)\,|q(p_1)\rangle=\bar u(p_2)\,\Gamma^\mu(p_1,p_2)\,u(p_1),\qquad
+\Gamma^\mu=F(q^2)\,\gamma^\mu,\\
+q=p_2-p_1,\qquad Q^2\equiv-q^2=2p_1\cdot p_2>0 ;
+\end{gathered}
+\end{equation}
+色与自旋指标已从两边约去（$F$ 是色单位矩阵的系数）。对产生过程 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$，
+$\langle q(p_1)\bar q(p_2)|j^\mu(0)|0\rangle=\bar u(p_1)\,F(q^2)\gamma^\mu\,v(p_2)$，$q=p_1+p_2$，$q^2=s>0$；
+\emph{类时形状因子}是同一个解析函数在 $q^2=s+\ii0$ 的边界值。$F$ 在微扰论中按 $\alpha_s=\alpha_s(\mu)$ 展开，$F=1+F^{(1)}+O(\alpha_s^2)$。
+\uses{def:prelim-feynman-rules}
+\end{definition}
+
+只出现一个形状因子的理由：无质量 QCD 的 Feynman 规则只产生含奇数个 $\gamma$ 矩阵的 Dirac 串，夹在 $\bar u(p_2)\cdots u(p_1)$ 之间时，
+任何 $\sla p_1$、$\sla p_2$ 都可用反对易关系移到相应旋量旁而消失，只剩 $\gamma^\mu$ 乘以标量函数；这只用到 $\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}$，在 CDR 中逐阶成立。
+
+\begin{proposition}[一圈形状因子（精确到 $\varepsilon$ 的所有阶） \tagR]\label{prop:sudakov-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 $O(\alpha_s)$、$\MSbar$ 方案、$D=4-2\varepsilon$ 维中，类空形状因子为
+\begin{equation}\label{eq:sudakov-F1}
+\begin{gathered}
+F(Q^2)=1+\frac{\alpha_s}{4\pi}C_F\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}f(\varepsilon)+O(\alpha_s^2),\\
+f(\varepsilon)=-K_v(\varepsilon)\,\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)},\qquad
+K_v(\varepsilon)=\frac{\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)},
+\end{gathered}
+\end{equation}
+对 $\varepsilon$ 精确；其 Laurent 展开为
+\begin{equation}\label{eq:sudakov-F1-exp}
+f(\varepsilon)=-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\zeta_2+\varepsilon\Big(-16+\frac32\zeta_2+\frac{14}3\zeta_3\Big)+O(\varepsilon^2)
+% VF-SUD-1
+\end{equation}
+（$\zeta_2=\pi^2/6$）。(a) 式中所有极点都是红外极点。(b) 类时区的值由 $(\mu^2/Q^2)^\varepsilon\to(\mu^2/s)^\varepsilon\ee^{\ii\pi\varepsilon}$ 得到：
+\begin{equation}\label{eq:sudakov-F1-timelike}
+\begin{gathered}
+2\Real F^{(1)}(s+\ii0)=\frac{\alpha_sC_F}{2\pi}\Big(\frac{\mu^2}{s}\Big)^{\varepsilon}\cos(\pi\varepsilon)\,f(\varepsilon),\\
+2\Real F^{(1)}(s+\ii0)-2F^{(1)}(Q^2\!=\!s)=\frac{\alpha_sC_F}{2\pi}\Big(\frac{\mu^2}{s}\Big)^{\varepsilon}\Big[\pi^2+\frac{3\pi^2}{2}\varepsilon+O(\varepsilon^2)\Big],
+% VF-SUD-2
+\end{gathered}
+\end{equation}
+即在 $|q^2|$ 相同时，类时值比类空值大 $\frac{\alpha_sC_F}{2\pi}\pi^2$，且这一差是红外有限的。（本命题只涉及部分子态。）
+\uses{def:sudakov-ff,def:qcd-dimreg,def:prelim-dr-conventions,lem:prelim-scaleless,ex:prelim-scaleless,def:prelim-feynman-rules,def:prelim-msbar}
+\end{proposition}
+
+\begin{proof}
+\emph{第一步：图与 Feynman 规则。}在 $O(\alpha_s)$，只有一个单粒子不可约图：入射夸克发出胶子 $k$、吸收光子、再吸收该胶子（\cref{fig:sudakov-ff}左图画的是同一个图的类时形式）。
+外线自能插入是无质量在壳的、没有标度的积分，在维数正规化中为零（\cref{lem:prelim-scaleless}；其紫外/红外记账见\cref{ex:prelim-scaleless}，下面第五步再用）。
+按\cref{def:prelim-feynman-rules}（Feynman 规范），
+\begin{equation}\label{eq:sudakov-vertex}
+\bar u(p_2)\Lambda^\mu u(p_1),\qquad
+\Lambda^\mu=\int\!\frac{\dd^Dk}{(2\pi)^D}\,(\ii g\gamma^\nu t^a)\,\frac{\ii(\sla p_2-\sla k)}{(p_2-k)^2}\,\gamma^\mu\,\frac{\ii(\sla p_1-\sla k)}{(p_1-k)^2}\,(\ii g\gamma_\nu t^a)\,\frac{-\ii}{k^2},
+\end{equation}
+各分母带 $+\ii0$。常数因子为 $(\ii g)^2\cdot\ii\cdot\ii\cdot(-\ii)=-\ii g^2$，色因子 $t^at^a=C_F$，故
+\[
+\Lambda^\mu=-\ii g^2C_F\int\!\frac{\dd^Dk}{(2\pi)^D}\,\frac{N^\mu}{D_0D_1D_2},\qquad N^\mu=\gamma^\nu(\sla p_2-\sla k)\gamma^\mu(\sla p_1-\sla k)\gamma_\nu ,
+\]
+$D_0=k^2$，$D_1=(p_1-k)^2$，$D_2=(p_2-k)^2$。
+
+\emph{第二步：Feynman 参数与分子代数。}用 $\frac1{D_0D_1D_2}=2\int\!\dd F\,(zD_0+xD_1+yD_2)^{-3}$，$\int\!\dd F\equiv\int_0^1\dd x\,\dd y\,\dd z\,\delta(1-x-y-z)$。
+由 $p_i^2=0$ 与 $2p_1\cdot p_2=Q^2$，$zD_0+xD_1+yD_2=(k-xp_1-yp_2)^2-\Delta$，$\Delta=xyQ^2$。令 $\ell=k-xp_1-yp_2$，则
+$\sla p_2-\sla k=\sla a-\sla\ell$、$\sla p_1-\sla k=\sla b-\sla\ell$，$a=(1-y)p_2-xp_1$，$b=(1-x)p_1-yp_2$。$\ell$ 的奇次项积分为零，$\ell^\alpha\ell^\beta\to g^{\alpha\beta}\ell^2/D$。
+用 $D$ 维恒等式 $\gamma^\nu\sla a\gamma^\mu\sla b\gamma_\nu=-2\sla b\gamma^\mu\sla a+(4-D)\sla a\gamma^\mu\sla b$ 与 $\gamma^\rho\gamma^\mu\gamma_\rho=-(D-2)\gamma^\mu$，
+\[
+N^\mu\ \to\ -2\sla b\gamma^\mu\sla a+(4-D)\sla a\gamma^\mu\sla b+\frac{(D-2)^2}{D}\,\ell^2\gamma^\mu .
+\]
+夹在旋量之间：$\bar u(p_2)\sla b=(1-x)\bar u(p_2)\sla p_1$，$\sla a u(p_1)=(1-y)\sla p_2u(p_1)$，而
+$\bar u(p_2)\sla p_1\gamma^\mu\sla p_2u(p_1)=-2p_1\cdot p_2\,\bar u(p_2)\gamma^\mu u(p_1)$（把 $\sla p_1$ 右移、$\sla p_2$ 左移，用 Dirac 方程）。于是
+$\bar u\sla b\gamma^\mu\sla a u=-(1-x)(1-y)Q^2\,\bar u\gamma^\mu u$，同理 $\bar u\sla a\gamma^\mu\sla b u=-xyQ^2\,\bar u\gamma^\mu u$，
+\[
+\bar u(p_2)N^\mu u(p_1)\ \to\ \Big\{\big[2(1-x)(1-y)-2\varepsilon xy\big]Q^2+\frac{4(1-\varepsilon)^2}{D}\,\ell^2\Big\}\,\bar u(p_2)\gamma^\mu u(p_1).
+\]
+
+\emph{第三步：圈积分。}标准公式（\cref{def:qcd-dimreg}；附录~C 的\cref{sec:appC-formfactor}）
+\[
+\int\!\frac{\dd^D\ell}{(2\pi)^D}\frac{1}{(\ell^2-\Delta)^3}=\frac{-\ii}{(4\pi)^{D/2}}\frac{\Gamma(1+\varepsilon)}{2}\Delta^{-1-\varepsilon},\qquad
+\int\!\frac{\dd^D\ell}{(2\pi)^D}\frac{\ell^2}{(\ell^2-\Delta)^3}=\frac{\ii}{(4\pi)^{D/2}}\frac{D}{4}\Gamma(\varepsilon)\Delta^{-\varepsilon}
+\]
+给出（$-\ii\cdot2\cdot(-\ii/2)=-1$，$-\ii\cdot2\cdot\ii/4=1/2$）
+\[
+F^{(1)}=\frac{2g^2C_F}{(4\pi)^{2-\varepsilon}}\,\Gamma(1+\varepsilon)\,(Q^2)^{-\varepsilon}\int\!\dd F\,
+\Big\{\underbrace{\frac{(1-\varepsilon)^2}{\varepsilon}(xy)^{-\varepsilon}}_{\text{紫外}}-\underbrace{\big[(1-x)(1-y)-\varepsilon xy\big](xy)^{-1-\varepsilon}}_{\text{红外}}\Big\}.
+\]
+
+\emph{第四步：参数积分。}用 Dirichlet 积分 $\int\!\dd F\,x^{\alpha-1}y^{\beta-1}z^{\gamma-1}=\Gamma(\alpha)\Gamma(\beta)\Gamma(\gamma)/\Gamma(\alpha+\beta+\gamma)$
+与 $(1-x)(1-y)=z+xy$（因 $1-x=y+z$，$1-y=x+z$），花括号的积分为
+\[
+\begin{aligned}
+&\frac{(1-\varepsilon)^2}{\varepsilon}\frac{\Gamma^2(1-\varepsilon)}{\Gamma(3-2\varepsilon)}-\frac{\Gamma^2(-\varepsilon)}{\Gamma(2-2\varepsilon)}-(1-\varepsilon)\frac{\Gamma^2(1-\varepsilon)}{\Gamma(3-2\varepsilon)}\\
+&\qquad=\frac{\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)}\,\frac{1}{1-2\varepsilon}\Big[\frac{1-\varepsilon}{2\varepsilon}-\frac{1}{\varepsilon^2}-\frac12\Big]
+=-\frac{\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)}\,\frac{2-\varepsilon+2\varepsilon^2}{2\varepsilon^2(1-2\varepsilon)},
+\end{aligned}
+\]
+其中用了 $\Gamma(-\varepsilon)=-\Gamma(1-\varepsilon)/\varepsilon$、$\Gamma(3-2\varepsilon)=2(1-\varepsilon)(1-2\varepsilon)\Gamma(1-2\varepsilon)$。最后代入
+$\MSbar$ 的裸耦合 $g_0^2=4\pi\alpha_s\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}(4\pi)^{-\varepsilon}+O(\alpha_s^2)$（\cref{def:prelim-msbar}），
+$g_0^2/(4\pi)^{2-\varepsilon}=\frac{\alpha_s}{4\pi}\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}$，即得式~\eqref{eq:sudakov-F1}。式~\eqref{eq:sudakov-F1-exp} 由
+$\ln K_v(\varepsilon)=-\frac{\zeta_2}2\varepsilon^2-\frac73\zeta_3\varepsilon^3+O(\varepsilon^4)$（由 $\ln\Gamma(1+z)=-\gamma_Ez+\sum_{k\ge2}(-1)^k\zeta_kz^k/k$）与
+$\frac{2-\varepsilon+2\varepsilon^2}{1-2\varepsilon}=2+3\varepsilon+8\varepsilon^2+16\varepsilon^3+O(\varepsilon^4)$ 相乘得到。
+
+\emph{第五步：极点的来源（(a)）。}第三步中标为“紫外”的项来自 $\ell^2\to\infty$，它的极点 $+\frac{\alpha_sC_F}{4\pi}\frac1{\varepsilon_{\rm UV}}$ 是顶点的紫外发散；
+由 Ward 恒等式 $Z_1=Z_2$，它与夸克场重整化的紫外部分相消。外线自能 $\delta Z_2^{\rm OS}=\frac{\alpha_sC_F}{4\pi}\big(-\frac1{\varepsilon_{\rm UV}}+\frac1{\varepsilon_{\rm IR}}\big)=0$
+在维数正规化中为零（\cref{ex:prelim-scaleless}），把这一紫外极点“转换”为红外极点（\cref{def:prelim-dr-conventions}(a)）。守恒流不需要重整化，所以 $F$ 中余下的全部极点是红外极点：
+双极点来自既软又共线的胶子，$-3/\varepsilon$ 中含共线极点与上述转换来的部分。
+
+\emph{第六步：类时区（(b)）。}对 $\gamma^*\to q(p_1)\bar q(p_2)$ 重复第一至第四步（旋量换成 $\bar u(p_1)\cdots v(p_2)$），唯一的变化是 $\Delta=-xy(q^2+\ii0)$，
+$+\ii0$ 来自 Feynman 传播子。对 $q^2=s>0$，$-s-\ii0=s\,\ee^{-\ii\pi}$，故 $(xyQ^2)^{-\varepsilon}\to(xys)^{-\varepsilon}\ee^{\ii\pi\varepsilon}$，从而
+$F^{(1)}(s+\ii0)=\frac{\alpha_sC_F}{4\pi}(\mu^2/s)^\varepsilon\ee^{\ii\pi\varepsilon}f(\varepsilon)$。取实部得式~\eqref{eq:sudakov-F1-timelike} 的第一式；
+差值为 $\frac{\alpha_sC_F}{2\pi}(\mu^2/s)^\varepsilon(\cos\pi\varepsilon-1)f(\varepsilon)$，由 $\cos\pi\varepsilon-1=-\frac{\pi^2\varepsilon^2}2+O(\varepsilon^4)$ 与 $f=-\frac2{\varepsilon^2}-\frac3\varepsilon+\cdots$
+得方括号 $\pi^2+\frac32\pi^2\varepsilon+O(\varepsilon^2)$：$f$ 的 $\varepsilon^{-2}$ 与 $\varepsilon^{-1}$ 项都被 $\varepsilon^2$ 乘掉，差值有限。
+\end{proof}
+
+把式~\eqref{eq:sudakov-F1-exp} 乘上 $(\mu^2/Q^2)^\varepsilon$ 并展开，用 $L\equiv\ln(Q^2/\mu^2)$，
+\begin{equation}\label{eq:sudakov-F1-L}
+F^{(1)}(Q^2)=\frac{\alpha_sC_F}{4\pi}\Big[-\frac2{\varepsilon^2}+\frac{2L-3}{\varepsilon}-L^2+3L-8+\zeta_2\Big]+O(\varepsilon);
+% VF-EE-4
+\end{equation}
+类时区以 $L\to\ell-\ii\pi$ 代入，$\ell\equiv\ln(s/\mu^2)$，得
+$2\Real F^{(1)}(s+\ii0)=\frac{\alpha_sC_F}{2\pi}\big[-\frac2{\varepsilon^2}+\frac{2\ell-3}{\varepsilon}-\ell^2+3\ell-8+\zeta_2+\pi^2\big]$，虚部见\cref{prop:sudakov-coulomb}。
+$f(\varepsilon)$ 的展开直到 $\varepsilon^4$ 与\cite[式~(3.5)]{MochVermaserenVogt2005}的单圈系数逐项相同（两圈见\cite{Gonsalves1983}；上述每一步都经符号与数值计算核对）。% check: s1_formfactor.py
+取 $\alpha_s=0.1180$（世界平均值\cite{ParticleDataGroup:2024cfk}，仅作示意），$\frac{\alpha_sC_F}{2\pi}\pi^2\approx0.247$：解析延拓本身给出约 $25\%$ 的修正，
+它在 Drell--Yan 系数函数的 $\delta(1-z)$ 项中重现（第~12~章\cref{prop:dy-nlo}），其指数化见\cref{cor:sudakov-exponentiation}。
+% -----------------------------------------------------------------------------------------------------
+\section{区域分析}\label{sec:sudakov-regions}
+
+\cref{prop:sudakov-oneloop}的双极点从何而来？\cref{ch:ir}的区域方法（\cref{def:ir-regions}）回答这个问题：按圈动量的标度划分区域，在每个区域内 Taylor 展开、
+在整个积分域上用维数正规化积分、丢掉无标度积分，再求和。下面三个一圈例子说明它在 Sudakov 问题中的全部要点。我们先研究标量三角形
+\begin{equation}\label{eq:sudakov-triangle}
+I=\ee^{\varepsilon\gamma_E}\mu^{2\varepsilon}\int\!\frac{\dd^Dk}{\ii\pi^{D/2}}\,
+\frac{1}{(-k^2-\ii0)\,(-(k+p_1)^2-\ii0)\,(-(k+p_2)^2-\ii0)},
+\end{equation}
+领头对数精度下 QCD 顶点修正正比于 $p_1\cdot p_2\,I$（\cref{ex:sudakov-ll}）。
+
+\begin{example}[在壳无质量形状因子 = 硬区]\label{ex:sudakov-onshell-hard}
+取 $p_1^2=p_2^2=0$，$(p_1-p_2)^2=-Q^2$。Feynman 参数表示为 $I=\ee^{\varepsilon\gamma_E}\mu^{2\varepsilon}\Gamma(1+\varepsilon)\int\!\dd F\,(Q^2xy)^{-1-\varepsilon}$，由 Dirichlet 积分
+\begin{equation}\label{eq:sudakov-onshell-H}
+Q^2I=\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\frac{\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(-\varepsilon)}{\Gamma(1-2\varepsilon)}
+\overset{\mu=Q}{=}\frac1{\varepsilon^2}-\frac{\pi^2}{12}-\frac73\zeta_3\varepsilon+O(\varepsilon^2)
+% VF-REG-10 (H)
+\end{equation}
+（在 $\Real\varepsilon<0$ 收敛：极点是红外的）。被积函数中没有小量，硬区（$k\sim Q(1,1,1)$）的展开就是原被积函数；其余区域都无标度，例如与 $p_1$ 共线的区域把
+$-(k+p_2)^2$ 换成 $-2p_2^-k^+$ 后，被积函数在 $k^-\to\kappa^2k^-$、$\mathbf k_T\to\kappa\mathbf k_T$ 下齐次。所以在壳积分的红外极点是\emph{无标度低能区域的紫外极点}：
+低能区域 $\propto\frac1{\varepsilon_{\rm UV}}-\frac1{\varepsilon_{\rm IR}}=0$，其紫外部分与硬区的红外极点相消。同样的论证适用于\cref{prop:sudakov-oneloop}的整个顶点；
+这一机制是\cref{thm:sudakov-ir-poles}中 $\mathbf Z$ 因子的起源。
+\uses{prop:sudakov-oneloop,def:ir-regions}
+\end{example}
+
+\begin{example}[离壳 Sudakov 三角形的区域展开]\label{ex:sudakov-offshell}
+取 $p_1^2=p_2^2=-P^2<0$，$(p_1-p_2)^2=-Q^2$，$t\equiv P^2/Q^2\ll1$，$\mathcal L\equiv\ln(Q^2/P^2)$。此时 $\mathcal F=P^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2>0$，
+$I$ 在 $D=4$ 中有限且为实数；令 $\alpha_0=1-r$、$\alpha_1=ru$、$\alpha_2=r(1-u)$ 并对 $r$ 积分，
+\begin{equation}\label{eq:sudakov-offshell-exact}
+Q^2I\big|_{\varepsilon=0}=\int_0^1\!\dd u\,\frac{\ln\big(u(1-u)/t\big)}{u(1-u)-t}
+=\frac{4\,\mathrm{Li}_2(-\rho t)+\ln^2(\rho t)+\pi^2/3}{\sqrt{1-4t}},\qquad\rho=\frac{2}{1-2t+\sqrt{1-4t}},
+% VF-REF-2
+\end{equation}
+即 Usyukina--Davydychev 函数 $\Phi^{(1)}(t,t)$\cite{UsyukinaDavydychev1993a}；其展开为
+\begin{equation}\label{eq:sudakov-offshell-nlp}
+Q^2I=\mathcal L^2+\frac{\pi^2}3+t\Big(2\mathcal L^2-4\mathcal L-4+\frac{2\pi^2}3\Big)+t^2\big(6\mathcal L^2-14\mathcal L-11+2\pi^2\big)+O(t^3\mathcal L^2).
+% VF-REF-2 (expansion; binding sign convention L = ln(Q^2/m^2))
+\end{equation}
+$Q^2\gg P^2$ 不能用欧氏外动量实现（欧氏几何中 $|p_1-p_2|^2\le4P^2$），实动量是类空的 Minkowski 矢量 $p_1=(p_1^+,-\frac{P^2}{2p_1^+},\mathbf 0_T)$、
+$p_2=(-\frac{P^2}{2p_2^-},p_2^-,\mathbf 0_T)$，故这一极限不在欧氏大动量定理的范围内。
+
+\emph{区域。}$\lambda^2\sim t$ 时有四个贡献区域（\cref{fig:sudakov-ff}；标度按 $(k^+,k^-,k_T)$）：硬区 $Q(1,1,1)$、共线区 $C_1$：$Q(1,\lambda^2,\lambda)$、$C_2$：$Q(\lambda^2,1,\lambda)$、
+超软区 $S$：$Q(\lambda^2,\lambda^2,\lambda^2)$；记 $\mathcal N(\varepsilon)=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(-\varepsilon)/\Gamma(1-2\varepsilon)$，
+\begin{equation}\label{eq:sudakov-regions}
+Q^2H=\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\mathcal N,\qquad Q^2C_{1,2}=-\Big(\frac{\mu^2}{P^2}\Big)^{\varepsilon}\mathcal N,\qquad
+Q^2S=-\Big(\frac{\mu^2Q^2}{P^4}\Big)^{\varepsilon}\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma(\varepsilon)\Gamma(-\varepsilon).
+% VF-REG-10
+\end{equation}
+以 $C_1$ 为例：在 $-(k+p_2)^2$ 中只保留 $-2p_2^-k^+$，用参数 $x$ 合并 $-k^2$ 与 $-(k+p_1)^2$（得 $-\ell^2+x(1-x)P^2$，$\ell=k+xp_1$），再以 $\frac{1}{A^2B}=2\int_0^\infty\frac{\dd\eta}{(A+\eta B)^3}$
+并入线性分母并作类光平移 $\ell\to\ell+\eta p_2^-n_B$，得
+$C_1=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\mu^{2\varepsilon}\int_0^1\!\dd x\int_0^\infty\!\dd\eta\,[x(1-x)P^2+\eta xQ^2]^{-1-\varepsilon}$；$\eta$ 积分要求 $\Real\varepsilon>0$，
+$x$ 积分（软端由维数正规化调节）要求 $\Real\varepsilon<0$，区域积分由两个因子各自的解析延拓定义。超软区用两个 Schwinger 参数，
+$-k^2-2\eta_1p_1^+k^--2\eta_2p_2^-k^+=-(k+\eta_1p_1^+n_A+\eta_2p_2^-n_B)^2+\eta_1\eta_2Q^2$，化为 $\iint\dd\eta_1\dd\eta_2[\eta_1\eta_2Q^2+(\eta_1+\eta_2)P^2]^{-1-\varepsilon}$
+（$0<\Real\varepsilon<1$），令 $\eta_i=ts_i$ 后逐次积分即得式~\eqref{eq:sudakov-regions}。软区 $Q(\lambda,\lambda,\lambda)$ 的分母 $-k^2$、$-2p_1^+k^-$、$-2p_2^-k^+$ 齐次，无标度；Glauber 区 $Q(\lambda^2,\lambda^2,\lambda)$ 中
+$k^\pm$ 各只出现在一个分母里，加上解析正规子后为零。两两重叠（如 $T_ST_{C_1}\propto\int_0^\infty\dd\eta_1\,\eta_1^{-1-\varepsilon}$）无标度：维数正规化中\emph{不需要零仓扣除}。
+
+\emph{求和。}取 $\mu=Q$，$Q^2H=\frac1{\varepsilon^2}-\frac{\pi^2}{12}$，$Q^2C_{1,2}=-\frac1{\varepsilon^2}-\frac{\mathcal L}\varepsilon-\frac{\mathcal L^2}2+\frac{\pi^2}{12}$，
+$Q^2S=\frac1{\varepsilon^2}+\frac{2\mathcal L}\varepsilon+2\mathcal L^2+\frac{\pi^2}4$（均差 $O(\varepsilon)$），
+\begin{equation}\label{eq:sudakov-regions-sum}
+Q^2(H+C_1+C_2+S)=\mathcal L^2+\frac{\pi^2}3+\varepsilon\Big(\mathcal L^3+\frac{2\pi^2}3\mathcal L+2\zeta_3\Big)+O(\varepsilon^2).
+% VF-REG-10
+\end{equation}
+$1/\varepsilon^2$ 的系数 $1-2+1=0$；对一般的 $\mu$，$1/\varepsilon$ 的系数 $\ln\frac{\mu^2}{Q^2}-2\ln\frac{\mu^2}{P^2}+\ln\frac{\mu^2Q^2}{P^4}=0$。$H$ 的极点是红外的，$S$ 的是紫外的，$C_i$ 兼有：
+硬区的红外极点被低能区的紫外极点抵消。常数 $-\frac{\pi^2}{12}+\frac{\pi^2}6+\frac{\pi^2}4=\frac{\pi^2}3$，与式~\eqref{eq:sudakov-offshell-nlp} 的领头幂次相同；
+把各区域展开到更高阶，次领头与次次领头系数也逐项相同，且各阶极点分别相消。不等虚度时领头幂次为 $\ln\frac{Q^2}{P_1^2}\ln\frac{Q^2}{P_2^2}+\frac{\pi^2}3$。% check: s2_regions.py (C)
+三个非零区域与\cite[第~2.2~节，式~(2.39)--(2.44)]{BecherBroggioFerroglia2015}去掉 $\ee^{\varepsilon\gamma_E}$ 后相同；方法源于\cite{BenekeSmirnov1998}（针对阈展开）。
+Passarino--Veltman 函数（Minkowski 传播子，测度 $\dd^Dk/(\ii\pi^{D/2})$）满足 $q^2C_0=Q^2I$。% VF-REG-14
+这个四侧面的 Minkowski 例子不在区域方法的任何一般证明之内（\cref{prop:ir-regions-minkowski}，[P]）。
+同一三角形的 Collins 减除项与精确余项（余项在次领头幂次没有对数）见第~9~章\cref{ex:method-sudakov-subtraction}与附录~N 的\cref{prop:appN-triangle-exact}，
+积分范数下的验证见\cref{prop:appN-triangle-cs}，两圈的九个区域见\cref{fig:method-hasse}。
+\uses{def:ir-regions,prop:ir-regions-minkowski}
+\end{example}
+
+
+
+%%% BEGIN fig:sudakov-ff
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hc/.style={draw=black,line width=1.15pt},
+  t2 c1/.style={draw=blue!60!black},
+  t2 c2/.style={draw=orange!80!black},
+  t2 us/.style={draw=green!45!black},
+  t2 v/.style={font=\scriptsize,inner sep=1pt},
+  t2 lab/.style={font=\small}]
+  % ======================= master graph with momentum routing =======================
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.25,0) -- (V);
+    \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon] (G2) -- (G1);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.25,0) -- (V);
+    \path[mom={$p_1-k$},mom pos=0.5] (V) -- (G1);
+    \path[mom'={$p_2+k$},mom pos=0.5] (V) -- (G2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) -- (G1);
+    \path[mom={$p_1$},mom pos=0.55] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G2) -- (E2);
+    \node[font=\footnotesize,align=center] at (0.75,-2.05) {$p_1^2\sim p_2^2\sim\lambda^2Q^2\ll Q^2=q^2$};
+  \end{scope}
+  % region panels: smaller copies (scale 0.74) of the same graph, internal lines coloured by their virtuality class
+  % #1 = shift, line styles for (V-G1), (V-G2), gluon; labels
+  % ---------------- hard ----------------
+  \begin{scope}[xshift=4.85cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \fill[gray!28] (V) -- (G1) -- (G2) -- cycle;
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,line width=1.0pt] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west] at ($(G1)!0.5!(G2)+(0.2,0)$) {$Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {硬区：$k\sim Q(1,1,1)$};
+  \end{scope}
+  % ---------------- collinear to p1 ----------------
+  \begin{scope}[xshift=9.35cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,t2 c1] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west,text=blue!50!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$1$ 共线：$k\sim Q(1,\lambda^2,\lambda)$};
+  \end{scope}
+  % ---------------- collinear to p2 ----------------
+  \begin{scope}[xshift=4.85cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 c2] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=orange!60!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$2$ 共线：$k\sim Q(\lambda^2,1,\lambda)$};
+  \end{scope}
+  % ---------------- ultrasoft ----------------
+  \begin{scope}[xshift=9.35cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 us] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=green!35!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^4Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {超软：$k\sim Q(\lambda^2,\lambda^2,\lambda^2)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈离壳 Sudakov 形状因子的按区域展开（此处画成类时情形 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$；$p_1$ 沿 $n$（$+$ 方向），$p_2$ 沿 $\bar n$）。
+左：动量走向，外线离壳 $p_1\sim Q(1,\lambda^2,\lambda)$、$p_2\sim Q(\lambda^2,1,\lambda)$，标度均按 $(k^+,k^-,k_T)$ 书写。
+右：圈动量 $k$ 的四个贡献区域，内线旁标出其虚度的量级：硬区（三条内线均离壳 $\sim Q^2$，整个圈收缩为一点，灰色）、
+$1$ 共线区（$k$ 与 $p_1-k$ 构成沿 $p_1$ 的喷注，蓝色；$p_2+k$ 为硬线）、$2$ 共线区（橙色，镜像）、超软区（胶子虚度 $\sim\lambda^4Q^2$，绿色；两条夸克线虚度 $\sim\lambda^2Q^2$）。
+软区 $k\sim Q(\lambda,\lambda,\lambda)$ 给出无标度积分，在维数正规化中为零。各区域单独含有 $1/\varepsilon^2$、$1/\varepsilon$ 极点：对标量三角形积分，这些极点在求和中完全相消，给出有限的原积分；
+对完整的 QCD 顶点，求和后只剩原积分本身的紫外发散，由重整化消去。}
+\label{fig:sudakov-ff}
+\end{figure}
+%%% END fig:sudakov-ff
+
+\cref{fig:sudakov-ff}的图注中 $n$、$\bar n$ 分别是本书的 $n_A$、$n_B$。图画的是类时组态，而上例取在类空运动学中；两者的区域相同，因为区域只由各线虚度的标度决定，
+差别只在最后的解析延拓（\cref{prop:sudakov-oneloop}(b)）。
+
+\begin{remark}[一致性论证：单标度结构、$\mu$ 无关性与极点相消]\label{rem:sudakov-consistency}
+\cref{ex:sudakov-offshell}中的双极点系数与双对数可以由三个一般性质确定。(i) \emph{单标度结构}：$H$、$C_i$、$S$ 分别只依赖于 $Q^2$、$P^2$、$P^4/Q^2$
+（对超软分母作 $k^\pm\to k^\pm P^2/(2p^\mp)$、$k_T\to k_TP^2/Q$ 的伸缩即见），故 $Q^2R=c_R\,\varepsilon^{-2}(\mu^2/\Lambda_R^2)^\varepsilon(1+O(\varepsilon))$。(ii) 和与 $\mu$ 无关。(iii) 和中极点相消。
+记 $a=\ln\frac{\mu^2}{Q^2}$、$b=\ln\frac{\mu^2}{P^2}$，$\ln(\mu^2/\Lambda_R^2)$ 依次为 $a,b,b,2b-a$；$\varepsilon^{-2}$ 相消要求 $c_h+2c_c+c_s=0$，$\varepsilon^{-1}$ 中的对数 $(c_h-c_s)a+2(c_c+c_s)b$
+不得依赖于 $a,b$，故以 $c_h=1$ 归一化有 $(c_h,c_1,c_2,c_s)=(1,-1,-1,1)$，双对数为 $\frac12[a^2-2b^2+(2b-a)^2]=(a-b)^2=\ln^2\frac{Q^2}{P^2}$。
+常数 $\pi^2/3$ 不由此决定，它来自显式积分；论证本身又以区域展开成立为前提（\cref{prop:ir-regions-minkowski}）。
+\uses{ex:sudakov-offshell}
+\end{remark}
+
+\begin{example}[有质量交换：需要解析正规化]\label{ex:sudakov-massive}
+令外线在壳且无质量，交换的玻色子有质量 $M$，$t\equiv M^2/Q^2$，并给两条夸克传播子加解析正规子：
+\[
+I_M=\ee^{\varepsilon\gamma_E}\mu^{2\varepsilon}\!\int\!\frac{\dd^Dk}{\ii\pi^{D/2}}\,\frac{\nu^{2(\delta_1+\delta_2)}}{(-k^2+M^2)\,\big(-(k+p_1)^2\big)^{1+\delta_1}\big(-(k+p_2)^2\big)^{1+\delta_2}} .
+\]
+$\delta_i=0$、$\varepsilon=0$ 时积分有限，\cite[式~(6.30)]{Jantzen2011}
+\begin{equation}\label{eq:sudakov-massive-exact}
+Q^2I_M=\frac12\ln^2\frac{Q^2}{M^2}+\ln\frac{Q^2}{M^2}\ln\Big(1-\frac{M^2}{Q^2}\Big)-\mathrm{Li}_2\Big(\frac{M^2}{Q^2}\Big)+\frac{\pi^2}3
+\ \xrightarrow{\ \text{领头幂次}\ }\ \frac12\ln^2\frac{Q^2}{M^2}+\frac{\pi^2}3 .
+\end{equation}
+\emph{纯维数正规化失效。}$\delta_i=0$ 时共线区为 $C_1=\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\mu^{2\varepsilon}\int_0^1\dd x\,[(1-x)M^2]^{-\varepsilon}/(\varepsilon xQ^2)$，
+$x\to0$ 处的 $\int\dd x/x$ 对任何 $\varepsilon$ 都发散：这是\emph{快度发散}（$x=k^+/p_1^+\to0$ 的胶子快度趋于 $-\infty$），维数正规化只调节横动量积分。
+软区（$k\sim M$）在推动 $k^\pm\to\kappa^{\pm1}k^\pm$ 下只差因子 $\kappa^{\delta_1-\delta_2}$，$\delta_1=\delta_2$ 时无定义。
+\emph{加解析正规子。}取 $\delta_1=-\delta_2=\delta$（$\mu=\nu$），每个 $C_i$ 含因子 $\Gamma(\pm2\delta)(Q^2/M^2)^{\pm\delta}$，即 $1/\delta$ 极点（\cite[式~(6.27)]{Jantzen2011}；该文的 $F$ 是这里的 $-I_M$），
+它们在和中相消；取 $\mu=Q$，先令 $\delta\to0$ 再展开 $\varepsilon$：
+\begin{equation}\label{eq:sudakov-massive-regions}
+\begin{gathered}
+\lim_{\delta\to0}Q^2(C_1+C_2)=-\frac1{\varepsilon^2}+\frac12\ln^2\frac{Q^2}{M^2}+\frac{5\pi^2}{12}+O(\varepsilon),\\
+Q^2(H+C_1+C_2)=\frac12\ln^2\frac{Q^2}{M^2}+\frac{\pi^2}3+O(\varepsilon),
+\end{gathered}
+% VF-REG-11
+\end{equation}
+$H$ 即式~\eqref{eq:sudakov-onshell-H}，结果与式~\eqref{eq:sudakov-massive-exact} 的领头幂次相同（\cite[式~(6.29)--(6.30)]{Jantzen2011}，\cite[第~2.3~节，式~(2.50)--(2.52)]{BecherBroggioFerroglia2015}）。
+换成单一正规子（$\delta_1=0$，$\delta_2=\alpha$），单个区域改变而 $C_1+C_2$ 不变；正规子须在 $\varepsilon\to0$ 之前移除。
+\emph{物理含义。}单个共线积分只知道一个光锥方向与质量 $M$，$C_1+C_2$ 却依赖 $\ln(Q^2/M^2)$：正规子破坏推动不变性，大对数通过 $1/\delta$ 极点的相消重新出现
+（$(Q^2/M^2)^{\pm\delta}\Gamma(\pm2\delta)=\pm\frac1{2\delta}+\frac12\ln\frac{Q^2}{M^2}-\gamma_E+O(\delta)$），与 $q_T$ 分布中的“共线反常”\cite{BecherNeubert2011}同源（\cite[第~2.3~节]{BecherBroggioFerroglia2015}）。
+快度发散标志着一个新的因子化变量，由演化方程控制（\cref{sec:sudakov-evolution}；\cref{ch:tmd}），正确组合的物理量与正规子无关（参见\cite{BecherBell2012}）。
+\emph{对比：有质量外线、无质量胶子。}若 $p_i^2=m^2$ 而胶子无质量，则 $C_1=C_2=-\frac1{Q^2}(\frac{\mu^2}{m^2})^\varepsilon\frac{\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)}{2\varepsilon^2}$：
+合并后的质量项为 $x^2m^2$，软端 $\int\dd x\,x^{-1-2\varepsilon}$ 已被维数正规化调节；在 $\mu=Q$，$Q^2(H+C_1+C_2)=\frac1\varepsilon\ln\frac{m^2}{Q^2}-\frac12\ln^2\frac{m^2}{Q^2}-\frac{\pi^2}6$，
+与精确结果的领头幂次一致。% VF-REG-12
+所以只有当\emph{交换的玻色子}有质量时才必须使用解析正规子。
+\uses{def:ir-regions}
+\end{example}
+
+\begin{example}[双对数系数]\label{ex:sudakov-ll}
+领头对数只来自既软又共线的区域，此时顶点分子可作程函近似：在近在壳旋量之间 $\gamma^\nu\sla p_2\gamma^\mu\sla p_1\gamma_\nu=-2\sla p_1\gamma^\mu\sla p_2\to4p_1\cdot p_2\,\gamma^\mu$
+（用\cref{prop:sudakov-oneloop}证明第二步中的旋量恒等式）。于是 $\Lambda^\mu_{\rm LL}=-\ii g^2C_F\cdot4p_1\cdot p_2\,\gamma^\mu\int\frac{\dd^4k}{(2\pi)^4}\frac{1}{k^2(p_1-k)^2(p_2-k)^2}$，
+而该积分等于 $-\frac{\ii}{16\pi^2}I$（三个分母各换号，$\dd^4k=\ii\pi^2\cdot\frac{\dd^4k}{\ii\pi^2}$），故 $\delta F_{\rm LL}=-\frac{\alpha_sC_F}{\pi}\,p_1\cdot p_2\,I$，$2p_1\cdot p_2\simeq Q^2$。代入两例的领头幂次：
+\begin{equation}\label{eq:sudakov-LL}
+\begin{aligned}
+\delta F_{\rm LL}&=-\frac{\alpha}{2\pi}\ln\frac{Q^2}{P_1^2}\ln\frac{Q^2}{P_2^2}&&(\text{离壳外线，无质量光子}),\\
+\delta F_{\rm LL}&=-\frac{\alpha}{4\pi}\ln^2\frac{Q^2}{M^2}&&(\text{在壳外线，有质量光子}),
+\end{aligned}
+% VF-SUD-4
+\end{equation}
+QCD 中 $\alpha\to C_F\alpha_s$。这正是 Collins\cite{Collins:1989bt}所引的 Sudakov 离壳结果 $F\sim\exp[-\frac{g^2}{8\pi^2}\ln^2Q^2]$\cite{Sudakov1956}
+与 Jackiw 在壳有质量光子结果 $F\sim\exp[-\frac{g^2}{16\pi^2}\ln^2Q^2]$\cite{Jackiw:1968zz}的一圈系数（$g^2=4\pi\alpha$；参见\cite[第~10.5.2--10.5.3~节]{Collins2011}）。
+相差因子 $2$ 的几何原因：在胶子的 $(\ln k^+,\ln k^-)$ 平面中，离壳情形的双对数区域是菱形，有质量光子情形是三角形（$k_T\gtrsim M$ 截去一半），面积比为 $2$（\cite[图~10.8]{Collins2011}）。数值示意：$\alpha_sC_F/(2\pi)\approx0.025$（$\alpha_s=0.118$），$\mathcal L=10$ 时离壳单圈双对数已达 $-2.5$，必须重求和；
+指数化（\cref{cor:sudakov-exponentiation}）给出抑制因子 $\ee^{-2.5}\approx0.08$（固定耦合下的示意）。
+\uses{ex:sudakov-offshell,ex:sudakov-massive,prop:sudakov-oneloop}
+\end{example}
+% -----------------------------------------------------------------------------------------------------
+\section{全阶因子化 \texorpdfstring{$F=H\cdot J_1J_2/S$}{F = H J1 J2 / S}}\label{sec:sudakov-factorization}
+
+一圈区域分析显示了全阶结构的雏形：硬区与红外无关，两个共线区各自只“认识”一条外线，超软区只“认识”外线的方向与虚度。全阶因子化要使这一图像对任意阶成立，
+并给出各因子的\emph{算符定义}：(1) 用 Landau 方程与幂次计数确定领头区域；(2) 作共线近似与软近似；(3) 用 Ward 恒等式把纵向共线胶子与软胶子收集为 Wilson 线；(4) 用减除消除重复计数。
+
+\paragraph{领头区域与近似。}由\cref{thm:ir-leading-regions}（全阶论证，[A]），类时组态的领头约化图（\cref{fig:sudakov-hjjs}(a)）由硬子图 $H$、沿 $n_A$、$n_B$ 的喷注子图 $J_1$、$J_2$
+与只以胶子连到喷注上的软子图 $S$ 组成；每个喷注以一个物理夸克加任意多个\emph{标量极化}共线胶子连到 $H$，没有软线连到 $H$。由\cref{prop:ir-power-counting}，这些构型 $\omega=0$
+（多余的标量极化胶子不付出 $\lambda$ 的幂次），其余连接至少付出一个 $\lambda$（E-S 型陈述）。共线近似把 $J_1$ 与 $H$ 之间胶子（动量 $k$ 流入 $H$）的 $g_{\mu\nu}$ 换成
+$K_{\mu\nu}(k)=k_\mu n_{B\nu}/(n_B\cdot k-\ii0)$（$\mu$ 在 $H$ 一侧），即 Collins 对 Grammer--Yennie 分解\cite{GrammerYennie1973}的单侧改写中的 K 部分\cite[第~10.6~节]{Collins2011}；
+软近似在喷注一侧保留 $k^\mu$、在软子图一侧换成 $n_A^\nu/(n_A\cdot k\pm\ii0)$（对 $J_1$）。两者都把一个指标换成 $k^\mu$，于是可以用 Ward 恒等式。
+
+\begin{example}[Ward 恒等式把纵向胶子收集为 Wilson 线]\label{ex:sudakov-ward-wilson}
+取 $H$ 的最低阶：流顶点 $\Gamma$（$=\gamma^\rho$，通向 $J_1$ 的 Dirac 指标保持开放）与出射反夸克 $v(p_2)$；$J_1$ 中的 A 共线胶子（动量 $k$ 流入 $H$，色 $a$）附着在 $H$ 内的反夸克线上：
+$H^\mu_a=\Gamma\,S(-p_2+k)\,(\ii g\gamma^\mu t^a)\,v(p_2)$，$S(p)=\ii\sla p/(p^2+\ii0)$。
+
+(i) \emph{一个胶子。}由 $\sla p_2v(p_2)=0$，$\sla kv(p_2)=(\sla k-\sla p_2)v(p_2)$，故 $S(-p_2+k)\,\ii g\sla k\,v(p_2)=-g\,v(p_2)$（出射反夸克端的基本 Ward 恒等式），对任意 $k$
+\begin{equation}\label{eq:sudakov-ward1}
+k_\mu H^\mu_a=-g\,t^a H_0,\qquad H_0\equiv\Gamma\,v(p_2).
+% VF-WL-6 (W2)
+\end{equation}
+$K_{\mu\nu}$ 中的 $-\ii0$ 取自被近似的传播子：$(p_2-k)^2+\ii0\simeq-2p_2^-(k^+-\ii0)$。于是 $H^\mu K_{\mu\nu}C^\nu=H_0\,[-g\,t^a\,n_B\!\cdot\!C/(n_B\cdot k-\ii0)]$，
+方括号恰是 $W[0,\infty n_B]$ 的一阶项（\cref{prop:prelim-wilson-rules}：取向 $-n_B$，顶点 $-\ii gt^an_B^\nu$，传播子 $-\ii/(n_B\cdot k-\ii0)$）：反夸克线被一条沿 $n_B$、伸向未来无穷远的 Wilson 线取代。
+
+(ii) \emph{$m$ 个胶子，阿贝尔情形。}对全部 $m!$ 种附着次序求和，内部插入由 $S(p+k)(\ii g\sla k)S(p)=g[S(p+k)-S(p)]$ 逐项相消，末次插入用 (i)，
+得 $\sum_{\text{次序}}\prod_jk_{j\mu_j}H^{\mu_1\cdots\mu_m}=(-g)^mH_0$（对任意 $k_j$ 精确）；乘上 $m$ 个 K 投影，由程函恒等式（\cref{lem:prelim-eikonal-identity}）
+$H_0\prod_j[-g\,n_B\cdot C_j/(n_B\cdot k_j-\ii0)]$ 正是阿贝尔 Wilson 线 $W[0,\infty n_B]$ 的 $m$ 阶项。
+
+(iii) \emph{两个胶子，非阿贝尔树图。}同样的代数给出精确恒等式
+\[
+k_{1\mu}k_{2\nu}H^{\mu\nu}_{ab}=g^2t^at^bH_0+\ii g^2[t^a,t^b]\,\Gamma S(-p_2+K)\sla k_2v(p_2)\qquad(K=k_1+k_2);
+\]
+对严格共线的胶子 $k_j=k_j^+n_A$，第二项化为 $-g^2[t^a,t^b]\,(k_2^+/K^+)\,H_0$，
+合起来等于 $(n_B\!\cdot\!k_1)(n_B\!\cdot\!k_2)\,W^{(2)}_{ab}[0,\infty n_B]\,H_0$：对易子项恰好补出路径排序。以上各式都以显式 Dirac 矩阵与 SU(3) 生成元核对过。% check: writing/work/W05/s6_ward_ff.py
+\uses{def:prelim-feynman-rules,prop:prelim-wilson-rules,lem:prelim-eikonal-identity}
+\end{example}
+
+%%% BEGIN fig:sudakov-hjjs
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lab/.style={font=\small},
+  fa note/.style={font=\footnotesize},
+  fa cap/.style={font=\footnotesize},
+  fa eq/.style={font=\normalsize}]
+  % ===================== (a) leading region (reduced diagram) =====================
+  \begin{scope}
+    \node[hard blob,circle,minimum size=1.0cm,inner sep=0pt] (H) at (0,0) {$H$};
+    \node[jet blob,ellipse,minimum width=2.15cm,minimum height=0.66cm,rotate=28] (J1) at (2.8,1.55) {};
+    \node[jetB blob,ellipse,minimum width=2.15cm,minimum height=0.66cm,rotate=-28] (J2) at (2.8,-1.55) {};
+    \node[soft blob,circle,minimum size=0.62cm,inner sep=0pt] (S) at (3.4,0) {};
+    \draw[photon] (-1.75,0) -- (H.west);
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (H.west);
+    % quark: H -> J1 -> out;  antiquark: out -> J2 -> H  (arrows = fermion-number flow)
+    \draw[quark] (H.60) -- (J1.180);
+    \draw[quark] (J1.0) -- ++(28:1.25) coordinate (E1);
+    \draw[quark] ($(J2.0)+(-28:1.25)$) coordinate (E2) -- (J2.0);
+    \draw[quark] (J2.180) -- (H.-60);
+    % momenta of the outgoing quark and antiquark (both point away from H)
+    \path[mom={$p_1$},mom pos=0.55] (J1.0) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (J2.0) -- (E2);
+    % scalar-polarized collinear gluons J_i -> H
+    \draw[longit] (J1.246) to[bend left=8] (H.14);  \longitmark{(J1.246)}{(H.14)}
+    \draw[longit] (J2.114) to[bend right=8] (H.-14); \longitmark{(J2.114)}{(H.-14)}
+    % soft gluons, attached to the jets only
+    \draw[gluon,green!45!black] (S.118) -- (J1.290);
+    \draw[gluon,green!45!black] (S.62) -- (J1.320);
+    \draw[gluon,green!45!black] (S.-118) -- (J2.70);
+    \draw[gluon,green!45!black] (S.-62) -- (J2.40);
+    \node[fa lab] at (2.55,2.27) {$J_1$};
+    \node[fa lab] at (2.55,-2.27) {$J_2$};
+    \node[fa lab,anchor=west] at (S.east) {$S$};
+    \node[fa note,anchor=west] at ($(E1)+(0.05,0)$) {沿 $n_A$};
+    \node[fa note,anchor=west] at ($(E2)+(0.05,0)$) {沿 $n_B$};
+    \node[fa note,text=blue!55!black,align=center,anchor=east] at (0.55,-1.3) {纵向极化\\共线胶子};
+    \draw[blue!55!black,line width=0.4pt] (0.5,-1.05) -- (0.98,-0.5);
+    \node[fa cap] at (1.75,-3.0) {(a)\ 领头区域（约化图）};
+  \end{scope}
+  % ===================== (b) factorized form F = H J1 J2 / S =====================
+  \begin{scope}[yshift=-5.1cm,xshift=-2.45cm]
+    \node[fa eq] at (-0.75,0) {$F\;=\;H\;\times$};
+    % ---- J1: quark jet along n_A, Wilson line along n_B ----
+    \begin{scope}[xshift=0.45cm]
+      \coordinate (O) at (0,0);
+      \node[jet blob,ellipse,minimum width=1.3cm,minimum height=0.5cm,rotate=28] (J) at (28:1.4) {};
+      \draw[quark] (O) -- (J.180);
+      \draw[quark] (J.0) -- ++(28:0.7);
+      \draw[wilson=0.22] (-28:2.1) coordinate (W) -- (O);
+      \draw[gluon] (J.275) -- ($(O)!0.47!(W)$);
+      \node[vertex] at ($(O)!0.47!(W)$) {};
+      \node[opvertex] at (O) {};
+      \node[fa note,anchor=west] at (W) {$n_B$};
+      \node[fa lab] at (1.25,1.45) {$J_1$};
+    \end{scope}
+    \node[fa eq] at (3.15,0) {$\times$};
+    % ---- J2: antiquark jet along n_B, Wilson line along n_A ----
+    \begin{scope}[xshift=3.75cm]
+      \coordinate (O) at (0,0);
+      \node[jetB blob,ellipse,minimum width=1.3cm,minimum height=0.5cm,rotate=-28] (J) at (-28:1.4) {};
+      \draw[quark] (J.180) -- (O);
+      \draw[quark] ($(J.0)+(-28:0.7)$) -- (J.0);
+      \draw[wilson=0.8] (O) -- (28:2.1) coordinate (W);
+      \draw[gluon] (J.85) -- ($(O)!0.47!(W)$);
+      \node[vertex] at ($(O)!0.47!(W)$) {};
+      \node[opvertex] at (O) {};
+      \node[fa note,anchor=west] at (W) {$n_A$};
+      \node[fa lab] at (1.25,-1.45) {$J_2$};
+    \end{scope}
+    \node[fa eq] at (6.55,0) {$\Big/$};
+    % ---- S: two Wilson lines meeting at a cusp ----
+    \begin{scope}[xshift=7.05cm]
+      \coordinate (O) at (0,0);
+      \draw[wilson=0.84] (O) -- (28:2.1) coordinate (WA);
+      \draw[wilson=0.16] (-28:2.1) coordinate (WB) -- (O);
+      \node[soft blob,circle,minimum size=0.52cm,inner sep=0pt] (Sb) at (1.5,0) {};
+      \draw[gluon,green!45!black] (Sb.110) -- ($(O)!0.5!(WA)$);
+      \draw[gluon,green!45!black] (Sb.-110) -- ($(O)!0.5!(WB)$);
+      \node[vertex] at ($(O)!0.5!(WA)$) {};
+      \node[vertex] at ($(O)!0.5!(WB)$) {};
+      \node[opvertex] at (O) {};
+      \node[fa note,anchor=west] at (WA) {$n_A$};
+      \node[fa note,anchor=west] at (WB) {$n_B$};
+      \node[fa lab] at (1.25,1.45) {$S$};
+    \end{scope}
+    \node[fa cap] at (4.2,-1.85) {(b)\ 因子化形式 $F=H\,J_1J_2/S$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Sudakov 形状因子的领头区域与因子化 $F=H\,J_1J_2/S$（$\gamma^*\to q(p_1)\,\bar q(p_2)$，$p_1$ 沿 $n_A$、$p_2$ 沿 $n_B$）。
+(a) 硬子图 $H$、两个喷注子图 $J_1$、$J_2$ 与只连接喷注的软子图 $S$（绿色）；Feynman 规范下 $J_i$ 与 $H$ 之间还有任意多条标量（纵向）极化的共线胶子（蓝色，以圆点标记）。
+(b) 喷注函数中的 Wilson 线沿另一喷注方向，软函数是两条 Wilson 线的真空期望（$\otimes$ 为算符所在点，双线箭头与被替代的夸克线的费米子数流向一致）。}
+\label{fig:sudakov-hjjs}
+\end{figure}
+%%% END fig:sudakov-hjjs
+
+\cref{fig:sudakov-hjjs}(b) 画的是 Wilson 线取到光锥时的形式；$J_1$ 中的 $W[0,\infty n_B]$ 正是\cref{ex:sudakov-ward-wilson}得到的线。严格的陈述需要让 Wilson 线稍偏离光锥，
+以正规化\cref{ex:sudakov-massive}所示的快度发散。
+
+\begin{theorem}[Sudakov 形状因子的全阶因子化 \tagA]\label{thm:sudakov-factorization}
+考虑类时组态 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$ 的形状因子（\cref{def:sudakov-ff}），$p_1$ 沿 $n_A$、$p_2$ 沿 $n_B$ 运动，红外发散以规范不变的方式正规化
+（阿贝尔规范理论中可取胶子质量与在壳有质量费米子，如\cite[第~10~章]{Collins2011}；QCD 中取维数正规化下的在壳无质量夸克）。取有限快度 $y_A>y_B$ 的类空辅助矢量
+（光锥分量 $(v^+,v^-,\mathbf v_T)$）$\tilde n_A=(1,-\ee^{-2y_A},\mathbf 0_T)$、$\tilde n_B=(-\ee^{2y_B},1,\mathbf 0_T)$（$y_A\to+\infty$、$y_B\to-\infty$ 时趋于 $n_A$、$n_B$），
+令 $P_B=\gamma^+\gamma^-/2$，$\gamma^\pm=(\gamma^0\pm\gamma^3)/\sqrt2$，并定义共线因子 $J_{1,2}$ 与软因子 $S$：
+\begin{equation}\label{eq:sudakov-JS}
+\begin{gathered}
+\langle q(p_1)|\,\bar\psi(0)\,W[0,\infty\tilde n_B]\,P_B\,|0\rangle=J_1\,\bar u(p_1)P_B,\\
+\langle\bar q(p_2)|\,W[\infty\tilde n_A,0]\,P_B\,\psi(0)\,|0\rangle=J_2\,P_Bv(p_2),\\
+S=\frac1{N_c}\,\langle0|\,\Tr\,T\{W[\infty\tilde n_A,0]\,W[0,\infty\tilde n_B]\}\,|0\rangle ,
+\end{gathered}
+\end{equation}
+其中色结构为单位矩阵，各矩阵元都已除以相应 Wilson 线的自能因子并作 $\MSbar$ 紫外重整化（\cite[式~(10.89)--(10.92)、(10.101)]{Collins2011}）。则在领头幂次、对 $\alpha_s$ 的所有阶，
+\begin{equation}\label{eq:sudakov-fact}
+F=H\Big(\frac{Q^2}{\mu^2},\frac{\zeta_1}{\mu^2},\frac{\zeta_2}{\mu^2};\alpha_s(\mu)\Big)\,\frac{J_1\,J_2}{S}+(\text{幂次压低项}),\qquad
+\zeta_1=2(p_1^+)^2\ee^{-2y_B},\quad\zeta_2=2(p_2^-)^2\ee^{2y_A},
+\end{equation}
+其中 $J_i$ 只依赖于 $p_i$、相应的辅助矢量与红外正规子，$S$ 只依赖于 $y_A-y_B$ 与红外正规子，硬因子 $H$ 与红外正规子无关。
+等价地（Collins 的写法），$F=\lim H\,J_1(y_{p_1}-y_{u})\,J_2(y_{u'}-y_{p_2})\,S(y_A-y_B)/[S(y_{u'}-y_B)\,S(y_A-y_u)]$，极限取 $y_{u'}\to+\infty$、$y_u\to-\infty$，
+快度发散在分子分母之间相消\cite[式~(10.109)]{Collins2011}。（本定理只涉及部分子态。）
+% errtype: E-S
+\uses{def:sudakov-ff,thm:ir-leading-regions,prop:ir-power-counting,lem:prelim-eikonal-identity,prop:prelim-wilson-rules,def:prelim-wilson,thm:prelim-slavnov-taylor,prop:sudakov-oneloop,ex:sudakov-offshell,ex:sudakov-ward-wilson}
+\end{theorem}
+
+\begin{proofsketch}
+(1) \emph{领头区域}：由\cref{thm:ir-leading-regions}与\cref{prop:ir-power-counting}（E-S 型陈述）。
+(2) \emph{近似}：共线近似用 $k_\mu\tilde n_{B\nu}/(\tilde n_B\cdot k-\ii0)$，软近似在软子图一侧用 $\tilde n_A^\nu/(\tilde n_A\cdot k\pm\ii0)$，有限快度正规化快度发散；
+各近似在其区域核心幂次精确，对更小或更大的区域则不然，这正是减除的原因\cite[第~10.4、10.6~节]{Collins2011}。
+(3) \emph{Ward 恒等式}：阿贝尔情形见\cref{ex:sudakov-ward-wilson}（工具为\cref{prop:prelim-wilson-rules}、\cref{lem:prelim-eikonal-identity}），纵向共线胶子给出 $J_i$ 中的 Wilson 线；
+同一论证作用于喷注一侧，把软胶子从喷注上解耦并连到 $S$ 中的 Wilson 线上。Collins 在协变规范的阿贝尔理论中连同减除项与不可约性要求对所有阶完成了这一步\cite[第~10.8.3--10.8.5~节]{Collins2011}。
+非阿贝尔情形还需\cref{thm:prelim-slavnov-taylor}与含鬼场的组合学：树图层次见\cref{ex:sudakov-ward-wilson}(iii)，全阶形式见第~9~章\cref{lem:method-ward-multi}（前向指针）。
+(4) \emph{减除}：一圈时 $F$ 等于 $H+C_1+C_2+S$ 且重叠无标度（\cref{ex:sudakov-offshell}），正是 $H\cdot J_1J_2/S$ 的一圈展开。全阶上 Collins 的逐次近似
+$C_R=T_R(1-\sum_{R'<R}C_{R'})$ 求和后，减除项以“除以软因子”的形式出现，给出上述极限形式\cite[式~(10.11)、(10.94)、(10.109)]{Collins2011}；
+辅助快度的演化方程\cite[第~10.10~节]{Collins2011}表明 $J_1/S(y_A-y_u)$ 对 $y_u$ 的依赖只来自可吸收进 $H$ 的 $G$ 项，故可取 $y_u=y_B$、$y_{u'}=y_A$，得式~\eqref{eq:sudakov-fact}。
+一般的减除定理与此三角形的单圈减除见第~9~章\cref{thm:method-subtraction}与\cref{ex:method-sudakov-subtraction}（前向指针）。
+完整论证见\cite[第~10.3、10.8--10.10~节]{Collins2011}（阿贝尔情形），QCD 中见\cite{Mueller:1979ih,Collins:1980ih,Sen:1981sd,Collins:1989bt,Magnea:1990zb}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}本定理是全阶论证（[A]），其瓶颈有两处。其一是\emph{减除}：Collins~2011 第~10~章对此例给出的减除论证在该章的严格程度下是完整的，
+但它停留在标度陈述与钳夹面的层次（E-S），而没有给出积分范数界（E-N）；积分范数下的估计只对单圈离壳三角形写出（附录~N 的\cref{prop:appN-triangle-cs}）。
+因此 $[A]$ 等级的瓶颈是\cref{asm:appN-collins}（全阶论证，[A]）的内容，其精确的条件形式是\cref{thm:appN-subtraction}——这里只作指针而不作前提，因为两者都是用第~9~章的条件\cref{def:method-collins-conditions}表述的。
+其二是\emph{非阿贝尔 Ward 恒等式}：Collins 的全阶推导限于阿贝尔理论（\cite[第~10.8.3~节]{Collins2011}），QCD 情形依赖第~9~章\cref{lem:method-ward-multi}（[A]）的多胶子 Ward 恒等式，
+本书在那里点名该论证中被明确假定的一步（\cref{asm:appN-brst-nonlocal}，[C]，具名缺口）。领头区域一步继承\cref{thm:ir-leading-regions}的 E-S 地位。
+把本定理升级为 $[R]$ 需要：一般图在积分范数下的减除估计（\cref{asm:appN-collins}），以及含鬼场的非阿贝尔多胶子 Ward 恒等式的完整组合学证明。
+% -----------------------------------------------------------------------------------------------------
+\section{\texorpdfstring{$K+G$}{K+G} 演化、cusp 反常维度与指数化}\label{sec:sudakov-evolution}
+
+因子化后的每个因子仍含大对数。驯服它们的工具是演化方程：$\partial\ln F/\partial\ln Q^2$ 分解为只依赖低能物理的核 $K$ 与只依赖硬物理的核 $G$，
+两者对 $\mu$ 的依赖由同一个反常维度 $\gamma_K$ 控制，而 $\gamma_K$ 是 Wilson 线尖点的反常维度。
+
+\paragraph{尖点。}在类空形状因子的程函极限中，入射夸克沿类时方向 $v_2$ 自过去而来，在原点吸收光子后沿 $v_1$ 飞出；软胶子看到的是折线
+$W[\infty v_1,0]\,W[0,-\infty v_2]$（\cref{fig:sudakov-cusp}(a)；$v_i^2=1$，$v_i^0>0$；入射线 $\leftrightarrow W[0,-\infty v]$、出射线 $\leftrightarrow W[\infty v,0]$，\cref{prop:prelim-wilson-rules}）。
+尖点角 $\beta\ge0$ 由 $\cosh\beta=v_1\cdot v_2$ 定义；若 $v_i=(\cosh y_i,0,0,\sinh y_i)$，则 $\beta=|y_1-y_2|$ 是两条线的快度差。
+
+\begin{definition}[cusp 反常维度]\label{def:sudakov-cusp}
+对上述折线定义 $W_\beta\equiv\frac1{N_c}\langle0|\Tr\,T\{W[\infty v_1,0]\,W[0,-\infty v_2]\}|0\rangle$，红外端用远处的阻尼正规化（例如绝热因子 $\ee^{-\delta|\lambda|}$）。
+它的紫外发散集中在尖点处，可乘性地重整化：$W_\beta=Z_{\rm cusp}(\beta,\alpha_s,\varepsilon)\,W_\beta^{\rm ren}(\mu)$，$Z_{\rm cusp}$ 只含 $\varepsilon$ 的极点（$\MSbar$）。\emph{cusp 反常维度}定义为
+\begin{equation}\label{eq:sudakov-cusp-def}
+\Gamma_{\rm cusp}(\beta,\alpha_s)\equiv\frac{\dd\ln Z_{\rm cusp}}{\dd\ln\mu}=-\frac{\dd\ln W_\beta^{\rm ren}}{\dd\ln\mu} .
+\end{equation}
+\emph{类光 cusp 反常维度}是它在大角度下线性增长的系数，$\Gamma_{\rm cusp}(\alpha_s)\equiv\lim_{\beta\to\infty}\Gamma_{\rm cusp}(\beta,\alpha_s)/\beta$，按
+\begin{equation}\label{eq:sudakov-cusp-series}
+\Gamma_{\rm cusp}=\sum_{n\ge0}\Big(\frac{\alpha_s}{4\pi}\Big)^{n+1}\Gamma_n,\qquad \Gamma_0=4C_F,\qquad
+\Gamma_1=4C_F\Big[\Big(\frac{67}9-\frac{\pi^2}3\Big)C_A-\frac{20}9T_Fn_f\Big]
+% VF-CONV-23
+\end{equation}
+展开；Collins 的 $\gamma_K$ 与之的关系为 $\gamma_K=2\Gamma_{\rm cusp}$。
+\uses{def:prelim-wilson}
+\end{definition}
+
+单圈值在附录~B 的\cref{prop:appB-cusp-oneloop}中计算：
+\begin{equation}\label{eq:sudakov-cusp-1loop}
+\Gamma_{\rm cusp}(\beta,\alpha_s)=\frac{\alpha_sC_F}{\pi}\,(\beta\coth\beta-1)+O(\alpha_s^2).
+% VF-CONV-23
+\end{equation}
+交换图给出 $\beta\coth\beta$，两条线的自能给出 $-1$；$\beta\coth\beta-1=\beta^2/3+O(\beta^4)$，故 $\Gamma(0)=0$——不折的直线没有尖点发散，这正是必须包含自能的原因。
+$\beta\to\infty$ 时 $\Gamma=\frac{\alpha_sC_F}\pi(\beta-1)+O(\beta\ee^{-2\beta})$，斜率 $\alpha_sC_F/\pi=\frac{\alpha_s}{4\pi}\Gamma_0$ 即单圈的类光 $\Gamma_{\rm cusp}$（\cref{fig:sudakov-cusp}(b)(c)）；
+常数 $-\alpha_sC_F/\pi$ 是大角度常数 $\gamma_{HH}$ 的单圈值（\cref{ch:yzliu}）。两圈系数见\cite{KorchemskyRadyushkin1987}，$n_f=5$ 时 $\Gamma_1=36.8436$；
+\cite[式~(A.10)]{BecherSchwartz2008}（期刊版与 arXiv 版）在 $T_Fn_f$ 前多印了一个 $C_F$（附录~Q 第~1~条），应使用式~\eqref{eq:sudakov-cusp-series}。
+cusp 反常维度见\cite{Polyakov1980,BrandtNeriSato1981,KorchemskyRadyushkin1987}，它与 Sudakov 形状因子的关系见\cite{Korchemsky1989}。
+
+%%% BEGIN fig:sudakov-cusp
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lc/.style={draw=gray!60!black,line width=0.55pt,dash pattern=on 3pt off 2pt},
+  fa ext/.style={draw=gray!55!black,line width=0.5pt,dash pattern=on 1.5pt off 1.5pt},
+  fa lab/.style={font=\small},
+  fa note/.style={font=\footnotesize},
+  fa cap/.style={font=\footnotesize},
+  fa eq/.style={font=\normalsize}]
+  % ===================== (a) the cusp: incoming along v2 from the past, outgoing along v1 =====================
+  \begin{scope}
+    \draw[lcaxis,gray!60!black] (-2.15,0) -- (2.3,0) node[fa note,below] {$z$};
+    \draw[lcaxis,gray!60!black] (0,-2.05) -- (0,2.3) node[fa note,left] {$t$};
+    \draw[fa lc] (-1.85,-1.85) -- (1.85,1.85);
+    \draw[fa lc] (1.85,-1.85) -- (-1.85,1.85) node[fa note,anchor=south east,text=gray!45!black,inner sep=1pt] {光锥};
+    % continuation of the incoming direction v2 beyond the cusp
+    \draw[fa ext] (0,0) -- (68:1.45);
+    \draw[wilson=0.5] (248:1.95) node[fa lab,anchor=north,inner sep=2pt] {$v_2$} -- (0,0);
+    \draw[wilson=0.62] (0,0) -- (112:1.95) node[fa lab,anchor=south,inner sep=2pt] {$v_1$};
+    \draw[line width=0.5pt] (68:0.85) arc[start angle=68,end angle=112,radius=0.85];
+    \node[fa lab] at (90:1.08) {$\beta$};
+    \node[opvertex] at (0,0) {};
+    \node[fa cap,align=center] at (0.1,-2.62) {(a)\ 类时 Wilson 线的尖点，$\cosh\beta=v_1\cdot v_2$};
+  \end{scope}
+  % ===================== (b) light-like limit =====================
+  \begin{scope}[xshift=5.6cm]
+    \draw[fa lc] (0,0) -- (45:2.45);
+    \draw[fa lc] (0,0) -- (-45:2.45);
+    % in the limit both lines lie on the light cone (drawn on top of the dashed cone)
+    \draw[wilson=0.5] (225:1.95) node[fa lab,anchor=north east,inner sep=1pt] {$v_2\to n_A$} -- (0,0);
+    \draw[wilson=0.62] (0,0) -- (135:1.95) node[fa lab,anchor=south east,inner sep=1pt] {$v_1\to n_B$};
+    \node[opvertex] at (0,0) {};
+    \node[fa note,align=left,anchor=west] at (1.45,0.05)
+      {$\beta\to\infty$：$\Gamma(\beta)\simeq\dfrac{\alpha_sC_F}{\pi}\,(\beta-1)$\\[3pt]
+       线性依赖于 $\beta$，斜率即单圈\\[1pt]
+       $\Gamma_{\mathrm{cusp}}=\dfrac{\alpha_sC_F}{\pi}=\dfrac{\alpha_s}{4\pi}\,\Gamma_0$};
+    \node[fa cap] at (2.2,-2.62) {(b)\ 类光极限};
+  \end{scope}
+  % ===================== (c) one-loop graphs =====================
+  \begin{scope}[yshift=-5.55cm,xshift=-0.6cm]
+    % exchange between the two lines
+    \begin{scope}
+      \draw[wilson=0.17] (248:1.7) -- (0,0);
+      \draw[wilson=0.83] (0,0) -- (112:1.7);
+      \draw[gluon] (248:0.95) to[bend left=62] (112:0.95);
+      \foreach \a in {248,112} \node[vertex] at (\a:0.95) {};
+      \node[opvertex] at (0,0) {};
+      \node[fa note] at (-0.35,-1.95) {交换};
+    \end{scope}
+    \node[fa eq] at (1.25,0) {$+$};
+    % self-energy of line 1
+    \begin{scope}[xshift=2.55cm]
+      \draw[wilson=0.5] (248:1.7) -- (0,0);
+      \draw[wilson=0.6] (0,0) -- (112:1.7);
+      \draw[gluon] (112:0.42) .. controls ($(112:0.42)+(22:0.85)$) and ($(112:1.42)+(22:0.85)$) .. (112:1.42);
+      \foreach \r in {0.42,1.42} \node[vertex] at (112:\r) {};
+      \node[opvertex] at (0,0) {};
+      \node[fa note] at (0,-1.95) {线 1 的自能};
+    \end{scope}
+    \node[fa eq] at (4.1,0) {$+$};
+    % self-energy of line 2
+    \begin{scope}[xshift=5.35cm]
+      \draw[wilson=0.4] (248:1.7) -- (0,0);
+      \draw[wilson=0.5] (0,0) -- (112:1.7);
+      \draw[gluon] (248:1.42) .. controls ($(248:1.42)+(-22:0.85)$) and ($(248:0.42)+(-22:0.85)$) .. (248:0.42);
+      \foreach \r in {0.42,1.42} \node[vertex] at (248:\r) {};
+      \node[opvertex] at (0,0) {};
+      \node[fa note] at (0,-1.95) {线 2 的自能};
+    \end{scope}
+    \node[fa eq,anchor=west] at (7.0,0) {$\Longrightarrow\ \ \Gamma(\beta)=\dfrac{\alpha_sC_F}{\pi}\,\big(\beta\coth\beta-1\big)$};
+    \node[fa cap] at (6.0,-2.55) {(c)\ 单圈图：交换与两条线的自能（自能给出 $-1$，使 $\Gamma(0)=0$）};
+  \end{scope}
+\end{tikzpicture}
+\caption{Wilson 线尖点及其单圈修正。(a) 类时 Wilson 线 $W[\infty v_1,0]\,W[0,-\infty v_2]$（$v_i^2=1$，$v_i^0>0$；双线箭头为路径方向）：沿 $v_2$ 自过去入射，在原点折向 $v_1$；
+尖点角 $\beta$ 由 $\cosh\beta=v_1\cdot v_2$ 定义，$\beta=0$ 即一条不折的直线（图中所画角度为示意）。(b) 类光极限：$v_2$、$v_1$ 分别趋于 $n_A$、$n_B$ 方向，$\beta\to\infty$。
+(c) 包含两线自能的单圈尖点反常维度为 $\Gamma(\beta)=\frac{\alpha_sC_F}\pi(\beta\coth\beta-1)$，类光极限下线性依赖于 $\beta$，斜率给出单圈 $\Gamma_{\rm cusp}$（VF-CONV-23）。}
+\label{fig:sudakov-cusp}
+\end{figure}
+%%% END fig:sudakov-cusp
+
+\cref{fig:sudakov-cusp}(b) 中入射线趋于 $n_A$、出射线趋于 $n_B$，正是 Breit 系中的类空形状因子。类光极限下 $\beta$ 等于快度差，故软因子对快度差的依赖是指数型的，
+指数系数由 $\Gamma_{\rm cusp}$ 给出——这是下面 $K$ 核的来源。产生组态（两线都出射）由 $\beta\to\beta-\ii\pi$ 得到，虚部即 Coulomb 相位（\cref{prop:sudakov-coulomb}）。
+
+\begin{proposition}[$K+G$ 演化方程 \tagA]\label{prop:sudakov-kg}
+(a) 对\cref{thm:sudakov-factorization}中的形状因子（维数正规化的无质量在壳情形取 $\varepsilon<0$），
+\begin{equation}\label{eq:sudakov-KG}
+\frac{\partial\ln F}{\partial\ln Q^2}=\frac12\Big[K\big(\varepsilon,\alpha_s(\mu)\big)+G\big(Q^2/\mu^2,\alpha_s(\mu),\varepsilon\big)\Big],
+% VF-SUD-3
+\end{equation}
+其中 $K$ 是只含 $\varepsilon$ 极点的抵消项级数（与 $Q$ 无关），$G$ 在 $\varepsilon\to0$ 时有限，且
+$\mu\frac{\dd K}{\dd\mu}=-\gamma_K(\alpha_s)=-\mu\frac{\dd G}{\dd\mu}$，$\gamma_K=2\Gamma_{\rm cusp}$。
+(b)（单圈内容，\tagR，$R_{\mathrm{PT}}$）在 $O(\alpha_s)$，
+\begin{equation}\label{eq:sudakov-KG-1loop}
+K=\frac{\alpha_sC_F}{4\pi}\,\frac4\varepsilon,\qquad G=\frac{\alpha_sC_F}{2\pi}\Big(3+2\ln\frac{\mu^2}{Q^2}\Big)+O(\varepsilon),\qquad
+\gamma_K=\frac{2C_F\alpha_s}{\pi}.
+% VF-SUD-3
+\end{equation}
+（本命题只涉及部分子态。）
+\uses{thm:sudakov-factorization,def:sudakov-cusp,prop:qcd-rge,prop:sudakov-oneloop}
+\end{proposition}
+
+\begin{proofsketch}
+(a) 固定\cref{thm:sudakov-factorization}中的红外标度与辅助快度。由于 $Q^2=2p_1^+p_2^-\propto\ee^{y_{p_1}-y_{p_2}}$，
+有 $\partial\ln F/\partial\ln Q^2=\frac12(\partial_{y_{p_1}}-\partial_{y_{p_2}})\ln F$。由推动不变性 $J_1$ 只依赖 $y_{p_1}-y_B$，$J_2$ 只依赖 $y_A-y_{p_2}$，$S$ 不依赖外线快度。
+对 Wilson 线快度求导时，被求导的顶点迫使相连的胶子要么软、要么硬，对两类区域重复因子化论证得
+\[
+\partial_{y_{p_1}}\ln J_1=\tfrac12\big[K+G_1(\zeta_1/\mu^2)\big],\qquad -\partial_{y_{p_2}}\ln J_2=\tfrac12\big[K+G_2(\zeta_2/\mu^2)\big],
+\]
+$K$ 来自软区（只依赖 $\mu$ 与红外正规子），$G_i$ 来自硬区\cite[式~(10.112)--(10.117)]{Collins2011}。于是式~\eqref{eq:sudakov-KG} 成立，$G=\frac12(G_1+G_2)+(\partial_{y_{p_1}}-\partial_{y_{p_2}})\ln H$
+只含硬动量，且因 $F$ 不依赖 $y_A,y_B$ 而只依赖 $Q^2/\mu^2$。守恒流的矩阵元与 $\mu$ 无关（\cref{prop:qcd-rge}），故 $\mu\frac{\dd}{\dd\mu}(K+G)=0$；$K$ 不依赖 $Q$、$G$ 不依赖红外正规子，
+两者对 $\mu$ 的导数只能是 $\mp\gamma_K(\alpha_s)$。$K$ 的 $\mu$ 依赖来自软因子的紫外重整化，即近类光尖点在快度差上的线性增长，故 $\gamma_K=2\Gamma_{\rm cusp}$\cite{Korchemsky1989,KorchemskyRadyushkin1987}；
+无质量维数正规化中 $K$ 没有红外标度，只能是纯极点。全阶形式见\cite{Collins:1980ih,Collins:1989bt,Magnea:1990zb}。
+
+(b) 的完整证明。由\cref{prop:sudakov-oneloop}，$\ln F=\frac{\alpha_sC_F}{4\pi}(\mu^2/Q^2)^\varepsilon f(\varepsilon)+O(\alpha_s^2)$，故
+\[
+\frac{\partial\ln F}{\partial\ln Q^2}=-\varepsilon\,\frac{\alpha_sC_F}{4\pi}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}f(\varepsilon)
+=\frac{\alpha_sC_F}{4\pi}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\Big[\frac2\varepsilon+3+O(\varepsilon)\Big]
+=\frac{\alpha_sC_F}{4\pi}\Big[\frac2\varepsilon+3+2\ln\frac{\mu^2}{Q^2}+O(\varepsilon)\Big].
+\]
+与 $Q$ 无关的纯极点部分是 $\frac12K$，有限部分是 $\frac12G$，即式~\eqref{eq:sudakov-KG-1loop}。$D$ 维中 $\mu\frac{\dd\alpha_s}{\dd\mu}=-2\varepsilon\alpha_s+O(\alpha_s^2)$，故
+$\mu\frac{\dd K}{\dd\mu}=\frac{C_F}{\pi\varepsilon}(-2\varepsilon\alpha_s)=-\frac{2C_F\alpha_s}\pi$；而 $\mu\frac{\dd G}{\dd\mu}=\frac{\alpha_sC_F}{2\pi}\cdot4=\frac{2C_F\alpha_s}\pi$（$G$ 有限，$-2\varepsilon\alpha_s$ 项给出 $O(\varepsilon)$）。
+两者之和为零，$\gamma_K=2\alpha_sC_F/\pi$，与\cref{def:sudakov-cusp}的单圈 $\Gamma_{\rm cusp}=\alpha_sC_F/\pi$ 之比为 $2$。
+\end{proofsketch}
+
+\paragraph{地位与缺口}(a) 是全阶论证（[A]），继承\cref{thm:sudakov-factorization}的全部缺口（减除步骤的 E-S 地位，即\cref{asm:appN-collins}的内容，以及非阿贝尔 Ward 恒等式）；
+对快度导数重复因子化论证一步在\cite[第~10.10~节]{Collins2011}中对阿贝尔理论给出，QCD 中见\cite{Collins:1989bt,Magnea:1990zb}。(b) 是单圈的显式计算，[R]。
+作为检验：胶子质量正规化下 $K=-\frac{\gamma_K}2\ln\frac{\mu^2}{m_g^2}+\cdots$，积分得 $\ln F=-\frac{\gamma_K}8\ln^2\frac{Q^2}{m_g^2}=-\frac{\alpha_sC_F}{4\pi}\ln^2\frac{Q^2}{m_g^2}$，即\cref{ex:sudakov-ll}中 Jackiw 的系数。
+
+\begin{corollary}[指数化与解析延拓 \tagA]\label{cor:sudakov-exponentiation}
+在维数正规化的无质量在壳情形（$\varepsilon<0$），记 $\bar\alpha_s(\xi^2,\varepsilon)$ 为 $D$ 维中的跑动耦合（$\xi\frac{\dd\bar\alpha_s}{\dd\xi}=-2\varepsilon\bar\alpha_s-\frac{\beta_0}{2\pi}\bar\alpha_s^2+O(\bar\alpha_s^3)$，$\bar\alpha_s(\mu^2)=\alpha_s(\mu)$），则
+\begin{equation}\label{eq:sudakov-expo}
+F(Q^2,\varepsilon)=\exp\Big\{\frac12\int_0^{Q^2}\frac{\dd\xi^2}{\xi^2}\Big[K\big(\varepsilon,\alpha_s(\mu)\big)+G\big(1,\bar\alpha_s(\xi^2,\varepsilon),\varepsilon\big)
++\frac12\int_{\xi^2}^{\mu^2}\frac{\dd\lambda^2}{\lambda^2}\,\gamma_K\big(\bar\alpha_s(\lambda^2,\varepsilon)\big)\Big]\Big\}:
+\end{equation}
+全部红外极点（$\alpha_s^n$ 阶直至 $\varepsilon^{-2n}$）以指数形式出现，双对数由 $\gamma_K$ 控制。类时与类空形状因子之比的模
+$|F(s+\ii0)/F(-s)|^2$ 红外有限且可在微扰论中计算\cite{Magnea:1990zb}；单圈时
+\begin{equation}\label{eq:sudakov-ratio}
+\Big|\frac{F(s+\ii0)}{F(-s)}\Big|^2=1+\frac{\alpha_sC_F}{2\pi}\pi^2+O(\alpha_s^2).
+% VF-SUD-2
+\end{equation}
+（本推论只涉及部分子态。）
+\uses{prop:sudakov-kg,prop:sudakov-oneloop}
+\end{corollary}
+
+\begin{proofsketch}
+$\varepsilon<0$ 时 $\bar\alpha_s(\xi^2)\propto(\xi^2)^{-\varepsilon}\to0$（$\xi\to0$），每一圈正比于 $(Q^2)^{-n\varepsilon}$，故 $\ln F(0)=0$。从 $0$ 到 $Q^2$ 积分\cref{prop:sudakov-kg}，
+在被积函数中利用 $K+G$ 与 $\mu$ 无关而取 $\mu=\xi$，再用（由 $\mu\frac{\dd K}{\dd\mu}=-\gamma_K$）
+\[
+K\big(\varepsilon,\bar\alpha_s(\xi^2)\big)=K\big(\varepsilon,\alpha_s(\mu)\big)+\frac12\int_{\xi^2}^{\mu^2}\frac{\dd\lambda^2}{\lambda^2}\,\gamma_K ,
+\]
+即得式~\eqref{eq:sudakov-expo}。
+单圈检验：$K+G=-2\varepsilon\frac{\alpha_sC_F}{4\pi}(\mu^2/\xi^2)^\varepsilon f(\varepsilon)$，$\frac12\int_0^{Q^2}\frac{\dd\xi^2}{\xi^2}(K+G)=\frac{\alpha_sC_F}{4\pi}(\frac{\mu^2}{Q^2})^\varepsilon f(\varepsilon)$，
+与\cref{prop:sudakov-oneloop}逐项一致。类时值沿弧 $\xi^2=s\,\ee^{\ii\theta}$（$\theta:0\to-\pi$）延拓：% check: s1_formfactor.py (9)
+\[
+\Real\ln\frac{F(s+\ii0)}{F(-s)}=-\frac12\int_0^{-\pi}\dd\theta\,\Imag\big[K+G\big]_{\xi^2=s\ee^{\ii\theta}} ;
+\]
+单圈时 $\Imag K=-\frac{\alpha_sC_F}{\pi\varepsilon}(\frac{\mu^2}{s})^\varepsilon\sin(\varepsilon\theta)\to-\frac{\alpha_sC_F}\pi\theta$ 有限，
+积分给出 $\frac{\alpha_sC_F}{4\pi}\pi^2$，平方即式~\eqref{eq:sudakov-ratio}；高阶时 $K$ 的极点同样只以有限角度积分出现。完整论证见\cite{Magnea:1990zb}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}全阶论证（[A]），继承\cref{prop:sudakov-kg}与\cref{thm:sudakov-factorization}的地位（瓶颈同前）；式~\eqref{eq:sudakov-ratio} 的单圈内容由\cref{prop:sudakov-oneloop}严格给出。
+$\alpha_s=0.118$ 时单圈修正为 $0.247$，指数 $\ee^{0.247}\approx1.28$；据 Magnea 与 Sterman 的摘要，比值的两圈大修正大部分来自单圈修正（连同跑动耦合）的指数化\cite{Magnea:1990zb}。
+这正是 Drell--Yan 截面中 $\pi^2$ 增强的系统处理（\cref{ch:dy}、\cref{ch:thr}）。
+
+\paragraph{非阿贝尔指数化。}非阿贝尔理论中 Wilson 线的色矩阵按路径排序，指数化仍成立，但指数中的图（web）带修正的色因子：例如两线间的两胶子交换，
+不交叉梯形图（色因子 $C_F^2$）被单圈项的平方完全重现，交叉梯形图（$C_F(C_F-\frac{C_A}2)$）只留下 $-\frac12C_FC_A$。% check: s4_wilson.py (h)
+
+\begin{proposition}[非阿贝尔指数化（webs） \tagA]\label{prop:sudakov-webs}
+(a) 在原点相遇的 Wilson 线的真空关联函数可以写成 $\exp[\sum_w\tilde C(w)\,\mathcal F(w)]$，求和遍及 web（对 Wilson 线的“不可约”图），$\tilde C(w)$ 是修正的色因子；
+对两条线，web 的修正色因子由“最大非阿贝尔”部分组成\cite{Gatheral1983,FrenkelTaylor1984}（附录~B 的\cref{prop:appB-webs}）。
+(b)（$O(g^2)$ 内容，\tagR，$R_{\mathrm{def}}$）设 $W[0,-\infty n]$ 处于由有限个平面波组成的背景场中，第 $r$ 个模式的顶点因子记为矩阵 $T_r$（含 $\ii g\,n\cdot\tilde a_r$ 与色生成元），
+$E(r)=\frac{\ii}{n\cdot k_r+\ii\epsilon}$，$E(r,s)=\frac{\ii}{n\cdot k_r+\ii\epsilon}\frac{\ii}{n\cdot(k_r+k_s)+2\ii\epsilon}$（绝热正规子，\cref{prop:prelim-wilson-rules}），
+则 $W^{(1)}=\sum_rT_rE(r)$、$W^{(2)}=\sum_{r,s}T_sT_rE(r,s)$，并且在有限 $\epsilon$ 下\emph{严格}成立
+\begin{equation}\label{eq:sudakov-web2}
+W^{(2)}-\tfrac12\big(W^{(1)}\big)^2=\tfrac14\sum_{r,s}[T_s,T_r]\,\big(E(r,s)-E(s,r)\big):
+% VF-WL-3
+\end{equation}
+$\ln W=W^{(1)}+\big[W^{(2)}-\frac12(W^{(1)})^2\big]+O(g^3)$ 的 $O(g^2)$ 部分只含对易子；阿贝尔情形 $\ln W=W^{(1)}$。（本命题只涉及 Wilson 线算符。）
+\uses{def:prelim-wilson,prop:prelim-wilson-rules,lem:prelim-eikonal-identity,prop:appB-webs}
+\end{proposition}
+
+\begin{proofsketch}
+(a) 是 Gatheral 以及 Frenkel 与 Taylor 的组合学论证（对色因子按“最大非阿贝尔”部分重新组织），其概要见\cref{prop:appB-webs}。
+(b) 的完整证明：$W^{(1)}$、$W^{(2)}$ 是\cref{prop:prelim-wilson-rules}的一阶与二阶项（离 $-\infty$ 近的模式 $r$ 在右）。由程函恒等式在有限 $\epsilon$ 下的形式（\cref{lem:prelim-eikonal-identity}，$m=2$），
+$E(r)E(s)=E(r,s)+E(s,r)$。于是 $\frac12(W^{(1)})^2=\frac12\sum_{r,s}T_sT_r[E(r,s)+E(s,r)]$，
+$W^{(2)}-\frac12(W^{(1)})^2=\frac12\sum_{r,s}T_sT_r[E(r,s)-E(s,r)]$；在第二项中交换求和指标 $r\leftrightarrow s$ 得 $\frac12\sum_{r,s}[T_s,T_r]E(r,s)$，再对 $(r,s)$ 反对称化即得式~\eqref{eq:sudakov-web2}。
+若 $T_r$ 彼此对易，右边为零。
+\end{proofsketch}
+
+\paragraph{地位与缺口}(a) 是全阶的组合学论证（[A]），对在一点相遇的两条线在文献中完整给出\cite{Gatheral1983,FrenkelTaylor1984}；多条线的 web 及其重整化本书不需要。
+(b) 是严格的代数恒等式（[R]）；它依赖于绝热正规子——若每个程函分母都加同一个 $+\ii\epsilon$，程函恒等式在有限 $\epsilon$ 下不再成立（附录~B 的\cref{lem:appB-shuffle}），式~\eqref{eq:sudakov-web2} 只在 $\epsilon\to0$ 的分布意义下成立。
+% -----------------------------------------------------------------------------------------------------
+\section{多腿振幅的红外极点}\label{sec:sudakov-multileg}
+
+$n$ 条有色外线的在壳振幅同样有至多 $1/\varepsilon^{2L}$ 的红外极点，且由于软胶子可以连接任意两条外线，极点带有色关联。自然的语言是\emph{色空间形式}：
+振幅是色空间矢量 $|\mathcal M(\{p\},\varepsilon)\rangle$，$\mathbf T_i$ 作用于第 $i$ 个部分子的色指标（出射夸克为 $t^a$，出射反夸克为 $-t^{a\,\tp}$，胶子为伴随表示生成元，入射粒子取共轭），
+$\mathbf T_i^2=C_i$，色守恒为 $\sum_i\mathbf T_i|\mathcal M\rangle=0$。形状因子的结构推广为色空间中的乘性重整化因子 $\mathbf Z$，两圈以内其反常维度只含两两的“偶极子”色关联。
+
+\begin{theorem}[无质量多腿振幅红外极点的因子化 \tagA]\label{thm:sudakov-ir-poles}
+设 $|\mathcal M(\{p\},\varepsilon)\rangle$ 是 $n$ 个无质量部分子的紫外已重整化的在壳振幅（红外由维数正规化正规化）。则存在色空间中的矩阵 $\mathbf Z(\{p\},\mu,\varepsilon)$（只含 $\varepsilon$ 的极点），
+使 $|\mathcal M_{\rm fin}(\{p\},\mu)\rangle\equiv\mathbf Z^{-1}|\mathcal M(\{p\},\varepsilon)\rangle$ 在 $\varepsilon\to0$ 时有限：
+\begin{equation}\label{eq:sudakov-Zfact}
+|\mathcal M(\{p\},\varepsilon)\rangle=\mathbf Z(\{p\},\mu,\varepsilon)\,|\mathcal M_{\rm fin}(\{p\},\mu)\rangle,\qquad
+\frac{\dd\mathbf Z}{\dd\ln\mu}=-\boldsymbol\Gamma\,\mathbf Z,\qquad \frac{\dd}{\dd\ln\mu}|\mathcal M_{\rm fin}\rangle=\boldsymbol\Gamma\,|\mathcal M_{\rm fin}\rangle .
+\end{equation}
+两圈以内，反常维度取偶极子形式
+\begin{equation}\label{eq:sudakov-dipole}
+\boldsymbol\Gamma=\sum_{(i,j)}\frac{\mathbf T_i\cdot\mathbf T_j}{2}\,\gamma_{\rm cusp}(\alpha_s)\ln\frac{\mu^2}{-s_{ij}}+\sum_i\gamma^i(\alpha_s),\qquad s_{ij}=2\sigma_{ij}\,p_i\cdot p_j+\ii0,
+% VF-SUD-5
+\end{equation}
+其中 $(i,j)$ 遍历 $i\ne j$ 的全部\emph{有序}对（每个无序对计两次），$\sigma_{ij}=+1$（$i,j$ 同为入射或同为出射）或 $-1$（其余），
+$\gamma_{\rm cusp}=4\frac{\alpha_s}{4\pi}+O(\alpha_s^2)$ 是去掉 Casimir 的 cusp 反常维度（$\Gamma^F_{\rm cusp}=C_F\gamma_{\rm cusp}$，\cref{def:sudakov-cusp}），$\gamma^q=-3C_F\frac{\alpha_s}{4\pi}+O(\alpha_s^2)$。
+在单圈阶，$\ln\mathbf Z=\frac{\alpha_s}{4\pi}\big[\frac{\boldsymbol\Gamma'_0}{4\varepsilon^2}+\frac{\boldsymbol\Gamma_0}{2\varepsilon}\big]+O(\alpha_s^2)$，其中 $\boldsymbol\Gamma=\frac{\alpha_s}{4\pi}\boldsymbol\Gamma_0+\cdots$，
+$\boldsymbol\Gamma'\equiv\partial\boldsymbol\Gamma/\partial\ln\mu=-\gamma_{\rm cusp}\sum_iC_i$。对夸克形状因子（$n=2$），式~\eqref{eq:sudakov-dipole} 重现硬匹配系数的演化 $\dd\ln C_V/\dd\ln\mu$（见下例）。（本定理只涉及部分子振幅。）
+\uses{thm:sudakov-factorization,def:sudakov-cusp,prop:sudakov-webs,prop:sudakov-oneloop,ex:sudakov-onshell-hard}
+\end{theorem}
+
+\begin{proofsketch}
+(1) 把\cref{thm:sudakov-factorization}的论证推广到 $n$ 条宽角外线，得到振幅的硬—喷注—软因子化\cite{Sen1983}（全阶的振幅表述见\cite{FeigeSchwartz2014,Ma2020}）。
+(2) 纯维数正规化中喷注与软矩阵元无标度，其红外与紫外极点相消（\cref{ex:sudakov-onshell-hard}的机制），故振幅的红外极点由低能矩阵元的紫外重整化因子给出；喷注部分色对角，
+软部分是 $n$ 条类光 Wilson 线的关联函数，其重整化在色空间中乘性，web 结构（\cref{prop:sudakov-webs}）保证它是矩阵的指数\cite{Becher:2009cu,Becher:2009qa,DixonMagneaSterman2008}。
+(3) 于是 $\mathbf Z$ 满足式~\eqref{eq:sudakov-Zfact}。设 $\mathbf Z=1+\frac{\alpha_s}{4\pi}(\frac{\mathbf z_2}{\varepsilon^2}+\frac{\mathbf z_1}{\varepsilon})+O(\alpha_s^2)$，由 $\frac{\dd\alpha_s}{\dd\ln\mu}=-2\varepsilon\alpha_s+O(\alpha_s^2)$，
+$\frac{\dd\mathbf Z}{\dd\ln\mu}=\frac{\alpha_s}{4\pi}[-\frac{2\mathbf z_2}{\varepsilon}-2\mathbf z_1+\frac1\varepsilon\frac{\partial\mathbf z_1}{\partial\ln\mu}]$；令其等于有限的 $-\frac{\alpha_s}{4\pi}\boldsymbol\Gamma_0$，得 $\mathbf z_1=\frac12\boldsymbol\Gamma_0$、$\mathbf z_2=\frac14\boldsymbol\Gamma'_0$。
+由色守恒 $\sum_{(i,j)}\mathbf T_i\cdot\mathbf T_j=-\sum_iC_i$，故 $\boldsymbol\Gamma'=-\gamma_{\rm cusp}\sum_iC_i$ 色对角。
+(4) 单圈时软关联函数是两两 Wilson 线之间单胶子交换之和，每对贡献色因子 $\mathbf T_i\cdot\mathbf T_j$ 与类光尖点反常维度（\cref{def:sudakov-cusp}）；两圈时软反常维度矩阵与单圈矩阵成正比\cite{Aybat:2006mz}。
+Becher 与 Neubert\cite[式~(7)]{Becher:2009cu}（亦见\cite[式~(7)]{Becher:2009qa}）以及 Gardi 与 Magnea\cite{Gardi:2009qi}猜测它对所有阶成立；两圈的显式结构与 Catani 公式\cite{Catani:1998bh}及\cite{Sterman:2002qn}一致。
+\end{proofsketch}
+
+\paragraph{地位与缺口}极点的全阶因子化（式~\eqref{eq:sudakov-Zfact}）是全阶论证（[A]），它继承振幅层次硬—喷注—软因子化的地位（与\cref{thm:sudakov-factorization}同样的两个瓶颈：
+减除的 E-S 地位与非阿贝尔 Ward 恒等式）。偶极子形式在单圈与两圈是显式计算的结果（[R] 意义上的定阶内容，两圈见\cite{Aybat:2006mz}）；
+作为全阶精确公式它不成立（\cref{prop:sudakov-dipole-violation}）。升级为 $[R]$ 需要振幅因子化的完整证明（参见第~24~章\cref{prop:front-ir-forest}的地位，前向指针）。
+
+\begin{example}[两部分子情形与色守恒]\label{ex:sudakov-dipole-twoparton}
+\emph{形状因子。}$n=2$，色单态要求 $\mathbf T_1+\mathbf T_2=0$，故 $\mathbf T_1\cdot\mathbf T_2=-C_F$，两个有序对给出 $\boldsymbol\Gamma=-C_F\gamma_{\rm cusp}\ln\frac{\mu^2}{-s_{12}}+2\gamma^q$。
+类空形状因子一入一出，$\sigma_{12}=-1$，$-s_{12}=Q^2$，故 $\boldsymbol\Gamma=\frac{C_F\alpha_s}{4\pi}(4L-6)$，$L=\ln\frac{Q^2}{\mu^2}$。另一方面式~\eqref{eq:sudakov-F1-L} 的有限部分
+$C_V=1+\frac{C_F\alpha_s}{4\pi}(-L^2+3L-8+\zeta_2)$ 满足 $\frac{\dd C_V}{\dd\ln\mu}=\frac{C_F\alpha_s}{4\pi}(-2L+3)(-2)=\frac{C_F\alpha_s}{4\pi}(4L-6)$，两者一致；若把 $(i,j)$ 读作无序对，结果少一半——
+这就是“有序对”的含义。% VF-SCET-8, VF-SUD-5
+极点：$\boldsymbol\Gamma_0=C_F(4L-6)$、$\boldsymbol\Gamma'_0=-8C_F$，单圈公式给出 $\ln\mathbf Z=\frac{C_F\alpha_s}{4\pi}[-\frac2{\varepsilon^2}+\frac{2L-3}\varepsilon]$，正是式~\eqref{eq:sudakov-F1-L} 的极点部分。
+类时形状因子 $\sigma_{12}=+1$，$\ln\frac{\mu^2}{-s-\ii0}=\ln\frac{\mu^2}{s}+\ii\pi$，$\ln\mathbf Z$ 获得虚部 $\frac{C_F\alpha_s}{4\pi}(-\frac{2\pi\ii}\varepsilon)$，与\cref{prop:sudakov-coulomb}一致。
+\emph{三部分子。}对 $q\bar qg$，$\sum_{(i,j)}\mathbf T_i\cdot\mathbf T_j=-(2C_F+C_A)$。% check: s3_irpoles.py (c)
+\uses{thm:sudakov-ir-poles,prop:sudakov-oneloop}
+\end{example}
+
+%%% BEGIN fig:sudakov-dipole
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa soft/.style={gluon,green!45!black},
+  fa web/.style={soft blob,line width=0.7pt,pattern=north east lines,pattern color=green!45!black},
+  fa over/.style={preaction={draw=white,line width=4.2pt,decorate=false}},
+  fa lab/.style={font=\small},
+  fa note/.style={font=\footnotesize},
+  fa cap/.style={font=\footnotesize},
+  fa legs/.pic={\foreach \a/\n in {66/1,22/2,-22/3,-66/4} {
+                  \draw[plain] (\a:0.4) -- (\a:2.2) node[font=\small,anchor=\a+180,inner sep=2pt] {$\n$};}
+                \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] at (0,0) {$H$};}]
+  % ===================== (a) dipole terms =====================
+  \begin{scope}
+    \pic at (0,0) {fa legs};
+    \draw[fa soft] (66:1.75) to[bend left=38] (22:1.75);
+    \draw[fa soft] (-22:1.75) to[bend left=38] (-66:1.75);
+    \foreach \a in {66,22,-22,-66} \node[vertex] at (\a:1.75) {};
+    \node[fa note,anchor=south west,inner sep=1pt] at (44:2.12) {$\mathbf T_1\cdot\mathbf T_2$};
+    \node[fa note,anchor=north west,inner sep=1pt] at (-44:2.12) {$\mathbf T_3\cdot\mathbf T_4$};
+    \node[fa note,align=left,anchor=west] at (2.75,0) {对所有\\$i\neq j$ 求和};
+    \node[fa cap] at (1.3,-3.05) {(a)\ 两圈以内：偶极子（色关联 $\mathbf T_i\cdot\mathbf T_j$）};
+  \end{scope}
+  % ===================== (b) three-loop webs (non-dipole) =====================
+  % web blob in the free sector between legs 2 and 3; gluons that pass over a leg get a white gap
+  \begin{scope}[xshift=7.2cm]
+    \pic at (0,0) {fa legs};
+    \draw[fa soft,fa over] (1.66,0.27) -- (66:1.5);
+    \draw[fa soft] (1.86,0.2) -- (22:2.02);
+    \draw[fa soft] (1.86,-0.2) -- (-22:2.02);
+    \node[fa web,circle,minimum size=0.62cm,inner sep=0pt] (W) at (1.75,0) {};
+    \foreach \p in {(66:1.5),(22:2.02),(-22:2.02)} \node[vertex] at \p {};
+    \node[fa note] at (0.9,-2.6) {连接三条外线};
+  \end{scope}
+  \begin{scope}[xshift=11.6cm]
+    \pic at (0,0) {fa legs};
+    \draw[fa soft,fa over] (1.66,0.27) -- (66:1.5);
+    \draw[fa soft,fa over] (1.66,-0.27) -- (-66:1.5);
+    \draw[fa soft] (1.86,0.2) -- (22:2.02);
+    \draw[fa soft] (1.86,-0.2) -- (-22:2.02);
+    \node[fa web,circle,minimum size=0.62cm,inner sep=0pt] (W) at (1.75,0) {};
+    \foreach \p in {(66:1.5),(22:2.02),(-22:2.02),(-66:1.5)} \node[vertex] at \p {};
+    \node[fa note] at (0.9,-2.6) {连接四条外线};
+  \end{scope}
+  \node[fa cap] at (9.45,-3.05) {(b)\ 三圈起：非偶极子 web（阴影）};
+  % ===================== anomalous dimension (VF-SUD-5) =====================
+  \node[font=\small] at (5.6,-3.9)
+    {$\boldsymbol\Gamma=\displaystyle\sum_{(i,j)}\frac{\mathbf T_i\cdot\mathbf T_j}{2}\,\gamma_{\rm cusp}(\alpha_s)\ln\frac{\mu^2}{-s_{ij}}+\sum_i\gamma^i(\alpha_s)$
+     \quad（两圈以内成立）};
+\end{tikzpicture}
+\caption{多腿振幅的红外结构：(a) 两圈以内由偶极子项（色关联 $\mathbf T_i\cdot\mathbf T_j$）给出，反常维度如图下公式（VF-SUD-5，$(i,j)$ 取有序对）；
+(b) 三圈起出现连接三条或四条外线的非偶极子 web（偶极子公式作为全阶公式在三圈失效，[V]）。}
+\label{fig:sudakov-dipole}
+\end{figure}
+%%% END fig:sudakov-dipole
+
+\cref{fig:sudakov-dipole}(a) 是两圈以内的偶极子结构；从三圈起一个 web 可以同时连接三条或四条 Wilson 线（\cref{fig:sudakov-dipole}(b)），带来新的色张量与运动学依赖。
+
+\begin{proposition}[偶极子公式作为全阶精确公式的失效 \tagV]\label{prop:sudakov-dipole-violation}
+式~\eqref{eq:sudakov-dipole} 作为对所有阶成立的公式是错误的：三圈时 $\boldsymbol\Gamma$ 获得非偶极子修正 $\boldsymbol\Delta^{(3)}_n$。
+它由两类色结构组成：只含三个不同部分子的项 $\propto C\,f^{abe}f^{cde}\{\mathbf T_i^a,\mathbf T_i^d\}\mathbf T_j^b\mathbf T_k^c$，$C=\zeta_5+2\zeta_2\zeta_3\approx4.99$，对三个有色部分子是一个与运动学无关的常数；
+含四个不同部分子的项乘以共形交比的权五单值多重对数函数，对四个及以上有色部分子依赖于运动学。该修正保持类时严格共线因子化\cite[式~(7)、(13)、(14)、(17)]{Almelid:2015jia}。
+（本命题只涉及部分子振幅。）
+\uses{thm:sudakov-ir-poles}
+\end{proposition}
+
+\begin{proofsketch}
+（证据：显式计算。）Almelid、Duhr 与 Gardi 计算了连接三条与四条类光 Wilson 线的全部三圈 web\cite{Almelid:2015jia}；Henn 与 Mistlberger 在 $\mathcal N=4$ 超对称 Yang--Mills 理论中的三圈四胶子振幅
+为此提供了独立检验\cite{Henn:2016jdu}；此前 Caron-Huot 由 Regge 极限中的 BFKL 动力学论证了偶极子猜测从四圈起不成立\cite[第~4.3~节，式~(4.28)]{Caron-Huot:2013fea}。
+结构上：三线与四线 web 的色因子含两个 $f^{abc}$ 的缩并，不能约化为 $\mathbf T_i\cdot\mathbf T_j$；类光 Wilson 线在 $n_i\to\kappa_in_i$ 下的重标度不变性要求运动学依赖只通过共形交比进入，
+三个部分子没有共形交比，故只剩常数。
+\end{proofsketch}
+
+\paragraph{地位与缺口}[V]，证据类型：显式三圈计算（\cite{Almelid:2015jia}，并由\cite{Henn:2016jdu}独立检验）以及四圈的 Regge 论证\cite{Caron-Huot:2013fea}。
+被推翻的只是“偶极子形式对所有阶精确”这一陈述；\cref{thm:sudakov-ir-poles}的极点因子化本身（[A]）与两圈以内的偶极子形式不受影响。
+三圈修正首先出现在三圈振幅的 $1/\varepsilon$ 极点中；它与类时共线极限相容（严格共线因子化得以保持），这是一个非平凡的检验。
+% -----------------------------------------------------------------------------------------------------
+\section{振幅的共线因子化与 Coulomb 相位}\label{sec:sudakov-collinear}
+
+本节讨论振幅层次上两个依赖运动学组态的现象：同为入射或同为出射的两条有色线之间的软交换带有 $\ii\pi$（Coulomb 相位）；
+所有共线方向都在末态时振幅全阶因子化，而入射与出射部分子共线时严格共线因子化在单圈即失效。
+
+\begin{proposition}[Coulomb 相位 \tagR]\label{prop:sudakov-coulomb}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈阶：
+(a) 类空形状因子是实的，类时形状因子的虚部为
+\begin{equation}\label{eq:sudakov-coulomb-ff}
+\Imag F^{(1)}(s+\ii0)=\frac{\alpha_sC_F}{4\pi}\Big(\frac{\mu^2}{s}\Big)^{\varepsilon}\sin(\pi\varepsilon)\,f(\varepsilon)
+=\frac{\alpha_sC_F}{4\pi}\Big[-\frac{2\pi}{\varepsilon}+2\pi\ell-3\pi\Big]+O(\varepsilon),\qquad \ell=\ln\frac{s}{\mu^2},
+% VF-EE-4
+\end{equation}
+它在 $|F|^2$ 的 $O(\alpha_s)$ 项中不出现。
+(b) 两条类时 Wilson 线在原点相遇（$\cosh\beta=v_1\cdot v_2$，$v_i^0>0$）时，单圈尖点反常维度在散射组态（一入一出，$W[\infty v_1,0]W[0,-\infty v_2]$）为实数
+$\frac{\alpha_sC_F}\pi(\beta\coth\beta-1)$；在产生组态（同为出射，$W[\infty v_1,0]W[0,\infty v_2]$）与吸收组态（同为入射）为
+\begin{equation}\label{eq:sudakov-coulomb-cusp}
+\Gamma_{\rm cusp}^{\rm prod}(\beta)=\frac{\alpha_sC_F}{\pi}\big[(\beta-\ii\pi)\coth\beta-1\big],
+\end{equation}
+即 $\beta\to\beta-\ii\pi$；其虚部 $-\ii\alpha_sC_F\coth\beta$ 在类光极限下趋于 $-\ii\alpha_sC_F$。
+(c) 因此在 $n$ 条 Wilson 线的单圈关联函数中（两两单胶子交换之和，第 $(i,j)$ 对的色因子为 $\mathbf T_i\cdot\mathbf T_j$），$\ii\pi$ 恰好出现在 $\sigma_{ij}=+1$ 的那些对上，
+与式~\eqref{eq:sudakov-dipole} 中 $\ln\frac{\mu^2}{-s_{ij}}$ 的虚部 $\ii\pi$（$s_{ij}>0$ 时）一致。（本命题只涉及部分子态与 Wilson 线算符。）
+\uses{prop:sudakov-oneloop,def:sudakov-cusp,prop:appB-cusp-oneloop}
+\end{proposition}
+
+\begin{proof}
+(a) 由\cref{prop:sudakov-oneloop}(b)，$F^{(1)}(s+\ii0)=\frac{\alpha_sC_F}{4\pi}(\mu^2/s)^\varepsilon\ee^{\ii\pi\varepsilon}f(\varepsilon)$，取虚部即得第一式；
+$\sin(\pi\varepsilon)=\pi\varepsilon+O(\varepsilon^3)$、$(\mu^2/s)^\varepsilon=1-\varepsilon\ell+O(\varepsilon^2)$ 与 $f=-\frac2{\varepsilon^2}-\frac3\varepsilon+O(1)$ 相乘，
+$\pi\varepsilon\cdot(-\frac2{\varepsilon^2})=-\frac{2\pi}\varepsilon$，$\pi\varepsilon\cdot[-\frac3\varepsilon+(-\varepsilon\ell)(-\frac2{\varepsilon^2})]=-3\pi+2\pi\ell$，即第二式。
+类空区 $(\mu^2/Q^2)^\varepsilon f(\varepsilon)$ 为实数。$|F|^2=1+2\Real F^{(1)}+O(\alpha_s^2)$，虚部不进入 $O(\alpha_s)$。
+
+(b) 散射组态即\cref{prop:appB-cusp-oneloop}。产生组态与它只有两处不同：$W[0,\infty v_2]$ 的路径取向为 $-v_2$，顶点多一个负号；两个顶点的间隔由 $lv_1+sv_2$ 变为 $lv_1-sv_2$（$l,s>0$）。
+沿用附录~B 的记号（$l=\rho u$，$s=\rho(1-u)$，绝热阻尼 $\ee^{-\delta(l+s)}$），交换图的紫外极点变为
+$-\frac{\alpha_sC_F}{2\pi\varepsilon}\cosh\beta\int_0^1\frac{\dd u}{-N'(u)+\ii0}$，其中 $(lv_1-sv_2)^2=\rho^2N'(u)$，
+$N'(u)=1-2u(1-u)(1+\cosh\beta)$；$+\ii0$ 来自 Feynman 传播子 $(-x^2+\ii0)^{-1+\varepsilon}$。与散射组态不同，$N'$ 在 $(0,1)$ 内变号：两个顶点既可以类空分离也可以类时分离。
+令 $w=2u-1$，$N'=\frac12(a^2w^2-b^2)$，$a^2=1+\cosh\beta=2\cosh^2\frac\beta2$，$b^2=\cosh\beta-1=2\sinh^2\frac\beta2$，$ab=\sinh\beta$；用 $\frac1{x-\ii0}=\mathrm{PV}\frac1x+\ii\pi\delta(x)$，
+\[
+\int_0^1\frac{\dd u}{N'(u)-\ii0}=\int_{-1}^{1}\frac{\dd w}{a^2w^2-b^2-\ii0}
+=\frac{1}{ab}\ln\frac{a-b}{a+b}+\frac{\ii\pi}{ab}=\frac{\ii\pi-\beta}{\sinh\beta},
+\]
+其中用了 $\frac{a+b}{a-b}=\frac{\cosh(\beta/2)+\sinh(\beta/2)}{\cosh(\beta/2)-\sinh(\beta/2)}=\ee^{\beta}$，$\delta(a^2w^2-b^2)$ 在 $w=\pm b/a$ 处各贡献 $1/(2ab)$。
+于是交换图的极点为 $-\frac{\alpha_sC_F}{2\pi\varepsilon}(\beta-\ii\pi)\coth\beta$；两条线的自能与组态无关，仍为 $+\frac{\alpha_sC_F}{2\pi\varepsilon}$（附录~B）。合起来
+$W^{\rm prod}=1-\frac{\alpha_sC_F}{2\pi\varepsilon}[(\beta-\ii\pi)\coth\beta-1]+(\text{有限})$，按\cref{def:sudakov-cusp}的定义即式~\eqref{eq:sudakov-coulomb-cusp}。
+吸收组态（同为入射，两个顶点位于 $-lv_1$、$-sv_2$）的间隔为 $-(lv_1-sv_2)$，平方不变，两个顶点的符号之积也与产生组态相同，结果相同。
+由 $\coth(\beta-\ii\pi)=\coth\beta$，这正是在散射组态的结果中作代换 $\beta\to\beta-\ii\pi$（$\cosh(\beta-\ii\pi)=-\cosh\beta$ 对应于把一条线的方向反转）。
+
+(c) 单圈时 $n$ 条线的关联函数是两两交换图与各线自能之和；第 $(i,j)$ 对交换图的色因子在色空间形式中为 $\mathbf T_i\cdot\mathbf T_j$（对色单态的夸克—反夸克对，$\mathbf T_1\cdot\mathbf T_2=-C_F$，
+即上面的 $C_F$），其运动学因子按 (b) 只在两线同为入射或同为出射时含 $\ii\pi$。自能是实的且色对角。$\sigma_{ij}=+1$ 时 $s_{ij}=2p_i\cdot p_j>0$，
+$\ln\frac{\mu^2}{-s_{ij}-\ii0}=\ln\frac{\mu^2}{s_{ij}}+\ii\pi$，与此相合。
+\end{proof}
+
+形状因子的 $\ii\pi$ 与 $\pi^2$ 来自同为出射的两条线之间的软（Coulomb/Glauber 型）交换；区域分析中加解析正规子后 Glauber 区为零（\cref{ex:sudakov-offshell}），
+这些相位由带正确 $\ii0$ 方向的程函（Wilson 线）区再现。软函数紫外极点的虚部 $+\ii\frac{\alpha_sC_F}{2\varepsilon}$（式~\eqref{eq:sudakov-coulomb-cusp} 的类光极限）与形状因子红外极点的虚部
+$-\ii\frac{\alpha_sC_F}{2\varepsilon}$ 大小相等、符号相反，是“红外极点 = 无标度低能矩阵元的紫外极点”的又一例证。% check: s5_cusp.py (g), s3_irpoles.py (b)
+
+\begin{proposition}[振幅的硬—软—共线因子化（出射或阈值运动学） \tagA]\label{prop:sudakov-amplitude-factorization}
+设一个 QCD 散射振幅的外态只含沿若干方向的共线粒子与软粒子，且没有入射部分子与出射部分子共线（例如全部共线方向都在末态的衰变型过程，或部分子质心能量接近总能量、旁观者必为软的阈值运动学）。
+则在领头幂次、对所有阶，振幅等于由 QCD 计算的若干算符矩阵元之积：每个共线方向一个共线矩阵元（夸克或胶子场乘以 Wilson 线），一个软矩阵元（沿各共线方向的 Wilson 线），
+软—共线重叠由沿两个方向的折线 Wilson 线的真空矩阵元除去，系数只依赖于硬运动学；这一等式与正规子、规范无关，并蕴含软流与共线分裂函数对所有阶与过程无关
+\cite{FeigeSchwartz2014,Feige:2013zla}。入射部分子与出射部分子共线的构型被明确排除在外\cite[第~2.2、10、11.2~节]{FeigeSchwartz2014}。（本命题只涉及部分子振幅。）
+\uses{thm:sudakov-factorization,thm:ir-leading-regions}
+\end{proposition}
+
+\begin{proofsketch}
+Feige 与 Schwartz 的证明分四步\cite[第~5--9~节]{FeigeSchwartz2014}：(1) 按软敏感性把图“着色”分解；(2) 用钳夹分析与幂次计数确定红外敏感区域（只有末态共线方向时 Glauber 标度不产生领头奇点，
+同书第~2.2~节）；(3) 取一种“因子化规范”使软—共线解耦显明、鬼场退耦；(4) 用 Ward 恒等式逐步自举出 Wilson 线。要素与\cref{thm:sudakov-factorization}相同（领头区域\cref{thm:ir-leading-regions}、
+Ward 恒等式、重叠的扣除），区别在于外线数目任意并在振幅层次上处理一切辐射。
+\end{proofsketch}
+
+\paragraph{地位与缺口}全阶论证（[A]）：这是一个已发表的、在振幅层次上的长篇全阶论证，本书没有独立重推；其最弱的步骤与\cref{thm:sudakov-factorization}相同——
+领头区域与幂次计数只给出 E-S 型陈述，非阿贝尔 Ward 恒等式的组合学在其因子化规范中给出。适用范围受明确限制：入射—出射共线的构型被排除，因此一般的强子—强子散射（有高能旁观者）不在其内，
+这与下面的类空失效相容。宽角振幅的红外森林公式（\cite{Ma2020}；第~24~章\cref{prop:front-ir-forest}，前向指针）给出了另一种全阶表述。
+
+\begin{remark}[类空共线极限预览 \tagV]\label{rem:sudakov-spacelike}
+当一个入射部分子与一个出射部分子变得共线（类空共线极限）时，单圈分裂振幅依赖于非共线部分子的色荷与动量：与过程无关的\emph{严格}共线因子化在单圈即失效，
+而类时（全为出射）的共线极限中它成立\cite{CataniDeFlorianRodrigo2012}。这与\cref{prop:sudakov-amplitude-factorization}排除入射—出射共线构型相容。完整的陈述与讨论见第~18~章\cref{prop:break-spacelike}（前向指针）。
+\uses{prop:sudakov-amplitude-factorization}
+\end{remark}
+
+\paragraph{地位与缺口}[V]，证据类型：显式的单圈（与两圈）计算\cite{CataniDeFlorianRodrigo2012}。由\cref{prop:sudakov-coulomb}(c) 可以看出单圈失效的来源：
+类空共线对中的两个部分子一入一出，对每个非共线部分子 $j$，偶极子 $(1,j)$ 与 $(2,j)$ 中恰有一个 $\sigma=+1$，即恰有一个带 $\ii\pi$，哪一个取决于 $j$ 是入射还是出射；
+于是 $\ii\pi$ 项不能合并为 $(\mathbf T_1+\mathbf T_2)\cdot\mathbf T_j$，奇异因子依赖于非共线部分子的色荷。它本身\emph{并不}说明 PDF 因子化失效：这是关于振幅的多部分子共线极限的陈述，它对单举截面的后果在许多情形中相消；
+据 Catani、de Florian 与 Rodrigo 的摘要，它影响强子—强子截面中对数增强项的非阿贝尔结构（从 NNLO 起），并\emph{可能}影响质量奇异性的因子化（从 N$^3$LO 起）。
+Drell--Yan 的共线因子化仍是全阶论证（[A]，\cref{ch:dy}）。
+
+\paragraph{与前沿章节的联系。}本章的 cusp 结构在\cref{ch:yzliu}中以另一面貌出现：重—轻 Sudakov 形状因子与类空喷注函数（\cref{def:yzliu-hl-jet}），离光锥软函数作为快速色源对的形状因子
+（\cref{def:lamet-soft-offlc}、\cref{thm:yzliu-soft-hqet}），其大角度常数是 $\beta\coth\beta-1$ 中 $-1$ 的全阶推广 $\gamma_{HH}$（均为前向指针）。
+
+\begin{tcolorbox}[enhanced,breakable,title=常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{「快度发散是坏正规子的人为产物。」}不对：有质量交换时大对数正是通过解析正规子极点的相消重新出现的（\cref{ex:sudakov-massive}）；快度发散标志着一个新的因子化变量，
+其依赖由演化方程控制（\cref{prop:sudakov-kg}；第~14~章\cref{prop:tmd-evolution}），正确组合的物理量与正规子无关。\par
+\textbf{「有质量的 Sudakov 形状因子必须用解析正规子。」}不准确：只有\emph{交换的玻色子}有质量时才需要；在壳有质量夸克与无质量胶子时维数正规化已足够（\cref{ex:sudakov-massive}）。\par
+\textbf{「类空严格共线因子化的失效说明 PDF 因子化失效。」}不对：那是振幅的类空共线极限的性质，对单举截面的后果在许多情形中相消，Drell--Yan 共线因子化仍为 [A]（\cref{rem:sudakov-spacelike}；\cref{ch:break}）。\par
+\textbf{「偶极子公式给出红外极点的全阶精确形式。」}只在两圈以内成立（\cref{prop:sudakov-dipole-violation}，[V]）。
+\end{tcolorbox}
+
+\paragraph{本章小结}一圈形状因子（\cref{prop:sudakov-oneloop}）对 $\varepsilon$ 精确，双极点来自既软又共线的胶子，类时延拓带来约 $25\%$ 的 $\pi^2$ 修正；区域分析显示了硬、共线、超软标度与极点的相消，
+以及有质量交换时快度发散的必然性。全阶上 $F=H\,J_1J_2/S$（\cref{thm:sudakov-factorization}，[A]）；辅助快度的依赖导出 $K+G$ 方程，其反常维度是 cusp 反常维度的两倍，
+积分后红外极点与双对数指数化；多腿振幅的红外极点由 $\mathbf Z$ 因子生成，两圈以内是偶极子形式，三圈起不是。$[A]$ 结论的共同瓶颈是减除的积分范数估计（\cref{asm:appN-collins}，指针）与非阿贝尔多胶子 Ward 恒等式。
+
+\paragraph{这些工具在后文的用途}一圈形状因子是 $e^+e^-$ 总截面的虚修正（第~6~章\cref{prop:ee-oneloop}）、Drell--Yan 系数函数中 $\delta(1-z)$ 与 $\pi^2$ 项的来源（第~12~章\cref{prop:dy-nlo}）
+与 SCET 硬匹配系数 $C_V$ 的单圈值（第~15~章\cref{prop:scet-hard-matching}）；离壳三角形是减除法的标准例子（第~9~章\cref{ex:method-sudakov-subtraction}，附录~N 的\cref{prop:appN-triangle-exact}）；
+Ward 恒等式产生 Wilson 线的机制推广到 PDF 定义（第~8~章\cref{def:pdf-quark}）与第~9~章\cref{lem:method-ward-multi}；$K+G$ 方程与 cusp 反常维度是 Collins--Soper 演化（第~14~章\cref{prop:tmd-evolution}）
+与阈值重求和（第~13~章\cref{thm:thr-refactorization}）的原型；多腿红外极点与 Coulomb 相位在超领头对数（第~16~章\cref{prop:jets-sll}）与类空共线失效（第~18~章\cref{prop:break-spacelike}）中再次出现。

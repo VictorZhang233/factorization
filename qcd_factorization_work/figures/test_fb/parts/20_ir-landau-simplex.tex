@@ -1,0 +1,63 @@
+%%% BEGIN fig:ir-landau-simplex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb edgeA/.style={draw=red!65!black,line width=2.2pt,line cap=round},
+  fb edgeB/.style={draw=blue!65!black,line width=2.2pt,line cap=round},
+  fb simplex/.style={fill=gray!10,draw=gray!60!black,line width=0.6pt},
+  fb corner/.style={circle,fill=black,inner sep=0pt,minimum size=5.5pt}]
+  % ======================= the vertex graph and its lines =======================
+  \begin{scope}[yshift=1.25cm]
+    \coordinate (X) at (0,0); \coordinate (Y1) at (1.3,0.8); \coordinate (Y2) at (1.3,-0.8);
+    \draw[photon] (-1.2,0) -- (X);
+    \draw[quark] (X) -- (Y1); \draw[quark] (Y1) -- (2.15,1.32);
+    \draw[quark] (2.15,-1.32) -- (Y2); \draw[quark] (Y2) -- (X);
+    \draw[gluon] (Y2) -- (Y1);
+    \foreach \v in {X,Y1,Y2} \node[vertex] at (\v) {};
+    \node[fb lab,anchor=south] at (-0.62,0.08) {$q$};
+    \node[fb lab,anchor=south east] at (0.66,0.4) {$p_1-k$};
+    \node[fb lab,anchor=north east] at (0.66,-0.4) {$p_2+k$};
+    \node[fb lab,anchor=west] at (1.42,0) {$k$};
+    \node[fb lab,anchor=west] at (2.15,1.32) {$p_1$};
+    \node[fb lab,anchor=west] at (2.15,-1.32) {$p_2$};
+    \node[font=\footnotesize,align=center,anchor=north] at (0.5,-1.72) {线 $0,1,2$：$k$，$p_1-k$，$p_2+k$\\Feynman 参数 $\alpha_0,\alpha_1,\alpha_2$};
+  \end{scope}
+  % ======================= (a) on-shell massless vertex =======================
+  \begin{scope}[xshift=4.85cm,x=2.55cm,y=2.55cm]
+    \coordinate (A0) at (0,0); \coordinate (A1) at (1,0); \coordinate (A2) at (0.5,0.866);
+    \draw[fb simplex] (A0) -- (A1) -- (A2) -- cycle;
+    \draw[gray!55!black,line width=0.9pt,dash pattern=on 3pt off 2pt] (A1) -- (A2);
+    \draw[fb edgeA] (A0) -- (A1);
+    \draw[fb edgeB] (A0) -- (A2);
+    \node[fb corner] at (A0) {};
+    \node[fb lab,anchor=north east] at (A0) {$S$\,($\alpha_0=1$)};
+    \node[fb lab,anchor=north west] at (A1) {$\alpha_1=1$};
+    \node[fb lab,anchor=south] at (A2) {$\alpha_2=1$};
+    \node[fb lab,anchor=north,text=red!60!black] at (0.5,-0.03) {$C_1$};
+    \node[fb lab,anchor=south east,text=blue!60!black] at (0.23,0.42) {$C_2$};
+    \node[fb lab,anchor=south west,text=gray!35!black] at (0.77,0.42) {$Q^2=0$ 时};
+    \node[font=\small] at (0.5,0.3) {$H$};
+    \node[fb lab,anchor=north,align=left] at (0.5,-0.2) {$C_1$：$\alpha_2=0$，$k=xp_1$\\$C_2$：$\alpha_1=0$，$k=-yp_2$\\$S$：$k=0$；\ $H$：没有钳夹};
+    \node[font=\small,anchor=north] at (0.5,-0.75) {(a)\ 在壳无质量：$\mathcal F=-Q^2\alpha_1\alpha_2$};
+  \end{scope}
+  % ======================= (b) off-shell (Euclidean) triangle =======================
+  \begin{scope}[xshift=10.55cm,x=2.55cm,y=2.55cm]
+    \coordinate (A0) at (0,0); \coordinate (A1) at (1,0); \coordinate (A2) at (0.5,0.866);
+    \draw[fb simplex] (A0) -- (A1) -- (A2) -- cycle;
+    \foreach \c in {A0,A1,A2} \node[fb corner] at (\c) {};
+    \node[fb lab,anchor=north east] at (A0) {$\alpha_0=1$};
+    \node[fb lab,anchor=north west] at (A1) {$\alpha_1=1$};
+    \node[fb lab,anchor=south] at (A2) {$\alpha_2=1$};
+    \node[font=\small] at (0.5,0.3) {$\mathcal F>0$};
+    \node[fb lab,anchor=north,align=center] at (0.5,-0.2) {Landau 解只在三个角上：\\零动量的无质量线};
+    \node[font=\small,anchor=north,align=center] at (0.5,-0.75) {(b)\ 离壳（欧氏）：\\$\mathcal F=m^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈顶点的 Feynman 参数单形 $\{\alpha_0+\alpha_1+\alpha_2=1,\ \alpha_j\ge0\}$ 上的 Landau 集（示意；左为线与参数的记号）。
+(a)~在壳无质量外线（$p_i^2=0$，$Q^2=2p_1\cdot p_2>0$）：$\mathcal F=-Q^2\alpha_1\alpha_2$，Landau 集为两条闭棱 $\alpha_2=0$（$k=xp_1$，共线于 $p_1$，红）与 $\alpha_1=0$（$k=-yp_2$，蓝），二者交于软角 $S$（$k=0$）；
+另两个角是零动量夸克线（共线面的幂次压低端点）；棱 $\alpha_0=0$（虚线）只在 $Q^2=0$ 时是解；内部即硬区 $H$，没有钳夹（VF-REG-4）。
+(b)~两条外线离壳（$p_i^2=-m^2$，欧氏非例外运动学）：$\mathcal F$ 只在单形的三个角上为零（零动量的无质量线，VF-REF-17）；欧氏区的红外有限性来自幂次计数，而不是因为没有 Landau 解（\cref{rem:ir-euclid-corners}）。}
+\label{fig:ir-landau-simplex}
+\end{figure}
+%%% END fig:ir-landau-simplex

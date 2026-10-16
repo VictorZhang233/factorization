@@ -1,0 +1,53 @@
+%%% BEGIN fig:ope-schematic
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  % ---------- left: matrix element of T J(x) J(0) ----------
+  \begin{scope}
+    \coordinate (vl) at (-0.8,1.7); \coordinate (vr) at (0.8,1.7);
+    \draw[quark] (-0.8,0.32) -- (vl);
+    \draw[quark] (vl) -- (vr);
+    \draw[quark] (vr) -- (0.8,0.32);
+    \draw[photon] (-1.65,2.75) -- (vl);
+    \draw[photon] (vr) -- (1.65,2.75);
+    \draw[t1 hadron] (-2.0,0) -- (2.0,0);
+    \draw[hadron blob] (0,0) ellipse[x radius=1.1,y radius=0.42];
+    \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+    \node[font=\footnotesize] at (0,2.08) {$x^2\to0$};
+    \draw[region] (-1.25,1.3) rectangle (1.25,2.38);
+    \node[above left,inner sep=1pt] at (-1.65,2.75) {$J(x)$};
+    \node[above right,inner sep=1pt] at (1.65,2.75) {$J(0)$};
+    \node[left] at (-2.0,0) {$P$}; \node[right] at (2.0,0) {$P$};
+  \end{scope}
+  \node at (3.3,1.0) {$\displaystyle\simeq\;\sum_n$};
+  % ---------- right: C_n times local operator O_n(0) ----------
+  \begin{scope}[shift={(6.5,0)}]
+    \coordinate (C) at (0,2.05); \coordinate (O) at (0,1.43);
+    \draw[quark] (-0.62,0.36) -- (O);
+    \draw[quark] (O) -- (0.62,0.36);
+    \draw[photon] (-1.25,2.8) -- ($(C)+(140:0.42)$);
+    \draw[photon] ($(C)+(40:0.42)$) -- (1.25,2.8);
+    \draw[t1 hadron] (-2.0,0) -- (2.0,0);
+    \draw[hadron blob] (0,0) ellipse[x radius=1.1,y radius=0.42];
+    \draw[hard blob] (C) circle[radius=0.42];
+    \node at (C) {$C_n$};
+    \node[opvertex] at (O) {};
+    \node[right,inner sep=5pt] at (O) {$O_n(0)$};
+    \node[above left,inner sep=1pt] at (-1.25,2.8) {$J$};
+    \node[above right,inner sep=1pt] at (1.25,2.8) {$J$};
+    \node[left] at (-2.0,0) {$P$}; \node[right] at (2.0,0) {$P$};
+  \end{scope}
+  \node[font=\small] at (10.05,1.0) {$+\;\cdots$};
+  % ---------- the corresponding formula ----------
+  \node[font=\small] at (4.4,-0.95)
+    {$T\,J(x)J(0)\;\simeq\;\displaystyle\sum_n C_n(x^2,\mu^2)\,x_{\mu_1}\cdots x_{\mu_n}\,O_n^{\mu_1\cdots\mu_n}(0;\mu)\;+\;\cdots\qquad(x^2\to0)$};
+\end{tikzpicture}
+\caption{光锥算符乘积展开的图示。左：$\langle P|T\,J(x)J(0)|P\rangle$ 在 $x^2\to0$（而 $x$ 本身不趋于零）时，两流之间的夸克传播子远离壳层，
+虚线框内为硬部分。右：硬部分收缩为 Wilson 系数 $C_n$，长程部分化为定域算符 $O_n^{\mu_1\cdots\mu_n}(0)$（$\otimes$）的强子矩阵元；
+$C_n(x^2,\mu^2)$ 在 $x^2\to0$ 时的行为为 $(x^2)^{(\tau_n-6)/2}$ 乘以对数修正（$\tau_n$ 为 $O_n$ 的扭度），故扭度越高奇异性越弱，$\cdots$ 即表示这些高扭度项。领头项为扭度 $2$ 的算符
+$O_q^{\mu_1\cdots\mu_n}=\bar\psi\gamma^{\{\mu_1}\ii D^{\mu_2}\cdots\ii D^{\mu_n\}}\psi-(\text{迹})$ 及其胶子对应物；由于协变导数，$\otimes$ 处还可连接任意多条胶子线。
+与短距离展开不同，光锥展开的每一扭度都含有对所有 $n$ 的无穷求和。}
+\label{fig:ope-schematic}
+\end{figure}
+%%% END fig:ope-schematic

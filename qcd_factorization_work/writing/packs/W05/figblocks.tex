@@ -1,0 +1,327 @@
+%%% BEGIN fig:sudakov-cusp
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lc/.style={draw=gray!60!black,line width=0.55pt,dash pattern=on 3pt off 2pt},
+  fa ext/.style={draw=gray!55!black,line width=0.5pt,dash pattern=on 1.5pt off 1.5pt},
+  fa lab/.style={font=\small},
+  fa note/.style={font=\footnotesize},
+  fa cap/.style={font=\footnotesize},
+  fa eq/.style={font=\normalsize}]
+  % ===================== (a) the cusp: incoming along v2 from the past, outgoing along v1 =====================
+  \begin{scope}
+    \draw[lcaxis,gray!60!black] (-2.15,0) -- (2.3,0) node[fa note,below] {$z$};
+    \draw[lcaxis,gray!60!black] (0,-2.05) -- (0,2.3) node[fa note,left] {$t$};
+    \draw[fa lc] (-1.85,-1.85) -- (1.85,1.85);
+    \draw[fa lc] (1.85,-1.85) -- (-1.85,1.85) node[fa note,anchor=south east,text=gray!45!black,inner sep=1pt] {光锥};
+    % continuation of the incoming direction v2 beyond the cusp
+    \draw[fa ext] (0,0) -- (68:1.45);
+    \draw[wilson=0.5] (248:1.95) node[fa lab,anchor=north,inner sep=2pt] {$v_2$} -- (0,0);
+    \draw[wilson=0.62] (0,0) -- (112:1.95) node[fa lab,anchor=south,inner sep=2pt] {$v_1$};
+    \draw[line width=0.5pt] (68:0.85) arc[start angle=68,end angle=112,radius=0.85];
+    \node[fa lab] at (90:1.08) {$\beta$};
+    \node[opvertex] at (0,0) {};
+    \node[fa cap,align=center] at (0.1,-2.62) {(a)\ 类时 Wilson 线的尖点，$\cosh\beta=v_1\cdot v_2$};
+  \end{scope}
+  % ===================== (b) light-like limit =====================
+  \begin{scope}[xshift=5.6cm]
+    \draw[fa lc] (0,0) -- (45:2.45);
+    \draw[fa lc] (0,0) -- (-45:2.45);
+    % in the limit both lines lie on the light cone (drawn on top of the dashed cone)
+    \draw[wilson=0.5] (225:1.95) node[fa lab,anchor=north east,inner sep=1pt] {$v_2\to n_A$} -- (0,0);
+    \draw[wilson=0.62] (0,0) -- (135:1.95) node[fa lab,anchor=south east,inner sep=1pt] {$v_1\to n_B$};
+    \node[opvertex] at (0,0) {};
+    \node[fa note,align=left,anchor=west] at (1.45,0.05)
+      {$\beta\to\infty$：$\Gamma(\beta)\simeq\dfrac{\alpha_sC_F}{\pi}\,(\beta-1)$\\[3pt]
+       线性依赖于 $\beta$，斜率即单圈\\[1pt]
+       $\Gamma_{\mathrm{cusp}}=\dfrac{\alpha_sC_F}{\pi}=\dfrac{\alpha_s}{4\pi}\,\Gamma_0$};
+    \node[fa cap] at (2.2,-2.62) {(b)\ 类光极限};
+  \end{scope}
+  % ===================== (c) one-loop graphs =====================
+  \begin{scope}[yshift=-5.55cm,xshift=-0.6cm]
+    % exchange between the two lines
+    \begin{scope}
+      \draw[wilson=0.17] (248:1.7) -- (0,0);
+      \draw[wilson=0.83] (0,0) -- (112:1.7);
+      \draw[gluon] (248:0.95) to[bend left=62] (112:0.95);
+      \foreach \a in {248,112} \node[vertex] at (\a:0.95) {};
+      \node[opvertex] at (0,0) {};
+      \node[fa note] at (-0.35,-1.95) {交换};
+    \end{scope}
+    \node[fa eq] at (1.25,0) {$+$};
+    % self-energy of line 1
+    \begin{scope}[xshift=2.55cm]
+      \draw[wilson=0.5] (248:1.7) -- (0,0);
+      \draw[wilson=0.6] (0,0) -- (112:1.7);
+      \draw[gluon] (112:0.42) .. controls ($(112:0.42)+(22:0.85)$) and ($(112:1.42)+(22:0.85)$) .. (112:1.42);
+      \foreach \r in {0.42,1.42} \node[vertex] at (112:\r) {};
+      \node[opvertex] at (0,0) {};
+      \node[fa note] at (0,-1.95) {线 1 的自能};
+    \end{scope}
+    \node[fa eq] at (4.1,0) {$+$};
+    % self-energy of line 2
+    \begin{scope}[xshift=5.35cm]
+      \draw[wilson=0.4] (248:1.7) -- (0,0);
+      \draw[wilson=0.5] (0,0) -- (112:1.7);
+      \draw[gluon] (248:1.42) .. controls ($(248:1.42)+(-22:0.85)$) and ($(248:0.42)+(-22:0.85)$) .. (248:0.42);
+      \foreach \r in {0.42,1.42} \node[vertex] at (248:\r) {};
+      \node[opvertex] at (0,0) {};
+      \node[fa note] at (0,-1.95) {线 2 的自能};
+    \end{scope}
+    \node[fa eq,anchor=west] at (7.0,0) {$\Longrightarrow\ \ \Gamma(\beta)=\dfrac{\alpha_sC_F}{\pi}\,\big(\beta\coth\beta-1\big)$};
+    \node[fa cap] at (6.0,-2.55) {(c)\ 单圈图：交换与两条线的自能（自能给出 $-1$，使 $\Gamma(0)=0$）};
+  \end{scope}
+\end{tikzpicture}
+\caption{Wilson 线尖点及其单圈修正。(a) 类时 Wilson 线 $W[\infty v_1,0]\,W[0,-\infty v_2]$（$v_i^2=1$，$v_i^0>0$；双线箭头为路径方向）：沿 $v_2$ 自过去入射，在原点折向 $v_1$；
+尖点角 $\beta$ 由 $\cosh\beta=v_1\cdot v_2$ 定义，$\beta=0$ 即一条不折的直线（图中所画角度为示意）。(b) 类光极限：$v_2$、$v_1$ 分别趋于 $n_A$、$n_B$ 方向，$\beta\to\infty$。
+(c) 包含两线自能的单圈尖点反常维度为 $\Gamma(\beta)=\frac{\alpha_sC_F}\pi(\beta\coth\beta-1)$，类光极限下线性依赖于 $\beta$，斜率给出单圈 $\Gamma_{\rm cusp}$（VF-CONV-23）。}
+\label{fig:sudakov-cusp}
+\end{figure}
+%%% END fig:sudakov-cusp
+
+%%% BEGIN fig:sudakov-dipole
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa soft/.style={gluon,green!45!black},
+  fa web/.style={soft blob,line width=0.7pt,pattern=north east lines,pattern color=green!45!black},
+  fa over/.style={preaction={draw=white,line width=4.2pt,decorate=false}},
+  fa lab/.style={font=\small},
+  fa note/.style={font=\footnotesize},
+  fa cap/.style={font=\footnotesize},
+  fa legs/.pic={\foreach \a/\n in {66/1,22/2,-22/3,-66/4} {
+                  \draw[plain] (\a:0.4) -- (\a:2.2) node[font=\small,anchor=\a+180,inner sep=2pt] {$\n$};}
+                \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] at (0,0) {$H$};}]
+  % ===================== (a) dipole terms =====================
+  \begin{scope}
+    \pic at (0,0) {fa legs};
+    \draw[fa soft] (66:1.75) to[bend left=38] (22:1.75);
+    \draw[fa soft] (-22:1.75) to[bend left=38] (-66:1.75);
+    \foreach \a in {66,22,-22,-66} \node[vertex] at (\a:1.75) {};
+    \node[fa note,anchor=south west,inner sep=1pt] at (44:2.12) {$\mathbf T_1\cdot\mathbf T_2$};
+    \node[fa note,anchor=north west,inner sep=1pt] at (-44:2.12) {$\mathbf T_3\cdot\mathbf T_4$};
+    \node[fa note,align=left,anchor=west] at (2.75,0) {对所有\\$i\neq j$ 求和};
+    \node[fa cap] at (1.3,-3.05) {(a)\ 两圈以内：偶极子（色关联 $\mathbf T_i\cdot\mathbf T_j$）};
+  \end{scope}
+  % ===================== (b) three-loop webs (non-dipole) =====================
+  % web blob in the free sector between legs 2 and 3; gluons that pass over a leg get a white gap
+  \begin{scope}[xshift=7.2cm]
+    \pic at (0,0) {fa legs};
+    \draw[fa soft,fa over] (1.66,0.27) -- (66:1.5);
+    \draw[fa soft] (1.86,0.2) -- (22:2.02);
+    \draw[fa soft] (1.86,-0.2) -- (-22:2.02);
+    \node[fa web,circle,minimum size=0.62cm,inner sep=0pt] (W) at (1.75,0) {};
+    \foreach \p in {(66:1.5),(22:2.02),(-22:2.02)} \node[vertex] at \p {};
+    \node[fa note] at (0.9,-2.6) {连接三条外线};
+  \end{scope}
+  \begin{scope}[xshift=11.6cm]
+    \pic at (0,0) {fa legs};
+    \draw[fa soft,fa over] (1.66,0.27) -- (66:1.5);
+    \draw[fa soft,fa over] (1.66,-0.27) -- (-66:1.5);
+    \draw[fa soft] (1.86,0.2) -- (22:2.02);
+    \draw[fa soft] (1.86,-0.2) -- (-22:2.02);
+    \node[fa web,circle,minimum size=0.62cm,inner sep=0pt] (W) at (1.75,0) {};
+    \foreach \p in {(66:1.5),(22:2.02),(-22:2.02),(-66:1.5)} \node[vertex] at \p {};
+    \node[fa note] at (0.9,-2.6) {连接四条外线};
+  \end{scope}
+  \node[fa cap] at (9.45,-3.05) {(b)\ 三圈起：非偶极子 web（阴影）};
+  % ===================== anomalous dimension (VF-SUD-5) =====================
+  \node[font=\small] at (5.6,-3.9)
+    {$\boldsymbol\Gamma=\displaystyle\sum_{(i,j)}\frac{\mathbf T_i\cdot\mathbf T_j}{2}\,\gamma_{\rm cusp}(\alpha_s)\ln\frac{\mu^2}{-s_{ij}}+\sum_i\gamma^i(\alpha_s)$
+     \quad（两圈以内成立）};
+\end{tikzpicture}
+\caption{多腿振幅的红外结构：(a) 两圈以内由偶极子项（色关联 $\mathbf T_i\cdot\mathbf T_j$）给出，反常维度如图下公式（VF-SUD-5，$(i,j)$ 取有序对）；
+(b) 三圈起出现连接三条或四条外线的非偶极子 web（偶极子公式作为全阶公式在三圈失效，[V]）。}
+\label{fig:sudakov-dipole}
+\end{figure}
+%%% END fig:sudakov-dipole
+
+%%% BEGIN fig:sudakov-ff
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hc/.style={draw=black,line width=1.15pt},
+  t2 c1/.style={draw=blue!60!black},
+  t2 c2/.style={draw=orange!80!black},
+  t2 us/.style={draw=green!45!black},
+  t2 v/.style={font=\scriptsize,inner sep=1pt},
+  t2 lab/.style={font=\small}]
+  % ======================= master graph with momentum routing =======================
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.25,0) -- (V);
+    \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon] (G2) -- (G1);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.25,0) -- (V);
+    \path[mom={$p_1-k$},mom pos=0.5] (V) -- (G1);
+    \path[mom'={$p_2+k$},mom pos=0.5] (V) -- (G2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) -- (G1);
+    \path[mom={$p_1$},mom pos=0.55] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G2) -- (E2);
+    \node[font=\footnotesize,align=center] at (0.75,-2.05) {$p_1^2\sim p_2^2\sim\lambda^2Q^2\ll Q^2=q^2$};
+  \end{scope}
+  % region panels: smaller copies (scale 0.74) of the same graph, internal lines coloured by their virtuality class
+  % #1 = shift, line styles for (V-G1), (V-G2), gluon; labels
+  % ---------------- hard ----------------
+  \begin{scope}[xshift=4.85cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \fill[gray!28] (V) -- (G1) -- (G2) -- cycle;
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,line width=1.0pt] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west] at ($(G1)!0.5!(G2)+(0.2,0)$) {$Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {硬区：$k\sim Q(1,1,1)$};
+  \end{scope}
+  % ---------------- collinear to p1 ----------------
+  \begin{scope}[xshift=9.35cm,yshift=1.05cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 hc] (G2) -- (V);
+    \draw[gluon,t2 c1] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east] at ($(V)!0.5!(G2)$) {$Q^2$};
+    \node[t2 v,anchor=west,text=blue!50!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$1$ 共线：$k\sim Q(1,\lambda^2,\lambda)$};
+  \end{scope}
+  % ---------------- collinear to p2 ----------------
+  \begin{scope}[xshift=4.85cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 hc] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 c2] (G2) -- (G1);
+    \node[t2 v,anchor=south east] at ($(V)!0.5!(G1)$) {$Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=orange!60!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^2Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {$2$ 共线：$k\sim Q(\lambda^2,1,\lambda)$};
+  \end{scope}
+  % ---------------- ultrasoft ----------------
+  \begin{scope}[xshift=9.35cm,yshift=-1.95cm,scale=0.74,every node/.append style={transform shape=false}]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.45,1.35); \coordinate (E2) at (2.45,-1.35);
+    \coordinate (G1) at ($(V)!0.58!(E1)$); \coordinate (G2) at ($(V)!0.58!(E2)$);
+    \draw[photon] (-1.2,0) -- (V);
+    \draw[quark,t2 c1] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark,t2 c2] (G2) -- (V);
+    \draw[gluon,t2 us] (G2) -- (G1);
+    \node[t2 v,anchor=south east,text=blue!50!black] at ($(V)!0.5!(G1)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=north east,text=orange!60!black] at ($(V)!0.5!(G2)$) {$\lambda^2Q^2$};
+    \node[t2 v,anchor=west,text=green!35!black] at ($(G1)!0.5!(G2)+(0.2,0)$) {$\lambda^4Q^2$};
+    \node[font=\footnotesize,anchor=north] at (0.75,-1.45) {超软：$k\sim Q(\lambda^2,\lambda^2,\lambda^2)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈离壳 Sudakov 形状因子的按区域展开（此处画成类时情形 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$；$p_1$ 沿 $n$（$+$ 方向），$p_2$ 沿 $\bar n$）。
+左：动量走向，外线离壳 $p_1\sim Q(1,\lambda^2,\lambda)$、$p_2\sim Q(\lambda^2,1,\lambda)$，标度均按 $(k^+,k^-,k_T)$ 书写。
+右：圈动量 $k$ 的四个贡献区域，内线旁标出其虚度的量级：硬区（三条内线均离壳 $\sim Q^2$，整个圈收缩为一点，灰色）、
+$1$ 共线区（$k$ 与 $p_1-k$ 构成沿 $p_1$ 的喷注，蓝色；$p_2+k$ 为硬线）、$2$ 共线区（橙色，镜像）、超软区（胶子虚度 $\sim\lambda^4Q^2$，绿色；两条夸克线虚度 $\sim\lambda^2Q^2$）。
+软区 $k\sim Q(\lambda,\lambda,\lambda)$ 给出无标度积分，在维数正规化中为零。各区域单独含有 $1/\varepsilon^2$、$1/\varepsilon$ 极点：对标量三角形积分，这些极点在求和中完全相消，给出有限的原积分；
+对完整的 QCD 顶点，求和后只剩原积分本身的紫外发散，由重整化消去。}
+\label{fig:sudakov-ff}
+\end{figure}
+%%% END fig:sudakov-ff
+
+%%% BEGIN fig:sudakov-hjjs
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lab/.style={font=\small},
+  fa note/.style={font=\footnotesize},
+  fa cap/.style={font=\footnotesize},
+  fa eq/.style={font=\normalsize}]
+  % ===================== (a) leading region (reduced diagram) =====================
+  \begin{scope}
+    \node[hard blob,circle,minimum size=1.0cm,inner sep=0pt] (H) at (0,0) {$H$};
+    \node[jet blob,ellipse,minimum width=2.15cm,minimum height=0.66cm,rotate=28] (J1) at (2.8,1.55) {};
+    \node[jetB blob,ellipse,minimum width=2.15cm,minimum height=0.66cm,rotate=-28] (J2) at (2.8,-1.55) {};
+    \node[soft blob,circle,minimum size=0.62cm,inner sep=0pt] (S) at (3.4,0) {};
+    \draw[photon] (-1.75,0) -- (H.west);
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (H.west);
+    % quark: H -> J1 -> out;  antiquark: out -> J2 -> H  (arrows = fermion-number flow)
+    \draw[quark] (H.60) -- (J1.180);
+    \draw[quark] (J1.0) -- ++(28:1.25) coordinate (E1);
+    \draw[quark] ($(J2.0)+(-28:1.25)$) coordinate (E2) -- (J2.0);
+    \draw[quark] (J2.180) -- (H.-60);
+    % momenta of the outgoing quark and antiquark (both point away from H)
+    \path[mom={$p_1$},mom pos=0.55] (J1.0) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (J2.0) -- (E2);
+    % scalar-polarized collinear gluons J_i -> H
+    \draw[longit] (J1.246) to[bend left=8] (H.14);  \longitmark{(J1.246)}{(H.14)}
+    \draw[longit] (J2.114) to[bend right=8] (H.-14); \longitmark{(J2.114)}{(H.-14)}
+    % soft gluons, attached to the jets only
+    \draw[gluon,green!45!black] (S.118) -- (J1.290);
+    \draw[gluon,green!45!black] (S.62) -- (J1.320);
+    \draw[gluon,green!45!black] (S.-118) -- (J2.70);
+    \draw[gluon,green!45!black] (S.-62) -- (J2.40);
+    \node[fa lab] at (2.55,2.27) {$J_1$};
+    \node[fa lab] at (2.55,-2.27) {$J_2$};
+    \node[fa lab,anchor=west] at (S.east) {$S$};
+    \node[fa note,anchor=west] at ($(E1)+(0.05,0)$) {沿 $n_A$};
+    \node[fa note,anchor=west] at ($(E2)+(0.05,0)$) {沿 $n_B$};
+    \node[fa note,text=blue!55!black,align=center,anchor=east] at (0.55,-1.3) {纵向极化\\共线胶子};
+    \draw[blue!55!black,line width=0.4pt] (0.5,-1.05) -- (0.98,-0.5);
+    \node[fa cap] at (1.75,-3.0) {(a)\ 领头区域（约化图）};
+  \end{scope}
+  % ===================== (b) factorized form F = H J1 J2 / S =====================
+  \begin{scope}[yshift=-5.1cm,xshift=-2.45cm]
+    \node[fa eq] at (-0.75,0) {$F\;=\;H\;\times$};
+    % ---- J1: quark jet along n_A, Wilson line along n_B ----
+    \begin{scope}[xshift=0.45cm]
+      \coordinate (O) at (0,0);
+      \node[jet blob,ellipse,minimum width=1.3cm,minimum height=0.5cm,rotate=28] (J) at (28:1.4) {};
+      \draw[quark] (O) -- (J.180);
+      \draw[quark] (J.0) -- ++(28:0.7);
+      \draw[wilson=0.22] (-28:2.1) coordinate (W) -- (O);
+      \draw[gluon] (J.275) -- ($(O)!0.47!(W)$);
+      \node[vertex] at ($(O)!0.47!(W)$) {};
+      \node[opvertex] at (O) {};
+      \node[fa note,anchor=west] at (W) {$n_B$};
+      \node[fa lab] at (1.25,1.45) {$J_1$};
+    \end{scope}
+    \node[fa eq] at (3.15,0) {$\times$};
+    % ---- J2: antiquark jet along n_B, Wilson line along n_A ----
+    \begin{scope}[xshift=3.75cm]
+      \coordinate (O) at (0,0);
+      \node[jetB blob,ellipse,minimum width=1.3cm,minimum height=0.5cm,rotate=-28] (J) at (-28:1.4) {};
+      \draw[quark] (J.180) -- (O);
+      \draw[quark] ($(J.0)+(-28:0.7)$) -- (J.0);
+      \draw[wilson=0.8] (O) -- (28:2.1) coordinate (W);
+      \draw[gluon] (J.85) -- ($(O)!0.47!(W)$);
+      \node[vertex] at ($(O)!0.47!(W)$) {};
+      \node[opvertex] at (O) {};
+      \node[fa note,anchor=west] at (W) {$n_A$};
+      \node[fa lab] at (1.25,-1.45) {$J_2$};
+    \end{scope}
+    \node[fa eq] at (6.55,0) {$\Big/$};
+    % ---- S: two Wilson lines meeting at a cusp ----
+    \begin{scope}[xshift=7.05cm]
+      \coordinate (O) at (0,0);
+      \draw[wilson=0.84] (O) -- (28:2.1) coordinate (WA);
+      \draw[wilson=0.16] (-28:2.1) coordinate (WB) -- (O);
+      \node[soft blob,circle,minimum size=0.52cm,inner sep=0pt] (Sb) at (1.5,0) {};
+      \draw[gluon,green!45!black] (Sb.110) -- ($(O)!0.5!(WA)$);
+      \draw[gluon,green!45!black] (Sb.-110) -- ($(O)!0.5!(WB)$);
+      \node[vertex] at ($(O)!0.5!(WA)$) {};
+      \node[vertex] at ($(O)!0.5!(WB)$) {};
+      \node[opvertex] at (O) {};
+      \node[fa note,anchor=west] at (WA) {$n_A$};
+      \node[fa note,anchor=west] at (WB) {$n_B$};
+      \node[fa lab] at (1.25,1.45) {$S$};
+    \end{scope}
+    \node[fa cap] at (4.2,-1.85) {(b)\ 因子化形式 $F=H\,J_1J_2/S$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Sudakov 形状因子的领头区域与因子化 $F=H\,J_1J_2/S$（$\gamma^*\to q(p_1)\,\bar q(p_2)$，$p_1$ 沿 $n_A$、$p_2$ 沿 $n_B$）。
+(a) 硬子图 $H$、两个喷注子图 $J_1$、$J_2$ 与只连接喷注的软子图 $S$（绿色）；Feynman 规范下 $J_i$ 与 $H$ 之间还有任意多条标量（纵向）极化的共线胶子（蓝色，以圆点标记）。
+(b) 喷注函数中的 Wilson 线沿另一喷注方向，软函数是两条 Wilson 线的真空期望（$\otimes$ 为算符所在点，双线箭头与被替代的夸克线的费米子数流向一致）。}
+\label{fig:sudakov-hjjs}
+\end{figure}
+%%% END fig:sudakov-hjjs

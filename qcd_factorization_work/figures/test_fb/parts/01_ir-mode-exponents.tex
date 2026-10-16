@@ -1,0 +1,66 @@
+%%% BEGIN fig:ir-mode-exponents
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x={(1.9cm,0cm)},y={(-0.996cm,0.575cm)},z={(0cm,1.55cm)},
+  fb ax/.style={lcaxis,gray!50!black},
+  fb guide/.style={draw=gray!60,line width=0.4pt,dash pattern=on 1pt off 1.6pt},
+  fb plane/.style={fill=gray!22,fill opacity=0.62,draw=gray!55!black,line width=0.6pt},
+  fb pt/.style={circle,draw=white,line width=0.4pt,inner sep=0pt,minimum size=5.6pt},
+  fb gl/.style={circle,draw=red!60!black,fill=white,line width=0.9pt,inner sep=0pt,minimum size=6pt},
+  fb lab/.style={font=\footnotesize,inner sep=2pt},
+  fb tick/.style={font=\scriptsize,text=gray!35!black,inner sep=1.5pt}]
+  % ---------------- base grid (c = 0) and axes ----------------
+  \foreach \t in {1,2} {
+    \draw[fb guide] (\t,0,0) -- (\t,2,0);
+    \draw[fb guide] (0,\t,0) -- (2,\t,0);
+  }
+  \draw[fb ax] (0,0,0) -- (2.75,0,0) node[right,font=\small] {$a$};
+  \draw[fb ax] (0,0,0) -- (0,2.85,0) node[left,font=\small] {$b$};
+  \foreach \t in {1,2} {
+    \draw[gray!50!black,line width=0.5pt] (\t,0,0) -- ++(0,0,-0.07) node[below,fb tick] {$\t$};
+    \draw[gray!50!black,line width=0.5pt] (0,\t,0) -- ++(0,0,-0.07) node[below,fb tick] {$\t$};
+  }
+  % vertical guides down to the base plane
+  \draw[fb guide] (2,2,0) -- (2,2,0.95);
+  \draw[fb guide] (2,0,0) -- (2,0,1);
+  \draw[fb guide] (0,2,0) -- (0,2,1);
+  % Glauber point and its vertical offset: below the plane, hence drawn before the translucent plane
+  \node[fb gl] (G) at (2,2,1) {};
+  \draw[red!60!black,line width=0.85pt,dash pattern=on 2.5pt off 1.8pt,-{Stealth[length=4pt,width=3.4pt]}]
+       (2,2,1.07) -- (2,2,1.93);
+  % ---------------- on-shell plane c = (a+b)/2 ----------------
+  \draw[fb plane] (0,0,0) -- (2,0,1) -- (2,2,2) -- (0,2,1) -- cycle;
+  \node[font=\footnotesize,text=gray!30!black,rotate=22.2] at (1.35,0.3,0.825) {在壳平面};
+  % the c axis lies in front of the plane
+  \draw[fb ax] (0,0,0) -- (0,0,2.8) node[above,font=\small] {$c$};
+  \foreach \t in {1,2}
+    \draw[gray!50!black,line width=0.5pt] (0,0,\t) -- ++(-0.045,0,0) node[left,fb tick] {$\t$};
+  % ---------------- modes ----------------
+  \node[fb pt,fill=black] (H)  at (0,0,0) {};
+  \node[fb pt,fill=blue!55!black] (CA) at (0,2,1) {};
+  \node[fb pt,fill=orange!85!black] (CB) at (2,0,1) {};
+  \node[fb pt,fill=green!40!black] (US) at (2,2,2) {};
+  \node[fb pt,fill=green!60!black] (S) at (1,1,1) {};
+  \node[fb lab,anchor=north east] at (H.south west) {硬 $(0,0,0)$};
+  \node[fb lab,anchor=east] at (CA.west) {$A$ 共线 $(0,2,1)$};
+  \node[fb lab,anchor=west] at (CB.east) {$B$ 共线 $(2,0,1)$};
+  \node[fb lab,anchor=west] at (US.east) {超软 $(2,2,2)$};
+  \node[fb lab,anchor=south] at ($(S.north)+(0cm,0.02cm)$) {软 $(1,1,1)$};
+  \node[fb lab,anchor=west,text=red!55!black] (GL) at (canvas cs:x=3.15cm,y=3.25cm) {Glauber $(2,2,1)$};
+  \node[fb lab,anchor=north west,text=red!55!black,inner sep=1pt] at ($(GL.south west)+(0.1cm,0cm)$) {$k^2\approx-k_T^2$，离壳};
+  \draw[red!55!black,line width=0.4pt] ($(G.east)+(0.02cm,0.03cm)$) -- (GL.west);
+  % ---------------- legend ----------------
+  \node[font=\small,anchor=east] at (canvas cs:x=-0.45cm,y=4.3cm) {$(k^+,\,k^-,\,k_T)\sim(\lambda^a,\,\lambda^b,\,\lambda^c)\,Q$};
+  \node[font=\footnotesize,anchor=north west,align=left,inner sep=0pt] at (canvas cs:x=6.45cm,y=3.38cm)
+    {平面上 $c=\tfrac12(a+b)$：\\[1pt]$\quad k_T^2\sim k^+k^-\sim|k^2|$\\[5pt]
+     平面下 $c<\tfrac12(a+b)$：\\[1pt]$\quad k_T^2\gg|k^+k^-|$，$k^2\approx-k_T^2$};
+\end{tikzpicture}
+\caption{动量模式在指数空间 $(a,b,c)$ 中的位置，$(k^+,k^-,k_T)\sim(\lambda^a,\lambda^b,\lambda^c)\,Q$，$\lambda\ll1$（指数越大，相应分量越小）。
+硬、$A$ 共线、$B$ 共线、软与超软模式都在在壳平面 $c=\frac12(a+b)$（半透明灰色平行四边形）上，即 $k_T^2$、$k^+k^-$ 与虚度 $|k^2|$ 同阶；
+硬、两种共线与超软模式恰为平行四边形的四个顶点，软模式 $(1,1,1)$（TMD 因子化所用的标度）为其中心。
+Glauber 模式 $(2,2,1)$（红色空心圆，透过平面看到）与超软模式有相同的 $k^\pm$，只是横动量大 $\lambda^{-1}$ 倍（红色虚线），因而位于平面之下：
+$|k^+k^-|\ll k_T^2$，$k^2\approx-k_T^2$，以横动量为主且离壳；在 $(\ln k^+,\ln k^-)$ 平面（\cref{fig:momentum-regions}）上它与超软模式重合，只有加上第三个方向 $\ln k_T$ 才能区分。
+本书的“超软”即 Libby--Sterman 的“软”。}
+\label{fig:ir-mode-exponents}
+\end{figure}
+%%% END fig:ir-mode-exponents

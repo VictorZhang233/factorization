@@ -1,0 +1,42 @@
+%%% BEGIN fig:jets-ngl
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ray/.style={draw,solid,line width=0.9pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc veto/.style={fill=orange!12,draw=none},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  \def\fcR{2.3}
+  % hemispheres: R (measured, energy veto) shaded, L (unmeasured) blank
+  \fill[fc veto] (0,-\fcR) arc[start angle=-90,end angle=90,radius=\fcR] -- cycle;
+  \draw[line width=0.6pt,gray!60!black] (0,0) circle[radius=\fcR];
+  \draw[line width=0.7pt,gray!60!black] (0,-\fcR-0.25) -- (0,\fcR+0.25);
+  % thrust axis
+  \draw[gray!60!black,line width=0.45pt,dash pattern=on 3pt off 2pt] (-\fcR-0.6,0) -- (\fcR+0.6,0);
+  \node[fc note,anchor=north west,text=gray!35!black] at (\fcR+0.05,-0.08) {推力轴};
+  % primary q qbar pair
+  \draw[fc ray] (0,0) -- (2.15,0);
+  \draw[fc ray] (0,0) -- (-2.15,0);
+  \node[fc lab,anchor=north] at (1.95,-0.05) {$q$};
+  \node[fc lab,anchor=north] at (-1.95,-0.05) {$\bar q$};
+  % harder gluon k1 into L, softer gluon k2 radiated by it into R
+  \draw[gluon] (0,0) -- (-1.2,1.44);
+  \draw[fc soft] (-0.6,0.72) -- (1.05,1.42);
+  \node[vertex] at (0,0) {};  \node[vertex] at (-0.6,0.72) {};
+  \node[fc lab,anchor=east] at (-1.25,1.3) {$k_1$};
+  \node[fc lab,anchor=west,text=green!35!black] at (1.12,1.38) {$k_2$};
+  \node[fc note,anchor=north west] at (0.55,1.1) {$\omega_2\ll\omega_1$};
+  % hemisphere labels
+  \node[fc lab,align=center] at (-1.1,-1.0) {L\\[-1pt]\scriptsize（不测量）};
+  \node[fc lab,align=center] at (1.05,-1.0) {R\\[-1pt]\scriptsize（$E_R<E_{\rm cut}$）};
+  % order and colour factor
+  \node[fc note,draw=gray!60!black,rounded corners=2pt,inner sep=3pt,anchor=west] at (\fcR+0.9,1.55) {$\order{\alpha_s^2}$：$C_FC_A$};
+  \node[fc note,anchor=west,align=left] at (\fcR+0.9,0.75) {$k_1\in\mathrm L$：不受限制\\$k_2\in\mathrm R$：受否决};
+\end{tikzpicture}
+\caption{非全局对数的来源（$e^+e^-$质心系，示意）。垂直于推力轴的平面把事例分为半球 L 与 R，只对 R 中的总能量施加否决$E_R<E_{\rm cut}$（阴影）；$q$、$\bar q$沿推力轴。
+未被测量的 L 中的较硬胶子$k_1$（能量$\omega_1$）向被否决的 R 辐射较软的胶子$k_2$（$\omega_2\ll\omega_1$）：$k_2$由$k_1$参与的相干发射给出，其实辐射被否决而虚修正不受限制，二者不再相消，产生非全局对数；
+首项出现在$\order{\alpha_s^2}$，色因子为$C_FC_A$（\cref{prop:jets-ngl}）。}
+\label{fig:jets-ngl}
+\end{figure}
+%%% END fig:jets-ngl

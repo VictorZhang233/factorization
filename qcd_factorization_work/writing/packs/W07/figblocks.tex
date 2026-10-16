@@ -1,0 +1,439 @@
+%%% BEGIN fig:dis-euclid-segment
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb bcut/.style={draw,line width=0.9pt,decorate,decoration={zigzag,segment length=4.2pt,amplitude=1.6pt}},
+  fb seg/.style={draw=blue!65!black,line width=2.2pt,line cap=butt},
+  fb lab/.style={font=\footnotesize},
+  fb zoom/.style={draw=gray!55!black,line width=0.45pt}]
+  \def\fbu{1.75}   % cm per unit of omega
+  % ---------------- omega plane ----------------
+  \fill[blue!5] (0,0) circle[radius=\fbu];
+  \draw[gray!65!black,line width=0.7pt,dash pattern=on 1.2pt off 1.8pt] (0,0) circle[radius=\fbu];
+  \draw[lcaxis] (-2.45*\fbu,0) -- (2.55*\fbu,0) node[above left=3pt and -2pt,font=\small] {$\Real\omega$};
+  \draw[lcaxis] (0,-1.5*\fbu) -- (0,1.75*\fbu) node[left,font=\small] {$\Imag\omega$};
+  \draw[fb bcut] (\fbu,0) -- (2.4*\fbu,0);
+  \draw[fb bcut] (-\fbu,0) -- (-2.4*\fbu,0);
+  \fill (\fbu,0) circle[radius=1.6pt]; \fill (-\fbu,0) circle[radius=1.6pt];
+  \node[anchor=north west,font=\small,inner sep=1.5pt] at (\fbu+0.02,-0.08) {$1$};
+  \node[anchor=north east,font=\small,inner sep=1.5pt] at (-\fbu-0.02,-0.08) {$-1$};
+  \node[fb lab,anchor=north,align=center] at (1.9*\fbu,-0.16) {$s$ 道割线\\（物理区 $0<x\le1$）};
+  \node[fb lab,anchor=north] at (-1.85*\fbu,-0.16) {$u$ 道割线};
+  \node[fb lab,text=gray!35!black,anchor=north east] at (-0.72*\fbu,-0.72*\fbu) {$|\omega|=1$};
+  \node[fb lab,align=left,text=blue!45!black,anchor=south east] (AN) at (-1.05,1.82) {单位圆盘 $|\omega|<1$ 内\\$T_2$ 解析（\cref{prop:dis-dispersion-np}）};
+  \draw[blue!45!black,line width=0.4pt] ($(AN.south east)+(-0.25,0.02)$) -- (-0.72,0.9);
+  % the Euclidean segment I_Q (drawn to scale for sqrt(3)M/Q = 0.08)
+  \draw[fb seg] (0,-0.08*\fbu) -- (0,0.08*\fbu);
+  % magnifier: small circle at the origin, external tangents to the inset
+  \coordinate (Z) at (5.7,3.45);
+  \draw[fb zoom] (0,0) circle[radius=0.49];
+  \draw[fb zoom] (-0.320,0.371) -- (4.655,4.662);
+  \draw[fb zoom] (0.180,-0.456) -- (6.289,1.962);
+  \begin{scope}[shift={(Z)}]
+    \begin{scope}
+      \clip (0,0) circle[radius=1.6];
+      \fill[blue!5] (-1.7,-1.7) rectangle (1.7,1.7);
+      % the origin of omega sits at (-0.5,0) inside the inset
+      \draw[gray!60!black,line width=0.5pt] (-1.7,0) -- (1.7,0);
+      \draw[gray!60!black,line width=0.5pt] (-0.5,-1.7) -- (-0.5,1.7);
+    \end{scope}
+    \draw[fb zoom,line width=0.7pt] (0,0) circle[radius=1.6];
+    \draw[fb seg] (-0.5,-0.75) -- (-0.5,0.75);
+    \draw[blue!65!black,line width=0.6pt] (-0.61,0.75) -- (-0.39,0.75) (-0.61,-0.75) -- (-0.39,-0.75);
+    \node[font=\scriptsize,anchor=west,inner sep=2pt] at (-0.38,0.75) {$\ii\sqrt3\,M/Q$};
+    \node[font=\scriptsize,anchor=west,inner sep=2pt] at (-0.38,-0.75) {$-\ii\sqrt3\,M/Q$};
+    \node[font=\small,text=blue!55!black,anchor=west] at (-0.36,0.3) {$\mathcal I_Q$};
+    \draw[red!60!black,line width=0.7pt,-{Stealth[length=4pt,width=3.4pt]}] (-0.9,1.27) -- (-0.9,0.82);
+    \draw[red!60!black,line width=0.7pt,-{Stealth[length=4pt,width=3.4pt]}] (-0.9,-1.27) -- (-0.9,-0.82);
+  \end{scope}
+  \node[font=\footnotesize,anchor=west,align=left] at ($(Z)+(1.72,0)$) {{\color{gray!25!black}原点附近放大}\\[3pt]{\color{red!55!black}$Q\to\infty$：}\\{\color{red!55!black}线段缩向原点}};
+\end{tikzpicture}
+\caption{前向 Compton 振幅 $T_2$ 在复 $\omega=1/x$ 平面上的欧氏点。靶静止系中，欧氏动量 $q=(\ii q^4,\mathbf q)$（$|\mathbf q|\ge Q/2$）给出 $\omega=2\ii Mq^4/Q^2$，
+恰好取遍虚轴上的短线段 $\mathcal I_Q=\{\ii y:\,|y|\le\sqrt3M/Q\}$（蓝色粗线；右上为原点附近的放大），$Q\to\infty$ 时它缩向原点（VF-REF-1）。
+$T_2$ 在单位圆盘 $|\omega|<1$ 内解析，割线 $(-\infty,-1]$ 与 $[1,\infty)$ 分别为 $u$ 道与 $s$ 道（物理区）的割线。
+欧氏 OPE 只在长度为 $\order{M/Q}$ 的线段 $\mathcal I_Q$ 上提供信息；由此得到固定 $n$ 的矩还需要 $F_2\ge0$ 与有限减除的色散关系（\cref{thm:dis-fixed-n}），
+而 $n<n_0$ 的低阶矩还需要增长条件（\cref{prop:dis-low-moments}）。}
+\label{fig:dis-euclid-segment}
+\end{figure}
+%%% END fig:dis-euclid-segment
+
+%%% BEGIN fig:dis-kinematics
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \coordinate (V) at (0,1.75);
+  \coordinate (B) at (0,0);
+  \draw[quark] (-2.4,2.6) -- (V);
+  \draw[quark] (V) -- (2.4,2.6);
+  \draw[photon] (V) -- (0,0.5);
+  \draw[t1 hadron] (-2.4,0) -- (B);
+  \foreach \a in {24,8,-8,-24} \draw[plain] (B) -- ++(\a:2.3);
+  \draw[hadron blob] (B) circle[radius=0.5];
+  \node[vertex] at (V) {};
+  % momenta
+  \path[mom={$\ell$}] (-2.4,2.6) -- (V);
+  \path[mom={$\ell'$}] (V) -- (2.4,2.6);
+  \path[mom={$q$}] (V) -- (0,0.5);
+  \path[mom={$P$},mom sep=0.3cm] (-2.4,0) -- (-0.5,0);
+  % particle labels (lepton momenta are labelled by the momentum arrows)
+  \node[left,inner sep=5pt] at (0,1.12) {$\gamma^*$};
+  \node[left] at (-2.4,0) {$A$};
+  \node[right] at (2.45,0) {$X$};
+  % invariants
+  \node[right,align=left,font=\small] at (3.4,1.2)
+    {$q=\ell-\ell',\qquad Q^2=-q^2>0$\\[3pt]
+     $x=\dfrac{Q^2}{2P\cdot q},\qquad y=\dfrac{P\cdot q}{P\cdot\ell}$\\[8pt]
+     $W^2=(P+q)^2=M^2+\dfrac{1-x}{x}\,Q^2$};
+\end{tikzpicture}
+\caption{深度非弹性散射 $\ell+A(P)\to\ell'+X$ 的运动学（单光子交换）。轻子放出类空虚光子 $\gamma^*(q)$，
+被强子 $A$ 吸收；$X$ 为不被观测的强子末态，$W$ 为其不变质量，$M$ 为强子质量。Bjorken 极限为
+$Q^2\to\infty$、$x$ 固定。}
+\label{fig:dis-kinematics}
+\end{figure}
+%%% END fig:dis-kinematics
+
+%%% BEGIN fig:dis-oneloop
+\begin{figure}[htbp]
+\centering
+% photons, photon vertices, cut and external labels common to the cut graphs (a)-(d)
+\newcommand{\toneDIS}{%
+  \draw[photon] (-1.65,2.6) -- (-1.15,1.8);
+  \draw[photon] (1.15,1.8) -- (1.65,2.6);
+  \node[vertex] at (-1.15,1.8) {}; \node[vertex] at (1.15,1.8) {};
+  \draw[cut] (0,-0.25) -- (0,2.65);
+  \node[below] at (-1.15,0) {$p$}; \node[below] at (1.15,0) {$p$};
+  \node[left,inner sep=2pt] at (-1.65,2.6) {$q$};}
+\begin{subfigure}[b]{0.245\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-1.15,0) -- (-1.15,0.75);
+  \draw[quark] (-1.15,0.75) -- (-1.15,1.8);
+  \draw[quark] (-1.15,1.8) -- (-0.45,1.8);
+  \draw[quark=0.65] (-0.45,1.8) -- (1.15,1.8);
+  \draw[quark] (1.15,1.8) -- (1.15,0);
+  \draw[gluon] (-1.15,0.75) to[out=0,in=-90] (-0.45,1.8);
+  \toneDIS
+  \node[vertex] at (-1.15,0.75) {}; \node[vertex] at (-0.45,1.8) {};
+\end{tikzpicture}
+\caption{虚修正}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.245\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-1.15,0) -- (-1.15,0.75);
+  \draw[quark] (-1.15,0.75) -- (-1.15,1.8);
+  \draw[quark=0.75] (-1.15,1.8) -- (1.15,1.8);
+  \draw[quark] (1.15,1.8) -- (1.15,0.75);
+  \draw[quark] (1.15,0.75) -- (1.15,0);
+  \draw[gluon] (-1.15,0.75) -- (1.15,0.75);
+  \toneDIS
+  \node[vertex] at (-1.15,0.75) {}; \node[vertex] at (1.15,0.75) {};
+\end{tikzpicture}
+\caption{初态辐射}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.245\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-1.15,0) -- (-1.15,1.8);
+  \draw[quark] (-1.15,1.8) -- (-0.6,1.8);
+  \draw[quark=0.27] (-0.6,1.8) -- (0.6,1.8);
+  \draw[quark] (0.6,1.8) -- (1.15,1.8);
+  \draw[quark] (1.15,1.8) -- (1.15,0);
+  \draw[gluon] (-0.6,1.8) arc[start angle=180,end angle=0,radius=0.6];
+  \toneDIS
+  \node[vertex] at (-0.6,1.8) {}; \node[vertex] at (0.6,1.8) {};
+\end{tikzpicture}
+\caption{末态辐射}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.245\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-1.15,0) -- (-1.15,0.75);
+  \draw[quark] (-1.15,0.75) -- (-1.15,1.8);
+  \draw[quark=0.3] (-1.15,1.8) -- (0.6,1.8);
+  \draw[quark] (0.6,1.8) -- (1.15,1.8);
+  \draw[quark] (1.15,1.8) -- (1.15,0);
+  \draw[gluon] (-1.15,0.75) to[out=0,in=-90] (0.6,1.8);
+  \toneDIS
+  \node[vertex] at (-1.15,0.75) {}; \node[vertex] at (0.6,1.8) {};
+\end{tikzpicture}
+\caption{干涉项}
+\end{subfigure}
+
+\bigskip
+\begin{subfigure}[b]{0.42\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (A) at (0,-0.7); \coordinate (B) at (0,0.7);
+  \draw[gluon] (-1.5,-0.7) -- (A);
+  \draw[photon] (-1.5,0.7) -- (B);
+  \draw[quark] (1.5,-0.7) -- (A);
+  \draw[quark] (A) -- (B);
+  \draw[quark] (B) -- (1.5,0.7);
+  \node[vertex] at (A) {}; \node[vertex] at (B) {};
+  \path[mom={$q$}] (-1.5,0.7) -- (B);
+  \path[mom'={$p$}] (-1.5,-0.7) -- (A);
+  \path[mom={$k_1$}] (B) -- (1.5,0.7);
+  \path[mom'={$k_2$}] (A) -- (1.5,-0.7);
+  \path[mom'={$k_1-q$}] (A) -- (B);
+  \node[left] at (-1.5,0.7) {$\gamma^*$};
+  \node[left] at (-1.5,-0.7) {$g$};
+  \node[right] at (1.5,0.7) {$q$};
+  \node[right] at (1.5,-0.7) {$\bar q$};
+\end{tikzpicture}
+\caption{$\gamma^*g\to q\bar q$，$t$ 道}
+\end{subfigure}\hspace{1em}
+\begin{subfigure}[b]{0.42\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (A) at (0,-0.7); \coordinate (B) at (0,0.7);
+  \draw[gluon] (-1.5,-0.7) -- (A);
+  \draw[photon] (-1.5,0.7) -- (B);
+  \draw[quark] (1.5,0.7) -- (B);
+  \draw[quark] (B) -- (A);
+  \draw[quark] (A) -- (1.5,-0.7);
+  \node[vertex] at (A) {}; \node[vertex] at (B) {};
+  \path[mom={$q$}] (-1.5,0.7) -- (B);
+  \path[mom'={$p$}] (-1.5,-0.7) -- (A);
+  \path[mom={$k_2$}] (B) -- (1.5,0.7);
+  \path[mom'={$k_1$}] (A) -- (1.5,-0.7);
+  \path[mom={$q-k_2$}] (B) -- (A);
+  \node[left] at (-1.5,0.7) {$\gamma^*$};
+  \node[left] at (-1.5,-0.7) {$g$};
+  \node[right] at (1.5,0.7) {$\bar q$};
+  \node[right] at (1.5,-0.7) {$q$};
+\end{tikzpicture}
+\caption{$\gamma^*g\to q\bar q$，$u$ 道}
+\end{subfigure}
+\caption{DIS 在 $\order{\as}$ 的部分子图。(a)--(d) 为 $\gamma^*q$ 道的割图（左侧为振幅，右侧为共轭振幅）：
+(a) 一圈顶点修正与树图的干涉（外线自能在维数正规化中无标度，未画出）；(b) 初态辐射的平方；(c) 末态辐射的平方；
+(d) 初态辐射与末态辐射的干涉。(a) 与 (d) 各有一个未画出的镜像图（左右互换，即取复共轭），须一并计入。(e)、(f) 为玻色子—胶子聚合 $\gamma^*g\to q\bar q$ 的两个振幅图：虚光子分别与夸克、反夸克耦合，
+内线动量分别为 $k_1-q$ 与 $q-k_2$，传播子分母为 $\hat t=(q-k_1)^2$ 与 $\hat u=(q-k_2)^2$；
+反夸克线上的箭头为费米子数流向，其动量 $k_2$ 向外。两图之和的平方给出胶子道系数函数。}
+\label{fig:dis-oneloop}
+\end{figure}
+%%% END fig:dis-oneloop
+
+%%% BEGIN fig:forward-compton
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (vl) at (-0.95,1.9); \coordinate (vr) at (0.95,1.9);
+  \draw[quark] (-0.95,0.3) -- (vl);
+  \draw[quark] (vl) -- (vr);
+  \draw[quark] (vr) -- (0.95,0.3);
+  \draw[photon] (-2.1,3.3) -- (vl);
+  \draw[photon] (vr) -- (2.1,3.3);
+  \draw[t1 hadron] (-2.4,0) -- (0,0);
+  \draw[t1 hadron] (0,0) -- (2.4,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.25,y radius=0.45];
+  \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+  \path[mom={$k$}] (-0.95,0.42) -- (vl);
+  \path[mom={$k$}] (vr) -- (0.95,0.42);
+  \path[mom'={$k+q$}] (vl) -- (vr);
+  \path[mom'={$q$}] (-2.1,3.3) -- (vl);
+  \path[mom'={$q$}] (vr) -- (2.1,3.3);
+  \node[left] at (-2.1,3.3) {$\nu$};
+  \node[right] at (2.1,3.3) {$\mu$};
+  \node[left] at (-2.4,0) {$P$}; \node[right] at (2.4,0) {$P$};
+\end{tikzpicture}
+\caption{$s$ 道}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (vl) at (-0.95,1.9); \coordinate (vr) at (0.95,1.9);
+  \coordinate (gn) at (-1.9,3.75); \coordinate (gm) at (1.9,3.75);
+  \coordinate (gx) at (intersection of gn--vr and vl--gm);
+  \draw[quark] (-0.95,0.3) -- (vl);
+  \draw[quark] (vl) -- (vr);
+  \draw[quark] (vr) -- (0.95,0.3);
+  % the mu photon passes over the nu photon: white gap in the latter at the crossing
+  \draw[photon] (gn) -- (vr);
+  \draw[white,line width=6pt,line cap=butt] ($(gx)!0.3cm!(vl)$) -- ($(gx)!0.3cm!(gm)$);
+  \draw[photon] (vl) -- (gm);
+  \draw[t1 hadron] (-2.4,0) -- (0,0);
+  \draw[t1 hadron] (0,0) -- (2.4,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.25,y radius=0.45];
+  \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+  \path[mom={$k$}] (-0.95,0.42) -- (vl);
+  \path[mom={$k$}] (vr) -- (0.95,0.42);
+  \path[mom'={$k-q$}] (vl) -- (vr);
+  \path[mom'={$q$},mom pos=0.2] (gn) -- (vr);
+  \path[mom'={$q$},mom pos=0.8] (vl) -- (gm);
+  \node[left] at (-1.9,3.75) {$\nu$};
+  \node[right] at (1.9,3.75) {$\mu$};
+  \node[left] at (-2.4,0) {$P$}; \node[right] at (2.4,0) {$P$};
+\end{tikzpicture}
+\caption{$u$ 道（交叉图）}
+\end{subfigure}
+\caption{前向虚 Compton 振幅 $T^{\mu\nu}=\ii\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|T\,j^\mu(z)j^\nu(0)|P\rangle$ 的领头阶（手提包）图。
+(a) 夸克先在 $\nu$ 顶点吸收入射虚光子，再在 $\mu$ 顶点放出出射虚光子，中间夸克动量为 $k+q$；
+(b) 交叉图，先放出后吸收，中间夸克动量为 $k-q$。对夸克动量 $k$ 积分；领头幂次下 $k\simeq\xi P$。
+(b) 由 (a) 作 $q\to-q$、$\mu\leftrightarrow\nu$ 得到，二者之和体现交叉对称性 $T^{\mu\nu}(P,q)=T^{\nu\mu}(P,-q)$。
+与\cref{fig:handbag}不同，这里没有末态割线：$W^{\mu\nu}$ 由 $T^{\mu\nu}$ 在 $s$ 道割线上的不连续性给出。}
+\label{fig:forward-compton}
+\end{figure}
+%%% END fig:forward-compton
+
+%%% BEGIN fig:higher-twist
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs/\ng/\ttl in {a/0/0/{扭度 2：两部分子}, b/5.15/1/{三部分子（$qgq$）关联}, c/10.3/2/{四部分子关联（扭度 4）}} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (VL) at (-1.15,2.1); \coordinate (VR) at (1.15,2.1);
+    \coordinate (GL) at (-0.5,2.1);  \coordinate (GR) at (0.5,2.1);
+    % spectators crossing the cut (the blobs cover their ends)
+    \foreach \y in {0.2,0,-0.2} \draw[plain] (-1.15,\y) -- (1.15,\y);
+    \draw[t3 hadron] (-2.3,0) -- (-1.77,0);  \draw[t3 hadron] (1.77,0) -- (2.3,0);
+    \draw[photon] (-2.0,2.9) -- (VL);  \draw[photon] (VR) -- (2.0,2.9);
+    \ifnum\ng>0 \draw[gluon] (-0.74,0.32) -- (GL); \fi
+    \ifnum\ng>1 \draw[gluon] (0.74,0.32) -- (GR); \fi
+    \draw[quark] (-1.15,0.42) -- (VL);  \draw[quark] (VR) -- (1.15,0.42);
+    \ifcase\ng
+      \draw[quark=0.3] (VL) -- (VR);
+    \or
+      \draw[quark] (VL) -- (GL);  \draw[quark=0.62] (GL) -- (VR);
+    \or
+      \draw[quark] (VL) -- (GL);  \draw[quark=0.25] (GL) -- (GR);  \draw[quark] (GR) -- (VR);
+    \fi
+    \node[hadron blob,ellipse,minimum width=1.24cm,minimum height=0.84cm,inner sep=0pt] at (-1.15,0) {};
+    \node[hadron blob,ellipse,minimum width=1.24cm,minimum height=0.84cm,inner sep=0pt] at (1.15,0) {};
+    \node[vertex] at (VL) {}; \node[vertex] at (VR) {};
+    \ifnum\ng>0 \node[vertex] at (GL) {}; \fi
+    \ifnum\ng>1 \node[vertex] at (GR) {}; \fi
+    \draw[cut] (0,-0.72) -- (0,2.78);
+    \node[t3 lab,above left=-1pt] at (-2.0,2.9) {$\gamma^*$};
+    \node[t3 note] at (-1.15,0) {$P$};  \node[t3 note] at (1.15,0) {$P$};
+    \node[t3 lab] at (0,-1.15) {(\panel)\ \ttl};
+  \end{scope}}
+\end{tikzpicture}
+\caption{DIS 强子张量的扭度展开（割图；竖直虚线为末态割线）。(a)~扭度 2 的手提包图：强子经割线两侧各一条夸克线与硬部分相连。
+(b)~强子另外经一条横向极化的胶子（光锥规范 $A^+=0$ 中的 $A_{\mathrm T}$）与硬部分相连，即夸克--胶子--夸克关联（算符 $\bar\psi\gamma^+G^{+\alpha}\psi$ 为扭度 3）；
+按幂次计数，每多一条与硬部分相连的横向极化部分子，贡献就多一个 $1/Q$ 压低。在非极化 DIS 中，$1/Q$ 项因前向矩阵元中没有可用的横向矢量而为零；
+(b) 类图对部分子横动量展开到一阶的项，与 (a) 展开到二阶的项以及 (c) 类图合并为规范不变的扭度 4 矩阵元（如 $\bar\psi\gamma^+D_{\mathrm T}D_{\mathrm T}\psi$），
+给出结构函数的 $1/Q^2$ 修正（Ellis--Furmanski--Petronzio 的共线展开）。(c)~割线两侧各多一条胶子的四部分子关联直接属于扭度 4；四夸克关联亦属此列（图略）。}
+\label{fig:higher-twist}
+\end{figure}
+%%% END fig:higher-twist
+
+%%% BEGIN fig:omega-plane
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 bcut/.style={draw,line width=0.9pt,decorate,
+           decoration={zigzag,segment length=4.2pt,amplitude=1.6pt}},
+         t1 contour/.style={draw,blue!60!black,line width=0.9pt},
+         t1 carrow/.style={postaction={decorate,decoration={markings,
+           mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}},
+         t1 carrow/.default=0.5}
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.92]
+  \draw[lcaxis] (-3.3,0) -- (3.45,0) node[below left,inner sep=2pt]{$\Real\omega$};
+  \draw[lcaxis] (0,-2.45) -- (0,2.6) node[left,inner sep=3pt]{$\Imag\omega$};
+  \draw[t1 bcut] (1,0) -- (3.2,0);
+  \draw[t1 bcut] (-1,0) -- (-3.2,0);
+  \fill (1,0) circle[radius=1.6pt]; \fill (-1,0) circle[radius=1.6pt];
+  \node[below,inner sep=4pt] at (1,-0.05) {$1$};
+  \node[below,inner sep=4pt] at (-1,-0.05) {$-1$};
+  \draw[t1 contour,t1 carrow=0.12,t1 carrow=0.62] (0,0) circle[radius=0.55];
+  \node[blue!60!black] at (0.66,0.62) {$C_0$};
+  \node[font=\footnotesize] at (2.15,0.42) {割线};
+  \node[font=\footnotesize] at (-2.15,0.42) {割线};
+  \node[font=\small] at (0,-3.2) {$T^{(n)}=\displaystyle\oint_{C_0}\frac{\dd\omega}{2\pi\ii}\,\frac{T(\omega)}{\omega^{n+1}}$};
+\end{tikzpicture}
+\caption{原点附近的 Taylor 系数}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.92]
+  \def\toneR{2.15}\def\toned{0.17}
+  \pgfmathsetmacro\tonea{asin(\toned/\toneR)}
+  \pgfmathsetmacro\tonex{sqrt(\toneR*\toneR-\toned*\toned)}
+  \draw[lcaxis] (-3.3,0) -- (3.45,0) node[below left,inner sep=2pt]{$\Real\omega$};
+  \draw[lcaxis] (0,-2.45) -- (0,2.6) node[left,inner sep=3pt]{$\Imag\omega$};
+  \draw[t1 bcut] (1,0) -- (3.2,0);
+  \draw[t1 bcut] (-1,0) -- (-3.2,0);
+  \fill (1,0) circle[radius=1.6pt]; \fill (-1,0) circle[radius=1.6pt];
+  \draw[gray,densely dashed,line width=0.6pt] (0,0) circle[radius=0.55];
+  \node[gray!75!black,font=\footnotesize] at (-0.5,0.72) {$C_0$};
+  % deformed contour (positively oriented): big arcs + hairpins around both cuts
+  \draw[t1 contour,t1 carrow=0.3] (\tonea:\toneR) arc[start angle=\tonea,end angle=180-\tonea,radius=\toneR];
+  \draw[t1 contour,t1 carrow=0.7] (180+\tonea:\toneR) arc[start angle=180+\tonea,end angle=360-\tonea,radius=\toneR];
+  \draw[t1 contour,t1 carrow=0.55] (-\tonex,\toned) -- (-1,\toned);
+  \draw[t1 contour] (-1,\toned) arc[start angle=90,end angle=-90,radius=\toned];
+  \draw[t1 contour,t1 carrow=0.55] (-1,-\toned) -- (-\tonex,-\toned);
+  \draw[t1 contour,t1 carrow=0.55] (\tonex,-\toned) -- (1,-\toned);
+  \draw[t1 contour] (1,-\toned) arc[start angle=270,end angle=90,radius=\toned];
+  \draw[t1 contour,t1 carrow=0.55] (1,\toned) -- (\tonex,\toned);
+  \node[blue!60!black] at (48:\toneR+0.33) {$C_R$};
+  \node[below,inner sep=5pt] at (1.07,-0.1) {$1$};
+  \node[below,inner sep=5pt] at (-1.07,-0.1) {$-1$};
+  \node[font=\small] at (0,-3.2) {$T^{(n)}=\displaystyle\frac{1}{2\pi\ii}\int_{|\omega|\ge1}\frac{\dd\omega}{\omega^{n+1}}\,\Disc T(\omega)$};
+\end{tikzpicture}
+\caption{围道变形到割线上}
+\end{subfigure}
+\caption{固定 $Q^2$ 时前向 Compton 振幅的不变振幅 $T(\omega)$（$T_1$ 或 $T_2$）在复 $\omega=1/x=2P\cdot q/Q^2$ 平面上的解析结构。
+(a) $T$ 的奇点全在实轴 $|\omega|\ge1$ 上，即物理区 $0<x\le1$ 及其交叉像（对核子靶，$\omega=\pm1$ 处是弹性极点，
+非弹性割线始于 $|\omega|=1+[(M+m_\pi)^2-M^2]/Q^2$；图中把二者合画为始于 $\pm1$ 的割线），$T$ 在 $|\omega|<1$ 内解析；
+绕原点的小围道 $C_0$ 给出 Taylor 系数 $T^{(n)}$，它们在非物理区 $|\omega|<1$ 中由算符乘积展开计算。
+(b) 把 $C_0$ 放大为半径 $R\to\infty$ 的大圆 $C_R$ 并绕过两条割线。若 $|\omega|\to\infty$ 时 $T(\omega)/\omega^{n}\to0$，大圆的贡献为零，
+$T^{(n)}$ 化为不连续性 $\Disc T(\omega)=T(\omega+\ii0)-T(\omega-\ii0)=2\ii\Imag T(\omega+\ii0)$（$T$ 为实解析函数）沿割线的积分。
+由 $\Imag T_i(\omega+\ii0)=2\pi F_i$（$\omega\ge1$），右割线给出 $2\int_0^1\dd x\,x^{n-1}F_i(x)$；
+按交叉对称性，$T_1$ 是 $\omega$ 的偶函数、$T_2$ 是奇函数，左割线的贡献分别是右割线的 $(-1)^n$ 倍与 $(-1)^{n+1}$ 倍。
+于是对偶数 $n$ 有 $T_1^{(n)}=4\int_0^1\dd x\,x^{n-1}F_1(x)$，对奇数 $n$ 有 $T_2^{(n)}=4\int_0^1\dd x\,x^{n-1}F_2(x)$，其余系数为零。}
+\label{fig:omega-plane}
+\end{figure}
+%%% END fig:omega-plane
+
+%%% BEGIN fig:ope-schematic
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  % ---------- left: matrix element of T J(x) J(0) ----------
+  \begin{scope}
+    \coordinate (vl) at (-0.8,1.7); \coordinate (vr) at (0.8,1.7);
+    \draw[quark] (-0.8,0.32) -- (vl);
+    \draw[quark] (vl) -- (vr);
+    \draw[quark] (vr) -- (0.8,0.32);
+    \draw[photon] (-1.65,2.75) -- (vl);
+    \draw[photon] (vr) -- (1.65,2.75);
+    \draw[t1 hadron] (-2.0,0) -- (2.0,0);
+    \draw[hadron blob] (0,0) ellipse[x radius=1.1,y radius=0.42];
+    \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+    \node[font=\footnotesize] at (0,2.08) {$x^2\to0$};
+    \draw[region] (-1.25,1.3) rectangle (1.25,2.38);
+    \node[above left,inner sep=1pt] at (-1.65,2.75) {$J(x)$};
+    \node[above right,inner sep=1pt] at (1.65,2.75) {$J(0)$};
+    \node[left] at (-2.0,0) {$P$}; \node[right] at (2.0,0) {$P$};
+  \end{scope}
+  \node at (3.3,1.0) {$\displaystyle\simeq\;\sum_n$};
+  % ---------- right: C_n times local operator O_n(0) ----------
+  \begin{scope}[shift={(6.5,0)}]
+    \coordinate (C) at (0,2.05); \coordinate (O) at (0,1.43);
+    \draw[quark] (-0.62,0.36) -- (O);
+    \draw[quark] (O) -- (0.62,0.36);
+    \draw[photon] (-1.25,2.8) -- ($(C)+(140:0.42)$);
+    \draw[photon] ($(C)+(40:0.42)$) -- (1.25,2.8);
+    \draw[t1 hadron] (-2.0,0) -- (2.0,0);
+    \draw[hadron blob] (0,0) ellipse[x radius=1.1,y radius=0.42];
+    \draw[hard blob] (C) circle[radius=0.42];
+    \node at (C) {$C_n$};
+    \node[opvertex] at (O) {};
+    \node[right,inner sep=5pt] at (O) {$O_n(0)$};
+    \node[above left,inner sep=1pt] at (-1.25,2.8) {$J$};
+    \node[above right,inner sep=1pt] at (1.25,2.8) {$J$};
+    \node[left] at (-2.0,0) {$P$}; \node[right] at (2.0,0) {$P$};
+  \end{scope}
+  \node[font=\small] at (9.45,1.0) {$+\;\cdots$};
+  % ---------- the corresponding formula ----------
+  \node[font=\small] at (3.75,-0.95)
+    {$T\,J(x)J(0)\;\simeq\;\displaystyle\sum_n C_n(x^2,\mu^2)\,x_{\mu_1}\cdots x_{\mu_n}\,O_n^{\mu_1\cdots\mu_n}(0;\mu)\;+\;\cdots\qquad(x^2\to0)$};
+\end{tikzpicture}
+\caption{光锥算符乘积展开的图示。左：$\langle P|T\,J(x)J(0)|P\rangle$ 在 $x^2\to0$（而 $x$ 本身不趋于零）时由两流之间夸克传播子的光锥奇异性主导
+（在动量空间中，即 $Q^2\to\infty$ 时该传播子远离壳层），虚线框内为硬部分。右：硬部分收缩为 Wilson 系数 $C_n$，长程部分化为定域算符 $O_n^{\mu_1\cdots\mu_n}(0)$（$\otimes$）的强子矩阵元；
+$C_n(x^2,\mu^2)$ 在 $x^2\to0$ 时的行为为 $(x^2)^{(\tau_n-6)/2}$ 乘以对数修正（$\tau_n$ 为 $O_n$ 的扭度），故扭度越高奇异性越弱，$\cdots$ 即表示这些高扭度项。领头项为扭度 $2$ 的算符
+$O_q^{\mu_1\cdots\mu_n}=\bar\psi\gamma^{\{\mu_1}\ii D^{\mu_2}\cdots\ii D^{\mu_n\}}\psi-(\text{迹})$ 及其胶子对应物；由于协变导数，$\otimes$ 处还可连接任意多条胶子线。
+与短距离展开不同，光锥展开的每一扭度都含有对所有 $n$ 的无穷求和。}
+\label{fig:ope-schematic}
+\end{figure}
+%%% END fig:ope-schematic

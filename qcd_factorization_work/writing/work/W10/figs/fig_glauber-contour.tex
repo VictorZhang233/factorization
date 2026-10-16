@@ -1,0 +1,50 @@
+%%% BEGIN fig:glauber-contour
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  t2 contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  t2 contour/.default=0.5,
+  t2 ax/.style={lcaxis,gray!60!black},
+  t2 band/.style={fill=red!9,draw=none},
+  t2 lab/.style={font=\footnotesize}]
+  % ======================= (a) all A-collinear poles on one side =======================
+  \begin{scope}
+    \fill[t2 band] (-0.55,-1.3) rectangle (0.55,1.45);
+    \draw[red!45,line width=0.4pt,dash pattern=on 2pt off 1.5pt] (-0.55,-1.3) -- (-0.55,1.45) (0.55,-1.3) -- (0.55,1.45);
+    \draw[t2 ax] (-2.4,0) -- (2.5,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.3) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.5] (-2.3,0) -- (-1.75,0) .. controls (-1.4,0) and (-1.25,1.05) .. (0,1.05)
+        .. controls (1.25,1.05) and (1.4,0) .. (1.75,0) -- (2.3,0);
+    \pic at (-0.32,-0.17) {t2 pole}; \pic at (0.1,-0.27) {t2 pole}; \pic at (0.38,-0.12) {t2 pole};
+    \node[t2 lab,anchor=east,align=right] at (-0.66,-0.62) {同侧的 $A$\\共线极点};
+    \node[t2 lab,anchor=south west] at (0.9,0.95) {$|k^-|\sim|k_T|$};
+    \node[t2 lab,text=red!55!black,anchor=south] at (0,1.62) {Glauber 区};
+    \node at (0,-1.9) {(a)\ 极点同侧：围道可移出 Glauber 区};
+  \end{scope}
+  % ======================= (b) poles on both sides: Glauber pinch =======================
+  \begin{scope}[xshift=6.4cm]
+    \fill[t2 band] (-0.55,-1.3) rectangle (0.55,1.45);
+    \draw[red!45,line width=0.4pt,dash pattern=on 2pt off 1.5pt] (-0.55,-1.3) -- (-0.55,1.45) (0.55,-1.3) -- (0.55,1.45);
+    \draw[t2 ax] (-2.4,0) -- (2.5,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.3) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.82] (-2.3,0) -- (2.3,0);
+    \pic at (0.15,0.19) {t2 pole}; \pic at (-0.15,-0.19) {t2 pole};
+    \draw[gray!60!black,line width=0.45pt] (0.24,0.27) -- (0.75,0.72) node[right,t2 lab,text=black,align=left] {活动部分子线\\（进入 $H$）};
+    \draw[gray!60!black,line width=0.45pt] (-0.24,-0.27) -- (-0.75,-0.72) node[left,t2 lab,text=black] {旁观者线};
+    \node[t2 lab,text=red!55!black,anchor=south] at (0,1.62) {Glauber 区};
+    \node at (0,-1.9) {(b)\ 极点异侧：围道被钳在 Glauber 区};
+  \end{scope}
+\end{tikzpicture}
+\caption{软胶子动量 $k$（固定 $k^+$、$k_T$，$k_T\sim\lambda Q$）在复 $k^-$ 平面上的 Glauber 区分析。阴影带为 Glauber 区 $|k^-|\lesssim k_T^2/Q$；
+图中极点来自 $k$ 流经的 $A$ 共线传播子，位于 $|k^-|\sim k_T^2/Q$。约定 $k$ 在附着顶点从 $A$ 子图流出，并取末态旁观者动量 $p_X$ 固定：
+Glauber 顶点之前的旁观者线 $l_s=p_X+k$ 中 $k$ 与大分量 $l_s^+$ 同向，极点在下半平面；进入 $H$ 的活动部分子线 $l_a=P_A-p_X-k$ 中 $k$ 与 $l_a^+$ 反向，极点在上半平面（$k$ 流入时上下互换）。
+$B$ 共线线与胶子传播子本身给出的 $k^-$ 极点位于 $|k^-|\sim Q$，在图外。
+(a)~所有 $A$ 共线极点在同一侧：围道可向另一侧变形到 $|k^-|\sim|k_T|$，在那里软近似成立；
+(b)~旁观者线与活动部分子线的极点分居两侧：围道被钳在 Glauber 区内（Glauber 钳夹）。
+仅有 $k^-$ 钳夹并不致命：若胶子另一端的线（如 DIS 中出射的被击出夸克）给出的 $k^+$ 极点都在同一侧，仍可把 $k^+$ 围道变形到 $|k^+|\sim|k_T|$，使该端的程函近似成立；
+Drell--Yan 中 $B$ 一侧的 $k^+$ 围道同样被钳住，这一钳夹只有在对末态切割求和之后才被消除（\cref{fig:glauber-exchange}）。}
+\label{fig:glauber-contour}
+\end{figure}
+%%% END fig:glauber-contour

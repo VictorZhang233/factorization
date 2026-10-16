@@ -1,0 +1,95 @@
+%%% BEGIN fig:appO-deformation
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  ff spole/.pic={\draw[line width=1pt,line cap=round,green!40!black] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  ff contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  ff contour/.default=0.5,
+  ff ax/.style={lcaxis,gray!60!black},
+  ff win/.style={draw=red!55!black,line width=0.6pt},
+  ff lab/.style={font=\footnotesize},
+  ff note/.style={font=\footnotesize,text=black!75},
+  ff dim/.style={draw=gray!60!black,line width=0.45pt,{Stealth[length=3pt]}-{Stealth[length=3pt]}}]
+  % ================================================================ (a) complex k^- plane (J_A)
+  \begin{scope}
+    \fill[red!7] (-1.4,-1.0) rectangle (1.4,1.3);
+    \draw[ff ax] (-3.3,0) -- (3.55,0) node[above left=0pt and -2pt] {$\Real k^-$};
+    \draw[ff ax] (0,-1.05) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[ff contour=0.5] (-3.2,0) -- (-2.35,0) .. controls (-1.9,0) and (-1.85,0.85) .. (-1.4,0.85) -- (1.4,0.85)
+         .. controls (1.85,0.85) and (1.9,0) .. (2.35,0) -- (3.2,0);
+    \pic at (-0.5,-0.17) {ff pole}; \pic at (0.12,-0.24) {ff pole}; \pic at (0.48,-0.13) {ff pole};
+    \node[ff note,anchor=north,align=center] at (0.1,-0.36) {$J_A$ 初态极点};
+    \draw[ff dim] (1.05,0.02) -- (1.05,0.83);
+    \node[ff lab,anchor=east] at (1.0,0.45) {$\kappa|\mathbf k_T|$};
+    % window edges and the soft line's own pole (here k^+ < 0: upper half-plane, outside the window)
+    \foreach \x in {-2.35,2.35} \draw[ff win] (\x,-0.1) -- (\x,0.1);
+    \node[ff note,anchor=north,text=red!55!black] at (2.35,-0.12) {窗口边缘};
+    \pic at (-2.95,0.2) {ff spole};
+    \node[ff note,anchor=south,text=green!35!black,align=center] at (-2.95,0.32) {软线极点\\（$k^+<0$）};
+    \node[ff note,anchor=south west,text=red!55!black] at (0.12,1.3) {窗口核（$\psi=1$）};
+    \node at (0,-1.95) {(a)\ $J_A$：复 $k^-$ 平面，围道上移};
+  \end{scope}
+  % ================================================================ (b) complex k^+ plane (J_B)
+  \begin{scope}[xshift=7.45cm]
+    \fill[red!7] (-1.4,-1.3) rectangle (1.4,1.0);
+    \draw[ff ax] (-3.3,0) -- (3.55,0) node[above left=0pt and -2pt] {$\Real k^+$};
+    \draw[ff ax] (0,-1.4) -- (0,1.3) node[left] {$\Imag k^+$};
+    \draw[ff contour=0.5] (-3.2,0) -- (-2.35,0) .. controls (-1.9,0) and (-1.85,-0.85) .. (-1.4,-0.85) -- (1.4,-0.85)
+         .. controls (1.85,-0.85) and (1.9,0) .. (2.35,0) -- (3.2,0);
+    \pic at (-0.45,0.15) {ff pole}; \pic at (0.15,0.25) {ff pole}; \pic at (0.5,0.12) {ff pole};
+    \node[ff note,anchor=south,align=center] at (0.05,0.35) {$J_B$ 初态极点};
+    \draw[ff dim] (1.05,-0.02) -- (1.05,-0.83);
+    \node[ff lab,anchor=east] at (1.0,-0.45) {$\kappa|\mathbf k_T|$};
+    \foreach \x in {-2.35,2.35} \draw[ff win] (\x,-0.1) -- (\x,0.1);
+    \node[ff note,anchor=south,text=red!55!black] at (-2.35,0.12) {窗口边缘};
+    \pic at (2.95,-0.2) {ff spole};
+    \node[ff note,anchor=north,text=green!35!black,align=center] at (2.95,-0.32) {软线极点\\（$k^->0$）};
+    \node[ff note,anchor=north west,text=red!55!black] at (0.12,-1.3) {窗口核（$\psi=1$）};
+    \node at (0,-1.95) {(b)\ $J_B$：复 $k^+$ 平面，围道下移};
+  \end{scope}
+  % ================================================================ (c) moduli plane at fixed |k_T| ~ lambda Q
+  \begin{scope}[yshift=-4.45cm,xshift=1.6cm,x=1.32cm,y=1.32cm]
+    % coordinates: ln|k^\pm|/ln(1/lambda);  -2 <-> lambda^2 Q, -1 <-> lambda Q, 0 <-> Q;  |k_T| = lambda Q.
+    % lines |k^+||k^-| = const have slope -1; offsets from x+y=-2 schematic, drawn for kappa=1/2, delta=1/8:
+    % c = min(kappa^2,delta/2) = delta/2 (the core boundary), kappa^2 = 1/4 between delta and 1/2.
+    \fill[red!8] (-3.15,-3.15) -- (0.65,-3.15) -- (-3.15,0.65) -- cycle;                              % G_delta
+    \draw[red!55!black,line width=0.75pt] (0.65,-3.15) -- (-3.15,0.65);                               % delta k_T^2
+    \draw[red!55!black,line width=0.55pt,dash pattern=on 2.2pt off 1.5pt] (0.4,-3.15) -- (-3.15,0.4);  % delta k_T^2/2
+    \draw[green!40!black,line width=0.75pt] (1.0,-2.85) -- (-2.85,1.0);                               % 2k^+k^- = k_T^2
+    % axes and ticks
+    \draw[ff ax] (-3.2,-3.2) -- (1.05,-3.2) node[below left=1pt and -4pt] {$\ln|k^+|$};
+    \draw[ff ax] (-3.2,-3.2) -- (-3.2,1.05) node[left] {$\ln|k^-|$};
+    \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (\v,-3.2) -- ++(0,0.06);  \node[font=\scriptsize,below] at (\v,-3.2) {$\t$};
+      \draw[line width=0.5pt] (-3.2,\v) -- ++(0.06,0);  \node[font=\scriptsize,left] at (-3.2,\v) {$\t$};
+    }
+    % image of the window core under the deformation: |k^+|,|k^-| >= kappa |k_T|
+    \fill[blue!10] (-1.09,-1.09) rectangle (0.75,0.75);
+    \draw[blue!60!black,line width=0.6pt] (0.75,-1.09) -- (-1.09,-1.09) -- (-1.09,0.75);
+    \node[circle,draw=red!60!black,line width=0.8pt,fill=white,inner sep=0pt,minimum size=6pt] (G) at (-2,-2) {};
+    \node[circle,fill=blue!60!black,inner sep=0pt,minimum size=5pt] (D) at (-1.09,-1.09) {};
+    \draw[blue!60!black,line width=0.75pt,-{Stealth[length=5pt,width=4pt]}] (G) -- (D);
+    \node[font=\scriptsize,anchor=north,text=red!55!black,inner sep=1.5pt] at (G.south) {Glauber 实点};
+    \node[font=\scriptsize,anchor=south west,text=blue!50!black,inner sep=1.5pt] at (-1.05,-1.05) {$|k^\pm|\ge\kappa|\mathbf k_T|$};
+    \node[font=\scriptsize,text=green!35!black,anchor=south west,inner sep=1pt] at (0.05,-2.0) {软线质壳};
+    \node[font=\small,text=red!55!black] at (-2.65,-2.75) {$G_\delta$};
+    \node at (-1.05,-4.0) {(c)\ $|k^\pm|$ 的对数平面，$|\mathbf k_T|\sim\lambda Q$};
+  \end{scope}
+  % ---------------------------------------------------------------- notes: constants, line styles, eikonal bound
+  \node[anchor=north west,font=\footnotesize,align=left,text width=7.1cm] at (3.55,-3.3) {%
+    形变：$k\to k+\ii\sigma\kappa\psi|\mathbf k_T|\,e_G$，$e_G=n_B-n_A$。\\[2pt]
+    (c) 中斜线（$|k^+||k^-|=$ 常数）：红实线 $\delta\mathbf k_T^2$（$G_\delta$ 的边界，形变在其外关闭），红虚线 $\frac12\delta\mathbf k_T^2$（窗口核边界），绿线为连接线的质壳 $2k^+k^-=\mathbf k_T^2$；图中取 $\kappa=\frac12$、$\delta=\frac18$，此时 $c=\delta/2$，红虚线即 $c\,\mathbf k_T^2$。\\[2pt]
+    \textbullet\ 窗口核上 $|k^+||k^-|\ge|{\rm Im}\,k^+||{\rm Im}\,k^-|=\kappa^2\mathbf k_T^2$，核外实部已满足 $|k^+k^-|>\frac12\delta\mathbf k_T^2$，故形变后处处 $|k^+||k^-|\ge c\,\mathbf k_T^2$，$c=\min(\kappa^2,\delta/2)$；\\[1pt]
+    \textbullet\ $\mathcal G_0$：$0<\kappa\le\frac12$，$0<\delta\le\frac18$；分级构型另需 $\kappa^2<1/(2KN_C^2)$；\\[1pt]
+    \textbullet\ 形变后的连接线 ${\rm Re}(k^2)\le-\frac14\mathbf k_T^2$，不触及质壳；\\[1pt]
+    \textbullet\ 实围道上程函近似以 $O(1)$ 失效；形变后的围道上 Grammer--Yennie 比值为 $O(\lambda/\kappa)$。};
+\end{tikzpicture}
+\caption{单侧改写之后的同时形变（振幅一侧 $\sigma=+1$，软动量 $k$ 流入 $J_A$；共轭一侧方向相反；示意，非比例）。
+(a)~改写后 $J_A$ 只经初态分母依赖 $k^-$，其极点全在下半平面；围道在窗口核上抬到 ${\rm Im}\,k^-=\kappa|\mathbf k_T|$，在窗口边缘之前回到实轴，因而不触及窗口外的连接线自身极点 $k^-=(\mathbf k_T^2-\ii0)/(2k^+)$（$k^+>0$ 时它在下半平面，不受影响）。
+(b)~$J_B$ 的 $k^+$ 极点全在上半平面，围道同时下移到 ${\rm Im}\,k^+=-\kappa|\mathbf k_T|$，故 ${\rm Im}\,k\propto e_G=n_B-n_A$；只形变一个分量时 $|k^+k^-|$ 仍远小于 $\mathbf k_T^2$。
+(c)~以 $\ln|k^\pm|$ 为坐标（$|\mathbf k_T|\sim\lambda Q$）：窗口核中的 Glauber 点（$|k^\pm|\sim\lambda^2Q$，位于 $G_\delta=\{|k^+k^-|\le\delta\mathbf k_T^2\}$ 深处）被移到 $|k^\pm|\ge\kappa|\mathbf k_T|$ 处，形变后的围道处处满足 $|k^+||k^-|\ge c\,\mathbf k_T^2$，从而离开 Glauber 区，程函近似在其上有定量误差界（\cref{lem:appO-no-crossing}、\cref{prop:appO-target}、\cref{prop:appO-eikonal}）。}
+\label{fig:appO-deformation}
+\end{figure}
+%%% END fig:appO-deformation

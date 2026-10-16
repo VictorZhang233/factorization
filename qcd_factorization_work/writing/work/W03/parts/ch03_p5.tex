@@ -1,0 +1,144 @@
+% -------------------------------------------------------------------------------------
+\section{割图、切割规则、幺正性与光学定理}\label{sec:prelim-cuts}
+
+截面是振幅模平方对末态的求和，而因子化证明处理的是前向振幅的 Feynman 图；两者由幺正性联系：一个图的全部割之和等于它的虚部。规范理论中还有第二个问题：割胶子线用 $-g_{\mu\nu}$ 求极化和会把非物理极化也算进去，需要鬼场补偿。本节给出割图、切割规则与物理幺正性，证明流关联函数的光学定理，并用单圈真空极化把它们串起来。
+
+\begin{definition}[割图]\label{def:prelim-cut}
+一个割图是一个 Feynman 图被一条“割线”分成左、右两部分，割线把入射外线与出射外线分开，并配以如下规则：
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item 割线左侧（振幅）用通常的 Feynman 规则（\cref{def:prelim-feynman-rules}），传播子带 $+\ii0$；
+\item 割线右侧（共轭振幅）用复共轭的规则：传播子取复共轭（$-\ii0$），顶点取复共轭（例如夸克--胶子顶点 $\ii g\gamma^\mu t^a\to-\ii g\gamma^\mu t^a$；Wilson 线的规则见\cref{prop:prelim-wilson-rules}）；
+\item 被割的线换成在壳、正能量的割线因子：末态夸克 $2\pi\delta^+(p^2-m^2)(\sla p+m)$，末态反夸克 $2\pi\delta^+(p^2-m^2)(\sla p-m)$（$p$ 为该粒子的物理动量，$\delta^+(p^2-m^2)\equiv\theta(p^0)\delta(p^2-m^2)$），胶子 $2\pi\delta^+(k^2)(-g^{\mu\nu})\delta^{ab}$（Feynman 规范），鬼场 $2\pi\delta^+(k^2)\delta^{ab}$，每个闭合鬼圈另带因子 $-1$；
+\item 对割线上的动量积分，对末态的颜色、自旋求和，乘以对称因子。
+\end{enumerate}
+\uses{def:prelim-feynman-rules,prop:prelim-wilson-rules}
+\end{definition}
+
+(c) 中的因子来自 $\sum_su\bar u=\sla p+m$、$\sum_sv\bar v=\sla p-m$ 与 $\int\frac{\dd^3p}{(2\pi)^32E}=\int\frac{\dd^4p}{(2\pi)^4}2\pi\delta^+(p^2-m^2)$；按这些规则，单举截面 $\sum_X|\langle X|T|i\rangle|^2$ 就是全部割图之和。部分子分布（第~8~章）也是割图：割线两侧各有一个算符顶点，左侧的 Wilson 线用振幅规则，右侧用其复共轭。
+
+\begin{theorem}[切割规则 \tagR]\label{thm:prelim-cutting-rules}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设 $G$ 是一个 Feynman 图，全部内线带正质量（或以其他方式正规化，使所涉积分都收敛），外动量为实数且位于物理区域；把图 $G$ 的值记作 $\ii\mathcal M_G$。则
+\begin{equation}\label{eq:prelim-cutting}
+2\,\Imag\mathcal M_G=\sum_{c}\mathcal M_{G,c},
+\end{equation}
+求和遍及把入射外线与出射外线分开、且与外动量的能量流相容的全部割 $c$（Cutkosky 割），$\mathcal M_{G,c}$ 是按\cref{def:prelim-cut}计算的割图。在坐标空间中等价的陈述是最大时间方程：对图的全部 $2^n$ 种顶点标记求和为零。（本定理只涉及 Feynman 图。）
+\uses{def:prelim-cut,def:prelim-feynman-rules}
+\end{theorem}
+
+\begin{proofsketch}
+(1) 坐标空间：把每个顶点标记为“无圈”或“有圈”（有圈顶点用复共轭的顶点因子），两端无圈的线用 $\Delta_F(x-y)$，两端有圈的用 $\Delta_F^*(x-y)$，无圈的 $x$ 与有圈的 $y$ 之间用正频函数 $\Delta^+(y-x)$。由 $\Delta_F(x)=\theta(x^0)\Delta^+(x)+\theta(-x^0)\Delta^+(-x)$，若 $x_i$ 是时间最大的顶点，与它相连的线在 $x_i$ 改变标记时都不变而顶点因子变号；故全部 $2^n$ 种标记之和为零。
+
+(2) 全无圈的项是 $\ii\mathcal M_G$，全有圈的项是其复共轭 $-\ii\mathcal M_G^*$，二者之和为 $-2\Imag\mathcal M_G$；由 (1)，$2\Imag\mathcal M_G$ 等于全部混合标记之和。
+
+(3) 动量空间中正频函数是 $2\pi\theta(k^0)\delta(k^2-m^2)$（乘以分子），正能量只能由无圈区流向有圈区；对给定的外动量，只有无圈区含全部入射外线、有圈区含全部出射外线的标记保留下来，这正是 Cutkosky 割，有圈区的规则即\cref{def:prelim-cut}的右侧。完整证明见 Veltman~\cite{Veltman1963}、'tHooft--Veltman~\cite{tHooftVeltman1974}与 Cutkosky~\cite{Cutkosky1960}；教科书式的讲解见\cite[第~7.3~节]{PeskinSchroeder1995}。
+\end{proofsketch}
+
+附录~O 用到这一方程的光锥版本：带算符插入时移动割线位置的恒等式及其闭时路形式（\cref{lem:appO-cut-position}、\cref{lem:appO-unitarity}）。Feynman 规范中割胶子线的 $-g^{\mu\nu}$ 含非物理极化，下一命题说明鬼场割线恰好把它们抵消。
+
+\begin{proposition}[物理幺正性与鬼场割线 \tagR]\label{prop:prelim-unitarity}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 Feynman 规范、维数正规化的微扰 QCD 中，考虑一个前向振幅任一阶的割图，并设所涉割图积分有定义（红外已正规化）。对每一组固定的割线动量，割胶子线以 $-g_{\mu\nu}$ 求和并计入全部鬼场割线（每个闭合鬼圈带 $-1$）所得之和，等于只对物理末态（夸克、反夸克与横向极化胶子）求和所得之和。结合\cref{thm:prelim-cutting-rules}，前向振幅的虚部逐阶等于对物理末态的截面之和。树图例子 $q\bar q\to gg$（\cref{ex:qcd-qqbar-gg}）中，% VF-WL-9
+\begin{equation}\label{eq:prelim-qqgg}
+\sum_{\mathrm{phys}}|\mathcal A|^2=\sum_{-g,-g}|\mathcal A|^2-2\sum|\mathcal A_{\mathrm{gh}}|^2,\qquad
+\frac1{36}\sum_{\mathrm{phys}}|\mathcal A|^2=g^4\Big[\frac{32}{27}\frac{t^2+u^2}{tu}-\frac83\frac{t^2+u^2}{s^2}\Big],
+\end{equation}
+因子 $2$ 来自鬼与反鬼两种末态，$\frac1{36}$ 是夸克自旋与颜色的平均。（本命题只涉及部分子态。）
+\uses{def:prelim-cut,thm:prelim-cutting-rules,prop:qcd-brst-cohomology,thm:prelim-slavnov-taylor,prop:appJ-ghost-cuts,ex:qcd-qqbar-gg}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 对在壳胶子取类光的 $\bar k=(k^0,-\mathbf k)$，$-g_{\mu\nu}=\sum_{\lambda=1,2}\epsilon^{(\lambda)}_\mu\epsilon^{(\lambda)*}_\nu-\frac{k_\mu\bar k_\nu+\bar k_\mu k_\nu}{k\cdot\bar k}$。(2) 由 Slavnov--Taylor 恒等式（\cref{thm:prelim-slavnov-taylor}），把割胶子的极化换成其动量时振幅剩下鬼场振幅（树图形式，$Q=k_1+k_2$：$k_{1\mu}\mathcal A^{\mu\nu}_{ab}=\frac{g^2f^{abc}}{Q^2}(k_2^2g^{\nu\sigma}-k_2^\nu k_2^\sigma)\bar v(p_2)\gamma_\sigma t^cu(p_1)$，另一胶子为物理极化时为零），于是 (1) 中第二项与鬼场割线相消。(3) 一般的论证是 BRST 四重态机制（\cref{prop:qcd-brst-cohomology}）：非物理模式组成零模四重态，在割线求和中整体抵消。完整证明见\cref{prop:appJ-ghost-cuts}，以及 Kugo--Ojima~\cite{KugoOjima1979}、'tHooft--Veltman~\cite{tHooftVeltman1972b}；树图截面与 Combridge、Kripfganz、Ranft~\cite{CombridgeKripfganzRanft1977}一致。
+\end{proofsketch}
+
+\begin{remark}[无质量维数正规化中的割图规则 \tagA]\label{rem:prelim-cutting-dr}
+对无质量 QCD，\cref{thm:prelim-cutting-rules}与\cref{prop:prelim-unitarity}推广为维数正规化积分之间的恒等式：对含鬼场的无质量图，作为 $\varepsilon$ 的亚纯函数，对割线求和等于前向振幅的虚部，并等于对物理末态的求和。
+% errtype: E-S
+\uses{thm:prelim-cutting-rules,prop:prelim-unitarity,def:qcd-dimreg}
+\end{remark}
+
+\paragraph{地位与缺口}
+在 $O(g^2)$ 处，对流关联函数，这一恒等式已精确到 $\varepsilon$ 的一切阶验证：
+\[
+2(D-1)\,s\,\Imag\Pi^{(1)}_{\mathrm{bare}}(s+\ii0)=\rho_V+\rho_R , % VF-EE-8
+\]
+其中 $\rho_V$、$\rho_R$ 分别是两部分子割（含虚修正）与三部分子割（实辐射）的谱函数；等式逐项成立：双圈图中 $G(1,1)^2$ 一项对应虚修正（两部分子割），$G(1,1)G(1+\varepsilon,1)$ 一项对应实辐射（三部分子割）（\cref{prop:ee-cutting-exact}，第~6~章）。
+一般情形的论证是标准的：最大时间方程在 $D$ 维被积函数的层次上形式不变，鬼场与非物理极化的抵消是 BRST 四重态的代数性质（Veltman~\cite{Veltman1963}，'tHooft--Veltman~\cite{tHooftVeltman1972b,tHooftVeltman1974}，Kugo--Ojima~\cite{KugoOjima1979}）。最弱的一步是：单个无质量割图有红外发散，逐图应用最大时间方程、再把每个割图作为 $\varepsilon$ 的亚纯函数延拓，需要对这些积分的存在性与延拓作额外论证，本书没有给出。因子化真正需要的精确形式是附录~N 的割线求和公共表示（\cref{asm:appN-cutsum}，\tagA，此处只作指引）。误差类型：已证明之处恒等式是精确的，一般陈述只是 E-S 型的论证。要提升为 [R]，需要对无质量、含鬼场的维数正规化图证明逐图的最大时间方程及其解析延拓。
+
+\begin{proposition}[流关联函数的光学定理 \tagR]\label{prop:prelim-optical}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $j^\mu=\sum_qe_q\bar q\gamma^\mu q$（以 $e$ 为单位），对自旋平均的靶态 $|P\rangle$ 令 % VF-CONV-12, VF-CONV-13, VF-CONV-14
+\begin{gather*}
+\Pi^{\mu\nu}(q)=\ii\int\dd^4x\,\ee^{\ii q\cdot x}\langle0|T\,j^\mu(x)j^\nu(0)|0\rangle=(q^\mu q^\nu-q^2g^{\mu\nu})\,\Pi(q^2),\\
+W^{\mu\nu}=\frac1{4\pi}\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[j^\mu(z),j^\nu(0)]|P\rangle,\qquad
+T^{\mu\nu}=\ii\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|T\,j^\mu(z)j^\nu(0)|P\rangle ,
+\end{gather*}
+并以 $\Imag X^{\mu\nu}\equiv\frac1{2\ii}[X^{\mu\nu}-(X^{\nu\mu})^*]$ 表示吸收部分（对实对称的张量结构即通常的虚部）。
+\par
+(a) 对 $q^0>0$，
+\begin{equation}\label{eq:prelim-optical-vac}
+\sum_X(2\pi)^4\delta^4(q-p_X)\langle0|j^\mu(0)|X\rangle\langle X|j^\nu(0)|0\rangle=2\,\Imag\Pi^{\mu\nu}(q),
+\end{equation}
+因而 $\Imag\Pi(s+\ii0)\ge0$；$e^+e^-\to$ 强子（单光子交换、无质量轻子、$\alpha$ 的最低阶）的截面为 $\sigma=\frac{16\pi^2\alpha^2}{s}\Imag\Pi(s+\ii0)$，从而 $R(s)\equiv\sigma/\sigma_{\mu\mu}=12\pi\,\Imag\Pi(s+\ii0)$，$\sigma_{\mu\mu}=\frac{4\pi\alpha^2}{3s}$。
+\par
+(b) 对 $P\cdot q>0$（靶静止系中 $q^0>0$），$W^{\mu\nu}=\frac1{2\pi}\Imag T^{\mu\nu}$，即结构函数满足 $\Imag T_i=2\pi F_i$；$x>1$ 时两边都为零。
+\par
+非微扰地位：\cref{asm:intro-wightman}（MA0：态的完备性与谱条件）——只对强子态需要；对部分子态，(a)(b) 是微扰论逐阶的恒等式。
+\uses{def:prelim-cut,asm:intro-wightman}
+\end{proposition}
+
+\begin{proof}
+(a) 由平移不变性 $j(x)=\ee^{\ii P\cdot x}j(0)\ee^{-\ii P\cdot x}$ 与 $\langle0|P^\mu=0$，在 $T$ 乘积的两个时序中插入完备态：
+\[
+\langle0|j^\mu(x)j^\nu(0)|0\rangle=\sum_XA_X^{\mu\nu}\ee^{-\ii p_X\cdot x},\qquad \langle0|j^\nu(0)j^\mu(x)|0\rangle=\sum_XB_X^{\nu\mu}\ee^{+\ii p_X\cdot x},
+\]
+$A_X^{\mu\nu}=\langle0|j^\mu(0)|X\rangle\langle X|j^\nu(0)|0\rangle$，$B_X^{\nu\mu}=\langle0|j^\nu(0)|X\rangle\langle X|j^\mu(0)|0\rangle$。用
+\begin{gather*}
+\int\dd^4x\,\ee^{\ii q\cdot x}\theta(x^0)\ee^{-\ii p_X\cdot x}=\frac{\ii\,(2\pi)^3\delta^3(\mathbf q-\mathbf p_X)}{q^0-p_X^0+\ii0},\\
+\int\dd^4x\,\ee^{\ii q\cdot x}\theta(-x^0)\ee^{+\ii p_X\cdot x}=\frac{-\ii\,(2\pi)^3\delta^3(\mathbf q+\mathbf p_X)}{q^0+p_X^0-\ii0},
+\end{gather*}
+得
+\[
+\Pi^{\mu\nu}(q)=-\sum_X\frac{(2\pi)^3\delta^3(\mathbf q-\mathbf p_X)}{q^0-p_X^0+\ii0}A_X^{\mu\nu}+\sum_X\frac{(2\pi)^3\delta^3(\mathbf q+\mathbf p_X)}{q^0+p_X^0-\ii0}B_X^{\nu\mu}.
+\]
+流是厄米的，故 $(A_X^{\nu\mu})^*=A_X^{\mu\nu}$，$(B_X^{\mu\nu})^*=B_X^{\nu\mu}$。由 $\frac1{\Delta-\ii0}-\frac1{\Delta+\ii0}=2\pi\ii\,\delta(\Delta)$，第一项的吸收部分为 $\frac12\sum_X(2\pi)^4\delta^4(q-p_X)A_X^{\mu\nu}$；第二项的吸收部分正比于 $\delta(q^0+p_X^0)$，由谱条件 $p_X^0\ge0$ 在 $q^0>0$ 时为零；$T$ 乘积在 $x=0$ 处的定义只差局域项，给出 $q$ 的厄米多项式，没有吸收部分。这就是\cref{eq:prelim-optical-vac}。在 $q$ 的静止系中取空间指标 $\mu=\nu=i$，左边 $\ge0$，右边为 $2s\Imag\Pi$，故 $\Imag\Pi\ge0$。截面：自旋平均的轻子张量 $L_{\mu\nu}=k_{1\mu}k_{2\nu}+k_{1\nu}k_{2\mu}-g_{\mu\nu}k_1\cdot k_2$ 满足 $L_{\mu\nu}(q^\mu q^\nu-q^2g^{\mu\nu})=s^2$，故 $\sigma=\frac1{2s}\frac{e^4}{s^2}L_{\mu\nu}2\Imag\Pi^{\mu\nu}=\frac{16\pi^2\alpha^2}{s}\Imag\Pi$，除以 $\sigma_{\mu\mu}$ 即得 $R$。
+
+(b) 同样插入完备态。对易子的第二项与 $T$ 乘积的 $\theta(-z^0)$ 项要求 $p_X=P-q$，而 $(P-q)^2=M^2-2P\cdot q-Q^2<M^2$，靶的超选择扇区中没有这样的态（谱条件；对部分子靶即带同样量子数的态 $p_X^2\ge m^2$），故它们为零。剩下的项给出
+\begin{gather*}
+W^{\mu\nu}=\frac1{4\pi}\sum_X(2\pi)^4\delta^4(P+q-p_X)\langle P|j^\mu|X\rangle\langle X|j^\nu|P\rangle,\\
+\Imag T^{\mu\nu}=\frac12\sum_X(2\pi)^4\delta^4(P+q-p_X)\langle P|j^\mu|X\rangle\langle X|j^\nu|P\rangle,
+\end{gather*}
+后者的计算与 (a) 相同；两式相比即得 $W^{\mu\nu}=\frac1{2\pi}\Imag T^{\mu\nu}$，按同一组张量结构分解即 $\Imag T_i=2\pi F_i$。$x>1$ 时 $(P+q)^2=M^2+2P\cdot q(1-x)<M^2$，两边都没有中间态。
+\end{proof}
+
+检验：自由夸克圈给出 $\Imag\Pi=N_ce_q^2/(12\pi)$，从而 $R_0=N_c\sum_qe_q^2$（$n_f=5$ 时为 $11/3$），见下例。% VF-EE-3
+
+\begin{example}[维数正规化中的单圈无质量流关联函数]\label{ex:prelim-vacpol}
+单个味道（电荷 $e_q$）的单圈图带闭合夸克圈的因子 $-1$ 与色因子 $N_c$，
+\[
+\Pi^{\mu\nu}(q)=\ii N_ce_q^2\int\frac{\dd^Dk}{(2\pi)^D}\,\frac{\Tr\big[\gamma^\mu\sla k\gamma^\nu(\sla k-\sla q)\big]}{(k^2+\ii0)\,((k-q)^2+\ii0)} .
+\]
+用 $g_{\mu\nu}$ 缩并：左边为 $-(D-1)q^2\Pi$；右边用 $\gamma^\mu\sla a\gamma_\mu=-(D-2)\sla a$ 与 $\Tr[\sla k(\sla k-\sla q)]=2[k^2+(k-q)^2-q^2]$，其中 $k^2$、$(k-q)^2$ 两项各消去一个传播子而成为无标度积分（\cref{lem:prelim-scaleless}）。再用两点积分（\cref{lem:appC-bubble}）$\int\frac{\dd^Dk}{(2\pi)^D}\frac1{(k^2+\ii0)((k-q)^2+\ii0)}=\frac{\ii\,G(1,1)}{(4\pi)^{D/2}}(-q^2-\ii0)^{-\varepsilon}$，得
+\begin{equation}\label{eq:prelim-Pi0}
+\Pi_0(q^2)=N_ce_q^2\,\frac{2(D-2)}{D-1}\,\frac{G(1,1)}{(4\pi)^{D/2}}\,(-q^2-\ii0)^{-\varepsilon},\qquad G(1,1)=\frac{\Gamma(\varepsilon)\Gamma(1-\varepsilon)^2}{\Gamma(2-2\varepsilon)}. % VF-EE-3
+\end{equation}
+\par
+\emph{$\MSbar$ 重整化。}光子自能中出现的是 $e_0^2\Pi_0=e^2\big[\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}(4\pi)^{-\varepsilon}\Pi_0\big]$。由 $\ee^{\varepsilon\gamma_E}G(1,1)=\frac1\varepsilon+2+O(\varepsilon)$（$\ee^{\varepsilon\gamma_E}\Gamma(\varepsilon)$ 无常数项，$\Gamma(1-\varepsilon)^2/\Gamma(1-2\varepsilon)=1+O(\varepsilon^2)$，$\Gamma(2-2\varepsilon)=(1-2\varepsilon)\Gamma(1-2\varepsilon)$）与 $\frac{2(D-2)}{D-1}=\frac43\big(1-\frac\varepsilon3+O(\varepsilon^2)\big)$，
+\[
+\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}(4\pi)^{-\varepsilon}\Pi_0=\frac{N_ce_q^2}{12\pi^2}\Big[\frac1\varepsilon+\frac53-L+O(\varepsilon)\Big],\qquad L=\ln\frac{-q^2-\ii0}{\mu^2},
+\]
+减去极点得 $\Pi_0^{\MSbar}=\frac{N_ce_q^2}{12\pi^2}\big(\frac53-L\big)$。
+\par
+\emph{虚部的两种算法。}(i) $q^2=s+\ii0$ 处 $L=\ln(s/\mu^2)-\ii\pi$，故 $\Imag\Pi_0^{\MSbar}=\frac{N_ce_q^2}{12\pi}$，$R_0=12\pi\Imag\Pi_0=N_ce_q^2$。(ii) 精确到 $\varepsilon$：$(-s-\ii0)^{-\varepsilon}=s^{-\varepsilon}\ee^{\ii\pi\varepsilon}$ 与 $\Gamma(\varepsilon)\Gamma(1-\varepsilon)\sin\pi\varepsilon=\pi$ 给出
+\[
+2(D-1)\,s\,\Imag\Pi_0(s+\ii0)=N_ce_q^2\,2(D-2)\,s\,\Phi_2,\qquad \Phi_2=\frac1{8\pi}\Big(\frac{4\pi}{s}\Big)^{\varepsilon}\frac{\Gamma(1-\varepsilon)}{\Gamma(2-2\varepsilon)},
+\]
+右边正是两部分子割：按\cref{def:prelim-cut}，以 $-g_{\mu\nu}$ 缩并的谱函数为 $N_ce_q^2\int\dd\Phi_2(-g_{\mu\nu})\Tr[\sla p_1\gamma^\mu\sla p_2\gamma^\nu]=N_ce_q^2\,2(D-2)s\,\Phi_2$（$\Phi_2$ 为 $D$ 维两体相空间的体积，附录~C）。所以按切割规则（\cref{thm:prelim-cutting-rules}）与光学定理（\cref{prop:prelim-optical}）算出的虚部与直接延拓的虚部对一切 $\varepsilon$ 精确相等。
+\par
+\emph{符号。}Peskin--Schroeder 的单粒子不可约光子自能写作 $(q^2g^{\mu\nu}-q^\mu q^\nu)\Pi_{\mathrm{PS}}$，与本书的关系为 $\Pi_{\mathrm{PS}}=-e^2\Pi$；本书的符号使 $\Imag\Pi>0$。
+\uses{def:prelim-dr-conventions,def:prelim-msbar,thm:prelim-cutting-rules,prop:prelim-optical,lem:appC-bubble}
+\end{example}
+
+\begin{tcolorbox}[enhanced,breakable,title=常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{「维数正规化中夸克中的夸克分布就是 $\delta(1-x)$，所以什么也没有发生。」}只对裸分布成立：全部圈图都是无标度的，$\int\dd^{2-2\varepsilon}\mathbf l_{\mathrm T}/\mathbf l_{\mathrm T}^2\propto\frac1{\varepsilon_{\mathrm{UV}}}-\frac1{\varepsilon_{\mathrm{IR}}}=0$。重整化分布是 $\delta(1-x)-\frac{\as}{2\pi}\frac1\varepsilon P_{qq}+\dots$，其中的极点是红外的（\cref{ex:prelim-scaleless}；一般陈述见\cref{prop:pdf-partonic-dr}）。\par
+\textbf{「单个割图是幺正的。」}不对。切割规则把前向图的虚部等同于它的\emph{全部}割之和；末态相互作用以及虚修正与实辐射的抵消只在对割线位置求和后发生，单个割图甚至是红外发散的（\cref{prop:ee-cutting-exact}）。因子化中末态相互作用的相消正是这样的割线求和（\cref{prop:method-fsi}，第~9~章；精确形式见\cref{lem:appO-unitarity}）。
+\end{tcolorbox}

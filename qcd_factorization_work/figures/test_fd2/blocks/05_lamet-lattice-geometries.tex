@@ -1,0 +1,67 @@
+%%% BEGIN fig:lamet-lattice-geometries
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 grid/.style={draw=gray!30,line width=0.3pt},
+  fd2 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  fd2 site/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=5pt},
+  fd2 osite/.style={circle,draw=black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5pt},
+  fd2 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 lab/.style={font=\small,fill=white,inner sep=1pt},
+  fd2 note/.style={font=\footnotesize,fill=white,inner sep=1pt}]
+  % ======================= (a) quasi-PDF operator =======================
+  \begin{scope}
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.4,1.8);
+    \draw[wilson plain] (0,0) -- (1.8,0);
+    \path[fd2 warrow=0.56] (0,0) -- (1.8,0);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (1.8,0) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=north] at (1.8,-0.12) {$\bar\psi(z\hat e_z)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$z$} (1.8,0.36);
+    \draw[fd2 dim] (2.1,1.32) -- node[fd2 note,above=1pt] {$a$} (2.4,1.32);
+    \draw[fd2 ax] (-0.45,1.05) -- (0.2,1.05) node[fd2 note,right=0pt] {$\hat z$};
+    \draw[fd2 ax] (-0.45,1.05) -- (-0.45,1.62) node[fd2 note,right=1pt] {$\vec b_\perp$};
+    \node[font=\small] at (0.9,-1.15) {$\bar\psi(z\hat e_z)\,\Gamma\,W[z\hat e_z,0]\,\psi(0)$};
+    \node[font=\small] at (0.9,-1.75) {(a)\ 准 PDF：直 Wilson 线};
+  \end{scope}
+  % ======================= (b) quasi-TMD operator: space-like staple =======================
+  \begin{scope}[xshift=4.4cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (2.7,1.8);
+    \draw[wilson plain] (0,0) -- (2.1,0) -- (2.1,1.2) -- (0.9,1.2);
+    \path[fd2 warrow=0.52] (0,0) -- (2.1,0);
+    \path[fd2 warrow=0.55] (2.1,0) -- (2.1,1.2);
+    \path[fd2 warrow=0.6] (2.1,1.2) -- (0.9,1.2);
+    \node[fd2 site] at (0,0) {};  \node[fd2 osite] at (0.9,1.2) {};
+    \node[fd2 lab,anchor=north] at (0,-0.12) {$\psi(0)$};
+    \node[fd2 lab,anchor=south] at (0.75,1.33) {$\bar\psi(z\hat e_z+\vec b_\perp)$};
+    \draw[fd2 dim] (0,0.36) -- node[fd2 note,above=1pt] {$L$} (2.1,0.36);
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \draw[red!60!black,line width=0.6pt,-{Stealth[length=4.5pt,width=3.8pt]}] (2.25,0.6) -- (2.85,0.6) node[font=\footnotesize,text=red!55!black,right=1pt] {$L\to\infty$};
+    \node[font=\small] at (1.05,-1.15) {$\bar\psi(z\hat e_z+\vec b_\perp)\,\Gamma\,\mathcal W_z\,\psi(0)$};
+    \node[font=\small] at (1.05,-1.75) {(b)\ 准 TMD：类空订书钉};
+  \end{scope}
+  % ======================= (c) rectangular Wilson loop =======================
+  \begin{scope}[xshift=9.45cm]
+    \draw[fd2 grid,step=0.3] (-0.6,-0.6) grid (4.8,1.8);
+    \draw[wilson plain] (0,0) rectangle (4.2,1.2);
+    \path[fd2 warrow=0.5] (0,0) -- (4.2,0);
+    \path[fd2 warrow=0.55] (4.2,0) -- (4.2,1.2);
+    \path[fd2 warrow=0.5] (4.2,1.2) -- (0,1.2);
+    \path[fd2 warrow=0.55] (0,1.2) -- (0,0);
+    \draw[fd2 dim] (0,-0.36) -- (4.2,-0.36);
+    \node[fd2 note] at (2.1,-0.36) {$2L$};
+    \draw[fd2 dim] (-0.33,0) -- node[fd2 note,left=1pt] {$b_\perp$} (-0.33,1.2);
+    \node[font=\small,fill=white,inner sep=1.2pt] at (2.1,0.6) {$Z_E(2L,b_\perp)$};
+    \node[font=\small] at (2.1,-1.15) {$\frac1{N_c}\Tr\langle0|W_\perp\,\mathcal W_z(\vec b_\perp;2L)|0\rangle$};
+    \node[font=\small] at (2.1,-1.75) {(c)\ 矩形 Wilson 圈};
+  \end{scope}
+\end{tikzpicture}
+\caption{格点上的算符几何（等时面 $t=0$，晶格间距 $a$；实心点为 $\psi$、空心点为 $\bar\psi$ 所在格点，双线为规范链，箭头为路径方向，即 $W[b,a]$ 由 $a$ 指向 $b$）：
+(a)~准 PDF 算符的直 Wilson 线 $W[z\hat e_z,0]$；(b)~准 TMD 算符的订书钉形 Wilson 线 $\mathcal W_z$：自 $\psi$ 沿 $+\hat z$ 走长度 $L$，经横向连接（间隔 $b_\perp$），再沿 $-\hat z$ 回到 $\bar\psi$（图示为 DY 型；SIDIS 型沿 $-\hat z$）；
+(c)~矩形 Wilson 圈 $Z_E(2L,b_\perp)$，$\sqrt{Z_E}$ 除去订书钉的线性发散、尖点发散与捏点奇点，使 $L\to\infty$ 的极限存在。手征对称性不严格的格点费米子还引起同维混合 $\Gamma\to\Gamma'$（见正文）。
+注意：这里的订书钉是类空的，与\cref{fig:tmd-staple}中 Collins TMD 的类光订书钉不同。}
+\label{fig:lamet-lattice-geometries}
+\end{figure}
+%%% END fig:lamet-lattice-geometries

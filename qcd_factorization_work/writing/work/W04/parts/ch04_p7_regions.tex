@@ -1,0 +1,66 @@
+%% =====================================================================
+\section{区域方法及其地位}\label{sec:ir-regions}
+
+前几节由钳夹分析与幂次计数确定领头区域。实际计算中常用另一种思路——区域方法（expansion by regions）：先猜出一组区域，在每个区域中展开被积函数，再把各区域的结果相加。它是极有效的计算工具，但其地位必须与前面的结论严格区分。
+
+\begin{definition}[区域方法]\label{def:ir-regions}
+对一个依赖于小参数的 Feynman 积分，Beneke--Smirnov 的区域展开\cite{BenekeSmirnov1998}规定：(i)~选定一组区域（圈动量或 Feynman 参数的标度）；(ii)~在每个区域中把被积函数按该区域的小量作 Taylor 展开；(iii)~把每个展开项在\emph{整个}积分区域上积分，用维数正规化，必要时加辅助的解析正规子；(iv)~无标度积分取为零（\cref{lem:prelim-scaleless}）；(v)~对区域求和。Jantzen 从积分区域的划分出发，给出该方法成立所需的四个条件\cite[第~3~节]{Jantzen2011}：(1)~各区域的收敛域互不相交并覆盖积分区域；(2)~各展开彼此对易；(3)~原积分与一切展开项（无论是否限制在收敛域上）都已正规化；(4)~展开项在整个区域上积分时级数绝对收敛（或已正规化）。在这些条件下 $I=\sum_xT^{(x)}I-\sum_{x<x'}T^{(x)}T^{(x')}I+\cdots$，维数正规化下重叠项通常是无标度的。
+\uses{def:qcd-dimreg,lem:prelim-scaleless}
+\end{definition}
+
+\begin{theorem}[欧氏极限的渐近展开 \tagR]\label{thm:ir-regions-euclid}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）对外动量为大的欧氏动量的极限与内线质量为大质量的极限，区域展开与已有严格证明的子图展开（渐近展开的子图形式）逐项一致，因而对维数正规化的 Feynman 积分逐阶给出其渐近展开。（本定理只涉及 Feynman 积分。）
+\uses{def:ir-regions}
+\end{theorem}
+\begin{proof}
+子图展开的证明见\cite{Smirnov:1990rz}与\cite{Smirnov2002}，其在 $\MSbar$ 方案中的构造见\cite{Gorishnii1989}；在这两类极限中每个区域对应一个子图——硬子图按小量作 Taylor 展开、其余部分保持原样——两种展开逐项相同\cite{Smirnov2002}。
+\end{proof}
+
+\begin{proposition}[Minkowski 极限下区域方法的地位 \tagP]\label{prop:ir-regions-minkowski}
+对阈值、Sudakov、Regge 与在壳展开等 Minkowski 极限，区域方法没有一般的证明，只有部分结果：Jantzen 在上述四个条件之下的推导及其对有质量 Sudakov 形状因子的演示\cite{Jantzen2011}；Newton 多面体的几何表述\cite{Pak:2010pt}及其对势区与 Glauber 区的推广\cite{Jantzen:2012mw}；对正系数多项式，每个本质侧面的领头阶贡献以及只有一个侧面贡献时的全阶展开的证明\cite{Semenova:2018cwy}；区域与 Landau 解、Newton 多面体侧面的对应及一类区域的展开可交换性\cite{Gardi:2022khw}；宽角散射中区域的图论识别\cite{Ma:2023hrt}。即使离壳 Sudakov 三角形（四个侧面，$\mathcal F>0$）也没有完整的证明。（本命题只涉及 Feynman 积分。）
+\uses{def:ir-regions,thm:ir-regions-euclid}
+\end{proposition}
+
+\paragraph{地位与缺口}
+一般陈述是 \tagP：已证明的是欧氏极限（\cref{thm:ir-regions-euclid}），Jantzen 的推导以展开可对易、求和可交换为条件（恒等式本身在这些条件下成立，适用性则是部分的）\cite{Jantzen2011}，Semenova--Smirnov--Smirnov 证明了每个本质侧面的领头阶与单侧面情形的全阶结果\cite{Semenova:2018cwy}，而“积分的领头阶等于各侧面之和”被归结为一个未证明的可交换性。离壳 Sudakov 三角形只在单圈被精确验证（第~5~章的\cref{ex:sudakov-offshell}；其区域分析见\cite[第~2.2~节]{BecherBroggioFerroglia2015}，有质量交换的情形见其第~2.3~节与\cite[第~6~节]{Jantzen2011}）。“区域 $=$ Newton 多面体的下表面”作为一般陈述在 Minkowski 运动学中不成立：据该文摘要，从三圈起非平面的 $2\to2$ 图需要剖分多面体才能得到的新区域\cite{Gardi:2024axt}；另有一个三圈的活动--活动 Glauber 区被自动寻找区域的程序漏掉\cite{Becher:2024kmk}（第~24~章的\cref{prop:front-hidden-regions}，\tagV）。因此“侧面处方”在一般情形是 \tagV，而以正确补全的区域集合为前提的方法本身仍未证明（\tagP／\tagC，第~24~章的\cref{conj:front-mor-minkowski}）；SCET 的模式清单继承这一注意事项。在因子化证明中，领头区域必须由钳夹分析与幂次计数确定，区域方法只是交叉检验——反过来用区域方法“确认”领头区域，在 Minkowski 运动学中是循环论证。%
+% (critic C5)
+升级途径：Minkowski 极限下（含隐藏区域的识别算法）的一般证明。
+
+\begin{remark}[发散区域积分的值依赖于表示]\label{rem:ir-regions-values}
+单个区域积分往往本身发散，只由解析延拓定义，其值依赖于所用的表示。例如零区（zero-bin）型积分 $\int_0^\infty\dd\sigma\,\sigma^{-1-\varepsilon}$ 是无标度的，在维数正规化中为零：在 $\sigma=1$ 处分开，$\int_0^1$ 在 $\varepsilon<0$ 时收敛并等于 $-1/\varepsilon$，$\int_1^\infty$ 在 $\varepsilon>0$ 时收敛并等于 $1/\varepsilon$，二者各自延拓后相加为零（即 $\frac1{\varepsilon_{\rm UV}}-\frac1{\varepsilon_{\rm IR}}$ 的记账）；而同一个区域若在参数表示中写成 $\int_0^1\dd\sigma\,\sigma^{-1-\varepsilon}$，其值为 $-1/\varepsilon$。因此单个“区域贡献”不是与表示无关的量，只有在条件 (1)--(4) 之下的区域之和才有意义。Collins 的减除项则是绝对收敛的累次积分，没有这种歧义；把减除项的值与区域方法的逐项值等同时所需的取值规则，是附录~N 的约定\cref{asm:appN-values}。这也是\cref{prop:ir-regions-minkowski}缺乏一般证明的技术原因之一。
+\uses{def:ir-regions}
+\end{remark}
+
+\begin{example}[一维玩具积分与零区减除]\label{ex:ir-regions-toy}
+$I=\int_0^\infty\frac{\dd k}{(k+m)(k+M)}=\frac{\ln(M/m)}{M-m}$，$m\ll M$ 时领头幂次为 $\ln(M/m)/M$。两个区域：软区 $k\sim m$（把 $1/(k+M)$ 展开为 $1/M$）与硬区 $k\sim M$（把 $1/(k+m)$ 展开为 $1/k$）。二者各自发散，以解析正规子 $k^{-e}$ 定义：
+\begin{equation}\label{eq:ir-toy-regions}
+\begin{aligned}
+T_s&=\frac1M\int_0^\infty\frac{\dd k\,k^{-e}}{k+m}=\frac{m^{-e}\Gamma(e)\Gamma(1-e)}{M}\qquad(0<e<1),\\
+T_h&=\int_0^\infty\frac{\dd k\,k^{-e}}{k(k+M)}=M^{-1-e}\Gamma(-e)\Gamma(1+e)\qquad(-1<e<0).
+\end{aligned}
+\end{equation}
+% VF-REG-13
+由 $\Gamma(e)\Gamma(1-e)=-\Gamma(-e)\Gamma(1+e)=\pi/\sin\pi e$，得 $T_s+T_h=\frac{\pi}{M\sin\pi e}\big(m^{-e}-M^{-e}\big)\to\frac{\ln(M/m)}{M}$（$e\to0$）：两个区域各自的 $1/e$ 极点相消。两次展开的重叠 $T_sT_h=\frac1M\int_0^\infty\dd k\,k^{-1-e}=0$ 是无标度的，不需要另行减除。若改用截断 $[10^{-12},10^{12}]$（$m=10^{-3}$，$M=1$）代替解析正规子，则 $T_s+T_h=62.17$，重复计数了重叠区域，只有 $T_s+T_h-T_sT_h=6.9078=\ln10^3$ 才给出领头幂次——这就是零区减除。各数值均已核对。
+\uses{def:ir-regions,rem:ir-regions-values}
+\end{example}
+
+区域方法最重要的实例是第~5~章的 Sudakov 形状因子（\cref{ex:sudakov-offshell}；有质量交换须用解析正规子，\cref{ex:sudakov-massive}）；它与 Landau 分析、Newton 多面体的现代联系以及隐藏区域见\cref{sec:front-landau}等。
+
+%% ---------------------------------------------------------------------
+% misconception box: M29; M20 + critic O12; critic C15; M8; M9 (first statement); M19 + critic O11 + critic C5
+\begin{tcolorbox}[enhanced,breakable,title=常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{“欧氏区没有钳夹，所以欧氏 Green 函数红外有限。”}零动量无质量线总满足 Landau 方程；有限性来自幂次计数（\cref{rem:ir-euclid-corners}）。\par
+\textbf{“Landau 方程给出奇异性。”}只是必要条件；解可以无害（分子压低、可积），被钳住也不等于奇异；端点奇异性与第二类奇异性须另行处理；外部不变量的奇异性与固定外动量下的钳夹区域是两个问题（\cref{rem:ir-landau-status}）。\par
+\textbf{“Coleman--Norton 图像说明这里没有奇异性。”}它只刻画物理区钳夹（\cref{sec:ir-coleman-norton}）。\par
+\textbf{“KLN 定理解释了强子对撞截面为何有限。”}初态共线奇异性被因子化而非相消；有色初态的 Bloch--Nordsieck 相消会失效（\cref{prop:ir-bn-failure}）。\par
+\textbf{“红外安全保证了因子化。”}它只处理末态奇异性（\cref{thm:ir-safe-finite}）。\par
+\textbf{“区域方法是定理”“可以用它确定领头区域。”}只在欧氏极限下是定理；Minkowski 极限下无一般证明，侧面处方在三圈有反例；维数正规化不能分开各区域时（有质量交换、快度发散）还须加解析或快度正规子；用它确定领头区域是循环论证（\cref{prop:ir-regions-minkowski}）。
+\end{tcolorbox}
+
+\paragraph{本章小结。}
+长程敏感性只能出现在积分围道被钳住的地方。动量空间的 Landau 方程（带 $\alpha_j\ge0$）是钳夹的必要条件，参数形式的 Landau 条件控制外部不变量的解析性与红外有限性；二者都在微扰论中严格成立，但在钳夹层次上并不等价。Coleman--Norton 图像给出硬--喷注--软的约化图（\tagA）；幂次计数（严格的标度陈述）在 Feynman 规范中挑出每个喷注一个物理部分子加任意多个标量极化胶子、软线只以胶子附着于喷注的领头区域（\tagA），超领头构型只在规范不变的和中相消。Glauber 区在幂次计数上领头而程函近似失效：在顶点中未被钳住，在初、末态相互作用并存时被钳住。QED 的软光子发散在单举截面中相消；KLN 定理与红外安全给出末态相消的一般框架（\tagA），有色初态的非阿贝尔 Bloch--Nordsieck 相消不成立（\tagV）；区域方法只在欧氏极限下严格。从标度陈述到积分界的过渡（\cref{asm:appN-envelope}、\cref{asm:appN-separation}）是本章全部 \tagA 结论的共同瓶颈。
+
+\paragraph{这些工具在后文的用途。}
+第~5~章用钳夹面与区域分析 Sudakov 形状因子（\cref{sec:sudakov-regions}）；第~6~章的欧氏红外有限性与 $R(s)$ 的有限性（\cref{thm:ee-euclid-ir}、\cref{thm:ee-R-finite}）建立在\cref{rem:ir-euclid-corners}之上；第~9~章把领头区域、标量极化主导与 Glauber 形变发展为一般方法（\cref{def:method-regions}、\cref{prop:method-gy-suppression}、\cref{prop:method-glauber-deformation}），附录~N 给出其精确形式；第~10、12、14~章对 DIS、Drell--Yan（\cref{prop:dy-regions}）与 TMD 使用\cref{fig:reduced-dis,fig:reduced-dy}的约化图，附录~O 处理被钳住的 Glauber 区；第~16~章以\cref{def:ir-safe}为出发点（\cref{prop:jets-sw}）；第~24~章讨论 Landau 判据的完整证明（预印本）、Gordan 择一定理与隐藏区域（\cref{thm:front-collins-pinch}、\cref{prop:front-hidden-regions}）。

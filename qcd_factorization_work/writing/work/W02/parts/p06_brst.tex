@@ -1,0 +1,120 @@
+% -------------------------------------------------------------------------------------
+\section{BRST 对称性与物理态}\label{sec:prelim-brst}
+
+规范固定项与鬼场项破坏了规范不变性。但它们是以一种非常特殊的方式加进去的，因而留下了一个整体的、Grassmann 奇的对称性：Becchi、Rouet、Stora\cite{BecchiRouetStora1975,BecchiRouetStora1976}与 Tyutin\cite{Tyutin1975}发现的 BRST 对称性。它的思想很简单：把无穷小规范变换的参数换成鬼场乘以一个 Grassmann 奇的常数。这个对称性是规范理论量子化后的全部推论——Slavnov--Taylor 恒等式、可重整性、物理 S 矩阵的幺正性与规范参数无关性——的共同来源。
+
+\begin{definition}[BRST 变换]\label{def:prelim-brst}
+BRST 变换 $s$ 是作用于场的多项式上的 Grassmann 奇导子，从左边作用，与 $\partial_\mu$ 对易，并满足分次 Leibniz 法则 $s(XY)=(sX)Y+(-1)^{|X|}X(sY)$（$|X|$ 为 $X$ 的 Grassmann 宇称）；它在基本场上的作用为
+\begin{equation}\label{eq:qcd-brst}
+\begin{gathered}
+sA^a_\mu=(D_\mu c)^a=\partial_\mu c^a+gf^{abc}A^b_\mu c^c,\qquad s\psi=\ii g\,c^at^a\psi,\qquad s\bar\psi=-\ii g\,c^a\bar\psi t^a,\\
+sc^a=-\frac g2f^{abc}c^bc^c,\qquad s\bar c^a=B^a,\qquad sB^a=0 .
+\end{gathered}
+\end{equation}
+\uses{def:qcd-fp}
+\end{definition}
+
+在 $A$、$\psi$ 上，$\epsilon s$（$\epsilon$ 为 Grassmann 奇的常数）正是\cref{prop:qcd-covariance}(c) 中参数取为 $\theta^a=g\epsilon c^a$ 的无穷小规范变换；与\cite[第~16.4~节]{PeskinSchroeder1995}一样，规范参数正比于鬼场。$s\bar\psi$ 的符号由 $s(\bar\psi\psi)=0$ 确定：$(s\bar\psi)\psi-\bar\psi(s\psi)=-\ii gc^a\bar\psi t^a\psi+\ii gc^a\bar\psi t^a\psi=0$（把 $c^a$ 移过 $\bar\psi$ 得一个负号）。$sc^a$ 的形式由下面的幂零性唯一确定（在相差 $c$ 的归一化的意义下）。
+
+\begin{lemma}[$s^2=0$ 与拉氏量的 BRST 不变性 \tagR]\label{lem:prelim-brst-nilpotent}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item 在 $A^a_\mu$、$\psi$、$\bar\psi$、$c^a$、$\bar c^a$、$B^a$ 上 $s^2=0$，从而在它们的任意多项式上 $s^2=0$；
+\item $s\mathcal L_{\mathrm{cl}}=0$；
+\item $\mathcal L_{\mathrm{gf}}+\mathcal L_{\mathrm{FP}}=s\Psi$，其中规范费米子 $\Psi=\bar c^a\big(\partial\cdot A^a+\frac{\xi_g}2B^a\big)$，$\mathcal L_{\mathrm{gf}}$ 取含 $B$ 的形式，$\mathcal L_{\mathrm{FP}}=\bar c^a(-\partial^\mu D^{ac}_\mu)c^c$。因此 $s\mathcal L=0$。
+\end{enumerate}
+\uses{def:prelim-brst, def:prelim-qcd, def:qcd-fp, lem:qcd-colour-identities, prop:qcd-covariance, thm:qcd-gauge-invariance}
+\end{lemma}
+
+\begin{proof}
+(a) $s^2$ 是两个奇导子的平方，即偶导子 $\frac12\{s,s\}$，故只需在基本场上验证。$s^2\bar c^a=sB^a=0$，$s^2B^a=0$。对 $c$：
+\[
+s^2c^a=-\frac g2f^{abc}\big[(sc^b)c^c-c^b(sc^c)\big]=-\frac{g^2}2f^{abc}f^{cde}\,c^bc^dc^e ,
+\]
+（第二步用 $f$ 的反对称性把两项合并），而 $c^bc^dc^e$ 对 $(b,d,e)$ 完全反对称，$f^{abc}f^{cde}$ 对这三个指标的完全反对称化由 Jacobi 恒等式（\cref{lem:qcd-colour-identities}(v)）为零。对 $\psi$：
+\[
+s^2\psi=\ii g(sc^a)t^a\psi-\ii gc^at^a(s\psi)=-\frac{\ii g^2}2f^{abc}c^bc^ct^a\psi+g^2c^ac^bt^at^b\psi ,
+\]
+由 $c^ac^b=-c^bc^a$，$c^ac^bt^at^b=\frac12c^ac^b[t^a,t^b]=\frac{\ii}2f^{abc}c^ac^bt^c$，两项相消；$\bar\psi$ 同理。对 $A$，含 $\partial_\mu c$ 的项由 $f$ 的反对称性相消，$g^2$ 项为 $g^2(f^{axe}f^{xbd}-\frac12f^{abx}f^{xde})A^b_\mu c^dc^e$，其关于 $(d,e)$ 的反对称部分由 Jacobi 恒等式为零；逐项计算见附录~J（\cref{sec:appJ-brst}）。
+
+(b) 取 Grassmann 奇常数 $\epsilon$，则 $\delta=\epsilon s$ 在 $A$、$\psi$、$\bar\psi$ 上是参数为 $\theta^a=g\epsilon c^a$（Grassmann 偶）的无穷小规范变换（\cref{prop:qcd-covariance}(c)）。$\mathcal L_{\mathrm{cl}}$ 对一切规范变换不变（\cref{thm:qcd-gauge-invariance}(a)），故 $\epsilon s\mathcal L_{\mathrm{cl}}=0$；$\epsilon$ 任意，故 $s\mathcal L_{\mathrm{cl}}=0$。
+
+(c) 由分次 Leibniz 法则，$s(\bar c^aX^a)=(s\bar c^a)X^a-\bar c^a(sX^a)$。取 $X^a=\partial\cdot A^a+\frac{\xi_g}2B^a$，$s(\partial\cdot A^a)=\partial^\mu(D_\mu c)^a$，$sB^a=0$：
+\[
+s\Psi=B^a\partial\cdot A^a+\frac{\xi_g}2B^aB^a-\bar c^a\partial^\mu(D_\mu c)^a=\mathcal L_{\mathrm{gf}}+\mathcal L_{\mathrm{FP}} .
+\]
+于是 $s\mathcal L=s\mathcal L_{\mathrm{cl}}+s^2\Psi=0$。
+\end{proof}
+
+以上全部等式还用一个显式的 Grassmann 代数（$\mathrm{SU}(2)$，场及其导数作为独立生成元）逐项验证过。% s12_brst_grassmann.py (9/9 PASS); s1_colour_brst.py (tensor identities)
+(c) 说明规范固定部分是 BRST \emph{正合}的：它是某个量的 $s$ 像。由此马上得到：$\partial\mathcal L/\partial\xi_g=\frac12B^aB^a=s(\frac12\bar c^aB^a)$ 也是正合的，这将是物理量与规范参数无关的根源（\cref{prop:qcd-xi-independence}）。
+
+\paragraph{BRST 荷与物理态。}在算符形式中，BRST 对称性由一个守恒荷 $Q$ 生成：$[Q,\Phi\}=-\ii\,s\Phi$（$[\cdot,\cdot\}$ 对奇算符取反对易子）。为使 $Q$ 关于态空间的内积自伴，鬼场须指定厄米性；按 Kugo 与 Ojima\cite{KugoOjima1979}的约定取 $c$ 与 $\bar c_{\mathrm{KO}}\equiv\ii\bar c$ 为厄米场（于是 $\mathcal L_{\mathrm{FP}}$ 与 $-\ii\partial^\mu\bar c_{\mathrm{KO}}D_\mu c$ 只差一个全导数）。协变规范的态空间是一个\emph{不定度规}空间：时间分量的胶子有负模方。物理态被定义为 BRST 上同调 $\ker Q/\operatorname{im}Q$ 的元素。下面的命题在自由理论中证明这一定义是合理的。
+
+\begin{proposition}[自由渐近 Fock 空间上的 BRST 上同调（Kugo--Ojima 四重态） \tagR]\label{prop:qcd-brst-cohomology}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）考虑 $g=0$ 的自由理论，取 Feynman 规范 $\xi_g=1$，令 $\mathcal F$ 为胶子（四个极化）、鬼场、反鬼场与夸克的不定度规 Fock 空间（$B^a=-\partial\cdot A^a$ 不是独立的模式），$Q$ 为其上的 BRST 荷（$Q|0\rangle=0$，$Q$ 关于不定内积自伴）。则
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item $Q^2=0$；
+\item $\ker Q/\operatorname{im}Q$ 同构于只含夸克与横向极化胶子的 Fock 空间 $\mathcal F_{\mathrm{phys}}$（它位于鬼数零）；
+\item 内积在 $\ker Q$ 上半正定，在 $\operatorname{im}Q$ 上为零，故 $\ker Q/\operatorname{im}Q$ 是正定度规的 Hilbert 空间；
+\item 对每个类光动量 $k$，非物理的模式——极化正比于 $k$ 与正比于 $\bar k$（$k\cdot\bar k\neq0$）的两个胶子模式、鬼场与反鬼场——组成一个 BRST 四重态，含四重态模式的 $Q$ 闭合态模方为零。
+\end{enumerate}
+（本命题是关于自由场 Fock 空间的代数陈述。）
+\uses{def:prelim-brst, def:qcd-fp, lem:prelim-brst-nilpotent}
+\end{proposition}
+
+\begin{proof}
+自由理论中 $s_0A_\mu=\partial_\mu c$，$s_0c=0$，$s_0\bar c=B=-\partial\cdot A$，$s_0\psi=0$（\cref{def:prelim-brst}中令 $g=0$），自由运动方程为 $\partial^2A_\mu=\partial^2c=\partial^2\bar c=0$。
+
+(a) 由\cref{lem:prelim-brst-nilpotent}(a)（取 $g=0$；$s_0^2\bar c=-\partial^2c=0$ 用到自由运动方程），$[Q^2,\Phi]=-s_0^2\Phi=0$ 对一切自由场成立，故 $Q^2$ 在不可约的 Fock 表示上是常数；又 $Q^2|0\rangle=0$，故 $Q^2=0$。
+
+\emph{一粒子态。}固定类光的 $k$ 与类光的 $\bar k$（$k\cdot\bar k\ne0$），令 $\eta=\bar k/(k\cdot\bar k)$，取横向极化 $\epsilon_{1,2}$（$\epsilon_i\cdot k=\epsilon_i\cdot\bar k=0$，$\epsilon_i^2=-1$）。胶子的正规对易关系 $[a_\mu(k),a^\dagger_\nu(k')]=-g_{\mu\nu}(2\pi)^32k^0\delta^3(\mathbf k-\mathbf k')$ 使极化为 $e$ 的一粒子态满足 $\langle e|e'\rangle=-e^*\cdot e'$（略去动量 $\delta$ 函数），故
+\[
+\langle\epsilon_i|\epsilon_j\rangle=\delta_{ij},\qquad \langle K|K\rangle=\langle H|H\rangle=0,\qquad \langle K|H\rangle=-1,\qquad |K\rangle\equiv|e=k\rangle,\ |H\rangle\equiv|e=\eta\rangle .
+\]
+由 $[Q,A_\mu\}=-\ii\partial_\mu c$，比较正频部分得 $[Q,a^\dagger_\mu(k)]=k_\mu c^\dagger(k)$，即 $Q|e\rangle=(e\cdot k)|C\rangle$（$|C\rangle$ 为鬼场一粒子态）：$Q|\epsilon_i\rangle=Q|K\rangle=0$，$Q|H\rangle=|C\rangle$。由 $s_0\bar c=-\partial\cdot A$，$Q|\bar C\rangle=\lambda|K\rangle$，$\lambda\ne0$ 由鬼场的归一化决定；$Q|C\rangle=0$。鬼数守恒给出 $\langle C|C\rangle=\langle\bar C|\bar C\rangle=0$；$Q$ 的自伴性给出 $\langle C|\bar C\rangle=\langle QH|\bar C\rangle=\langle H|Q\bar C\rangle=\lambda\langle H|K\rangle=-\lambda$。所以 $(H,C)$ 与 $(\bar C,K)$ 是两个 BRST 双重态，前者的“母态”$H$ 与后者的“子态”$K$ 配对，后者的母态 $\bar C$ 与前者的子态 $C$ 配对：这就是四重态。夸克与横向胶子满足 $[Q,\cdot\}=0$。
+
+\emph{同伦。}在一粒子四重态上定义 $R|C\rangle=|H\rangle$，$R|K\rangle=\lambda^{-1}|\bar C\rangle$，$R$ 在其余一粒子态上为零，并把 $Q$ 与 $R$ 都作为作用于产生算符的奇导子延拓到 $\mathcal F$（$Q|0\rangle=R|0\rangle=0$）。直接验证：$\{Q,R\}|C\rangle=Q|H\rangle=|C\rangle$，$\{Q,R\}|H\rangle=R|C\rangle=|H\rangle$，$\{Q,R\}|K\rangle=\lambda^{-1}Q|\bar C\rangle=|K\rangle$，$\{Q,R\}|\bar C\rangle=R(\lambda|K\rangle)=|\bar C\rangle$，而在夸克与横向胶子上 $\{Q,R\}=0$。两个奇导子的反对易子是偶导子，它与四重态量子数算符 $N_q$ 在全部一粒子态上一致，故 $\{Q,R\}=N_q$。$Q$ 与 $R$ 都保持 $N_q$。
+
+(b) 若 $Q\psi=0$ 且 $N_q\psi=n\psi$，$n>0$，则 $\psi=\frac1n\{Q,R\}\psi=Q(\frac1nR\psi)$ 是正合的。在 $N_q=0$ 的子空间 $\mathcal F_{\mathrm{phys}}$ 上 $Q=0$，而 $Q$ 保持 $N_q$，故 $\operatorname{im}Q\cap\mathcal F_{\mathrm{phys}}=Q(\mathcal F_{\mathrm{phys}})=0$。于是 $\ker Q/\operatorname{im}Q\cong\mathcal F_{\mathrm{phys}}$。
+
+(c) 设 $\psi\in\ker Q$，按 $N_q$ 分解 $\psi=\psi_0+\psi_+$，$\psi_0\in\mathcal F_{\mathrm{phys}}$，$\psi_+=Q\chi$。由 $Q$ 的自伴性，对任意 $\phi\in\ker Q$ 有 $\langle Q\chi|\phi\rangle=\langle\chi|Q\phi\rangle=0$；于是 $\langle\psi|\psi\rangle=\langle\psi_0|\psi_0\rangle\ge0$（夸克与横向胶子的 Fock 空间正定），等号成立当且仅当 $\psi_0=0$，即 $\psi\in\operatorname{im}Q$。
+
+(d) 即上面的一粒子构造与 (c)。
+\end{proof}
+
+在相互作用理论中，同样的结构作用于渐近态，再结合 Slavnov--Taylor 恒等式（S 矩阵与 $Q$ 对易），就逐阶给出物理 S 矩阵的幺正性\cite{KugoOjima1979}；它的割图形式是第~3~章的\cref{prop:prelim-unitarity}（完整证明见附录~J 的\cref{prop:appJ-ghost-cuts}）。在一般的协变规范中四重态结构同样成立，只是胶子的纵向部分是一个“偶极”场，模式分析稍繁\cite{KugoOjima1979}。上述同伦论证也在一个截断的 Fock 空间（至多四个量子）上作了数值验证。% s5_quartet.py (Q^2 = 0, {Q,R} = N_q, cohomology = transverse sector, Gram >= 0 on ker Q)
+
+\begin{example}[单一动量模式的四重态]\label{ex:qcd-brst-quartet}
+取 $k=|\mathbf k|(1,0,0,1)$，$\bar k=|\mathbf k|(1,0,0,-1)$，$\eta=\bar k/(2|\mathbf k|^2)$，$\epsilon_1=(0,1,0,0)$，$\epsilon_2=(0,0,1,0)$。在基 $(|K\rangle,|H\rangle,|C\rangle,|\bar C\rangle)$ 中，四重态的 Gram 矩阵与 $Q$ 的作用为
+\[
+G=\begin{pmatrix}0&-1&0&0\\-1&0&0&0\\0&0&0&-\lambda\\0&0&-\lambda^*&0\end{pmatrix},\qquad
+Q:\ H\mapsto C,\quad \bar C\mapsto\lambda K,\quad K,C\mapsto0 .
+\]
+$G$ 的本征值为 $\pm1$、$\pm|\lambda|$：四重态内既有正模方也有负模方的方向，单看度规无法扔掉它们。但 $\ker Q$ 在四重态中只含 $K$ 与 $C$，而它们又正是 $Q$ 的像（$K=Q(\lambda^{-1}\bar C)$，$C=QH$），所以四重态对上同调没有贡献；$K$ 与 $C$ 都是零模方的，并且与 $\ker Q$ 中的一切态正交。两粒子态 $|K,\epsilon_1\rangle$ 闭合而正合，模方为零；$|H,\epsilon_1\rangle$ 不闭合。
+
+与\cref{ex:qcd-qqbar-gg}的联系：一粒子胶子态 $\{\epsilon_1,\epsilon_2,K,H\}$ 的完备性关系（用 Gram 矩阵的逆）为
+\[
+\sum_{\lambda,\lambda'}e^\mu_\lambda\,(G^{-1})_{\lambda\lambda'}\,e^{\nu*}_{\lambda'}=\epsilon_1^\mu\epsilon_1^\nu+\epsilon_2^\mu\epsilon_2^\nu-(k^\mu\eta^\nu+\eta^\mu k^\nu)=-g^{\mu\nu},
+\]
+所以用 $-g_{\mu\nu}$ 求极化和，就是对包括 $K$、$H$ 在内的全部四个极化按不定度规求和；其中 $-(k\eta+\eta k)$ 一项正是\cref{ex:qcd-qqbar-gg}中的 $-\Delta$，它被同一四重态中的鬼场割线抵消，这就是该例中 $-2\sum|\mathcal A_{\mathrm{gh}}|^2$ 的来源。
+\uses{prop:qcd-brst-cohomology, ex:qcd-qqbar-gg}
+\end{example}
+
+BRST 不变性在相互作用的、正规化了的理论中的表述是 Slavnov--Taylor 恒等式。它是后文一切规范理论论证的出发点。
+
+\begin{lemma}[维数正规化理论的 Slavnov--Taylor 恒等式 \tagR]\label{lem:qcd-st-regularized}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在维数正规化的微扰 QCD 中（矢量型，不含 $\gamma_5$），对 $g$ 的每一阶，并作为 $\varepsilon$ 的亚纯函数之间的恒等式：对基本场的任意乘积 $X$，
+\begin{equation}\label{eq:qcd-st-regularized}
+\langle0|T\,(sX)|0\rangle=0 ,
+\end{equation}
+其中 $sX$ 按 Leibniz 法则展开，基本场的 BRST 变分（$D_\mu c$、$c^at^a\psi$、$f^{abc}c^bc^c$）作为定域复合算符插入。等价地，带 BRST 源的 1PI 生成泛函满足 Zinn-Justin（主）方程。特别地，胶子自能是横向的，各顶点函数满足的关系蕴含\cref{sec:prelim-renorm}中重整化常数之间的 Slavnov--Taylor 关系。（本引理只涉及正规化的 Green 函数。）
+\uses{def:qcd-dimreg, lem:prelim-brst-nilpotent, def:prelim-feynman-rules}
+\end{lemma}
+
+\begin{proofsketch}
+(1) 拉氏量是 BRST 不变的（\cref{lem:prelim-brst-nilpotent}）。(2) 在形式的路径积分中作变量替换 $\Phi\to\Phi+\epsilon s\Phi$：作用量不变；Jacobian 的对数是 $\epsilon$ 乘以 $\delta(s\Phi)/\delta\Phi$ 的超迹，正比于 $\delta^D(0)$ 与 $f^{aab}=0$、$\Tr t^a=0$，在维数正规化中为零（$\delta^D(0)=\int\dd^Dk$ 是无标度积分）。于是 $\langle sX\rangle=0$。(3) 在微扰论中，这一形式论证对应于维数正规化 Feynman 被积函数之间的组合恒等式，逐阶严格成立：'t~Hooft\cite{tHooft1971}、Taylor\cite{Taylor1971}、Slavnov\cite{Slavnov1972}给出了图形证明，Becchi、Rouet、Stora\cite{BecchiRouetStora1976}给出了代数证明；维数正规化保持这些恒等式，是因为它满足重整化的作用量原理\cite{BreitenlohnerMaison1977a}。生成泛函的形式见 Zinn-Justin\cite{Zinn-Justin:1974ggz}与\cite{KugoOjima1979,Collins1984}。
+
+(4) \emph{横向性。}取 $X=\bar c^a(x)\,\partial\cdot A^b(y)$：$sX=B^a(x)\,\partial\cdot A^b(y)-\bar c^a(x)\,\partial^\mu(D_\mu c)^b(y)$。$B$ 的运动方程 $\partial\cdot A+\xi_gB=0$ 在不含 $B$ 的编时乘积中精确成立（Schwinger--Dyson 方程），鬼场的运动方程 $\partial^\mu(D_\mu c)^b=0$ 使第二项只剩下接触项 $\propto\delta^{ab}\delta^D(x-y)$，与自由理论相同。于是 $\langle T\,\partial\cdot A^a(x)\,\partial\cdot A^b(y)\rangle$ 等于其自由值；在动量空间中 $k_\mu k_\nu D^{\mu\nu}_{ab}(k)=-\ii\xi_g\delta_{ab}$ 不受修正。完全传播子 $D=D_0+D_0(\ii\Pi)D_0+\cdots$ 的纵向部分不被修正，等价于 $k_\mu\Pi^{\mu\nu}_{ab}(k)=0$。（单圈的明确验证见\cref{ex:qcd-gluon-self-energy}：胶子圈与鬼场圈各自不横向，其和横向。）
+\end{proofsketch}
+

@@ -1,0 +1,241 @@
+% ===================================================================================
+% c_exclusive_formfactors.tex —— π 介子电磁形状因子的领头阶硬核、端点行为，以及 γ*γ→π0 跃迁形状因子
+% （research/c_exclusive，对应 DERIVATION.md §4–§5；验证脚本 scripts/s4_pion_ff.py, s5_tff.py）
+% ===================================================================================
+\section{\texorpdfstring{$\pi$}{pi} 介子形状因子：领头阶硬散射核与端点区域}\label{sec:cex-ff}
+
+\subsection{电磁形状因子}
+
+\begin{definition}\label{def:cex-fpi}
+$\langle\pi^+(p')|J^\mu(0)|\pi^+(p)\rangle=(p+p')^\mu F_\pi(Q^2)$，$J^\mu=\sum_qe_q\bar q\gamma^\mu q$，$q=p'-p$，$Q^2=-q^2$，$F_\pi(0)=1$。
+取 Breit 系并略去 $\pi$ 介子质量：$p=(P,0,\bm 0_{\mathrm T})$，$p'=(0,P,\bm 0_{\mathrm T})$（光锥分量），$Q^2=2p\cdot p'=2P^2$。
+\end{definition}
+
+领头区域由两个共线子图（入射与出射 $\pi$ 介子各一个，各含一对夸克）与一个硬子图组成。在硬子图中把部分子动量换成共线投影
+$xp$、$\bar xp$、$yp'$、$\bar yp'$，并用 \cref{eq:cex-proj} 的投影算符代替两对夸克场。两条夸克线经投影算符连成一个闭合的
+Dirac 迹；把场重排为 $(\bar u_cd_d)(\bar d_bu_a)$ 带来整体因子 $-1$，色因子为 $\Trc[t^a\frac1{N_c}t^a\frac1{N_c}]=C_F/N_c$。
+
+\begin{figure}[htbp]
+\centering
+\tikzset{cex ff frame/.pic={
+  \draw[hadron blob] (0,0) ellipse (0.28 and 0.95);
+  \draw[hadron blob] (4.2,0) ellipse (0.28 and 0.95);
+  \node[left] at (-0.3,0) {$\pi^+$}; \node[right] at (4.5,0) {$\pi^+$};}}
+\begin{tikzpicture}[fd,scale=0.78]
+  \pic {cex ff frame};
+  \draw[quark] (0.25,0.6) -- (1.3,0.6); \draw[quark] (1.3,0.6) -- (2.8,0.6); \draw[quark] (2.8,0.6) -- (3.95,0.6);
+  \draw[quark] (3.95,-0.6) -- (2.8,-0.6); \draw[quark] (2.8,-0.6) -- (0.25,-0.6);
+  \draw[photon] (1.3,1.7) -- (1.3,0.6); \draw[gluon] (2.8,0.6) -- (2.8,-0.6);
+  \foreach \p in {(1.3,0.6),(2.8,0.6),(2.8,-0.6)} \node[vertex] at \p {};
+  \node[above] at (1.3,1.7) {$\gamma^*$};
+  \node[above] at (0.75,0.6) {$xp$}; \node[below] at (0.75,-0.6) {$\bar xp$};
+  \node[above] at (3.45,0.6) {$yp'$}; \node[below] at (3.45,-0.6) {$\bar yp'$};
+  \node[font=\bfseries] at (-0.85,1.25) {A};
+\end{tikzpicture}\hspace{0.6em}
+\begin{tikzpicture}[fd,scale=0.78]
+  \pic {cex ff frame};
+  \draw[quark] (0.25,0.6) -- (1.3,0.6); \draw[quark] (1.3,0.6) -- (2.8,0.6); \draw[quark] (2.8,0.6) -- (3.95,0.6);
+  \draw[quark] (3.95,-0.6) -- (1.3,-0.6); \draw[quark] (1.3,-0.6) -- (0.25,-0.6);
+  \draw[photon] (2.8,1.7) -- (2.8,0.6); \draw[gluon] (1.3,0.6) -- (1.3,-0.6);
+  \foreach \p in {(1.3,0.6),(2.8,0.6),(1.3,-0.6)} \node[vertex] at \p {};
+  \node[above] at (2.8,1.7) {$\gamma^*$};
+  \node[font=\bfseries] at (-0.85,1.25) {B};
+\end{tikzpicture}\\[0.4em]
+\begin{tikzpicture}[fd,scale=0.78]
+  \pic {cex ff frame};
+  \draw[quark] (0.25,0.6) -- (2.8,0.6); \draw[quark] (2.8,0.6) -- (3.95,0.6);
+  \draw[quark] (3.95,-0.6) -- (2.8,-0.6); \draw[quark] (2.8,-0.6) -- (1.3,-0.6); \draw[quark] (1.3,-0.6) -- (0.25,-0.6);
+  \draw[photon] (1.3,-1.7) -- (1.3,-0.6); \draw[gluon] (2.8,0.6) -- (2.8,-0.6);
+  \foreach \p in {(1.3,-0.6),(2.8,0.6),(2.8,-0.6)} \node[vertex] at \p {};
+  \node[below] at (1.3,-1.7) {$\gamma^*$};
+  \node[font=\bfseries] at (-0.85,1.25) {C};
+\end{tikzpicture}\hspace{0.6em}
+\begin{tikzpicture}[fd,scale=0.78]
+  \pic {cex ff frame};
+  \draw[quark] (0.25,0.6) -- (1.3,0.6); \draw[quark] (1.3,0.6) -- (3.95,0.6);
+  \draw[quark] (3.95,-0.6) -- (2.8,-0.6); \draw[quark] (2.8,-0.6) -- (1.3,-0.6); \draw[quark] (1.3,-0.6) -- (0.25,-0.6);
+  \draw[photon] (2.8,-1.7) -- (2.8,-0.6); \draw[gluon] (1.3,0.6) -- (1.3,-0.6);
+  \foreach \p in {(1.3,0.6),(1.3,-0.6),(2.8,-0.6)} \node[vertex] at \p {};
+  \node[below] at (2.8,-1.7) {$\gamma^*$};
+  \node[font=\bfseries] at (-0.85,1.25) {D};
+\end{tikzpicture}
+\caption{$F_\pi$ 在 $\order{\as}$ 的全部四个硬散射图（Feynman 规范）。上线为 $u$ 夸克（$xp\to yp'$），下线为 $\bar d$（箭头为费米子数流向）。
+光子分别连在 $u$ 线（A、B）或 $\bar d$ 线（C、D）上胶子顶点的两侧。}
+\label{fig:cex-pionff-lo}
+\end{figure}
+
+\begin{proposition}[LO 硬散射核]\tagR\label{prop:cex-TH}
+在领头幂次与 $\order{\as}$，
+\begin{equation}\label{eq:cex-fpi-conv}
+F_\pi(Q^2)=\int_0^1\!\!\dd x\,\dd y\;\phi_\pi^*(y;\mu)\,T_H(x,y;Q^2,\mu)\,\phi_\pi(x;\mu),\qquad
+T_H=\frac{2\pi C_F\,\as(\mu)\,f_\pi^2}{N_c\,Q^2}\Big[\frac{e_u}{\bar x\bar y}+\frac{e_{\bar d}}{xy}\Big],
+\end{equation}
+$e_{\bar d}=-e_d=\frac13$。各图的贡献（$\mathcal T_u=\frac{C_Fg^2f_\pi^2}{2N_cQ^2}\frac{e_u}{\bar x\bar y}$，$\mathcal T_{\bar d}=\frac{C_Fg^2f_\pi^2}{2N_cQ^2}\frac{e_{\bar d}}{xy}$）如下：
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+图 & 光子位置 & 内夸克线 & 胶子 & 贡献 \\
+\midrule
+A & 先被入射 $u$ 吸收 & $(xp+q)^2=-\bar xQ^2$ & $(\bar yp'-\bar xp)^2=-\bar x\bar yQ^2$ & $\mathcal T_u\,p^\mu$\\
+B & $u$ 先放出胶子 & $(p-\bar yp')^2=-\bar yQ^2$ & $-\bar x\bar yQ^2$ & $\mathcal T_u\,p'^\mu$\\
+C & 先被入射 $\bar d$ 吸收 & $(xp-p')^2=-xQ^2$ & $(xp-yp')^2=-xyQ^2$ & $\mathcal T_{\bar d}\,p^\mu$\\
+D & $\bar d$ 先放出胶子 & $(yp'-p)^2=-yQ^2$ & $-xyQ^2$ & $\mathcal T_{\bar d}\,p'^\mu$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+每个图写成 $-\frac{C_F}{N_c}\Tr\big[A\,\tfrac{\ii f_\pi}4\gamma_5\sla p\,B\,\tfrac{\ii f_\pi}4\sla p'\gamma_5\big]\cdot\frac{-\ii}{\ell^2}$，
+其中 $A$（$B$）是 $u$（$d$）线上的顶点 $\ii g\gamma^\alpha$、$e_q\gamma^\mu$ 与传播子 $\ii\sla k/k^2$ 之积。用显式 Dirac 矩阵计算全部迹（sympy）得上表。
+单个图不满足流守恒（$q\cdot p=-q\cdot p'=p\cdot p'$），但 A+B 与 C+D 分别满足 $q_\mu M^\mu=0$，且总和 $\propto(p+p')^\mu$，横向分量为零。
+结果的符号为正，与 $F_\pi(0)=1$ 同号，这检验了费米子重排的符号。各因子的来源：$g^2=4\pi\as$；投影算符的 $(\frac14)^2|f_\pi|^2$；
+色因子 $C_F/N_c$；$P^2=Q^2/2$。
+\end{proof}
+
+\begin{corollary}[渐近行为]\label{cor:cex-fpi-asym}
+对称 DA（$\phi(x)=\phi(\bar x)$）与 $N_c=3$ 时
+\begin{equation}\label{eq:cex-fpi-asym}
+\begin{split}
+Q^2F_\pi(Q^2)&=\frac{8\pi\as f_\pi^2}{9}\Big|\int_0^1\!\dd x\,\frac{\phi_\pi(x)}{x}\Big|^2=8\pi\as f_\pi^2\,(1+a_2+a_4+\cdots)^2\\
+&\xrightarrow{\ \phi\to6x\bar x\ }\ 8\pi\as f_\pi^2\qquad(f_\pi\simeq130\ \mathrm{MeV}),
+\end{split}
+\end{equation}
+等价于 $16\pi\as F_\pi^2$（$F_\pi=f_\pi/\sqrt2\simeq93$ MeV，Lepage--Brodsky 的写法）；一般 $N_c$ 下渐近值为 $18\pi C_F\as f_\pi^2/N_c$。
+一般（非对称）DA 时 $Q^2F_\pi=\frac{2\pi C_F\as f_\pi^2}{N_c}\big[e_u|\int\frac{\phi}{\bar x}|^2+e_{\bar d}|\int\frac\phi x|^2\big]$。
+CZ 模型给出渐近值的 $\frac{25}{9}$ 倍。取 $\as=0.3$、$f_\pi=130.2$ MeV：渐近 DA 给出 $0.128\ \mathrm{GeV}^2$，CZ 给出 $0.355\ \mathrm{GeV}^2$。
+\end{corollary}
+
+\begin{theorem}[$\pi$ 介子形状因子的因子化]\tagA\label{thm:cex-fpi}
+在 $Q^2\to\infty$ 的领头幂次、对 $\as$ 的各阶，$F_\pi(Q^2)=\int\dd x\,\dd y\,\phi^*_\pi(y;\mu)T_H(x,y;Q^2,\mu)\phi_\pi(x;\mu)\,[1+\order{\Lambda^2/Q^2}]$，
+$T_H$ 可逐阶计算，领头项见 \cref{eq:cex-fpi-conv}。
+\end{theorem}
+
+\begin{proofsketch}
+（Lepage--Brodsky 1979/80；Efremov--Radyushkin 1980；Duncan--Mueller 1980。）领头区域：两个共线子图各以一对夸克连到硬子图；
+软胶子在色单态的共线子图之间的耦合按 Ward 恒等式抵消或被压低；共线胶子的纵向分量组成 \cref{eq:cex-da} 中的 Wilson 线。
+端点区域 $x\to0,1$ 只有在 $\phi\sim x$（端点处线性为零）时才被幂次压低；这一条件对任意有限 Gegenbauer 和成立，ERBL 演化也保持它，
+但它对非微扰的 $\phi(x;\mu_0)$ 是一个假设。完整细节只以概要形式存在于文献中，故标为 [A]。
+\end{proofsketch}
+
+\subsection{端点区域}\label{sec:cex-endpoint}
+
+\begin{proposition}[端点收敛性与软胶子区域的权重]\label{prop:cex-endpoint}
+\begin{enumerate}[label=(\alph*)]
+\item 对归一化的 $\phi\propto(x\bar x)^a$，$\int_0^1\phi/x=(2a+1)/a$：卷积 \cref{eq:cex-fpi-conv} 有限当且仅当 $a>0$；
+对“平坦”的 DA（$a\to0$）以 $1/a$ 的方式发散。
+\item 记 $c=\mu_0^2/Q^2\le1$。\cref{eq:cex-fpi-conv} 中 $u$ 线部分来自胶子虚度 $\bar x\bar yQ^2<\mu_0^2$ 的比例，对渐近 DA 与 CZ 模型分别为
+\begin{equation}\label{eq:cex-Rc}
+\begin{gathered}
+R_{\mathrm{as}}(c)=c\,\big[\,5c-2(c+2)\ln c-4\,\big],\\
+R_{\mathrm{CZ}}(c)=c\,\big[\,456c^3+352c^2-675c-132-(144c^3+768c^2+450c+36)\ln c\,\big],
+\end{gathered}
+\end{equation}
+$R(1)=1$，$c\to0$ 时 $R_{\mathrm{as}}\simeq4c\ln(1/c)$、$R_{\mathrm{CZ}}\simeq36c\ln(1/c)$。取 $\mu_0^2=1\ \mathrm{GeV}^2$：$Q^2=4,10,100\ \mathrm{GeV}^2$ 时
+$R_{\mathrm{as}}=0.87,\,0.62,\,0.15$，$R_{\mathrm{CZ}}=0.98,\,0.90,\,0.48$（\cref{fig:cex-endpoint}）。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) $\int_0^1x^{a-1}\bar x^a\dd x/B(a+1,a+1)=B(a,a+1)/B(a+1,a+1)=(2a+1)/a$。
+(b) 记 $u=\bar x$，$v=\bar y$。渐近 DA 的被积函数为 $36(1-u)(1-v)$，总积分为 $9$；CZ 模型为 $900(1-u)(1-2u)^2(1-v)(1-2v)^2$，总积分为 $25$。
+在区域 $uv<c$ 上积分（$u<c$ 时 $v$ 不受限制，$u>c$ 时 $v<c/u$）即得 \cref{eq:cex-Rc}（sympy 精确积分，并与数值积分核对）。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.72\textwidth,height=0.42\textwidth,xmode=log,xmin=1,xmax=100,ymin=0,ymax=1.05,
+  xlabel={$Q^2\ [\mathrm{GeV}^2]$},ylabel={$R$},legend pos=south west,legend cell align=left,
+  grid=major,grid style={gray!25}]
+% 坐标由 \cref{eq:cex-Rc} 以 30 位精度计算（mpmath），c=1/Q^2；直接在 pgfplots 中求值会因 R_CZ 中的大数相消而出现数值噪声。
+\addplot[thick,blue] coordinates {(1,1.00000) (1.122,0.99997) (1.259,0.99964) (1.413,0.99842) (1.585,0.99564) (1.778,0.99068)
+ (1.995,0.98306) (2.239,0.97243) (2.512,0.95865) (2.818,0.94168) (3.162,0.92163) (3.548,0.89871) (3.981,0.87318) (4.467,0.84539)
+ (5.012,0.81568) (5.623,0.78442) (6.31,0.75197) (7.079,0.71870) (7.943,0.68492) (8.913,0.65096) (10,0.61709) (11.22,0.58354)
+ (12.59,0.55054) (14.13,0.51827) (15.85,0.48688) (17.78,0.45650) (19.95,0.42722) (22.39,0.39911) (25.12,0.37224) (28.18,0.34663)
+ (31.62,0.32230) (35.48,0.29926) (39.81,0.27749) (44.67,0.25699) (50.12,0.23771) (56.23,0.21962) (63.1,0.20270) (70.79,0.18688)
+ (79.43,0.17213) (89.13,0.15840) (100,0.14563)};
+\addlegendentry{渐近 DA $6x\bar x$}
+\addplot[thick,red,dashed] coordinates {(1,1.00000) (1.122,0.99984) (1.259,0.99850) (1.413,0.99555) (1.585,0.99182) (1.778,0.98848)
+ (1.995,0.98620) (2.239,0.98501) (2.512,0.98444) (2.818,0.98377) (3.162,0.98235) (3.548,0.97966) (3.981,0.97546) (4.467,0.96969)
+ (5.012,0.96247) (5.623,0.95403) (6.31,0.94458) (7.079,0.93434) (7.943,0.92347) (8.913,0.91205) (10,0.90008) (11.22,0.88753)
+ (12.59,0.87431) (14.13,0.86031) (15.85,0.84542) (17.78,0.82951) (19.95,0.81252) (22.39,0.79437) (25.12,0.77505) (28.18,0.75457)
+ (31.62,0.73297) (35.48,0.71033) (39.81,0.68676) (44.67,0.66237) (50.12,0.63731) (56.23,0.61174) (63.1,0.58580) (70.79,0.55965)
+ (79.43,0.53346) (89.13,0.50736) (100,0.48149)};
+\addlegendentry{CZ 模型 $30x\bar x(2x-1)^2$}
+\end{axis}
+\end{tikzpicture}
+\caption{LO $F_\pi$ 卷积（$u$ 线部分）中来自胶子虚度 $\bar x\bar yQ^2<\mu_0^2=1\ \mathrm{GeV}^2$ 的比例 $R$，按 \cref{eq:cex-Rc} 作图。
+在 $Q^2\lesssim10\ \mathrm{GeV}^2$ 时大部分贡献来自微扰论不可靠的软胶子区域（Isgur--Llewellyn Smith 的论点）。}
+\label{fig:cex-endpoint}
+\end{figure}
+
+\begin{remark}[Isgur--Llewellyn Smith 批评、Feynman 机制与 Sudakov 压低]\label{rem:cex-ils}
+\cref{eq:cex-Rc} 量化了 Isgur 与 Llewellyn Smith 的论点：在可及的 $Q^2$ 下，领头阶积分的大部分来自胶子虚度低于 $1\ \mathrm{GeV}^2$ 的区域，
+那里微扰论并不可靠；形式上这只是幂次修正（因为 $\phi\sim x$），数值上却占主导。旁观夸克变软的“Feynman 机制”（软重叠）贡献在形式上
+相对于硬的 $1/Q^2$ 项是幂次压低的（文献中通常说它对 $\pi$ 介子按 $1/Q^4$ 下降，本文未推导），但它没有 $\as/\pi$ 的压低。
+Li 与 Sterman 在碰撞参数空间对 Sudakov 对数求和，压低了端点区域；该 $k_{\mathrm T}$ 修正方案依赖于本征横动量的模型，属于 \tagP。
+\end{remark}
+
+\subsection{$\gamma^*\gamma\to\pi^0$ 跃迁形状因子}
+
+\begin{definition}[归一化]\label{def:cex-tff}
+\begin{equation}\label{eq:cex-tff-def}
+T^{\mu\nu}\equiv\int\dd^4z\,\ee^{-\ii q_1\cdot z}\langle\pi^0(p)|T\{J^\mu(z)J^\nu(0)\}|0\rangle=-\ii\,\epsilon^{\mu\nu\alpha\beta}q_{1\alpha}q_{2\beta}\,F(Q_1^2,Q_2^2),
+\end{equation}
+$q_{1,2}$ 为入射光子动量，$p=q_1+q_2$，$Q_i^2=-q_i^2$。于是 $\mathcal M(\gamma^*\gamma^*\to\pi^0)=e^2F\,\epsilon^{\mu\nu\alpha\beta}\varepsilon_{1\mu}\varepsilon_{2\nu}q_{1\alpha}q_{2\beta}$，
+$\Gamma(\pi^0\to\gamma\gamma)=\frac{\pi\alpha^2m_\pi^3}{4}|F(0,0)|^2$；反常给出 $|F(0,0)|=1/(4\pi^2F_\pi)$，即 $\Gamma=\frac{\alpha^2m_\pi^3}{64\pi^3F_\pi^2}\approx7.76$ eV（$F_\pi=92.2$ MeV）。
+整体符号依赖于 $|\pi^0\rangle$ 的相位与 $\epsilon^{0123}$ 的约定，下面只比较 $|F|$。
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.85]
+  \draw[hadron blob] (4.0,0) ellipse (0.3 and 0.95);
+  \node[right] at (4.35,0) {$\pi^0(p)$};
+  \coordinate (V1) at (2.0,0.65); \coordinate (V2) at (2.0,-0.65);
+  \draw[quark] (V1) -- (3.75,0.65) node[midway,above]{$yp$};
+  \draw[quark] (3.75,-0.65) -- (V2) node[midway,below]{$\bar yp$};
+  \draw[quark] (V2) -- (V1);
+  \draw[photon] (0.4,1.3) -- (V1); \draw[photon] (0.4,-1.3) -- (V2);
+  \node[left] at (0.4,1.3) {$\gamma^*(q_1)$}; \node[left] at (0.4,-1.3) {$\gamma(q_2)$};
+  \node[vertex] at (V1) {}; \node[vertex] at (V2) {};
+\end{tikzpicture}\hspace{2em}
+\begin{tikzpicture}[fd,scale=0.85]
+  \draw[hadron blob] (4.0,0) ellipse (0.3 and 0.95);
+  \node[right] at (4.35,0) {$\pi^0(p)$};
+  \coordinate (V1) at (2.0,0.65); \coordinate (V2) at (2.0,-0.65);
+  \draw[quark] (V1) -- (3.75,0.65); \draw[quark] (3.75,-0.65) -- (V2); \draw[quark] (V2) -- (V1);
+  \draw[photon] (0.4,1.3) -- (V2); \draw[photon] (0.4,-1.3) -- (V1);
+  \node[left] at (0.4,1.3) {$\gamma^*(q_1)$}; \node[left] at (0.4,-1.3) {$\gamma(q_2)$};
+  \node[vertex] at (V1) {}; \node[vertex] at (V2) {};
+\end{tikzpicture}
+\caption{$\gamma^*\gamma\to\pi^0$ 的两个领头阶图；内线虚度分别为 $-(\bar yQ_1^2+yQ_2^2)$ 与 $-(yQ_1^2+\bar yQ_2^2)$。}
+\label{fig:cex-tff}
+\end{figure}
+
+\begin{proposition}[LO 跃迁形状因子]\tagR\label{prop:cex-tff}
+取 $\pi^0=(u\bar u-d\bar d)/\sqrt2$，$\langle0|(\bar u\gamma^\mu\gamma_5u-\bar d\gamma^\mu\gamma_5d)/\sqrt2|\pi^0(p)\rangle=\ii f_\pi p^\mu$（同位旋对称下与 $\pi^+$ 的 $f_\pi$ 相同），则
+\begin{equation}\label{eq:cex-tff}
+F(Q_1^2,Q_2^2)=\frac{\sqrt2f_\pi}{6}\int_0^1\!\dd y\,\phi_\pi(y)\Big[\frac{1}{\bar yQ_1^2+yQ_2^2}+\frac{1}{yQ_1^2+\bar yQ_2^2}\Big].
+\end{equation}
+特别地，实光子（$Q_2^2=0$）时
+\begin{equation}\label{eq:cex-tff-real}
+Q^2F(Q^2)=\frac{\sqrt2f_\pi}{3}\int_0^1\!\dd x\,\frac{\phi_\pi(x)}{x}=\sqrt2f_\pi\,(1+a_2+a_4+\cdots)\ \xrightarrow{\ \phi\to6x\bar x\ }\ \sqrt2f_\pi=2F_\pi\approx0.184\ \mathrm{GeV};
+\end{equation}
+在对称点 $Q_1^2=Q_2^2=Q^2$，$Q^2F=\sqrt2f_\pi/3$ 对任意归一化的 DA 成立。
+\end{proposition}
+
+\begin{proof}
+味因子 $(e_u^2-e_d^2)/\sqrt2=\sqrt2/6$，色因子为 $1$。两图的迹为 $\Tr[\gamma^\mu\sla a\gamma^\nu\sla p\gamma_5]=-4\ii\epsilon^{\mu\alpha\nu\beta}a_\alpha p_\beta$，
+其中只有 $a$ 中的 $q_2$（或 $q_1$）分量有贡献，二者都给出 $-4\ii\epsilon^{\mu\nu\alpha\beta}q_{1\alpha}q_{2\beta}$；乘以投影算符 $\frac{\ii f_\pi}4\sla p\gamma_5$ 与传播子
+$\ii/k^2$ 即得 \cref{eq:cex-tff}。全部 16 个张量分量都已用显式 Dirac 矩阵核对；对称点的结果在带横动量的参考系中单独计算。
+\end{proof}
+
+\begin{remark}[与文献及数据的对照]\label{rem:cex-tff-lit}
+\cref{eq:cex-tff-real} 与 BaBar（2009）文中的式 (2) 完全相同（$f_\pi=0.131$ GeV）。Brodsky--Lepage 的内插公式
+$F(Q^2)=F(0)/[1+Q^2/(8\pi^2F_\pi^2)]$，$F(0)=1/(4\pi^2F_\pi)$，满足 $Q^2F\to2F_\pi=\sqrt2f_\pi$，与 \cref{eq:cex-tff-real} 一致。
+CELLO（$0.7$--$2.2\ \mathrm{GeV}^2$）、CLEO（$1.6$--$8\ \mathrm{GeV}^2$）、BaBar（$4$--$40\ \mathrm{GeV}^2$）与 Belle（2012）测量了该形状因子；
+BaBar 的数据在较大 $Q^2$ 处迅速上升，超过渐近值 $\sqrt2f_\pi$ 达 50\%；Belle 的数据在 $Q^2\lesssim9\ \mathrm{GeV}^2$ 与此前的测量一致，在更高 $Q^2$ 处没有显示这种迅速上升（据 Belle 文章摘要）。NNLO 的硬核已经算出（Gao--Huber--Ji--Wang 2022）。
+跃迁形状因子只含一个 DA、领头阶无胶子交换，是遍举因子化最干净的检验；其全阶因子化论证属于 \tagA。
+\end{remark}

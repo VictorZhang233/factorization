@@ -1,0 +1,327 @@
+%%% BEGIN fig:appM-dependency
+\begin{figure}[htbp]
+\centering
+% Data: the \uses lists of FINAL_OUTLINE_v2 (Ch7 statements, App M, ASSUMPTIONS.md entries):
+%  disp  prop:dis-dispersion-np [R,R_cond]  <- W                       (asm only in the node set)
+%  eseg  lem:dis-euclid-segment [R,R_def]   <- (def:dis-compton only)
+%  oseg  lem:dis-ope-segment [R,R_cond]     <- eseg, O
+%  fixn  thm:dis-fixed-n [R,R_cond]         <- oseg, disp, O, W
+%  lowm  prop:dis-low-moments [R,R_def]     <- (def:dis-compton only)
+%  mnp   thm:dis-moments-np [R,R_cond]      <- fixn, disp, lowm, W, C, O, F, G
+%  weak  cor:dis-weak-xspace [R,R_cond]     <- mnp, W, C, O, F
+%  oeuc  prop:dis-ope-euclid [A] (by D3)    <- asm:appM-remainder (plain premise, not R_cond and not
+%                                              the bottleneck: drawn as an ordinary uses edge)
+%  ogi   prop:dis-ope-gi [A]                <- oeuc, asm:appM-brst-ope (bottleneck)
+%  ofw   prop:dis-ope-forward [A]           <- oeuc, ogi, asm:appM-forward (bottleneck)
+%  mom   thm:dis-moments [R,R_OPE]          <- ofw, thm:dis-ope(=oeuc,ogi,ofw), fixn, disp, mnp, W, C, O, F, G
+%  asm:  C <- W;  O <- W, C;  F <- O;  G <- W.
+%  W,C,O,F,G = asm:intro-wightman, -composite, -np-ope, -af-coeff, -growth (global, [C]).
+\begin{tikzpicture}[
+  fe node/.style={rounded corners=1pt,line width=0.6pt,font=\scriptsize,inner xsep=3pt,inner ysep=2.2pt,minimum height=0.5cm,align=center},
+  fe asm/.style={fe node,draw=orange!65!black,dash pattern=on 2.5pt off 1.5pt,fill=orange!8},
+  fe R/.style={fe node,draw=OliveGreen!75!black,fill=OliveGreen!15},
+  fe Rc/.style={fe R,dash pattern=on 2.5pt off 1.5pt},
+  fe A/.style={fe node,draw=RoyalBlue!75!black,fill=RoyalBlue!15},
+  fe use/.style={draw=gray!55!black,line width=0.6pt,-{Stealth[length=4.2pt,width=3.4pt]},shorten >=0.5pt},
+  fe bottle/.style={draw=red!60!black,line width=1.5pt,-{Stealth[length=5.5pt,width=4.6pt]}}]
+  \newcommand{\fegl}[1]{\\[-0.5pt]{\color{orange!70!black}\tiny\sffamily\bfseries #1}}
+  \newcommand{\fest}{\vphantom{Ag}}% uniform height of the first text line
+  % ---------------- assumptions (top row) ----------------
+  \node[fe asm] (G) at (0.8,0)  {\fest growth\fegl{G}};
+  \node[fe asm] (W) at (2.7,0)  {\fest wightman\fegl{W}};
+  \node[fe asm] (C) at (4.6,0)  {\fest composite\fegl{C}};
+  \node[fe asm] (O) at (6.5,0)  {\fest np-ope\fegl{O}};
+  \node[fe asm] (F) at (8.4,0)  {\fest af-coeff\fegl{F}};
+  \node[fe asm] (Rm) at (10.5,0) {\fest remainder};
+  \node[fe asm] (Bo) at (12.5,0) {\fest brst-ope};
+  \node[fe asm] (Fw) at (14.5,0) {\fest forward};
+  \node[font=\footnotesize,anchor=south] at (4.6,0.95) {全局非微扰假设（\texttt{asm:intro-}$\ast$，[C]）};
+  \node[font=\footnotesize,anchor=south] at (12.5,0.95) {App M 技术假设（\texttt{asm:appM-}$\ast$，[A]）};
+  \draw[fe use] (W) -- (G);
+  \draw[fe use] (W) -- (C);
+  \draw[fe use] (C) -- (O);
+  \draw[fe use] (O) -- (F);
+  \draw[fe use] (W.north) .. controls (3.4,0.85) and (5.8,0.85) .. (O.north);
+  % ---------------- hadronic (non-perturbative) route ----------------
+  \node[fe R]  (eseg) at (1.2,-1.9) {euclid-segment};
+  \node[fe Rc] (oseg) at (1.2,-3.4) {ope-segment\fegl{O}};
+  \node[fe R]  (lowm) at (1.2,-4.9) {low-moments};
+  \node[fe Rc] (disp) at (6.4,-1.9) {dispersion-np\fegl{W}};
+  \node[fe Rc] (fixn) at (3.8,-3.4) {fixed-n\fegl{W\,O}};
+  \node[fe Rc] (mnp)  at (3.8,-4.9) {moments-np\fegl{W\,C\,O\,F\,G}};
+  \node[fe Rc] (weak) at (1.8,-6.4) {weak-xspace\fegl{W\,C\,O\,F}};
+  \node[fe R]  (mom)  at (6.4,-6.4) {moments\fegl{W\,C\,O\,F\,G}};
+  % ---------------- perturbative route: the three sub-statements of thm:dis-ope ----------------
+  \node[fe A] (oeuc) at (10.5,-2.6) {ope-euclid};
+  \node[fe A] (ogi)  at (12.5,-2.6) {ope-gi};
+  \node[fe A] (ofw)  at (14.5,-2.6) {ope-forward};
+  \begin{scope}[on background layer]
+    \draw[RoyalBlue!60!black,line width=0.6pt,rounded corners=3pt,fill=RoyalBlue!4] (9.55,-2.05) rectangle (15.4,-3.85);
+  \end{scope}
+  \node[font=\scriptsize,text=RoyalBlue!50!black,anchor=south east,inner sep=2pt] (gl) at (15.4,-3.85) {thm:dis-ope};
+  % edges
+  \draw[fe use] (eseg) -- (oseg);
+  \draw[fe use] (oseg) -- (fixn);
+  \draw[fe use] (disp) -- (fixn);
+  \draw[fe use] (disp) -- (mnp);
+  \draw[fe use] (fixn) -- (mnp);
+  \draw[fe use] (lowm) -- (mnp);
+  \draw[fe use] (mnp) -- (weak);
+  \draw[fe use] (mnp) -- (mom);
+  \draw[fe use] (fixn) -- (mom);
+  \draw[fe use] (disp) -- (mom);
+  \draw[fe use] (oeuc) -- (ogi);
+  \draw[fe use] (ogi) -- (ofw);
+  \draw[fe use] (oeuc.south) .. controls (11.2,-3.65) and (13.8,-3.65) .. (ofw.south);
+  \draw[fe use] (9.55,-3.6) -- (mom);
+  \draw[fe use] (Rm) -- (oeuc);
+  \draw[fe bottle] (Bo) -- (ogi);
+  \draw[fe bottle] (Fw) -- (ofw);
+  % ---------------- legend ----------------
+  \begin{scope}[shift={(9.7,-4.75)}]
+    \node[fe R,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (0,0) {};
+    \node[font=\scriptsize,anchor=west] at (0.32,0) {R 严格};
+    \node[fe A,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (1.8,0) {};
+    \node[font=\scriptsize,anchor=west] at (2.12,0) {A 全阶论证};
+    \node[fe Rc,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (4.1,0) {};
+    \node[font=\scriptsize,anchor=west] at (4.42,0) {$R_{\mathrm{cond}}$};
+    \node[fe asm,minimum width=0.55cm,minimum height=0.32cm,inner sep=0pt] at (0,-0.5) {};
+    \node[font=\scriptsize,anchor=west] at (0.32,-0.5) {编号假设};
+    \node[font=\scriptsize,anchor=west] at (1.75,-0.5) {{\color{orange!70!black}\sffamily\bfseries W\,C\,O\,F\,G}：所用全局假设};
+    \draw[fe use] (-0.3,-1.0) -- (0.3,-1.0);
+    \node[font=\scriptsize,anchor=west] at (0.32,-1.0) {依赖};
+    \draw[fe bottle] (1.25,-1.0) -- (1.85,-1.0);
+    \node[font=\scriptsize,anchor=west] at (1.87,-1.0) {瓶颈：[A] 地位即该假设的地位};
+  \end{scope}
+\end{tikzpicture}
+\caption{DIS 矩定理对编号假设的依赖（据各陈述所列的“依赖”绘制；节点只写标签去掉前缀 \texttt{prop:dis-}、\texttt{asm:intro-} 等后的部分）：\cref{thm:dis-moments} 的微扰部分只依赖 OPE 的三个子陈述（蓝框，即 \cref{thm:dis-ope}），它们在编号假设中只用到 App M 的三个技术假设，其中 \cref{asm:appM-brst-ope}、\cref{asm:appM-forward} 是相应 [A] 陈述的瓶颈（粗红线）；非微扰的固定 $n$ 定理（\cref{thm:dis-fixed-n}）依赖 Wightman 公理（W）与非微扰 OPE（O），$n<n_0$ 的矩（\cref{thm:dis-moments-np}）还依赖增长条件（G）。
+框色为严格性标签，虚线框为 $R_{\mathrm{cond}}$ 条件定理，橙色虚线框为编号假设；节点第二行的橙色字母标出该陈述直接使用的全局假设（W、C、O、F、G 对应上排五个全局假设），其余依赖画为由前提指向陈述的箭头。}
+\label{fig:appM-dependency}
+\end{figure}
+%%% END fig:appM-dependency
+
+%%% BEGIN fig:appM-euclid-forward
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe big/.style={draw=blue!60!black,line width=1.1pt,-{Stealth[length=6.5pt,width=5pt]}},
+  fe ghostq/.style={draw=blue!45,line width=0.6pt,dash pattern=on 2pt off 1.5pt,-{Stealth[length=4.5pt,width=3.6pt]}},
+  fe small/.style={draw,line width=0.9pt,-{Stealth[length=5pt,width=4pt]}},
+  fe exc/.style={draw=red!60!black,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) Euclidean, non-exceptional =======================
+  \begin{scope}
+    % 2D projection of Euclidean momentum space
+    \draw[blue!55!black,line width=0.6pt,dash pattern=on 3pt off 2pt] (6:3.45) arc[start angle=6,end angle=54,radius=3.45];
+    \draw[fe ghostq] (0,0) -- (14:3.4);
+    \draw[fe ghostq] (0,0) -- (46:3.4);
+    \draw[fe big] (0,0) -- (30:3.4);
+    \node[anchor=south west,inner sep=1pt,text=blue!55!black] at (30:3.42) {$q=|q|\,\hat q$};
+    \node[fe lab,text=blue!50!black,anchor=north west,inner sep=2pt] at (6:3.45) {$\hat q$ 任意};
+    \draw[fe small] (0,0) -- (118:0.95) node[anchor=south east,inner sep=1pt] {$p_1$};
+    \draw[fe small] (0,0) -- (205:0.9) node[anchor=north east,inner sep=1pt] {$p_2$};
+    \node[circle,fill=black,inner sep=0pt,minimum size=3pt] at (0,0) {};
+    \node[fe lab,anchor=north east,inner sep=2pt] at (0.05,-0.08) {$0$};
+    \node[fe lab,align=center,anchor=north] at (1.35,-0.95) {余项 $O(|q|^{D-1-a}\ln^k|q|)$，对 $\hat q$ 一致};
+    % inset: configuration space of the external momenta (exceptional set = linear subspaces)
+    \begin{scope}[shift={(-0.7,2.35)}]
+      \fill[gray!7] (-1.3,-0.8) rectangle (1.3,0.8);
+      \begin{scope}
+        \clip (-1.3,-0.8) rectangle (1.3,0.8);
+        \foreach \t in {15,72,140} \draw[fe exc] (\t:-1.6) -- (\t:1.6);
+      \end{scope}
+      \fill[green!18,draw=green!45!black,line width=0.5pt] (43:0.78) ellipse[x radius=0.24,y radius=0.15];
+      \node[circle,fill=black,inner sep=0pt,minimum size=2.6pt] at (43:0.78) {};
+      \node[font=\scriptsize,anchor=west,inner sep=1.5pt] at ($(43:0.78)+(0.24,0)$) {$K$};
+      \node[circle,fill=red!60!black,inner sep=0pt,minimum size=2.4pt] at (0,0) {};
+      \node[font=\scriptsize,text=red!55!black,anchor=south west,inner sep=1pt] at (-1.3,-0.8) {例外集};
+      \node[font=\scriptsize,anchor=south,inner sep=2pt,align=center] at (0,0.8) {外动量构型空间（示意）};
+    \end{scope}
+    \node at (1.35,-2.0) {(a)\ 欧氏、非例外外动量};
+  \end{scope}
+  % ======================= (b) forward on-shell partonic kinematics =======================
+  \begin{scope}[xshift=8.4cm]
+    \coordinate (VA) at (-1.0,2.1); \coordinate (VB) at (1.0,2.1);
+    \coordinate (Pin) at (-1.75,0.0); \coordinate (Pout) at (1.75,0.0);
+    \draw[red!60!black,line width=0.8pt,dash pattern=on 3pt off 2pt,rounded corners=4pt] (-2.15,-0.25) rectangle (2.15,0.75);
+    \draw[photon] (-2.15,3.2) -- (VA);
+    \draw[photon] (VB) -- (2.15,3.2);
+    \draw[quark=0.62] (Pin) -- (VA);
+    \draw[quark=0.55] (VA) -- (VB);
+    \draw[quark=0.45] (VB) -- (Pout);
+    \node[vertex] at (VA) {}; \node[vertex] at (VB) {};
+    \path[mom'={$q$},mom sep=0.22cm] (-2.15,3.2) -- (VA);
+    \path[mom={$q$},mom sep=0.22cm] (VB) -- (2.15,3.2);
+    \path[mom={$p+q$},mom sep=0.2cm] (VA) -- (VB);
+    \path[mom={$p$},mom pos=0.6] (Pin) -- (VA);
+    \path[mom={$p$},mom pos=0.4] (VB) -- (Pout);
+    \node[fe lab,anchor=north,inner sep=2pt] at (0,0.62) {$p^2=0$};
+    \node[fe lab,text=red!55!black,anchor=north,align=center] at (0,-0.3) {两条外部部分子线：$p+(-p)=0$，例外动量};
+    \node[fe lab,anchor=north,align=center] at (0,-0.95) {余项估计：需\cref{asm:appM-forward}};
+    \node at (0,-2.0) {(b)\ 前向在壳部分子矩阵元};
+  \end{scope}
+\end{tikzpicture}
+\caption{欧氏非例外动量与前向在壳运动学：(a)~微扰 OPE 的定理形式（\cref{prop:dis-ope-euclid}）适用于欧氏、非例外的外动量——外动量取在避开例外集（某个真部分和为零；在构型空间中是过原点的线性子空间，图中虚线）的紧集 $K$ 内，$|q|\to\infty$ 时余项在方向 $\hat q$ 上一致；
+(b)~DIS 所需的前向在壳部分子矩阵元（入射与出射动量同为 $p$，$p^2=0$）是例外构型，欧氏定理不直接适用，其余项估计是编号假设（\cref{asm:appM-forward}；$O(\alpha_s)$ 已精确到 $\varepsilon$ 地检验至 $N\le8$，VF-DIS-13）。}
+\label{fig:appM-euclid-forward}
+\end{figure}
+%%% END fig:appM-euclid-forward
+
+%%% BEGIN fig:appM-forest
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe reg/.style={region,line width=0.7pt},
+  fe aux/.style={draw=gray!55!black,line width=0.7pt,dash pattern=on 1pt off 1.6pt},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) a forest of a two-loop graph =======================
+  % forward Compton graph (uncut): q enters at V_A, leaves at V_B; vertex correction gamma_1 at V_A,
+  % gamma_2 = gamma_1 + the struck-quark line b->V_B (contains both current vertices; not 1PI by
+  % itself, but gamma_2 + l_x is 1PI: an AB part, omega = D - sum_E d_e = 2 - 3 = -1, subtracted
+  % only in N_a with delta_a = a - 3), self-energy gamma_3 on the incoming quark line (no common
+  % vertex with gamma_2; omega(gamma_1) = 0, omega(gamma_3) = 1).
+  \begin{scope}
+    \coordinate (VA) at (-1.25,2.3); \coordinate (VB) at (1.25,2.3);
+    \coordinate (a) at (-1.25,1.35); \coordinate (b) at (-0.05,2.3);
+    \coordinate (c) at (-1.25,-0.5); \coordinate (d) at (-1.25,0.4);
+    \coordinate (Ein) at (-1.25,-1.4); \coordinate (Eout) at (1.25,-1.4);
+    % subgraph boxes (drawn first)
+    \draw[fe reg,blue!55!black] (-1.55,1.05) rectangle (0.3,2.6);
+    \draw[fe reg] (-1.85,0.8) rectangle (1.6,2.9);
+    \draw[fe reg,orange!75!black] (-2.05,-0.78) rectangle (-0.93,0.67);
+    % lines
+    \draw[photon] (-2.45,3.45) -- (VA);
+    \draw[photon] (VB) -- (2.45,3.45);
+    \draw[quark=0.5] (Ein) -- (c);
+    \draw[quark] (c) -- (d);
+    \draw[quark=0.55] (d) -- (a);
+    \draw[quark=0.6] (a) -- (VA);
+    \draw[quark=0.6] (VA) -- (b);
+    \draw[quark] (b) -- (VB);
+    \draw[quark=0.62] (VB) -- (Eout);
+    \draw[gluon] (a) .. controls (-0.6,1.37) and (-0.1,1.75) .. (b);
+    \draw[gluon] (c) .. controls (-1.98,-0.4) and (-1.98,0.3) .. (d);
+    \foreach \p in {VA,VB,a,b,c,d} \node[vertex] at (\p) {};
+    \path[mom'={$q$},mom sep=0.24cm] (-2.45,3.45) -- (VA);
+    \path[mom'={$q$},mom sep=0.24cm] (VB) -- (2.45,3.45);
+    \path[mom'={$p$},mom pos=0.42] (Ein) -- (c);
+    \path[mom={$p$},mom pos=0.72] (VB) -- (Eout);
+    \node[fe lab,anchor=north west,inner sep=1pt] at (-1.2,2.24) {$V_A$};
+    \node[fe lab,anchor=north east,inner sep=1pt] at (1.2,2.24) {$V_B$};
+    \node[fe lab,text=blue!50!black,anchor=south east,inner sep=1.5pt] at (0.3,1.05) {$\gamma_1$};
+    \node[fe lab,anchor=west,inner sep=2pt] at (1.6,1.15) {$\gamma_2$};
+    \node[fe lab,text=orange!65!black,anchor=east,inner sep=2pt] at (-2.05,-0.05) {$\gamma_3$};
+    \node[fe lab,anchor=north] at (0.05,-1.75) {森林 $F=\{\gamma_1,\gamma_2,\gamma_3\}$：$\gamma_1\subset\gamma_2$，$\gamma_3\cap\gamma_2=\varnothing$};
+    \node[anchor=north] at (0.05,-2.3) {$R_\Gamma=\sum_F\prod^{\curvearrowleft}_{\gamma\in F}\big(-t^{\delta(\gamma)}_\gamma\big)\,I_\Gamma$};
+    \node at (0.05,-3.35) {(a)\ 森林：两两嵌套或不相交};
+  \end{scope}
+  % ======================= (b) frozen-q bilocal normal product =======================
+  \begin{scope}[xshift=7.6cm]
+    \coordinate (VA) at (-1.0,1.85); \coordinate (VB) at (1.0,1.85);
+    \coordinate (u) at (-1.0,0.65); \coordinate (w) at (1.0,0.65);
+    \draw[fe reg,line width=0.8pt] (-1.38,0.35) rectangle (1.38,2.2);
+    \draw[quark] (-1.95,-0.35) -- (u);
+    \draw[quark] (w) -- (1.95,-0.35);
+    \draw[quark] (u) -- (VA);
+    \draw[quark] (VA) -- (VB);
+    \draw[quark] (VB) -- (w);
+    \draw[gluon] (u) -- (w);
+    \node[vertex] at (u) {}; \node[vertex] at (w) {};
+    % auxiliary line l_x carrying the frozen external momentum q
+    \draw[fe aux] (VA) .. controls (-0.85,3.25) and (0.85,3.25) .. (VB);
+    \path[mom={$q$},mom sep=0.2cm] (VA) .. controls (-0.85,3.25) and (0.85,3.25) .. (VB);
+    \node[opvertex] at (VA) {}; \node[opvertex] at (VB) {};
+    \node[fe lab,anchor=east,inner sep=2pt] at (-1.38,1.85) {$A(x)$};
+    \node[fe lab,anchor=west,inner sep=2pt] at (1.38,1.85) {$B(0)$};
+    \node[fe lab,anchor=west,inner sep=1pt,text=gray!40!black] at (0.82,2.85) {$\ell_x$：$\ee^{-\ii q\cdot x}$};
+    \path[mom={$p_1$},mom pos=0.45] (-1.95,-0.35) -- (u);
+    \path[mom'={$p_2$},mom pos=0.55] (w) -- (1.95,-0.35);
+    \node[fe lab,anchor=north,inner sep=2pt] at (0,0.35) {AB 部分 $\gamma$};
+    \node[fe lab,align=center,anchor=north] at (0,-0.65) {只对外动量 $p$（不对 $q$）作 Taylor 减除：\\$t^{\delta_a(\gamma)}_p$，$\delta_a(\gamma)=a-\sum_{E(\gamma)}d_e$};
+    \node[fe lab,align=center,anchor=north,text=red!60!black] at (0,-1.75) {减除次数须对顶点可加};
+    \node at (0,-3.35) {(b)\ 冻结 $q$ 的双局域正规乘积 $N_a[A(x)B(0)]$};
+  \end{scope}
+\end{tikzpicture}
+\caption{BPHZ 森林公式与正规乘积（示意）：(a)~森林是两两嵌套或不相交的子图（重整化部分；在正规乘积中还包括 AB 部分）的集合，例如紫外发散的顶点修正 $\gamma_1$ 与自能 $\gamma_3$，以及包含 $\gamma_1$ 与两个流顶点 $V_A$、$V_B$ 的 AB 部分 $\gamma_2$（$\gamma_3$ 与 $\gamma_2$ 无公共顶点）；$R_\Gamma$ 中较小的子图先作用（$\curvearrowleft$），大动量 $q$ 自 $V_A$ 流入、自 $V_B$ 流出；
+(b)~冻结 $q$ 的双局域正规乘积中，含两个流顶点的子图（AB 部分，加上辅助线 $\ell_x$ 后为单粒子不可约）只对外动量 $p$ 作 Taylor 减除，$q$ 不展开。
+减除次数必须对顶点可加（$\delta(\gamma)=\omega(\gamma)+\sum_{v\in V(\gamma)}c_v$），否则可构造反例（\cref{ex:appM-nonadditive}）。}
+\label{fig:appM-forest}
+\end{figure}
+%%% END fig:appM-forest
+
+%%% BEGIN fig:appM-handbag-ab
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe hadron/.style={draw,solid,line width=1.5pt,line cap=butt},
+  fe reg/.style={region,line width=0.8pt},
+  fe map/.style={draw=gray!60!black,line width=0.7pt,-{Stealth[length=5pt,width=4pt]}},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) handbag as an AB part =======================
+  \begin{scope}
+    \coordinate (VA) at (-1.15,2.05); \coordinate (VB) at (1.15,2.05);
+    \coordinate (BL) at (-0.62,0.36); \coordinate (BR) at (0.62,0.36);
+    \draw[fe hadron] (-2.3,0) -- (-0.8,0);
+    \draw[fe hadron] (0.8,0) -- (2.3,0);
+    \draw[quark=0.55] (BL) -- (VA);
+    \draw[quark=0.55] (VA) -- (VB);
+    \draw[quark=0.55] (VB) -- (BR);
+    \draw[photon] (-2.25,3.15) -- (VA);
+    \draw[photon] (VB) -- (2.25,3.15);
+    \draw[hadron blob] (0,0) ellipse[x radius=0.95,y radius=0.45];
+    \node[vertex] at (VA) {}; \node[vertex] at (VB) {};
+    \draw[fe reg,red!60!black] (-1.5,1.72) rectangle (1.5,2.72);
+    \path[mom'={$q$},mom sep=0.22cm] (-2.25,3.15) -- (VA);
+    \path[mom={$q$},mom sep=0.22cm] (VB) -- (2.25,3.15);
+    \path[mom={$k$},mom pos=0.45] (BL) -- (VA);
+    \path[mom={$k$},mom pos=0.55] (VB) -- (BR);
+    \path[mom={$k+q$},mom pos=0.5,mom sep=0.2cm] (VA) -- (VB);
+    \path[mom={$P$},mom sep=0.28cm] (-2.3,0) -- (-1.15,0);
+    \path[mom={$P$},mom sep=0.28cm] (1.15,0) -- (2.3,0);
+    \node[fe lab,text=red!55!black,anchor=north,align=center] at (0,1.66) {AB 部分 $\gamma$\\（$q$ 冻结）};
+    \node[fe lab,text=red!55!black,anchor=west,inner sep=2pt] at (1.5,2.05) {$\to C^{(n)}(q)$};
+    \node[fe lab,anchor=north,align=center] at (0,-0.55) {其余部分 $\to\langle P|O^{(n)}|P\rangle$};
+    % contraction of gamma: local operator vertex
+    \draw[fe map] (2.45,1.2) -- node[above,fe lab,inner sep=2pt] {收缩 $\gamma$} (3.6,1.2);
+    \begin{scope}[shift={(4.65,0)}]
+      \coordinate (O) at (0,1.7);
+      \draw[quark=0.55] (-0.45,0.33) -- (O);
+      \draw[quark=0.55] (O) -- (0.45,0.33);
+      \draw[fe hadron] (-1.0,0) -- (-0.55,0);
+      \draw[fe hadron] (0.55,0) -- (1.0,0);
+      \draw[hadron blob] (0,0) ellipse[x radius=0.65,y radius=0.36];
+      \node[opvertex,minimum size=8pt] at (O) {};
+      \node[fe lab,anchor=south,inner sep=3pt] at (O) {$O^{(n)}$};
+      \node[fe lab,anchor=north,align=center] at (0,-0.55) {$\propto A^{(n)}$};
+    \end{scope}
+    \node at (1.4,-1.5) {(a)\ AB 部分（正规乘积的语言）};
+  \end{scope}
+  % ======================= (b) handbag as a reduced graph =======================
+  \begin{scope}[xshift=10.1cm]
+    \coordinate (H) at (0,2.05);
+    \draw[fe hadron] (-2.3,0) -- (-1.0,0);
+    \draw[fe hadron] (1.0,0) -- (2.3,0);
+    \draw[quark=0.5] (-0.42,0.38) -- ($(H)+(-0.3,-0.3)$);
+    \draw[quark=0.5] ($(H)+(0.3,-0.3)$) -- (0.42,0.38);
+    \draw[photon] (-2.05,3.05) -- ($(H)+(-0.38,0.18)$);
+    \draw[photon] ($(H)+(0.38,0.18)$) -- (2.05,3.05);
+    \draw[jet blob] (0,0) ellipse[x radius=1.1,y radius=0.45];
+    \draw[hard blob] (H) circle[radius=0.42];
+    \node at (H) {$H$};
+    \node at (0,0) {$J_A$};
+    \path[mom'={$q$},mom sep=0.22cm] (-2.05,3.05) -- ($(H)+(-0.38,0.18)$);
+    \path[mom={$q$},mom sep=0.22cm] ($(H)+(0.38,0.18)$) -- (2.05,3.05);
+    \path[mom={$P$},mom sep=0.28cm] (-2.3,0) -- (-1.3,0);
+    \path[mom={$P$},mom sep=0.28cm] (1.3,0) -- (2.3,0);
+    \node[fe lab,anchor=west,inner sep=2pt] at (0.45,2.05) {硬顶点 $\to C^{(n)}$};
+    \node[fe lab,anchor=west,align=left,text=blue!50!black] at (0.55,1.0) {共线线\\（平行于 $n_A$）};
+    \node[fe lab,anchor=north,align=center] at (0,-0.55) {靶的共线子图 $\to A^{(n)}$};
+    \node at (0,-1.5) {(b)\ 约化图（区域的语言）};
+  \end{scope}
+\end{tikzpicture}
+\caption{手提包图（前向 Compton 振幅，未切割）的两种读法：(a)~作为正规乘积展开中的 AB 部分——含两个流顶点的子图 $\gamma$（$q$ 冻结在其中）给出系数 $C^{(n)}(q)$，把 $\gamma$ 收缩为一点后其余部分给出局域算符 $O^{(n)}$ 的矩阵元（$\propto A^{(n)}$）；
+(b)~作为区域分析中的约化图——硬顶点 $H$ 与靶（沿 $+z$ 运动）的共线子图 $J_A$ 由平行于 $n_A$ 的共线线相连。
+在有质量模型中两种读法的重叠由超减除分开；无质量 QCD 中还需要红外抵消项（\cref{sec:appM-massless}）。}
+\label{fig:appM-handbag-ab}
+\end{figure}
+%%% END fig:appM-handbag-ab

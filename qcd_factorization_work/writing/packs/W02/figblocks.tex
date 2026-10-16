@@ -1,0 +1,361 @@
+%%% BEGIN fig:prelim-feynman-rules
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa idx/.style={font=\footnotesize,inner sep=2pt},
+  fa rule/.style={font=\small},
+  fa cap/.style={font=\footnotesize}]
+  % ===================== row 1: propagators =====================
+  % (a) quark
+  \begin{scope}
+    \draw[quark] (0,0) node[fa idx,left]{$j$} -- (2.4,0) node[fa idx,right]{$i$};
+    \path[mom={$p$}] (0,0) -- (2.4,0);
+    \node[fa rule] at (1.2,-0.95) {$\dfrac{\ii(\sla p+m)}{p^2-m^2+\ii0}\,\delta_{ij}$};
+    \node[fa cap] at (1.2,-1.85) {(a)\ 夸克传播子};
+  \end{scope}
+  % (b) gluon, Feynman gauge
+  \begin{scope}[xshift=5.3cm]
+    \draw[gluon] (0,0) node[fa idx,left]{$\mu,a$} -- (2.4,0) node[fa idx,right]{$\nu,b$};
+    \path[mom={$k$},mom sep=0.32cm] (0,0) -- (2.4,0);
+    \node[fa rule] at (1.2,-0.95) {$\dfrac{-\ii g_{\mu\nu}\,\delta^{ab}}{k^2+\ii0}$};
+    \node[fa cap] at (1.2,-1.85) {(b)\ 胶子传播子（Feynman 规范 $\xi_g=1$）};
+  \end{scope}
+  % (c) ghost
+  \begin{scope}[xshift=10.6cm]
+    \draw[ghost] (0,0) node[fa idx,left]{$a$} -- (2.4,0) node[fa idx,right]{$b$};
+    \path[mom={$p$}] (0,0) -- (2.4,0);
+    \node[fa rule] at (1.2,-0.95) {$\dfrac{\ii\,\delta^{ab}}{p^2+\ii0}$};
+    \node[fa cap] at (1.2,-1.85) {(c)\ 鬼场传播子};
+  \end{scope}
+  % ===================== row 2: three-point vertices =====================
+  % (d) quark-gluon vertex
+  \begin{scope}[yshift=-3.55cm]
+    \coordinate (v) at (1.45,0);
+    \draw[quark] (0.35,-0.85) node[fa idx,left]{$j$} -- (v);
+    \draw[quark] (v) -- (0.35,0.85) node[fa idx,left]{$i$};
+    \draw[gluon] (v) -- (2.75,0) node[fa idx,right]{$\mu,a$};
+    \node[vertex] at (v) {};
+    \node[fa rule] at (1.2,-1.75) {$\ii g\,\gamma^\mu\,(t^a)_{ij}$};
+    \node[fa cap] at (1.2,-2.62) {(d)\ 夸克—胶子顶点};
+  \end{scope}
+  % (e) ghost-gluon vertex
+  \begin{scope}[xshift=5.3cm,yshift=-3.55cm]
+    \coordinate (v) at (1.2,-0.3);
+    \draw[ghost] (0,-0.3) node[fa idx,left]{$c$} -- (v);
+    \draw[ghost] (v) -- (2.4,-0.3) node[fa idx,right]{$a$};
+    \draw[gluon] (v) -- (1.2,0.9) node[fa idx,above]{$\mu,b$};
+    \path[mom'={$p$}] (v) -- (2.4,-0.3);
+    \node[vertex] at (v) {};
+    \node[fa rule] at (1.2,-1.75) {$-g\,f^{abc}\,p^\mu$};
+    \node[fa cap] at (1.2,-2.62) {(e)\ 鬼场—胶子顶点};
+  \end{scope}
+  % (f) three-gluon vertex, all momenta incoming
+  \begin{scope}[xshift=11.8cm,yshift=-3.55cm]
+    \coordinate (v) at (0,0);
+    \draw[gluon] (v) -- (180:1.2) coordinate (ea) node[fa idx,left]{$\mu,a$};
+    \draw[gluon] (v) -- (-56:1.0) coordinate (eb) node[fa idx,anchor=west]{$\nu,b$};
+    \draw[gluon] (v) -- (56:1.0) coordinate (ec) node[fa idx,anchor=west]{$\rho,c$};
+    \path[mom={$k$},mom sep=0.3cm] (ea) -- (v);
+    \path[mom={$p$},mom sep=0.3cm] (eb) -- (v);
+    \path[mom={$q$},mom sep=0.3cm] (ec) -- (v);
+    \node[vertex] at (v) {};
+    \node[fa rule] at (0,-1.82)
+      {$\begin{aligned}gf^{abc}\big[&g^{\mu\nu}(k-p)^\rho+g^{\nu\rho}(p-q)^\mu\\[-1pt]&+g^{\rho\mu}(q-k)^\nu\big]\end{aligned}$};
+    \node[fa cap] at (0,-2.62) {(f)\ 三胶子顶点（动量 $k,p,q$ 均流入）};
+  \end{scope}
+  % ===================== row 3: four-gluon vertex =====================
+  \begin{scope}[xshift=2.3cm,yshift=-7.75cm]
+    \coordinate (v) at (1.2,0);
+    % short straight stubs keep the four coils from piling up at the vertex
+    \foreach \a/\l/\an in {135/{\mu,a}/-45,225/{\nu,b}/45,315/{\rho,c}/135,45/{\sigma,d}/-135} {
+      \draw[plain] (v) -- ++(\a:0.16);
+      \draw[gluon] ($(v)+(\a:0.16)$) -- ++(\a:1.04) node[fa idx,anchor=\an]{$\l$};
+    }
+    \node[vertex] at (v) {};
+    \node[fa rule,anchor=west] at (3.3,0)
+      {$\begin{aligned}
+        -\ii g^2\big[&f^{abe}f^{cde}\,(g^{\mu\rho}g^{\nu\sigma}-g^{\mu\sigma}g^{\nu\rho})\\
+        &+f^{ace}f^{bde}\,(g^{\mu\nu}g^{\rho\sigma}-g^{\mu\sigma}g^{\nu\rho})\\
+        &+f^{ade}f^{bce}\,(g^{\mu\nu}g^{\rho\sigma}-g^{\mu\rho}g^{\nu\sigma})\big]
+      \end{aligned}$};
+    \node[fa cap,anchor=west] at (3.3,-1.45) {(g)\ 四胶子顶点};
+  \end{scope}
+\end{tikzpicture}
+\caption{本书使用的 Feynman 规则（协变规范，$D_\mu=\partial_\mu-\ii gA^a_\mu t^a$，与 Peskin--Schroeder 第 16 章一致；图中胶子传播子取 Feynman 规范 $\xi_g=1$，一般 $\xi_g$ 的形式见正文）。
+夸克与鬼场传播子中的动量沿线上的箭头；夸克—胶子顶点 $(t^a)_{ij}$ 中的 $i$ 属于沿箭头离开顶点的夸克线；三胶子顶点的动量 $k,p,q$ 均流入顶点；
+鬼场—胶子顶点中 $a$ 为出射鬼场（动量 $p$ 流出顶点），$c$ 为入射鬼场，$b$ 为胶子的色指标。每个闭合夸克圈与闭合鬼场圈各带因子 $-1$。}
+\label{fig:prelim-feynman-rules}
+\end{figure}
+%%% END fig:prelim-feynman-rules
+
+%%% BEGIN fig:qcd-antiscreening
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa dip/.pic={\draw[line width=0.5pt,fill=gray!10] (0,0) ellipse[x radius=0.34,y radius=0.155];
+               \node[font=\scriptsize,inner sep=0pt] at (-0.17,0) {$-$};
+               \node[font=\scriptsize,inner sep=0pt] at (0.17,0) {$+$};},
+  fa src/.style={circle,draw,line width=0.7pt,minimum size=0.62cm,inner sep=0pt,font=\small},
+  fa lab/.style={font=\footnotesize},
+  fa cap/.style={font=\footnotesize}]
+  % ================= (a) QED =================
+  \begin{scope}
+    \foreach \a in {0,45,...,315} \pic[rotate=\a] at (\a:1.02) {fa dip};
+    \node[fa src,fill=red!12] at (0,0) {$+$};
+    \draw[lcaxis,line width=0.6pt] (22.5:0.42) -- (22.5:1.9) node[fa lab,anchor=south west,inner sep=1pt] {$r$ 增大};
+    \node[fa lab,align=center] at (0,-1.85) {虚 $e^+e^-$ 对的“$-$”端靠近电荷：\\有效电荷随 $r$ 增大而减小（屏蔽）};
+    \node[fa cap] at (0,-2.7) {(a)\ QED};
+  \end{scope}
+  % ================= (b) QCD =================
+  \begin{scope}[xshift=5.3cm]
+    \foreach \a in {0,90,180,270} \pic[rotate=\a] at (\a:1.02) {fa dip};
+    \foreach \a/\c in {45/red!70!black,135/green!50!black,225/blue!70!black,315/red!70!black} {
+      \draw[gluon,green!45!black] (\a:0.42) -- (\a:1.45);
+      \fill[\c] (\a:1.56) circle[radius=0.075];
+    }
+    \node[fa src,fill=gray!15] at (0,0) {$\mathbf T$};
+    \pic at (-1.6,-1.62) {fa dip};
+    \node[fa lab,anchor=west] at (-1.15,-1.62) {夸克对：屏蔽，$-\tfrac43T_Fn_f$};
+    \draw[gluon,green!45!black] (-1.92,-2.12) -- (-1.36,-2.12);
+    \fill[red!70!black] (-1.27,-2.12) circle[radius=0.075];
+    \node[fa lab,anchor=west] at (-1.15,-2.12) {胶子：色荷外移，反屏蔽，$+\tfrac{11}3C_A$};
+    \node[fa cap] at (0,-2.7) {(b)\ QCD};
+  \end{scope}
+  % ================= (c) inset: effective coupling vs distance =================
+  \begin{scope}[xshift=9.55cm,yshift=-1.3cm]
+    \draw[lcaxis] (0,0) -- (3.6,0) node[fa lab,below left=1pt and -2pt] {$r$（对数刻度）};
+    \draw[lcaxis] (0,0) -- (0,2.6) node[fa lab,anchor=south] {有效耦合};
+    % schematic: QCD rises steeply towards large r, QED falls slowly; QCD stays above QED
+    \draw[line width=0.9pt,blue!60!black] plot[smooth] coordinates {(0.15,0.78) (1.1,0.92) (2.0,1.2) (2.75,1.62) (3.3,2.2)};
+    \draw[line width=0.9pt,red!60!black] plot[smooth] coordinates {(0.15,0.52) (1.2,0.44) (2.2,0.39) (3.3,0.35)};
+    \node[fa lab,text=blue!60!black,anchor=south east] at (2.55,1.55) {QCD};
+    \node[fa lab,text=red!60!black,anchor=south] at (2.3,0.42) {QED};
+    \node[fa cap] at (1.8,-1.4) {(c)\ 有效耦合与距离（示意）};
+  \end{scope}
+\end{tikzpicture}
+\caption{屏蔽与反屏蔽的直观图像（示意）。(a) QED：真空中的虚电子—正电子对屏蔽电荷，有效耦合在远处变小；
+(b) QCD：夸克对同样屏蔽（$-\frac43T_Fn_f$），而带色的胶子把色荷“涂抹”到更大的区域，在短距离处看到的色荷变小（反屏蔽，$+\frac{11}3C_A$）；
+(c) 两种理论的有效耦合随距离的变化趋势。二者之和 $\beta_0>0$（SU(3) 中 $n_f\le16$）。
+这只是启发式图像：规范无关的推导见\cref{prop:prelim-beta}，把反屏蔽解释为胶子自旋的顺磁效应见\cite{Nielsen:1980sx}。}
+\label{fig:qcd-antiscreening}
+\end{figure}
+%%% END fig:qcd-antiscreening
+
+%%% BEGIN fig:qcd-ir-safety
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lab/.style={font=\footnotesize},
+  fa note/.style={font=\footnotesize,align=center},
+  fa cap/.style={font=\footnotesize},
+  fa hint/.style={draw=gray!60!black,line width=0.6pt,-{Stealth[length=4pt,width=3.4pt]}},
+  fa ok/.style={draw=green!45!black,line width=0.8pt,rounded corners=2pt,fill=green!6,font=\footnotesize,align=center,inner sep=4pt},
+  fa bad/.style={draw=red!60!black,line width=0.8pt,rounded corners=2pt,fill=red!5,font=\footnotesize,align=center,inner sep=4pt}]
+  % ===================== (a) soft and collinear emission =====================
+  \begin{scope}
+    \node[hard blob,circle,minimum size=0.7cm,inner sep=0pt] (H) at (0,0) {$H$};
+    \coordinate (V) at (1.75,0);
+    \draw[quark] (H.east) -- (V);
+    \draw[quark] (V) -- (3.75,0);
+    \draw[gluon] (V) -- ++(36:1.75) coordinate (G);
+    \node[vertex] at (V) {};
+    \path[mom'={$p+k$}] (H.east) -- (V);
+    \path[mom'={$p$},mom pos=0.62] (V) -- (3.75,0);
+    \path[mom={$k$},mom sep=0.3cm,mom pos=0.42] (V) -- (G);
+    \draw[line width=0.5pt] ($(V)+(0.55,0)$) arc[start angle=0,end angle=36,radius=0.55];
+    \node[fa lab] at ($(V)+(17:0.75)$) {$\theta$};
+    \draw[fa hint] ($(V)+(30:1.22)$) arc[start angle=30,end angle=6,radius=1.22];
+    \node[fa lab,anchor=west] at ($(V)+(13:1.3)$) {共线：$\theta\to0$};
+    \node[fa lab,anchor=south west,inner sep=1pt] at ($(G)+(0.04,0.02)$) {软：$E_k\to0$};
+    \node[fa note] at (1.85,-1.15) {$\dfrac{1}{(p+k)^2}=\dfrac{1}{2E_pE_k(1-\cos\theta)}$};
+    \node[fa note] at (1.85,-2.1) {发射概率 $\propto\dfrac{\dd E_k}{E_k}\,\dfrac{\dd\theta^2}{\theta^2}$};
+    \node[fa cap] at (1.85,-2.95) {(a)\ 无质量夸克的软发射与共线发射};
+  \end{scope}
+  % ===================== (b) real-virtual cancellation =====================
+  \begin{scope}[xshift=6.45cm,yshift=0.15cm]
+    % real emission: the gluon crosses the cut
+    \coordinate (L) at (0,0); \coordinate (R) at (2.2,0);
+    \draw[photon] (-0.55,0) -- (L); \draw[photon] (R) -- (2.75,0);
+    \draw[quark=0.13] (L) -- (0.42,0.55) -- (1.78,0.55) -- (R);
+    \draw[quark=0.13] (R) -- (1.78,-0.55) -- (0.42,-0.55) -- (L);
+    \draw[gluon] (0.6,0.55) .. controls (0.72,1.12) and (1.48,1.12) .. (1.6,0.55);
+    \foreach \p in {(L),(R),(0.6,0.55),(1.6,0.55)} \node[vertex] at \p {};
+    \draw[cut] (1.1,1.2) -- (1.1,-0.85);
+    \node[fa note] at (1.1,-1.5) {实发射\\$N_\varepsilon\Big[\dfrac{2}{\varepsilon^2}+\dfrac{3}{\varepsilon}+\cdots\Big]$};
+    \node[font=\large] at (3.3,0) {$+$};
+    % virtual correction on one side of the cut, interfering with the Born amplitude
+    \begin{scope}[xshift=4.4cm]
+      \coordinate (L) at (0,0); \coordinate (R) at (2.2,0);
+      \draw[photon] (-0.55,0) -- (L); \draw[photon] (R) -- (2.75,0);
+      \draw[quark=0.13] (L) -- (0.42,0.55) -- (1.78,0.55) -- (R);
+      \draw[quark=0.13] (R) -- (1.78,-0.55) -- (0.42,-0.55) -- (L);
+      \draw[gluon] (0.66,0.55) -- (0.66,-0.55);
+      \foreach \p in {(L),(R),(0.66,0.55),(0.66,-0.55)} \node[vertex] at \p {};
+      \draw[cut] (1.1,1.2) -- (1.1,-0.85);
+      \node[fa note] at (1.1,-1.5) {虚修正（及复共轭）\\$N_\varepsilon\Big[-\dfrac{2}{\varepsilon^2}-\dfrac{3}{\varepsilon}-\cdots\Big]$};
+    \end{scope}
+    \node[fa note] at (3.3,-2.45) {和 $=\dfrac32N_\varepsilon\ \xrightarrow{\ \varepsilon\to0\ }\ \dfrac34\,C_F\,\dfrac{\alpha_s}{\pi}$（有限）};
+    \node[fa cap] at (3.3,-3.1) {(b)\ $e^+e^-$ 总截面中实发射与虚修正的相消};
+  \end{scope}
+  % ===================== (c) infrared safety =====================
+  \begin{scope}[yshift=-5.25cm,
+      fa prod/.style={circle,fill=gray!35,draw,line width=0.6pt,inner sep=0pt,minimum size=0.3cm},
+      fa out/.style={draw,line width=0.8pt,-{Stealth[length=4.5pt,width=3.8pt]}}]
+    % n-parton final state: two back-to-back partons from the production vertex
+    \begin{scope}[xshift=0.9cm]
+      \draw[fa out] (0,0) -- (1.05,0.36);  \draw[fa out] (0,0) -- (-1.05,-0.36);
+      \node[fa prod] at (0,0) {};
+      \node[fa lab] at (0,-0.8) {$n$ 个部分子};
+    \end{scope}
+    \draw[fa hint,line width=0.8pt] (2.25,0.18) -- (3.05,0.55);
+    \draw[fa hint,line width=0.8pt] (2.25,-0.18) -- (3.05,-0.55);
+    % + soft gluon emitted from one of the partons
+    \begin{scope}[xshift=4.2cm,yshift=0.68cm]
+      \draw[fa out] (0,0) -- (1.05,0.36);  \draw[fa out] (0,0) -- (-1.05,-0.36);
+      \draw[gluon,green!45!black] (0.52,0.178) -- ++(108:0.78);
+      \node[fa prod] at (0,0) {};
+      \node[fa lab,text=green!35!black,anchor=west] at ($(0.52,0.178)+(108:0.62)+(0.12,0)$) {软胶子};
+    \end{scope}
+    % collinear splitting of one parton
+    \begin{scope}[xshift=4.2cm,yshift=-0.72cm]
+      \draw[plain] (0,0) -- (0.5,0.171);
+      \draw[fa out] (0.5,0.171) -- (1.06,0.55);  \draw[fa out] (0.5,0.171) -- (1.13,0.26);
+      \draw[fa out] (0,0) -- (-1.05,-0.36);
+      \node[fa prod] at (0,0) {};
+      \node[fa lab,anchor=west] at (1.2,0.38) {共线劈裂};
+    \end{scope}
+    \node[fa lab] at (4.2,-1.55) {$n+1$ 个部分子};
+    % verdicts
+    \node[fa ok,anchor=west] (ok) at (7.6,0.45) {红外安全：$O_{n+1}\to O_n$\\（如推力、Sterman--Weinberg 截面）};
+    \node[fa bad,anchor=west] (bad) at (7.6,-0.75) {末态部分子数};
+    \draw[red!70!black,line width=1.1pt] ($(bad.east)+(0.2,-0.17)$) -- ++(0.34,0.34) ($(bad.east)+(0.2,0.17)$) -- ++(0.34,-0.34);
+    \node[fa lab,text=red!60!black,anchor=west] at ($(bad.east)+(0.62,0)$) {不安全};
+    \node[fa cap] at (6.3,-2.15) {(c)\ 红外安全可观测量在软发射与共线劈裂下取值不变};
+  \end{scope}
+\end{tikzpicture}
+\caption{红外发散与红外安全（示意）。(a) 无质量夸克发射胶子：传播子在软（$E_k\to0$）与共线（$\theta\to0$）极限下发散；
+(b) 对足够单举的量，实发射与虚修正的发散相消（$e^+e^-$ 总截面，VF-EE-6；$N_\varepsilon$ 为两者共同的归一化因子，以 Born 截面 $\sigma_0$ 为单位，见\cref{prop:ee-oneloop}）；
+(c) 红外安全可观测量在软发射与共线劈裂下取值不变，因而可以逐阶微扰计算（精确定义见\cref{def:ir-safe}）。}
+\label{fig:qcd-ir-safety}
+\end{figure}
+%%% END fig:qcd-ir-safety
+
+%%% BEGIN fig:qcd-running-coupling
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[name=A,width=0.47\textwidth,height=5.6cm,xmode=log,xmin=5,xmax=1000,ymin=0.08,ymax=0.22,
+  xlabel={$Q/\mathrm{GeV}$},ylabel={$\alpha_s(Q)$},
+  legend style={font=\scriptsize,draw=none,fill=none,at={(0.97,0.97)},anchor=north east},
+  legend cell align=left,
+  tick label style={font=\scriptsize},label style={font=\small},title={\small (a)},
+  yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=2}]
+\addplot[domain=5:1000,samples=120,thick,dashed,blue!60!black]{0.1180/(1+(23/3)*0.1180/(4*pi)*ln(x^2/91.19^2))};
+\addlegendentry{单圈}
+\addplot[domain=5:1000,samples=120,thick,red!60!black]{4*pi/((23/3)*ln(x^2/0.2262^2))*(1-(116/3)/(23/3)^2*ln(ln(x^2/0.2262^2))/ln(x^2/0.2262^2))};
+\addlegendentry{两圈（截断式）}
+\addplot[only marks,mark=*,mark size=1.6pt,error bars/.cd,y dir=both,y explicit] coordinates {(91.19,0.1180) +- (0,0.0009)};
+\node[font=\scriptsize,anchor=south west] at (axis cs:100,0.121) {$\alpha_s(M_Z)=0.1180$};
+\node[font=\scriptsize,anchor=south west] at (axis cs:6,0.085) {$n_f=5$};
+\end{axis}
+\begin{axis}[at={(A.east)},anchor=west,xshift=1.45cm,width=0.47\textwidth,height=5.6cm,xmin=1.6,xmax=6.95,ymin=4.5,ymax=12,
+  xlabel={$\ln(Q/\mathrm{GeV})$},ylabel={$1/\alpha_s(Q)$},tick label style={font=\scriptsize},label style={font=\small},title={\small (b)}]
+\addplot[domain=1.609:6.908,samples=2,thick,blue!60!black]{1/0.1180+(23/3)/(2*pi)*(x-ln(91.19))};
+% slope triangle attached to the line (values of the line at x=3.2 and x=4.2)
+\draw[thin] (axis cs:3.2,6.8726) -- (axis cs:4.2,6.8726) -- (axis cs:4.2,8.0927);
+\node[font=\scriptsize,anchor=north] at (axis cs:3.7,6.8726) {$1$};
+\node[font=\scriptsize,anchor=west] at (axis cs:4.25,7.45) {斜率 $\beta_0/(2\pi)=1.22$};
+\node[font=\scriptsize,align=left,anchor=north west] at (axis cs:1.75,11.7) {渐近自由：\\$Q\to\infty$ 时 $\alpha_s\to0$};
+\end{axis}
+\end{tikzpicture}
+\caption{跑动耦合 $\alpha_s(Q)$（$n_f=5$，输入 PDG 2024 世界平均 $\alpha_s(M_Z)=0.1180\pm0.0009$\cite[式~(9.25)]{ParticleDataGroup:2024cfk}）。
+(a) 单圈与两圈（截断式，$\Lambda^{(5)}_{\MSbar}=0.226\,\mathrm{GeV}$，在 $5\le Q\le1000\,\mathrm{GeV}$ 内与精确两圈跑动相差不到 $0.6\%$，VF-QCD-7）跑动；
+(b) 单圈下 $1/\alpha_s$ 对 $\ln Q$ 为直线，斜率 $\beta_0/(2\pi)>0$：$Q$ 越大耦合越弱，这就是渐近自由。
+图中全程取 $n_f=5$；$Q<m_b$ 与 $Q>m_t$ 处应分别改用 $n_f=4$ 与 $n_f=6$（阈值匹配），图中未画出。}
+\label{fig:qcd-running-coupling}
+\end{figure}
+%%% END fig:qcd-running-coupling
+
+%%% BEGIN fig:qcd-vacuum-polarization
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa idx/.style={font=\footnotesize,inner sep=1.5pt},
+  fa note/.style={font=\footnotesize,align=center},
+  fa cap/.style={font=\footnotesize}]
+  % common: external gluons (k, mu, a) -> loop -> (k, nu, b);  loop radius 0.6
+  % ---------------- (a) quark loop ----------------
+  \begin{scope}
+    \draw[gluon] (-1.6,0) -- (-0.6,0);
+    \draw[gluon] (0.6,0) -- (1.6,0);
+    \draw[quark] (-0.6,0) arc[start angle=180,end angle=0,radius=0.6];
+    \draw[quark] (0.6,0) arc[start angle=0,end angle=-180,radius=0.6];
+    \foreach \x in {-0.6,0.6} \node[vertex] at (\x,0) {};
+    \path[mom={$k$},mom sep=0.3cm] (-1.6,0) -- (-0.65,0);
+    \path[mom={$k$},mom sep=0.3cm] (0.65,0) -- (1.6,0);
+    \node[fa idx,anchor=north] at (-1.55,-0.2) {$\mu,a$};
+    \node[fa idx,anchor=north] at (1.55,-0.2) {$\nu,b$};
+    \node[fa note] at (0,0.98) {$\times\,n_f$};
+    \node[fa cap] at (0,-1.35) {(a)\ 夸克圈};
+  \end{scope}
+  % ---------------- (b) gluon loop ----------------
+  \begin{scope}[xshift=4.0cm]
+    \draw[gluon] (-1.6,0) -- (-0.6,0);
+    \draw[gluon] (0.6,0) -- (1.6,0);
+    \draw[gluon] (-0.6,0) arc[start angle=180,end angle=0,radius=0.6];
+    \draw[gluon] (0.6,0) arc[start angle=0,end angle=-180,radius=0.6];
+    \foreach \x in {-0.6,0.6} \node[vertex] at (\x,0) {};
+    \path[mom={$k$},mom sep=0.3cm] (-1.6,0) -- (-0.68,0);
+    \path[mom={$k$},mom sep=0.3cm] (0.68,0) -- (1.6,0);
+    \node[fa idx,anchor=north] at (-1.55,-0.2) {$\mu,a$};
+    \node[fa idx,anchor=north] at (1.55,-0.2) {$\nu,b$};
+    \node[fa note] at (0,1.05) {对称因子 $\tfrac12$};
+    \node[fa cap] at (0,-1.35) {(b)\ 胶子圈};
+  \end{scope}
+  % ---------------- (c) ghost loop ----------------
+  \begin{scope}[xshift=8.0cm]
+    \draw[gluon] (-1.6,0) -- (-0.6,0);
+    \draw[gluon] (0.6,0) -- (1.6,0);
+    \draw[ghost] (-0.6,0) arc[start angle=180,end angle=0,radius=0.6];
+    \draw[ghost] (0.6,0) arc[start angle=0,end angle=-180,radius=0.6];
+    \foreach \x in {-0.6,0.6} \node[vertex] at (\x,0) {};
+    \path[mom={$k$},mom sep=0.3cm] (-1.6,0) -- (-0.65,0);
+    \path[mom={$k$},mom sep=0.3cm] (0.65,0) -- (1.6,0);
+    \node[fa idx,anchor=north] at (-1.55,-0.2) {$\mu,a$};
+    \node[fa idx,anchor=north] at (1.55,-0.2) {$\nu,b$};
+    \node[fa note] at (0,0.98) {闭合鬼场圈 $\times(-1)$};
+    \node[fa cap] at (0,-1.35) {(c)\ 鬼场圈};
+  \end{scope}
+  % ---------------- (d) tadpole ----------------
+  \begin{scope}[xshift=12.0cm]
+    % external legs and the loop leave the vertex with short straight stubs
+    \draw[gluon] (-1.6,0) -- (-0.16,0);
+    \draw[gluon] (0.16,0) -- (1.6,0);
+    \draw[plain] (-0.16,0) -- (0.16,0);
+    \draw[plain] (0,0) -- (128:0.17);
+    \draw[plain] (0,0) -- (52:0.17);
+    \draw[gluon] (128:0.17) to[out=128,in=180,looseness=1.25] (0,1.22)
+                            to[out=0,in=52,looseness=1.25] (52:0.17);
+    \node[vertex] at (0,0) {};
+    \path[mom={$k$},mom sep=0.3cm] (-1.6,0) -- (-0.5,0);
+    \path[mom={$k$},mom sep=0.3cm] (0.5,0) -- (1.6,0);
+    \node[fa idx,anchor=north] at (-1.55,-0.2) {$\mu,a$};
+    \node[fa idx,anchor=north] at (1.55,-0.2) {$\nu,b$};
+    \node[fa note] at (0,1.68) {维数正规化中为零};
+    \node[fa cap] at (0,-1.35) {(d)\ 四胶子顶点的蝌蚪图};
+  \end{scope}
+  % ---------------- the result ----------------
+  \node[font=\small,anchor=north] at (6.0,-1.85)
+    {$\delta Z_3=\dfrac{\alpha_s}{4\pi\varepsilon}\Big[\dfrac53\,C_A-\dfrac43\,T_Fn_f\Big]$
+     \quad（Feynman 规范；一般规范中 $C_A$ 的系数为 $\tfrac{13}{6}-\tfrac{\xi_g}{2}$）};
+  \node[font=\small,anchor=north] at (6.0,-3.05)
+    {$\Longrightarrow$\ 与 $\delta Z_2$、$\delta Z_{1F}$ 合成：\
+     $\delta Z_g=\delta Z_{1F}-\delta Z_2-\tfrac12\,\delta Z_3=-\dfrac{\alpha_s}{4\pi\varepsilon}\,\dfrac{\beta_0}{2}$，\
+     $\beta_0=\tfrac{11}{3}C_A-\tfrac43T_Fn_f$};
+\end{tikzpicture}
+\caption{胶子传播子的单圈修正（Feynman 规范，外线动量 $k$ 自左向右流动）：(a) 夸克圈（对 $n_f$ 味求和），(b) 胶子圈，(c) 鬼场圈，
+(d) 四胶子顶点的蝌蚪图（无标度积分，维数正规化中为零）。(b)(c) 单独都不满足横向性，三者之和正比于 $k^2g^{\mu\nu}-k^\mu k^\nu$；
+紫外极点给出 $\delta Z_3$，与夸克场和顶点的重整化常数合成规范无关的 $\delta Z_g$ 与 $\beta_0=\frac{11}3C_A-\frac43T_Fn_f$（VF-PDF-14，VF-QCD-4）。}
+\label{fig:qcd-vacuum-polarization}
+\end{figure}
+%%% END fig:qcd-vacuum-polarization

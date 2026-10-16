@@ -1,0 +1,53 @@
+% -------------------------------------------------------------------------------------
+\section{模式与幂次计数}\label{sec:scet-modes}
+
+在领头幂次上，QCD 振幅的红外敏感部分来自少数几个动量区域，每个区域中动量的各光锥分量按 $\lambda$ 的确定幂次标度（\cref{def:ir-scalings}）。有效理论为每个这样的区域引入一种场，并按动量的标度给场赋予标度；两种模式相互作用时，若各粒子仍在各自的质壳附近，这一耦合保留在拉氏量中，若有粒子被推到更大的虚度，相应的线就被积掉，变成匹配系数或 Wilson 线。下面列出常用的模式；哪些模式真正出现在给定的观测量中，是区域分析的结论（\cref{thm:ir-leading-regions}），而不是有效理论自身能够决定的。
+
+\begin{definition}[模式]\label{def:scet-modes}
+设 $Q$ 为硬标度，$\lambda\ll1$ 为由观测量确定的幂次计数参数（推力：$\lambda=\sqrt\tau$；横动量分布：$\lambda=q_T/Q$）。下表中的动量区域称为 SCET 的\emph{模式}（mode）：
+\begin{center}\small
+\renewcommand{\arraystretch}{1.1}\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}lccl@{\hspace{1.2em}}lccl@{}}
+\toprule
+模式 & $(\bar n\cdot p,n\cdot p,p_\perp)/Q$ & $p^2$ & 场 & 模式 & $(\bar n\cdot p,n\cdot p,p_\perp)/Q$ & $p^2$ & 场\\
+\midrule
+硬 & $(1,1,1)$ & $Q^2$ & 积出 & 软 & $(\lambda,\lambda,\lambda)$ & $\lambda^2Q^2$ & $q_s$，$A_s$ \\
+$n$ 共线 & $(1,\lambda^2,\lambda)$ & $\lambda^2Q^2$ & $\xi_n$，$A_n$ & 硬共线 & $(1,\lambda,\lambda^{1/2})$ & $\lambda Q^2$ & 积出 \\
+$\bar n$ 共线 & $(\lambda^2,1,\lambda)$ & $\lambda^2Q^2$ & $\xi_{\bar n}$，$A_{\bar n}$ & Glauber $n\bar n$ & $(\lambda^2,\lambda^2,\lambda)$ & $\simeq-\bm p_{\mathrm T}^2$ & 离壳 \\
+超软 & $(\lambda^2,\lambda^2,\lambda^2)$ & $\lambda^4Q^2$ & $q_{us}$，$A_{us}$ & Glauber $ns$；$\bar ns$ & $(\lambda,\lambda^2,\lambda)$；$(\lambda^2,\lambda,\lambda)$ & $\simeq-\bm p_{\mathrm T}^2$ & 离壳 \\
+\bottomrule
+\end{tabular}
+\end{center}
+% VF-SCET-1
+Glauber 模式离壳，不是传播的模式；Rothstein--Stewart 的 Glauber 动量 $Q(\lambda^a,\lambda^b,\lambda)$，$a+b>2$，按 $(n\cdot p,\bar n\cdot p,p_\perp)$ 排列，交换前两项即表中三行\cite[表~1]{RothsteinStewart2016}。只含硬、两个共线与超软模式的理论称为 SCET$_{\rm I}$，以软模式代替超软模式者称为 SCET$_{\rm II}$。由 $(\bar n\cdot p,n\cdot p)=\sqrt2(p^+,p^-)$，表中的标度与\cref{def:ir-scalings}逐项相同；Libby--Sterman 意义下的“软”即此处的超软。
+\uses{def:ir-scalings}
+\end{definition}
+
+\begin{proposition}[场的标度 \tagR]\label{prop:scet-scalings}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）以 $Q$ 的相应幂次为单位（夸克场 $Q^{3/2}$，胶子场 $Q$），各模式的场按下列方式标度：
+\begin{equation}\label{eq:scet-fieldscaling}
+\xi_n\sim\lambda,\qquad (\bar n\cdot A_n,\,n\cdot A_n,\,A_{n\perp})\sim(1,\lambda^2,\lambda),\qquad
+A_{us}\sim\lambda^2,\quad q_{us}\sim\lambda^3,\qquad A_s\sim\lambda,\quad q_s\sim\lambda^{3/2}.
+\end{equation}
+% VF-SCET-2
+这是 BFPS 与 BPS 的标度规则\cite{BauerEtAl2001,Bauer:2002uv}。（本命题只涉及部分子场，不涉及强子态。）
+\uses{def:scet-modes, def:prelim-feynman-rules}
+\end{proposition}
+
+\begin{proof}
+场 $\phi$ 的标度定义为使自由两点函数 $\int\frac{\dd^4p}{(2\pi)^4}\ee^{-\ii p\cdot x}\Delta_\phi(p)$ 在该模式的动量区内与 $\phi\phi$ 同阶的幂次，即 $\phi\phi\sim[\dd^4p]\,\Delta_\phi$，$\dd^4p=\frac12\dd(\bar n\cdot p)\,\dd(n\cdot p)\,\dd^2p_\perp$。共线模式 $[\dd^4p]\sim\lambda^4$。把 $\sla p=\frac{\bar n\cdot p}{2}\sla n+\frac{n\cdot p}{2}\bar{\sla n}+\sla p_\perp$ 代入并用 $P_n\sla nP_{\bar n}=\sla n$、$P_n\bar{\sla n}P_{\bar n}=P_n\gamma_\perp^\mu P_{\bar n}=0$，
+\begin{equation}\label{eq:scet-xiprop}
+P_n\,\frac{\ii\sla p}{p^2+\ii0}\,P_{\bar n}=\ii\,\frac{\sla n}{2}\,\frac{\bar n\cdot p}{p^2+\ii0}\sim\lambda^{-2}
+\end{equation}
+（对离壳的 $p$ 也精确成立），故 $\xi_n\sim\lambda$。共线胶子：协变规范传播子 $\frac{-\ii}{k^2}[g^{\mu\nu}-(1-\xi_g)\frac{k^\mu k^\nu}{k^2}]$（\cref{def:prelim-feynman-rules}）的第二项给出 $\langle A_n^\mu A_n^\nu\rangle\sim\lambda^4\cdot k^\mu k^\nu/\lambda^4\sim k^\mu k^\nu$，即 $A_n^\mu$ 与 $k^\mu$ 逐分量同阶，$(\bar n\cdot A_n,n\cdot A_n,A_{n\perp})\sim(1,\lambda^2,\lambda)$；第一项给出 $\langle\bar n\cdot A_n\,\bar n\cdot A_n\rangle\propto\bar n^2=0$、$\langle\bar n\cdot A_n\,n\cdot A_n\rangle\propto n\cdot\bar n\,\lambda^4/\lambda^2\sim\lambda^2$、$\langle A_{n\perp}A_{n\perp}\rangle\sim\lambda^2$，都与这一标度之积相容。在 Feynman 规范（$\xi_g=1$）中只剩第一项，它不单独确定 $\bar n\cdot A_n$ 的标度；这时由规范协变性定出：共线规范变换中的非齐次项 $\frac1gU[\ii\partial^\mu,U^\dagger]$ 与 $\partial^\mu\sim k^\mu$ 同阶，只有 $A_n^\mu\sim k^\mu$ 才能使标度在变换下保持不变。超软模式 $[\dd^4k]\sim\lambda^8$，胶子与夸克传播子分别 $\sim\lambda^{-4}$、$\lambda^{-2}$，故 $A_{us}\sim\lambda^2$、$q_{us}\sim\lambda^3$；软模式 $[\dd^4k]\sim\lambda^4$，传播子 $\sim\lambda^{-2}$、$\lambda^{-1}$，故 $A_s\sim\lambda$、$q_s\sim\lambda^{3/2}$。
+\end{proof}
+
+于是 $\ii D^\mu=\ii\partial^\mu+gA^\mu$ 的每个分量都与相应的动量分量同阶；特别地 $g\,\bar n\cdot A_n\sim\lambda^0$，须对所有阶求和（\cref{prop:scet-wilson}）。对在壳的 $n$ 共线动量 $p$，由 $2p\cdot k=\bar n\cdot p\,n\cdot k+n\cdot p\,\bar n\cdot k+2p_\perp\cdot k_\perp$ 逐项计数：% w18_s1 (E): all mode combinations checked
+吸收超软动量后 $(p+k)^2=p^2+\bar n\cdot p\,n\cdot k+\order{\lambda^3Q^2}$ 仍是共线的；吸收软动量后 $(p+k)^2\simeq\bar n\cdot p\,n\cdot k\sim\lambda Q^2$ 是硬共线的；与 $\bar n$ 共线动量结合得 $\sim Q^2$；交换 Glauber 动量时两个共线扇区都保持在壳，交换是瞬时的势。共线场所在区域 $(n\cdot x,\bar n\cdot x,x_\perp)\sim(1,\lambda^{-2},\lambda^{-1})/Q$，故
+\begin{equation}\label{eq:scet-multipole}
+\begin{gathered}
+k_{us}\cdot x=\tfrac12\,n\cdot k\,\bar n\cdot x\,[\lambda^0]+k_\perp\cdot x_\perp\,[\lambda]+\tfrac12\,\bar n\cdot k\,n\cdot x\,[\lambda^2],\\
+A_{us}(x)=A_{us}(x_-)+\order{\lambda},\qquad x_-^\mu\equiv\bar n\cdot x\,\frac{n^\mu}{2}
+\end{gathered}
+\end{equation}
+（方括号内是各项相对于 $1$ 的标度）：共线场看到的超软场只依赖于 $\bar n\cdot x$（多极展开）。BFPS 用标签动量算符 $\bar{\mathcal P}$、$\mathcal P_\perp$ 表述\cite{BauerEtAl2001,BauerStewart2001}；下面用坐标空间写法\cite{BenekeEtAl2002,Beneke:2002ni}，$\ii\bar n\cdot\partial$、$\ii\partial_\perp$ 作用于共线场时只取出大分量。领头阶共线拉氏量的每一项是 $\order{\lambda^4}$，共线测度 $\dd^4x\sim\lambda^{-4}$，故作用量为 $\order{\lambda^0}$。

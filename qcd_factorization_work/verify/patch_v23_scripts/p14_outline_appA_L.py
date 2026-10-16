@@ -1,0 +1,37 @@
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import src
+ln = src.ln
+TARGET = 'FINAL_OUTLINE_v2.md'
+
+HERM_HEAD_OLD = '[R, R_def] · new (refdoc S53) [PENDING-VERIFY: S63-8, X1, N14] (class K3 of WRITER_SPEC_v2 §6.5: a sharpened explicit result, never marked new)'
+HERM_HEAD_NEW = '[R, R_def] · new (refdoc S53; statement corrected in v2.3, claim N14) (class K3 of WRITER_SPEC_v2 §6.5: a sharpened explicit result, never marked new)'
+HERM_STMT = r'''  - **陈述.** （$R_{\rm def}$：关于割图规则的定义层次陈述。）(a) Define the rules to the right of the final-state cut by the largest-time (circling) rule: a circled vertex carries $(i\times\text{coefficient})^*$ times the same momentum factors as the uncircled one, and circled propagators are the complex conjugates of the uncircled ones. Then for every vertex with a real coefficient — the three-gluon, four-gluon and ghost–gluon vertices included — the circled factor is minus the uncircled one, so the two sides of a forward cut graph carry the same numerator polynomials up to this sign rule; the two prescriptions that the earlier formulation compared (called $\alpha$ and $\beta$ there) coincide identically. (b) The on-shell numerators (numerator polynomials evaluated at on-shell light-front energies, as they appear in the light-cone-ordered representation of App O) are the same polynomials on both sides of a forward cut graph. Hence the cut rules are Hermitian in the sense required by App O: clause (iii) of the original hermiticity hypothesis becomes a lemma, so `asm:appO-lcopt` keeps only its clauses (i)(ii). (c) *Caveat (printed):* the vertex-by-vertex reading "the conjugate side is the physical $\mathcal M^*$" fails for ghosts — the conjugate ghost vertex is $V_{\rm conj}=-V_{\rm amp}-gf\,q^\mu$ — and the two agree only after summing both orientations of each ghost loop; the equivalence of the circled rules with the physical $\mathcal M^\dagger$ is unitarity of the BRST-quantized theory (`Veltman1963`, `tHooftVeltman1974`, `KugoOjima1979`; `prop:appJ-ghost-cuts`), cited, not re-proved here. The Hermitian-ghost mechanism of the earlier formulation (Kugo–Ojima ghost fields making every vertex self-conjugate) is not used; as stated there it is false.'''
+HERM_PROOF = r'''  - **证明.** Full for (a), (b) (inspection of the Feynman rules of `def:prelim-feynman-rules` and of the cut conventions of `def:prelim-cut`; the sign rule is the largest-time equation); (c) by explicit evaluation of the ghost–gluon vertex and citation for the unitarity statement. **地位与缺口.** Claim N14 is unresolved in the verification (item (i) is standard; no second confirmation of the corrected wording): the tag [R, R_def] covers (a), (b) only; the hedge of (c) is part of the printed statement; class K3, never marked new.'''
+
+OPS = [
+ # ---------------- App B
+ ('sub', '(D4; the $g$-sign item of [PENDING-VERIFY: E27]).', '(D4; E27 confirmed: Collins uses $D=\\partial+ig_0tA$, his eq. (2.2), so $g_{\\rm Collins}=-g$ and his Wilson lines are $P\\exp(-ig_0\\int n\\cdot A)$, eq. (13.40)).', 'the $g$-sign item of [PENDING-VERIFY: E27]'),
+ ('sub', '(VF-WL-4; c_wilson, [PENDING-VERIFY: N26] — novelty not claimed).', '(VF-WL-4; c_wilson; the operator-level regulator $e^{-\\delta\\sigma}$ with cumulative denominators and the failure of the naive $\\delta$-regularization are in `Echevarria:2015byo` eqs. (5)–(6) — claim N26 confirmed, novelty not claimed).', '[PENDING-VERIFY: N26] — novelty not claimed'),
+ ('sub', 'the arXiv version of that paper has a spurious $C_F$ in its App. A (c_scet §6 item 10; VF-SCET-16) [PENDING-VERIFY: E23 — App Q candidate; check the journal version].', 'that paper (journal version JHEP 07 (2008) 034, eq. (A.10), and arXiv v1, v2) has a spurious $C_F$ in front of $T_Fn_f$ (c_scet §6 item 10; VF-SCET-16; App Q, row Q.1; $\\Gamma_1=36.8436$ for $n_f=5$).', '[PENDING-VERIFY: E23 — App Q candidate; check the journal version]'),
+ # ---------------- App D
+ ('sub', '(proof only in a preprint, [PENDING-VERIFY: A08])', '(proof only in a preprint, v1 of 8 July 2020, no journal publication; A08 confirmed)', '(proof only in a preprint, [PENDING-VERIFY: A08])'),
+ ('sub', '(pointer, [PENDING-VERIFY: N02])', '(pointer; N02 confirmed, printed without novelty marker)', '(pointer, [PENDING-VERIFY: N02])'),
+ # ---------------- App F
+ ('sub', '(`GrammerYennie1973` cited only together with `SenIndumathiChoudhury2019`) [PENDING-VERIFY: A18]; errata to Collins 2011 eqs. (11.4)–(11.6) as flagged by c_wilson [PENDING-VERIFY: E27 — author-corrected class Q2];',
+  '(`GrammerYennie1973` cited only together with `SenIndumathiChoudhury2019`; A18 confirmed: Collins states the adaptation himself, 2011 §5.5.6 p. 118, §10.6 p. 345, §11.9.3 p. 421, eqs. (11.4)–(11.6) p. 402, and the symmetrized $b_k$ is a later modification, not GY\'s formula); Collins 2011 eqs. (11.4)–(11.6) are used with the author\'s errata list (E27 confirmed; App Q `tab:appQ-errata-b`);',
+  '[PENDING-VERIFY: A18]; errata to Collins 2011 eqs. (11.4)–(11.6)'),
+ ('sub', '(signs re-derived in our conventions; c_glauber §2 telescoping identity, [PENDING-VERIFY: N19]).', '(signs re-derived in our conventions; c_glauber §2 telescoping identity — claim N19, auxiliary, novelty not claimed).', '[PENDING-VERIFY: N19]'),
+ ('sub', 'the moment reduction of the bilocal case is a frontier result (Ch24, pointer, [PENDING-VERIFY: N04]).', 'the moment reduction of the bilocal case is a frontier result (Ch24, pointer; [A], prior art `Braun:2019qtp`).', '(Ch24, pointer, [PENDING-VERIFY: N04])'),
+ # ---------------- App J
+ ('sub', HERM_HEAD_OLD, HERM_HEAD_NEW, '* **引理 `lem:appJ-cut-hermiticity` —'),
+ ('rep', ln(5244) + '\n' + ln(5245) + '\n' + ln(5246) + '\n', HERM_STMT + '\n' + HERM_PROOF + '\n' + '  - `\\uses{def:prelim-feynman-rules, def:qcd-fp, def:prelim-cut}`\n'),
+ ('sub', '(forward on-shell gluon matrix elements and alien operators, [PENDING-VERIFY: S63-3, S63-4])', '(the vanishing of alien-operator matrix elements is proved only for non-zero momentum transfer or IR-regulated legs — `Collins:1994ee` give a forward on-shell gluon counterexample, S63-4 with the R-M24 precision; the Joglekar papers are read at abstract level, S63-3)', '[PENDING-VERIFY: S63-3, S63-4]'),
+ ('sub', '(pp. 407–410, page numbers [PENDING-VERIFY: A18])', '(pp. 407–410, the gap verbatim on p. 410; triangular mixing (11.20) on p. 412; locations verified, A13/A18)', 'page numbers [PENDING-VERIFY: A18]'),
+ ('sub', '(Ch24 `prop:front-brst-bilocal`, pointer; planning tag [A] [PENDING-VERIFY: N04])', '(Ch24 `prop:front-brst-bilocal`, pointer; [A], prior art `Braun:2019qtp`)', 'planning tag [A] [PENDING-VERIFY: N04]'),
+ # ---------------- App K
+ ('sub', '(c_pdf §7, s6 15/15 PASS; own proofs of classical facts, novelty not claimed [PENDING-VERIFY: N23]).', '(c_pdf §7, s6 15/15 PASS; own proofs of classical facts, novelty not claimed — claim N23 confirmed; cite the classical sources).', 'own proofs of classical facts, novelty not claimed [PENDING-VERIFY: N23]'),
+ ('sub', '(`Carlson1914`, `Titchmarsh1939` §5.81, `Boas1954` Thm 9.2.1; locations [PENDING-VERIFY: N23]).', '(`Carlson1914`, `Titchmarsh1939` §5.81, `Boas1954` Thm 9.2.1; locations verified — Titchmarsh in the book, Boas as cited by Waldschmidt; the sharp example for even integers is $\\sin(\\pi z/2)$, not $\\sin^2(\\pi z/2)$, which has type $\\pi$).', 'locations [PENDING-VERIFY: N23]'),
+ ('sub', ' [PENDING-VERIFY: X3]', '', '* **引理 `lem:appK-entire` —'),
+ ('sub', ' [PENDING-VERIFY: X3]', '', '* **引理 `lem:appK-markov` —'),
+]

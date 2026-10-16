@@ -1,0 +1,126 @@
+\section{类空 Wilson 线算符的重整化}\label{sec:lamet-renorm}
+
+非定域算符 $\bar\psi(z)\Gamma W[z,0]\psi(0)$ 能否像定域算符那样重整化？直 Wilson 线有线性发散的自能（试探粒子的“质量”重整化），端点有对数发散，线上的胶子顶点由耦合常数重整化吸收\cite{Polyakov1980,Dotsenko:1979wb,BrandtNeriSato1981,Craigie:1980qs}；把 Wilson 线写成辅助静态色源的传播子，问题化为扩展理论中定域复合算符的重整化\cite{Dorn:1986dt}。格点上的算符几何见\cref{fig:lamet-lattice-geometries}(a)。
+
+%%% FIGBLOCK fig:lamet-lattice-geometries
+
+\begin{assumption}[含类空辅助静态色源的 QCD 的可重整性 \tagA]\label{asm:lamet-aux-renorm}
+\begin{enumerate}[label=(AX\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 在 QCD 中加入一个色三重态、无自旋的 Grassmann 场 $Q$，$\mathcal L_Q=\bar Q\,\ii\hat n\cdot D\,Q$（对截断正规化另加 $\delta m\,\bar QQ$），$\hat n=\hat e_z$。在背景场中其传播子为 $S_Q(x,y)=\theta(x^z-y^z)\delta(x^0-y^0)\delta^2(\mathbf x_\perp-\mathbf y_\perp)W[x,y]$，因而 $O_\Gamma(z)=\langle\bar\psi(z)\Gamma Q(z)\,\bar Q(0)\psi(0)\rangle_Q$ 是扩展理论中两个定域复合算符 $\bar J=\bar\psi Q$、$J=\bar Q\psi$ 之积。
+\item 扩展理论只需抵消项 $Z_Q$、$Z_1^{QQg}$（由 Slavnov--Taylor 恒等式与 $Z_g$ 相联系）与 $\delta m$ 即可重整化，并保持 BRST 不变性。
+\item 在所用的正规化（维数正规化）中，$Q$ 圈的行列式 $\det(\ii\hat n\cdot D)$ 是常数。
+\end{enumerate}
+地位：全阶论证级——文献\cite{Ji:2017oey}断言 HQET 可重整性论证可推广到类空方向，但没有写出；格点上的辅助场构造\cite{Green:2017xeu}与坐标空间的发散度计数\cite{Ishikawa:2017faj}（只到表观发散度与“簿记森林”，不是 BPHZ 证明）支持它；显式检验：两圈\cite{Ji:2015jwa}，三圈反常维度\cite{Braun:2020ymy}，重—轻流到三圈\cite{Chetyrkin:2003vi}。本书把类空 Wilson 线算符的乘法可重整性定为 \tagA。
+文献：\cite{Ji:2017oey,Green:2017xeu,Ishikawa:2017faj,Dorn:1986dt,Dotsenko:1979wb,Braun:2020ymy,Chetyrkin:2003vi}。
+被使用于：\cref{prop:lattice-renormalizability}、\cref{asm:lamet-ope}、\cref{asm:lamet-gap}、\cref{conj:lamet-decay-qcd}、\cref{asm:lamet-staple}、\cref{thm:yzliu-soft-hqet}。
+解除途径：写出 QCD$+$类空静态源的 BRST 不变重整化证明（用传播子 $\theta(x^z)\delta(x^0)\delta^2(x_\perp)$ 的各向异性幂次计数作 Zimmermann/BPHZ 分析，或用流方程方法，参见\cite{Frob:2015uqy}），包括 $\det(\ii\hat n\cdot D)$ 与 $\delta(0)$ 型项的处理。
+\uses{def:prelim-qcd, def:prelim-brst, def:prelim-wilson}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：(AX2) 只有断言与表观发散度层次的计数（误差类型 E-S），没有写出的证明；它是本章全部共线匹配定理的第一个前提。
+
+\begin{proposition}[Wilson 线夸克双线性算符的乘法可重整性 \tagA]\label{prop:lattice-renormalizability}
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 设裸算符为 $O^B_\Gamma(z)=\bar\psi_0(z\hat n)\,\Gamma\, W_0[z\hat n,0]\,\psi_0(0)$，其中 $\hat n$ 类空，$z\neq0$，味非单态或单态，$\Gamma$ 任意。用规范不变的正规化，存在与 $z$、$\Gamma$ 及外态都无关的常数 $Z_j$，以及（对截断正规化）线性发散的 $\delta m$，使
+\begin{equation}\label{eq:lamet-multren}
+O^R_\Gamma(z,\mu)=Z_j^{-2}\,\ee^{-\delta m|z|}\,O^B_\Gamma(z)
+\end{equation}
+与基本场的 Green 函数在每一阶都有限；$Z_j=Z_\psi^{1/2}Z_Q^{1/2}Z_V$ 是重—轻流 $\bar Q\psi$ 的重整化常数；不与胶子算符或其他味道的算符混合。（$\delta m$ 的符号约定：$\ee^{-\delta m|z|}$ 消去裸算符的 $\ee^{+\delta m|z|}$ 增长；各文献的符号不同。）% VF-LAM-2
+\item 格点上，对手征不严格对称的费米子，$O^R_\Gamma(z)=Z_\phi^2\ee^{-m|z|}O_{\Gamma'}(z)$，$\Gamma'=\Gamma+r_{\rm mix}\,{\rm sgn}(z)\{\sla n,\Gamma\}+r_{\rm mix}^2\,\sla n\Gamma\sla n$，共三个参数：线性发散的 $m$、对数发散的 $Z_\phi$ 与有限的 $r_{\rm mix}=\order{g^2}$。$\Gamma=\gamma^0$ 时 $\{\gamma^z,\gamma^0\}=0$ 且 $\sla n\gamma^0\sla n=\gamma^0$，因而在 $\order{a^0}$ 没有混合，只有整体的重新标度。
+\item 胶子算符 $O_g(z)=g_\perp^{\mu\nu}F^{n_1}{}_\mu(\tfrac z2)W^{ab}F^{n_2}{}_\nu(-\tfrac z2)$，$n_i\in\{\hat e_z,\hat e_t\}$：$z\neq0$ 且指标为横向时，相关的组合乘法可重整（非极化四个、螺旋度三个关联函数）；胶子与单态夸克的准 PDF 算符在重整化下不混合，混合只出现在匹配中。在辅助场表述中 $O_g$ 化为“重—胶流” $J^{n\mu}=F^{n\mu}_aQ^a$（$Q$ 为伴随表示的辅助场）之积；文献\cite[第~III.A~节]{JiEtAl2021}给出的单圈常数为 $Z_{J^{n_ti}}=1+\frac{\as}{4\pi}\big(\frac76C_A-\frac43n_fT_F\big)\frac1{\varepsilon_{\rm UV}}$、$Z_{J^{n_z\nu}}=1+\frac{\as}{4\pi}\big(\frac16C_A-\frac43n_fT_F\big)\frac1{\varepsilon_{\rm UV}}$（$n_t=\hat e_t$，$n_z=\hat e_z$，$i$ 为横向指标），两圈反常维度见\cite{Braun:2020ymy}。
+\item （单圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在维数正规化中，单圈 $\delta m=0$，
+\begin{equation}\label{eq:lamet-Zj}
+Z_j=1+\frac{\as C_F}{4\pi}\frac3{2\varepsilon},\qquad Z_O=Z_j^2=1+\frac{\as C_F}{4\pi}\frac3\varepsilon,\qquad\frac{\dd\ln O^R}{\dd\ln\mu^2}=\frac{3\as C_F}{4\pi}+\order{\as^2}=\frac32a .
+\end{equation}
+\end{enumerate}
+（本命题只涉及算符与部分子 Green 函数。）
+\uses{asm:lamet-aux-renorm, def:prelim-wilson, def:prelim-msbar, thm:prelim-composite-renorm}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+\emph{路线 A（辅助场\cite{Ji:2017oey,Green:2017xeu}）。}(1) \cref{asm:lamet-aux-renorm}：扩展理论可重整。(2) 重—轻流 $J=\bar Q\psi$ 按定域算符的论证（\cref{thm:prelim-composite-renorm}，\tagR，$R_{\mathrm{PT}}$）乘法重整化：没有量子数相同、量纲更低的算符；胶子的 $F^{\mu\nu}_aQ^a$ 与 $J_2^{\mu\nu}=(n^\nu F^{\mu n}-n^\mu F^{\nu n})Q/n^2$ 及一个运动方程算符混合\cite{Dorn:1986dt}，对 $z\neq0$ 与横向指标不起作用。(3) 积掉 $Q$ 得 $O^B_\Gamma(z)=Z_j^2\ee^{\delta m|z|}O^R_\Gamma(z)$。格点上 $Q$ 是静态夸克型的场，作用量 $\frac1{1+am_0}\bar\zeta(\nabla_n+m_0)\zeta$，传播子 $\theta(\xi)\ee^{-m\xi}W$，$m=a^{-1}\ln(1+am_0)$；质量项不被任何对称性禁止，给出 (b) 中的 $m$；手征破缺时 $\phi_R=Z_\phi(\phi+r_{\rm mix}\sla n\phi)$，代入两个流之积即得 $\Gamma'$\cite{Green:2017xeu}，与单圈格点微扰论\cite{Constantinou:2017sej}及对称性分析\cite{Chen:2017mie}一致。
+\emph{路线 B（图形法\cite{Ishikawa:2017faj}）。}坐标空间中，Wilson 线上的胶子插入改变三维与四维圈积分的表观发散度；“规范链不可约”的图在三维子积分上没有整体紫外发散。紫外发散因而是定域的，只来自：(i) Wilson 线自能，其线性部分按 $1+c\int\dd r_1+c^2\int\!\!\int\cdots=P\ee^{cr}$ 指数化；(ii) 胶子—Wilson 线顶点，由耦合常数重整化吸收\cite{Dotsenko:1979wb}；(iii) 夸克—Wilson 线端点，给出常数抵消项。胶子算符见\cite{Li:2018tpe,Zhang:2018diq}（据其摘要）。
+(c) 由路线 A 对 $F^{\mu\nu}_aQ^a$ 的分析：横向指标下 $J_2$ 与运动方程算符的混合消失，重—胶流与重—轻夸克流量子数不同，所以胶子与单态夸克算符在重整化下不混合\cite{JiEtAl2021,Zhang:2018diq}；所列单圈常数来自\cite[第~III.A~节]{JiEtAl2021}的显式计算，其中 Wilson 线顶点图的线性发散在图与图之间相消。
+(d) 单圈紫外极点逐图分解（Feynman 规范、维数正规化、在壳无质量夸克，各图见\cite[第~III~节]{IzubuchiEtAl2018}；单位 $a/\varepsilon_{\rm UV}$）：顶点图在 $z\neq0$ 时有限（$0$）；两个帆图合计 $1$；Wilson 线自能 $1$——坐标空间中它等于 $a\,\ee^{\varepsilon\gamma_E}(\mu|z|/2)^{2\varepsilon}\Gamma(1-\varepsilon)/[\varepsilon(1-2\varepsilon)]$，线性发散对应 $\varepsilon=\frac12$ 处的极点，故 $\delta m=0$；夸克场重整化 $2\times\frac12\delta Z_\psi$ 贡献 $-\frac12$。总和 $\frac32$，即 $Z_O=1+\frac{3a}{2\varepsilon}$。按重—轻流分解：Wilson 线自能相当于两个静态源的场重整化，每个帆图相当于一个重—轻顶点修正，于是 $Z_j=1+\frac{\as C_F}{4\pi}\frac3{2\varepsilon}$、$Z_O=Z_j^2$，与 HQET 重—轻流的 $\gamma_0=-3C_F$ 一致。由 $O^R=O^B/Z_O$ 与 $\mu^2\frac{\dd\as}{\dd\mu^2}=-\varepsilon\as+\order{\as^2}$，$\frac{\dd\ln O^R}{\dd\ln\mu^2}=\varepsilon\as\frac{C_F}{4\pi}\frac3\varepsilon=\frac{3\as C_F}{4\pi}$，正是单圈 $\MSbar$ 矩阵元 $C_0=1+a(\frac32L_z+\frac52)$ 中 $\ln\mu^2$ 的系数（见下节）。
+显式检验：两圈\cite{Ji:2015jwa}，三圈反常维度\cite{Braun:2020ymy}，重—轻流到三圈\cite{Chetyrkin:2003vi}；格点混合\cite{Constantinou:2017sej,Chen:2017mie}，改进\cite{Green:2020xco}。完整论证见\cite{Ji:2017oey,Ishikawa:2017faj}与\cite[第~III.A~节]{JiEtAl2021}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA：(i) HQET/BRST 可重整性证明向类空方向的推广只是断言（\cref{asm:lamet-aux-renorm}，这是本命题的瓶颈）；(ii) 图形法的计数停留在表观发散度与“簿记森林”的层次，不是 BPHZ/Zimmermann 意义下的证明（此步只给出 E-S 型陈述）；(iii) $z=0$ 时算符是定域流，重整化不同（$Q$ 的运动方程产生接触项）——本命题的全部陈述都只对 $z\neq0$。关于 (b)：文献\cite{Ji:2017oey}所说“没有更低维的算符可以混合”是正确的，但对手征不严格对称的格点费米子还存在 $\order{a^0}$ 的同维混合 $\Gamma\to\Gamma'$\cite{Green:2017xeu,Constantinou:2017sej,Chen:2017mie}；对 $\gamma^t$，$r_{\rm mix}^2$ 项只是重新标度；与四维算符的 $\order{a}$ 混合对每个 $\Gamma$ 都存在。提高到 \tagR 需要\cref{asm:lamet-aux-renorm}的解除途径中所说的完整证明。
+
+\begin{proposition}[类空与类时 Wilson 线算符的反常维度相同 \tagA]\label{prop:lamet-ad-spacelike}
+带类空 Wilson 线与带类时 Wilson 线的非定域夸克算符，其 Green 函数由一条明确的代换规则（对 $v^2$ 的解析延拓）相联系；二者的重整化常数与反常维度在所有阶相同，$\gamma_O=2\gamma_{hl}$（$\gamma_{hl}$：重—轻流的反常维度），与 $z$ 无关。（三圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）到三圈，夸克算符的 $\gamma_O$ 已显式算出，类空与类时的结果一致（\cite[附录~A]{Braun:2020ymy}，归一化 $a_s=\as/(4\pi)$、$\mu^2\dd/\dd\mu^2$）。
+（本命题只涉及算符与部分子 Green 函数。）
+\uses{prop:lattice-renormalizability}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 由\cref{prop:lattice-renormalizability}，两种算符都化为重—轻流之积，$\gamma_O=2\gamma_{hl}$。(2) 重—轻流的 Feynman 积分只通过 $v^2$ 与 $v\cdot k$ 依赖于静态源的方向；被积函数层次上把类时结果对 $v^2$ 解析延拓到 $v^2<0$ 即得类空结果\cite{Braun:2020ymy}。(3) 紫外极点与 $v^2$ 无关，在延拓下不变。(4) 三圈的显式计算验证了这一点。第~23~章的解析延拓技术是同一思想的推广。完整论证见\cite{Braun:2020ymy}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA：代换规则（被积函数层次对 $v^2$ 的解析延拓）是逐阶论证的，但没有写成重整化 Green 函数之间的恒等式；它继承\cref{prop:lattice-renormalizability}的瓶颈\cref{asm:lamet-aux-renorm}；到三圈有显式的一致性（\cite[附录~A]{Braun:2020ymy}；胶子到两圈）。提高途径：在辅助场表述中证明这一延拓。
+
+\begin{definition}[准关联函数的重整化方案]\label{def:lamet-schemes}
+一个重整化方案 $X$ 由重整化因子 $Z_X$ 定义；按文献\cite{IzubuchiEtAl2018}，它与 $\MSbar$ 之间的换算因子 $Z'_X$ 由下面第二式定义：
+\[
+\tilde h^X=\lim_{a\to0}\frac{\tilde h(z,a)}{Z_X(z,a)},\qquad \tilde h^X=Z'_X\big(z^2\mu_R^2,\mu_R/\mu\big)\,\tilde h^{\MSbar}.
+\]
+常用方案如下（一览见本章后文的方案表）：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{Wilson 线质量减除}：$Z_X=\ee^{\delta m|z|}Z_{\log}$；换算因子与 $z$ 无关\cite{Chen:2016fxx,Ishikawa:2016znu,Green:2017xeu}（\cite{Ishikawa:2016znu}为预印本）。
+\item \emph{RI/MOM}：$Z^{-1}\tilde h_{\rm quark}(z,p)|_{p^2=-\mu_R^2,\,p^z=p^z_R}=$ 树图值；换算因子依赖于 $z$，含 $\ln z^2\mu_R^2$，并依赖于规范与投影的选择\cite{Constantinou:2017sej,Stewart:2017tvs,Alexandrou:2017huk,Chen:2017mzz,LatticeParton:2018gjr}。
+\item \emph{比值（约化 ITD）}：$\tilde h(\lambda,z^2)/\tilde h(0,z^2)$（或除以真空矩阵元）；换算因子 $1/C_0(-z^2\mu^2)$\cite{Radyushkin2017,Orginos:2017kos,Braun:2018brg}。
+\item \emph{混合方案}：$|z|\le z_S$ 用比值方案；$|z|>z_S$ 用 $\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$，$Z_{\rm hyb}=\ee^{\delta mz_S}/\tilde h(0,z_S^2)$ 由 $z_S$ 处的连续性确定；换算因子为 $1/C_0(\min(|z|,z_S))$，对所有 $z$ 都是微扰的\cite{Ji:2020brr}。于是对 $|z|>z_S$，
+\begin{equation}\label{eq:lamet-hybrid-conv}
+\tilde h_{\rm hyb}=\frac{\tilde h_{\MSbar}}{C_0(z_S)}=\tilde h_{\rm ratio}\,\frac{C_0(z)}{C_0(z_S)} .
+\end{equation}% VF-LAM-3
+\item \emph{自重整化}：把 $\ln Z(a)$ 拟合成 $m_{-1}(a)/a+m_0$、离散化项与短距离 $\MSbar$ 形状之和\cite{LatticePartonLPC:2021gpi}（据该文摘要）。
+\item \emph{Coulomb 规范}：不带规范链的 Coulomb 规范夸克双线性算符，没有线性发散，$Z$ 与 $z$ 无关\cite{Gao:2023lny,Zhao:2023ptv}（据其摘要）。
+\end{enumerate}
+\uses{def:lattice-quasi, prop:lattice-renormalizability, def:prelim-msbar}
+\end{definition}
+
+\cref{eq:lamet-hybrid-conv}的推导：部分子态、领头扭度下 $\tilde h_{\MSbar}(0,z^2)=C_0(-z^2\mu^2)$；$|z|>z_S$ 处，裸的 $\tilde h\,\ee^{-\delta m|z|}$ 与 $\tilde h(0,z_S^2)\ee^{-\delta mz_S}$ 的对数因子相同，比值为 $\tilde h_{\MSbar}(\lambda,z^2)/C_0(z_S)$；再用 $\tilde h_{\rm ratio}=\tilde h_{\MSbar}/C_0(z)$。这里假定线性发散被完全减去；残余 $\ee^{-m_0|z|}$ 的效应如下。
+
+\begin{lemma}[残余线性项 $\ee^{-m_0|z|}$ 的 Lorentz 抹平]\label{lem:lamet-lorentzian}
+设 $\tilde h_1(\lambda)=\ee^{-m_0|\lambda|/P^z}\tilde h_2(\lambda)$，$\tilde q_{1,2}$ 为按\cref{eq:lamet-quasi-itd}得到的准 PDF，$\delta=m_0/P^z$。则
+\begin{equation}\label{eq:lamet-lorentzian}
+\tilde q_1(y)-\tilde q_2(y)=\frac1\pi\int\dd y'\,\frac{\delta}{\delta^2+(y-y')^2}\big[\tilde q_2(y')-\tilde q_2(y)\big];
+\end{equation}
+若 $\tilde q_2$ 有界且二阶导数有界，则 $\sup_y|\tilde q_1-\tilde q_2|\le\frac\delta\pi\big(\|\tilde q_2''\|_\infty+4\|\tilde q_2\|_\infty\big)$：这是 $m_0/P^z$ 的\emph{线性}修正。
+\uses{def:lattice-quasi}
+\end{lemma}
+
+\begin{proof}
+$\int\frac{\dd\lambda}{2\pi}\ee^{-\ii u\lambda}\ee^{-\delta|\lambda|}=\frac1{2\pi}\frac{2\delta}{\delta^2+u^2}=L_\delta(u)$，$\int L_\delta=1$；由卷积定理 $\tilde q_1=L_\delta*\tilde q_2$，减去 $\tilde q_2(y)\int L_\delta$ 即得\cref{eq:lamet-lorentzian}（此恒等式见\cite{Ji:2020brr}）。令 $u=y'-y$。$|u|<1$：$\tilde q_2(y+u)-\tilde q_2(y)=u\tilde q_2'(y)+\frac{u^2}2\tilde q_2''(\eta)$，线性项在对称区间上积分为零，由 $\frac{u^2}{\delta^2+u^2}\le1$，余下部分不超过 $\frac1\pi\cdot\frac{\|\tilde q_2''\|_\infty}2\int_{-1}^1\delta\,\dd u=\frac\delta\pi\|\tilde q_2''\|_\infty$。$|u|\ge1$：$|\tilde q_2(y+u)-\tilde q_2(y)|\le2\|\tilde q_2\|_\infty$，$\int_{|u|\ge1}\frac{\delta\,\dd u}{\delta^2+u^2}\le\int_{|u|\ge1}\frac{\delta}{u^2}\dd u=2\delta$，这部分不超过 $\frac4\pi\delta\|\tilde q_2\|_\infty$。相加即得。
+\end{proof}
+
+\begin{proposition}[Wilson 线自能的线性重整子与领头重整子重求和 \tagP]\label{prop:lamet-lrr}
+（大 $\beta_0$ 泡链近似中的陈述。）
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 格点上 $\delta m=m_{-1}(a)/a+m_0$；$m_{-1}=\order{\as}$ 是普适的，$m_0=\order{\Lambda}$ 依赖于固定 $\delta m$ 的条件（静态势、大 $z$ 衰减、辅助场传播子、RI/MOM）。
+\item 线性发散自能的微扰级数在 $u=\frac12$ 处有极点质量型的重整子（\cref{def:power-borel}）；在 $n\sim1/\as$ 处截断，$\delta m$ 留有 $\order{\Lambda}$ 的模糊度。
+\item 残余的 $\ee^{-m_0|z|}$ 使 $\tilde q$ 被宽度为 $m_0/P^z$ 的 Lorentz 分布抹平（\cref{lem:lamet-lorentzian}）：线性幂次修正 $\order{\Lambda/(xP^z)}$。
+\item 在 $\MSbar$ 中，准 ITD 的 Wilson 系数 $C_k(\as,z^2\mu^2)$ 带有相应的 $u=\frac12$ 重整子，其模糊度与 $|z|$ 成线性、与自旋无关；领头重整子重求和（LRR）——在 $C_k$ 与 $m_0$ 中用同一个主值处方，并由短距离处 $P^z=0$ 的矩阵元确定 $m_0$——消去 $\order{\Lambda/P^z}$ 修正；归一化（比值）方案中没有 $u=\frac12$ 项。
+\end{enumerate}
+（本命题是泡链近似中关于微扰级数与算符重整化的陈述。）
+\uses{lem:lamet-lorentzian, def:lamet-schemes, def:power-borel, prop:power-renormalon-examples, prop:lattice-renormalizability}
+\end{proposition}
+
+\begin{proofsketch}
+(a) 见\cite{Ji:2020brr}。(b) 是极点质量重整子\cite{Beneke:1994sw,Bigi:1994em}（参见\cref{prop:power-renormalon-examples}，\tagP）：线性发散 $\propto\as/a$ 的级数系数阶乘增长，截断模糊度 $\order{\Lambda}$。(c) 是\cref{lem:lamet-lorentzian}。(d) 文献\cite{Braun:2018brg}在泡链中算出坐标空间系数函数的 Borel 变换，在 $u=\frac12$ 处有奇点（该文称之为紫外重整子，因为它来自 Wilson 线自能的线性紫外发散；按\cref{def:power-borel}的约定它位于正半轴），模糊度 $\propto\Lambda|z|$，归一化后消失；文献\cite{Zhang:2023bxs}提出 LRR，并用格点微扰论到二十圈交叉检验了极点质量归一化；另见\cite{Holligan:2023rex}（据其摘要）。完整论证见所引文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagP：只是关于泡链的严格陈述；处方是一种方案选择；$m_0(\tau)$ 在不同矩阵元之间是否普适尚未解决（它依赖于外态\cite{Zhang:2023bxs}）；具体格点系综上的数值（$m_0$ 的值、“改进 3--5 倍”）不作为一般事实。超出大 $\beta_0$ 的重整子结构是\cref{conj:power-renormalon-ht}型的猜想。
+
+\begin{proposition}[欧氏格点矩阵元与 Minkowski 矩阵元的等同 \tagA]\label{prop:lamet-euclid-minkowski}
+据该文摘要\cite{Briceno:2017cpo}：欧氏格点 QCD 中算出的等时矩阵元与 Minkowski（LSZ）矩阵元相同，这一等同在微扰论的所有阶唯一。有限体积效应对空间非定域算符是指数小的，但随 $|z|$ 增大（据\cite{Briceno:2018lfj}摘要）。（本命题是关于等时矩阵元的欧氏与 Minkowski 表示之间关系的陈述。）
+\uses{def:lattice-quasi}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagA：这里只依据该文摘要，把它作为作者的陈述给出，不提供超出其思想的证明。思想是：等时算符不需要对算符本身作欧氏延拓，欧氏时间只用来投影出外态。所以它不同于需要实时演化的量（例如强子张量），后者的欧氏化本身就是一个逆问题。

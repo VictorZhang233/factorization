@@ -1,0 +1,116 @@
+% ============================================================================
+%  c_tmd snippet 1/4: TMD 的算符定义（订书钉 Wilson 线、横向连接、软因子、Collins 定义）
+%  约定：CONTEXT.md 的绑定约定；补充约定见 DERIVATION.md §1。
+% ============================================================================
+\section{TMD 的算符定义}
+\label{sec:tmd-definitions}
+
+\paragraph{方向矢量与快度。}
+记 $n\equiv(0,1,\boldsymbol 0_{\mathrm T})$（$n\cdot k=k^+$），$\bar n\equiv(1,0,\boldsymbol 0_{\mathrm T})$。
+为正规化光锥（快度）发散，用有限快度的非类光矢量（Collins 的选择为类空）
+\begin{equation}
+  n_A(y_A)=(1,-\ee^{-2y_A},\boldsymbol 0_{\mathrm T}),\qquad
+  n_B(y_B)=(-\ee^{2y_B},1,\boldsymbol 0_{\mathrm T}),
+  \label{eq:tmd-nAnB}
+\end{equation}
+矢量 $v$ 的快度定义为 $\tfrac12\ln|v^+/v^-|$；$y_B\to-\infty$ 时 $n_B\to n$，$y_A\to+\infty$ 时 $n_A\to\bar n$。
+
+\begin{definition}[订书钉型 Wilson 线与未减除 TMD]
+\label{def:tmd-unsub}
+对 $w=(0^+,w^-,\boldsymbol b_{\mathrm T})$，定义从 $0$ 到 $w$ 的未来指向（SIDIS，记 $[+]$）与过去指向（DY，记 $[-]$）订书钉
+\begin{equation}
+  \mathcal W^{[\pm]}(w,0;n)=W[w,\,w\pm\infty n]\;W[w\pm\infty n,\,\pm\infty n]\;W[\pm\infty n,\,0],
+  \label{eq:tmd-staple}
+\end{equation}
+中间一段是位于光前时间 $w^-=\pm\infty$、在横平面内从 $\boldsymbol 0_{\mathrm T}$ 到 $\boldsymbol b_{\mathrm T}$ 的\emph{横向连接}。
+夸克在强子 $H$（动量 $P$，自旋矢量 $S$）中的未减除 TMD 为
+\begin{equation}
+  \tilde f^{[\pm]\,\mathrm{unsub}}_{q/H}(x,\boldsymbol b_{\mathrm T};y_P-y_B)
+  =\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii xP^+w^-}
+   \langle P,S|\,\bar\psi(w)\,\gamma^+\,\mathcal W^{[\pm]}(w,0;n_B)\,\psi(0)\,|P,S\rangle_{c,\ \text{无自作用}},
+  \label{eq:tmd-unsub}
+\end{equation}
+对色求和；“无自作用”指去掉 Wilson 线自能（类空线的自能是线性发散的，在 \cref{def:tmd-collins} 的组合中严格抵消，
+见 \cref{ex:tmd-oneloop}）。动量空间 $f(x,\boldsymbol k_{\mathrm T})=\int\frac{\dd^{2-2\varepsilon}b_{\mathrm T}}{(2\pi)^{2-2\varepsilon}}
+\ee^{\ii\boldsymbol k_{\mathrm T}\cdot\boldsymbol b_{\mathrm T}}\tilde f(x,\boldsymbol b_{\mathrm T})$，与 CONTEXT 的 Fourier 约定一致。
+$\boldsymbol b_{\mathrm T}=0$ 且 Wilson 线类光时，\eqref{eq:tmd-unsub} 化为共线 PDF 的定义。
+\end{definition}
+
+\begin{proposition}[规范不变性]\tagR
+\label{prop:tmd-gauge}
+对任意规范变换（包括在无穷远处不趋于单位元的变换），$\mathcal W^{[\pm]}(w,0;n)\to U(w)\,\mathcal W^{[\pm]}(w,0;n)\,U^\dagger(0)$，
+从而 \eqref{eq:tmd-unsub} 中的算符规范不变。若略去横向连接，则只对在光锥无穷远处平凡的规范变换不变。
+\end{proposition}
+\begin{proof}
+每一段 $W[b,a]\to U(b)W[b,a]U^\dagger(a)$，相邻段的 $U^\dagger U$ 在拐点相消；再与 $\psi(0)\to U(0)\psi(0)$，
+$\bar\psi(w)\to\bar\psi(w)U^\dagger(w)$ 合并即得。
+\end{proof}
+
+\begin{remark}[横向连接的作用：Ji--Yuan 与 Belitsky--Ji--Yuan]
+\label{rem:transverse-link}
+在协变（非奇异）规范中，规范势在光锥无穷远处为零，横向连接等于 $1$，可以略去\cite{AybatRogers2011}。
+在光锥规范 $A^+=n\cdot A=0$ 中纵向段等于 $1$，但 $\boldsymbol A_{\mathrm T}(w^-\to\pm\infty,\boldsymbol x_{\mathrm T})$ 不必为零：
+由 $F^{+\perp}=\partial^+A^\perp$ 及 $A(x)=\int\ee^{-\ii l\cdot x}\tilde A(l)$ 得 $\tilde A^\perp=\ii\tilde F^{+\perp}/[l^+]$，于是
+\begin{equation}
+  \boldsymbol A_{\mathrm T}(+\infty^-)=0\iff\Big[\frac1{l^+}\Big]=\frac1{l^+-\ii0},\qquad
+  \boldsymbol A_{\mathrm T}(-\infty^-)=0\iff\Big[\frac1{l^+}\Big]=\frac1{l^++\ii0}.
+  \label{eq:lc-prescription}
+\end{equation}
+对 SIDIS 取 $1/(l^+-\ii0)$ 时横向连接平凡，末态相互作用的相位全部出现在传播子的规范项中，其处方恰与 Feynman 规范中
+未来指向 Wilson 线的程函传播子相同；取主值处方时传播子无虚部，相位完全由横向连接携带。
+这正是 Ji--Yuan\cite{JiYuan2002} 与 Belitsky--Ji--Yuan\cite{BelitskyJiYuan2003} 的结论：光锥规范下的 TMD 只有在包含
+光锥无穷远处的横向连接（或与之相容的 $1/l^+$ 处方）时才规范不变，而 T-奇分布正来自这些连接。
+\end{remark}
+
+\begin{remark}[快度发散]
+\label{rem:rapidity-divergence}
+以类光 $n$ 计算时，单胶子实辐射的被积函数在固定 $\kT$ 下含 $2x/(1-x)$（见 \eqref{eq:tmd-real-graphs}），$x\to1$
+（胶子快度 $\to-\infty$）处不可积，而维数正规化只作用于横向积分，不能正规化它。$n_B(y_B)$ 把它截断在
+$1-x\sim\kT\ee^{y_B}/P^+$；$y_B\to-\infty$ 的极限要靠软因子来抵消（\cref{def:tmd-collins}）。
+\end{remark}
+
+\begin{definition}[软因子]
+\label{def:soft-factor}
+按 Collins 的约定\cite{Collins2011,AybatRogers2011}，
+\begin{equation}
+  \begin{split}
+  \tilde S(\boldsymbol b_{\mathrm T};y_A,y_B)=\frac1{N_c}\langle0|\,
+  &W(\tfrac{\boldsymbol b_{\mathrm T}}2,\infty;n_B)^\dagger_{ca}\,W(\tfrac{\boldsymbol b_{\mathrm T}}2,\infty;n_A)_{ad}\\
+  &\times W(-\tfrac{\boldsymbol b_{\mathrm T}}2,\infty;n_B)_{bc}\,W(-\tfrac{\boldsymbol b_{\mathrm T}}2,\infty;n_A)^\dagger_{db}\,|0\rangle_{\text{无自作用}},
+  \end{split}
+  \label{eq:soft-factor-def}
+\end{equation}
+其中 $W(x,\infty;n)$ 是从 $x$ 到 $x+\infty n$ 的平行移动子（即本书的 $W[x+\infty n,x]$；Collins 写作
+$P\exp(-\ii g_0\int_0^\infty\dd s\,n\cdot A)$ 是因为他的 $g$ 与本书反号）。由 boost 不变性 $\tilde S$ 只依赖 $y_A-y_B$；
+由幺正性 $\tilde S(\boldsymbol b_{\mathrm T}=0)=1$。
+\end{definition}
+
+\begin{definition}[Collins 的 TMD 定义]
+\label{def:tmd-collins}
+\begin{equation}
+  \tilde f_{q/H}(x,\boldsymbol b_{\mathrm T};\mu,\zeta)
+  =\lim_{\substack{y_A\to+\infty\\ y_B\to-\infty}}
+  \tilde f^{\mathrm{unsub}}_{q/H}(x,\boldsymbol b_{\mathrm T};y_P-y_B)\,
+  \sqrt{\frac{\tilde S(\boldsymbol b_{\mathrm T};y_A,y_n)}{\tilde S(\boldsymbol b_{\mathrm T};y_A,y_B)\,\tilde S(\boldsymbol b_{\mathrm T};y_n,y_B)}}\;Z_FZ_2,
+  \label{eq:tmd-collins-def}
+\end{equation}
+\begin{equation}
+  \zeta_A=M_A^2x_A^2\ee^{2(y_P-y_n)}=2(x_AP_A^+)^2\ee^{-2y_n},\qquad
+  \zeta_B=2(x_BP_B^-)^2\ee^{2y_n},\qquad \zeta_A\zeta_B=Q^4 ,
+  \label{eq:zeta-def}
+\end{equation}
+（\cite{AybatRogers2011} 式 (12)；\cite{CollinsRogers2013}，后者引 \cite{Collins2011} 式 (13.106)、(14.31)）。
+$Z_F$、$Z_2$ 分别为 TMD 与夸克场的 $\MSbar$ 重整化因子，$y_n$ 是任意的中间快度。
+\textbf{极限的次序是定义的一部分}：先在固定 $\varepsilon$ 下取类光极限，再做 $\MSbar$ 重整化，最后令 $\varepsilon\to0$
+（\cite{CollinsRogers2013} 第 3 节，引 \cite{Collins2011} §10.8、§10.11.1）；两种次序不可交换的显式一圈原因见
+\eqref{eq:vertex-nonlightlike}。
+\end{definition}
+
+\begin{remark}[$\delta$ 正规子]
+\label{rem:delta-regulator}
+EIS\cite{EchevarriaIdilbiScimemi2012} 把类光 Wilson 线的传播子换成 $\frac{\ii}{-k^++\ii\delta^+}$、$\frac{\ii}{k^-+\ii\delta^-}$，并定义
+$\tilde f^{\mathrm{EIS}}=\lim_{\delta^\pm\to0}\tilde f_0(\delta^+)/\sqrt{\tilde S_0(\delta^-,\delta^+)}\times(\text{UV 重整化})$（$\delta^+/\delta^-$ 固定）。
+Collins--Rogers 证明\cite{CollinsRogers2013}它与 \eqref{eq:tmd-collins-def} 完全相等，对应
+$\zeta_A=2(k_A^+)^2\delta^-/\delta^+$，即 $y_n=\ln\sqrt{\delta^+/\delta^-}$（仅 $\MSbar$ 约定可能不同，见 \cref{tab:tmd-scheme}）。
+一圈验证见 \eqref{eq:delta-reg-check}。
+\end{remark}

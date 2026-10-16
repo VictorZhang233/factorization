@@ -1,0 +1,31 @@
+=== integral tests ===
+PASS  T1  I(1,1,1,1,0) = G(1,1)^2
+PASS  T2  I(1,1,1,1,1) -> 6 zeta(3) as eps->0  (got 7.21234157735196)
+PASS  T3  I(1,1,1,1,1) from the (3,4,5) triangle == from (1,2,5) (exact, 3 values of eps)
+PASS  T4  nested integral with numerator, I(1,1,1,-1,1), vs hand reduction
+PASS  T5  I(2,1,0,1,1) = G(1,1) G(2,1+eps)
+=== one loop (calibration) ===
+PASS  P1  one-loop Pi = N_c e_q^2 [2(D-2)/(D-1)] G(1,1) (Q^2)^-eps/(4pi)^{D/2}
+PASS  W1a one loop: q_mu q_nu Pi^{mu nu} = 0
+=== two loops ===
+PASS  W1b two loops: q_mu q_nu Pi^{mu nu} = 0 exactly (3 values of eps)
+      r1 = -4*(eps - 1)*(2*eps**2 - eps + 2)/(eps*(2*eps - 3))
+      r2 = 16*(eps - 1)*(2*eps - 1)*(eps**2 - 2*eps + 2)/(eps*(2*eps - 3)*(3*eps - 2))
+PASS  P0  closed form  Pi_2 = r1 G(1,1)^2 + r2 G(1,1) G(1+eps,1)  equals the diagram sum (4 values of eps)
+PASS  P0c r1 = -4(1-e)(2-e+2e^2)/(e(3-2e)),  r2 = 16(1-e)(1-2e)(2-2e+e^2)/(e(3-2e)(2-3e))
+      one-loop  [units Nc eq^2/(12 pi^2)]       : -L + eps*(L**2/2 - 5*L/3 - pi**2/12 + 28/9) + 5/3 + 1/eps
+      two-loop  [units (as/pi) C_F Nc eq^2/(12 pi^2)]: -3*L/4 + eps*(3*L**2/4 - 55*L/8 + 6*L*zeta(3) - 19*zeta(3)/2 - pi**4/20 - pi**2/16 + 1711/96) - 3*zeta(3) + 55/16 + 3/(8*eps)
+PASS  P2  two-loop bare Pi: no 1/eps^2 (subdivergences cancel, Z1=Z2); simple pole L-independent
+      MS-bar finite parts:  one loop: 5/3 - L  ;  two loop (per C_F): -3*L/4 - 3*zeta(3) + 55/16
+PASS  P3a one loop MS-bar:  Pi^(0) = (Nc eq^2/12pi^2)(5/3 - L)
+PASS  P3b two loop MS-bar:  Pi^(1) = (Nc eq^2/12pi^2)(as/pi)(3 C_F/4)(55/12 - 4 zeta3 - L)  [= (55/12-4z3-L) for C_F=4/3]
+PASS  P4  mu^2 dPi/dmu^2 = (Nc eq^2/12pi^2)[1 + (3C_F/4)(as/pi)] from the poles, = -dPi/dL
+PASS  P5  Adler function D(Q^2) = -12pi^2 Q^2 dPi/dQ^2 = Nc eq^2 (1 + as/pi): L-independent (RG invariant), finite
+      V      [units (as/pi) C_F Nc eq^2/12pi^2, MS-bar factor]: L**2/2 - 17*L/6 - 3*zeta(3) - pi**2/24 + 259/36 + (17/12 - L/2)/eps + 1/(4*eps**2)   (basis ok: True)
+      S1+S2  [units (as/pi) C_F Nc eq^2/12pi^2, MS-bar factor]: -L**2/2 + 25*L/12 - 541/144 + pi**2/24 + (L/2 - 25/24)/eps - 1/(4*eps**2)   (basis ok: True)
+PASS  P2b individual graphs have 1/eps^2 poles that cancel in the sum (V vs S1+S2)
+      LHS/RHS at eps = 0.1,-0.2,0.31,-0.43,0.0123: ['1.0', '1.0', '1.0', '1.0', '1.0']
+PASS  C1  exact D-dim cutting identity: 2(D-1) s Im Pi_2(s+i0) = rho_virtual + rho_real for all eps
+PASS  C2  R = 12 pi Im Pi(s+i0) = Nc eq^2 (1 + as/pi)   [got Nc eq^2 x (a_s + 1)]
+
+SUMMARY: 18/18 checks passed

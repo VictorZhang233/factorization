@@ -1,0 +1,101 @@
+%%% BEGIN STYLES
+% =====================================================================
+%  Plain-TikZ Feynman-diagram styles (no tikz-feynman).
+%  Load in the preamble, after \usepackage{tikz}:
+%    \usetikzlibrary{decorations.pathmorphing,decorations.markings,arrows.meta,calc,positioning}
+%  Contents of this block (all low-level names start with \fd):
+%   (i)  helper registers/macros and three decorations
+%          "fd gluon"      coil for open paths,
+%          "fd gluon loop" coil for closed paths (full circles),
+%          "fd photon"     sine wave;
+%        they rescale the nominal segment length so that an integer
+%        number of coils / half-waves fits the path exactly (no straight
+%        left-overs, evenly spaced coils, also on arcs);
+%   (ii) a single \tikzset with the user-level styles:
+%          fd             picture style (line width, caps, label font)
+%          quark[=pos]    solid line, centred Stealth arrow at pos (default 0.5)
+%          gluon          coiled line;   gluon loop[=m]: closed coil, number
+%                         of coils a multiple of m (use for full circles)
+%          photon         wavy line
+%          ghost[=pos]    dotted line with centred arrow
+%          mom={..}, mom'={..}   momentum arrow parallel to a path, on its
+%                         left / right:  \path[mom={$p$}] (A) -- (B);
+%                         keys: mom pos, mom length, mom sep
+%          vertex         vertex dot (node style):  \node[vertex] at (A) {};
+%          blob           grey filled region:  \draw[blob] (c) circle[radius=5mm];
+%          bound state    double line (e.g. a bound state)
+% =====================================================================
+\newdimen\fdAA \newdimen\fdTW \newdimen\fdHW
+\def\fdloopmult{1}
+\def\fdpt#1#2#3{\pgfqpoint{\dimexpr#1\fdAA+#3\fdTW\relax}{#2\pgfdecorationsegmentamplitude}}
+\def\fdcoilfull{%
+  \pgfpathcurveto{\fdpt{0}{0.555}{1}}{\fdpt{0.445}{1}{2}}{\fdpt{1}{1}{3}}%
+  \pgfpathcurveto{\fdpt{1.555}{1}{4}}{\fdpt{2}{0.555}{5}}{\fdpt{2}{0}{6}}%
+  \pgfpathcurveto{\fdpt{2}{-0.555}{7}}{\fdpt{1.555}{-1}{8}}{\fdpt{1}{-1}{9}}%
+  \pgfpathcurveto{\fdpt{0.445}{-1}{10}}{\fdpt{0}{-0.555}{11}}{\fdpt{0}{0}{12}}}
+\def\fdcoilhalf{%
+  \pgfpathcurveto{\fdpt{0}{0.555}{1}}{\fdpt{0.445}{1}{2}}{\fdpt{1}{1}{3}}%
+  \pgfpathcurveto{\fdpt{1.555}{1}{4}}{\fdpt{2}{0.555}{5}}{\fdpt{2}{0}{6}}}
+\def\fdcoilopeninit{%
+  \fdAA=\pgfdecorationsegmentaspect\pgfdecorationsegmentamplitude\relax
+  \pgfmathsetmacro\fdN{max(1,round((\pgfdecoratedpathlength-2*\fdAA)/\pgfdecorationsegmentlength-0.5))}%
+  \pgfmathsetlength\pgfdecorationsegmentlength{(\pgfdecoratedpathlength-2*\fdAA-0.3pt)/(\fdN+0.5)}%
+  \fdTW=0.0833333\pgfdecorationsegmentlength\relax}%
+\def\fdcoilclosedinit{%
+  \fdAA=\pgfdecorationsegmentaspect\pgfdecorationsegmentamplitude\relax
+  \pgfmathsetmacro\fdN{\fdloopmult*max(1,round(\pgfdecoratedpathlength/(\fdloopmult*\pgfdecorationsegmentlength)))}%
+  \pgfmathsetlength\pgfdecorationsegmentlength{(\pgfdecoratedpathlength-0.1pt)/\fdN}%
+  \fdTW=0.0833333\pgfdecorationsegmentlength\relax}%
+\def\fdphotoninit{%
+  \pgfmathsetmacro\fdN{max(1,round(2*\pgfdecoratedpathlength/\pgfdecorationsegmentlength))}%
+  \pgfmathsetlength\fdHW{(\pgfdecoratedpathlength-0.1pt)/\fdN}}%
+\pgfdeclaredecoration{fd gluon}{init}{%
+  \state{init}[width=+0pt,next state=coil,persistent precomputation=\fdcoilopeninit]{}%
+  \state{coil}[switch if less than=1.5\pgfdecorationsegmentlength+2\fdAA to last,
+               width=+\pgfdecorationsegmentlength]{\fdcoilfull}%
+  \state{last}[width=+\dimexpr.5\pgfdecorationsegmentlength+2\fdAA\relax,next state=final]{\fdcoilhalf}%
+  \state{final}{\pgfpathlineto{\pgfpointdecoratedpathlast}}}
+\pgfdeclaredecoration{fd gluon loop}{init}{%
+  \state{init}[width=+0pt,next state=coil,persistent precomputation=\fdcoilclosedinit]{}%
+  \state{coil}[switch if less than=+\pgfdecorationsegmentlength to final,
+               width=+\pgfdecorationsegmentlength]{\fdcoilfull}%
+  \state{final}{\pgfpathlineto{\pgfpointdecoratedpathlast}}}
+\pgfdeclaredecoration{fd photon}{init}{%
+  \state{init}[width=+0pt,next state=up,persistent precomputation=\fdphotoninit]{}%
+  \state{up}[switch if less than=+\fdHW to final,width=+\fdHW,next state=down]{%
+    \pgfpathsine{\pgfqpoint{.5\fdHW}{\pgfdecorationsegmentamplitude}}%
+    \pgfpathcosine{\pgfqpoint{.5\fdHW}{-\pgfdecorationsegmentamplitude}}}%
+  \state{down}[switch if less than=+\fdHW to final,width=+\fdHW,next state=up]{%
+    \pgfpathsine{\pgfqpoint{.5\fdHW}{-\pgfdecorationsegmentamplitude}}%
+    \pgfpathcosine{\pgfqpoint{.5\fdHW}{\pgfdecorationsegmentamplitude}}}%
+  \state{final}{\pgfpathlineto{\pgfpointdecoratedpathlast}}}
+\tikzset{
+  /pgf/decoration/coil multiple/.store in=\fdloopmult,
+  fd/.style={line width=0.8pt,line cap=round,line join=round,font=\small},
+  fd arrow/.style={postaction={decorate,solid,line width=0.8pt,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=2.9pt]{Stealth[length=5.5pt,width=4.5pt]}}}}},
+  quark/.style={draw,solid,line width=0.8pt,fd arrow=#1},
+  quark/.default=0.5,
+  plain/.style={draw,solid,line width=0.8pt},
+  gluon/.style={draw,solid,line width=0.75pt,decorate,
+      decoration={fd gluon,amplitude=3.2pt,segment length=4.6pt,aspect=0.7}},
+  gluon loop/.style={draw,solid,line width=0.75pt,decorate,
+      decoration={fd gluon loop,amplitude=3.2pt,segment length=4.6pt,aspect=0.7,coil multiple=#1}},
+  gluon loop/.default=1,
+  photon/.style={draw,solid,line width=0.8pt,decorate,
+      decoration={fd photon,amplitude=2pt,segment length=6.6pt}},
+  ghost/.style={draw,line width=1.3pt,line cap=round,dash pattern=on 0pt off 2.6pt,fd arrow=#1},
+  ghost/.default=0.5,
+  mom pos/.store in=\fdmompos,mom pos=0.5,
+  mom length/.store in=\fdmomlen,mom length=0.55cm,
+  mom sep/.store in=\fdmomsep,mom sep=0.25cm,
+  mom arrow/.style={draw,solid,line width=0.5pt,-{Stealth[length=3.8pt,width=3.2pt]}},
+  mom/.style={decorate,decoration={markings,mark=at position \fdmompos with {%
+      \draw[mom arrow] (-0.5*\fdmomlen,\fdmomsep) -- node[auto,inner sep=1.5pt]{#1} (0.5*\fdmomlen,\fdmomsep);}}},
+  mom'/.style={decorate,decoration={markings,mark=at position \fdmompos with {%
+      \draw[mom arrow] (-0.5*\fdmomlen,-\fdmomsep) -- node[auto,swap,inner sep=1.5pt]{#1} (0.5*\fdmomlen,-\fdmomsep);}}},
+  vertex/.style={circle,fill,draw=none,inner sep=0pt,minimum size=3.8pt},
+  blob/.style={draw,solid,fill=gray!30,line width=0.8pt},
+  bound state/.style={draw,solid,double,double distance=1.6pt,line width=0.6pt},
+}
+%%% END STYLES

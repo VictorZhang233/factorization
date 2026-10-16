@@ -1,0 +1,86 @@
+% =====================================================================
+%  appE_powercount.tex —— 附录 E  幂次计数公式的推导
+%  writer W04；规格：FINAL_OUTLINE_v2 附录 E、WRITER_SPEC_v2、LEAD_DECISIONS。
+%  核对脚本与日志：writing/work/W04/（w04_power.py、w04_extra.py 及 logs/）。
+% =====================================================================
+\chapter{幂次计数公式的推导}\label{app:appE}
+
+本附录证明\cref{prop:ir-power-counting}所用的超表观红外发散度公式（\cref{prop:appE-degree}，\tagR，$R_{\mathrm{PT}}$）：先固定两种单位与各类因子的标度（\cref{sec:appE-units}），再以两种形式给出证明并说明从超表观度到实际界还缺什么（\cref{sec:appE-formula}，\cref{rem:appE-actual-bound}，\tagA），最后对 $e^+e^-$、DIS 与 Drell--Yan 的约化图逐一计算（\cref{sec:appE-examples}）。记号同\cref{sec:ir-power}。
+
+%% =====================================================================
+\section{单位与各因子的标度}\label{sec:appE-units}
+
+以 $\lambda$ 为单位（\cref{def:ir-scalings}）：沿 $+z$ 的共线动量 $Q(1,\lambda^2,\lambda)$，超软动量 $Q(\lambda^2,\lambda^2,\lambda^2)$。Sterman 单位以 $\lambda_S=\lambda^2$ 计数：喷注的法变量（$\ell^2$ 与 $\ell\cdot p$）与超软动量的全部分量都 $\propto\lambda_S$，所以 $\lambda$ 的幂次 $p$ 与 Sterman 发散度 $\omega$ 的关系是 $p=2\omega$\cite[第~2.4~节]{Sterman:1995fz}。各因子的标度（$\lambda$ 的幂次）：
+\begin{itemize}[leftmargin=2em,itemsep=0pt,topsep=2pt]
+\item \emph{测度}：一个共线圈动量的法变量为 $k^-\sim\lambda^2$ 与 $\mathbf k_T\sim\lambda$（$k^+$ 为内禀坐标），$\dd k^-\dd^2k_T\sim\lambda^4$；一个超软圈动量的四个分量都是法变量，$\dd^4k\sim\lambda^8$。
+\item \emph{分母}：共线线 $1/p^2\sim\lambda^{-2}$；超软胶子 $1/k^2\sim\lambda^{-4}$；超软夸克连同分子 $\sla k/k^2\sim\lambda^{-2}$；携带超软动量的共线线 $(p+k)^2\simeq p^2+2p^+k^-\sim\lambda^2$，即 $\lambda^{-2}$。
+\item \emph{分子与推动权重}：沿 $z$ 以快度 $\eta$ 推动时 $v^\pm\to\ee^{\pm\eta}v^\pm$，好、坏旋量分量 $P_\pm\psi$（$P_+=\frac12\gamma^-\gamma^+$，$P_-=\frac12\gamma^+\gamma^-$）按 $\ee^{\pm\eta/2}$ 变换（\cref{lem:prelim-boost}）。取 $\ee^\eta=1/\lambda$，把静止系中各分量 $\sim\lambda Q$ 的喷注推到实验室系：上指标 $+$ 获得 $\lambda^{-1}$，上指标 $-$ 获得 $\lambda$，横向指标不变，好分量获得 $\lambda^{-1/2}$，坏分量获得 $\lambda^{1/2}$。
+\end{itemize}
+一个 $A$ 共线夸克线的分子 $\sla p=p^+\gamma^-+p^-\gamma^+-\mathbf p_T\cdot\boldsymbol\gamma_T$ 由 $p^+\gamma^-\sim\lambda^0$ 主导；夹在外旋量之间时，逐项看来是 $\lambda^0$ 的结构常常相消（例如 $e^+e^-\to q\bar qg$ 的共线区中模方的分子只有 $\lambda^2$，\cref{ex:ir-real-emission}）。逐线计数要正确处理这些相消，须借助 Sterman 关于分子压低的下界\cite[式~(65)]{Sterman:1995fz}；下面的推动论证自动包含了它们。
+
+%% =====================================================================
+\section{超表观发散度公式}\label{sec:appE-formula}
+
+记号如\cref{prop:ir-power-counting}：对每个喷注 $J$，$f^g_J$、$f^b_J$ 为经好、坏分量与 $H$ 相连的夸克线数，$f_J=f^g_J+f^b_J$；$b_J=b_{+,J}+t_J+u_J$ 为与 $H$ 相连的胶子线数，按其经 $J^+$、横向、$J^-$ 分量与 $H$ 缩并分类；$s^g_J$、$s^q_J$ 为附着于 $J$ 的软胶子、软夸克数；$e_J\in\{1,2\}$。与 $H$ 相连的线连同其传播子属于 $J$（不截肢），软线在 $J$ 一侧截肢。
+
+\begin{proposition}[约化图的超表观红外发散度 \tagR]\label{prop:appE-degree}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设约化图 $R$ 由硬部分 $H$（及 $H^\dagger$）、喷注 $J$ 与超软子图 $S$ 组成，各区域按\cref{def:ir-scalings}标度。则 $R$ 的钳夹面邻域的贡献（齐次积分）按 $\lambda^{2\omega(R)}=\lambda_S^{\omega(R)}$ 标度（至多差对数因子），
+\begin{equation}\label{eq:appE-omega}
+\omega(R)=\sum_J\tfrac12\big(f^g_J+t_J+2u_J+2f^b_J-e_J\big)+\tfrac12\sum_Js^q_J+b_{S\to H}+\tfrac32f_{S\to H} ,
+\end{equation}
+% VF-REG-8
+% errtype: E-S
+其中 $b_{S\to H}$、$f_{S\to H}$ 为附着于 $H$ 的软胶子与软夸克数。这是一个标度陈述（E-S）。（本命题只涉及 Feynman 积分。）
+\uses{def:ir-scalings,lem:prelim-boost,def:prelim-feynman-rules}
+\end{proposition}
+\begin{proof}
+\emph{形式 (a)：逐个子图的量纲计数加推动计数。}
+(1)~\emph{超软子图。}设 $S$ 的连通分支 $a$ 有 $M^g_a$ 条胶子外线与 $M^q_a$ 条夸克外线（不截肢，动量 $\sim\lambda^2Q$）。截肢连通 Green 函数的质量量纲是 $4-M^g_a-\frac32M^q_a$，不截肢一条胶子线再加 $-2$、一条夸克线加 $-1$，故该分支是动量 $\sim\lambda^2Q$ 的齐次函数，量纲 $4-3M^g_a-\frac52M^q_a$，贡献 $\lambda^{2(4-3M^g_a-\frac52M^q_a)}$；其 $M_a=M^g_a+M^q_a$ 个外动量受一个整体守恒约束，$M_a-1$ 个独立的超软动量流入其余部分，测度 $\lambda^{8(M_a-1)}$。合计
+\[
+p_{S_a}=2\big(4-3M^g_a-\tfrac52M^q_a\big)+8(M_a-1)=2M^g_a+3M^q_a .
+\]
+(2)~\emph{喷注。}以快度 $\eta$（$\ee^\eta=1/\lambda$）把 $J$ 推到静止系：共线动量 $Q(1,\lambda^2,\lambda)\to\lambda Q(1,1,1)$，超软动量 $Q(\lambda^2,\lambda^2,\lambda^2)\to Q(\lambda^3,\lambda,\lambda^2)$，其主分量 $k^-\sim\lambda Q$，而领头幂次下喷注只通过 $k^-$ 感知软动量（程函耦合）。因此在静止系中 $J$ 是单一尺度 $\lambda Q$ 的协变函数，按量纲为 $\lambda^{\dim J}$，其中
+\[
+\dim J=4-3b_J-\tfrac52f_J-s^g_J-\tfrac32s^q_J-\delta_J ,
+\]
+其中 $\delta_J=1$（$e_J=1$：一个外部在壳部分子，截肢的 $-\frac32$ 加外旋量的 $+\frac12$；外部胶子同样给出 $-1+0$），$\delta_J=2$（$e_J=2$ 的前向靶喷注，两条外腿），$\delta_J=0$（$e_J=2$ 的割图末态喷注，没有外腿）。
+由 Lorentz 协变性，推回实验室系只作用于 $J$ 的\emph{自由}指标（与 $H$ 或 $S$ 缩并的指标）；外旋量在 $J$ 内部，其量纲已计入 $\dim J$，不得另加推动因子。权重为 $\lambda^{-b_{+,J}+u_J-\frac12f^g_J+\frac12f^b_J}$（与 $H$ 缩并的指标）乘以 $\lambda^{-s^g_J-\frac12s^q_J}$（软胶子经 $J^+$、软夸克经好分量与 $O(1)$ 的软顶点缩并）。$J$--$H$ 的圈测度：$e_J=1$ 或前向时有 $b_J+f_J-1$ 个独立的共线圈动量，各 $\lambda^4$；割图末态喷注有 $b_J+f_J-2$ 个相对圈动量，另加喷注总动量 $P_J$，其中只有 $P_J^2\sim\lambda^2$ 是法变量，测度 $\lambda^2$。三种情形都给出
+\[
+p_J=\big(f^g_J+t_J-e_J\big)+2\big(u_J+f^b_J\big)-2\big(s^g_J+s^q_J\big).
+\]
+例如 $e_J=1$：$p_J=(3-3b_J-\frac52f_J-s^g_J-\frac32s^q_J)+4(b_J+f_J-1)-b_{+,J}+u_J-\frac12f^g_J+\frac12f^b_J-s^g_J-\frac12s^q_J$，以 $b_J=b_{+,J}+t_J+u_J$、$f_J=f^g_J+f^b_J$ 代入即得上式。
+(3)~\emph{硬部分。}$H$ 的全部线离壳 $O(Q^2)$，它只在次领头幂次依赖于小分量，贡献 $\lambda^0$。
+(4)~\emph{求和。}$p=\sum_Jp_J+\sum_ap_{S_a}$，并且 $\sum_aM^g_a=\sum_Js^g_J+b_{S\to H}$、$\sum_aM^q_a=\sum_Js^q_J+f_{S\to H}$，故
+\[
+p=\sum_J\big[(f^g_J+t_J-e_J)+2(u_J+f^b_J)\big]+\sum_Js^q_J+2b_{S\to H}+3f_{S\to H},
+\]
+$\omega=p/2$ 即\cref{eq:appE-omega}。对一切 $0\le f^g\le2$、$f^b,t,u,s^g,s^q\le1$、$b_+\le2$ 与三种 $e_J$，步骤 (2) 的代数已逐项核对；软子图的公式另以逐线计数核对：取软圈数 $L_S=N_g+N_q-V_3-V_4-V_{qg}$（附着点不约束软动量），每个软圈 $\lambda^8$、软胶子 $\lambda^{-4}$、软夸克 $\lambda^{-2}$、三胶子顶点 $\lambda^2$、每个附着于喷注的端点添一条喷注传播子 $\lambda^{-2}$，用 $2N_g=3V_3+4V_4+V_{qg}+E^B$、$2N_q=2V_{qg}+E^F$ 消去，对 500 个随机软子图都得到 $p_S=2E^B_H+3E^F_H+E^F_J$，与 (1) 加上附着点的计数一致（$E^{B,F}_{H,J}$ 为胶子、夸克端点附着于 $H$ 或喷注的数目）。
+
+\emph{形式 (b)：推动加量纲。}上面的计算可以压缩为一句话：齐次积分逐个子图地 Lorentz 协变，每个子图都可以在使其各向同性的参考系中计算——喷注在其静止系（单一尺度 $\lambda Q$），超软子图与 $H$ 在实验室系（尺度 $\lambda^2Q$ 与 $Q$）——于是每个子图的幂次等于其质量量纲（乘以相应尺度的幂次），再按连接各子图的外部好、坏分量与矢量指标的推动权重修正；加上法变量测度即得 $\omega(R)$。这一形式说明了为什么不必逐图分析分子：例如 $e^+e^-\to q\bar qg$ 共线区中模方分子的 $\lambda^2$ 压低，以及横向胶子连接比标量极化连接多出的 $\lambda$，都已由推动权重自动给出；自能插入（完整两点函数在 $p^2=0$ 处只有单极点\cite[第~2.4~节]{Sterman:1995fz}）、四胶子顶点与鬼场也都计入了量纲。数值核对：对一圈顶点的喷注张量 $J^\nu=\bar u(p_1)\gamma^\nu(\sla p_1-\sla k)$（$\dim=\frac32$），在倾斜的喷注轴下拟合得 $|J^+|\sim\lambda^{0.000}$、$|\mathbf J_T|\sim\lambda^{1.000}$、$|J^-|\sim\lambda^{2.000}$，正是 $\frac32-1-\frac12$、$\frac32-\frac12$、$\frac32+1-\frac12$（自由旋量指标取好分量）。
+\end{proof}
+
+所得公式与 Sterman 的直接计数\cite[式~(64)]{Sterman:1995fz}一致：对单个软胶子、双胶子梯形与三胶子软网，其 $n_T$ 都等于 $\omega=0$；注意该文式~(63) 中的 $4(L_S+M_J+M_{J'}-1)$ 预设软子图连通，对多个连通分支应用式~(64)。CSS 的物理规范公式\cite[式~(143)]{CollinsSoperSterman1989}对 $b_+=0$ 的构型给出同样的分类。
+
+\begin{remark}[从超表观度到实际界 \tagA]\label{rem:appE-actual-bound}
+在嵌套区域得到控制之后，超表观度 $\omega(R)$ 给出该区域实际贡献的界（至多差对数因子）：一个区域邻域的贡献不超过 $C\lambda^{2\omega(R)}L^K$，$L=\ln(1/\lambda)$。
+% errtype: E-S
+\uses{prop:appE-degree,asm:appN-envelope}
+\end{remark}
+
+\paragraph{地位与缺口}
+\cref{prop:appE-degree}是标度陈述（E-S）：它给出齐次积分在单一标度族下的幂次，而嵌套的子区域（某些法坐标更快趋于零）可能使实际行为偏离，Sterman 的第 iv 步要求逐层检查它们\cite[第~2.3~节]{Sterman:1995fz}。把它化为对嵌套邻域一致、对 $\varepsilon$ 一致的积分范数界（E-N）恰是附录~N 的技术性假设\cref{asm:appN-envelope}（幂次计数包络，\tagA）的内容；文献中的论证\cite{Sterman1978a,LibbySterman1978a}，\cite[第~5~章]{Collins2011}达到的是标度层次，没有在所有阶写成积分形式。这就是\cref{thm:ir-leading-regions}只能是 \tagA 的原因。升级途径：\cref{asm:appN-envelope}的证明，例如逐区域的扇形分解给出的积分版 Sterman--Collins 幂次计数。
+
+%% =====================================================================
+\section{例子：\texorpdfstring{$e^+e^-$}{e+e-}、DIS 与 Drell--Yan}\label{sec:appE-examples}
+
+以下用\cref{eq:appE-omega}计算典型约化图（\cref{fig:reduced-ee,fig:reduced-dis,fig:reduced-dy}）的 $\omega$，括号中为 $\lambda$ 的幂次；全部结果都已由逐项计数核对（\cref{tab:ir-connection-powers}）。
+
+\emph{Sudakov 顶点}（振幅，两个喷注各 $e_J=1$、$f^g_J=1$）：$p_{J_1}=p_{J_2}=0$；两喷注间交换软胶子，$s^g_J=1$ 的代价 $-2$ 被软子图的 $2M^g=2$ 抵消，$\omega=0$；一个共线胶子以标量极化接入 $H$ 也不付代价，$\omega=0$；以横向极化接入则 $t_{J_1}=1$，$\omega=\frac12$（$\lambda^1$）；以“$-$”极化接入，$\omega=1$。这与\cref{ex:ir-vertex}中直接拟合的各区域 $p=0$ 一致。
+
+\emph{$e^+e^-\to$ 两喷注}（割图，两个末态喷注各 $e_J=2$）：每个喷注以一条好分量夸克线在割线两侧接入 $H$ 与 $H^\dagger$，$f^g_J=2$，$p_J=0$；任意多条标量极化胶子与附着于喷注的软胶子都不改变它，$\omega=0$。若一个喷注是胶子喷注，$t_J=2$ 同样给出 $0$；若它只以标量极化胶子相连则 $p_J=-2$（$\omega=-1$），是\cref{prop:ir-super-leading}的超领头构型。软胶子接入 $H$ 使 $\omega=1$，软夸克接入 $H$ 使 $\omega=2$，两喷注间交换软夸克使 $\omega=1$。
+
+\emph{DIS}：靶喷注是前向振幅的喷注（$e_J=2$），以割线两侧各一个物理部分子（$f^g_J=2$ 或 $t_J=2$）加任意多个标量胶子接入 $H$、$H^\dagger$，$p_A=0$；末态喷注 $J$ 为割图喷注，$f^g_J=2$，$p_J=0$；故领头区域 $\omega=0$。靶喷注多送一个横向胶子进入 $H$（扭度 3）使 $\omega=\frac12$，多送一对共线 $q\bar q$（扭度 4）使 $\omega=1$。
+
+\emph{Drell--Yan}：两个入射喷注 $A$、$B$ 都是前向型（$e_J=2$），各以一个物理部分子在割线两侧接入，$p_A=p_B=0$；软胶子只附着于喷注时 $\omega=0$，接入 $H$ 时 $\omega=1$。\emph{Glauber 区}：在两个旁观者之间交换一个 Glauber 胶子 $k\sim Q(\lambda^2,\lambda^2,\lambda)$，测度 $\dd k^+\dd k^-\dd^2k_T\sim\lambda^6$，胶子传播子 $1/k_T^2\sim\lambda^{-2}$，两条旁观者线的分母各 $\sim\lambda^2$（共 $\lambda^{-4}$），分子 $\sim Q^2$，合计 $\lambda^0$，即“$Q^0$ 乘以对数”的领头幂次（与 CSS 综述的结论一致\cite[第~8.4~节]{CollinsSoperSterman1989}）%
+% VF-GLA-1
+。Glauber 区因此必须在领头区域中单独列出；它在 DY 中可能被钳住（\cref{prop:ir-glauber-trapping}），其相消需要附录~O 的论证。

@@ -1,0 +1,97 @@
+% -----------------------------------------------------------------------------------------------------
+\section{碎裂函数、类时演化与极化分布的定义}\label{sec:pdf-ff}
+
+碎裂函数描述高能部分子产生动量份额为 $z$ 的强子 $h$ 的“数密度”。其算符定义与 PDF 平行，但被观测的强子在\emph{末态}，对其余末态 $X$ 的求和夹在两个场之间，并由此带来参考系与归一问题。
+
+\begin{definition}[碎裂函数]\label{def:pdf-ff}
+设夸克动量 $k$ 沿 $+z$ 方向，碎裂出强子 $h$，$z=p_h^+/k^+$。在强子系（$\bm p_{h,\mathrm T}=0$）中取 $w=(0^+,w^-,\bm 0_{\mathrm T})$，
+\begin{equation}\label{eq:pdf-ff}
+\begin{aligned}
+d_{h/q}(z)=\frac{z^{1-2\varepsilon}}{4N_c}\sum_X\int\frac{\dd w^-}{2\pi}\,\ee^{\ii k^+w^-}\Trc\TrD\Big[&\gamma^+\langle0|W[\infty n_B,w]\psi(w)|hX\rangle\\
+&\times\langle hX|\bar\psi(0)W[0,\infty n_B]|0\rangle\Big],
+\end{aligned}
+\end{equation}
+% VF-CONV-17
+Wilson 线是沿 $n_B$ 的未来指向线。等价地，在部分子系（$\bm k_{\mathrm T}=0$）中前置因子为 $\frac1{4N_cz}$，并显式对 $\int\dd^{2-2\varepsilon}\bm p_{h,\mathrm T}$ 积分；两者由 $\dd^{2-2\varepsilon}\bm p_{h,\mathrm T}=z^{2-2\varepsilon}\dd^{2-2\varepsilon}\bm k_{\mathrm T}$ 联系。胶子碎裂函数类似地定义为
+\begin{equation}\label{eq:pdf-ffg}
+\begin{aligned}
+d_{h/g}(z)=\frac{z^{1-2\varepsilon}}{(D-2)(N_c^2-1)k^+}\sum_X\int\frac{\dd w^-}{2\pi}\ee^{\ii k^+w^-}\sum_{j,a}&\langle0|W^{(A)}_{ab}[\infty n_B,w]G^{+j}_b(w)|hX\rangle\\
+&\times\langle hX|G^{+j}_c(0)W^{(A)}_{ca}[0,\infty n_B]|0\rangle,
+\end{aligned}
+\end{equation}
+$W^{(A)}$ 如\cref{def:pdf-gluon}。自由部分子给出 $d^{(0)}_{q/q}=d^{(0)}_{g/g}=\delta(1-z)$。碎裂函数在 Mellin 空间中按 $\MSbar$ 重整化。
+\uses{def:prelim-wilson,def:prelim-lightfront,def:pdf-gluon}
+\end{definition}
+
+\paragraph{归一的检验。}
+强子系由部分子系经横向推动得到，部分子的横动量为 $\bm k_{\mathrm T}=-\bm p_{h,\mathrm T}/z$，故 $\frac1z\cdot z^{2-2\varepsilon}=z^{1-2\varepsilon}=z^{d-3}$，即\cite[第~12.4~节，式~(12.38)、(12.40)]{Collins2011}中积分碎裂函数所带的 $z^{n-3}$。自由夸克检验（$\Trc\TrD[\gamma^+u\bar u]=4N_cp_h^+$，$\int\frac{\dd w^-}{2\pi}\ee^{\ii(k^+-p_h^+)w^-}=\delta(1-z)/k^+$）只在 $z=1$ 处取值，看不出 $z$ 的幂次；能看出的是 $\order{\as}$ 的检验：$A^+=0$ 规范中取 $h=q$、$X=g$，振幅 $\langle0|\psi(0)|q(p_h)g(l)\rangle=-g\,t^a\frac{\sla k\sla\epsilon}{k^2}u(p_h)$，$k=p_h+l$，强子系中 $p_h=(zk^+,0^-,\bm 0_{\mathrm T})$，$k^2=z\bm l_{\mathrm T}^2/(1-z)$，迹与相空间给出
+\[
+d^{(1)}_{q/q}(z)=\frac{g^2}{(2\pi)^{D-1}}\int\dd^{D-2}\bm l_{\mathrm T}\frac{z^{-2\varepsilon}\hat P_{qq}(z;\varepsilon)}{\bm l_{\mathrm T}^2}\ \xrightarrow{\ D=4\ }\ \frac{\as}{2\pi}C_F\frac{1+z^2}{1-z}\int\frac{\dd\bm l_{\mathrm T}^2}{\bm l_{\mathrm T}^2}\quad(z<1),
+\]
+恰是领头阶的类时分裂概率；若在强子系中误用 $\frac1{4N_cz}$，结果会多出 $z^{-2+2\varepsilon}$。对纯维数正规化中的无质量部分子，裸部分子碎裂函数无论前置因子如何都是 $\delta(1-z)$（无标度），故 $\MSbar$ 部分子系数函数不受影响；$z^{-2\varepsilon}$ 固定的是强子层次定义的方案。
+
+\begin{remark}[碎裂函数的乘法可重整性是独立输入]\label{rem:pdf-ff-multren}
+碎裂函数的 Mellin 矩\emph{不是}定域算符的矩阵元：\cref{eq:pdf-ff}中 $\sum_X|hX\rangle\langle hX|$ 夹在两个场之间，矩不能化为 $w^-=0$ 处的导数，\cref{thm:pdf-moments-local}的论证不适用。因此碎裂函数在矩空间中的乘法可重整性是独立的输入，即\cref{asm:appN-multren}(Z1) 对碎裂函数的情形；类时 DGLAP 在已计算的阶上是 $[R,R_{\mathrm{PT}}]$，作为全阶算符陈述则是 \tagA（\cref{prop:pdf-timelike-dglap}）。动量求和规则 $\sum_h\int_0^1\dd z\,z\,d_{h/q}=1$ 可由算符定义作形式推导（Collins 与 Soper 的原文讨论了这类求和规则，据该文摘要\cite{CollinsSoper1982a}），但推导要交换对强子的求和与重整化，本书视之为形式关系；据 Collins 与 Rogers 的摘要\cite{Collins:2023cuo}，夸克碎裂函数的荷（数）型求和规则在 QCD 中可能不成立，原因是 Wilson 线导致位于 $z=0$ 的束缚态，而这一效应不影响动量求和规则。
+\uses{def:pdf-ff,thm:pdf-moments-local}
+\end{remark}
+
+\begin{proposition}[类时 DGLAP 演化 \tagA]\label{prop:pdf-timelike-dglap}
+(a) 在碎裂函数的乘法可重整性（\cref{asm:appN-multren}(Z1)）之下，对一切阶
+\begin{equation}\label{eq:pdf-tdglap}
+\frac{\partial d_{h/i}(z;\mu)}{\partial\ln\mu^2}=\sum_j\big(P^T_{ji}\otimes d_{h/j}\big)(z),\qquad P^T_{ji}=\frac{\as}{2\pi}P^{T(0)}_{ji}+\Big(\frac{\as}{2\pi}\Big)^2P^{T(1)}_{ji}+\cdots,
+\end{equation}
+指标结构与 PDF 的演化互为转置；$P^{T(1)}\ne P^{(1)}$\cite{CurciFurmanskiPetronzio1980}；动量求和规则是形式的。
+(b)（单圈内容，\tagR）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈阶，部分子碎裂函数 $d_{j/i}$ 的紫外极点给出 $P^{T(0)}_{ji}=P_{ji}$（Gribov--Lipatov 关系\cite{GribovLipatov1972b}）；在 Feynman 规范与胶子质量正规化下，单圈裸碎裂函数与单圈裸 PDF 逐图相等：$d^{(1)}_{q/q}(z)=f^{(1)}_{q/q}(z)$。
+非微扰地位：强子态需\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{def:pdf-ff,rem:pdf-ff-multren,thm:pdf-dglap,prop:pdf-lo-kernels,asm:appN-multren,asm:intro-wightman,asm:intro-composite}
+\end{proposition}
+
+\begin{proofsketch}[(a) 的证明概要]
+(1) 由\cref{asm:appN-multren}(Z1)，矩空间中 $d^{\mathrm{ren}}_{h/i}(N)=\sum_jd^{\mathrm{bare}}_{h/j}(N)Z^T_{ji}(N)$，$Z^T(N)$ 是与 $h$ 无关的纯极点矩阵。(2) 裸碎裂函数与 $\mu$ 无关；与\cref{thm:pdf-dglap}的证明相同的代数给出 $\partial d_{h/i}(N)/\partial\ln\mu^2=\sum_jd_{h/j}(N)P^T_{ji}(N)$，一致性条件保证 $P^T$ 有限且 $P^T=-\as\partial Z^{T(1)}/\partial\as$。(3) $P^T(N)$ 在 $\Real N>\sigma_0$ 中多项式有界，由偶数（或奇数）$N$ 的值唯一确定，Mellin 逆变换给出 $x$ 空间的卷积形式。(4) 单圈由 (b) 得 $P^{T(0)}=P^{(0)}$；从次领头阶起 $P^T\ne P$。碎裂函数的定义见\cite{CollinsSoper1982a}与\cite[第~12.4~节]{Collins2011}。
+\end{proofsketch}
+
+\begin{proof}[(b) 的证明]
+(i) 夸克道，Feynman 规范，胶子质量 $m$，强子系：$p_h=(zk^+,0^-,\bm 0_{\mathrm T})$，$l^2=m^2$，$k=p_h+l$，$k^2=(z\bm l_{\mathrm T}^2+m^2)/(1-z)$。实图与\cref{fig:pdf-oneloop}一一对应（割线隔开被观测的夸克与胶子）；振幅 $\langle0|W[\infty n_B,0]\psi(0)|q(p_h)g(l)\rangle=g\,t^a\epsilon_\mu[-\frac{\sla k\gamma^\mu}{k^2}+\frac{n_B^\mu}{n_B\cdot l}]u(p_h)$（$\epsilon\to l$ 时 $-\sla k\sla lu/k^2+u=0$）。乘以 $z^{1-2\varepsilon}/(4N_c)$ 与 $1/(2l^+)$，横向被积函数（单位 $\frac{g^2C_F}{(2\pi)^{D-1}}\dd^{D-2}\bm l_{\mathrm T}$）为：梯形图 $\frac{z^{-2\varepsilon}(1-\varepsilon)(1-z)\bm l_{\mathrm T}^2}{(\bm l_{\mathrm T}^2+m^2/z)^2}$，Wilson 线图（含镜像）$\frac{2z^{1-2\varepsilon}}{(1-z)(\bm l_{\mathrm T}^2+m^2/z)}$；以 $M^2=m^2/z$ 积分得 $A_\varepsilon(1-\varepsilon)^2(1-z)z^{-\varepsilon}$ 与 $A_\varepsilon\frac{2z^{1-\varepsilon}}{1-z}$，与\cref{prop:pdf-pqq-operator}(a) 在 $\xi=z$ 处逐项相同。虚图不穿过割线，是同一振幅 $\langle0|[W[\infty n_B,0]\psi](0)|q(p)\rangle$ 的单圈修正（单粒子态的入态与出态相同），与 PDF 的虚图一样。因此 $d^{(1)}_{q/q}=f^{(1)}_{q/q}$ 对 $\varepsilon$ 精确成立，紫外极点为 $\frac{\as}{2\pi}\frac1\varepsilon P_{qq}$，包括 $\frac32C_F\delta(1-z)$。
+(ii) 其余道。$A^+=0$ 规范中强子系的单圈实辐射密度对四个道都满足 $\bm l_{\mathrm T}^2\times(\text{密度})=z^{-2\varepsilon}\hat P_{ji}(z;\varepsilon)$（$q\to g$ 用夸克碎裂函数并对被观测胶子的物理极化求和，$g\to q$、$g\to g$ 用\cref{eq:pdf-ffg}），而 PDF 的相应密度是 $\hat P_{ji}(z;\varepsilon)$；两者的 $1/\varepsilon$ 系数逐点相同，故 $z<1$ 时 $P^{T(0)}_{ji}=P_{ji}$。$gg$ 道的 $\delta(1-z)$ 项：虚图仍是同一振幅 $\langle0|[W^{(A)}G^{+j}](0)|g(p)\rangle$ 的修正，与 $f_{g/g}$ 相同；实图之差 $(z^{-2\varepsilon}-1)\times(\text{PDF 实图})$ 乘以 $1/\varepsilon$ 后有限，且因 $(z^{-2\varepsilon}-1)/(1-z)\to2\varepsilon$ 在 $z\to1$ 可积，不改变作为分布的紫外极点，故 $P^{T(0)}_{gg}=P_{gg}$，包括 $\frac{\beta_0}2\delta(1-z)$。结合\cref{prop:pdf-lo-kernels}即得 (b)。
+\end{proof}
+
+\paragraph{地位与缺口}
+全阶陈述 (a) 依赖于\cref{asm:appN-multren}(Z1) 对碎裂函数的情形（\tagA 级）：碎裂函数的矩不是定域算符的矩阵元，\cref{sec:pdf-moments}的论证不适用（\cref{rem:pdf-ff-multren}），这一步因此作为编号假设列出，而非从定域算符的重整化推出。此缺口与幂次计数无关，不涉及 E-S 至 E-W 型的误差估计。(b) 是严格的单圈结果。若能证明碎裂算符在矩空间中的乘法可重整性（例如一个类时算符的定义与相应的全阶图形论证），(a) 即可不再需要这一技术假设。Gribov--Lipatov 关系只在领头阶成立：从次领头阶起 $\MSbar$ 的类时与类空分裂函数不同\cite{CurciFurmanskiPetronzio1980}。
+
+\begin{definition}[螺旋度与横度分布]\label{def:pdf-polarized}
+对螺旋度 $+\frac12$ 的纵向极化靶，夸克螺旋度分布为
+\begin{equation}\label{eq:pdf-helicity}
+\Delta f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}\langle P,+|\bar\psi(w)\gamma^+\gamma_5W[w,0]\psi(0)|P,+\rangle_{\mathrm c},
+\end{equation}
+$x>0$ 时 $\Delta q(x)=\Delta f_q(x)$，$\Delta\bar q(x)=+\Delta f_q(-x)$；$\gamma_5=\ii\gamma^0\gamma^1\gamma^2\gamma^3$（\cref{def:prelim-gamma5}）；对螺旋度 $h$ 的自由夸克 $\bar u_h\gamma^+\gamma_5u_h=(2h)2p^+$，故 $\Delta q=q^\uparrow-q^\downarrow$；$\bar\psi\gamma^+\gamma_5\psi$ 是 C 偶的，所以反夸克关系的符号与\cref{def:pdf-antiquark}相反。对横向极化靶（横向自旋矢量 $\bm S_{\mathrm T}$），横度分布由
+\begin{equation}\label{eq:pdf-transversity}
+\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}\langle P,S_{\mathrm T}|\bar\psi(w)\,\ii\sigma^{j+}\gamma_5W[w,0]\psi(0)|P,S_{\mathrm T}\rangle_{\mathrm c}=S_{\mathrm T}^j\,h_{1,q/H}(\xi)
+\end{equation}
+定义，$\ii\sigma^{j+}\gamma_5=\gamma^+\gamma^j\gamma_5$（$j$ 横向）；自旋沿 $+x$ 的自由夸克给出 $h_1=\delta(1-\xi)$。胶子螺旋度分布为
+\begin{equation}\label{eq:pdf-dg}
+\Delta f_{g/H}(\xi)=-\sum_{i,j}\int\frac{\dd w^-}{2\pi\xi P^+}\ee^{-\ii\xi P^+w^-}\,\ii\epsilon_{\mathrm T}^{ij}\langle P,+|G^{+i}_a(w)W^{(A)}_{ab}[w,0]G^{+j}_b(0)|P,+\rangle_{\mathrm c},
+\end{equation}
+其中 $\epsilon_{\mathrm T}^{12}=+1$；螺旋度 $+1$ 的自由胶子给出 $\Delta f_{g/g}=\delta(1-\xi)+\delta(1+\xi)$（偶分布，$\Delta g(x)=\Delta f_g(x)$）。维数正规化中 $\gamma_5$ 与 $\epsilon$ 张量按 HVBM 方案处理，并对轴矢流作 Larin 的有限重整化\cite{Larin:1993tq}，极化分布的 $\MSbar$ 方案由此确定。
+\uses{def:pdf-quark,def:pdf-antiquark,def:pdf-gluon,def:prelim-gamma5}
+\end{definition}
+
+横度分布是手征奇的，单举 DIS 中不出现，需要另一个手征奇的对象才能测量（如横向极化 Drell--Yan\cite{RalstonSoper1979,JaffeJi1991,JaffeJi1992}）；自旋 $\frac12$ 的靶没有胶子横度分布。极化分布的演化（次领头阶核见\cite{MertigVanNeerven1996,Vogelsang1996}）与因子化见\cref{ch:coll}。
+
+% -----------------------------------------------------------------------------------------------------
+\begin{tcolorbox}[enhanced,breakable,title=本章澄清的常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=8pt,after skip=6pt]
+\begin{enumerate}[leftmargin=1.6em,itemsep=1pt,topsep=1pt,label=\arabic*.]
+\item 「PDF 由 DIS 定义。」——PDF 由算符定义；用 $F_2$ 定义会把普适性变成定义（\cref{rem:pdf-schemes}）。
+\item 「PDF 是概率密度，故 $\MSbar$ PDF 为正」或「领头阶演化保持正定性，故 $\MSbar$ PDF 为正」。——数密度只对裸的截断量成立（\cref{rem:pdf-number-density}）；后一说法是循环论证，初始条件的正定性正是问题所在；$\MSbar$ 正定性是猜想，在所有标度上非负是错的（\cref{conj:pdf-positivity}）。
+\item 「反常维度唯一确定 $x$ 空间的核。」——要选定解析延拓；偶数与奇数 $N$ 的延拓不同，$P^+_{\mathrm{NS}}\ne P^-_{\mathrm{NS}}$ 从次领头阶起（\cref{rem:pdf-ns-plusminus}）。
+\item 「光锥规范去掉了所有 Wilson 线。」——剩余规范自由、$1/k^+$ 处方与无穷远横向连接仍在（\cref{rem:pdf-gauge-residual}）。
+\item 「类时与类空分裂函数相同。」——只在领头阶成立（\cref{prop:pdf-timelike-dglap}）。
+\item 「维数正规化中 $f_{q/q}=\delta(1-x)$，什么也没发生。」——裸分布是；重整化后它是纯红外极点（\cref{prop:pdf-partonic-dr}）。
+\item 「DGLAP 来自截面的标度无关性。」——DGLAP 来自算符重整化（\cref{thm:pdf-dglap}），截面的标度无关性是因子化的推论。
+\item 「PDF 的支撑是 $0\le\xi\le1$。」——$f_q$ 支撑在 $[-1,1]$，$\xi<0$ 部分是反号的反夸克密度（\cref{thm:pdf-support-pt}）。
+\end{enumerate}
+\end{tcolorbox}
+
+\paragraph{本章小结。}
+PDF 与碎裂函数在任何因子化定理之前就有了精确的算符定义：PDF 的矩是扭度 2 定域算符的矩阵元（\cref{app:appL}），DGLAP 由算符重整化得出，求和规则来自守恒流，DIS 扭度 2 部分的 $x$ 空间因子化以 OPE 为前提而严格；碎裂函数的全阶演化需要独立的乘法可重整性输入，$\MSbar$ PDF 的正定性只是猜想。\cref{ch:method}起，这些分布作为因子化定理中的长距离因子出现。

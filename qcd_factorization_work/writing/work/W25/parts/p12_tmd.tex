@@ -1,0 +1,139 @@
+\section{格点 TMD：准 TMD 因子化与 Collins--Soper 核}\label{sec:lattice-tmd}
+
+TMD 的光锥定义（\cref{def:tmd-collins}）含有类光的订书钉形 Wilson 线与快度发散，格点无法直接计算。LaMET 的做法是用沿 $\hat z$ 的类空订书钉代替类光订书钉（\cref{fig:lamet-lattice-geometries}(b)(c)；注意\cref{fig:tmd-staple}画的是 Collins TMD 的类光订书钉），用有限的 $P^z$ 作为离光锥的快度正规子。与共线情形不同，这里的匹配是乘法的，但需要一个非微扰的软因子 $S_r$。
+
+\begin{assumption}[订书钉形类空 Wilson 线算符的重整化与 $L\to\infty$ 极限 \tagA]\label{asm:lamet-staple}
+\begin{enumerate}[label=(ST\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 对 $z\neq0$、$b_{\mathrm T}\neq0$，令 $z_\pm=\pm(\frac z2\hat e_z+\frac{\vec b_{\mathrm T}}2)$；订书钉算符 $\bar\psi(z_+)\Gamma\mathcal W_z(z_+,z_-;L)\psi(z_-)$ 除以 $\sqrt{Z_E(2L,b_{\mathrm T},\mu)}$ 后乘法可重整，重整化因子只依赖于端点（重—轻流、夸克场）：$\propto L$ 的线性发散与订书钉的尖点发散在比值中相消。
+\item 在微扰论的每一阶，比值的 $L\to\infty$ 极限存在：无穷长类空规范链的捏点奇异性在订书钉的自相互作用与 $\sqrt{Z_E}$ 之间相消；超软模式在偶极自相互作用重求和后相消。
+\item 格点上 $\sqrt{Z_E}$ 加上短距离的强子矩阵元可除去全部紫外发散（RI/MOM 不能除去全部线性发散）；同维混合同\cref{prop:lattice-renormalizability}(b)。
+\end{enumerate}
+地位：全阶论证级——对 (ST2) 的全阶论证见第~23~章\cref{prop:yzliu-pinch-ultrasoft}（其本身为 \tagA，超软相消是论证而非证明）；有单圈的显式检验与格点重整化研究。
+文献：\cite{Ji:2019ewn}，\cite[第~3--4~节]{Liu:2022nnk}，\cite{Ebert:2022fmh,Ebert:2019tvc,Constantinou:2019vyb,Alexandrou:2023ucc}；用矩形回路除去订书钉自相互作用的做法可追溯到\cite{Collins:2008ht,Ji:2018hvs}（据其摘要）。
+被使用于：\cref{def:lamet-quasi-tmd}、\cref{thm:lamet-quasi-tmd}、\cref{prop:yzliu-qtmd-powercount}。
+解除途径：对带尖点的订书钉作辅助场重整化证明（同\cref{asm:lamet-aux-renorm}），并对超软与“超超软”模式作全阶处理。
+\uses{asm:lamet-aux-renorm, def:prelim-wilson}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：(ST1) 是辅助场论证向带尖点的订书钉的推广，与\cref{asm:lamet-aux-renorm}一样只有断言；(ST2) 中超软模式的相消是论证而不是证明（\cref{prop:yzliu-pinch-ultrasoft}，第~23~章）；幂次计数只给出 E-S 型陈述。它是\cref{thm:lamet-quasi-tmd}的前提之一。
+
+\begin{definition}[准 TMD]\label{def:lamet-quasi-tmd}
+在本书约定下（\cite{Ji:2019ewn}，\cite[第~3~节]{Liu:2022nnk}，\cite{Ebert:2022fmh}，已换算），
+\begin{equation}\label{eq:lamet-quasi-tmd}
+\tilde f_\Gamma(x,b_{\mathrm T},\mu,\zeta_z)=\lim_{L\to\infty}N_\Gamma\int\frac{\dd z}{4\pi}\,\ee^{\ii xP^zz}\,\frac{\langle P|\bar\psi(z_+)\,\Gamma\,\mathcal W_z(z_+,z_-;L)\,\psi(z_-)|P\rangle}{\sqrt{Z_E(2L,b_{\mathrm T},\mu)}},\qquad\zeta_z=(2xP^z)^2,
+\end{equation}
+其中 $z_\pm\equiv\pm(\frac z2\hat e_z+\frac{\vec b_{\mathrm T}}2)$ 是两个夸克场的位置，$\mathcal W_z$ 是订书钉：自 $z_-$ 沿 $+\hat e_z$ 到 $L\hat e_z-\frac{\vec b_{\mathrm T}}2$，横向连到 $L\hat e_z+\frac{\vec b_{\mathrm T}}2$，再沿 $-\hat e_z$ 回到 $z_+$（DY 型；SIDIS 型订书钉朝 $-\hat z$）；$Z_E(2L,b_{\mathrm T},\mu)=\frac1{N_c}\Tr\langle0|W_\perp\mathcal W_z(\vec b_{\mathrm T};2L)|0\rangle$ 是 $2L\times b_{\mathrm T}$ 的矩形 Wilson 圈；$\Gamma=\gamma^0$ 或 $\gamma^z$（除 $\gamma^0-\gamma^z$ 外的任意组合）。准 TMD \emph{没有快度发散}：$P^z$ 起离光锥快度正规子的作用。
+\uses{asm:lamet-staple, def:lattice-quasi, def:prelim-wilson}
+\end{definition}
+
+文献\cite{Ebert:2022fmh}还定义了包含 $S_r$ 的“正当的”准 TMD，以及覆盖准、Collins、大快度（LR）、JMY 与 MHENS 方案的一个 Lorentz 不变关联函数 $\Omega(b,P,\epsilon,\eta v,\delta)$；下面的证明路线 (B) 正是利用这一点。
+
+\begin{definition}[离光锥软函数（Ji--Liu--Liu 归一化）]\label{def:lamet-soft-offlc}
+在 $(t,z,\vec b_\perp)$ 中取类时矢量 $v=\gamma(1,\beta,\vec0_\perp)$、$v'=\gamma'(1,-\beta',\vec0_\perp)$，$\beta=\tanh Y$，$\beta'=\tanh Y'$；$W_v(\xi;t)=W[\xi,\xi-\frac t\gamma v]$（本书约定），订书钉 $\mathcal W_v(\vec b_\perp,t)=W_v(0;t)W_\perp W_v^\dagger(\vec b_\perp;t)$。令
+\begin{equation}\label{eq:lamet-soft-offlc}
+\begin{gathered}
+W(t,t',b_\perp,Y,Y')=\tfrac1{N_c}\Tr\langle\Omega|T[\mathcal W^\dagger_{v'}(\vec b_\perp,t')\mathcal W_v(\vec b_\perp,t)]|\Omega\rangle,\qquad Z(2t,b_\perp,Y)=W(t,t,b_\perp,Y,-Y),\\
+S(b_\perp,\mu,Y,Y')=\lim_{t,t'\to\infty}\frac{W(t,t',b_\perp,Y,Y')}{\sqrt{Z(2t,b_\perp,Y)\,Z(2t',b_\perp,Y')}},
+\end{gathered}
+\end{equation}
+按 $\MSbar$ 重整化。由推动不变性，$S$ 只依赖于 $Y+Y'$。单圈 $S^{(1)}=a[2-2(Y+Y')]L_b+\order{\ee^{-(Y+Y')}}$。% VF-YZL-2
+\uses{def:prelim-wilson, def:tmd-soft, lem:tmd-soft-oneloop}
+\end{definition}
+
+单圈值是\cref{lem:tmd-soft-oneloop}(b)（\tagR，$R_{\mathrm{PT}}$）中类时、包含自能（$\sigma=1$）的情形：两条线的快度差为 $Y_{\rm t}=Y+Y'$，重整化后的单圈软函数为 $-\frac{\as C_F}\pi(Y_{\rm t}\coth Y_{\rm t}-1)L_b$，而 $Y_{\rm t}\coth Y_{\rm t}-Y_{\rm t}=2Y_{\rm t}/(\ee^{2Y_{\rm t}}-1)$，所以它等于 $-2a(Y_{\rm t}-1)L_b+\order{Y_{\rm t}\ee^{-2Y_{\rm t}}}$。\footnote{若用 Collins 的类空 Wilson 线并排除自相互作用（\cref{def:tmd-soft}），单圈中与快度无关的常数为零（$\sigma=0$）。单个软函数依赖于正规子，只有它们的组合才有物理意义。}
+
+\begin{assumption}[离光锥软函数的大快度结构 \tagA]\label{asm:lamet-soft-rapidity}
+\begin{enumerate}[label=(SR),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 当 $Y+Y'\to\infty$ 时，$\ln S(b_\perp,\mu,Y,Y')=(Y+Y')\tilde K(b_\perp,\mu)+\mathcal D(b_\perp,\mu)+\order{\ee^{-(Y+Y')}}$，$\tilde K$ 是\cref{prop:tmd-evolution}的 Collins--Soper 核，$\mathcal D$ 有限。
+\end{enumerate}
+地位：全阶论证级——全阶论证见\cref{prop:yzliu-rapidity-linear}（第~23~章；除快度切片中一个被明确假定的红外步骤外是完整的）；文献\cite{CollinsSoper1981}已断言这一结构；类光正规子的共形映射重整化定理见\cite{Vladimirov:2017ksc}与\cref{prop:front-rapidity-renorm}（第~24~章）；三圈软函数的显式结果\cite{Li:2016axz}。
+文献：\cite{Ji:2019sxk}，\cite[附录~E]{Liu:2022nnk}，\cite{CollinsSoper1981,Vladimirov:2017ksc,Li:2016axz}。
+被使用于：\cref{def:lamet-reduced-soft}、\cref{thm:lamet-quasi-tmd}。
+解除途径：证明快度切片论证中的红外控制步骤（第~23~章）。
+\uses{def:lamet-soft-offlc, prop:tmd-evolution}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：全阶论证中被明确假定的一步是快度切片中的红外控制（第~23~章\cref{prop:yzliu-rapidity-linear}）；单圈由\cref{def:lamet-soft-offlc}后的计算直接验证，三圈有显式结果\cite{Li:2016axz}。它决定约化软函数（\cref{def:lamet-reduced-soft}）的存在，并是\cref{thm:lamet-quasi-tmd}的前提之一。
+
+\begin{definition}[约化软函数 $S_r$]\label{def:lamet-reduced-soft}
+$S_r(b_\perp,\mu)\equiv\ee^{-\mathcal D(b_\perp,\mu)}=\lim_{Y+Y'\to\infty}\ee^{(Y+Y')\tilde K(b_\perp,\mu)}/S(b_\perp,\mu,Y,Y')$；单圈 $S_r=1-\frac{\as C_F}\pi L_b$。% VF-YZL-2
+\uses{def:lamet-soft-offlc, asm:lamet-soft-rapidity}
+\end{definition}
+
+由\cref{def:lamet-soft-offlc}的单圈值，$\tilde K^{(1)}=-2aL_b$、$\mathcal D^{(1)}=2aL_b$，故 $S_r^{(1)}=-2aL_b$，$\mu^2\frac{\dd\ln S_r}{\dd\mu^2}=-2a=-\frac{\as C_F}\pi=\gamma^{(1)}_{HH}$（本书只用 $\gamma_{HH}$；Liu 等人的 $\Gamma_S$ 有两种相反的符号约定）。第~23~章把它称为本征软函数 $S_I$，并在那里建立其光锥定义、方案无关性与反常维度（\cref{thm:yzliu-intrinsic-soft}）。$S_r$ 不等于 $\ee^{-\mathcal D_{\rm Collins}}$（上面的注意）。
+
+\begin{assumption}[极限次序 \tagA]\label{asm:lamet-order-limits}
+\begin{enumerate}[label=(OL\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 对比值 $\Omega/\sqrt S$，$\varepsilon\to0$ 与 $L\to\infty$ 以及离光锥快度正规子的极限 $\tilde\eta\to\infty$ 可交换（自能相消，因为 $\Omega$ 的订书钉是 $S$ 的一半；两半之间的交换按指数压低；类光程函极点 $1/(n_B\cdot k)$ 在两种正规子下给出相同结果——单圈已验证）。
+\item 大快度方案与 Collins 方案只在 $\varepsilon\to0$ 与 $y_B\to-\infty$ 的次序上不同；由渐近自由这是紫外效应：$f^{\rm LR}=C_q(\sqrt{\zeta_{\rm LR}}/2,\mu)f^{\rm TMD}+\order{y_B^k\ee^{y_B}}$，且 $C_q$ 与 $y_n-y_B$ 无关（否则非微扰的 CS 核会进入）。
+\end{enumerate}
+地位：全阶论证——文献\cite{Ebert:2022fmh}对所有阶给出论证（(OL1) 在单圈验证，(OL2) 依据渐近自由），不是逐图的证明。
+文献：\cite{Ebert:2022fmh}。
+被使用于：\cref{thm:lamet-quasi-tmd}。
+解除途径：对 (OL1) 给出超出单圈的图形证明，并证明 (OL2)。
+\uses{def:lamet-quasi-tmd, def:tmd-collins}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：(OL1) 只在单圈逐图验证；(OL2) 依据渐近自由的一般论证，不是逐图的减除证明\cite{Ebert:2022fmh}。这是\cref{thm:lamet-quasi-tmd}的瓶颈；提高等级需要 (OL1) 超出单圈的图形证明与 (OL2) 的证明。
+
+\begin{theorem}[准 TMD 因子化 \tagA]\label{thm:lamet-quasi-tmd}
+(a) 对 $b_{\mathrm T}\gg1/(xP^z)$、$\zeta_z\gg\Lambda^2$，在领头幂次，
+\begin{equation}\label{eq:lamet-qtmd}
+\begin{split}
+\tilde f(x,b_{\mathrm T},\mu,\zeta_z)\sqrt{S_r(b_{\mathrm T},\mu)}={}&H\Big(\frac{\zeta_z}{\mu^2}\Big)\exp\Big[\frac12\tilde K(b_{\mathrm T},\mu)\ln\frac{\zeta_z}\zeta\Big]f^{\rm TMD}(x,b_{\mathrm T},\mu,\zeta)\\
+&\times\Big\{1+\order{\frac{\Lambda^2}{\zeta_z},\frac{M^2}{\zeta_z},\frac1{b_{\mathrm T}^2\zeta_z}}\Big\},
+\end{split}
+\end{equation}% VF-LAM-15; E02
+$f^{\rm TMD}$ 为 Collins TMD（\cref{def:tmd-collins}），$2\zeta\partial_\zeta\ln f^{\rm TMD}=\tilde K$。这一关系对 $x$ 是\emph{乘法}的（没有卷积）、味对角（没有夸克—胶子或味的混合）、与自旋无关（$H$ 只依赖于色表示），对夸克与胶子都成立。动量演化 $2\zeta_z\partial_{\zeta_z}\ln\tilde f=\tilde K+G$，$G=2\zeta_z\partial_{\zeta_z}\ln H$。等价的 ESSZ 形式：$\tilde f^{[s]}_{i/h}(x,\vec b_{\mathrm T},\mu,\tilde\zeta,x\tilde P^z)=C_i(x\tilde P^z,\mu)\exp[\frac12\gamma^i_\zeta\ln\frac{\tilde\zeta}\zeta]f^{[s]}_{i/h}(x,\vec b_{\mathrm T},\mu,\zeta)\{1+\order{\frac1{(x\tilde P^zb_{\mathrm T})^2},\frac{\Lambda^2}{(x\tilde P^z)^2}}\}$，$\gamma_\zeta=\tilde K$（其正当的准 TMD 已包含 $S_r$）。
+(b)（单圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈 $H=1+a(-2+\frac{\pi^2}{12}-\frac12L_\zeta^2+L_\zeta)$，$G^{(1)}=\frac{\as C_F}\pi(1-L_\zeta)$，$\tilde K\ln(\zeta_z/\zeta)$ 的系数被单圈表达式唯一地固定为 $\frac12$。
+(c)（两圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在两圈，$H$ 的 NNLO 系数\cite{delRio:2023pse}与 Ji--Liu--Su 的两圈重—轻 Sudakov 核一致（数值见第~23~章）。
+非微扰地位：\cref{asm:intro-bridge}、\cref{asm:intro-composite}（MA0、MA1、MA2）。
+\uses{def:lamet-quasi-tmd, def:lamet-reduced-soft, def:tmd-collins, prop:tmd-evolution, asm:lamet-staple, asm:lamet-soft-rapidity, asm:lamet-order-limits, lem:tmd-soft-oneloop, prop:tmd-evolution-oneloop, prop:lattice-renormalizability}
+% errtype: E-S
+\end{theorem}
+
+\begin{proofsketch}
+几条独立的路线。\emph{(A) 领头区域}（Ji--Liu--Liu\cite{Ji:2019ewn}，该文称之为“数学证明的概要”，细节“留待以后发表”）：共线子图与光前 TMD 相同（取 $P^z\to\infty$）；快速色荷与订书钉之间的软辐射由离光锥软函数刻画；$\zeta_z$ 处的硬子图局限于两个夸克—规范链顶点附近，因为任何在 $0$ 与 $\vec b_{\mathrm T}$ 之间流动的硬动量都要付出 $1/P^z$ 的代价——因此没有卷积，这与共线准 PDF 截然不同。\emph{(B) Ebert--Schindler--Stewart--Zhao}\cite{Ebert:2022fmh}（对所有阶，详细处理非极化夸克，胶子与自旋“只需作少量直接的修改”）：(1) 准、LR 与 Collins 束函数都是同一个 Lorentz 不变关联函数 $\Omega$ 的 Fourier 变换，领头幂次只保留 $P^\mu\Omega$ 结构；(2) 以快度 $y_B$ 推动准关联函数的参数：$\tilde b^+=-b^-\ee^{2y_B}\to0$，$\tilde b^z\to0$，$y_{\tilde P}=y_P-y_B\to\infty$，于是它等于有限长规范链的 LR 关联函数，差别在大质子快度下压低；(3) (OL1)；(4) (OL2) 给出 $C_q=C_q(\zeta_{\rm LR}/\mu^2,\as)$；(5) 不混合：夸克场始终保持类空分离，$y_B\to-\infty$ 不能产生缩并味指标的紫外抵消项（对比共线准 PDF：那里场趋近光锥，混合确实出现）；通过 JMY 方案（类空与类时之间的解析延拓）交叉检验。\emph{(C) SCET}\cite{Vladimirov:2020ofp}（据其摘要）：给出用物理 TMD 与一个“与格点有关的非微扰因子”表示的因子化形式，该因子在适当的比值中相消；这是带单圈检验的 SCET$_{\rm II}$ 推导。\emph{(D) Coulomb 规范准 TMD}\cite{Zhao:2023ptv}（据其摘要）：在主值处方下化为标准的 TMD 关联函数；只适用于 T 偶 TMD。\emph{(E)} Liu 的 Collins 式幂次计数：\cref{prop:yzliu-qtmd-powercount}（第~23~章）。（幂次计数各步只给出 E-S 型陈述。）(b) 由单圈表达式直接验证，逐项计算见下面的例；(c) 见\cite{delRio:2023pse}与第~23~章。完整论证见\cite{Ji:2019ewn}与\cite{Ebert:2022fmh}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA（几个独立的论证）；决定性的一步 (OL2) 是关于极限次序的论证，而不是逐图的减除证明（\cref{asm:lamet-order-limits}，这是瓶颈；另有\cref{asm:lamet-staple}、\cref{asm:lamet-soft-rapidity}）；幂次计数各步只给出 E-S 型陈述；据我们截至 2026 年 10 月的文献检索（INSPIRE 标题检索），尚未见专门针对有限长订书钉的 Glauber/软交换分析；强子层次的陈述需要\cref{asm:intro-bridge}。不能说“准 TMD 因子化已严格证明”。关于印刷形式：\cite[式~(22)]{Ji:2019ewn}、\cite[式~(209)--(210)]{JiEtAl2021}、\cite[式~(53)、(75)]{Liu:2022nnk}与\cite{Ji:2021znw}的 arXiv 第一版把指数印作 $\ee^{\tilde K\ln(\zeta_z/\zeta)}$，差一个因子 $2$（附录~Q 第~11~条）。对\cite{JiEtAl2021}，作者们在\cite{Ji:2021znw}的期刊版（脚注~1）中指出了这一遗漏，该期刊版本身是正确的；对\cite[式~(22)]{Ji:2019ewn}与\cite[式~(53)、(75)]{Liu:2022nnk}未见更正。正确的指数更早见于\cite[式~(24)、(27)]{EbertStewartZhao2019}，亦见\cite{Ebert:2022fmh}与\cite[式~(52)]{Liu:2022nnk}。$H$ 的位置：本书按\cref{eq:lamet-qtmd}写作 $\tilde f\sqrt{S_r}=H\,\ee^{\cdots}f^{\rm TMD}$，\cite[式~(209)]{JiEtAl2021}写作 $f^{\rm TMD}=H\,\ee^{\cdots}\tilde f\sqrt{S_r}$，即彼处的 $H$ 是此处的倒数。
+
+\begin{example}[单圈检验：指数中的因子 $\frac12$]\label{ex:lamet-qtmd-oneloop}
+取 $a=\as C_F/(2\pi)$，$L_\zeta=\ln(\zeta_z/\mu^2)$，$L_b=\ln(\mu^2b_{\mathrm T}^2/b_0^2)$。夸克靶的单圈准 TMD 与 Collins TMD 都是“$aF(x,\varepsilon_{\rm IR},b_{\mathrm T},\mu)\theta(x)\theta(1-x)$ 加 $\delta(1-x)$ 项”，其中共线项 $F$（含红外极点）两者相同\cite{JiEtAl2021}；$\delta(1-x)$ 的系数为
+\[
+\tilde f^{(1)}=a\Big[-\frac12L_b^2+L_b\Big(\frac52-L_\zeta\Big)-\frac32-\frac12L_\zeta^2+L_\zeta\Big],\qquad
+f^{{\rm TMD}(1)}=a\Big[-\frac12L_b^2+\Big(\frac32-\ln\frac\zeta{\mu^2}\Big)L_b+\frac12-\frac{\pi^2}{12}\Big],
+\]% VF-LAM-15
+$S_r^{(1)}=\tilde K^{(1)}=-2aL_b$。代入 $\ln\tilde f+\frac12\ln S_r-\ln H-c\tilde K\ln\frac{\zeta_z}\zeta-\ln f^{\rm TMD}=0$ 的 $\order{a}$ 项：$L_b^2$ 项相消；$L_b$ 的一次项 $\frac52-1-\frac32=0$；$L_bL_\zeta$ 项为 $(-1+2c)aL_bL_\zeta$，$L_b\ln\frac\zeta{\mu^2}$ 项为 $(1-2c)aL_b\ln\frac\zeta{\mu^2}$，二者为零当且仅当 $c=\frac12$；常数给出 $H^{(1)}=a(-\frac32-\frac12+\frac{\pi^2}{12}-\frac12L_\zeta^2+L_\zeta)$，即 $-2=-\frac32-\frac12$。若取印刷的 $c=1$，则留下 $aL_b(L_\zeta-\ln\frac\zeta{\mu^2})\neq0$。动量演化：$2\zeta_z\partial_{\zeta_z}\tilde f^{(1)}=2a(1-L_b-L_\zeta)=\tilde K^{(1)}+G^{(1)}$，$G^{(1)}=2\partial_{L_\zeta}H^{(1)}=2a(1-L_\zeta)$。\cref{prop:lattice-cs-kernel}的比值公式：$L_{\zeta,1}-L_{\zeta,2}=2\ln(P^z_1/P^z_2)$，$\ln\tilde f(P^z_1)-\ln\tilde f(P^z_2)+\ln C(xP^z_2)-\ln C(xP^z_1)=-aL_b(L_{\zeta,1}-L_{\zeta,2})$，除以 $\ln(P^z_1/P^z_2)$ 得 $\tilde K^{(1)}=-2aL_b$。
+\uses{thm:lamet-quasi-tmd}
+\end{example}
+
+\begin{proposition}[格点 Collins--Soper 核 \tagA]\label{prop:lattice-cs-kernel}
+在固定的 $x$、$b_{\mathrm T}$ 与两个动量 $P_1^z,P_2^z$ 下，
+\begin{equation}\label{eq:lamet-cs}
+\tilde K(b_{\mathrm T},\mu)=\frac1{\ln(P_1^z/P_2^z)}\ln\frac{C(\mu,xP_2^z)\,\tilde f(x,b_{\mathrm T},\mu,P_1^z)}{C(\mu,xP_1^z)\,\tilde f(x,b_{\mathrm T},\mu,P_2^z)}+\text{幂次修正},\qquad C(\mu,xP^z)\equiv H\Big(\frac{(2xP^z)^2}{\mu^2}\Big),
+\end{equation}% VF-LAM-16
+等价地 $\frac{\tilde f(\zeta_{z,1})}{\tilde f(\zeta_{z,2})}=\frac{H_1}{H_2}\big(\frac{\zeta_{z,1}}{\zeta_{z,2}}\big)^{\tilde K/2}=\frac{H_1}{H_2}\big(\frac{P^z_1}{P^z_2}\big)^{\tilde K}$；$S_r$ 以及一切与 $\Gamma$、味、自旋无关的因子都相消；右边与 $x$ 无关是对领头幂次的检验。（单圈内容，\tagR，$R_{\mathrm{PT}}$）（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在单圈，此公式精确地给出 $\tilde K^{(1)}=-2aL_b$。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{thm:lamet-quasi-tmd, prop:tmd-evolution}
+\end{proposition}
+
+\begin{proofsketch}
+把\cref{eq:lamet-qtmd}分别写在 $P_1^z$ 与 $P_2^z$（同一 $x$、$b_{\mathrm T}$、$\zeta$）并相除：$S_r$ 与 $f^{\rm TMD}$ 相消，$\frac{\tilde f(P_1^z)}{\tilde f(P_2^z)}=\frac{H_1}{H_2}\exp[\frac12\tilde K\ln\frac{\zeta_{z,1}}{\zeta_{z,2}}]$；$\zeta_{z,i}=(2xP^z_i)^2$ 给出 $(P_1^z/P_2^z)^{\tilde K}$；取对数即得\cref{eq:lamet-cs}。在单圈，代入上例中的 $\tilde f^{(1)}$ 与 $H^{(1)}$ 即得 $\tilde K^{(1)}=-2aL_b$。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA，继承\cref{thm:lamet-quasi-tmd}（瓶颈\cref{asm:lamet-order-limits}）。原始提议见\cite{EbertStewartZhao2019}；带订书钉的 RI$'$/MOM 重整化与位置空间的做法见\cite{Ebert:2019tvc}（据其摘要）。$b_{\mathrm T}\sim1/\Lambda$ 处的 $\tilde K$ 是非微扰的（CS 核并不总是微扰的）；格点只通过这个 \tagA 定理提供它。格点测定（证据）：\cite{Shanahan:2020zxr,Shanahan:2021tst,Schlemmer:2021aij,LatticePartonLPC:2022eev,LatticePartonLPC:2023pdv,Avkhadiev:2023poz,Avkhadiev:2024mgd,Bollweg:2024zet,Tan:2025ofx}；据我们所知（INSPIRE 检索，2026 年 10 月），最早的格点测定是\cite{Shanahan:2020zxr}；文献\cite{Avkhadiev:2024mgd}称其结果是“首个系统控制了夸克质量、算符混合与离散化效应的测定”（该文自己的说法，据其摘要）。基于准 TMD 波函数的提取中虚部收敛缓慢，可由重—轻核的线性重整子解释（\cref{prop:yzliu-linear-renormalon}，第~23~章）。
+
+\begin{proposition}[准 TMD 之比与 TMD 之比 \tagA]\label{prop:lamet-tmd-ratios}
+在固定的 $(x,b_{\mathrm T},P^z)$ 下，自旋普适类中不同 $\Gamma$、不同味或不同靶极化的准 TMD 之比，在领头幂次等于相应的 TMD 之比（$S_r$、$H$ 与 CS 因子相消，因为 $H$ 与自旋、味无关，而 $S_r$、$\tilde K$ 只依赖于 $b_{\mathrm T}$）；这在大动量极限下为早期的订书钉“比值”格点纲领\cite{Hagler:2009mb,Musch:2010ka,Musch:2011er,Yoon:2017qzo}提供了依据\cite{Ebert:2022fmh,Vladimirov:2020ofp}。（以下据其摘要：）自旋普适性——螺旋度与横度准 TMD 的单圈系数与非极化的相同，并被论证对 pretzelosity 与所有阶成立\cite{Ebert:2020gxr}；胶子准 TMD 的单圈硬核与捏点处方无关\cite{Zhu:2022bja}；次领头幂次的准 TMD 涉及扭度 2、扭度 3 TMD 与一个格点特有的非微扰函数\cite{Rodini:2022wic}。\emph{不同} $b_{\mathrm T}$ 处的比值中 $S_r$ 与 CS 因子不相消。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{thm:lamet-quasi-tmd}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagA，继承\cref{thm:lamet-quasi-tmd}；摘要层次的条目已注明。Sivers 型比值的处理见第~23~章。

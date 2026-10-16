@@ -1,0 +1,83 @@
+%%% BEGIN fig:lamet-dependency
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 node/.style={rectangle,rounded corners=1.5pt,draw=black!65,line width=0.5pt,font=\tiny\ttfamily,
+      inner sep=1.5pt,minimum height=0.62cm,minimum width=2.05cm,align=center},
+  fd2 R/.style={fd2 node,fill=OliveGreen!15,draw=OliveGreen!65!black},
+  fd2 A/.style={fd2 node,fill=RoyalBlue!15,draw=RoyalBlue!65!black},
+  fd2 math/.style={fd2 node,fill=white},
+  fd2 cond/.style={fd2 node,fill=OliveGreen!15,draw=OliveGreen!65!black,dash pattern=on 2.2pt off 1.4pt},
+  fd2 asm/.style={fd2 node,draw=orange!65!black,fill=orange!8,dash pattern=on 2.2pt off 1.4pt},
+  fd2 asmC/.style={fd2 node,draw=red!60!black,fill=red!9,dash pattern=on 2.2pt off 1.4pt,line width=0.7pt},
+  fd2 grade/.style={font=\tiny\sffamily\bfseries,text=#1!75!black,inner sep=0.6pt,anchor=north east},
+  fd2 use/.style={draw=gray!60,line width=0.5pt,-{Stealth[length=3.4pt,width=2.8pt]}},
+  fd2 prem/.style={draw=orange!65!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt,-{Stealth[length=3.6pt,width=3pt]}},
+  fd2 neck/.style={draw=red!60!black,line width=1.3pt,-{Stealth[length=4.5pt,width=4pt]}}]
+  % ---------------- nodes (layers left to right) ----------------
+  \node[fd2 asm]  (aux) at (0,2.0)     {lamet-aux-renorm};
+  \node[fd2 R]    (sup) at (0,-1.0)    {lamet-support};
+  \node[fd2 A]    (ren) at (2.3,2.0)   {lattice-\\renormalizability};
+  \node[fd2 R]    (ent) at (2.3,-1.0)  {lamet-entire};
+  \node[fd2 A]    (cfp) at (4.6,3.2)   {lamet-cfp};
+  \node[fd2 asm]  (ope) at (4.6,2.0)   {lamet-ope};
+  \node[fd2 asmC] (tw4) at (4.6,-0.6)  {lamet-twist4};
+  \node[fd2 math] (fou) at (4.6,-1.7)  {lamet-fourier};
+  \node[fd2 A]    (lcs) at (4.6,-2.8)  {lamet-lcs};
+  \node[fd2 cond] (coo) at (6.9,1.0)   {lamet-coordinate};
+  \node[fd2 cond] (pmo) at (9.2,2.0)   {lamet-parton-\\momentum};
+  \node[fd2 cond] (tmc) at (9.2,0.95)  {lamet-tmc};
+  \node[fd2 asmC] (lgz) at (9.2,-0.6)  {lamet-large-z};
+  \node[fd2 A]    (lat) at (11.5,2.6)  {lattice-lamet};
+  \node[fd2 asmC] (uni) at (11.5,0.75) {lamet-uniform};
+  \node[fd2 cond] (had) at (13.8,1.0)  {lamet-hadronic};
+  % grade letters: tags of the assumptions, content grades of the R_cond theorems
+  \foreach \n/\g/\c in {aux/A/RoyalBlue,ope/A/RoyalBlue,tw4/C/Plum,lgz/C/Plum,uni/C/Plum,
+                        coo/A/RoyalBlue,pmo/A/RoyalBlue,tmc/A/RoyalBlue,had/C/Plum}
+    \node[fd2 grade=\c] at ($(\n.north east)+(-0.03,-0.02)$) {\g};
+  % ---------------- edges (transitive reduction; premise -> dependent) ----------------
+  \begin{scope}[on background layer]
+    \draw[fd2 neck] (aux) -- (ren);
+    \draw[fd2 use] (ren) -- (ope);
+    \draw[fd2 use] (ren.north east) -- (cfp.west);
+    \draw[fd2 use] (sup) -- (ent);
+    \draw[fd2 use] (ent.north east) .. controls (3.4,0.15) and (5.1,0.45) .. (coo.south west);
+    \draw[fd2 use] (ent.east) -- (tw4.west);
+    \draw[fd2 use] (ent.east) -- (fou.west);
+    \draw[fd2 use] (ent.south east) -- (lcs.west);
+    \draw[fd2 prem] (ope.south east) -- (coo.north west);
+    \draw[fd2 prem] (ope) -- (pmo);
+    \draw[fd2 prem] (ope.east) .. controls (6.6,1.85) and (7.9,1.62) .. (tmc.north west);
+    \draw[fd2 use] (coo.north east) -- (pmo.south west);
+    \draw[fd2 use] (coo) -- (tmc);
+    \draw[fd2 use] (coo.south east) -- (lgz.north west);
+    \draw[fd2 use] (tw4) -- (lgz);
+    \draw[fd2 use] (pmo.east) -- (lat.south west);
+    \draw[fd2 use] (cfp.east) -- (lat.north west);
+    \draw[fd2 use] (tmc.east) -- (uni.west);
+    \draw[fd2 use] (lat.south east) -- (had.north);
+    \draw[fd2 prem] (uni) -- (had.west);
+    \draw[fd2 prem] (lgz.east) -- (had.south west);
+    \draw[fd2 prem] (tw4.south east) .. controls (7.6,-1.45) and (12.6,-1.35) .. (had.south);
+    \draw[fd2 use] (fou.east) .. controls (8.6,-2.05) and (13.9,-1.95) .. (had.south east);
+  \end{scope}
+  % ---------------- legend ----------------
+  \begin{scope}[shift={(0.2,-3.85)}]
+    \node[fd2 R,minimum width=0.5cm,minimum height=0.3cm] at (-0.9,0) {};    \node[font=\scriptsize,anchor=west] at (-0.6,0) {[R]};
+    \node[fd2 A,minimum width=0.5cm,minimum height=0.3cm] at (0.3,0) {};     \node[font=\scriptsize,anchor=west] at (0.6,0) {[A]};
+    \node[fd2 math,minimum width=0.5cm,minimum height=0.3cm] at (1.5,0) {};  \node[font=\scriptsize,anchor=west] at (1.8,0) {纯数学};
+    \node[fd2 cond,minimum width=0.5cm,minimum height=0.3cm] at (3.3,0) {};  \node[font=\scriptsize,anchor=west] at (3.6,0) {$R_{\mathrm{cond}}$（角标：内容等级）};
+    \node[fd2 asm,minimum width=0.5cm,minimum height=0.3cm] at (7.6,0) {};   \node[font=\scriptsize,anchor=west] at (7.9,0) {[A] 级假设};
+    \node[fd2 asmC,minimum width=0.5cm,minimum height=0.3cm] at (9.85,0) {}; \node[font=\scriptsize,anchor=west] at (10.15,0) {[C] 级假设（强子层次的前提）};
+    \draw[fd2 use] (-1.2,-0.55) -- (-0.6,-0.55);   \node[font=\scriptsize,anchor=west] at (-0.5,-0.55) {\texttt{\string\uses} 依赖};
+    \draw[fd2 prem] (2.1,-0.55) -- (2.7,-0.55);    \node[font=\scriptsize,anchor=west] at (2.8,-0.55) {假设作为 $R_{\mathrm{cond}}$ 定理的前提};
+    \draw[fd2 neck] (7.6,-0.55) -- (8.2,-0.55);    \node[font=\scriptsize,anchor=west] at (8.3,-0.55) {[A] 陈述的瓶颈假设};
+  \end{scope}
+\end{tikzpicture}
+\caption{LaMET 匹配定理的依赖结构（\cref{tab:lamet-dependency} 的图示）。节点为去掉类型前缀的规范标签，箭头由前提指向依赖者，只画传递约化后的边（可由其他路径推出的依赖从略，假设到条件定理的前提边一律保留）；
+填充色为严格性标签（绿 [R]、蓝 [A]，白色为纯数学引理），绿色虚线框为 $R_{\mathrm{cond}}$ 条件定理，右上角字母为其内容等级；橙色与红色虚线框分别为 [A] 级与 [C] 级编号假设。
+第~7、8~章的前提（\cref{thm:dis-ope,thm:pdf-moments-local,thm:pdf-dglap}）未画出。
+部分子态的链 \cref{thm:lamet-coordinate}$\,\to\,$\cref{thm:lamet-parton-momentum}$\,\to\,$\cref{thm:lattice-lamet} 只依赖 [A] 级输入；强子层次的陈述 \cref{thm:lamet-hadronic} 另需三个 [C] 级假设（红色节点），其内容等级因而为 [C]。}
+\label{fig:lamet-dependency}
+\end{figure}
+%%% END fig:lamet-dependency

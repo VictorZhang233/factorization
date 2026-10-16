@@ -1,0 +1,18 @@
+(a) int x^{2k} g = int t^{k-1} h(t), h = sqrt(t) g(sqrt t)/2;  ||h||_1 = ||x^2 g||_1 (4 test g, k=1..4) PASS 
+(b) exact even moments of g = x^{1/2}(1-x)^3(1+4x) reproduce sympy integrals           PASS 
+(b) L^2 recovery of h from even moments: relative Parseval error -> 0 (K=2..48 Legendre terms) PASS K=2: 3.1e-01; K=4: 1.5e-01; K=8: 1.1e-02; K=16: 1.5e-03; K=32: 2.5e-04; K=48: 9.2e-05
+(c) cond_2 of the KxK moment Gram (Hilbert) matrix grows ~ e^{3.5 K}: uniqueness, not stability PASS K=5:4.8e+05 K=10:1.6e+13 K=15:6.1e+20 K=20:2.5e+28  rate=3.50
+(d) dist^2(x^lam, span{x^lam_k}) = Gram-det ratio = (2lam+1)^{-1} prod (lam-lam_k)^2/(lam+lam_k+1)^2 PASS 
+(d) x^1 vs even powers x^{2k} (sum 1/lam_k = oo): dist -> 0 ~ K^{-3/2}                 PASS K=10:9.25e-03 K=100:3.22e-04 K=1000:1.03e-05 K=10000:3.26e-07 slope=-1.500
+(d) x^1 vs x^{k^2+1} (sum 1/lam_k < oo): dist -> pi/sinh(sqrt3 pi) = 0.02722 > 0 (no density) PASS K=10:0.036179 K=100:0.028053 K=1000:0.027310 K=10000:0.027236 limit=0.027228
+(e) Jensen: log|f(0)| = sum_{|a|<r} log(|a|/r) + (1/2pi) int log|f(re^{i th})| d th (test f, r=0.8) PASS diff=2.0e-31
+(e) zeros z_k = 2k mapped by w=(z-1)/(z+1): sum (1-|w_k|) = sum 2/(2k+1) diverges (~ ln K) PASS K=10:2.36 K=1000:6.87 K=100000:11.48
+(f) |sin(pi N/2)| on N = 2+iy equals sinh(pi|y|/2): zeros at all even N, type exactly pi/2 PASS type(y=80)=1.5621
+(f) Mellin transform of g bounded on Re N = 3: |M(3+iy)| <= M(3), decaying in |y|      PASS 3.05e-02 2.32e-02 1.65e-03 4.67e-06 1.87e-08
+(f) M(2k+1) = m_k (even powers x^{2k}) for k=1..6                                      PASS 
+(g) decomposition r + a[1/(1-x)]_+ + b delta: P_qq/C_F (r=-(1+x), a=2, b=3/2) moments reproduce gamma_qq PASS 
+(g) recover a = 2, b = 3/2 from the large-N behaviour of the even moments of P_qq/C_F  PASS a=1.99999996 b=1.49999924
+(h) same q+qbar, different q-qbar: identical even-N moments, different odd-N moments   PASS 
+
+SUMMARY s6: 15/15 PASS
+python3 -I s6_uniqueness.py  15.18s user 0.13s system 97% cpu 15.687 total

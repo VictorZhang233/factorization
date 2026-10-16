@@ -1,0 +1,32 @@
+% !TEX program = xelatex
+% Figure checker: ALL figure files of the monograph compiled together, one figure per page.
+% Build: ./build.sh  (copies fresh relative copies of the nine sources into src/, regenerates
+% dummy_labels.tex from the FINAL_OUTLINE_v2 registry, runs xelatex twice, summarises the log).
+\input{preamble_fact.tex}
+\AfterEndEnvironment{figure}{\clearpage}
+% --- measurement hooks (test document only) ---
+\newcounter{chkfig}
+\AtBeginEnvironment{figure}{\stepcounter{chkfig}\typeout{CHKFIG BEGIN \thechkfig}}
+\AtEndEnvironment{figure}{\typeout{CHKFIG END \thechkfig}}
+\makeatletter
+\tikzset{every picture/.append style={execute at end picture={%
+  \typeout{CHKPIC \thechkfig\space w=\the\dimexpr\pgf@picmaxx-\pgf@picminx\relax\space h=\the\dimexpr\pgf@picmaxy-\pgf@picminy\relax}}}}
+\makeatother
+\begin{document}
+\chapter{全部插图的联合编译检查}
+本文档按文件顺序收录 \texttt{research/tikz1--3} 与 \texttt{figures/figset\_A--F} 的全部插图，每页一幅
+（图号仅为测试编号）。交叉引用的目标由 \texttt{dummy\_labels.tex} 按 FINAL\_OUTLINE\_v2 登记表在文末生成。
+\clearpage
+\input{src/figures1.tex}
+\input{src/figures2.tex}
+\input{src/figures3.tex}
+\input{src/figset_A.tex}
+\input{src/figset_B.tex}
+\input{src/figset_C.tex}
+\input{src/figset_D.tex}
+\input{src/figset_E.tex}
+\input{src/figset_F.tex}
+\clearpage
+\input{dummy_labels.tex}
+\noindent（本页仅承载测试用的交叉引用目标。）
+\end{document}

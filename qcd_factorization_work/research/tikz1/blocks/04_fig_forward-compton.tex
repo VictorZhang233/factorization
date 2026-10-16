@@ -1,0 +1,62 @@
+%%% BEGIN fig:forward-compton
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (vl) at (-0.95,1.9); \coordinate (vr) at (0.95,1.9);
+  \draw[quark] (-0.95,0.3) -- (vl);
+  \draw[quark] (vl) -- (vr);
+  \draw[quark] (vr) -- (0.95,0.3);
+  \draw[photon] (-2.1,3.3) -- (vl);
+  \draw[photon] (vr) -- (2.1,3.3);
+  \draw[t1 hadron] (-2.4,0) -- (0,0);
+  \draw[t1 hadron] (0,0) -- (2.4,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.25,y radius=0.45];
+  \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+  \path[mom={$k$}] (-0.95,0.42) -- (vl);
+  \path[mom={$k$}] (vr) -- (0.95,0.42);
+  \path[mom'={$k+q$}] (vl) -- (vr);
+  \path[mom'={$q$}] (-2.1,3.3) -- (vl);
+  \path[mom'={$q$}] (vr) -- (2.1,3.3);
+  \node[left] at (-2.1,3.3) {$\nu$};
+  \node[right] at (2.1,3.3) {$\mu$};
+  \node[left] at (-2.4,0) {$P$}; \node[right] at (2.4,0) {$P$};
+\end{tikzpicture}
+\caption{$s$ 道}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (vl) at (-0.95,1.9); \coordinate (vr) at (0.95,1.9);
+  \coordinate (gn) at (-1.9,3.75); \coordinate (gm) at (1.9,3.75);
+  \coordinate (gx) at (intersection of gn--vr and vl--gm);
+  \draw[quark] (-0.95,0.3) -- (vl);
+  \draw[quark] (vl) -- (vr);
+  \draw[quark] (vr) -- (0.95,0.3);
+  % the mu photon passes over the nu photon: white gap in the latter at the crossing
+  \draw[photon] (gn) -- (vr);
+  \draw[white,line width=6pt,line cap=butt] ($(gx)!0.3cm!(vl)$) -- ($(gx)!0.3cm!(gm)$);
+  \draw[photon] (vl) -- (gm);
+  \draw[t1 hadron] (-2.4,0) -- (0,0);
+  \draw[t1 hadron] (0,0) -- (2.4,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.25,y radius=0.45];
+  \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+  \path[mom={$k$}] (-0.95,0.42) -- (vl);
+  \path[mom={$k$}] (vr) -- (0.95,0.42);
+  \path[mom'={$k-q$}] (vl) -- (vr);
+  \path[mom'={$q$},mom pos=0.2] (gn) -- (vr);
+  \path[mom'={$q$},mom pos=0.8] (vl) -- (gm);
+  \node[left] at (-1.9,3.75) {$\nu$};
+  \node[right] at (1.9,3.75) {$\mu$};
+  \node[left] at (-2.4,0) {$P$}; \node[right] at (2.4,0) {$P$};
+\end{tikzpicture}
+\caption{$u$ 道（交叉图）}
+\end{subfigure}
+\caption{前向虚 Compton 振幅 $T^{\mu\nu}=\ii\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|T\,j^\mu(z)j^\nu(0)|P\rangle$ 的领头阶（手提包）图。
+(a) 夸克先在 $\nu$ 顶点吸收入射虚光子，再在 $\mu$ 顶点放出出射虚光子，中间夸克动量为 $k+q$；
+(b) 交叉图，先放出后吸收，中间夸克动量为 $k-q$。对夸克动量 $k$ 积分；领头幂次下 $k\simeq\xi P$。
+(b) 由 (a) 作 $q\to-q$、$\mu\leftrightarrow\nu$ 得到，二者之和体现交叉对称性 $T^{\mu\nu}(P,q)=T^{\nu\mu}(P,-q)$。
+与\cref{fig:handbag}不同，这里没有末态割线：$W^{\mu\nu}$ 由 $T^{\mu\nu}$ 在 $s$ 道割线上的不连续性给出。}
+\label{fig:forward-compton}
+\end{figure}
+%%% END fig:forward-compton

@@ -1,0 +1,43 @@
+%%% BEGIN fig:jets-sw-cone
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc cone/.style={fill=blue!8,draw=blue!45!black,line width=0.6pt},
+  fc rim/.style={fill=blue!4,draw=blue!45!black,line width=0.6pt},
+  fc ray/.style={draw,solid,line width=0.9pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  \def\fcL{3.6}   % cone length
+  \def\fcH{1.05}  % half-height of the cone base  (tan(delta) = h/L, delta ~ 16 deg)
+  % cones (perspective): lateral surface + elliptic base
+  \draw[fc cone] (0,0) -- (\fcL,\fcH) -- (\fcL,-\fcH) -- cycle;
+  \draw[fc rim] (\fcL,0) ellipse[x radius=0.28,y radius=\fcH];
+  \draw[fc cone] (0,0) -- (-\fcL,\fcH) -- (-\fcL,-\fcH) -- cycle;
+  \draw[fc rim] (-\fcL,0) ellipse[x radius=0.28,y radius=\fcH];
+  % cone axis (its orientation is arbitrary)
+  \draw[gray!60!black,line width=0.45pt,dash pattern=on 3pt off 2pt] (-4.4,0) -- (4.4,0);
+  % half-angle delta
+  \draw[gray!50!black,line width=0.5pt] (2.0,0) arc[start angle=0,end angle=16.26,radius=2.0];
+  \node[fc lab] at (2.22,0.31) {$\delta$};
+  \draw[gray!50!black,line width=0.5pt] (-2.0,0) arc[start angle=180,end angle=196.26,radius=2.0];
+  \node[fc lab] at (-2.22,-0.31) {$\delta$};
+  % particles (directions of flight from the interaction point)
+  \draw[fc ray] (0,0) -- (3.45,0.5);
+  \draw[gluon] (0,0) -- (3.3,-0.62);
+  \draw[fc ray] (0,0) -- (-3.45,0.3);
+  \draw[fc soft] (0,0) -- (0.62,1.72);
+  \node[vertex] at (0,0) {};
+  \node[fc lab,anchor=west] at (3.95,0.62) {$q$};
+  \node[fc lab,anchor=west] at (3.95,-0.62) {$g$（与$q$共线）};
+  \node[fc lab,anchor=east] at (-3.95,0.42) {$\bar q$};
+  \node[fc note,anchor=south,text=green!35!black,align=center] at (0.75,1.78) {锥外的软胶子：$E<\epsilon\sqrt s$};
+  % annotations
+  \node[fc note,align=center,anchor=north] at (0,-1.35) {两喷注事例：两锥之外的总能量$<\epsilon\sqrt s$\\
+     （能量份额$\epsilon$相对于总能量$\sqrt s$，不是束流能量$\sqrt s/2$；$\epsilon<\delta\ll1$）};
+\end{tikzpicture}
+\caption{Sterman--Weinberg 两喷注定义（$e^+e^-$质心系，示意；线段为各粒子的飞行方向）：若存在一对方向相反、半张角为$\delta$的锥（锥轴可任意选取），使两锥之外的总能量小于$\epsilon\sqrt s$，则事例计为两喷注事例。
+$\epsilon$是总能量$\sqrt s$的份额；在$\epsilon<\delta\ll1$时$\order{\alpha_s}$的结果含$4\ln\delta\ln2\epsilon$（若$\epsilon'$取为束流能量的份额，则为$4\ln\delta\ln\epsilon'$；\cref{prop:jets-sw}，VF-EE-12）。}
+\label{fig:jets-sw-cone}
+\end{figure}
+%%% END fig:jets-sw-cone

@@ -1,0 +1,65 @@
+%%% BEGIN fig:method-glauber-direction
+\begin{figure}[htbp]
+\centering
+% real (k^+,k^-) plane with the Glauber wedge G_delta = {|k^+ k^-| <= delta k_T^2}; units |k_T| = 1, delta = 0.12
+\newcommand{\fbGwedge}{%
+  \fill[red!9] plot[domain=1.6:0.075,samples=40] (\x,{0.12/\x})
+      -- plot[domain=0.075:1.6,samples=40] ({-\x},{0.12/\x})
+      -- plot[domain=1.6:0.075,samples=40] ({-\x},{-0.12/\x})
+      -- plot[domain=0.075:1.6,samples=40] (\x,{-0.12/\x}) -- cycle;
+  \foreach \s/\t in {1/1,-1/1,1/-1,-1/-1}
+    \draw[red!55!black,line width=0.5pt] plot[domain=0.075:1.6,samples=40] ({\s*\x},{\t*0.12/\x});
+  \draw[lcaxis] (-1.7,0) -- (1.8,0) node[right=0pt,font=\footnotesize] {$k^+$};
+  \draw[lcaxis] (0,-1.7) -- (0,1.8) node[above=0pt,font=\footnotesize] {$k^-$};
+  \draw[red!50!black,line width=0.4pt] (1.0,-0.06) -- (1.22,-0.45);
+  \node[font=\footnotesize,text=red!50!black,anchor=north,inner sep=1pt] at (1.25,-0.45) {$G_\delta$};
+  \fill (0.07,0.07) circle[radius=1.6pt];}
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb text/.style={font=\footnotesize,align=center,anchor=north,inner sep=1pt},
+  fb pole/.pic={\draw[line width=0.9pt,line cap=round] (-0.075,-0.075)--(0.075,0.075) (-0.075,0.075)--(0.075,-0.075);},
+  fb def/.style={line width=1.3pt,-{Stealth[length=6pt,width=5pt]}},
+  fb contour/.style={draw=blue!60!black,line width=1.0pt},
+  fb carrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}}]
+  % ======================= (a) one-component deformation stays in G_delta =======================
+  \begin{scope}[x=1.15cm,y=1.15cm]
+    \fbGwedge
+    \draw[fb def,red!65!black] (0.07,0.12) -- (0.07,1.3);
+    \node[fb lab,anchor=west,text=red!55!black] at (0.14,1.3) {$\Imag k^-\sim|\mathbf k_T|$};
+    \node[font=\small,anchor=south west] at (-1.75,1.6) {(a)};
+    \node[fb text] at (0,-1.87) {只形变 $k^-$（$\kappa\lesssim|\mathbf k_T|$）：\\$|k^+k^-|\sim\lambda^3\ll k_T^2$，\\仍在 $G_\delta$ 中};
+  \end{scope}
+  % ======================= (b) the soft line's own pole limits a one-component deformation =======================
+  \begin{scope}[xshift=5.15cm]
+    \draw[lcaxis] (-2.1,0) -- (2.1,0) node[right=0pt,font=\footnotesize] {$\Real k^-$};
+    \draw[lcaxis] (0,-1.2) -- (0,1.75) node[above=0pt,font=\footnotesize] {$\Imag k^-$};
+    \draw[fb contour,fb carrow=0.08,fb carrow=0.92] (-2.05,0) -- (-1.0,0) to[out=0,in=180] (0.55,0.78)
+        to[out=0,in=180] (1.75,0) -- (2.05,0);
+    \pic at (0.45,-0.16) {fb pole}; \pic at (0.8,-0.16) {fb pole}; \pic at (1.15,-0.16) {fb pole};
+    \node[fb lab,anchor=north] at (0.85,-0.25) {$J_A$ 的极点};
+    \pic[red!60!black] at (-1.45,0.16) {fb pole};
+    \node[fb lab,anchor=south,text=red!55!black] at (-1.45,0.26) {软线极点};
+    \draw[{Stealth[length=3.6pt,width=3pt]}-{Stealth[length=3.6pt,width=3pt]},line width=0.5pt] (0.55,0.04) -- (0.55,0.74);
+    \node[fb lab,anchor=west] at (0.59,0.4) {$\kappa$};
+    \node[font=\small,anchor=south west] at (-2.1,1.38) {(b)};
+    \node[fb text] at (0,-2.15) {$k^+<0$：软线极点 $k^-=\frac{k_T^2-\ii0}{2k^+}$\\在上半平面，只形变 $k^-$ 的\\幅度 $\kappa\lesssim k_T^2/|k^+|$};
+  \end{scope}
+  % ======================= (c) simultaneous deformation along e_G leaves G_delta =======================
+  \begin{scope}[xshift=10.35cm,x=1.15cm,y=1.15cm]
+    \fbGwedge
+    \draw[fb def,green!45!black] (0.03,0.11) -- (-0.92,1.06);
+    \node[fb lab,anchor=north east,text=green!30!black] at (-0.5,0.5) {$e_G$};
+    \node[font=\small,anchor=south west] at (-1.75,1.6) {(c)};
+    \node[fb text] at (0,-1.87) {沿 $e_G=n_B-n_A$ 同时形变：\\$\Imag k^->0$，$\Imag k^+<0$，\\幅度 $\sim|\mathbf k_T|$：离开 $G_\delta$};
+  \end{scope}
+  % identity below the panels
+  \node[font=\footnotesize,anchor=north] at (5.15,-3.82) {所有分母更类时：\ $(l+\ii t\sigma f e_G)^2-m^2=(l^2-m^2+2t^2f^2)+2\ii t\sigma f\,(l^+-l^-)$，\quad $e_G=(-1^+,+1^-,\mathbf 0_T)$};
+\end{tikzpicture}
+\caption{离开 Glauber 区需要沿 $e_G=n_B-n_A$ 同时形变两个光锥分量（示意；(a)、(c) 以 $|\mathbf k_T|$ 为单位，红色阴影为 Glauber 楔 $G_\delta=\{|k^+k^-|\le\delta k_T^2\}$，复形变量画在同一平面中）。
+(a)~对 Glauber 动量 $k^\pm\sim\lambda^2$、$k_T\sim\lambda$ 只形变 $k^-$，即使形变到 $|\mathbf k_T|$ 量级，仍有 $|k^+k^-|\sim\lambda^3\ll k_T^2$，动量留在 $G_\delta$ 中；
+(b)~$k^+<0$ 时软线自身的极点位于上半平面，与 $J_A$ 线的极点分居实轴两侧，把只形变 $k^-$ 的幅度限制在 $\kappa\sim k_T^2/|k^+|$（\cref{lem:method-i0-compat}）；
+(c)~振幅一侧（$\sigma=+1$）流入 $J_A$ 的软动量沿 $e_G$ 形变（$\Imag k^->0$、$\Imag k^+<0$），幅度 $\sim|\mathbf k_T|$，离开 $G_\delta$，且使所有分母更类时（VF-REF-7；\cref{prop:method-glauber-deformation}）。}
+\label{fig:method-glauber-direction}
+\end{figure}
+%%% END fig:method-glauber-direction

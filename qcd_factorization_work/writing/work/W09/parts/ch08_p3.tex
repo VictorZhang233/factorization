@@ -1,0 +1,141 @@
+% -----------------------------------------------------------------------------------------------------
+\section{矩与定域算符}\label{sec:pdf-moments}
+
+\cref{ch:dis}的算符乘积展开给出结构函数的\emph{矩}：每个偶数矩等于 Wilson 系数乘以扭度 2 定域算符的约化矩阵元 $A^{(n)}_i$（\cref{thm:dis-moments}）。与本章定义的桥梁是“PDF 的 $n$ 阶矩 $=A^{(n)}$”：对裸算符，它是光线算符在 $w^-=0$ 处的 Taylor 展开；对重整化的量，它要求 PDF 重整化核的矩恰为定域算符的重整化常数。
+
+\begin{definition}[光线算符]\label{def:pdf-lightray}
+称 $O_q(w^-)\equiv\bar\psi_q(w)\gamma^+W[w,0]\psi_q(0)$（$w=w^-n_B$）为夸克光线算符（light-ray operator），$O_g(w^-)\equiv\sum_jG^{+j}_a(w)W^{(A)}_{ab}[w,0]G^{+j}_b(0)$ 为胶子光线算符。其前向矩阵元与分布互为 Fourier 变换：
+\begin{equation}\label{eq:pdf-ioffe}
+\begin{gathered}
+M_q(w^-)\equiv\langle P|O_q(w^-)|P\rangle_{\mathrm c}=2P^+\!\int\!\dd\xi\,\ee^{\ii\xi P^+w^-}f_q(\xi),\\
+M_g(w^-)\equiv\langle P|O_g(w^-)|P\rangle_{\mathrm c}=(P^+)^2\!\int\!\dd\xi\,\ee^{\ii\xi P^+w^-}\xi f_g(\xi).
+\end{gathered}
+\end{equation}
+由推动不变性，$M_q/P^+$ 与 $M_g/(P^+)^2$ 只通过 $P\cdot w=P^+w^-$ 依赖于 $w^-$。
+\uses{def:pdf-quark,def:pdf-gluon}
+\end{definition}
+
+\cref{eq:pdf-ioffe}是\cref{eq:pdf-fq}、\cref{eq:pdf-fg}的逆变换。$P\cdot w$ 在光锥上的作用相当于 Ioffe 时间；\cref{ch:lamet}的准分布与赝分布使用类空分离的类比（\cref{def:lattice-quasi}）。
+
+\begin{lemma}[Wilson 线顶点的矩 = 定域算符顶点 \tagR]\label{lem:pdf-wilson-moments}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）
+设算符顶点不注入动量（流出夸克的动量等于流入夸克与全部附着胶子的动量之和）。对 $n\ge1$、$m\ge0$，$\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}O_q(w^-)$ 的 $m$ 胶子顶点的 $n$ 阶矩 $\int\dd\xi\,\xi^{n-1}(\cdots)$ 等于 $(2(P^+)^n)^{-1}$ 乘以 $\bar\psi\gamma^+(\ii D^+)^{n-1}\psi$ 的 $m$ 胶子顶点（$m\ge n$ 时两者为零）。单胶子情形（胶子动量 $q$、色 $a$、指标 $\mu$ 流入；夸克 $k_1$ 流入、$k_2=k_1+q$ 流出）：
+\begin{equation}\label{eq:pdf-vertex1}
+\frac{g\,t^an_B^\mu\gamma^+}{2q^+}\Big[\delta(\xi P^+-k_2^+)-\delta(\xi P^+-k_1^+)\Big]\ \xrightarrow{\ n\ \text{阶矩}\ }\ \frac{g\,t^an_B^\mu\gamma^+}{2(P^+)^n}\sum_{j=0}^{n-2}(k_2^+)^j(k_1^+)^{n-2-j}.
+\end{equation}
+% VF-PDF-12
+一般地，对固定的附着次序（色因子 $t^{a_m}\cdots t^{a_1}$），两边都等于 $g^mn_B^{\mu_m}\cdots n_B^{\mu_1}t^{a_m}\cdots t^{a_1}\gamma^+$ 乘以均差 $x^{n-1}[\kappa_0,\dots,\kappa_m]=h_{n-1-m}(\kappa_0,\dots,\kappa_m)$，$\kappa_i=k_1^++q_1^++\dots+q_i^+$，$h_r$ 为 $r$ 次完全齐次对称多项式。
+\uses{def:pdf-lightray,prop:prelim-wilson-rules,lem:appL-divided-differences}
+\end{lemma}
+
+\begin{proof}
+$m=0$：$\int\frac{\dd w^-}{4\pi}\ee^{-\ii(\xi P^+-k^+)w^-}=\frac12\delta(\xi P^+-k^+)$，其 $n$ 阶矩 $\frac12(k^+)^{n-1}/(P^+)^n$ 对应零胶子顶点 $\gamma^+(k^+)^{n-1}$。$m=1$：由\cref{eq:pdf-W}与 $A(x)=\int\frac{\dd^4q}{(2\pi)^4}\ee^{-\ii q\cdot x}\tilde A(q)$（$q$ 流入 Wilson 线，\cref{prop:prelim-wilson-rules}），$W[w,0]$ 的单胶子项为 $\ii g\,t^a\tilde A^{a+}\int_0^{w^-}\dd z\,\ee^{-\ii q^+z}=g\,t^a\tilde A^{a+}(1-\ee^{-\ii q^+w^-})/q^+$（$q^+=0$ 处极点可去）；乘上 $\bar\psi(w)$ 的 $\ee^{\ii k_2^+w^-}$，$w^-$ 依赖为 $\frac{g}{q^+}(\ee^{\ii k_2^+w^-}-\ee^{\ii k_1^+w^-})$，Fourier 变换即\cref{eq:pdf-vertex1}左边，其矩为 $\frac{g\,t^an_B^\mu\gamma^+}{2(P^+)^n}\frac{(k_2^+)^{n-1}-(k_1^+)^{n-1}}{k_2^+-k_1^+}$，即右边。另一方面 $\ii D^+=\ii\partial^++gA^+$，$(\ii D^+)^{n-1}$ 中含一个 $gA^+$ 的项为 $\sum_j(\ii\partial^+)^jgA^+(\ii\partial^+)^{n-2-j}$；$\ii\partial^+$ 给出其右侧全部场的加号动量之和，即 $A^+$ 右侧为 $k_1^+$、左侧为 $k_2^+$，定域顶点恰与之相同。一般 $m$ 见\cref{lem:appL-divided-differences}：路径排序积分是 $\ee^{\ii xw^-}$ 的均差（Hermite--Genocchi 公式），取矩化为 $x^{n-1}$ 的均差，而定域顶点按插入位置展开恰为完全齐次对称多项式。
+\end{proof}
+
+\begin{theorem}[PDF 的矩 = 扭度 2 定域算符矩阵元 \tagR]\label{thm:pdf-moments-local}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+对 $\MSbar$ 重整化的量与 $n\ge1$，
+\begin{equation}\label{eq:pdf-moments}
+\int_{-1}^1\dd\xi\,\xi^{n-1}f_q(\xi;\mu)=\frac{\langle P|[\bar\psi\gamma^+(\ii D^+)^{n-1}\psi]_\mu|P\rangle}{2(P^+)^n}=A^{(n)}_q(\mu)=\int_0^1\dd x\,x^{n-1}\big[q+(-1)^n\bar q\big](x;\mu),
+\end{equation}
+\begin{equation}\label{eq:pdf-moments-g}
+\int_0^1\dd x\,x^{n-1}g(x;\mu)=\frac{\langle P|[O_g^{(n)}]_\mu|P\rangle}{2(P^+)^n}=A^{(n)}_g(\mu)\quad(n\ \text{偶}),\qquad O_g^{(n)}=\sum_jG^{+j}(\ii D^+)^{n-2}G^{+j},
+\end{equation}
+% VF-PDF-11
+奇数 $n$ 时 $\langle P|O_g^{(n)}|P\rangle=0=\int_{-1}^1\xi^{n-1}f_g\,\dd\xi$。这里 $[\cdot]_\mu$ 是 $\MSbar$ 重整化的扭度 2 定域算符（\cref{def:dis-twist}），$\langle P|O_i^{\mu_1\cdots\mu_n}|P\rangle=2A^{(n)}_i(P^{\mu_1}\cdots P^{\mu_n}-\text{迹})$。同时，\cref{eq:pdf-Z}中与靶无关的卷积核 $Z$ 存在，其 Mellin 矩等于定域算符的重整化矩阵：$\int_0^1\dd z\,z^{N-1}Z(z)=Z_O(N)$（偶数 $N$ 在 $(q_k+\bar q_k,\,g)$ 扇区，奇数 $N$ 在 $q_k-\bar q_k$ 扇区）。
+非微扰地位：对强子态需\cref{asm:intro-wightman}、\cref{asm:intro-composite}(C3)（MA0）。
+\uses{lem:pdf-wilson-moments,thm:prelim-composite-renorm,def:dis-twist,thm:pdf-support-pt,prop:appL-bare,prop:appL-renormalized,asm:intro-wightman,asm:intro-composite}
+\end{theorem}
+
+\begin{proof}
+证明见\cref{app:appL}，要点有三。(1) 裸恒等式（\cref{prop:appL-bare}）：由支撑（\cref{thm:pdf-support-pt}），$M_q(w^-)$ 是整函数，矩是 $w^-=0$ 处的导数；由\cref{eq:pdf-W}，$\partial_{w^-}[\bar\psi(w)W[w,0]]=[\bar\psi\overleftarrow{D}{}^+](w)W[w,0]$，迭代给出裸定域算符，前向矩阵元中全导数为零，导数可移到右边——在顶点层次即\cref{lem:pdf-wilson-moments}；胶子用偶分布 $\xi f_g$。(2) 重整化（\cref{prop:appL-renormalized}）：由\cref{thm:prelim-composite-renorm}，红外正规化的部分子态中扭度 2 定域算符在 $\{O_q,O_g\}$ 内乘法重整化；在 $x$ 空间对部分子靶逐阶极小减除得 $Z(x)$，由极小减除的唯一性得 $Z(N)=Z_O(N)$。(3) 对任意态，$Z\otimes f_{\mathrm{bare}}$ 的每个极点系数是支撑在 $[-1,1]$ 上、各阶矩为零的分布，其 Fourier--Laplace 变换是 Taylor 系数全为零的整函数，故为零。
+\end{proof}
+
+三点说明。(i) 单圈时 (1)(2) 可精确到 $\varepsilon$ 逐图验证（\cref{ex:pdf-moments-exact}）。(ii) 左作用与右作用的协变导数只在\emph{前向}矩阵元中相等；对广义部分子分布（\cref{ch:excl}的\cref{def:excl-gpd}）两者相差全导数项。(iii) 本定理之后，\cref{thm:dis-moments}中的 $A^{(n)}_i$ 就是本章 PDF 的矩；对强子态，矩关系是\cref{asm:intro-composite}(C3) 的一部分。
+
+% -----------------------------------------------------------------------------------------------------
+\section{重整化与 DGLAP 方程}\label{sec:pdf-dglap}
+
+DGLAP 方程常被“推导”为截面与因子化标度无关的推论；若再用它“证明”截面与标度无关，就构成循环论证。本书的次序是：先由算符重整化得到 DGLAP（本节），再证明因子化（第~9~至~12~章），截面的标度无关性只是推论。
+
+%%FIG:splitting-vertices%%
+
+\begin{theorem}[由算符重整化得到 DGLAP 方程 \tagR]\label{thm:pdf-dglap}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+$\MSbar$ 分布满足
+\begin{equation}\label{eq:pdf-dglap}
+\frac{\partial f_i(x;\mu)}{\partial\ln\mu^2}=\sum_j\big(\mathcal P_{ij}\otimes f_j\big)(x),\qquad
+\mathcal P_{ij}=\frac{\as}{2\pi}P_{ij}+\order{\as^2},
+\end{equation}
+% VF-PDF-7 (normalization), VF-PDF-4
+$P_{ij}$ 为领头阶核（显式形式见紧接的命题）。把\cref{eq:pdf-Z}中的 $Z$ 写成 $Z=\mathbb 1+\sum_{k\ge1}Z^{(k)}/\varepsilon^k$，则 $\mathcal P=-\as\,\partial Z^{(1)}/\partial\as$，单圈 $Z^{(1)}=-\frac{\as}{2\pi}P+\order{\as^2}$；高阶极点 $Z^{(k)}$（$k\ge2$）由 $Z^{(1)}$ 与 $\beta$ 函数完全确定，使 $\mathcal P$ 有限。
+非微扰地位：强子态需\cref{asm:intro-composite}（MA0；部分子态无需）。
+\uses{def:pdf-quark,def:pdf-gluon,thm:pdf-moments-local,prop:qcd-rge,prop:prelim-beta,asm:intro-composite}
+\end{theorem}
+
+\begin{proof}
+(1) 由\cref{thm:pdf-moments-local}，$f^{\mathrm{ren}}=Z\otimes f^{\mathrm{bare}}$，$Z$ 是与靶无关的味道矩阵值卷积核，只含极点，且只通过 $\as(\mu)$ 依赖于 $\mu$（极小减除的抵消项不含显式的 $\mu$，\cref{prop:qcd-rge}）；裸算符与 $g_0$ 不含 $\mu$，故 $f^{\mathrm{bare}}$ 与 $\mu$ 无关。(2) $D$ 维中 $\mu^2\frac{\dd\as}{\dd\mu^2}=-\varepsilon\as+\beta(\as)$，$\beta=-\frac{\beta_0}{4\pi}\as^2+\order{\as^3}$（\cref{prop:prelim-beta}）。(3) 于是 $\partial_{\ln\mu^2}f^{\mathrm{ren}}=\frac{\dd Z}{\dd\ln\mu^2}\otimes f^{\mathrm{bare}}=\mathcal P\otimes f^{\mathrm{ren}}$，$\mathcal P\equiv\frac{\dd Z}{\dd\ln\mu^2}\otimes Z^{-1}$，$Z^{-1}$ 为卷积代数中的逆（$Z=\delta\,\mathbb 1+\order{\as}$ 作为形式幂级数可逆），矩阵次序如所写。(4) 展开：
+\[
+\mathcal P=(-\varepsilon\as+\beta)\frac{\partial Z}{\partial\as}\otimes Z^{-1}
+=-\as\frac{\partial Z^{(1)}}{\partial\as}+\frac1\varepsilon\Big[-\as\frac{\partial Z^{(2)}}{\partial\as}+\as\frac{\partial Z^{(1)}}{\partial\as}\otimes Z^{(1)}+\beta\frac{\partial Z^{(1)}}{\partial\as}\Big]+\order{\varepsilon^{-2}}.
+\]
+(5) 对每个靶，$f^{\mathrm{ren}}$ 与其 $\ln\mu^2$ 导数有限（每阶系数是 $\ln\mu^2$ 的多项式）；取一组部分子靶使 $f^{\mathrm{ren}}_{i/j}=\delta_{ij}\delta(1-x)+\order{\as}$ 可逆，则 $\mathcal P=(\partial_{\ln\mu^2}f^{\mathrm{ren}})\otimes(f^{\mathrm{ren}})^{-1}$ 有限。故 (4) 中 $\varepsilon$ 的负幂系数逐个为零（'t Hooft 一致性条件，如 $\as\partial_{\as}Z^{(2)}=(\as\partial_{\as}Z^{(1)})\otimes Z^{(1)}+\beta\,\partial_{\as}Z^{(1)}$），有限部分给出 $\mathcal P=-\as\partial Z^{(1)}/\partial\as$。(6) 由\cref{eq:pdf-Z}，$Z^{(1)}=-\frac{\as}{2\pi}P+\order{\as^2}$，故 $\mathcal P=\frac{\as}{2\pi}P+\order{\as^2}$；两圈的一致性条件给出 $Z^{(2)}=(\frac{\as}{2\pi})^2[\frac12P\otimes P+\frac{\beta_0}4P]+\order{\as^3}$。(7) 推导只用到算符定义与其重整化，没有用任何因子化定理；对强子态，$f^{\mathrm{ren}}$ 的存在由\cref{asm:intro-composite}(C3) 保证，(3) 的代数不变。
+\end{proof}
+
+\cref{eq:pdf-dglap}的物理图像见\cref{fig:dglap-ladder}：在物理规范中，领头对数来自横动量强序的梯形图。这只是图像，定理是\cref{thm:pdf-dglap}。
+
+%%FIG:dglap-ladder%%
+
+\begin{proposition}[领头阶分裂函数 \tagR]\label{prop:pdf-lo-kernels}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+在单圈阶（领头阶）：
+(a) 由算符定义算出的 $D$ 维实辐射核（夸克自旋平均 $\frac12$，胶子极化平均 $\frac1{D-2}$）为
+\begin{equation}\label{eq:pdf-Phat}
+\begin{aligned}
+\hat P_{qq}&=C_F\Big[\frac{1+z^2}{1-z}-\varepsilon(1-z)\Big], &
+\hat P_{gq}&=C_F\Big[\frac{1+(1-z)^2}{z}-\varepsilon z\Big],\\
+\hat P_{qg}&=T_F\Big[1-\frac{2z(1-z)}{1-\varepsilon}\Big], &
+\hat P_{gg}&=2C_A\Big[\frac{z}{1-z}+\frac{1-z}{z}+z(1-z)\Big];
+\end{aligned}
+\end{equation}
+% VF-PDF-6
+(b) 领头阶分裂函数为
+\begin{equation}\label{eq:pdf-Pij}
+\begin{gathered}
+P_{qq}=C_F\Big[\frac{1+z^2}{1-z}\Big]_+=C_F\Big[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\Big],\qquad P_{qg}=T_F\big[z^2+(1-z)^2\big],\\
+P_{gq}=C_F\frac{1+(1-z)^2}{z},\qquad P_{gg}=2C_A\Big[\frac{z}{(1-z)_+}+\frac{1-z}{z}+z(1-z)\Big]+\frac{\beta_0}{2}\delta(1-z),
+\end{gathered}
+\end{equation}
+% VF-PDF-7
+$\frac{z}{(1-z)_+}\equiv z[\frac1{1-z}]_+$；单态演化 $\frac{\dd}{\dd\ln\mu^2}\binom{\Sigma}{g}=\frac{\as}{2\pi}\begin{pmatrix}P_{qq}&2n_fP_{qg}\\P_{gq}&P_{gg}\end{pmatrix}\otimes\binom{\Sigma}{g}$，$\Sigma=\sum_k(q_k+\bar q_k)$；求和规则 $\int_0^1P_{qq}=0$，$\int_0^1z[P_{qq}+P_{gq}]=0$，$\int_0^1z[P_{gg}+2n_fP_{qg}]=0$；
+(c) Mellin 矩 $\gamma_{ij}(N)=\int_0^1z^{N-1}P_{ij}$ 为
+\begin{equation}\label{eq:pdf-gammas}
+\begin{gathered}
+\gamma_{qq}=C_F\Big[\frac32+\frac{1}{N(N+1)}-2S_1(N)\Big],\qquad \gamma_{qg}=T_F\frac{N^2+N+2}{N(N+1)(N+2)},\\
+\gamma_{gq}=C_F\frac{N^2+N+2}{(N-1)N(N+1)},\qquad \gamma_{gg}=2C_A\Big[\frac{1}{N(N-1)}+\frac{1}{(N+1)(N+2)}-S_1(N)\Big]+\frac{\beta_0}{2};
+\end{gathered}
+\end{equation}
+% VF-PDF-8
+(d) $N=2$ 单态矩阵为 $\begin{pmatrix}-\frac43C_F&\frac23n_fT_F\\\frac43C_F&-\frac23n_fT_F\end{pmatrix}$，本征值 $0$ 与 $-\frac{4C_F+2n_fT_F}{3}$；对 SU(3)，$\langle x\rangle_\Sigma\to\frac{3n_f}{16+3n_f}$；非单态矩的领头阶演化为 $M^{\mathrm{NS}}_n(Q^2)=M^{\mathrm{NS}}_n(Q_0^2)[\as(Q^2)/\as(Q_0^2)]^{-2\gamma_{qq}(n)/\beta_0}$；
+% VF-PDF-9
+(e) 与文献约定的换算：MVV（$a_s=\frac{\as}{4\pi}$，$\gamma^{(n)}=-\int x^{N-1}P^{(n)}$）有 $P^{(0)}_{\mathrm{MVV}}=2P$、$\gamma^{(0)}_{\mathrm{MVV}}=-2\gamma$；Gross--Wilczek 与 Georgi--Politzer 的 $\mu\frac{\dd O_N}{\dd\mu}=-\gamma_OO_N$ 有 $\gamma_O=-\frac{\as}{\pi}\gamma(N)$；定域算符按 $\frac{\dd O}{\dd\ln\mu^2}=\frac{\as}{2\pi}\Gamma O$ 有 $\Gamma_{qq}=\gamma_{qq}$、$\Gamma_{q_kg}=2\gamma_{qg}$、$\Gamma_{gq}=\gamma_{gq}$、$\Gamma_{gg}=\gamma_{gg}$。
+% VF-PDF-10
+\uses{thm:pdf-dglap,def:pdf-quark,def:pdf-gluon,thm:pdf-moments-local}
+\end{proposition}
+
+\begin{proof}
+(a) 取 $A^+=0$ 规范（$W=1$），靶为无质量在壳部分子 $p=(p^+,0^-,\bm 0_{\mathrm T})$，末态为一个无质量实部分子 $l=\big((1-z)p^+,\frac{\bm l_{\mathrm T}^2}{2(1-z)p^+},\bm l_{\mathrm T}\big)$，$k=p-l$，$k^+=zp^+$，$k^2=-\bm l_{\mathrm T}^2/(1-z)$。以 $q\leftarrow q$ 为例：振幅 $\langle l,a,\epsilon|\psi(0)|p\rangle=-g\,t^a\frac{\sla k\sla\epsilon^*}{k^2}u(p)$，物理极化和 $d^{\mu\nu}(l)=-g^{\mu\nu}+\frac{l^\mu n_B^\nu+n_B^\mu l^\nu}{l^+}$。代入\cref{eq:pdf-cut}（含其中的 $\frac12$），对靶自旋平均、对色求和平均（$C_F$），一粒子相空间中的 $l^+$ 被 $\delta$ 函数固定，得
+\[
+f^{\mathrm{real}}_{q/q}(z)=\frac{g^2C_F}{(2\pi)^{D-1}}\!\int\!\dd^{D-2}\bm l_{\mathrm T}\,
+\frac{\TrD[\sla p\gamma_\nu\sla k\gamma^+\sla k\gamma_\mu]d^{\mu\nu}(l)}{4\cdot2l^+(k^2)^2}
+=\frac{g^2}{(2\pi)^{D-1}}\!\int\!\dd^{D-2}\bm l_{\mathrm T}\,\frac{\hat P_{qq}(z;\varepsilon)}{\bm l_{\mathrm T}^2},
+\]
+末步是 $D$ 维 Dirac 迹的直接计算。其余三道相同，只需：$g\leftarrow q$ 用胶子算符顶点 $X^{j\beta}=(k^+g^{j\alpha}-k^jn_B^\alpha)d_\alpha{}^\beta(k)$ 与\cref{eq:pdf-fg}的 $1/(zp^+)$；$q\leftarrow g$ 用 $\sum v\bar v=\sla l$ 与初态极化平均 $-g_\perp^{\mu\nu}/(D-2)$；$g\leftarrow g$ 用三胶子顶点与两个物理极化和。四道结果作为 $D$ 的有理函数精确等于\cref{eq:pdf-Phat}。
+(b) 有红外正规化时 $\int\dd^{2-2\varepsilon}\bm l_{\mathrm T}/(\bm l_{\mathrm T}^2+M^2)=\pi^{1-\varepsilon}\Gamma(\varepsilon)M^{-2\varepsilon}$，而 $\MSbar$ 中 $\frac{g_0^2}{(2\pi)^{3-2\varepsilon}}\pi^{1-\varepsilon}=\frac{\as}{2\pi}\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}$，故实辐射的紫外极点为 $\frac{\as}{2\pi}\frac1\varepsilon\hat P_{ij}(z;0)$，对 $z<1$ 给出 $Z^{(1)}_{ij}=-\frac{\as}{2\pi}\hat P_{ij}(z;0)$，由\cref{thm:pdf-dglap}，$P_{ij}=\hat P_{ij}(z;0)$（$z<1$）。$z=1$ 处只能出现 $\delta(1-z)$ 与正规化 $1/(1-z)$ 的加号分布，且只有对角道有虚图。$\delta$ 项由守恒律确定：夸克数流 $\bar\psi\gamma^\mu\psi$ 守恒，其荷是好量子数，故 $\bar\psi\gamma^+\psi$ 不需重整化，由\cref{thm:pdf-moments-local}（$n=1$）与\cref{thm:pdf-dglap}得 $\int_0^1P_{qq}=0$，即 $b_q=C_F\int_0^1(1+z)\dd z=\frac32C_F$；能动张量守恒且其荷为四动量，故 $T^{++}=\sum_qO^{(2)}_q+O^{(2)}_g$ 不需重整化（\cite{Collins1984}），由 $n=2$ 得 $\sum_i\int_0^1zP_{ij}=0$。胶子列用 $\int_0^1\frac{z^2}{(1-z)_+}=-\frac32$、$\int_0^1(1-z)=\frac12$、$\int_0^1z^2(1-z)=\frac1{12}$、$2n_fT_F\int_0^1z[z^2+(1-z)^2]=\frac23n_fT_F$ 得 $b_g=\frac{11}6C_A-\frac23n_fT_F=\frac{\beta_0}2$；夸克列 $\int_0^1zP_{qq}=-\frac43C_F$ 与 $\int_0^1zP_{gq}=\frac43C_F$ 之和为零，是不含待定参数的独立检验。两种写法的 $P_{qq}$ 相差 $\delta(1-z)\int_0^1\frac{2-(1+z^2)}{1-z}\dd z=\frac32\delta(1-z)$。电荷共轭给出 $P_{\bar q\bar q}=P_{qq}$ 等，领头阶 $P_{q\bar q}=0$；单态矩阵中的 $2n_fP_{qg}$ 来自每味夸克与反夸克各一份。
+(c) 由 $\int_0^1\frac{z^{N-1}-1}{1-z}\dd z=-S_1(N-1)$（$S_1(N)=\psi(N+1)+\gamma_E$）得 $\int_0^1z^{N-1}[\frac{1+z^2}{1-z}]_+=\frac32-S_1(N-1)-S_1(N+1)=\frac32+\frac{1}{N(N+1)}-2S_1(N)$；其余直接积分。
+(d) $\gamma_{qq}(2)=-\frac43C_F$，$\gamma_{gq}(2)=\frac43C_F$，$2n_f\gamma_{qg}(2)=\frac23n_fT_F$，$\gamma_{gg}(2)=-\frac23n_fT_F$；两列之和为零，故 $(1,1)$ 是本征值 $0$ 的左本征矢，另一本征值等于迹；本征值 $0$ 的右本征矢 $\propto(2n_fT_F,4C_F)$ 给出 $\langle x\rangle_\Sigma\to\frac{2n_fT_F}{4C_F+2n_fT_F}=\frac{3n_f}{16+3n_f}$。非单态矩满足 $\frac{\dd M_n}{\dd\ln\mu^2}=\frac{\as}{2\pi}\gamma_{qq}(n)M_n$，与 $\frac{\dd\as}{\dd\ln\mu^2}=-\frac{\beta_0}{4\pi}\as^2$ 联立积分即得幂律。
+(e) 由各文献的定义直接推出。
+\end{proof}
+
+$\delta$ 项也可直接由虚图得到，两条路一致：$qq$ 道见\cref{prop:pdf-pqq-operator}（$\frac32=2-\frac12$），$gg$ 道的 $\frac{\beta_0}2$ 见\cref{prop:pdf-local-anomalous}。领头阶非单态时，MVV 的 $\gamma^{(0)}_{\mathrm{ns}}=C_F[4S_1(N)-3-\frac{2}{N(N+1)}]$\cite{MochVermaserenVogt2004}、Gross--Wilczek 与 Georgi--Politzer 的 $\gamma_O=\frac{\as}{2\pi}C_F[1-\frac{2}{N(N+1)}+4\sum_{j=2}^N\frac1j]$\cite{GrossWilczek1974,GeorgiPolitzer1974}，都等于 $\gamma_{qq}(N)$ 乘以 (e) 中的因子；延拓到非整数 $N$ 的唯一性见\cref{prop:appK-continuation}。四种分裂见\cref{fig:splitting-vertices}。
+

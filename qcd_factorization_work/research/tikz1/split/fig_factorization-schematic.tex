@@ -1,0 +1,58 @@
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt},
+         t1 parton/.style={draw,solid,line width=0.8pt}}
+\begin{tikzpicture}[fd]
+  % ---------------- left: full cut diagram ----------------
+  \begin{scope}
+    \coordinate (L) at (-0.95,0); \coordinate (R) at (0.95,0);
+    \draw[photon] (L) -- (R);
+    \foreach \y in {0.5,0.72,-0.5,-0.72} \draw[plain] (-0.95,\y) -- (0.95,\y);
+    \draw[t1 hadron] (-2.2,0.62) -- (-0.95,0.62);
+    \draw[t1 hadron] (-2.2,-0.62) -- (-0.95,-0.62);
+    \draw[t1 hadron] (0.95,0.62) -- (2.2,0.62);
+    \draw[t1 hadron] (0.95,-0.62) -- (2.2,-0.62);
+    \draw[blob] (L) ellipse[x radius=0.5,y radius=1.05];
+    \draw[blob] (R) ellipse[x radius=0.5,y radius=1.05];
+    \draw[cut] (0,-1.45) -- (0,1.45);
+    \node[left] at (-2.2,0.62) {$B$}; \node[left] at (-2.2,-0.62) {$A$};
+    \node[right] at (2.2,0.62) {$B$}; \node[right] at (2.2,-0.62) {$A$};
+    \node[above,font=\footnotesize,inner sep=2pt] at (0.25,0.04) {$Y$};
+    \node[font=\footnotesize] at (0.25,1.02) {$X$};
+  \end{scope}
+  \node at (3.25,0) {$=\;\displaystyle\sum_{i,j}$};
+  % ---------------- right: factorized form ----------------
+  \begin{scope}[shift={(6.45,0)}]
+    \coordinate (HL) at (-0.85,0); \coordinate (HR) at (0.85,0);
+    \draw[photon] (HL) -- (HR);
+    \draw[t1 parton] (-0.85,-1.62) -- (HL);
+    \draw[t1 parton] (HR) -- (0.85,-1.62);
+    \draw[t1 parton] (-0.85,1.62) -- (HL);
+    \draw[t1 parton] (HR) -- (0.85,1.62);
+    \draw[t1 hadron] (-2.25,2.0) -- (2.25,2.0);
+    \draw[t1 hadron] (-2.25,-2.0) -- (2.25,-2.0);
+    \draw[jetB blob] (0,2.0) ellipse[x radius=1.4,y radius=0.42];
+    \draw[jet blob] (0,-2.0) ellipse[x radius=1.4,y radius=0.42];
+    \draw[hard blob] (HL) circle[radius=0.36];
+    \draw[hard blob] (HR) circle[radius=0.36];
+    \node at (HL) {$H$}; \node at (HR) {$H^*$};
+    \node at (-0.66,2.0) {$f_{j/B}$};
+    \node at (-0.66,-2.0) {$f_{i/A}$};
+    \draw[cut] (0,-2.7) -- (0,2.7);
+    \path[mom={$\xi_a P_A$},mom pos=0.45] (-0.85,-1.6) -- (-0.85,-0.36);
+    \path[mom'={$\xi_b P_B$},mom pos=0.45] (-0.85,1.6) -- (-0.85,0.36);
+    \node[left] at (-2.25,2.0) {$B$}; \node[right] at (2.25,2.0) {$B$};
+    \node[left] at (-2.25,-2.0) {$A$}; \node[right] at (2.25,-2.0) {$A$};
+    \node[above,font=\footnotesize,inner sep=2pt] at (0.25,0.04) {$Y$};
+    \node[right,font=\small] at (0.85,0.9) {$j$};
+    \node[right,font=\small] at (0.85,-0.9) {$i$};
+  \end{scope}
+  \node[font=\small] at (10.35,0) {$+\;\order{(\Lambda/Q)^p}$};
+\end{tikzpicture}
+\caption{强子—强子碰撞 $A+B\to Y+X$ 中共线因子化的图示（$Y$ 为被观测的硬末态，例如 Drell--Yan 过程中的 $\gamma^*\to\ell^+\ell^-$）。
+左：完整的割图，$X$ 为未观测末态。右：领头幂次下，割图分解为强子 $A$、$B$ 的部分子分布 $f_{i/A}(\xi_a;\mu)$、$f_{j/B}(\xi_b;\mu)$
+（割图形式见\cref{fig:pdf-operator}，剩余部分包含在其中）与可微扰计算的硬部分 $H_{ij}$（由振幅 $H$ 与共轭振幅 $H^*$ 组成，$Y$ 穿过割线），
+二者通过部分子动量分数 $\xi_a$、$\xi_b$ 的卷积相连：$\sigma=\sum_{i,j}H_{ij}\otimes f_{i/A}\otimes f_{j/B}+\order{(\Lambda/Q)^p}$。
+软胶子与 Glauber 胶子的交换在单举截面中相消（对 Drell--Yan 过程这一步只有全阶论证），因此右图中没有软因子。}
+\label{fig:factorization-schematic}
+\end{figure}

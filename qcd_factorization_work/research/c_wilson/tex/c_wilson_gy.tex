@@ -1,0 +1,116 @@
+% =====================================================================================
+% c_wilson_gy.tex —— Grammer–Yennie 型 K/G 分解：共线与软连接、幂次计数、Glauber 区
+% （research/c_wilson，对应 DERIVATION.md §6；验证脚本 scripts/s5_grammer_yennie.py、scripts/s6_i0_poles.py）
+% =====================================================================================
+\section{Grammer--Yennie 分解}\label{sec:cw-gy}
+
+\begin{remark}[QED 中的原始形式]\label{rem:cw-gy-orig}
+Grammer 与 Yennie~\cite{GrammerYennie1973} 把连接末态（$p_f$）与初态（$p_i$）带电线的虚光子传播子分为
+（此处按 Sen、Indumathi、Choudhury~\cite{SenIndumathiChoudhury2019} 式 (7)–(9) 的转述，\emph{原文待核对}）
+\begin{equation}\label{eq:cw-gy-orig}
+\begin{gathered}
+g_{\mu\nu}=\big[g_{\mu\nu}-b_k(p_f,p_i)k_\mu k_\nu\big]+b_k(p_f,p_i)k_\mu k_\nu\equiv G+K,\\
+b_k(p_f,p_i)=\frac12\Big[\frac{(2p_f-k)\cdot(2p_i-k)}{((p_f-k)^2-m^2)((p_i-k)^2-m^2)}+(k\to-k)\Big].
+\end{gathered}
+\end{equation}
+由于 $(2p-k)\cdot k=-[(p-k)^2-m^2]$，K 部分与两条对流流相缩并后恰为 $b_k$，即对 $k$ 对称化的程函乘积：全部红外发散都在 K 光子中
+（借助 Ward 恒等式因子化并指数化），G 光子红外有限。因子化证明中使用的是下面的“单侧”形式。
+\end{remark}
+
+\begin{definition}[共线连接的 K/G 分解]\label{def:cw-kg-coll}
+设 $A$ 共线子图 $C$ 经 $N$ 个胶子连到硬部分 $H$，$H\cdot C=H^{\mu_1\cdots\mu_N}\prod_jg_{\mu_j\nu_j}C^{\nu_1\cdots\nu_N}$，$k_j$ 为流入 $H$ 的动量。
+按 Collins~\cite{Collins2011} 式 (11.4)–(11.6)（按其勘误表更正上下标）对每个胶子取
+\begin{equation}\label{eq:cw-kg-coll}
+\begin{gathered}
+g_{\mu\nu}=K_{\mu\nu}+G_{\mu\nu},\qquad K_{\mu\nu}(k)=\frac{k_\mu\,w_{2\nu}}{k\cdot w_2-\ii0},\\
+G_{\mu\nu}=g_{\mu\nu}-\frac{k_\mu\,w_{2\nu}}{k\cdot w_2-\ii0},\qquad w_2=n_B=(0^+,1^-,\bm 0_{\mathrm T}),
+\end{gathered}
+\end{equation}
+$\mu$ 为 $H$ 上的指标，$\nu$ 为 $C$ 上的指标，$k\cdot w_2=k^+$。$-\ii0$ 适用于 K 胶子连在末态线上的情形（DIS）；连在初态线上（DY）时取 $+\ii0$，
+两者都与被近似的传播子的极点一致（\cref{prop:cw-dis-seed}）。
+\end{definition}
+
+\begin{proposition}[共线 K/G 分解的性质]\label{prop:cw-kg-coll}
+(1)\,\tagR\ 代数性质：$G_{\mu\nu}k^\nu=0$（G 在共线一侧消去标量极化）；K 部分给出 $k_\mu H^\mu$，可用 Ward 恒等式化为沿 $n_B$ 的 Wilson 线
+（\cref{prop:cw-dis-seed}）；且严格有 $H\cdot G\cdot C=H\cdot\big(C-\frac{C^+}{k^+}k\big)$。
+(2)\,\tagA\ 幂次计数：$A$ 共线区 $k\sim(1,\lambda^2,\lambda)Q$，$C^\nu\sim(1,\lambda^2,\lambda)C^+$，$H$ 为硬部分，则
+$C-\frac{C^+}{k^+}k=(0,\order{\lambda^2},\order{\lambda})\,C^+$，从而 $H\cdot G\cdot C=\order{\lambda}\,H\cdot C$：在最少部分子内容之外，每多一个 G 胶子至少压低
+一个 $\lambda$；K 胶子（经推动放大的 $A^+$ 分量）不付代价，任意多个都出现在领头幂次，并由 Ward 恒等式求和为 Wilson 线。在 $H$ 中还可取
+$k\to\hat k=(k^+,0,\bm 0_{\mathrm T})$（误差 $\order{\lambda}$），使 $\hat k_\mu H^\mu(\hat k)$ 成为类光 K 胶子的 Ward 恒等式。
+\end{proposition}
+
+\begin{proof}
+(1) 直接代入 \cref{eq:cw-kg-coll}；$H\cdot G\cdot C=H\cdot C-\frac{(H\cdot k)\,C^+}{k^+}=H\cdot\big(C-\frac{C^+}{k^+}k\big)$。(2) 由 (1) 与给定的标度。
+数值检验（单圈 DIS 顶角被积函数，胶子与靶夸克共线）：一般离壳共线母线 $|G|/|\text{全}|\propto\lambda^{1.00}$；在壳无质量母夸克时
+$\propto\lambda^{2.00}$（坏分量为零：$\sla Pu(P)=0$，故 $S(P-k)\gamma_{\mathrm T}u(P)$ 额外压低）；K 项严格等于 $g\times$Born$\times$PDF 中 Wilson 线顶角图。
+\end{proof}
+
+\begin{remark}[胶子作为活动部分子]\label{rem:cw-gluon-active}
+若从 $C$ 进入 $H$ 的唯一部分子是一个胶子，则 $k\cdot H=0$（其余外线物理时的 Ward 恒等式），K 项为零，领头项来自 G 项：
+\begin{equation}\label{eq:cw-gluon-active}
+H\cdot C=H^+\Big(C^--\frac{k^-}{k^+}C^+\Big)-\bm H_{\mathrm T}\cdot\Big(\bm C_{\mathrm T}-\frac{\bm k_{\mathrm T}}{k^+}C^+\Big),
+\end{equation}
+即胶子 PDF 中场强 $G^{+j}$ 的组合 $k^+A^j-k^jA^+$（数值上用光子–胶子融合的硬部分验证）。
+\end{remark}
+
+\begin{definition}[软连接的 K/G 分解]\label{def:cw-kg-soft}
+软胶子 $k$ 连接 $A$ 共线线（指标 $\mu$）与软子图 $S$（指标 $\nu$）时取
+\begin{equation}\label{eq:cw-kg-soft}
+K^{\mu\nu}_{\mathrm s}(k)=\frac{k^\mu\,n_A^\nu}{n_A\cdot k\pm\ii0},\qquad G^{\mu\nu}_{\mathrm s}=g^{\mu\nu}-K^{\mu\nu}_{\mathrm s},\qquad
+n_A=(1^+,0^-,\bm 0_{\mathrm T}),\ \ n_A\cdot k=k^-,
+\end{equation}
+$A$ 线为入射线时取 $+\ii0$，出射线时取 $-\ii0$。
+\end{definition}
+
+\begin{proposition}[软 K/G 分解与 Glauber 区]\label{prop:cw-kg-soft}
+(1)\,\tagR\ $J\cdot K_{\mathrm s}\cdot S=(J\cdot k)\,S^-/k^-$：喷注一侧的 Ward 恒等式使软胶子与 $J$ 退耦，并连到软因子中沿 $n_A$ 的 Wilson 线上；
+纯程函流 $J^\mu\propto n_A^\mu$ 被 $G_{\mathrm s}$ 严格消去，余项为
+\begin{equation}\label{eq:cw-soft-rem}
+J\cdot G_{\mathrm s}\cdot S=J^-S^+-\bm J_{\mathrm T}\cdot\bm S_{\mathrm T}-\frac{(J^-k^+-\bm J_{\mathrm T}\cdot\bm k_{\mathrm T})\,S^-}{k^-}.
+\end{equation}
+(2)\,\tagA\ 因而 $G_{\mathrm s}$ 的相对大小为 $\order{\lambda\,|\bm k_{\mathrm T}|/|k^-|}$：软区（各分量同阶）为 $\order{\lambda}$；Glauber 区
+（$|k^+k^-|\ll\bm k_{\mathrm T}^2$）为 $\order{1}$。故软近似只在把围道变形出 Glauber 区（或证明 Glauber 贡献相消）之后才成立。
+\end{proposition}
+
+\begin{proof}
+(1) 代数。(2) $A$ 共线流 $J^\mu=J^+n_A^\mu+\order{\lambda}$，余项 \cref{eq:cw-soft-rem} 的主导项为 $\bm J_{\mathrm T}\cdot\bm k_{\mathrm T}S^-/k^-$。数值检验（三组随机参数）：
+软区比值 $\propto\lambda^{1.00}$，Glauber 区比值趋于与 $\lambda$ 无关的 $\order{1}$ 常数（0.34、0.15、0.85）。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd]
+  \draw[jet blob] (0,0) ellipse (1.1 and 0.45); \node at (0,0) {$C$};
+  \draw[hard blob] (0,2.3) ellipse (1.0 and 0.42); \node at (0,2.3) {$H$};
+  \draw[quark] (-0.6,0.38) -- (-0.6,1.92);
+  \draw[longit] (0.1,0.45) -- (0.1,1.88);
+  \longitmark{(0.1,1.88)}{(0.1,1.88)}
+  \draw[gluon] (0.7,0.38) -- (0.7,1.93);
+  \node at (-0.22,1.15) {\small K};
+  \node at (1.05,1.15) {\small G};
+  \node at (0,-1.0) {(a) 共线连接};
+  \begin{scope}[xshift=5.2cm]
+    \draw[quark=0.2] (-2.0,0) -- (2.2,0);
+    \node[left] at (-2.0,0) {$J$};
+    \draw[soft blob] (0.3,2.1) circle (0.45); \node at (0.3,2.1) {$S$};
+    \draw[longit] (-0.6,0) to[out=80,in=200] (-0.12,1.95);
+    \longitmark{(-0.6,0)}{(-0.6,0)}
+    \node[vertex] at (-0.6,0) {};
+    \draw[gluon] (1.1,0) to[out=100,in=-30] (0.7,1.85);
+    \node[vertex] at (1.1,0) {};
+    \node[left] at (-0.65,0.9) {\small K};
+    \node[right] at (1.12,0.9) {\small G};
+    \node at (0,-1.0) {(b) 软连接};
+  \end{scope}
+\end{tikzpicture}
+\caption{K/G 分解的记号。蓝色胶子为 K 胶子，圆点标出带标量极化 $k^\mu$ 的一端：(a) 共线 K 胶子的 $k^\mu$ 端在硬部分 $H$ 上
+（\cref{def:cw-kg-coll}），经 Ward 恒等式化为沿 $n_B$ 的 Wilson 线；(b) 软 K 胶子的 $k^\mu$ 端在共线线 $J$ 上（\cref{def:cw-kg-soft}），
+经 Ward 恒等式与 $J$ 退耦并连到软因子中沿 $n_A$ 的 Wilson 线。G 胶子在领头幂次上被压低（共线：除胶子作为活动部分子外；软：Glauber 区之外）。}\label{fig:cw-kg}
+\end{figure}
+
+\paragraph{小结：哪一部分被幂次压低。}
+\begin{itemize}
+\item 连到 $H$ 的共线胶子：K 为领头（任意多个，求和为 Wilson 线），每多一个 G 胶子至少压低 $\lambda$；例外是作为活动部分子的单个横向极化胶子（胶子 PDF）。
+\item 连到共线线的软胶子：K 为领头（给出软因子中的 Wilson 线），G 压低 $\lambda$，但只在 Glauber 区之外成立。
+\item QED 的原始形式：K 包含全部红外发散，G 红外有限。
+\end{itemize}

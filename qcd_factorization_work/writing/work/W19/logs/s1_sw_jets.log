@@ -1,0 +1,31 @@
+== G: geometry of the two-jet criterion ==
+PASS  G1  rule (a)/(b) == exact arc criterion on 179547 random three-parton events
+PASS  G2  rule (a)/(b) == axis scan (mismatches only within 2e-3 of a boundary)   [mismatches 0, all near boundaries]
+PASS  G3  projecting a cone axis onto the event plane never increases the energy outside
+== A: analytic asymptotics ==
+PASS  A1  int_0^1 (2-2x+x^2) ln(1-x)/x dx = 5/4 - pi^2/3   [5/4 - pi**2/3 ; numeric -2.0398681336964528729]
+PASS  A2a I_3j -> 4 ln d ln 2eps + 3 ln d + 2pi^2/3 - 7/2
+PASS  A2b sigma_2j/sigma0 - 1 = -(C_F as/pi)[4 ln delta ln 2eps + 3 ln delta + pi^2/3 - 5/2]
+PASS  A3  ln((1-a)/a) = -ln d - ln(1-x3) - d + O(d^2) for 0 < x3 < 1
+== N: numerics ==
+   eps      delta    I3j(our numerics)   I3j(c_ee)        asymptotic     num-asym
+    1e-02   0.100       61.34319294       61.34319294     61.36852692   -2.53e-02
+    1e-03   0.030      156.38234148      156.38234158    156.38201146    3.30e-04
+    1e-04   0.010      289.23452048      289.23452057    289.23474401   -2.24e-04
+    1e-05   0.010      374.06168116      374.06168121    374.06542079   -3.74e-03
+    1e-06   0.003      578.06210169      578.06210170    578.06250864   -4.07e-04
+PASS  N1  numerics -> asymptotic formula (|diff| <= 30(eps|ln d| + d|ln eps|) at every point)
+PASS  N2  our integration == c_ee semi-analytic routine (rel. 1e-7)
+   two-jet coefficient c_2j = (sigma_2j/sigma0 - 1)/(C_F as/pi):
+    eps=  1e-02 delta= 0.100  c2j(num)=    -29.9216  [ln 2eps]=    -29.9132  [ln eps]=    -36.2973
+    eps=  1e-03 delta= 0.030  c2j(num)=    -77.4412  [ln 2eps]=    -77.4377  [ln eps]=    -87.1600
+    eps=  1e-04 delta= 0.010  c2j(num)=   -143.8673  [ln 2eps]=   -143.8669  [ln eps]=   -156.6351
+    eps=  1e-05 delta= 0.010  c2j(num)=   -186.2808  [ln 2eps]=   -186.2820  [ln eps]=   -199.0503
+    eps=  1e-06 delta= 0.003  c2j(num)=   -288.2811  [ln 2eps]=   -288.2812  [ln eps]=   -304.3875
+PASS  N3  (1e-6,0.003): c2j(num) = -288.2811 agrees with the ln(2eps) form -288.2812, not with ln(eps) -304.39
+PASS  N4  eps' = 2e-6 of the beam energy (=1e-6 of sqrt(s)): formula with ln eps' holds   [-288.2811 vs -288.2812]
+PASS  N5  BNRS form with beta = 2 eps, c0 = 10 - 4pi^2/3, equals our formula
+PASS  N6  eps=0.05 >> delta=0.005: |I3j - asymptotic| > 1 (formula not applicable)   [102.7041 vs 68.8885]
+
+SUMMARY: 13/13 checks passed
+python3 -I -u s1_sw_jets.py  268.06s user 1.45s system 82% cpu 5:28.41 total

@@ -1,0 +1,174 @@
+% ---------------------------------------------------------------------
+\section{减除项的因子化结构、重整化相容性与两级梯形图}\label{sec:disall-subtraction}
+
+减除定理（\cref{thm:method-subtraction}，全阶论证，[A]）给出 $\Gamma=\sum_RC_R\Gamma+r$，$r\in\mathfrak S(\Omega)$，但它本身不说明 $\sum_RC_R\Gamma$ 具有“硬部分 $\otimes$ PDF”的形式。
+DIS 只有一个共线方向、没有软区域，较小区域的共线子图\emph{包含}较大区域的共线子图；这使减除项具有嵌套的乘积结构，并可以与 $\MSbar$ 重整化逐阶对接。
+
+\begin{proposition}[DIS 减除项的因子化结构 \tagR]\label{prop:disall-factorized-subtraction}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-ward-product}、\cref{asm:appN-uv}（及\cref{prop:disall-regions}）。（本命题只涉及部分子态。）
+设 $\Gamma$ 遍历部分子靶 $j$ 的前向振幅在 $\as$ 某一固定阶 $n$ 的全部领头幂次图，区域如\cref{prop:disall-regions}，动量分配是适配的（每个区域的界面动量与其硬子图内部的圈动量彼此分开）。则
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 若 $R'<R$，则 $J_{R'}\supset J_R$，$H_{R'}\subset H_R$；因此 $T_{R'}$ 只改变 $H_R$ 的因子以及 $J_R$ 与 $H_R$ 之间的投影，从不改变 $J_R$ 内部的因子；
+\item $C_R\Gamma=T_R\prod_{R'<R}(1-T_{R'})\Gamma$，即“减去全部较小区域之后的硬因子在投影动量处的值”与“精确的 $J_R$”之积；
+\item 对全部图与全部区域求和，并按共线部分的阶 $n_J$ 分组，
+\begin{equation}\label{eq:disall-factorized}
+\sum_\Gamma\ \sum_{R:\ \mathrm{ord}(J_R)=n_J}C_R\Gamma=\sum_i\int\frac{\dd\xi}{\xi}\,\hat{\mathsf H}^{[n-n_J]}_i(\xi p,q)\,f^{\mathrm{bare},[n_J]}_{i/j}(\xi),
+\end{equation}
+其中 $f^{\mathrm{bare}}_{i/j}$ 是\cref{def:pdf-quark,def:pdf-gluon}的算符在部分子态 $j$ 中的 $D$ 维裸矩阵元（不作算符重整化），$\hat{\mathsf H}_i$ 只依赖于投影后的部分子动量 $\xi p$，
+与靶无关；色投影 $\Trc[HJ]\simeq\frac1{N_c}\Trc H\,\Trc J$（胶子为 $\frac1{N_c^2-1}$）。特别地，$T_{(j)}-r_{(j)}=\sum_i\hat{\mathsf H}^{\mathrm{bare}}_i\otimes f^{\mathrm{bare}}_{i/j}$。
+\end{enumerate}
+\uses{prop:method-product,def:method-subtraction,prop:disall-regions,def:pdf-quark,def:pdf-gluon,asm:appN-ward-product,asm:appN-uv,lem:appN-algebra}
+% errtype: E-W
+\end{proposition}
+
+\begin{proof}
+(i) 由\cref{prop:disall-regions}，每个领头区域由包含两个光子顶点的硬子图 $H_R$ 确定，$J_R$ 是其余部分；逐线偏序中 $A<H$，故 $R'\le R$ 当且仅当 $H_{R'}\subseteq H_R$，即 $J_{R'}\supseteq J_R$。
+$T_{R'}$ 在 $H_{R'}$ 中把界面动量换成 $\pi_+(k)$（适配的动量分配下内部圈动量不变），只改变 $H_{R'}\subset H_R$ 的因子；它在 $R'$ 的界面线上插入的投影，若该线在 $R$ 中为硬则位于 $H_R$ 内部，
+若该线属于 $J_R$ 则它也是 $R$ 的界面线，投影与 $T_R$ 的相同（$\frac12\gamma^-\gamma^+$ 或 $\mathcal P_A$），由幂等性合而为一。所以 $J_R$ 内部的因子不变。
+
+(ii) 只有一个共线方向，没有方向翻转的线；适配的动量分配下各近似子是坐标投影（动量分量置零加投影），幂等且满足 (Com)(Abs)（\cref{lem:appN-algebra}），区域集合取为交封闭的（附录~N 的约定 (GA2)），
+于是乘积公式\cref{prop:method-product}给出 $C_R\Gamma=T_R\prod_{R'<R}(1-T_{R'})\Gamma$。写 $\Gamma=H_R\otimes J_R$（对界面指标缩并、对界面动量积分），由 (i) 得 $\prod_{R'<R}(1-T_{R'})\Gamma=\tilde H_R\otimes J_R$，
+$\tilde H_R\equiv\prod_{R'<R}(1-T_{R'})H_R$，故 $C_R\Gamma=\int\frac{\dd^Dk}{(2\pi)^D}\Tr[\tilde H_R(\pi_+k)\frac14\gamma^-]\Tr[\gamma^+J_R(k)]$（胶子界面以 $\mathcal P_A$ 代替）。
+
+(iii) $\tilde H_R(\pi_+k)$ 只依赖于 $k^+=\xi p^+$，$k^-$、$\mathbf k_T$ 的积分只作用于 $J_R$ 并延伸到全部取值。以 $J_R(k)=\int\dd^Dw\,\ee^{\ii k\cdot w}\langle j|\bar\psi(0)\psi(w)|j\rangle$
+（含 K 胶子与 Wilson 线）计，由 $\int\dd k^-\dd^{D-2}\mathbf k_T\,\ee^{\ii k\cdot w}=(2\pi)^{D-1}\delta(w^+)\delta^{D-2}(\mathbf w_T)$、平移不变性与\cref{def:pdf-quark}的归一化 $\int\dd w^-/(4\pi)$，
+\begin{equation}\label{eq:disall-chain}
+\begin{aligned}
+\int\frac{\dd k^-\,\dd^{D-2}\mathbf k_T}{(2\pi)^D}\,\Tr\big[\gamma^+J_R(k)\big]
+&=\frac1{2\pi}\int\dd w^-\,\ee^{-\ii\xi p^+w^-}\langle j|\bar\psi(w)\gamma^+W[w,0]\psi(0)|j\rangle\\
+&=2f_{q/j}(\xi);
+\end{aligned}
+\end{equation}
+又 $\dd^Dk=p^+\dd\xi\,\dd k^-\dd^{D-2}\mathbf k_T$，故 $C_R\Gamma=\int\frac{\dd\xi}{\xi}\frac12\Tr[\tilde H_R(\xi p)\xi\sla p]f(\xi)$，其中 $\xi\sla p=\sum_su\bar u$，$\frac12\Tr[\cdots]$ 是对在壳部分子 $\xi p$ 自旋平均的硬振幅。
+对全部图求和时，K 胶子对 $\tilde H_R$ 的附着由\cref{asm:appN-ward-product}(WI1) 分离为沿 $n_B$ 的 Wilson 线（(WI1) 明确包括已被其他近似子改变过的被积函数），与 $J_R$ 合成\cref{def:pdf-quark,def:pdf-gluon}中算符的矩阵元，
+(WI2) 保证按共线部分的阶分组后得到\cref{eq:disall-factorized}；\cref{asm:appN-uv}(U1) 使每个图在被积函数层次上已作紫外重整化，(U2) 保证 $T_R$ 与紫外减除只差不领头的多项式。
+色平均的靶有 $\langle J_{ab}\rangle\propto\delta_{ab}$，K 胶子并入 Wilson 线后算符是色单态，故色投影对整个乘积成立。$\hat{\mathsf H}^{[n_H]}_i$ 定义为全部硬拓扑上 $\frac12\Tr[\tilde H_R(\xi p)\xi\sla p]$（胶子对 $D-2$ 个极化平均）之和，只依赖于部分子种类与投影动量，因而与靶无关。
+\end{proof}
+
+\noindent
+若较小区域使 $J_R$ 中的线变软（事件形状、Drell--Yan、TMD），$T_{R'}$ 会改变 $J_R$ 的因子，裸共线因子须换成“共线因子减去其零箱”（单圈离壳三角图中 $C_{C_1}\Gamma=T_{C_1}\Gamma-T_{C_1}T_S\Gamma$）；
+DIS 没有领头的软区域，这正是“DIS 是最简单情形”的精确含义。下面接上 $\MSbar$ 重整化。按\cref{asm:appN-multren}(Z1) 写 $f^{\mathrm{bare}}_N=Z_Nf^{\mathrm{ren}}_N$（部分子种类空间中的矩阵）；它与\cref{def:pdf-quark}中 $f_{\mathrm{ren}}=Z\otimes f_{\mathrm{bare}}$ 的 $Z$ 互为逆，
+单圈 $Z_N=1+\frac{\as}{2\pi}\frac1\varepsilon\gamma(N)+\order{\as^2}$，$\gamma_{ij}(N)=\int_0^1\dd z\,z^{N-1}P_{ij}$。
+
+\begin{theorem}[减除与 $\overline{\rm MS}$ 重整化的相容性（矩空间） \tagR]\label{thm:disall-renorm-compat}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-multren}（(Z1)、(Z3)(i)）、\cref{asm:appN-ir-regulator}、\cref{asm:appN-contour}（(b)）（及\cref{prop:disall-two-routes}、\cref{prop:disall-factorized-subtraction}的前提）。（本定理只涉及部分子态。）
+本定理的内容等级为 [C]（经由\cref{asm:appN-ir-regulator}）：它是正规子路线下的严格一致性陈述，任何全阶论证（[A]）的陈述都不以它为依赖；DIS 与其他过程的定理使用维数正规化路线\cref{asm:appN-multren}(Z3)(ii)。
+考虑非物理区前向振幅的第 $N$ 阶矩。由\cref{prop:disall-two-routes}(a)(b)与\cref{prop:disall-factorized-subtraction}，
+\begin{equation}\label{eq:disall-renorm-start}
+T_{(j),N}=\sum_i\hat{\mathsf H}^{\mathrm{bare}}_{i,N}\,f^{\mathrm{bare}}_{i/j,N}+r_{(j),N},\qquad |r_{(j),N}|\le C\lambda^aL^K .
+\end{equation}
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item （前提 (Z1)、\cref{asm:appN-ir-regulator}）$C_{i,N}\equiv\sum_k\hat{\mathsf H}^{\mathrm{bare}}_{k,N}Z_{N,ki}$ 在 $\varepsilon=0$ 处有限；
+\item $C_{i,N}$ 与靶及其红外正规化无关；（前提 (Z1)、(Z3)(i)）它等于维数正规化中部分子匹配系数的矩（\cref{prop:pdf-partonic-dr}的构造）；
+\item 逐阶地 $C^{[n]}=\lim_{\lambda\to0}\big[T^{[n]}_{(j)}-\sum_{m=0}^{n-1}C^{[m]}f^{\mathrm{ren}[n-m]}_{\cdot/j}\big]$：每一项都像 $\ln\lambda$ 一样发散，只有组合有极限；以维数正规化作红外正规化时 $\lambda\to0$ 一步可以略去。
+\end{enumerate}
+\uses{prop:disall-factorized-subtraction,lem:method-no-pole,prop:pdf-partonic-dr,def:prelim-msbar,asm:appN-multren,asm:appN-ir-regulator,asm:appN-contour,prop:disall-two-routes,cor:method-removing-eps}
+% errtype: E-N
+\end{theorem}
+
+\begin{proof}
+(a) 由 (Z1)，$\hat{\mathsf H}^{\mathrm{bare}}f^{\mathrm{bare}}_{\cdot/j}=\hat{\mathsf H}^{\mathrm{bare}}Zf^{\mathrm{ren}}_{\cdot/j}=Cf^{\mathrm{ren}}_{\cdot/j}$（矩阵记号），代入\cref{eq:disall-renorm-start}得
+$C=\hat{\mathsf H}^{\mathrm{bare}}Z=(T_{(j)}-r_{(j)})(f^{\mathrm{ren}}_{\cdot/j})^{-1}$。左边与 $\lambda$ 及靶无关（$\hat{\mathsf H}^{\mathrm{bare}}$ 只依赖于投影动量，$Z$ 是与靶无关的纯 $\MSbar$ 极点级数），
+且在 $\varepsilon=0$ 附近亚纯（每个 $\int C_R\Gamma$ 由\cref{asm:appN-contour}(b) 亚纯延拓）。右边在 $(0,\varepsilon_0]$ 上有界：$T_{(j)}$ 是守恒流关联函数的矩，紫外有限，红外由 $\lambda$ 正规化；
+$r_{(j)}=T_{(j)}-\sum_R\int C_R\Gamma$ 中后者由\cref{cor:method-removing-eps}在 $\varepsilon=0$ 处没有极点，且 $|r_{(j)}|\le C\lambda^aL^K$ 对 $\varepsilon$ 一致；
+由\cref{asm:appN-ir-regulator}，$f^{\mathrm{ren}}_{N,\cdot/j}$ 在 $\varepsilon=0$ 处有限并逐阶可逆，且该正规化保持\cref{prop:disall-factorized-subtraction}所用的 Ward 恒等式并使\cref{prop:disall-two-routes}(a)(b) 成立。
+在 $\varepsilon=0$ 附近亚纯、在 $(0,\varepsilon_0]$ 上有界的函数没有极点（\cref{lem:method-no-pole}），故 $C$ 在 $\varepsilon=0$ 处有限。
+
+(b) $C$ 由左边定义，因此与靶及 $\lambda$ 无关。对在壳无质量部分子靶、以维数正规化为唯一的红外正规化，(Z3)(i) 断言因子化恒等式以同一个 $\hat{\mathsf H}^{\mathrm{bare}}$ 成立，且 $f^{\mathrm{bare}}_{\cdot/j}=\delta$（无标度），
+于是 $T^{\mathrm{DR}}_{(j)}=\hat{\mathsf H}^{\mathrm{bare}}$，$f^{\mathrm{ren,DR}}_{\cdot/j}=Z^{-1}$，$C=T^{\mathrm{DR}}_{(j)}(f^{\mathrm{ren,DR}}_{\cdot/j})^{-1}$：维数正规化的部分子结构函数乘以 $\MSbar$ 部分子 PDF 的逆，
+即\cref{prop:pdf-partonic-dr}的构造（$\MSbar$ 的归一化见\cref{def:prelim-msbar}）。
+
+(c) 把 $f^{\mathrm{ren}}_{\cdot/j}=\delta+\sum_{k\ge1}f^{\mathrm{ren}[k]}_{\cdot/j}$、$T_{(j)}=\sum_nT^{[n]}_{(j)}$、$C=\sum_nC^{[n]}$ 代入 $T_{(j)}=Cf^{\mathrm{ren}}_{\cdot/j}+r_{(j)}$，比较 $\as^n$ 的系数：
+$C^{[n]}=T^{[n]}_{(j)}-\sum_{m<n}C^{[m]}f^{\mathrm{ren}[n-m]}_{\cdot/j}-r^{[n]}_{(j)}$。\cref{prop:disall-two-routes}(a) 的界在每一固定阶成立，$r^{[n]}_{(j)}\to0$（$\lambda\to0$），而左边不依赖于 $\lambda$，即得 (c)。
+\end{proof}
+
+\noindent
+回到 $x$ 空间要用\cref{thm:pdf-dis-xspace}与附录~K 的唯一性。内容等级 [C] 的来源是：迄今没有既保持 Ward 恒等式、又能正规化在壳胶子共线发散的红外正规化（离壳外线与 (Z1) 的在壳性矛盾，胶子质量破坏非阿贝尔 Ward 恒等式，有质量夸克只正规化夸克靶）；
+过程定理因此改用 (Z3)(ii)，它在 NNLO 与 N$^3$LO 系数函数的有限性中被逐阶验证。两级梯形图是上述结构的最小例子，也说明为什么只能对分组的表达式作估计（\cref{fig:disall-ladder-regions}）。
+
+\begin{example}[两级梯形图：三个区域与分组余项]\label{ex:disall-ladder}
+外夸克离壳（$p^2=-m^2$）、内线无质量的 DIS 两级梯形图：$\Gamma=\mathsf H_0(k_2)\,K_2(k_2,k_1)\,K_1(k_1,p)$，$\mathsf H_0$ 是含两个光子顶点的顶端夸克线，$K_2$、$K_1$ 是上、下两级横档（含脊线传播子），
+$(k_1,k_2)$ 为两级横档之后的脊线动量。领头区域有\emph{三个}，构成链 $R_2<R_1<R_H$：$R_2$ 中两级横档都与 $p$ 共线，$R_1$ 中只有下级横档共线，$R_H$ 中一切都是硬的（靶被投影为无质量在壳部分子）。
+$T_2$ 在 $\mathsf H_0$ 中作 $k_2\to\pi_+k_2$ 并插入 Dirac 投影 $\mathcal P$；$T_1$ 作 $k_1\to\pi_+k_1$ 并插入 $\mathcal P$（只改变 $K_2$）；$T_H$ 作 $p\to\hat p=\pi_+(p)$、$m\to0$（只改变 $K_1$）；它们彼此对易（\cref{prop:appN-ladder}）。
+记 $\Delta\mathsf H_0\equiv\mathsf H_0(k_2)-\mathsf H_0(\pi_+k_2)\mathcal P$，$\Delta K_2\equiv K_2(k_2,k_1)-K_2(k_2,\pi_+k_1)\mathcal P$，$\Delta K_1\equiv K_1(k_1,p)-K_1(k_1,\hat p)$。
+全序区域链的链展开（\cref{prop:method-chains}）给出 $r=(1-T_H)(1-T_1)(1-T_2)\Gamma$ 与
+\begin{equation}\label{eq:disall-ladder}
+\begin{gathered}
+C_2\Gamma=[\mathsf H_0(\pi_+k_2)\mathcal P]\,K_2K_1,\qquad C_1\Gamma=\Delta\mathsf H_0\,[K_2(k_2,\pi_+k_1)\mathcal P]\,K_1,\\
+C_H\Gamma=\Delta\mathsf H_0\,\Delta K_2\,K_1(k_1,\hat p),\qquad r=\Delta\mathsf H_0\,\Delta K_2\,\Delta K_1 .
+\end{gathered}
+\end{equation}
+$C_2\Gamma$ 是 $\mathsf H^{[0]}\otimes f^{[2]}$；$C_1\Gamma$ 对 $k_2$ 积分得到单圈硬系数 $\hat{\mathsf H}^{[1]}(k_1^+)$（入射部分子为 $\pi_+k_1$ 的未减除单圈硬部分减去树图 $\otimes$ 单圈部分子共线因子），即 $\hat{\mathsf H}^{[1]}\otimes f^{[1]}$；
+把 $\Delta\mathsf H_0\Delta K_2$ 展开为四项，依次是无质量靶的两圈梯形图 $T^{[2]}$、$\mathsf H^{[0]}\otimes f^{[2]}$、$\mathsf H^{[1],\mathrm{unsub}}\otimes f^{[1]}$ 与 $\mathsf H^{[0]}\otimes f^{[1]}\otimes f^{[1]}$，
+合起来 $\int C_H\Gamma=T^{[2]}-\hat{\mathsf H}^{[1]}\otimes f^{[1]}-\mathsf H^{[0]}\otimes f^{[2]}$，即\cref{thm:disall-renorm-compat}(c) 在 $n=2$ 时的被积函数形式。
+全硬区域 $R_H$ 携带两圈系数函数：只计入 $R_1$、$R_2$ 时，$\Gamma-C_2\Gamma-C_1\Gamma=C_H\Gamma+r$ 中的 $C_H\Gamma$ 是领头的。
+分组的必要性：单个链项 $T_H(1-T_2)\Gamma=\Delta\mathsf H_0\,K_2(k_2,k_1)\,K_1(k_1,\hat p)$ 不属于 $L^1(U_{R_2})$——$k_1\parallel\hat p$ 时无质量的 $K_1(k_1,\hat p)$ 有 $\int\dd^{2-2\varepsilon}\mathbf k_{1T}/\mathbf k_{1T}^2$ 型的共线奇点
+（只对 $\varepsilon<0$ 收敛），而 $\Delta\mathsf H_0K_2$ 在那里不为零；分组后的 $C_H\Gamma$ 多出的因子 $\Delta K_2$ 在 $k_1\to\pi_+k_1$ 时至少线性地趋于零，积分收敛。
+所以误差估计只对分组的表达式成立，“减除定理可以逐项归纳证明”是错误的。上述代数是精确的（\cref{prop:appN-ladder}）；这一费米子梯形图的积分范数条件 (CS1)–(CS3) 没有被证明，标量 $\varphi^3_6$ 模型中单梯级梯形图的积分范数界见\cref{prop:appN-phi36-dis}（只在实的 $x\ge x_0>1$ 上成立，而不是\cref{prop:disall-two-routes}(b) 所需的复圆盘上的一致界）。
+\uses{thm:method-subtraction,prop:method-chains,def:method-collins-conditions,thm:disall-renorm-compat,prop:appN-ladder}
+\end{example}
+
+%%% BEGIN fig:disall-ladder-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb kern/.style={font=\scriptsize,inner sep=1pt,text=gray!25!black},
+  fb R2/.style={region,draw=blue!60!black,line width=0.7pt},
+  fb R1/.style={region,draw=orange!75!black,line width=0.7pt},
+  fb RH/.style={region,draw=gray!55!black,line width=0.7pt}]
+  \def\fbX{1.2}
+  % ======================= the two-rung ladder (cut graph; amplitude on the left) =======================
+  % left rail (amplitude): p -> rung K_1 -> k_1 -> rung K_2 -> k_2 -> photon vertex
+  \draw[quark] (-\fbX,0) -- (-\fbX,1.1);
+  \draw[quark] (-\fbX,1.1) -- (-\fbX,2.3);
+  \draw[quark] (-\fbX,2.3) -- (-\fbX,3.5);
+  % right rail (conjugate amplitude)
+  \draw[quark] (\fbX,3.5) -- (\fbX,2.3);
+  \draw[quark] (\fbX,2.3) -- (\fbX,1.1);
+  \draw[quark] (\fbX,1.1) -- (\fbX,0);
+  % struck quark and photons (H_0)
+  \draw[quark=0.25] (-\fbX,3.5) -- (\fbX,3.5);
+  \draw[photon] (-1.62,4.72) -- (-\fbX,3.5);
+  \draw[photon] (\fbX,3.5) -- (1.62,4.72);
+  % rungs: real gluons crossing the cut
+  \foreach \y in {1.1,2.3} {
+    \draw[gluon] (-\fbX,\y) -- (\fbX,\y);
+    \node[vertex] at (-\fbX,\y) {}; \node[vertex] at (\fbX,\y) {};}
+  \node[vertex] at (-\fbX,3.5) {}; \node[vertex] at (\fbX,3.5) {};
+  \draw[cut] (0,-0.35) -- (0,4.75);
+  % momenta and kernels
+  \path[mom'={$k_1$},mom sep=0.25cm,mom length=0.45cm] (-\fbX,1.1) -- (-\fbX,2.3);
+  \path[mom'={$k_2$},mom sep=0.25cm,mom length=0.45cm,mom pos=0.42] (-\fbX,2.3) -- (-\fbX,3.5);
+  \node[fb lab,anchor=north] at (-\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north] at (\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north,text=gray!30!black] at (0,-0.42) {$p^2=-m^2$};
+  \node[fb lab,anchor=south east] at (-1.62,4.72) {$q$};
+  \node[fb kern,anchor=south] at (0.6,1.25) {$K_1$};
+  \node[fb kern,anchor=south] at (0.6,2.45) {$K_2$};
+  \node[fb kern,anchor=south] at (-0.6,3.53) {$\mathsf H_0$};
+  % nested hard subgraphs of the three regions
+  \draw[fb R2] (-1.55,3.24) rectangle (1.55,3.98);
+  \draw[fb R1] (-1.78,2.04) rectangle (1.78,4.14);
+  \draw[fb RH] (-2.01,0.84) rectangle (2.01,4.3);
+  \node[font=\scriptsize,text=blue!55!black,anchor=south,inner sep=1pt] at (0.72,3.25) {$R_2$};
+  \node[font=\scriptsize,text=orange!65!black,anchor=south east,inner sep=1pt] at (1.76,2.06) {$R_1$};
+  \node[font=\scriptsize,text=gray!35!black,anchor=south east,inner sep=1pt] at (1.99,0.86) {$R_H$};
+  % ======================= the regions and the grouped remainder =======================
+  \node[anchor=north west,align=left,font=\footnotesize] (T) at (2.65,4.3) {%
+    区域链 $R_2<R_1<R_H$（虚线框为硬子图）：\\[3pt]
+    {\color{blue!55!black}$R_2$}：两级横档都与 $p$ 共线；\\[1pt]
+    {\color{orange!65!black}$R_1$}：上级横档为硬，下级横档共线；\\[1pt]
+    {\color{gray!35!black}$R_H$}：全部为硬——给出两圈系数函数。\\[6pt]
+    分组余项：\\[2pt]
+    \quad$r=(1-T_H)(1-T_1)(1-T_2)\,\Gamma=\Delta\mathsf H_0\,\Delta K_2\,\Delta K_1$};
+  \node[anchor=north west,align=left,font=\footnotesize,text width=6.1cm,draw=red!50!black,line width=0.5pt,
+        rounded corners=2pt,fill=red!3,inner sep=4pt] at ($(T.south west)+(0.05,-0.2)$)
+    {单个链项 $T_H(1-T_2)\Gamma$ 在 $U_{R_2}$ 上不可积（在 $k_1\parallel\hat p$ 处有无质量共线奇点），因而分组是必要的。};
+\end{tikzpicture}
+\caption{DIS 两级梯形图（外夸克离壳 $p^2=-m^2$，内线无质量；竖直红色虚线为末态割线，左侧为振幅）的三个区域 $R_2<R_1<R_H$ 与分组余项。
+$\Gamma=\mathsf H_0(k_2)\,K_2(k_2,k_1)\,K_1(k_1,p)$，$\mathsf H_0$ 为含两个光子顶点的顶端夸克线，$K_2$、$K_1$ 为上、下两级横档；虚线框依次为 $R_2$、$R_1$、$R_H$ 的硬子图。
+分组余项 $r=\Delta\mathsf H_0\Delta K_2\Delta K_1$（$\Delta$ 表示相应因子减去其共线近似）；包含全硬区域 $R_H$ 才能得到两圈系数函数（\cref{ex:disall-ladder}）。}
+\label{fig:disall-ladder-regions}
+\end{figure}
+%%% END fig:disall-ladder-regions

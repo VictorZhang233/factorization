@@ -1,0 +1,1905 @@
+% =====================================================================
+%  第 9 章  全阶因子化证明的一般方法（ch09_method.tex；writer W10）
+% =====================================================================
+\chapter{全阶因子化证明的一般方法}\label{ch:method}
+
+第二部分的三章给出了因子化的“严格核心”：$e^+e^-$ 总截面在微扰论每一阶红外有限（\cref{thm:ee-R-finite}）；对 DIS 的矩，算符乘积展开（OPE）把因子化化为对算符矩阵元的陈述；对部分子分布，算符定义
+（\cref{def:pdf-quark,def:pdf-gluon}）独立于任何过程而存在。然而，DIS 的 $x$ 空间结构函数、Drell--Yan 截面、单举湮灭、
+半单举 DIS 以及一切没有 OPE 可用的过程，其因子化只能在动量空间中逐图地论证：先找出 Feynman 积分的领头区域，
+在每个区域中作近似，用 Ward 恒等式把纵向胶子收拢成 Wilson 线，处理 Glauber 区，最后用减除法避免区域重叠造成的重复计数。
+本章把这一套步骤整理成\emph{一台可以反复使用的证明机器}，并逐步说明每一步在什么层次上是严格的。
+
+本章的结论分三类（见下框）：在所用层次上完整证明的陈述（Ward 恒等式的单胶子与树图情形、$i0$ 相容性、单胶子交换、软因子的幺正性、组合学引理，以及三个条件定理）；全阶论证（\tagA），其中最重要的是减除定理与因子化模板定理（\cref{thm:method-template}）；以及明确列出、本章不证明的输入——附录~N 与附录~O 的编号假设，每个 \tagA 结论都在其「地位与缺口」段落中点名它所依赖的假设。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:method-ward-elementary,lem:method-ward-abelian,prop:method-ward-one,prop:method-ward-tree,lem:method-i0-compat,prop:method-glauber-oneloop,ex:method-naive-induction}（\tagR，$R_{\mathrm{PT}}$）；
+\cref{lem:method-soft-unitarity}（\tagR，$R_{\mathrm{def}}$）；\cref{prop:method-scale-scheme}（\tagR，$R_{\mathrm{PT}}$）；
+数学结果：\cref{lem:method-meets,lem:method-covering,lem:method-telescoping,lem:method-gy,prop:method-chains,lem:method-pairing,prop:method-product,lem:method-no-pole}；
+条件定理：\cref{lem:method-local-accuracy}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-envelope,asm:appN-separation}）、
+\cref{cor:method-removing-eps}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-contour}）与附录~N 的\cref{thm:appN-subtraction}（\tagR，$R_{\mathrm{cond}}$）。\par
+\textbf{给出全阶论证：}\cref{lem:method-collinear-accuracy,lem:method-soft-accuracy,prop:method-gy-suppression}（\tagA）；
+\cref{lem:method-ward-multi}（\tagA；瓶颈\cref{asm:appN-ward-product}）；\cref{prop:method-collinear-wilson,prop:method-soft-wilson}（\tagA）；
+\cref{thm:method-subtraction}（\tagA；瓶颈\cref{asm:appN-collins}）；\cref{prop:method-fsi}（\tagA；\cref{asm:appN-cutsum,asm:appO-lcopt}）；
+\cref{prop:method-glauber-deformation}（\tagA；\cref{asm:appO-deformation}）；\cref{thm:method-template}（\tagA）。\par
+\textbf{没有证明：}积分范数意义下的全阶幂次计数（\cref{asm:appN-envelope,asm:appN-separation}）；含鬼场的非阿贝尔多胶子 Ward 恒等式的完整组合学，
+以及其中被明确假定的多定域光线算符的 BRST 分类（具名缺口\cref{asm:appN-brst-nonlocal}，\tagC）；Glauber 区的一般情形
+（\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-rewritten-cs}）；单个链项的可积性——它一般\emph{不成立}（\cref{ex:method-naive-induction}）。
+\end{tcolorbox}
+
+记号：光锥分量 $v^\pm=(v^0\pm v^3)/\sqrt2$；$A$ 沿 $+z$、$B$ 沿 $-z$ 运动；$n_A=(1^+,0^-,\mathbf 0_T)$，$n_A\cdot v=v^-$，$n_B=(0^+,1^-,\mathbf 0_T)$，$n_B\cdot v=v^+$（\cref{def:prelim-lightfront}；$n_B$ 即 Collins 的 $w_2$）。$\lambda$ 是幂次参数（红外正规子与硬标度之比，例如 $m/Q$），
+$L\equiv\ln(1/\lambda)$；各区域的标度是\cref{def:ir-scalings}的标度。维数正规化取 $D=4-2\varepsilon$，标量模型例子中的圈积分测度为
+$\mu^{2\varepsilon}\int\dd^Dk/(\ii\pi^{D/2})$。协变导数 $D_\mu=\partial_\mu-\ii gA^a_\mu t^a$，夸克—胶子顶点 $\ii g\gamma^\mu t^a$；
+Collins（2011）的耦合常数与此差一个符号（他的 $D=\partial+\ii gA$，故 $g_{\rm Collins}=-g$，其 Wilson 线为 $P\exp(-\ii g\int n\cdot A)$），凡引用其公式处都已换算。
+Wilson 线 $W[b,a]=P\exp\bigl(\ii g\int_a^b\dd z^\mu A^a_\mu t^a\bigr)$（离 $b$ 近的点在左），其动量空间规则见\cref{prop:prelim-wilson-rules}。
+
+%%% BEGIN fig:method-flowchart
+\begin{figure}[htbp]
+\centering
+\newcommand{\fbref}[1]{\mbox{\cref{#1}}}
+\begin{tikzpicture}[fd,font=\footnotesize,
+  fb num/.style={circle,fill=gray!65!black,text=white,font=\scriptsize\bfseries,inner sep=0pt,minimum size=0.42cm},
+  fb title/.style={font=\small\bfseries,anchor=west,inner sep=1pt},
+  fb stitle/.style={font=\footnotesize\bfseries,anchor=west,inner sep=1pt},
+  fb cell/.style={rectangle,rounded corners=1.5pt,line width=0.5pt,text width=3.38cm,minimum height=1.0cm,
+                  align=left,inner sep=3pt,font=\footnotesize},
+  fb R/.style={fb cell,fill=OliveGreen!10,draw=OliveGreen!65!black},
+  fb Rc/.style={fb R,dash pattern=on 2.4pt off 1.4pt},
+  fb A/.style={fb cell,fill=RoyalBlue!8,draw=RoyalBlue!65!black},
+  fb frame/.style={draw=gray!55!black,line width=0.65pt,rounded corners=3pt,fill=white,inner sep=3pt},
+  fb sub/.style={draw=gray!45,line width=0.45pt,rounded corners=2pt,fill=gray!4,inner sep=2pt},
+  fb htext/.style={text width=6.45cm,align=left,inner sep=1pt,font=\footnotesize},
+  fb H/.style={rectangle,rounded corners=2pt,draw=orange!70!black,line width=0.55pt,dash pattern=on 2.4pt off 1.4pt,
+               fill=orange!5,inner sep=3pt},
+  fb link/.style={draw=orange!70!black,line width=0.5pt,dash pattern=on 2.4pt off 1.4pt},
+  fb flow/.style={draw=gray!55!black,line width=1.1pt,-{Stealth[length=6pt,width=5pt]}}]
+  % one step: #1 name, #2 y of its title, #3 number, #4 title, #5 R cell, #6 A cell, #7 R style
+  \newcommand{\fbstep}[7]{%
+    \node[fb num] (#1n) at (0.28,#2) {#3};
+    \node[fb title] (#1t) at ($(#1n.east)+(0.06,0)$) {#4};
+    \node[#7,anchor=north west] (#1r) at (0.12,#2-0.3) {#5};
+    \node[fb A,anchor=north west] (#1a) at ($(#1r.north east)+(0.12,0)$) {#6};
+    \begin{scope}[on background layer]\node[fb frame,fit=(#1n)(#1t)(#1r)(#1a)] (#1) {};\end{scope}}
+  % ---------------- steps 1--4 ----------------
+  \fbstep{s1}{0}{1}{区域：Landau 方程与幂次计数}
+    {幂次计数（标度陈述）\\\fbref{prop:ir-power-counting}}
+    {领头区域与约化图\\\fbref{thm:ir-leading-regions}}{fb R}
+  \fbstep{s2}{-2.1}{2}{近似：共线与软近似子（沿用原有 $\ii0$）}
+    {$\ii0$ 相容性\\\fbref{lem:method-i0-compat}}
+    {近似精度\\\fbref{lem:method-collinear-accuracy,lem:method-soft-accuracy}}{fb R}
+  \fbstep{s3}{-4.2}{3}{Grammer--Yennie 分解\enspace$g_{\mu\nu}=K_{\mu\nu}+G_{\mu\nu}$}
+    {分解恒等式\\\fbref{lem:method-gy}}
+    {G 部分幂次压低\\\fbref{prop:method-gy-suppression}}{fb R}
+  \fbstep{s4}{-6.3}{4}{Ward 恒等式 $\to$ Wilson 线}
+    {单个与树图两个 K 胶子\\\fbref{prop:method-ward-one,prop:method-ward-tree}}
+    {多胶子（含鬼场）\\\fbref{lem:method-ward-multi}}{fb R}
+  % ---------------- step 5: Glauber region, unitarity, subtraction ----------------
+  \node[fb num] (s5n) at (0.28,-8.4) {5};
+  \node[fb title] (s5t) at ($(s5n.east)+(0.06,0)$) {Glauber 区、幺正性与减除};
+  \foreach \k/\y/\ttl/\rc/\ac/\rs in {%
+      a/-8.85/{5a\enspace Glauber 区：沿 $e_G=n_B-n_A$ 同时形变}/{单胶子交换的极点结构\\\fbref{prop:method-glauber-oneloop}}/{围道形变判据\\\fbref{prop:method-glauber-deformation}}/{fb R},
+      b/-10.75/{5b\enspace 幺正性：末态相互作用与软因子}/{软因子的幺正性\\\fbref{lem:method-soft-unitarity}}/{末态相互作用相消\\\fbref{prop:method-fsi}}/{fb R},
+      c/-12.65/{5c\enspace 减除（Collins）：$\Gamma=\sum_RC_R\Gamma+r$}/{链展开与乘积公式\\\fbref{prop:method-chains,prop:method-product}}/{减除定理\\\fbref{thm:method-subtraction}}/{fb R}} {
+    \node[fb stitle] (g5\k t) at (0.22,\y) {\ttl};
+    \node[\rs,anchor=north west,text width=3.3cm] (g5\k r) at (0.22,\y-0.24) {\rc};
+    \node[fb A,anchor=north west,text width=3.3cm] (g5\k a) at ($(g5\k r.north east)+(0.12,0)$) {\ac};
+    \begin{scope}[on background layer]\node[fb sub,fit=(g5\k t)(g5\k r)(g5\k a)] (s5\k) {};\end{scope}
+  }
+  \begin{scope}[on background layer]
+    \node[fb frame,fit=(s5n)(s5t)(s5a)(s5b)(s5c)] (s5) {};
+  \end{scope}
+  % ---------------- step 6 ----------------
+  \node[fb num] (s6n) at (0.28,-15.05) {6};
+  \node[fb title] (s6t) at ($(s6n.east)+(0.06,0)$) {因子化形式};
+  \node[fb A,anchor=north west,text width=7.09cm,minimum height=0.62cm,align=center] (s6a) at (0.12,-15.35)
+    {$\sigma=\sum_{ij}H_{ij}\otimes f_{i/A}\otimes f_{j/B}\,[\otimes S]+\order{\lambda^p}$};
+  \begin{scope}[on background layer]\node[fb frame,fit=(s6n)(s6t)(s6a)] (s6) {};\end{scope}
+  % ---------------- flow arrows ----------------
+  \foreach \u/\v in {s1/s2,s2/s3,s3/s4,s4/s5,s5/s6} \draw[fb flow] (\u.south) -- (\v.north);
+  % ---------------- hypotheses (H1)--(H5) with the numbered assumptions ----------------
+  \node[fb htext,anchor=west] (h1t) at (8.2,0|-s1) {\textbf{(H1)} 领头区域；积分范数下的幂次计数\\\fbref{asm:appN-envelope,asm:appN-separation}};
+  \node[fb htext,anchor=west] (h2t) at (8.2,0|-s3) {\textbf{(H2)} $H$--$J$ 界面上共线近似成立，K 胶子退耦为 Wilson 线\\\fbref{asm:appN-ward-product}\\[1pt]
+      {\color{gray!35!black}（步骤 2--4 中的软部分属于 (H3)）}};
+  \node[fb htext,anchor=north west] (h3t) at ($(8.2,0|-s5a)+(0,0.66)$) {\textbf{(H3)} Glauber 区之后：软近似与软胶子退耦\\\fbref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs}};
+  \node[fb Rc,anchor=north west,text width=6.3cm,minimum height=0.48cm] (h3c) at ($(h3t.south west)+(0,-0.07)$) {DY 的精确形式：\fbref{thm:appO-main}（$R_{\rm cond}$）};
+  \node[fb htext,anchor=west] (h4t) at (8.2,0|-s5b) {\textbf{(H4)} 末态相互作用由幺正性相消；软因子为 $1$ 或 Wilson 线真空矩阵元\\\fbref{asm:appN-cutsum,asm:appO-lcopt}};
+  \node[fb htext,anchor=north west] (h5t) at ($(8.2,0|-s5c)+(0,0.66)$) {\textbf{(H5)} 减除项 = 重整化的算符矩阵元\\\fbref{asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}};
+  \node[fb Rc,anchor=north west,text width=6.3cm,minimum height=0.48cm] (h5c) at ($(h5t.south west)+(0,-0.07)$) {精确演绎：\fbref{thm:appN-subtraction}（$R_{\rm cond}$）};
+  \begin{scope}[on background layer]
+    \node[fb H,fit=(h1t)] (h1) {};
+    \node[fb H,fit=(h2t)] (h2) {};
+    \node[fb H,fit=(h3t)(h3c)] (h3) {};
+    \node[fb H,fit=(h4t)] (h4) {};
+    \node[fb H,fit=(h5t)(h5c)] (h5) {};
+  \end{scope}
+  \draw[fb link] (s1.east) -- (h1.west|-s1.east);
+  \draw[fb link] (s2.east) -- ++(0.25,0) |- (h2.west);
+  \draw[fb link] (s3.east) -- (h2.west|-s3.east);
+  \draw[fb link] (s4.east) -- ++(0.25,0) |- (h2.west);
+  \draw[fb link] (s5a.east) -- (h3.west|-s5a.east);
+  \draw[fb link] (s5b.east) -- (h4.west|-s5b.east);
+  \draw[fb link] (s5c.east) -- (h5.west|-s5c.east);
+  \node[font=\footnotesize,anchor=west,align=left] at (8.2,0|-s6) {$\Longleftarrow$\ \mbox{(H1)--(H5)} 成立时的结论：\\\fbref{thm:method-template}（模板定理），全阶论证 [A]};
+  % ---------------- legend ----------------
+  \node[fb R,text width=0.3cm,minimum height=0.3cm,inner sep=0pt,anchor=west] (l1) at (0.1,-16.55) {};
+  \node[anchor=west] (l1t) at (l1.east) {[R]（在所用层次上严格；含数学引理）};
+  \node[fb A,text width=0.3cm,minimum height=0.3cm,inner sep=0pt,anchor=west] (l2) at ($(l1t.east)+(0.35,0)$) {};
+  \node[anchor=west] (l2t) at (l2.east) {[A] 全阶论证};
+  \node[fb Rc,text width=0.3cm,minimum height=0.3cm,inner sep=0pt,anchor=west] (l3) at ($(l2t.east)+(0.35,0)$) {};
+  \node[anchor=west] (l3t) at (l3.east) {条件定理 $R_{\rm cond}$};
+  \node[fb H,minimum width=0.36cm,minimum height=0.32cm,inner sep=0pt,anchor=west] (l4) at ($(l3t.east)+(0.35,0)$) {};
+  \node[anchor=west] (l4t) at (l4.east) {编号假设};
+\end{tikzpicture}
+\caption{全阶因子化证明的六个步骤（左），它们与\cref{thm:method-template}（模板定理）的假设 \mbox{(H1)--(H5)} 的对应，以及精确形式中的编号假设（右；\cref{app:appN}与\cref{app:appO}，对应关系即\cref{tab:method-hypotheses}）。
+每个步骤中，绿色框为在所用层次上已严格证明的陈述（[R] 或数学引理），蓝色框为全阶论证 [A]，绿色虚线框为条件定理 $R_{\rm cond}$，即\cref{app:appN}中的减除演绎（\cref{thm:appN-subtraction}）与\cref{app:appO}中单举色单态 Drell--Yan 过程的 Glauber 相消（\cref{thm:appO-main}）。
+步骤 4 中，$A$ 共线的 K 胶子化为沿 $n_B$ 的 Wilson 线（$B$ 共线的则沿 $n_A$），软胶子化为沿各喷注方向的 Wilson 线；离开 Glauber 区须沿 $e_G=n_B-n_A$ 同时形变两个光锥分量（\cref{fig:method-glauber-direction}），软因子的幺正性只在处理完 Glauber 区之后使用。}
+\label{fig:method-flowchart}
+\end{figure}
+%%% END fig:method-flowchart
+
+% ---------------------------------------------------------------------
+\section{证明策略}\label{sec:method-strategy}
+
+因子化陈述（\cref{def:intro-factorization}）在微扰论中应逐阶地对红外正规化的部分子态成立。对固定阶的一张图（或具有公共圈动量走向的一族图），它意味着被积函数 $\Gamma$
+可以写成若干减除项之和加一个余项，余项的积分在 $\lambda\to0$ 时被幂次压低、且对 $\varepsilon$ 一致（误差类型 E-N，\cref{def:intro-error-types}），而减除项由 Ward 恒等式化为硬部分与算符矩阵元的卷积。
+于是证明分成两件事：\emph{幂次计数与减除}（余项小）与\emph{规范结构}（减除项可分解）。传统的全阶论证（Libby--Sterman\cite{LibbySterman1978a}、Collins--Soper--Sterman\cite{CollinsSoperSterman1989}、
+Collins\cite{Collins2011}）可归纳为六步（\cref{fig:method-flowchart}）：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item \emph{区域}：由 Landau 方程与幂次计数（\cref{prop:ir-power-counting}）找出领头区域（\cref{thm:ir-leading-regions}），本章把它们表述为逐线的模式指派（\cref{sec:method-regions}）；
+\item \emph{近似}：用幂等投影作共线近似与软近似；近似子不引入新分母，被近似的传播子保留原有的 $i0$——它决定此后 Wilson 线的方向；
+\item \emph{Grammer--Yennie 分解}：连接共线（或软）子图与硬部分的胶子分为 K、G 两部分，K 部分适用 Ward 恒等式，G 部分被压低（\cref{sec:method-gy}）；
+\item \emph{Ward 恒等式}：K 胶子从硬部分退耦，改为附着在 Wilson 线上（\cref{sec:method-ward}）；次序是“先近似、后用 Ward 恒等式、再得 Wilson 线”，
+  在近似之前对原图使用 Ward 恒等式会产生不受控制的项\cite{CollinsSoperSterman1989,Labastida:1984gy}；
+\item \emph{Glauber 区、幺正性与减除}：把围道移出 Glauber 区或证明其贡献相消（\cref{sec:method-glauber}），末态相互作用由幺正性相消（\cref{sec:method-unitarity}），
+  区域重叠的重复计数由 Collins 的逐级减除消除（\cref{sec:method-subtraction}）；
+\item \emph{因子化形式}：对图与区域求和，得到 $\sigma=\sum_{ij}H_{ij}\otimes f_{i/A}\otimes f_{j/B}\,[\otimes S]+\order{\lambda^p}$（\cref{sec:method-template}）。
+\end{enumerate}
+第 (5) 步中的次序是固定的：软因子的幺正性（它对共线单举截面给出软因子为 $1$）只能在处理完 Glauber 区之后使用；同样，DGLAP 方程来自算符重整化（\cref{thm:pdf-dglap}），
+因子化标度无关性是其推论（\cref{prop:method-scale-scheme}）。
+
+每一步都在两个层次上陈述：文献中的全阶论证层次——幂次计数给出的是\emph{标度陈述}（E-S），结论为 \tagA；以及精确的条件层次——把“余项小”写成积分范数下的界（E-N），
+把不能证明的几何—解析输入写成编号假设，再给出完整的演绎（\tagR，$R_{\mathrm{cond}}$，见附录~N 与附录~O）。两个层次之间的差距恰好就是\cref{asm:appN-envelope,asm:appN-separation,asm:appN-collins}的内容；
+章末的\cref{tab:method-correspondence}列出二者的对应。
+
+% ---------------------------------------------------------------------
+\section{区域、邻域与幂次压低}\label{sec:method-regions}
+
+为了写出减除法，需要把第~4~章的领头区域（\cref{thm:ir-leading-regions}；它们在 $(\ln k^+,\ln k^-)$ 平面上的位置见\cref{fig:momentum-regions}，
+图中的 $n$、$\bar n$ 即本书的 $n_A$、$n_B$）变成可以比较、可以求交的对象，并说清楚“在某一区域附近被幂次压低”的含义。
+
+\subsection{区域作为逐线的模式指派}
+
+\begin{definition}[区域：逐线模式指派与偏序]\label{def:method-regions}
+固定一张（割）图 $\Gamma$ 与一种圈动量走向。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 模式集合 $\{S,A,B,H\}$（软、$A$ 共线、$B$ 共线、硬）带偏序 $S<A<H$、$S<B<H$，$A$ 与 $B$ 不可比，且 $A\wedge B=S$、$A\vee B=H$。
+  一个\emph{区域} $R$ 是对每条内线 $j$ 指派一个模式 $R(j)$ 的映射；外线按其方向取 $A$ 或 $B$，无色外线（如光子）取 $H$；
+  顶点的模式是与之相连各线模式的上确界。模式为 $H$、$A$、$B$、$S$ 的线与顶点分别组成子图 $\mathsf H_R$、$\mathsf J_{R,A}$、$\mathsf J_{R,B}$、$\mathsf S_R$。
+\item 在无质量极限下，区域 $R$ 的\emph{钳夹集}是圈动量空间中的仿射子空间
+  \begin{equation}\label{eq:method-pinchset}
+  \pi_R=\bigl\{k:\ l_j(k)=0\ (R(j)=S),\ \ l_j(k)\in\mathbb Rn_A\ (R(j)=A),\ \ l_j(k)\in\mathbb Rn_B\ (R(j)=B)\bigr\},
+  \end{equation}
+  $l_j(k)$ 是第 $j$ 条线的动量；它是\cref{def:ir-pinch-surface}中钳夹面的线性化。区域 $R$ 对应于一个领头钳夹面，其分解即 $(\mathsf H_R,\{\mathsf J_{i,R}\},\mathsf S_R)$。
+\item 逐线偏序：$R'\le R$ 当且仅当对每条线 $R'(j)\le R(j)$；逐线交：$(R\wedge R')(j)=R(j)\wedge R'(j)$。
+\item 所用的区域集合 $\mathcal R$ 包含\cref{thm:ir-leading-regions}的全部领头区域（各标度见\cref{def:ir-scalings}），其最大元 $R_{\max}$（全硬）的钳夹集为整个空间；
+  $\mathcal R$ 选为\emph{对逐线交封闭}：若 $R,R'\in\mathcal R$ 且 $\pi_R\cap\pi_{R'}\neq\emptyset$，则 $R\wedge R'\in\mathcal R$。
+  交封闭性是对 $\mathcal R$ 的一种选择（附录~N 记作 (GA2)），不是假设；为此 $\mathcal R$ 中一般还须含有若干次领头的指派。
+\end{enumerate}
+例如单圈顶点中，胶子软时两条夸克线分别为 $A$、$B$ 共线，$\pi_S=\{k=0\}$；胶子平行于 $p_A$ 时 $\pi_A=\{k\in\mathbb Rn_A\}$；于是 $\pi_S\subset\pi_A$、$\pi_S\subset\pi_B$，
+且 $\pi_S=\pi_A\cap\pi_B$（\cref{fig:method-nesting}）。
+\uses{def:ir-pinch-surface,def:ir-scalings,thm:ir-leading-regions}
+\end{definition}
+
+\begin{lemma}[逐线交与钳夹集的交]\label{lem:method-meets}
+(a) 若 $R'\le R$，则 $\pi_{R'}\subseteq\pi_R$。(b) $\pi_{R\wedge R'}=\pi_R\cap\pi_{R'}$。(c) 若 $\pi_R\cap\pi_{R'}\neq\emptyset$ 且 $R\wedge R'\in\mathcal R$，
+则 $R\wedge R'$ 是 $R$ 与 $R'$ 在 $\mathcal R$ 中的最大下界；若 $\pi_R\cap\pi_{R'}=\emptyset$，则 $R$ 与 $R'$ 在 $\mathcal R$ 中没有公共下界。
+\uses{def:method-regions}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-setting}。）记 $\mathcal C_S=\{0\}$、$\mathcal C_A=\mathbb Rn_A$、$\mathcal C_B=\mathbb Rn_B$、$\mathcal C_H=\mathbb R^D$，则 $\pi_R=\bigcap_j\{l_j(k)\in\mathcal C_{R(j)}\}$；
+$X\le Y$ 蕴含 $\mathcal C_X\subseteq\mathcal C_Y$，且 $\mathcal C_X\cap\mathcal C_Y=\mathcal C_{X\wedge Y}$（关键是 $\mathbb Rn_A\cap\mathbb Rn_B=\{0\}$）。逐线使用这两点得 (a)(b)。
+(c) 任一公共下界 $R''\le R\wedge R'$，故 $\pi_{R''}\subseteq\pi_R\cap\pi_{R'}$；交为空时 $\pi_{R''}=\emptyset$，与 $\mathcal R$ 中钳夹集非空矛盾；交非空且 $R\wedge R'\in\mathcal R$ 时它就是最大下界。
+\end{proof}
+
+\paragraph{例：两圈平面顶点。}\Cref{fig:method-hasse}中（图中 $C_1$、$C_2$ 即 $A$、$B$ 共线）两个胶子模式的 16 种组合里恰有九种是领头钳夹；每个区域是六条内线上的逐线指派，九个区域对逐线交封闭，
+有 12 条覆盖关系。我们把每个钳夹集写成 $(k_1,k_2)\in\mathbb R^8$ 中的仿射子空间，逐对核对了\cref{lem:method-meets}(b)（81 对）以及覆盖关系与下文的邻域指数。% check: writing/work/W10/w10_poset.py
+
+%%% BEGIN fig:method-nesting
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize},
+  fb ellA/.style={rotate around={22:(-0.95,0)}},
+  fb ellB/.style={rotate around={-22:(0.95,0)}},
+  fb step/.style={draw=gray!40!black,line width=0.75pt,-{Stealth[length=5pt,width=4.2pt]}},
+  fb stepl/.style={font=\footnotesize,inner sep=1.5pt,fill=white,rounded corners=1.5pt}]
+  % ---------------- Venn-like diagram of the pinch sets (schematic) ----------------
+  \draw[fill=gray!10,draw=gray!55!black,line width=0.7pt,rounded corners=10pt] (-3.6,-2.35) rectangle (3.6,2.35);
+  \fill[blue!12,fb ellA] (-0.95,0) ellipse[x radius=2.05,y radius=1.08];
+  \fill[orange!17,fb ellB] (0.95,0) ellipse[x radius=2.05,y radius=1.08];
+  % pi_S = pi_A cap pi_B: the lens common to both ellipses
+  \begin{scope}
+    \clip[fb ellA] (-0.95,0) ellipse[x radius=2.05,y radius=1.08];
+    \fill[green!22,fb ellB] (0.95,0) ellipse[x radius=2.05,y radius=1.08];
+  \end{scope}
+  \draw[blue!55!black,line width=0.7pt,fb ellA] (-0.95,0) ellipse[x radius=2.05,y radius=1.08];
+  \draw[orange!75!black,line width=0.7pt,fb ellB] (0.95,0) ellipse[x radius=2.05,y radius=1.08];
+  \node[font=\small,text=green!30!black] at (0,0.22) {$\pi_S$};
+  \node[font=\small,text=blue!50!black] at (-2.05,-0.25) {$\pi_A$};
+  \node[font=\small,text=orange!60!black] at (2.05,-0.25) {$\pi_B$};
+  \node[font=\small,anchor=north west] at (-3.5,2.25) {$\pi_H=\Omega$};
+  \node[fb lab,text=gray!30!black,anchor=south] at (0,-2.3) {$\pi_S=\pi_A\cap\pi_B$（\cref{lem:method-meets}）};
+  % order of the approximations: smallest region first
+  \draw[fb step] (0.1,1.95) node[fb stepl,anchor=south] {\textcircled{\scriptsize 1}\,$T_S$} to[out=-90,in=90] (0.04,0.62);
+  \draw[fb step] (-2.9,-1.65) node[fb stepl,anchor=north] {\textcircled{\scriptsize 2}\,$T_A$} to[out=60,in=-150] (-1.85,-0.75);
+  \draw[fb step] (2.9,-1.65) node[fb stepl,anchor=north] {\textcircled{\scriptsize 2}\,$T_B$} to[out=120,in=-30] (1.85,-0.75);
+  \draw[fb step] (2.75,1.85) node[fb stepl,anchor=south west,xshift=-0.15cm] {\textcircled{\scriptsize 3}\,$T_H$} to[out=-120,in=60] (2.4,1.2);
+  % ---------------- subtraction terms ----------------
+  \begin{scope}[xshift=4.15cm]
+    \node[anchor=north west,align=left,font=\small] (F) at (0,2.2) {%
+      $C_S\Gamma=T_S\,\Gamma$\\[4pt]
+      $C_A\Gamma=T_A(1-T_S)\,\Gamma$，\quad$C_B\Gamma=T_B(1-T_S)\,\Gamma$\\[4pt]
+      $C_H\Gamma=T_H\big(\Gamma-C_S\Gamma-C_A\Gamma-C_B\Gamma\big)$\\[4pt]
+      $\Gamma=\sum_{R}C_R\Gamma+r$};
+    \node[anchor=north west,align=left,font=\footnotesize,text width=6.6cm,draw=red!50!black,
+          line width=0.5pt,rounded corners=2pt,fill=red!3,inner sep=4pt] at ($(F.south west)+(0.05,-0.25)$)
+      {只有分组表达式被压低（\cref{ex:method-naive-induction}）：单个链项一般不可积（例如离壳三角图中的 $T_{C_1}\Gamma$ 对任何 $\varepsilon$ 都不绝对可积），被压低并满足 \mbox{(CS1)--(CS3)} 的是分组表达式 $C_R\Gamma$ 与余项 $r$。};
+  \end{scope}
+\end{tikzpicture}
+\caption{区域的偏序与减除（示意；钳夹集画成区域）。单圈顶点的钳夹集彼此嵌套：软钳夹集 $\pi_S$（绿色）同时含于两个共线钳夹集 $\pi_A$（蓝）与 $\pi_B$（橙），并且恰为二者之交 $\pi_S=\pi_A\cap\pi_B$，即逐线交 $A\wedge B=S$；所有钳夹集都含于硬区 $\pi_H=\Omega$。
+减除自最小区域（软）开始，依次为 \textcircled{\scriptsize 1}~$T_S$、\textcircled{\scriptsize 2}~$T_A,T_B$、\textcircled{\scriptsize 3}~$T_H$：较大区域的近似子作用于减去较小区域贡献之后的被积函数，$C_R\Gamma\equiv T_R\big(\Gamma-\sum_{R'<R}C_{R'}\Gamma\big)$（\cref{def:method-subtraction}）。
+单个链项一般不可积，只有分组表达式满足 \mbox{(CS1)--(CS3)}。}
+\label{fig:method-nesting}
+\end{figure}
+%%% END fig:method-nesting
+
+%%% BEGIN fig:method-hasse
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb J1/.style={draw=blue!60!black},
+  fb J2/.style={draw=orange!80!black},
+  fb S/.style={draw=green!45!black},
+  fb Hl/.style={draw=black,line width=1.6pt},
+  fb m/.style={font=\scriptsize,inner sep=2.6pt,sloped},
+  fb node/.style={draw=gray!60!black,fill=white,rounded corners=2.5pt,line width=0.6pt,inner sep=2.5pt,
+                  minimum width=1.5cm,minimum height=0.55cm,font=\small},
+  fb edge/.style={draw=gray!50!black,line width=0.7pt},
+  fb hl/.style={draw=red!60!black,line width=1.3pt}]
+  \newcommand{\fbH}{H}
+  \newcommand{\fbA}{{\color{blue!60!black}C_1}}
+  \newcommand{\fbB}{{\color{orange!80!black}C_2}}
+  \newcommand{\fbS}{{\color{green!45!black}S}}
+  % ======================= left: two-loop planar vertex, coloured for the region (C1,S) =======================
+  \begin{scope}
+    \coordinate (V) at (0,0);
+    \coordinate (Q1) at (28:1.9); \coordinate (Q2) at (28:3.4); \coordinate (E1) at (28:4.55);
+    \coordinate (A1) at (-28:1.9); \coordinate (A2) at (-28:3.4); \coordinate (E2) at (-28:4.55);
+    \draw[photon] (-1.3,0) -- (V);
+    \draw[quark=0.82,fb Hl] (A1) -- node[fb m,below,pos=0.4,text=black] {$p_2+k_1+k_2$} (V);
+    \draw[quark=0.2,fb J1] (V) -- node[fb m,above,pos=0.6,text=blue!50!black] {$p_1-k_1-k_2$} (Q1);
+    \draw[quark=0.22,fb J1] (Q1) -- node[fb m,above,pos=0.62,text=blue!50!black] {$p_1-k_2$} (Q2);
+    \draw[quark] (Q2) -- (E1);
+    \draw[quark=0.8,fb J2] (A2) -- node[fb m,below,pos=0.38,text=orange!60!black] {$p_2+k_2$} (A1);
+    \draw[quark] (E2) -- (A2);
+    \draw[gluon,fb J1] (A1) -- (Q1);
+    \draw[gluon,fb S] (A2) -- (Q2);
+    \foreach \p in {V,Q1,Q2,A1,A2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.3,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.6,mom length=0.45cm] (Q2) -- (E1);
+    \path[mom={$p_2$},mom pos=0.6,mom length=0.45cm] (A2) -- (E2);
+    \path[mom'={\scriptsize$k_1$},mom length=0.42cm,mom sep=0.3cm] (A1) -- (Q1);
+    \path[mom'={\scriptsize$k_2$},mom length=0.42cm,mom sep=0.3cm] (A2) -- (Q2);
+    \node[font=\footnotesize,align=center] at (1.75,-2.75) {例：区域 $(R(k_1),R(k_2))=(\fbA,\fbS)$\\[1pt]
+      {\color{blue!60!black}$J_1$}\quad{\color{orange!80!black}$J_2$}\quad{\color{green!45!black}$S$}\quad 粗线：$H$};
+  \end{scope}
+  % ======================= right: Hasse diagram of the nine leading regions =======================
+  \begin{scope}[xshift=8.6cm,yshift=-2.35cm]
+    \node[fb node] (SS) at (0,0) {$(\fbS,\fbS)$};
+    \node[fb node] (AS) at (-1.45,1.15) {$(\fbA,\fbS)$};
+    \node[fb node] (BS) at (1.45,1.15) {$(\fbB,\fbS)$};
+    \node[fb node] (AA) at (-2.75,2.3) {$(\fbA,\fbA)$};
+    \node[fb node] (HS) at (0,2.3) {$(\fbH,\fbS)$};
+    \node[fb node] (BB) at (2.75,2.3) {$(\fbB,\fbB)$};
+    \node[fb node] (HA) at (-1.45,3.45) {$(\fbH,\fbA)$};
+    \node[fb node] (HB) at (1.45,3.45) {$(\fbH,\fbB)$};
+    \node[fb node] (HH) at (0,4.6) {$(\fbH,\fbH)$};
+    \foreach \u/\v in {SS/AS,SS/BS,AS/AA,AS/HS,BS/BB,BS/HS,HS/HA,HS/HB,BB/HB,HA/HH,HB/HH}
+      \draw[fb edge] (\u) -- (\v);
+    \draw[fb hl] (AA) -- (HA);
+    \node[font=\scriptsize,text=red!55!black,align=right,anchor=east] at (-2.35,3.5) {逐线比较：\\$C_1\le H$，$C_1\le C_1$};
+    % beta_R column
+    \node[font=\footnotesize,text=gray!30!black] at (4.25,5.35) {$\beta_R$};
+    \foreach \y/\b in {0/{1/81},1.15/{1/27},2.3/{1/9},3.45/{1/3}}
+      \node[font=\footnotesize,text=gray!30!black] at (4.25,\y) {$\b$};
+    \node[font=\scriptsize,text=gray!30!black] at (4.25,4.6) {$N=\Omega$};
+    % pinch sets grow upwards
+    \draw[lcaxis,gray!50!black,line width=0.7pt] (5.05,-0.2) -- (5.05,4.8);
+    \node[font=\footnotesize,text=gray!30!black,rotate=90,anchor=north] at (5.12,2.3) {钳夹集增大};
+    \node[font=\footnotesize,anchor=south] at (0,5.1) {$(R(k_1),R(k_2))$：内胶子与外胶子的模式};
+  \end{scope}
+\end{tikzpicture}
+\caption{两圈平面顶点九个领头区域的 Hasse 图。左：内胶子 $k_1$、外胶子 $k_2$ 的动量走向（胶子动量由反夸克线流向夸克线），线的颜色给出区域 $(C_1,S)$ 的逐线模式：
+$J_1=\{k_1,\,p_1-k_2,\,p_1-k_1-k_2\}$、$J_2=\{p_2+k_2\}$、$S=\{k_2\}$，硬线 $p_2+k_1+k_2$ 与光子顶点组成 $H$。
+右：16 种模式组合中恰有 9 个领头钳夹，按逐线偏序（$S<C_i<H$，$C_1\wedge C_2=S$）排成 Hasse 图（12 条覆盖关系，自下而上钳夹集增大），其中 $(C_1,C_1)<(H,C_1)$（红线）不易一眼看出；
+这一集合对逐线交运算封闭，例如 $(C_1,C_1)\wedge(H,S)=(C_1,S)$、$(H,C_1)\wedge(H,C_2)=(H,S)$、$(C_1,C_1)\wedge(C_2,C_2)=(S,S)$。
+右列为各层的邻域指数 $\beta_R=3^{h(R)-h_*}$（$h_*=4$；最大区域的邻域为整个积分域 $\Omega$，\cref{def:method-neighbourhoods}）。}
+\label{fig:method-hasse}
+\end{figure}
+%%% END fig:method-hasse
+
+\subsection{积分范数下的幂次压低与依赖于 $\lambda$ 的邻域}
+
+\begin{definition}[积分范数意义下的幂次压低]\label{def:method-power-suppressed}
+设 $\Gamma$ 是一个被积函数：一张图，或具有公共圈动量走向的一族图之和，其紫外子发散已在被积函数层次上减除，因而 $\Gamma$ 是圈动量空间（或其复变形 $\Omega$，测度 $\dd\mu$）上的\emph{一个}函数，
+而不是图与抵消项图的形式和。对可测集 $A$（可以依赖于 $\lambda$）与函数 $F$，称 $F$ 在 $A$ 上\emph{幂次压低}，记作 $F\in\mathfrak S(A)$，如果存在常数 $C$、$a>0$ 与 $K$，使得
+\begin{equation}\label{eq:method-EN}
+\int_A|F|\,\dd\mu\le C\lambda^aL^K\qquad\text{对一切}\ \lambda\in(0,\lambda_0],\ \varepsilon\in(0,\varepsilon_0]\ \text{一致成立},\qquad L=\ln\frac1\lambda .
+\end{equation}
+这是\cref{def:intro-error-types}中的误差类型 E-N。
+\uses{def:intro-error-types}
+\end{definition}
+
+选用积分范数，是因为测量函数（如 $\theta(\tau-\tau(X))$）的近似在薄层上误差为 $O(1)$，逐点界不可能而积分界可以成立；要求 $\Gamma$ 是单个被积函数，是因为
+$\overline{\rm MS}$ 抵消项图与原图的相消不是逐点的，分开时 $\int|\Gamma|\sim1/\varepsilon$。$\mathfrak S(A)$ 是线性空间，在有限覆盖上可以拼合（附录~N 的\cref{sec:appN-setting}）。
+
+\begin{definition}[依赖于 $\lambda$ 的邻域]\label{def:method-neighbourhoods}
+以 $Q$ 为单位，对动量 $l$（复动量取各分量的模）记 $\|l\|=|l^+|+|l^-|+|\mathbf l_T|$，以及
+\begin{equation}\label{eq:method-sigma}
+\sigma_A(l)=|l^-|+|\mathbf l_T|,\qquad \sigma_B(l)=|l^+|+|\mathbf l_T|,\qquad \sigma_S(l)=\|l\| .
+\end{equation}
+对 $R\neq R_{\max}$ 取指数 $\beta_R=3^{h(R)-h_*}$，其中 $h(R)$ 是 $\mathcal R$ 中 $R$ 以下最长链的长度，$h_*=1+\max_{R\ne R_{\max}}h(R)$。定义
+\begin{equation}\label{eq:method-NU}
+N_R=\bigl\{k:\ \sigma_{R(j)}(l_j(k))\le\lambda^{\beta_R}\ \ \forall j:\ R(j)\neq H\bigr\},\qquad N_{R_{\max}}=\Omega,\qquad U_R=N_R\setminus\bigcup_{R'<R}N_{R'} .
+\end{equation}
+$N_R$ 是钳夹集 $\pi_R$ 的一个以 $\lambda^{\beta_R}$ 为尺度的邻域，$U_R$ 是“受 $R$ 支配”的集合：它靠近 $\pi_R$ 而远离一切更小的钳夹集。
+\uses{def:method-regions}
+\end{definition}
+
+邻域必须依赖于 $\lambda$：固定尺寸的邻域在边界上给出 $O(1)$ 的相对误差，而 $\lambda^\beta$（$0<\beta<1$）的邻域使相邻两个近似在过渡带中同时准确。较小的区域有较“胖”的邻域：
+$R'<R\neq R_{\max}$ 蕴含 $\beta_R\ge3\beta_{R'}$，且 $\beta_R\le\frac13$（\cref{lem:appN-beta}）。单圈离壳三角图中 $\beta_S=\frac19$、$\beta_{C_i}=\frac13$（\cref{fig:method-neighbourhoods}）；
+两圈平面顶点的指数见\cref{fig:method-hasse}右列。
+
+%%% BEGIN fig:method-neighbourhoods
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize},
+  fb dim/.style={draw=black!75,line width=0.5pt,{Stealth[length=3.6pt,width=3pt]}-{Stealth[length=3.6pt,width=3pt]}},
+  fb lead/.style={draw=black!60,line width=0.4pt}]
+  \def\fbw{0.42}   % half-width lambda^{beta_C} of the collinear tubes
+  \def\fbr{1.15}   % radius lambda^{beta_S} of the soft ball (beta_S < beta_C: fatter)
+  % ---------------- the domain Omega and the dominance sets ----------------
+  \begin{scope}
+    \clip[rounded corners=9pt] (-3.75,-2.45) rectangle (3.75,2.45);
+    \fill[gray!12] (-3.8,-2.5) rectangle (3.8,2.5);
+    \fill[blue!15] (-3.8,-\fbw) rectangle (3.8,\fbw);
+    \fill[orange!20] (-\fbw,-2.5) rectangle (\fbw,2.5);
+    \draw[blue!55!black,line width=0.5pt,dash pattern=on 2pt off 1.5pt] (-3.8,-\fbw) -- (3.8,-\fbw) (-3.8,\fbw) -- (3.8,\fbw);
+    \draw[orange!75!black,line width=0.5pt,dash pattern=on 2pt off 1.5pt] (-\fbw,-2.5) -- (-\fbw,2.5) (\fbw,-2.5) -- (\fbw,2.5);
+    \fill[green!20] (0,0) circle[radius=\fbr];
+    \draw[green!45!black,line width=0.6pt] (0,0) circle[radius=\fbr];
+    \draw[blue!60!black,line width=1.1pt] (-3.8,0) -- (3.8,0);
+    \draw[orange!80!black,line width=1.1pt] (0,-2.5) -- (0,2.5);
+  \end{scope}
+  \draw[gray!55!black,line width=0.7pt,rounded corners=9pt] (-3.75,-2.45) rectangle (3.75,2.45);
+  \fill (0,0) circle[radius=1.8pt];
+  % axes of the section k_T=0
+  \draw[lcaxis,blue!60!black] (3.75,0) -- (4.1,0) node[right=0pt,font=\footnotesize,text=black] {$k^+$};
+  \draw[lcaxis,orange!80!black] (0,2.45) -- (0,2.8) node[above=0pt,font=\footnotesize,text=black] {$k^-$};
+  % pinch sets
+  \node[fb lab,text=blue!50!black,anchor=south west] at (-3.62,\fbw+0.02) {$\pi_{C_1}$（$k\parallel p_1$）};
+  \draw[fb lead,blue!50!black] (-3.15,\fbw+0.07) -- (-3.0,0.04);
+  \node[fb lab,text=orange!60!black,anchor=north west] at (\fbw+0.06,2.36) {$\pi_{C_2}$（$k\parallel p_2$）};
+  \draw[fb lead,orange!60!black] (\fbw+0.1,2.12) -- (0.04,1.95);
+  \node[fb lab,anchor=south west,inner sep=1.5pt] at (0.05,0.03) {$\pi_S$};
+  % dominance sets
+  \node[font=\small,text=green!30!black] at (-0.66,-0.7) {$U_S$};
+  \node[font=\small,text=blue!45!black] at (2.35,-0.21) {$U_{C_1}$};
+  \node[font=\small,text=blue!45!black] at (-2.35,-0.21) {$U_{C_1}$};
+  \node[font=\small,text=orange!55!black,fill=orange!20,inner sep=1pt] at (0,-1.78) {$U_{C_2}$};
+  \node[font=\small,text=orange!55!black,fill=orange!20,inner sep=1pt] at (0,1.55) {$U_{C_2}$};
+  \node[font=\small,text=gray!35!black] at (-2.35,1.55) {$U_H$};
+  \node[font=\small,text=gray!35!black] at (2.35,-1.55) {$U_H$};
+  \node[fb lab,anchor=south east,text=gray!30!black] at (3.68,-2.4) {$\Omega$};
+  % dimensions
+  \draw[fb dim] (0,0) -- (-45:\fbr);
+  \draw[fb lead] (-45:0.62) -- (1.45,-1.12);
+  \node[fb lab,anchor=west,inner sep=1pt] at (1.45,-1.12) {$\lambda^{\beta_S}$};
+  \draw[fb dim] (3.05,0) -- (3.05,\fbw);
+  \draw[fb lead] (3.05,0.3) -- (3.3,0.75);
+  \node[fb lab,anchor=south,inner sep=1pt] at (3.3,0.75) {$\lambda^{\beta_C}$};
+  % ---------------- definitions ----------------
+  \node[anchor=north west,align=left,font=\footnotesize,text width=6.3cm] at (4.75,2.42) {%
+    $N_R=\{\sigma_{R(j)}(l_j)\le\lambda^{\beta_R}\ \ \forall j:\ R(j)\neq H\}$\\[2pt]
+    $\sigma_A=|l^-|+|\mathbf l_T|$，\ $\sigma_B=|l^+|+|\mathbf l_T|$，\ $\sigma_S=\|l\|$\\[6pt]
+    $U_R=N_R\setminus\bigcup_{R'<R}N_{R'}$：\\[2pt]
+    \quad$U_S=N_S$，\ \ $U_{C_i}=N_{C_i}\setminus N_S$，\\[2pt]
+    \quad$U_H=\Omega\setminus(N_S\cup N_{C_1}\cup N_{C_2})$\\[6pt]
+    $\beta_R=3^{h(R)-h_*}$：较小区域的邻域较“胖”\\[2pt]
+    （本例 $\beta_S=\frac19<\beta_C=\frac13$，$\lambda^{\beta_S}>\lambda^{\beta_C}$）\\[6pt]
+    $\bigcup_RU_R=\Omega$（\cref{lem:method-covering}）};
+\end{tikzpicture}
+\caption{依赖于 $\lambda$ 的邻域 $N_R=\{\sigma_{R(j)}(l_j)\le\lambda^{\beta_R}\}$ 与支配集 $U_R=N_R\setminus\bigcup_{R'<R}N_{R'}$（\cref{def:method-neighbourhoods}；示意：单圈离壳三角图的胶子动量 $k$ 在 $\mathbf k_T=0$ 处的 $(k^+,k^-)$ 截面，以 $Q$ 为单位）。
+共线钳夹集 $\pi_{C_1}$、$\pi_{C_2}$ 相交于软钳夹点 $\pi_S$（$k=0$）；$N_{C_i}$ 是半宽 $\lambda^{\beta_C}$ 的管道，$N_S$ 是半径 $\lambda^{\beta_S}$ 的球，
+由于 $\beta_S<\beta_C$ 而比管道“胖”。绿、蓝、橙、灰色区域分别为 $U_S$、$U_{C_1}$、$U_{C_2}$、$U_H$，它们覆盖整个积分域（\cref{lem:method-covering}）。}
+\label{fig:method-neighbourhoods}
+\end{figure}
+%%% END fig:method-neighbourhoods
+
+\begin{lemma}[邻域覆盖]\label{lem:method-covering}
+$\bigcup_{R\in\mathcal R}U_R=\Omega$。
+\uses{def:method-neighbourhoods,lem:appN-beta}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-setting}。）任取 $k\in\Omega$，令 $\mathcal A(k)=\{R\in\mathcal R:\ k\in N_R\}$。因 $N_{R_{\max}}=\Omega$，$\mathcal A(k)$ 非空；$\mathcal R$ 有限，故 $\mathcal A(k)$ 有极小元 $R_0$。
+于是 $k\in N_{R_0}$，而对每个 $R'<R_0$ 有 $k\notin N_{R'}$（否则 $R'\in\mathcal A(k)$，与极小性矛盾），即 $k\in U_{R_0}$。
+覆盖性对任何指数都成立；\cref{lem:appN-beta}的指数选择（$\beta_R\ge3\beta_{R'}$）只在下文的误差估计中用到。
+\end{proof}
+
+\subsection{近似子：幂等投影及其 $i0$}
+
+\begin{definition}[共线近似子（幂等投影形式）]\label{def:method-collinear-approx}
+设区域 $R$ 中 $A$ 共线子图 $\mathsf J_{R,A}$ 经由若干条线 $e$（动量 $k_e$ 流入 $\mathsf H_R$）连到硬子图 $\mathsf H_R$。$T_R$ 的硬—共线部分是以下操作：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{动量投影：}在 $\mathsf H_R$ 的一切因子中把 $k_e$ 换成 $\pi_+(k_e)=(n_B\cdot k_e)\,n_A=(k_e^+,0,\mathbf 0_T)\equiv\hat k_e$，并在 $\mathsf H_R$ 中令红外正规子（轻夸克质量、外线离壳度）为零；
+  来自 $\mathsf J_{R,B}$ 的线用 $\pi_-(k)=(n_A\cdot k)\,n_B$。
+\item \emph{Dirac 投影：}流入 $\mathsf H_R$ 的夸克线插入 $\mathcal P_+=\frac12\gamma^-\gamma^+$（流出的插入 $\mathcal P_-=\frac12\gamma^+\gamma^-$，因为 $\overline{\mathcal P_+\psi}=\bar\psi\mathcal P_-$）；
+  对非极化的前向靶喷注 $\Phi$，这等价于 $\mathsf H(k)\Phi(k)\to\mathsf H(\hat k)\,\frac14\gamma^-\Tr[\gamma^+\Phi(k)]$。
+\item \emph{胶子投影：}胶子线插入常数矩阵
+  \begin{equation}\label{eq:method-PA}
+  \mathcal P_A{}^\mu{}_\nu=g_T{}^\mu{}_\nu+n_A^\mu n_{B\nu},\qquad\text{即}\qquad \mathsf H_\mu\mathsf J^\mu\ \to\ \mathsf H_\mu\mathcal P_A{}^\mu{}_\nu\mathsf J^\nu=\mathsf H^-\mathsf J^+-\mathbf H_T\cdot\mathbf J_T ;
+  \end{equation}
+  其中 $n_A^\mu n_{B\nu}$ 项（给出 $\mathsf H^-\mathsf J^+$）是纵向（K）项：对 $k_e^+\neq0$ 有 $n_A^\mu n_{B\nu}=\hat k_e^\mu n_{B\nu}/k_e^+$；$g_T$ 项是物理的横向项。
+\item \emph{色投影：}对色单态靶，$\Trc[\mathsf H\mathsf J]\simeq\frac1{N_c}\Trc\mathsf H\,\Trc\mathsf J$。
+\end{enumerate}
+$\mathcal P_\pm^2=\mathcal P_\pm$，$\mathcal P_A^2=\mathcal P_A$，动量投影 $\pi_\pm$ 也是幂等的，故 $T_R^2=T_R$。$T_R$ \emph{不引入新的分母}：Wilson 线的分母 $1/(n_B\cdot k\mp i0)$
+只在用 Ward 恒等式改写 K 项之后才出现；附着在末态线上时为 $-i0$（DIS，未来指向的线），附着在初态线上时为 $+i0$（Drell--Yan，过去指向的线，须在附录~O 的单侧改写之后）。
+\uses{def:method-regions,def:prelim-lightfront,lem:prelim-boost}
+\end{definition}
+
+验证：$\mathcal P_+^2=\frac14\gamma^-(2g^{+-}-\gamma^-\gamma^+)\gamma^+=\mathcal P_+$；对 $\Phi=\sla p$、$p=(p^+,0,\mathbf 0_T)$，$\frac14\gamma^-\Tr[\gamma^+\sla p]=p^+\gamma^-=\sla p$；
+$\mathcal P_A^2=g_T+n_A(n_B\cdot n_A)n_B=\mathcal P_A$。这些投影保留的正是被推动放大的分量（\cref{lem:prelim-boost}）：好分量 $\mathcal P_+\psi$ 与 $A^+=n_B\cdot A$。
+
+\begin{definition}[软近似子（幂等投影形式）]\label{def:method-soft-approx}
+设区域 $R$ 的软动量 $k$ 流入 $A$ 共线子图 $\mathsf J_{R,A}$。$T_R$ 的软部分是：在 $\mathsf J_{R,A}$ 的一切因子中把 $k$ 换成 $\pi_-(k)=(n_A\cdot k)\,n_B=(0,k^-,\mathbf 0_T)$（$A$ 喷注只“看见” $k^-$）；
+在软胶子与 $\mathsf J_{R,A}$ 的连接处插入投影 $n_A^\mu n_{B\nu}$，即 $\mathsf S_\mu\mathsf J_A^\mu\to\mathsf S^-\mathsf J_A^+$；$\mathsf S_R$ 的因子保持精确；$B$ 喷注作 $+\leftrightarrow-$ 的替换。
+于是 $\mathsf J_{R,A}$ 中携带 $l=p+k$ 的分母变为
+\begin{equation}\label{eq:method-Dtilde}
+\tilde D=(p+\pi_-(k))^2-M^2+i0=p^2-M^2+2p^+k^-+i0 ,
+\end{equation}
+它继承了原传播子的 $i0$。在 Ward 恒等式之后，软胶子改为附着在沿 $n_A$ 的 Wilson 线上，其分母为 $1/(n_A\cdot k\pm i0)$：入射的 $A$ 线为 $+i0$，出射的为 $-i0$
+（单个软胶子的情形见\cref{fig:soft-eikonal}，图中的 $n$ 是被取代的夸克动量的方向，对 $A$ 喷注即 $n_A$）。这些 $i0$ 形式是上述定义的推论，而不是另加的约定。% VF-WL-11
+\uses{def:method-regions,def:prelim-lightfront}
+\end{definition}
+% VF-WL-11
+
+保留原有的 $i0$，近似后的被积函数才能与原被积函数在\emph{同一条}围道上积分。下面的引理说明这种围道变形何时存在、能走多远。
+
+\begin{lemma}[软近似分母的 $i0$ 相容性与变形幅度 \tagR]\label{lem:method-i0-compat}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+设软动量 $k$ 沿 $\mathsf J_A$ 中的一串线流动，每条线携带 $l=p+k$（$p$ 为其 $A$ 共线部分），沿 $k$ 的流向这些线的 $p^+$ 有相同的符号 $\eta=\pm1$，且 $|k^+|<|p^+|$。
+作变形 $k^-\to k^-+\ii\eta\kappa$（$\kappa\ge0$，其余分量为实）。则：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 精确分母 $D=l^2-M^2+i0$、软近似分母 $\tilde D$ 及其 $M\to0$ 形式满足 $\Imag D=2\eta\kappa(p^++k^+)\ge0$、$\Imag\tilde D=2\eta\kappa p^+\ge0$，在变形过程中都不为零；
+\item 软线自身的传播子 $k^2+i0=2k^+k^--\mathbf k_T^2+i0$ 满足 $\Imag k^2=2\eta\kappa k^+$，只当 $\eta k^+\ge0$ 时非负；当 $\eta k^+<0$ 时，其极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 位于变形一侧，
+  围道必须在 $\Real k^-\approx\mathbf k_T^2/(2k^+)$ 附近回到实轴，可以达到的变形幅度是 $\kappa\sim\mathbf k_T^2/|k^+|$ 而\emph{不是} $|\mathbf k_T|$，由此只得到 $|k^+k^-|\gtrsim\mathbf k_T^2$；
+\item 若 $k$ 还流经一条 $p^+$ 符号相反的 $\mathsf J_A$ 线，则两个分母要求相反方向的变形：这就是 Glauber 钳夹。
+\end{enumerate}
+（本引理只涉及 Feynman 积分。）
+\uses{def:method-soft-approx,def:ir-glauber}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-approximators}。）(a) $D=2(p^++k^+)(p^-+k^-)-(\mathbf p_T+\mathbf k_T)^2-M^2+i0$，只有 $k^-$ 被变形，故 $\Imag D=2(p^++k^+)\,\eta\kappa+0^+$。
+因 $|k^+|<|p^+|$，$p^++k^+$ 与 $p^+$ 同号，即与 $\eta$ 同号，所以 $\Imag D=2\kappa|p^++k^+|+0^+>0$，$D$ 在整个变形中不为零。由\cref{eq:method-Dtilde}，$\Imag\tilde D=2\eta\kappa p^++0^+=2\kappa|p^+|+0^+>0$；
+令 $M\to0$ 不改变虚部。(b) $\Imag(k^2+i0)=2k^+\eta\kappa+0^+$，当 $\eta k^+<0$ 时它在 $\kappa>0$ 处变负。此时极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 的虚部 $-0/(2k^+)$ 的符号为 $\eta$，
+即极点与变形在实轴同侧，位于 $\Real k^-=\mathbf k_T^2/(2k^+)$。均匀的变形 $k^-\to k^-+\ii\eta\kappa$ 会扫过它；容许的变形必须在该极点附近回到实轴，其高度与宽度都只能是
+$|\Real k^-|=\mathbf k_T^2/(2|k^+|)$ 的量级，于是在变形后的围道上只有 $|k^-|\gtrsim\mathbf k_T^2/|k^+|$。(c) 若某条线的 $p^+$ 符号为 $-\eta$，由 (a) 的计算，它的分母要求 $k^-\to k^-+\ii(-\eta)\kappa$；
+两个要求相反，围道被夹在两个极点之间。
+\end{proof}
+
+最简单的实例是离壳三角图：对 $k=(z,\lambda^2/z,\lambda)$（$\lambda^2\ll z\ll1$），胶子线的极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 在下半平面，夸克线 $D_1$ 的极点 $k^-\approx-(m^2+\mathbf k_T^2)/(2P)+i0$
+在上半平面，相距 $\sim\lambda^2/z$，围道只能在其间穿过实轴（\cref{fig:method-sudakov-plane}(b)）。(b) 说明把 $k^-$ 推到 $|k^-|\sim|\mathbf k_T|$ 一般做不到；能保证的只是
+$|k^+k^-|\gtrsim\mathbf k_T^2$，它恰好排除 Glauber 区（误差表第 5 行用的正是这一点）。
+
+\subsection{近似的精度与误差表}
+
+\begin{lemma}[乘积的伸缩恒等式]\label{lem:method-telescoping}
+设近似子 $T$ 逐个因子地作用于乘积，$T\bigl(\prod_{i=1}^nf_i\bigr)=\prod_{i=1}^n(Tf_i)$（投影 $\mathcal P$ 与 $1-\mathcal P$ 也计为因子，乘积保持原有次序）。则
+\begin{equation}\label{eq:method-telescoping}
+(1-T)\prod_{i=1}^nf_i=\sum_{i=1}^n\Bigl[\prod_{j<i}Tf_j\Bigr]\,(f_i-Tf_i)\,\Bigl[\prod_{j>i}f_j\Bigr].
+\end{equation}
+% uses: none
+\end{lemma}
+
+\begin{proof}
+令 $A_i=\bigl[\prod_{j\le i}Tf_j\bigr]\bigl[\prod_{j>i}f_j\bigr]$，则 $A_0=\prod_if_i$，$A_n=T\prod_if_i$，而右边第 $i$ 项恰为 $A_{i-1}-A_i$；求和得 $A_0-A_n$。
+（因子不必对易，只要保持次序。）
+\end{proof}
+
+\begin{lemma}[共线近似的精度 \tagA]\label{lem:method-collinear-accuracy}
+在钳夹集 $\pi_R$ 附近、远离一切更小区域的钳夹集处，$T_R\Gamma=\Gamma\,[1+O(\lambda)]$，其中 $T_R$ 是\cref{def:method-collinear-approx}的共线近似子。（本引理只涉及部分子态。）
+% errtype: E-S
+\uses{def:method-collinear-approx,prop:ir-power-counting}
+\end{lemma}
+
+\begin{proofsketch}
+(1) 在 $A$ 共线标度 $k_e\sim Q(1,\lambda^2,\lambda)$ 下，硬子图的分母离壳 $O(Q^2)$，把 $k_e$ 换成 $\hat k_e$ 删去的是 $2l\cdot(k_e-\hat k_e)\sim Q^2\lambda$ 量级的项（误差表第 1 行），
+质量与外线离壳度带来 $\lambda^2$（第 2 行）。(2) 共线子图的坏旋量分量与非 K 型的胶子极化相对于好分量被推动因子压低（\cref{prop:ir-power-counting}的推动论证；第 3、4 行）。
+(3) 数值上，在单圈 DIS 顶点的被积函数中，对在壳无质量的母夸克与物理（横向）光子，G 项按 $\lambda^2$ 压低；对一般的离壳母夸克按 $\lambda$ 压低（\cref{sec:appF-gy}）；
+因此一般的界是 $O(\lambda)$。（此步只给出 E-S 型陈述。）文献：Collins\cite[第~10~章（Sudakov 形状因子）与第~11.3~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}这是一个标度陈述（E-S）：它说明在 $\pi_R$ 的典型邻域中近似的相对误差按 $\lambda$ 标度，但没有给出在整个支配集 $U_R$ 上一致的界，
+更没有给出积分范数下的界。其积分形式是\cref{lem:method-local-accuracy}，那里需要附录~N 的\cref{asm:appN-envelope}与\cref{asm:appN-separation}（\tagA）：
+前者是 Sterman 与 Collins 幂次计数的积分形式，后者是“到更小钳夹集的距离 $\gtrsim t$ 蕴含虚度 $\gtrsim t^2$”这类 Łojasiewicz 型不等式；二者在所有阶都没有以积分形式写出
+（\cite[第~5~章]{Collins2011}给出标度陈述）。证明这两个假设即可把本引理升级为积分范数下的陈述。
+
+\begin{lemma}[软近似的精度 \tagA]\label{lem:method-soft-accuracy}
+对\cref{def:method-soft-approx}的软近似子，同样的结论成立，但只在 $|k^+k^-|\gtrsim\mathbf k_T^2$（Glauber 区之外）的地方成立：在\cref{lem:method-i0-compat}的变形围道上成立；
+在 Glauber 区的核心中，只在两分量同时变形的围道上成立（\cref{sec:method-glauber}）。（本引理只涉及部分子态。）
+% errtype: E-S
+\uses{def:method-soft-approx,lem:method-i0-compat,prop:ir-power-counting}
+\end{lemma}
+
+\begin{proofsketch}
+(1) 软近似删去的分母项为 $D-\tilde D=2p^-k^+-2\mathbf p_T\cdot\mathbf k_T+k^2$。对软动量 $k\sim Q(\lambda,\lambda,\lambda)$ 与共线的 $p\sim Q(1,\lambda^2,\lambda)$，保留项 $2p^+k^-\sim\lambda Q^2$，
+删去项 $\sim\lambda^2Q^2$，相对误差 $O(\lambda)$。(2) 极化投影删去 $\mathsf S^+\mathsf J^--\mathbf S_T\cdot\mathbf J_T$，相对于保留的 $\mathsf S^-\mathsf J^+$ 为 $O(\lambda|\mathbf k_T|/|k^-|)$。% VF-WL-11
+(3) 在 Glauber 区 $k\sim Q(\lambda^2,\lambda^2,\lambda)$，$2p^+k^-\sim\lambda^2Q^2$ 与 $2\mathbf p_T\cdot\mathbf k_T$、$\mathbf k_T^2$ 同阶，误差为 $O(1)$，(2) 中的比值也是 $O(1)$。
+因此软近似只能在围道已离开 Glauber 区（$|k^+k^-|\gtrsim\mathbf k_T^2$）的地方使用。（此步只给出 E-S 型陈述。）
+\end{proofsketch}
+
+\paragraph{地位与缺口。}标度陈述（E-S）。积分形式同样由\cref{lem:method-local-accuracy}给出，前提是\cref{asm:appN-envelope,asm:appN-separation}；其中\cref{asm:appN-separation}(iii)的第一个不等式 $|k^+k^-|\ge c\,\mathbf k_T^2$
+就是“支配集中没有 Glauber 区”的精确表述，它取代了常见的“$\kappa\sim|\mathbf k_T|$”的说法（\cref{lem:method-i0-compat}(b)）。在 Glauber 区核心的变形围道上的定量界
+由附录~O 的\cref{prop:appO-eikonal}给出（对色单态单举 Drell--Yan 中的图类 $\mathcal G_0$ 与分级构型）；一般情形是\cref{asm:appO-deformation}（\tagA）的内容。文献：\cite[第~10~章]{Collins2011}。
+
+\paragraph{误差表。}\Cref{tab:method-errors}列出近似子从单个因子中删去的项及其在 $U_R$ 上的大小（附录~N 的\cref{lem:appN-error-table}逐行给出证明）。记
+$t_R=\lambda^{\beta_<(R)}$，$\beta_<(R)=\max_{R'<R}\beta_{R'}$（无更小区域时为 $0$）——它是 $U_R$ 上到更小钳夹集距离的下界；$s_R=\lambda^{\beta_R}$——它是 $U_R$ 上小分量的上界；
+$\|V\|$ 为各光锥分量模之和，$\mathcal J_+$ 是好分量的幂次计数包络，$|\mathsf J^+|\le\mathcal J_+$。第 1 行把 $\mathsf H_R$ 中一条线的动量写成 $l=h+k_e$，
+$h$ 是其中不含共线动量 $k_e$ 的部分，于是精确的 $l^2=(h+k_e)^2$ 与保留的 $(h+\pi_+k_e)^2$ 之差为 $2(h+\pi_+k_e)\cdot(k_e-\pi_+k_e)+(k_e-\pi_+k_e)^2$。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.75cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.6cm}@{}}
+\toprule
+& 近似 & 删去的项 & 保留的项 & 在 $U_R$ 上的大小 & 界的类型 & 所用输入\\
+\midrule
+1 & 硬—共线：$\mathsf H_R$ 中的线 $l$ & $2(h+\pi_+k_e)\cdot(k_e-\pi_+k_e)+\cdots$ & $(h+\pi_+k_e)^2$ & 相对 $s_R/t_R^2$ & E-P（相对） & (GA4)(i)\\
+2 & 硬—共线：质量 & $m^2$，外线的 $p^-$ & — & 相对 $\lambda^2/t_R^2$ & E-P（相对） & (GA4)(i)\\
+3 & 硬—共线：夸克投影 & $\mathcal P_-$（坏）部分 & $\mathcal P_+$（好）部分 & 绝对 $(s_R/t_R)\|\mathsf H\|\mathcal J_+$ & E-P（相对于包络） & (GA3)(iii)，(GA4)(ii)\\
+4 & 硬—共线：胶子投影 & $\mathsf H^+\mathsf J^-$ & $\mathsf H^-\mathsf J^+-\mathbf H_T\cdot\mathbf J_T$ & 绝对 $(s_R/t_R)\|\mathsf H\|\mathcal J_+$ & E-P（相对于包络） & (GA3)(iii)，(GA4)(ii)\\
+5 & 软：$\mathsf J_A$ 中的线 $p+k$ & $2p^-k^+-2\mathbf p_T\cdot\mathbf k_T+k^2$ & $p^2-M^2+2p^+k^-$ & 相对 $(s_R/t_R)^{1/2}$ & E-P（相对） & (GA4)(iii)\\
+6 & 软：极化投影 & $\mathsf S^+\mathsf J^--\mathbf S_T\cdot\mathbf J_T$ & $\mathsf S^-\mathsf J^+$ & 绝对 $(s_R/t_R)\|\mathsf S\|\mathcal J_+$ & E-P（相对于包络） & (GA3)(iii)\\
+7 & TMD：快度正规化 & $n_A(y_A)-n_A$、$n_B(y_B)-n_B$ 的分量 & — & 相对 $e^{-2(y_A-y_k)}+e^{-2(y_k-y_B)}$ & E-P（相对，只在快度窗口中） & (T1)\\
+8 & 遍举：价夸克对 & 同第 1 行，$k_e^+=xP^+$ & 同第 1 行 & 相对 $s_R/t_R^2$ & E-P（相对） & (GA4)(ii)，端点区\\
+9 & 事件形状：测量函数 & $\tau(X)-\tau_R(X)$ & $\tau_R=\sum_{\text{区域}}\tau_i$ & 宽度 $O(s_R\tau)$ 的薄层 & E-N & (CU3)\\
+\bottomrule
+\end{tabularx}
+\caption{近似子的误差表（证明见\cref{lem:appN-error-table}）。(GA3)、(GA4) 分别是\cref{asm:appN-envelope}与\cref{asm:appN-separation}，(T1) 是\cref{asm:appN-tmd}的一项，(CU3) 是\cref{asm:appN-cutsum}的一项；
+第 7 行中 $n_A(y_A)$、$n_B(y_B)$ 是快度为 $y_A$、$y_B$ 的类空正规子方向，$y_k$ 是软动量的快度（TMD 近似子见附录~N）；第 8 行另需端点区在 $\mathcal R$ 中（\cref{asm:appN-endpoint}）。第 1、2、5、7、8 行是相对于保留项的逐点界，第 3、4、6 行是相对于包络的逐点界（保留项可以在个别点为零），
+第 9 行只有积分意义下的界。}
+\label{tab:method-errors}
+\end{table}
+
+除第 7 行外，各行的相对误差满足 $\delta\le C(s_R/t_R^2+\lambda^2/t_R^2+s_R+(s_R/t_R)^{1/2})\le C'\lambda^{\beta_R/3}$，因为 $\beta_R\ge3\beta_<(R)$ 给出
+$s_R/t_R^2=\lambda^{\beta_R-2\beta_<}\le\lambda^{\beta_R/3}$、$(s_R/t_R)^{1/2}\le\lambda^{\beta_R/3}$、$\lambda^2/t_R^2\le\lambda^{4/3}$。以第 5 行为例：设 $|k^+k^-|\ge c\,\mathbf k_T^2$ 且
+$|\tilde D|\ge c(|p^+||k^-|+v_A(p))$，$v_A(p)=|p^+p^-|+\mathbf p_T^2$（即\cref{asm:appN-separation}(iii)）。则 $|k^2|\le C|k^+||k^-|$，$|2p^-k^+|\le2v_A(p)|k^+|/|p^+|$，取 $\alpha=(|k^+|/|p^+|)^{1/2}$ 有
+$2|\mathbf p_T||\mathbf k_T|\le\alpha\mathbf p_T^2+\mathbf k_T^2/\alpha\le\alpha v_A(p)+\alpha|p^+||k^-|/c$；相加得 $|D-\tilde D|\le C'(|k^+|/|p^+|)^{1/2}|\tilde D|$，再用 $U_R$ 上 $|k^+|\le s_R$、
+$|p^+|\ge c\,t_R$ 即得。这里既没有用 $p$ 的在壳性，也没有用 $|k^-|\sim|\mathbf k_T|$，只用了\cref{lem:method-i0-compat}(b) 能保证的 $|k^+k^-|\gtrsim\mathbf k_T^2$（我们也用随机抽样核对了这一不等式）。% check: w10_extra.py (d)
+
+\begin{lemma}[局部精度（积分范数） \tagR]\label{lem:method-local-accuracy}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-envelope}、\cref{asm:appN-separation}。
+设近似子 $T_R$ 由\cref{def:method-collinear-approx,def:method-soft-approx}的操作组成（不含 TMD 快度正规化与事件形状测量函数的近似，它们分别另需附录~N 的 (T1) 与 (CU3)）。
+则对每个区域 $R_0\in\mathcal R$，
+\begin{equation}\label{eq:method-local}
+(1-T_{R_0})\Gamma\in\mathfrak S(U_{R_0}) .
+\end{equation}
+特别地，对极小区域 $R_0$（此时 $X_{R_0}=\Gamma$），\cref{sec:method-subtraction}中的精度条件 (CS1)$_{R_0}$ 成立。（本引理只涉及部分子态。）
+% errtype: E-N
+\uses{def:method-power-suppressed,def:method-neighbourhoods,lem:method-telescoping,def:method-collinear-approx,def:method-soft-approx,asm:appN-envelope,asm:appN-separation,lem:appN-error-table}
+\end{lemma}
+
+\begin{proof}
+完整证明在附录~N 的\cref{sec:appN-approximators}；其结构如下。把 $\Gamma$ 写成因子之积，由\cref{lem:method-telescoping}，$(1-T_{R_0})\Gamma$ 是有限多项之和，每一项恰含一个因子之差 $f_i-T_{R_0}f_i$，
+其左边的因子已被近似、右边的因子保持精确。在 $U_{R_0}\cap\{\|k\|\le1\}$ 上，由\cref{lem:appN-error-table}（其前提包含于所列两个假设），每个差不超过 $C\lambda^a$ 乘以保留的因子（误差表第 1、2、5 行）
+或乘以一个包络（第 3、4、6 行）；由此得到的“部分近似”的被积函数按\cref{asm:appN-envelope}(i) 被 $C\Phi_{R_0}$ 控制，其中 $\Phi_{R_0}\ge0$ 是该假设给出的包络，$\int_{U_{R_0}}\Phi_{R_0}\,\dd\mu\le CL^K$；
+于是每一项不超过 $C\lambda^a\Phi_{R_0}$，积分不超过 $C\lambda^aL^K$。
+在 $U_{R_0}\cap\{\|k\|\ge1\}$ 上，相对误差不必小，但\cref{asm:appN-envelope}(ii) 直接给出每一项的积分不超过 $C\lambda^aL^K$。对有限多项求和即得\cref{eq:method-local}，
+其中 $a=\min_{R_0}a_{R_0}>0$。对极小区域，$R<R_0$ 的区域不存在，故 $X_{R_0}=\Gamma$，(CS1)$_{R_0}$ 就是\cref{eq:method-local}。
+\end{proof}
+
+对非极小的 $R_0$，(CS1)(CS2) 还涉及较小与较大区域的减除项；在 (Com)(Abs) 之下它们化为\cref{prop:method-product}的分组表达式，其可积性需要中间的 $(1-T_{R'})$ 因子。
+要求每个单独链项 $T_c(1-T_{R_0})\Gamma$ 都被压低的“逐项稳定性”是\emph{错误的}：\cref{ex:method-naive-induction}给出两个反例——单个近似项 $T_{C_2}\Gamma$ 在另一个共线区中留下未被正规化的钳夹，
+而 $T_{C_1}$ 还必须在已近似的 $T_S\Gamma$ 上准确；两级梯形图中的情形见第~10~章的\cref{ex:disall-ladder}。
+
+\begin{remark}[吸收性质 (Abs) 何时失效]\label{rem:method-abs-failure}
+\Cref{prop:method-product}的乘积公式依赖 (Com) $T_RT_{R'}=T_{R'}T_R$ 与 (Abs) $T_RT_{R'}=T_RT_{R\wedge R'}T_{R'}$（$R$、$R'$ 不可比）。对适配走向下的动量替换，(Abs) 对逐线交成立
+（附录~N 的\cref{lem:appN-algebra}），但对极化投影可能失效：设线 $e$ 在 $R$ 中为 $A$ 共线、在 $R'$ 中为 $B$ 共线（方向翻转），则 $T_RT_{R'}$ 在 $e$ 上插入
+$\mathcal P_A\mathcal P_B=g_T+n_A(n_B\cdot n_B)n_A=g_T$，保留横向耦合，而 $T_{R\wedge R'}$ 的软投影只含纵向的 $n\otimes n$，零化 $g_T$。故 $T_RT_{R'}-T_RT_{R\wedge R'}T_{R'}$ 恰是 $e$ 的横向极化在该连接处的耦合；
+若 $e$ 是物理的最小连接（如胶子引发子过程中的活动胶子），它是领头的。此外有一个与软线约定有关的边缘情形（\cref{rem:appN-abs-edge}）；在“硬因子看到精确喷注动量的光锥投影、软动量只在喷注因子中近似”的字面约定下，
+两圈平面顶点中 (Abs) 恰有四处失效，而在“软优先”约定（携带软动量的喷注线以其软近似后的动量进入硬因子，即“硬因子不依赖于软动量”，\cite[第~10.6.6~节]{Collins2011}）下
+九对不可比区域的 (Abs) 全部精确成立（\cref{prop:appN-twoloop-algebra}）。所以一般情形的乘积公式不是定理，而是\cref{asm:appN-collins}的一部分。
+\end{remark}
+
+% ---------------------------------------------------------------------
+\section{Grammer--Yennie 分解}\label{sec:method-gy}
+
+Grammer--Yennie 分解把胶子投影\cref{eq:method-PA}的纵横分离写成传播子分子的恒等式，并把 $i0$ 明确下来。
+
+%%% BEGIN fig:method-kg
+\begin{figure}[htbp]
+\centering
+% collinear blob A, hard blob, photon and outgoing struck quark (origin at the centre of A); #1 = name of the hard blob
+\newcommand{\fbKGframe}[1]{%
+  \node[jet blob,ellipse,minimum width=1.75cm,minimum height=0.66cm,inner sep=0pt] (A) at (0,0) {};
+  \node[font=\small] at (-0.42,0) {$A$};
+  \node[hard blob,ellipse,minimum width=1.6cm,minimum height=0.66cm,inner sep=0pt] (H) at (0,2.25) {};
+  \node[font=\small] at (H) {$#1$};
+  \draw[photon] (-1.25,3.05) -- (H.150);
+  \draw[quark] (H.20) -- (1.25,3.0);}
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize},
+  fb idx/.style={font=\scriptsize,inner sep=1pt},
+  fb op/.style={font=\large},
+  fb box/.style={draw=gray!60!black,line width=0.5pt,rounded corners=3pt,fill=gray!4,inner sep=4pt}]
+  % ======================= row 1: g = K + G =======================
+  % full propagator numerator
+  \begin{scope}
+    \fbKGframe{H}
+    \draw[quark] (-0.45,0.3) -- (-0.45,1.96);
+    \draw[gluon] (0.42,0.33) -- (0.42,1.94);
+    \path[mom'={$k$},mom sep=0.32cm] (0.42,0.33) -- (0.42,1.94);
+    \node[fb idx,anchor=east] at (0.33,1.9) {$\mu$};
+    \node[fb idx,anchor=east] at (0.34,0.5) {$\nu$};
+    \node[fb lab] at (0,-0.75) {$g_{\mu\nu}$};
+  \end{scope}
+  \node[fb op] at (1.85,1.15) {$=$};
+  % K part: scalar polarization k_mu at the hard end (dot)
+  \begin{scope}[xshift=3.7cm]
+    \fbKGframe{H}
+    \draw[quark] (-0.45,0.3) -- (-0.45,1.96);
+    \draw[longit] (0.42,0.33) -- (0.42,1.94);
+    \fill[blue!60!black] (0.42,1.76) circle[radius=1.7pt];
+    \path[mom'={$k$},mom sep=0.32cm] (0.42,0.33) -- (0.42,1.94);
+    \node[fb idx,anchor=east] at (0.33,1.9) {$\mu$};
+    \node[fb idx,anchor=east] at (0.34,0.5) {$\nu$};
+    \node[fb lab] at (0,-0.85) {$K_{\mu\nu}=\dfrac{k_\mu\,n_{B\nu}}{n_B\cdot k-\ii0}$};
+  \end{scope}
+  \node[fb op] at (5.62,1.15) {$+$};
+  % G part
+  \begin{scope}[xshift=7.55cm]
+    \fbKGframe{H}
+    \draw[quark] (-0.45,0.3) -- (-0.45,1.96);
+    \draw[gluon] (0.42,0.33) -- (0.42,1.94);
+    \path[mom'={$k$},mom sep=0.32cm] (0.42,0.33) -- (0.42,1.94);
+    \node[fb idx,anchor=east] at (0.33,1.9) {$\mu$};
+    \node[fb idx,anchor=east] at (0.34,0.5) {$\nu$};
+    \node[fb lab] at (0,-0.75) {$G_{\mu\nu}=g_{\mu\nu}-K_{\mu\nu}$};
+    \node[fb lab] at (0,-1.28) {$H\cdot G\cdot C=H\cdot\big(C-\frac{C^+}{k^+}\,k\big)$};
+    \node[fb lab,text=red!55!black] at (0,-1.78) {$\ge\lambda$ 压低};
+  \end{scope}
+  % ======================= row 2: Ward identity for the K part; the exception =======================
+  \draw[draw=gray!50!black,line width=1.0pt,-{Stealth[length=6pt,width=5pt]}] (3.35,-1.42) -- (2.3,-2.5);
+  \node[fb lab,anchor=east,align=right] at (2.42,-1.86) {对 $H$ 内一切附着求和\\（Ward 恒等式，\cref{fig:ward-identity}）};
+  \begin{scope}[xshift=1.6cm,yshift=-5.85cm]
+    \node[jet blob,ellipse,minimum width=1.75cm,minimum height=0.66cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.42,0) {$A$};
+    \node[hard blob,ellipse,minimum width=1.6cm,minimum height=0.66cm,inner sep=0pt] (H) at (0,2.25) {};
+    \node[font=\small] at (H) {$H_0$};
+    \draw[photon] (-1.25,3.05) -- (H.150);
+    \draw[quark] (H.20) -- (1.25,3.0);
+    \draw[quark] (-0.45,0.3) -- (H.236);
+    \draw[wilson=0.8] (H.236) -- ++(-24:2.45) coordinate (W);
+    \node[fb lab,anchor=west] at (W) {沿 $n_B$ 至 $\infty$};
+    \coordinate (Y) at ($(H.236)!0.47!(W)$);
+    \draw[longit] (0.42,0.33) -- (Y);
+    \node[vertex] at (Y) {};
+    \path[mom'={$k$},mom sep=0.3cm,mom pos=0.45] (0.42,0.33) -- (Y);
+    \node[fb lab,anchor=north west,inner sep=1pt] at ($(W)+(0.05,-0.22)$) {$\dfrac{g\,t^a\,n_B^\nu}{n_B\cdot k-\ii0}$};
+  \end{scope}
+  % the exception: a single transverse gluon as the active parton (gamma* g -> q qbar)
+  \begin{scope}[xshift=8.25cm,yshift=-5.85cm]
+    \node[jet blob,ellipse,minimum width=1.75cm,minimum height=0.66cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.42,0) {$A$};
+    \node[hard blob,ellipse,minimum width=1.6cm,minimum height=0.66cm,inner sep=0pt] (H) at (0,2.25) {};
+    \node[font=\small] at (H) {$H$};
+    \draw[photon] (-1.25,3.05) -- (H.150);
+    \draw[quark] (H.30) -- (1.25,3.0);
+    \draw[quark] (1.35,1.75) -- (H.345);
+    \draw[gluon] (0.05,0.33) -- (0.05,1.92);
+    \path[mom'={$k$},mom sep=0.32cm] (0.05,0.33) -- (0.05,1.92);
+    \node[fb idx,anchor=east] at (-0.05,1.15) {$j$};
+    \node[fb idx,anchor=west] at (1.25,3.0) {$q$};
+    \node[fb idx,anchor=west] at (1.35,1.75) {$\bar q$};
+    \node[fb lab,align=center,anchor=north] (EXC) at (0,-0.45) {例外：活动部分子为单个横向胶子\\$k_\mu H^\mu=0$，G 项领头：\\$k^+A^j-k^jA^+\ \to\ G^{+j}$};
+    \begin{scope}[on background layer]\node[fb box,fit={(EXC) (A) (H) (-1.3,3.1) (1.55,3.05)}] {};\end{scope}
+  \end{scope}
+\end{tikzpicture}
+\caption{共线胶子的 Grammer--Yennie 分解（Feynman 规范；$k$ 由 $A$ 共线子图流入硬部分，$\mu$ 为硬端、$\nu$ 为共线端的指标）。
+$g_{\mu\nu}=K_{\mu\nu}+G_{\mu\nu}$：K 部分（蓝色，圆点标出带标量极化 $k_\mu$ 的硬端）的共线端只取 $A^+=n_B\cdot A$ 分量；对 $H$ 内一切附着求和后，由 Ward 恒等式，K 胶子改为附着在沿 $n_B$ 的 Wilson 线上，乘以不含该胶子的硬部分 $H_0$（左下；$-\ii0$ 对应末态附着，即 DIS 中未来指向的线，初态附着取 $+\ii0$）；
+G 部分满足 $G_{\mu\nu}k^\nu=0$，每多一条 G 胶子至少压低 $\lambda$。例外（右下）：作为活动部分子的单个横向胶子（此处为 $\gamma^*g\to q\bar q$），由 Ward 恒等式 $k_\mu H^\mu=0$，其 G 项是领头的，与 $k^+A^j-k^jA^+$ 组成场强 $G^{+j}$。}
+\label{fig:method-kg}
+\end{figure}
+%%% END fig:method-kg
+
+\begin{lemma}[Grammer--Yennie 分解]\label{lem:method-gy}
+(a)（共线）设胶子动量 $k$ 由 $A$ 共线子图 $C$ 流入硬部分 $H$，$\mu$ 为 $H$ 一端的指标、$\nu$ 为 $C$ 一端的指标。则
+\begin{equation}\label{eq:method-gy-coll}
+g_{\mu\nu}=K_{\mu\nu}+G_{\mu\nu},\qquad K_{\mu\nu}=\frac{k_\mu\,n_{B\nu}}{n_B\cdot k-i0},\qquad G_{\mu\nu}k^\nu=0,\qquad
+H\cdot G\cdot C=H\cdot\Bigl(C-\frac{C^+}{k^+}\,k\Bigr) ,
+\end{equation}
+其中 $H\cdot G\cdot C\equiv H^\mu G_{\mu\nu}C^\nu$，$C^+=n_B\cdot C$。若 $H\cdot k=0$，则
+$H\cdot C=H^+\bigl(C^--\frac{k^-}{k^+}C^+\bigr)-\mathbf H_T\cdot\bigl(\mathbf C_T-\frac{\mathbf k_T}{k^+}C^+\bigr)$。
+(b)（软）设软胶子 $k$ 连接 $A$ 共线子图 $J$（指标 $\mu$）与软子图 $S$（指标 $\nu$）。则 $g^{\mu\nu}=K_s^{\mu\nu}+G_s^{\mu\nu}$，
+\begin{equation}\label{eq:method-gy-soft}
+\begin{gathered}
+K_s^{\mu\nu}=\frac{k^\mu n_A^\nu}{n_A\cdot k\pm i0},\qquad J\cdot K_s\cdot S=\frac{(J\cdot k)\,S^-}{k^-},\\
+J\cdot G_s\cdot S=J^-S^+-\mathbf J_T\cdot\mathbf S_T-\frac{(J^-k^+-\mathbf J_T\cdot\mathbf k_T)\,S^-}{k^-} ,
+\end{gathered}
+\end{equation}
+入射的 $A$ 线取 $+i0$，出射的取 $-i0$；纯程函流 $J^\mu\propto n_A^\mu$ 被 $G_s$ 零化。
+(c) \cref{eq:method-gy-coll}中的 $-i0$ 对应于 K 胶子附着在末态线上（DIS，未来指向）；附着在初态线上时（Drell--Yan）取 $+i0$。
+\uses{def:method-collinear-approx,def:method-soft-approx}
+\end{lemma}
+% VF-WL-10, VF-WL-11
+
+\begin{proof}
+(a) $G_{\mu\nu}k^\nu=k_\mu-k_\mu(n_B\cdot k)/(n_B\cdot k)=0$（$n_B\cdot k\neq0$ 处）；$H^\mu K_{\mu\nu}C^\nu=(H\cdot k)(n_B\cdot C)/k^+=(H\cdot k)C^+/k^+$，
+故 $H\cdot G\cdot C=H\cdot C-(H\cdot k)C^+/k^+=H\cdot(C-\frac{C^+}{k^+}k)$。若 $H\cdot k=0$，K 项为零，把 $H\cdot C=H^+C^-+H^-C^+-\mathbf H_T\cdot\mathbf C_T$ 中的
+$H^-=(\mathbf H_T\cdot\mathbf k_T-H^+k^-)/k^+$ 代入即得所述形式。(b) 同理，$J_\mu K_s^{\mu\nu}S_\nu=(J\cdot k)(n_A\cdot S)/(n_A\cdot k)=(J\cdot k)S^-/k^-$；
+$J\cdot G_s\cdot S=J\cdot S-(J\cdot k)S^-/k^-$，把 $J\cdot S=J^+S^-+J^-S^++\ldots$ 与 $J\cdot k=J^+k^-+J^-k^+-\mathbf J_T\cdot\mathbf k_T$ 代入，$J^+S^-$ 项相消。
+若 $J\propto n_A$，则 $J^-=\mathbf J_T=0$，右边为零。(c) 见\cref{sec:appF-gy}：$i0$ 由被 K 项取代的传播子的极点位置决定。这些恒等式都用符号计算核对过。% check: w10_gy.py
+\end{proof}
+
+最初的 QED 形式（\cite{GrammerYennie1973}，如\cite{SenIndumathiChoudhury2019}（预印本）的式~(7)--(9)所转述）中 K 部分正比于 $k_\mu k_\nu$，系数由相邻带电线的传播子构成，全部红外发散都在 K 光子中；
+带固定辅助矢量与指定 $i0$ 的单侧形式是 Collins 的推广（\cite[第~5.5.6、10.6、11.9.3~节]{Collins2011}），\cref{eq:method-gy-coll}即\cite[式~(11.4)--(11.6)，第~402~页]{Collins2011}，
+须按作者的勘误表交换上下指标（附录~Q 第~19~条，\cref{tab:appQ-errata-b}）；历史与 $i0$ 的讨论见\cref{sec:appF-gy}。
+
+
+\begin{proposition}[G 部分的幂次压低 \tagA]\label{prop:method-gy-suppression}
+（\cref{fig:method-kg}）在共线近似之后：除最小部分子内容之外，每多一条共线 G 胶子至少压低一个 $\lambda$；K 胶子不带来任何压低，任意多条都是领头的。
+唯一的例外是作为活动部分子的单个横向胶子：此时 $k\cdot H=0$，K 项为零而 G 项是领头的，并经由组合 $k^+A^j-k^jA^+$ 组成胶子分布中的场强 $G^{+j}$（\cref{prop:ir-super-leading}）。
+软 G 胶子在 Glauber 区之外压低 $O(\lambda)$，在 Glauber 区中为 $O(1)$。（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{lem:method-gy,prop:ir-power-counting,prop:ir-super-leading}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 由推动论证（\cref{prop:ir-power-counting}），$A$ 共线子图的流按 $C^\nu\sim(1,\lambda^2,\lambda)\,C^+$ 标度，而 $k\sim(1,\lambda^2,\lambda)\,k^+$；
+于是 $C-\frac{C^+}{k^+}k=(0,O(\lambda^2),O(\lambda))\,C^+$，由\cref{lem:method-gy}(a)，$H\cdot G\cdot C=O(\lambda)\,H\cdot C$，而 K 项 $H\cdot K\cdot C=(H\cdot k)C^+/k^+$ 不含压低因子。
+(2) 若唯一的共线部分子是胶子，Ward 恒等式给出 $k\cdot H=0$（其余外线物理），\cref{lem:method-gy}(a) 的第二式中领头的是 $-\mathbf H_T\cdot(\mathbf C_T-\frac{\mathbf k_T}{k^+}C^+)=-H^j(k^+C^j-k^jC^+)/k^+$，
+即场强组合 $k^+A^j-k^jA^+$；这与\cref{prop:ir-super-leading}中超领头构型的相消一致。(3) 软胶子：由\cref{eq:method-gy-soft}，$J\cdot G_s\cdot S$ 相对于 $J\cdot K_s\cdot S$ 为 $O(\lambda|\mathbf k_T|/|k^-|)$，
+软区为 $O(\lambda)$，Glauber 区为 $O(1)$。(4) 数值上（\cref{sec:appF-gy}）：单圈 DIS 顶点中，在壳无质量母夸克配物理光子时 G 项按 $\lambda^2$ 压低（拟合幂次 $2.00$），一般情形按 $\lambda$ 压低（拟合幂次 $0.99$--$1.00$）；
+软区的 $G_s$ 项按 $\lambda$ 压低（拟合幂次 $1.00$），Glauber 区出现 $O(1)$ 的平台。（以上只给出 E-S 型陈述。）
+\end{proofsketch}
+
+\paragraph{地位与缺口。}全部是标度陈述（E-S）。积分形式需要\cref{asm:appN-envelope}（\tagA）：误差表第 3、4、6 行正是“相对于包络”的投影误差，(GA3)(iii) 是推动论证的逐点形式，
+而推动论证本身只给出标度。胶子道的例外说明“横向胶子的数目”不是规范不变的计数（\cref{prop:ir-super-leading}）。文献：\cite[第~11.3~节]{Collins2011}；
+Collins--Soper--Sterman\cite[第~8、9.1~节]{CollinsSoperSterman1989}指出，把硬部分的外动量换成类光动量并只保留领头的极化分量之后，连接硬部分与喷注的额外共线胶子恰好是纵向极化的，修正被 $Q$ 的幂次压低——这正是 K 部分领头、G 部分压低的标度陈述。
+
+% ---------------------------------------------------------------------
+\section{Ward 恒等式与 Wilson 线}\label{sec:method-ward}
+
+本节由逐个传播子的恒等式、阿贝尔情形、单个纵向胶子与树图层次的两个胶子（\tagR），走到任意多个非阿贝尔 K 胶子（\tagA）；\cref{fig:ward-identity}概括了要证明的图形恒等式。
+
+\begin{lemma}[基本 Ward 恒等式 \tagR]\label{lem:method-ward-elementary}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）记 $S(p)=\ii(\sla p+m)/(p^2-m^2+i0)$，$k$ 流入相应的线。则
+\begin{enumerate}[label=(W\arabic*),leftmargin=2.6em,itemsep=1pt,topsep=2pt]
+\item $S(p+k)\,(\ii g\sla kt^a)\,S(p)=g\,t^a\,[S(p+k)-S(p)]$；
+\item 在壳端点：$\bar u(p')\,\ii g\sla k\,S(p'-k)=g\,\bar u(p')$，$S(p+k)\,\ii g\sla k\,u(p)=-g\,u(p)$，$\bar v(p)\,\ii g\sla k\,S(-p-k)=+g\,\bar v(p)$，$S(-p+k)\,\ii g\sla k\,v(p)=-g\,v(p)$；
+\item 三胶子顶点（动量全部流入，$q_1+q_2+q_3=0$）：$q_{1\mu}V^{\mu\nu\rho}_{abc}=gf^{abc}\bigl[(q_3^2g^{\nu\rho}-q_3^\nu q_3^\rho)-(q_2^2g^{\nu\rho}-q_2^\nu q_2^\rho)\bigr]$；
+\item 鬼场顶点（$p'=p+k$ 为出射鬼场动量）：$k_\mu(-gf^{abc}p'^\mu)=-\frac g2f^{abc}(p'^2-p^2+k^2)$——它\emph{不是}逆传播子之差；
+\item 程函线：$\dfrac{n\cdot k}{(n\cdot\ell+i0)(n\cdot(\ell+k)+i0)}=\dfrac1{n\cdot\ell+i0}-\dfrac1{n\cdot(\ell+k)+i0}$。
+\end{enumerate}
+（本引理只涉及 Feynman 规则。）
+\uses{def:prelim-feynman-rules,prop:prelim-wilson-rules}
+\end{lemma}
+% VF-WL-6
+
+\begin{proof}
+(W1) $S(p)=\ii(\sla p-m)^{-1}$；用 $\sla k=(\sla p+\sla k-m)-(\sla p-m)$，
+$S(p+k)\,\ii g\sla k\,S(p)=-\ii g\,(\sla p+\sla k-m)^{-1}\bigl[(\sla p+\sla k-m)-(\sla p-m)\bigr](\sla p-m)^{-1}=-\ii g\bigl[(\sla p-m)^{-1}-(\sla p+\sla k-m)^{-1}\bigr]=g[S(p+k)-S(p)]$。
+(W2) 同样分解 $\sla k$，并用 $\bar u(p')(\sla p'-m)=0$、$(\sla p-m)u(p)=0$、$\bar v(p)(\sla p+m)=0$、$(\sla p+m)v(p)=0$；例如
+$\bar u(p')\ii g\sla k\,\ii(\sla p'-\sla k-m)^{-1}=-g\,\bar u(p')\bigl[(\sla p'-m)-(\sla p'-\sla k-m)\bigr](\sla p'-\sla k-m)^{-1}=g\,\bar u(p')$，其余三式完全类似。
+(W3) 由三胶子顶点 $gf^{abc}[g^{\mu\nu}(q_1-q_2)^\rho+g^{\nu\rho}(q_2-q_3)^\mu+g^{\rho\mu}(q_3-q_1)^\nu]$（\cref{def:prelim-feynman-rules}）与 $q_1=-q_2-q_3$：
+$q_1\cdot(q_2-q_3)=q_3^2-q_2^2$，$q_1^\nu(q_1-q_2)^\rho+q_1^\rho(q_3-q_1)^\nu=(q_2+q_3)^\nu(2q_2+q_3)^\rho-(q_2+2q_3)^\nu(q_2+q_3)^\rho=q_2^\nu q_2^\rho-q_3^\nu q_3^\rho$，相加即得。
+(W4) $k\cdot p'=\frac12(p'^2-p^2+k^2)$。(W5) 通分，分子为 $n\cdot(\ell+k)-n\cdot\ell=n\cdot k$；两个分母带相同的 $i0$ 是关键，这正是程函传播子 $\ii/(n\cdot\ell+i0)$ 的规则（\cref{prop:prelim-wilson-rules}）。
+以上各式我们都用显式的 Dirac 矩阵与 SU(3) 生成元数值核对过。% check: w10_ward.py
+\end{proof}
+
+(W5) 是 (W1) 在 $S(p)\to\ii/(n\cdot p)$、$\gamma^\mu\to n^\mu$ 下的像，所以 Wilson 线复现被它取代的部分子线的 Ward 恒等式；(W4) 中多出的 $k^2$ 是多胶子时额外鬼场项的根源。
+
+\begin{lemma}[阿贝尔 Ward 恒等式 \tagR]\label{lem:method-ward-abelian}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）(a) 在端点在壳的开放费米子线 $\bar u(p')V_nS\cdots SV_1u(p)$（$V_r=\ii g\gamma^{\mu_r}T_r$，动量 $q_r$ 流入）上，
+把一个标量极化的胶子（极化 $k^\mu$，色矩阵 $T_K$，动量 $k$ 流入）插入一切可能的位置并求和，结果等于 $g\sum_r[\text{该线，其中第 }r\text{ 个胶子携带 }q_r+k\text{、色矩阵换为 }[T_K,T_r]]$；
+在阿贝尔情形它为零。(b) 若费米子线的一端是硬顶点（离壳），另一端在壳，则 $m$ 个标量极化的阿贝尔胶子附着在一切位置上之和为 $\sum\prod_ik_{i\mu_i}H^{\mu_1\cdots\mu_m}=(\pm g)^mH_0$
+（$H_0$ 为不含这些胶子、动量相应平移的硬部分，在壳端点为出射夸克时取 $+$，入射夸克时取 $-$）；程函因子只在乘上 K 投影之后才出现，并由程函恒等式组成阿贝尔 Wilson 线。
+（本引理只涉及部分子态。）
+\uses{lem:method-ward-elementary,lem:prelim-eikonal-identity}
+\end{lemma}
+
+\begin{proof}
+(a) 插入在第 $r$ 与第 $r+1$ 个顶点之间时，由 (W1) 把 $S(P_r+k)\ii g\sla kT_KS(P_r)$ 换成 $gT_K[S(P_r+k)-S(P_r)]$（$P_r=p+q_1+\cdots+q_r$）；两个端点处的插入由 (W2) 化为 $\pm g$ 乘以不含该胶子的线。
+相邻插入的项两两相消（伸缩求和），剩下的项中动量 $k$ 都被某个顶点 $r$ 吸收，色因子是 $T_K$ 在 $T_r$ 之后与之前之差，即 $[T_K,T_r]$。例如 $n=1$：
+$\bar u(p')V_1S(p+k)\ii g\sla kT_Ku(p)+\bar u(p')\ii g\sla kT_KS(p'-k)V_1u(p)=g\,\bar u(p')(T_KV_1-V_1T_K)u(p)$。阿贝尔情形对易子为零。
+(b) 同样的伸缩求和，但只有在壳一端给出 (W2) 的端点项，离壳一端（硬顶点）不产生端点项，于是每个 K 胶子把动量注入硬顶点，留下因子 $\pm g$。乘上
+$K_{\mu\nu}=k_\mu n_{B\nu}/(n_B\cdot k-i0)$ 后，每条胶子贡献 $\pm g\,n_B^\nu/(n_B\cdot k-i0)$；由程函恒等式（\cref{lem:prelim-eikonal-identity}），
+$\prod_i(k_i^+-i0)^{-1}$ 等于对附着次序求和的嵌套分母之和，即阿贝尔 Wilson 线 $W[\infty n_B,0]$ 的 $m$ 阶项。
+\end{proof}
+
+\begin{proposition}[单个纵向胶子的非阿贝尔 Ward 恒等式 \tagR]\label{prop:method-ward-one}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在微扰论的任意阶，设振幅 $\mathcal M^\mu_a$ 中除一个（可以离壳的）胶子 $(k,\mu,a)$ 外，其余外部部分子都在壳且具有物理极化，
+动量非例外，则 $k_\mu\mathcal M^\mu_a=0$。（本命题只涉及部分子态。）
+\uses{thm:prelim-slavnov-taylor,def:prelim-brst}
+\end{proposition}
+
+\begin{proof}
+证明见\cref{sec:appF-one}。要点：由\cref{thm:prelim-slavnov-taylor}的 $N=1$ 情形，$\langle0|T\,\partial\cdot A^a(x)\,\Phi|0\rangle=0$；完全胶子传播子的纵向部分不被重整化，
+$k_\mu D^{\mu\nu}(k)=-\ii\xi_gk^\nu/(k^2+i0)$，于是该恒等式在截腿之后正是 $k_\mu\mathcal M^\mu_a=0$。
+\end{proof}
+
+\begin{proposition}[树图层次的非阿贝尔恒等式与 PDF Wilson 线的种子 \tagR]\label{prop:method-ward-tree}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（树图层次。）
+(a) $\gamma^*\to q(p_1)\bar q(p_2)g(k)$：在壳时 $k_\mu\mathcal A^{\mu\nu}=0$；若反夸克腿离壳（属于一个共线子图），硬部分给出 $k_\mu H^\mu=-g\,t^aH_0$，乘上 K 投影即沿夸克方向的 Wilson 线的一阶项。
+(b) DIS：K 胶子附着在出射的被击出夸克上时 $k_\mu H^\mu_a=g\,t^aH_0$，且
+\begin{equation}\label{eq:method-seed}
+H_\mu\,\frac{k^\mu n_B^\alpha}{n_B\cdot k-i0}=W^{(1)}[\infty n_B,0]\,H_0 ;
+\end{equation}
+两个共线的 K 胶子恰好给出 $(n_B\cdot k_1)(n_B\cdot k_2)\,W^{(2)}_{ab}[\infty n_B,0]\,H_0$：路径次序来自对易子项，在这一阶没有鬼场或三胶子顶点图的贡献。
+(c) $q\bar q\to g^*(k_1,a,\mu)\,g^*(k_2,b,\nu)$，夸克在壳、胶子离壳，$Q=k_1+k_2$：
+\begin{equation}\label{eq:method-qqgg}
+k_{1\mu}\mathcal A^{\mu\nu}_{ab}=\frac{g^2f^{abc}}{Q^2}\bigl(k_2^2g^{\nu\sigma}-k_2^\nu k_2^\sigma\bigr)J_{c\sigma},\qquad J_c^\sigma=\bar v(p_2)\gamma^\sigma t^cu(p_1) ;
+\end{equation}
+对非物理极化，鬼场项是显式的。（本命题只涉及部分子态。）
+\uses{lem:method-ward-elementary,prop:method-ward-one,prop:appF-two-gluon}
+\end{proposition}
+% VF-WL-7, VF-WL-8, VF-WL-9
+
+\begin{proof}
+(a) $\mathcal A^{\mu\nu}=\bar u(p_1)\bigl[\ii g\gamma^\mu t^aS(p_1+k)\gamma^\nu+\gamma^\nu S(-p_2-k)\ii g\gamma^\mu t^a\bigr]v(p_2)$（光子指标 $\nu$，单位耦合）。由 (W2)，第一项缩并后为 $-g\,t^a\bar u(p_1)\gamma^\nu v(p_2)$，
+第二项为 $+g\,t^a\bar u(p_1)\gamma^\nu v(p_2)$，和为零。若反夸克腿离壳且与 $k$ 同属一个共线子图，第二个图属于该子图，硬部分只含第一个图，故 $k_\mu H^\mu=-g\,t^aH_0$，
+$H_0=\bar u(p_1)\gamma^\nu X$；乘上 $k^\mu n_1^\alpha/(n_1\cdot k+i0)$（$n_1\propto p_1$）得 $H_0\,[-g\,t^an_1^\alpha/(n_1\cdot k+i0)]$，正是 $W[\infty n_1,0]$ 中动量 $k$ 流出该线的一阶项（Wilson 线的动量空间规则）。
+(b) $H^\mu_a=\bar u(p')\,\ii g\gamma^\mu t^a\,S(p'-k)\,\Gamma$，由 (W2) $k_\mu H^\mu_a=g\,t^a\bar u(p')\Gamma=g\,t^aH_0$；于是 $H_\mu k^\mu n_B^\alpha/(n_B\cdot k-i0)=[\ii g\,n_B^\alpha t^a\cdot(-\ii)/(n_B\cdot k-i0)]H_0$，
+即\cref{eq:method-seed}。两个 K 胶子的情形与 (c) 的推导见\cref{prop:appF-two-gluon}。(c) 是\cref{prop:method-ward-one}在树图层次的具体形式：当胶子 2 物理（$k_2^2=0$，$\epsilon_2\cdot k_2=0$）时右边为零。
+\end{proof}
+
+%%% BEGIN fig:ward-identity
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 eq/.style={font=\large},
+  t2 hb/.style={hard blob,ellipse,minimum width=1.3cm,minimum height=0.95cm,inner sep=0pt}]
+  % ======================= row (a): one K gluon =======================
+  \node[t2 eq] at (-2.35,-0.1) {$\displaystyle\sum_{\text{所有附着}}$};
+  \node[t2 hb] (H) at (0,0) {$H$};
+  \draw[photon] (-1.25,1.05) -- (H.140);
+  \draw[quark] (H.25) -- (1.55,0.85);
+  \draw[quark] (-1.5,-1.05) -- (H.214);
+  \path[mom={$p$},mom pos=0.4] (-1.5,-1.05) -- (H.214);
+  \draw[longit] (-0.55,-1.6) -- (H.264);
+  \longitmark{(-0.55,-1.6)}{(H.264)}
+  \path[mom'={$k$},mom sep=0.3cm] (-0.55,-1.6) -- (H.264);
+  \node[t2 lab,anchor=north] at (-0.55,-1.6) {$a$};
+  \node[t2 eq] at (2.35,0) {$=$};
+  \begin{scope}[xshift=4.6cm]
+    \node[t2 hb] (H0) at (0,0) {$H_0$};
+    \draw[photon] (-1.25,1.05) -- (H0.140);
+    \draw[quark] (H0.25) -- (1.55,0.85);
+    \draw[quark] (-1.5,-1.05) -- (H0.214);
+    \path[mom={$p+k$},mom pos=0.4] (-1.5,-1.05) -- (H0.214);
+    \draw[wilson] (H0.214) -- ++(-33:2.25) coordinate (W) node[right,t2 lab] {沿 $n_B$};
+    \coordinate (Y) at ($(H0.214)!0.52!(W)$);
+    \draw[longit] (-0.55,-1.6) -- (Y);
+    \longitmark{(-0.55,-1.6)}{(Y)}
+    \path[mom'={$k$},mom sep=0.3cm] (-0.55,-1.6) -- (Y);
+    \node[t2 lab,anchor=north] at (-0.55,-1.6) {$a$};
+  \end{scope}
+  \node[font=\small,anchor=west] at (-2.95,-2.4) {(a)\ 阿贝尔情形（任意多个 K 光子），或单个 K 胶子};
+  % ======================= row (b): two K gluons, non-abelian =======================
+  \begin{scope}[yshift=-4.2cm]
+    \node[t2 eq] at (-2.35,-0.1) {$\displaystyle\sum_{\text{所有附着}}$};
+    \node[t2 hb] (H) at (0,0) {$H$};
+    \draw[photon] (-1.25,1.05) -- (H.140);
+    \draw[quark] (H.25) -- (1.55,0.85);
+    \draw[quark] (-1.5,-1.05) -- (H.214);
+    \draw[longit] (-0.75,-1.62) -- (H.250);  \longitmark{(-0.75,-1.62)}{(H.250)}
+    \draw[longit] (0.05,-1.68) -- (H.290);   \longitmark{(0.05,-1.68)}{(H.290)}
+    \node[t2 lab,anchor=north] at (-0.75,-1.62) {$k_1$};
+    \node[t2 lab,anchor=north] at (0.05,-1.68) {$k_2$};
+    \node[t2 eq] at (2.35,0) {$=$};
+    \begin{scope}[xshift=4.6cm]
+      \node[t2 hb] (H0) at (0,0) {$H_0$};
+      \draw[photon] (-1.25,1.05) -- (H0.140);
+      \draw[quark] (H0.25) -- (1.55,0.85);
+      \draw[quark] (-1.5,-1.05) -- (H0.214);
+      \draw[wilson=0.84] (H0.214) -- ++(-33:2.25) coordinate (W) node[right,t2 lab] {沿 $n_B$};
+      \draw[longit] (-0.75,-1.62) -- ($(H0.214)!0.36!(W)$);  \longitmark{(-0.75,-1.62)}{($(H0.214)!0.36!(W)$)}
+      \draw[longit] (0.05,-1.68) -- ($(H0.214)!0.66!(W)$);   \longitmark{(0.05,-1.68)}{($(H0.214)!0.66!(W)$)}
+      \node[t2 lab,anchor=north] at (-0.75,-1.62) {$k_1$};
+      \node[t2 lab,anchor=north] at (0.05,-1.68) {$k_2$};
+      \node[font=\small,anchor=west] at (1.7,-0.08) {$+\;(k_1\leftrightarrow k_2)$};
+    \end{scope}
+    \node[t2 eq] at (8.75,0) {$+$};
+    \begin{scope}[xshift=10.55cm]
+      \node[t2 hb] (Hg) at (0,0) {$H'$};
+      \draw[photon] (-1.25,1.05) -- (Hg.140);
+      \draw[quark] (Hg.25) -- (1.55,0.85);
+      \draw[quark] (-1.5,-1.05) -- (Hg.214);
+      \draw[ghost] (-0.85,-1.65) -- (Hg.252);
+      \draw[ghost] (Hg.292) -- (0.15,-1.7);
+      \node[font=\footnotesize,anchor=north,align=center] at (-0.35,-1.75) {鬼场线\\（鬼场项，示意）};
+    \end{scope}
+  \end{scope}
+  \node[font=\small,anchor=west] at (-2.95,-6.85) {(b)\ 非阿贝尔情形，两个及以上 K 胶子};
+\end{tikzpicture}
+\caption{图示 Ward 恒等式。蓝色螺旋线是标量（纵向）极化的共线胶子（K 胶子，极化 $\propto k^\mu$，以圆点标记），来自 $A$ 共线子图（未画出）；
+$H$ 的其余外线（入射夸克、出射夸克、光子）都取为在壳的物理粒子（共线近似之后）。
+(a)~对 K 胶子在 $H$ 内一切可能附着位置（包括非阿贝尔情形中 $H$ 内的胶子线与鬼场线）求和，等于把它附着到一条沿 $n_B$ 方向的 Wilson 线（双线）上、
+再乘以不含该胶子的硬部分 $H_0$（其入射动量为 $p+k$）；Wilson 线是未来指向还是过去指向，取决于 K 胶子附着在 $H$ 的末态线还是初态线上。
+阿贝尔理论中这一等式对任意多个 K 光子成立；非阿贝尔理论中对单个 K 胶子成立（BRST 对称性）。
+(b)~非阿贝尔理论中有两个及以上 K 胶子时，求和给出按路径次序附着在 Wilson 线上的各项（色矩阵 $t^{a_1}$、$t^{a_2}$ 的次序由附着次序决定，两种次序都出现），
+一般还伴随含鬼场线（带箭头的点线）的附加项；此处只示意其存在，其精确形式与处理见附录 F。}
+\label{fig:ward-identity}
+\end{figure}
+%%% END fig:ward-identity
+
+\begin{example}[$q\bar q\to g^*g^*$ 的两个纵向胶子]\label{ex:method-ward-tree}
+由\cref{eq:method-qqgg}：(i) 胶子 2 物理时 $k_{1\mu}\mathcal A^{\mu\nu}\epsilon_{2\nu}=0$（\cref{prop:method-ward-one}）；(ii) 两个胶子都纵向时即使离壳也有 $k_{1\mu}k_{2\nu}\mathcal A^{\mu\nu}=0$；
+(iii) 胶子 2 在壳而取非物理极化 $\bar k_2=(k_2^0,-\mathbf k_2)$ 时，由流守恒 $k_2\cdot J=-k_1\cdot J$，$k_{1\mu}\bar k_{2\nu}\mathcal A^{\mu\nu}_{ab}=(k_2\cdot\bar k_2)\mathcal A_{\rm gh}$，
+$\mathcal A_{\rm gh}=\frac{g^2}{Q^2}f^{abc}k_1\cdot J_c$ 是 $q\bar q\to c^a\bar c^b$ 的鬼场振幅；(iv) 因此对物理极化求和须减去鬼场：
+\begin{equation}\label{eq:method-ghostsum}
+\sum_{\rm phys}|\mathcal A|^2=\sum_{-g,-g}|\mathcal A|^2-2\sum|\mathcal A_{\rm gh}|^2 ,\qquad
+\frac1{36}\sum_{\rm phys}|\mathcal A|^2=g^4\Bigl[\frac{32}{27}\frac{t^2+u^2}{tu}-\frac83\frac{t^2+u^2}{s^2}\Bigr],
+\end{equation}
+因子 $2$ 计入鬼场与反鬼场，第二式是 Combridge--Kripfganz--Ranft 的结果\cite{CombridgeKripfganzRanft1977}。数值例：取 $g=1$，在质心系中每个入射夸克的能量为 $1.3$、散射角 $\theta=0.83$
+（于是 $s=6.76$，$t=-\frac s2(1-\cos\theta)\approx-1.0989$，$u=-\frac s2(1+\cos\theta)\approx-5.6611$），用显式的 Dirac 矩阵与极化矢量算出的振幅给出
+$\frac1{36}\sum_{\rm phys}|\mathcal A|^2=4.3949316148$，与右边在机器精度内一致；鬼场减除项 $2\sum|\mathcal A_{\rm gh}|^2$ 占 $-g$ 求和的 $3.97\%$（参见\cref{ex:qcd-qqbar-gg}）。
+\uses{prop:method-ward-tree,ex:qcd-qqbar-gg}
+\end{example}
+% VF-WL-9
+
+\begin{lemma}[多个 K 胶子的 Ward 恒等式与 Wilson 线 \tagA]\label{lem:method-ward-multi}
+设 $n$ 个 $A$ 共线的 K 胶子（动量 $\hat k_i$，色指标 $a_i$，极化 $\propto\hat k_i^\mu$）以一切方式附着在硬子图 $H$ 上，$H$ 的其余外线（包括动量为 $\hat k$ 的 $A$ 共线部分子）都是在壳的物理部分子。
+则其和等于 $H_0$（不含这些胶子的硬部分）乘以沿 $n_B$ 的 Wilson 线的 Feynman 规则：附着在末态线上时为未来指向的线，附着在初态线上时为过去指向的线（单侧改写之后）；
+鬼场贡献相消或被吸收进 Wilson 线算符。（本引理只涉及部分子态。）
+\uses{prop:method-ward-one,prop:method-ward-tree,prop:appF-induction}
+\end{lemma}
+
+\begin{proofsketch}
+(1) $n=1$：\cref{prop:method-ward-one}与\cref{eq:method-seed}。(2) $n=2$（树图）：\cref{prop:method-ward-tree}(b)（证明见\cref{sec:appF-two}）——两种附着次序的和中，阿贝尔部分由程函恒等式给出 $g^2H_0$，
+对易子部分恰好补成路径次序 $W^{(2)}_{ab}$。(3) 归纳步骤（\cref{prop:appF-induction}）：加入第 $n$ 个 K 胶子并用单胶子的 BRST 恒等式；它附着在其余 K 胶子上的项由 (W3) 产生对易子，
+与路径次序组合；(W4) 中不是差分的部分产生鬼场项，它们必须相消或被吸收进 BRST 恰当的算符——这一步需要多定域算符的 BRST 分类。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}阿贝尔情形 \tagR（\cref{lem:method-ward-abelian}）；$n\le2$ 的树图层次 \tagR（\cref{prop:method-ward-tree}）；含鬼场的一般非阿贝尔组合学是 \tagA。
+文献中的论证是 Collins\cite[第~11.9~节，第~416~页，图~11.6]{Collins2011}、Collins--Soper\cite{CollinsSoper1982a}与 Labastida--Sterman\cite{Labastida:1984gy}；
+据 Collins 的记述，Labastida--Sterman 证明了全部外线或除一条以外的全部外线都是 K 胶子时结果为零，但只是在严格的共线极限下；
+Collins--Rogers\cite{Collins:2008sg}指出朴素的 K 胶子恒等式有一个非零的领头余项，它是得到正确的规范不变胶子分布所必需的；在振幅层次的另一种全阶论证见 Feige--Schwartz\cite{FeigeSchwartz2014}。
+本引理是代数—组合层次的恒等式，自身不含幂次计数；与之配合的近似误差是\cref{lem:method-collinear-accuracy}的 E-S 型陈述。
+附录~N 中使用的精确形式是\cref{asm:appN-ward-product}（\tagA）。\emph{该论证中被明确假定的一步}是多定域光线算符的 BRST 分类：Collins 在\cite[第~11.3.2~节，第~407--410~页]{Collins2011}中写道，
+对非定域算符「“no proof has been given”」，并决定「“I will assume the result is true”」（第~410~页）——即：就他所知尚无证明，他假定结论成立。这一步就是登记项\cref{asm:appN-brst-nonlocal}
+（\tagC：不存在全阶论证；第~24~章的\cref{conj:front-brst-multilocal}是同一主张）。本引理以及以它为基础的一切 Feynman 规范过程定理的 [A]，是 CSS/Collins 标准论证在文献中的等级，
+而该论证本身就包含这一被明确假定的步骤；因此它在此处与\cref{thm:method-template}中被点名，却只是附录~N 的精确条件定理\cref{thm:appN-structure}的形式前提（该定理的内容等级因而为 [C]）。
+对双定域的 PDF 算符，第~24~章的\cref{prop:front-brst-bilocal}（\tagA；先行工作见\cite{Braun:2019qtp}）给出了一个全阶论证：重整化所需的分类经由矩约化归结为定域算符的 Joglekar--Lee 定理；
+多定域的情形仍然开放。完成\cref{prop:appF-induction}的归纳即可解除\cref{asm:appN-ward-product}；证明多定域光线算符的 BRST 分类则消除上述具名缺口。
+
+\begin{proposition}[共线 Wilson 线与 PDF \tagA]\label{prop:method-collinear-wilson}
+对 $A$ 共线 K 胶子的一切附着方式求和，共线近似给出 $H_0(\hat k)\otimes\Phi^W(k)$，其中 $\Phi^W$ 是附有沿 $n_B$ 的 Wilson 线的共线子图。在固定 $k^+=\xi P^+$ 下对 $k^-$、$\mathbf k_T$ 积分，
+得到\cref{def:pdf-quark,def:pdf-gluon}的裸部分子分布，其中的 Wilson 线是直的类光线段：对 $w=(0^+,w^-,\mathbf 0_T)$，
+\begin{equation}\label{eq:method-straight}
+W[w,\infty n_B]\,W[\infty n_B,0]=W[w,0]=W[w,-\infty n_B]\,W[-\infty n_B,0] .
+\end{equation}
+（本命题只涉及部分子态。）
+\uses{lem:method-ward-multi,def:method-collinear-approx,prop:prelim-wilson-covariance,def:pdf-quark,def:pdf-gluon}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 在 $T_R$ 之下硬部分只依赖于 $\hat k$，夸克线带投影 $\frac14\gamma^-\Tr[\gamma^+\cdot]$，胶子线带 $\mathcal P_A$（\cref{def:method-collinear-approx}），纵向项是 K 胶子。
+(2) 由\cref{lem:method-ward-multi}，对附着求和后 K 胶子改为附着在沿 $n_B$ 的 Wilson 线上。(3) 固定 $k^+$ 对 $k^-$、$\mathbf k_T$ 积分，把两个场放到类光线 $w=(0^+,w^-,\mathbf 0_T)$ 上，
+得到 $\bar\psi(w)\gamma^+W[w,\infty n_B]W[\infty n_B,0]\psi(0)$ 矩阵元的 Fourier 变换（按\cref{def:pdf-quark}归一化；胶子情形见\cref{def:pdf-gluon}）。(4) $0$ 与 $w$ 在同一条类光线上，
+结合律与回溯（\cref{prop:prelim-wilson-covariance}）给出\cref{eq:method-straight}：DIS 与 Drell--Yan 给出同一个共线 PDF；TMD 的两点有横向间隔，Wilson 线不能合并（第~14~章）。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}继承\cref{lem:method-ward-multi}的地位（包括其中点名的具名缺口\cref{asm:appN-brst-nonlocal}）：瓶颈是\cref{asm:appN-ward-product}，其中还包含减除后的重组（零区重叠的扣除与重整化见\cref{sec:method-subtraction}，
+即模板定理的 (H5)）。\cref{eq:method-straight}本身是 Wilson 线的恒等式；本命题的误差只来自共线近似，是\cref{lem:method-collinear-accuracy}的 E-S 型陈述。
+\cref{eq:method-straight}在第~12~章重述为\cref{prop:dy-universality}。文献：\cite{CollinsSoper1982a}，\cite[第~11.9~节]{Collins2011}。
+
+\begin{proposition}[软 Wilson 线 \tagA]\label{prop:method-soft-wilson}
+附着在 $J_A$ 上的软胶子，在\cref{def:method-soft-approx}的近似与 Ward 恒等式之后从 $J_A$ 退耦，改为附着在软因子 $S=\langle0|\prod_iW_{n_i}|0\rangle$ 中沿 $n_A$ 的 Wilson 线上
+（振幅中为编时积，共轭振幅中为反编时积）。（本命题只涉及部分子态。）
+\uses{lem:method-ward-multi,def:method-soft-approx,lem:method-soft-accuracy}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 软近似之后 $J_A$ 只依赖于 $\pi_-(k)$，且 $n_A^\mu n_{B\nu}=n_A^\mu\pi_-(k)_\nu/(n_A\cdot k)$：相对于 $J_A$，软胶子是标量极化 $\pi_-(k)$ 的 K 胶子。(2) 把\cref{lem:method-ward-multi}用于 $J_A$，
+软胶子改为附着在沿 $n_A$ 的程函线上，分母 $1/(n_A\cdot k\pm i0)$（\cref{def:method-soft-approx}）。(3) 对所有喷注重复，得到 Wilson 线的真空矩阵元。前提是软近似有效（\cref{lem:method-soft-accuracy}）。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}继承\cref{lem:method-ward-multi}（\cref{asm:appN-ward-product}）与\cref{lem:method-soft-accuracy}；后者只在 Glauber 区之外成立（E-S 型陈述），因而本命题依赖模板定理的 (H3)：
+对 Drell--Yan 型过程，其精确形式是\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-rewritten-cs}（附录~O）。文献：\cite[第~10.8~节]{Collins2011}（Sudakov 形状因子），\cite[第~9.2~节]{CollinsSoperSterman1989}（单粒子单举截面与软近似：软近似之后用 Ward 恒等式把软胶子从喷注移到程函线上）。
+
+\begin{remark}[纯规范论证的地位]\label{rem:method-pure-gauge}
+“纯规范论证”说：共线近似后耦合到硬部分的 K 胶子场是纯规范的，$F[\mathcal A_{\rm eff}]=0$，故 $\mathcal A_{\rm eff}=-\frac\ii g(\partial U)U^\dagger$，硬部分看到 $\psi\to U^\dagger\psi$，$U$ 是一条 Wilson 线。
+这是结构性的启发：其第二步（硬部分对纯规范场的依赖就是这个规范转动，含鬼场贡献）正是\cref{lem:method-ward-multi}的 BRST 内容（\tagA）；它不能确定 Wilson 线的方向（方向由被取代传播子的 $i0$ 决定，
+\cref{def:method-collinear-approx}）；$U(+\infty)$ 是依赖于场的算符，不是整体规范变换。因此它不是非阿贝尔 Wilson 线结构的证明。SCET 中的共线规范不变性见第~15~章。
+\end{remark}
+
+% ---------------------------------------------------------------------
+\section{减除形式体系}\label{sec:method-subtraction}
+
+不同区域的近似在重叠处重复计数（例如软—共线重叠中两种近似都准确）。Collins 的办法是从最小的区域开始，逐级地对“减去较小区域贡献之后的被积函数”作近似\cite[第~10~章]{Collins2011}。
+
+\begin{definition}[减除项]\label{def:method-subtraction}
+设 $\mathcal R$ 是区域集合，$T_R$（$R\in\mathcal R$）是由\cref{def:method-collinear-approx,def:method-soft-approx}的操作组成的近似子，其积分扩展到全部动量范围。从极小区域开始递归地定义
+\begin{equation}\label{eq:method-CR}
+\begin{gathered}
+C_R\Gamma\equiv T_R\Bigl(\Gamma-\sum_{R'<R}C_{R'}\Gamma\Bigr),\\
+X_{R_0}\equiv\Gamma-\sum_{R<R_0}C_R\Gamma\quad(\text{故 }C_{R_0}\Gamma=T_{R_0}X_{R_0}),\qquad r\equiv\Gamma-\sum_{R\in\mathcal R}C_R\Gamma .
+\end{gathered}
+\end{equation}
+\uses{def:method-regions,def:method-collinear-approx,def:method-soft-approx}
+\end{definition}
+
+单圈顶点中（\cref{fig:method-nesting}）$C_S\Gamma=T_S\Gamma$，$C_A\Gamma=T_A(1-T_S)\Gamma$，$C_B\Gamma=T_B(1-T_S)\Gamma$，$C_H\Gamma=T_H(\Gamma-C_S\Gamma-C_A\Gamma-C_B\Gamma)$；减去的 $T_AT_S\Gamma$ 就是零区（zero-bin）项。
+
+\subsection{为什么朴素的归纳不成立}
+
+以下用附录~N 的\cref{sec:appN-examples}的离壳单圈三角图（也是\cref{ex:sudakov-offshell}的对象）：标量三角图，内线无质量，测度 $\mu^{2\varepsilon}\int\dd^Dk/(\ii\pi^{D/2})$，
+\begin{equation}\label{eq:method-tri-kin}
+\begin{gathered}
+p_1=\Bigl(P,-\frac{m^2}{2P},\mathbf 0_T\Bigr),\qquad p_2=\Bigl(\frac{m^2}{2P'},-P',\mathbf 0_T\Bigr),\qquad p_i^2=-m^2,\\
+\tilde Q^2\equiv2PP',\qquad Q^2\equiv-(p_1+p_2)^2=\frac{(\tilde Q^2+m^2)^2}{\tilde Q^2} ;
+\end{gathered}
+\end{equation}
+$D_g=-k^2$，$D_1=-(p_1-k)^2$，$D_2=-(p_2+k)^2$（都带 $-i0$），$\Gamma=1/(D_gD_1D_2)$；并记 $e_1=m^2+2Pk^-$，$h_1=2Pk^-$，$t_1=2Pk^--k^2$，$e_2=m^2+2P'k^+$，$h_2=2P'k^+$，$t_2=2P'k^+-k^2$。
+区域为 $\mathcal R=\{S<C_1,C_2<H\}$（$C_i$：胶子平行于 $p_i$；$S$ 是\cref{def:ir-scalings}意义下的超软区，$k\sim m^2/Q$）。近似子是 $T_S:(D_1,D_2)\mapsto(e_1,e_2)$，$T_H:(D_1,D_2)\mapsto(t_1,t_2)$，
+$T_{C_1}:D_2\mapsto h_2$，$T_{C_2}:D_1\mapsto h_1$，它们也作用于已近似的分母（$T_He_i=h_i$，$T_St_i=h_i$，$T_{C_1}e_2=h_2$，……）。
+它们是\cref{def:method-collinear-approx,def:method-soft-approx}的特例：$T_S$ 让夸克线 1 只看见 $k^-$，$D_1=m^2+2Pk^--(m^2/P)k^+-k^2\mapsto e_1$；$T_{C_1}$ 在硬线 2 中令 $k\to\pi_+(k)$、$m=0$。
+
+\begin{example}[朴素归纳为何失败：离壳单圈三角图 \tagR]\label{ex:method-naive-induction}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈。）在上述设定下：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 单个近似项 $T_{C_2}\Gamma=1/(D_gh_1D_2)$ 在 $C_1$ 中有一个未被正规化的共线钳夹；而减除项
+  \begin{equation}\label{eq:method-CC2}
+  C_{C_2}\Gamma=T_{C_2}(\Gamma-T_S\Gamma)=\frac{m^2}{2PP'}\,\frac1{D_gD_2e_2}-\frac1{h_1D_2e_2}
+  \end{equation}
+  在那里被压低；
+\item $C_S\Gamma$ 在 $C_1$ 中是领头的，因此 $T_{C_1}$ 必须在 $T_S\Gamma$ 上也准确：$(1-T_{C_1})T_S\Gamma=\frac1{D_ge_1}\bigl(\frac1{e_2}-\frac1{h_2}\bigr)$，相对大小为 $O(m^2/(Qk^+))$；
+\item $T_{C_1}\Gamma=1/(D_gD_1h_2)$ 对任何 $\varepsilon$ 都不绝对可积：快度端要求 $\varepsilon<0$，紫外端要求 $\varepsilon>0$。
+\end{enumerate}
+因此关于单个链项的陈述一般是错误的；被压低的只是分组的表达式 $C_R\Gamma$。
+\uses{def:method-subtraction,def:method-power-suppressed,prop:appN-triangle-exact}
+\end{example}
+% VF-REF-18
+
+\begin{proof}
+(a) 在 $C_1$ 中（$k\sim Q(1,\lambda^2,\lambda)$），$D_g$ 的极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 在下半平面，$h_1=2Pk^--i0$ 的极点 $k^-=+i0$ 在上半平面，二者在 $k^-=\mathbf k_T=0$、$k^+\sim Q$ 处钳夹：
+$k^-$ 积分给出 $\propto1/\mathbf k_T^2$，而 $\int\dd^{2-2\varepsilon}k_T/\mathbf k_T^2$ 只在 $\varepsilon<0$ 时收敛——$T_{C_2}$ 去掉了线 1 的质量正规子。另一方面，
+$C_{C_2}\Gamma=\frac1{D_gh_1}\bigl(\frac1{D_2}-\frac1{e_2}\bigr)=\frac{e_2-D_2}{D_gh_1D_2e_2}$，而 $e_2-D_2=(m^2/P')k^--D_g$，代入并用 $h_1=2Pk^-$ 即得\cref{eq:method-CC2}：
+每一项只含两个钳夹极点中的一个，第一项带因子 $m^2$，第二项在 $C_1$ 的 $(k^-,\mathbf k_T)$ 小盒子中只占很小的相空间。
+(b) 在 $C_1$ 中 $D_g\sim e_1\sim\lambda^2Q^2$，$e_2\sim Q^2$，故 $C_S\Gamma=1/(D_ge_1e_2)\sim\lambda^{-4}Q^{-6}$，与 $\Gamma$ 同阶。而
+$(1-T_{C_1})T_S\Gamma=\frac1{D_ge_1}\bigl(\frac1{e_2}-\frac1{h_2}\bigr)=-\frac{m^2}{D_ge_1e_2h_2}$，相对于 $T_S\Gamma$ 为 $-m^2/(2P'k^+)$。
+(c) 取 $k=(a^2\kappa^+,\kappa^-,a\boldsymbol\kappa_T)$，$a\to0$（胶子平行于 $p_2$，即 $h_2$ 的极点 $k^+=+i0$ 与 $D_g$ 的极点钳夹的快度端）：被积函数 $\sim a^{-4}$，测度 $\sim a^{4-2\varepsilon}\dd a/a$，收敛要求 $\varepsilon<0$。
+取 $k=(\kappa^+,a\kappa^-,\sqrt a\boldsymbol\kappa_T)$，$a\to\infty$（紫外方向）：$D_g\sim D_1\sim a$，被积函数 $\sim a^{-2}$，测度 $\sim a^{2-\varepsilon}\dd a/a$，收敛要求 $\varepsilon>0$。
+无标度的 $T_{C_1}T_S\Gamma$ 同样如此；在壳无质量三角图 $T_H\Gamma$ 只在 $\varepsilon<0$ 时收敛。这些闭式与标度都由\cref{prop:appN-triangle-exact}的计算给出，我们用符号计算逐一核对过。% check: w10_triangle.py
+\end{proof}
+
+教训：$T_{R_0}$ 的精度对象是 $X_{R_0}$ 而不是 $\Gamma$（(CS1)）；较大或不可比的区域只能作为整个减除项被压低（(CS2)）；只有减除项与分组组合可积（(CS3) 与\cref{asm:appN-contour}）；
+此外邻域须依赖于 $\lambda$，近似只在变形的围道上成立，扩展积分引起的紫外发散只在和中相消（\cref{cor:method-removing-eps}）。
+
+\subsection{减除条件与组合恒等式}
+
+\begin{definition}[减除条件 (CS1)--(CS3)]\label{def:method-collins-conditions}
+设 $X_{R_0}$ 如\cref{eq:method-CR}，$U_{R_0}$ 与 $\mathfrak S$ 如\cref{def:method-neighbourhoods,def:method-power-suppressed}。对 $R_0\in\mathcal R$：
+\begin{enumerate}[leftmargin=4.4em,labelwidth=4em,itemsep=1pt,topsep=2pt]
+\item[\textbf{(CS1)}$_{R_0}$]（精度）$(1-T_{R_0})X_{R_0}\in\mathfrak S(U_{R_0})$；
+\item[\textbf{(CS2)}$_{R_0}$]（非较小区域的压低）对一切 $R\not\le R_0$（$R>R_0$ 或与 $R_0$ 不可比），$C_R\Gamma\in\mathfrak S(U_{R_0})$；
+\item[\textbf{(CS3)}]（可积性）$\Gamma\in L^1(\Omega)$ 且 $\int_\Omega|\Gamma|\,\dd\mu$ 对 $\varepsilon\in(0,\varepsilon_0]$ 一致有界；对每个 $R$ 与每个 $\varepsilon\in(0,\varepsilon_0]$，$C_R\Gamma\in L^1(\Omega)$。
+\end{enumerate}
+（名称 (CS1)--(CS3) 的选取避免与模板定理的 (H1)--(H5)、标签 [A] 以及 MA 冲突。）
+\uses{def:method-subtraction,def:method-power-suppressed,def:method-neighbourhoods}
+\end{definition}
+
+记 $\downarrow R_0=\{X\in\mathcal R:X<R_0\}$，$\uparrow R_0=\{X\in\mathcal R:X>R_0\}$。一条\emph{链}是全序子集 $c=\{R_1>R_2>\dots>R_j\}$，$|c|=j$，$T_c\equiv T_{R_1}T_{R_2}\cdots T_{R_j}$（最大者在最左，最后作用），$T_\emptyset=1$；
+对 $\mathcal P\subset\mathcal R$ 定义 $\mathcal O_{\mathcal P}\equiv\sum_{\text{链 }c\subset\mathcal P}(-1)^{|c|}T_c$。
+
+\begin{proposition}[减除的链展开]\label{prop:method-chains}
+对任意线性映射 $T_R$：
+\begin{equation}\label{eq:method-chains}
+C_R\Gamma=\sum_{\text{链 }R_1<\dots<R_k<R}(-1)^kT_RT_{R_k}\cdots T_{R_1}\Gamma,\qquad X_{R_0}=\mathcal O_{\downarrow R_0}\Gamma,\qquad r=\mathcal O_{\mathcal R}\Gamma ;
+\end{equation}
+若 $\mathcal P=\{P_1<\dots<P_n\}$ 全序，则 $\mathcal O_{\mathcal P}=(1-T_{P_n})\cdots(1-T_{P_1})$。
+\uses{def:method-subtraction}
+\end{proposition}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}。）沿偏序归纳：$C_R\Gamma=T_R\Gamma-\sum_{R'<R}T_RC_{R'}\Gamma$，代入 $C_{R'}\Gamma$ 的展开；$(R',c')\mapsto\{R\}\cup c'$ 是到“以 $R$ 为最大元、长度 $\ge2$ 的链”的双射，
+且 $-(-1)^{|c'|-1}=(-1)^{|c|-1}$。非空链有唯一最大元，故 $X_{R_0}=\mathcal O_{\downarrow R_0}\Gamma$、$r=\mathcal O_{\mathcal R}\Gamma$；全序时展开乘积即得最后一式。
+\end{proof}
+
+链展开与 Zimmermann 森林公式\cite{Zimmermann1969}的类比须修正：森林是两两嵌套\emph{或不相交}的族，链只对应嵌套的族；不可比的区域即使钳夹集相交也不出现在同一条链中，只通过交 $R\wedge R'$
+相互作用（下面的配对分解），这才是重叠发散的类比。与 BPHZ 一样，严格估计只对分组表达式成立。宽角振幅的红外森林公式见\cite{Ma2020}。
+
+\begin{lemma}[配对分解]\label{lem:method-pairing}
+设 $\mathcal R$ 对逐线交封闭（\cref{def:appN-meet-closed}），固定 $R_0$；记 $\mathcal I'$（$\mathcal I''$）为与 $R_0$ 不可比、且钳夹集与 $\pi_{R_0}$ 相交（不相交）的区域，$R_\wedge\equiv R\wedge R_0$。则逐点地
+\begin{equation}\label{eq:method-pairing}
+r=\mathcal O_{\uparrow R_0}\bigl[(1-T_{R_0})X_{R_0}\bigr]-\sum_{R\in\mathcal I'}\mathcal O_{\uparrow R}\,T_R\bigl[(1-T_{R_\wedge})X_{R_\wedge}\bigr]-\sum_{R\in\mathcal I''}\mathcal O_{\uparrow R}\,T_R\Gamma .
+\end{equation}
+\uses{prop:method-chains,lem:method-meets,def:appN-meet-closed}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}。）在 $r=\sum_c(-1)^{|c|}T_c\Gamma$ 中，元素都与 $R_0$ 可比的链合起来给出第一项；其余的链按其中与 $R_0$ 不可比的最小元 $R^*$ 分组：$R^*$ 以下的元素都 $<R_0$，
+因而由\cref{lem:method-meets}(c) 都 $\le R_\wedge$（$R^*\in\mathcal I''$ 时没有这样的元素），对它们求和得 $(1-T_{R_\wedge})X_{R_\wedge}$，即得后两项。对任意（不对易的）线性映射成立；
+我们在九元偏序集上用随机矩阵数值核对了\cref{eq:method-chains,eq:method-pairing}。% check: w10_poset.py
+\end{proof}
+
+配对分解说明\emph{哪些组合}必须被估计，但没有把问题化为单个近似误差：展开交错和 $\mathcal O_{\uparrow R}$ 会重新产生不可积的项（\cref{ex:disall-ladder}）。
+
+\begin{proposition}[乘积公式]\label{prop:method-product}
+设任意两个区域的钳夹集都相交，$\mathcal R$ 对逐线交封闭，每个 $T_R$ 幂等，并且 (Com) $T_RT_{R'}=T_{R'}T_R$；(Abs) 对不可比的 $R,R'$，$T_RT_{R'}=T_RT_{R\wedge R'}T_{R'}$。则
+\begin{equation}\label{eq:method-product}
+C_R\Gamma=T_R\prod_{R'<R}(1-T_{R'})\,\Gamma,\qquad X_{R_0}=\prod_{R<R_0}(1-T_R)\,\Gamma,\qquad r=\prod_{R\in\mathcal R}(1-T_R)\,\Gamma ,
+\end{equation}
+并且 (CS1)$_{R_0}$ 等价于 $\prod_{R\le R_0}(1-T_R)\Gamma\in\mathfrak S(U_{R_0})$，(CS2)$_{R_0}$ 等价于：对一切 $R\not\le R_0$，$G_{R_0}(R)\equiv T_R\prod_{R'\in\downarrow R\cup\{R_0\}}(1-T_{R'})\Gamma\in\mathfrak S(U_{R_0})$。
+\uses{prop:method-chains,lem:method-meets,lem:method-pairing,def:method-collins-conditions,def:appN-meet-closed}
+\end{proposition}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}；交半格上的 Möbius 函数论证。）由 (Com)(Abs) 与幂等，$T_{\mathcal S}\equiv\prod_{R\in\mathcal S}T_R=T_{\bar{\mathcal S}}$（$\bar{\mathcal S}$ 为交封闭包），于是
+$\prod_{R\in\mathcal P}(1-T_R)=\sum_{\mathcal K}T_{\mathcal K}\sum_{\bar{\mathcal S}=\mathcal K}(-1)^{|\mathcal S|}$；记 $\mathcal M$ 为 $\mathcal K$ 的交不可约元，$\bar{\mathcal S}=\mathcal K$ 当且仅当 $\mathcal M\subset\mathcal S\subset\mathcal K$，
+内层和除非 $\mathcal K=\mathcal M$（即 $\mathcal K$ 是链）否则为零，故 $\prod(1-T_R)=\mathcal O_{\mathcal P}$，再用\cref{prop:method-chains}。对不可比的 $R$，$T_RT_{R_0}=T_RT_{R\wedge R_0}T_{R_0}$ 且
+$T_{R\wedge R_0}(1-T_{R\wedge R_0})=0$，故 $G_{R_0}(R)=C_R\Gamma$；$R>R_0$ 时显然。我们在九元偏序集上用满足 (Abs) 的置零模型核对了这些式子，并验证 (Abs) 被破坏时公式失效。% check: w10_poset.py
+\end{proof}
+
+分组表达式中 $(1-T_{R_0})$ 提供 $U_{R_0}$ 上的小因子；其余 $(1-T_{R'})$ 不提供小量，但在 $T_R$ 去掉红外正规子时阻止新的未正规化钳夹——所以单个链项不可积而 $G_{R_0}(R)$ 可积。
+(Com)(Abs) 对适配走向下的动量替换精确成立，对极化投影可能失效（\cref{rem:method-abs-failure}）。
+
+\subsection{减除定理}
+
+\begin{lemma}[有界的亚纯函数无极点]\label{lem:method-no-pole}
+在 $\varepsilon=0$ 附近亚纯、且在 $(0,\varepsilon_0]$ 上有界的函数在 $\varepsilon=0$ 处没有极点。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+若有 $k\ge1$ 阶极点，则 $\varepsilon^kF(\varepsilon)\to c\neq0$，于是 $\varepsilon\to0^+$ 时 $|F(\varepsilon)|\ge|c|\varepsilon^{-k}/2\to\infty$，与有界矛盾。
+\end{proof}
+
+\begin{corollary}[去掉维数正规化 \tagR]\label{cor:method-removing-eps}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-contour}(b)（及\cref{thm:appN-subtraction}的前提）。
+设 $\int\Gamma$ 在 $\varepsilon=0$ 附近解析，且\cref{thm:appN-subtraction}的假设成立。则 $F(\varepsilon)=\sum_R\int C_R\Gamma$ 在 $\varepsilon=0$ 处没有极点，且 $\bigl|\int\Gamma-F\bigr|_{\varepsilon=0}\le C\lambda^aL^K$。
+其意义是：单个减除项的紫外极点在对区域求和时逐图相消。（本推论只涉及部分子态。）
+% errtype: E-N
+\uses{thm:appN-subtraction,lem:method-no-pole,asm:appN-contour}
+\end{corollary}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-theorem}。）由\cref{asm:appN-contour}(b)，$F$ 在 $\varepsilon=0$ 附近亚纯。在 $(0,\varepsilon_0]$ 上，由 (CS3) 积分是线性的，$F=\int\Gamma-\int r$；由\cref{thm:appN-subtraction}，$|\int r|\le C\lambda^aL^K$ 对 $\varepsilon$ 一致，
+而 $\int\Gamma$ 在 $\varepsilon=0$ 附近连续，故 $F$ 在 $(0,\varepsilon_0']$ 上有界，由\cref{lem:method-no-pole}没有极点。于是 $F$ 在 $0$ 处解析，界 $|\int\Gamma-F|\le C\lambda^aL^K$ 在 $\varepsilon\to0^+$ 时保持。
+\end{proof}
+
+单圈离壳三角图中这一相消的显式形式见附录~N 的\cref{prop:appN-triangle-exact}(b)，以及下文\cref{ex:method-sudakov-subtraction}的第 (5) 步：四个减除项各有 $\varepsilon^{-2}$ 与 $\varepsilon^{-1}$ 极点，其和有限。
+
+\begin{theorem}[减除定理 \tagA]\label{thm:method-subtraction}
+对过程的每个领头幂次被积函数 $\Gamma$（一张图，或具有公共走向的一族图），$\Gamma=\sum_{R\in\mathcal R}C_R\Gamma+r$，且 $r\in\mathfrak S(\Omega)$；
+因此 $\int\Gamma=\sum_R\int C_R\Gamma+O(\lambda^aL^K)$，并且每个 $\int C_R\Gamma$ 绝对收敛。（本定理只涉及部分子态。）
+% errtype: E-S
+\uses{def:method-subtraction,def:method-collins-conditions,def:method-power-suppressed,thm:appN-subtraction,lem:method-local-accuracy,prop:method-product,cor:method-removing-eps,asm:appN-collins,asm:appN-uv,asm:appN-contour}
+\end{theorem}
+
+\begin{proofsketch}
+(1) \emph{演绎。}\cref{thm:appN-subtraction}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-contour}(a)）：若对给定的 $\Gamma$，(CS1)$_{R_0}$、(CS2)$_{R_0}$ 对一切 $R_0$ 成立且 (CS3) 成立，则 $r\in\mathfrak S(\Omega)$。
+其证明是初等的：把 $\mathcal R$ 分成 $R<R_0$、$R=R_0$、$R\not\le R_0$ 三部分，在 $U_{R_0}$ 上逐点有
+\begin{equation}\label{eq:method-r-identity}
+r=X_{R_0}-T_{R_0}X_{R_0}-\sum_{R\not\le R_0}C_R\Gamma=(1-T_{R_0})X_{R_0}-\sum_{R\not\le R_0}C_R\Gamma\ \in\mathfrak S(U_{R_0}) ,
+\end{equation}
+再由支配集的有限覆盖得 $r\in\mathfrak S(\Omega)$，由 (CS3) 得积分的线性。全部内容都在 (CS1)(CS2) 之中。
+(2) 极小区域的 (CS1) 由\cref{lem:method-local-accuracy}给出。(3) 在 (Com)(Abs) 之下，其余的 (CS1)(CS2) 化为\cref{prop:method-product}中分组表达式的幂次计数。
+(4) 对一切被积函数的分组估计就是\cref{asm:appN-collins}。(5) 去掉 $\varepsilon$（\cref{cor:method-removing-eps}）；紫外结构，即 $\Gamma$ 在被积函数层次上重整化、因而是单个函数且 $\int|\Gamma|$ 一致有界，是\cref{asm:appN-uv}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}演绎是 \tagR（$R_{\mathrm{cond}}$）；定理的 [A] 就是\cref{asm:appN-collins}的 [A]。Collins\cite[第~10.3、10.8~节]{Collins2011}在该章的严格程度上完整处理了 Sudakov 形状因子，
+但那里的幂次计数是标度陈述；\cref{asm:appN-collins}的条件 (CS1)--(CS3) 以纤维化的积分范数（误差类型 E-N$^\varphi$：负分量用留数精确积掉，在实的正分量与横向分量底空间上估计）
+只对单圈离壳三角图被完整验证（附录~N 的\cref{prop:appN-triangle-cs}；另见\cref{ex:method-sudakov-subtraction}）。
+一般过程是 \tagA。Collins--Soper--Sterman 的综述写道：「“there is as yet in the literature no complete and systematic subtraction procedure in QCD $\ldots$ even in the case of deeply inelastic scattering”」
+\cite[第~10.1~节]{CollinsSoperSterman1989}——即：文献中尚无 QCD 中完整而系统的减除程序，即使对 DIS 也是如此。与 BPHZ 不同，Minkowski 空间的无质量规范理论中没有 Weinberg 定理的类比，
+红外幂次计数需要钳夹面分析、围道变形、嵌套与重叠的区域以及 Glauber 区。单个链项一般不可积（\cref{ex:method-naive-induction}），任何逐项的归纳都不能代替对分组表达式的估计。
+误差类型：本定理断言的是 E-N，文献中存在的是 E-S。解除途径：在 (Com)(Abs) 之下对一切阶证明分组的幂次计数，或推广附录~N 的纤维化方法（\cref{rem:appN-fibered-allorders}）。
+
+\subsection{两个完整的单圈例子}
+
+%%% BEGIN fig:method-sudakov-plane
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb tick/.style={font=\scriptsize},
+  fb grid/.style={draw=gray!45,line width=0.4pt,dash pattern=on 1pt off 2pt},
+  fb hyp/.style={draw=black!60,line width=0.6pt},
+  fb patch/.style={circle,draw=black!70,line width=0.6pt,minimum size=0.62cm,inner sep=0pt,font=\small},
+  fb pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  fb contour/.style={draw=blue!60!black,line width=1.0pt},
+  fb carrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}}]
+  % ======================= (a) the (ln|k^+|, ln|k^-|) plane =======================
+  \begin{scope}[x=1.15cm,y=1.15cm]
+    % soft--collinear overlap strips (hatched)
+    \fill[pattern=north east lines,pattern color=green!45!black] (-2,-2.15) rectangle (0,-1.85);
+    \fill[pattern=north east lines,pattern color=green!45!black] (-2.15,-2) rectangle (-1.85,0);
+    % axes, ticks, grid
+    \draw[lcaxis] (-2.85,-2.85) -- (1.1,-2.85) node[below=1pt,font=\small] {$\ln|k^+|$};
+    \draw[lcaxis] (-2.85,-2.85) -- (-2.85,1.1) node[left=1pt,font=\small] {$\ln|k^-|$};
+    \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (\v,-2.85) -- ++(0,0.07);
+      \node[fb tick,below] at (\v,-2.85) {$\t$};
+      \draw[line width=0.5pt] (-2.85,\v) -- ++(0.07,0);
+      \node[fb tick,left] at (-2.85,\v) {$\t$};
+      \draw[fb grid] (\v,-2.78) -- (\v,0.95);
+      \draw[fb grid] (-2.78,\v) -- (0.95,\v);
+    }
+    % lines of constant k^+ k^-
+    \draw[fb hyp] (0.75,-0.75) -- (-0.98,0.98) node[left=1pt,fb lab,text=black!70] {$k^+k^-\sim Q^2$};
+    \draw[fb hyp,line width=1.0pt] (-2.62,0.62) -- (0.62,-2.62) node[right=1pt,fb lab,text=black!85] {$k^+k^-\sim m^2$};
+    % the family k=(z, lambda^2/z, lambda) between C1 and C2
+    \draw[red!60!black,line width=1.6pt,dash pattern=on 4pt off 2pt] (-1.72,-0.28) -- (-0.28,-1.72);
+    % regions of the off-shell triangle
+    \node[fb patch,fill=gray!35] (H) at (0,0) {$H$};
+    \node[fb patch,fill=blue!20] (C1) at (0,-2) {$C_1$};
+    \node[fb patch,fill=orange!25] (C2) at (-2,0) {$C_2$};
+    \node[fb patch,fill=green!25] (S) at (-2,-2) {$S$};
+    \draw[black!70,line width=0.6pt,fill=white] (-1,-1) circle[radius=2.3pt];
+    \draw[black!60,line width=0.4pt] (-1.06,-1.06) -- (-1.3,-1.4);
+    \node[font=\scriptsize,inner sep=1pt,anchor=north] at (-1.36,-1.4) {$(\lambda,\lambda,\lambda)$};
+    \node[fb lab,text=red!55!black,anchor=north west,align=left] at (0.02,-0.97) {$k=(z,\lambda^2/z,\lambda)$\\$\lambda^2\ll z\ll1$：见 (b)};
+    \node[fb lab,text=green!30!black] at (-1,-2.42) {软—共线重叠};
+    \node[font=\small,anchor=south west] at (-3.75,1.15) {(a)};
+  \end{scope}
+  % ======================= (b) complex k^- plane =======================
+  \begin{scope}[xshift=5.55cm,yshift=-1.4cm]
+    \fill[red!12] (0,0) circle[radius=0.42];
+    \draw[lcaxis] (-2.3,0) -- (3.2,0) node[right=1pt,font=\small] {$\Real k^-$};
+    \draw[lcaxis] (0,-1.25) -- (0,1.85) node[left=1pt,font=\small] {$\Imag k^-$};
+    % contour: lower half plane on the left, crossing near k_T^2/(4k^+), upper half plane on the right
+    \draw[fb contour,fb carrow=0.18,fb carrow=0.86] (-2.2,-1.0) .. controls (-0.6,-1.0) and (0.55,-0.55) .. (1.1,0)
+         .. controls (1.6,0.45) and (2.25,0.95) .. (3.05,0.95);
+    \pic at (-0.22,0.2) {fb pole};
+    \pic at (2.2,-0.2) {fb pole};
+    \fill[blue!60!black] (1.1,0) circle[radius=1.5pt];
+    \node[fb lab,anchor=south] at (-0.22,0.3) {$D_1$};
+    \node[fb lab,anchor=north] at (2.2,-0.3) {$D_g$};
+    \draw[gray!50!black,line width=0.4pt] (1.12,0.07) -- (1.28,1.18) node[above,fb lab] {$\Real k^-\approx\dfrac{k_T^2}{4k^+}$};
+    \draw[red!50!black,line width=0.4pt] (-0.32,0.28) -- (-0.62,0.56);
+    \node[fb lab,text=red!55!black,anchor=south east,align=right] at (-0.58,0.5) {$k^-\approx0$：\\软近似失效};
+    \node[fb lab,anchor=north west,align=left] at (-2.2,-1.42) {$D_1$：$k^-\approx-\dfrac{m^2+k_T^2}{2P}+\ii0$\\[2pt]$D_g$：$k^-=\dfrac{k_T^2-\ii0}{2k^+}$};
+    \node[font=\small,anchor=south west] at (-2.3,1.55) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈离壳三角图（$p_i^2=-m^2$，$\lambda=m/Q$）的区域与 Collins 减除中的软—共线重叠（\cref{ex:method-sudakov-subtraction}）。
+(a)~$(\ln|k^+|,\ln|k^-|)$ 平面（以 $\ln(1/\lambda)$ 为单位，$k_T$ 取 $k_T^2\sim|k^+k^-|$ 的典型值）：区域 $H$、$C_1$、$C_2$、$S$ 位于正方形的四角，其中软区 $S\sim Q(\lambda^2,\lambda^2,\lambda^2)$ 是\cref{def:ir-scalings}的超软标度（$k\sim m^2/Q$）；
+粗斜线 $k^+k^-\sim m^2$ 是 $k_T\sim\lambda Q$ 的在壳线 $k_T^2=2k^+k^-$，经过 $C_1$、$C_2$ 与“软中心”$(\lambda,\lambda,\lambda)$；绿色阴影带为软—共线重叠，减除项在重叠区相消的方式由分组表达式决定。
+(b)~对 $k=(z,\lambda^2/z,\lambda)$（$\lambda^2\ll z\ll1$，红色虚线），胶子线 $D_g$ 与夸克线 $D_1$ 的 $k^-$ 极点分居实轴两侧、相距 $\sim\lambda^2Q/z$，围道只能在两极点之间穿过实轴；
+软近似只在 $\Real k^-\sim k_T^2/(4k^+)$ 附近穿过实轴的围道上成立，在 $k^-\approx0$ 附近（红色区域）失效（\cref{lem:method-i0-compat}）。}
+\label{fig:method-sudakov-plane}
+\end{figure}
+%%% END fig:method-sudakov-plane
+
+\begin{example}[完整的单圈例子：离壳三角图的 Collins 减除]\label{ex:method-sudakov-subtraction}
+沿用\cref{ex:method-naive-induction}的运动学，以 $\tilde Q$ 为单位（$\tilde Q=1$，于是 $Q^2=(1+m^2)^2$），并记 $\lambda=m/\tilde Q$。下面分六步。
+
+\textbf{(1) 闭式。}每条夸克线上的近似构成四元半格 $\{1,e,t,h\}$（$e\circ t=t\circ e=h$，$h\circ x=h$，$x\circ x=x$），(Com)(Abs) 精确成立，由\cref{prop:method-product}，
+\begin{equation}\label{eq:method-tri-CR}
+\begin{gathered}
+C_S\Gamma=\frac1{D_ge_1e_2},\qquad C_{C_1}\Gamma=\frac1{D_gh_2}\Bigl(\frac1{D_1}-\frac1{e_1}\Bigr),\qquad C_{C_2}\Gamma=\frac1{D_gh_1}\Bigl(\frac1{D_2}-\frac1{e_2}\Bigr),\\
+C_H\Gamma=\frac1{D_g}\Bigl(\frac1{t_1}-\frac1{h_1}\Bigr)\Bigl(\frac1{t_2}-\frac1{h_2}\Bigr)=\frac{D_g}{t_1h_1t_2h_2}
+\end{gathered}
+\end{equation}
+（用 $h_i-t_i=-D_g$），余项 $r=\frac1{D_g}[\Delta_1\Delta_2-\Delta_1'\Delta_2'-\delta_1\delta_2]$，$\Delta_i=\frac1{D_i}-\frac1{h_i}$，$\Delta_i'=\frac1{e_i}-\frac1{h_i}=-\frac{m^2}{e_ih_i}$，$\delta_i=\frac1{t_i}-\frac1{h_i}$。
+
+\textbf{(2) $k^-$ 留数。}固定 $(k^+,\mathbf k_T)$，各 $C_R\Gamma$ 按 $|k^-|^{-2}$ 衰减。对 $0<k^+<P$，$C_{C_1}\Gamma$ 中 $D_g$ 的极点在下半平面、$D_1$ 与 $e_1$ 的在上半平面，
+\begin{equation}\label{eq:method-CC1-res}
+\int\frac{\dd k^-}{2\pi}\,C_{C_1}\Gamma=\frac\ii2\,\frac{m^2k^+/(2PP')}{\bigl[k^+m^2(1-k^+/P)+P\mathbf k_T^2\bigr]\bigl[k^+m^2+P\mathbf k_T^2\bigr]} ,
+\end{equation}
+它在 $k^+\to0$ 时线性地趋于零，而它的两项 $T_{C_1}\Gamma$ 与 $-T_{C_1}T_S\Gamma$ 各自像 $1/k^+$ 那样发散；$k^+>P$ 时只剩 $-T_{C_1}T_S\Gamma$ 的尾巴 $-\frac\ii2[h_2(k^+m^2+P\mathbf k_T^2)]^{-1}$，$k^+<0$ 时为零
+（我们用符号留数核对了这些式子）。% check: w10_extra.py (a)
+于是每个减除项都是 $(k^+,\mathbf k_T)$ 上绝对收敛的积分（$0<\varepsilon<1$）。
+
+\textbf{(3) 各支配集上的小因子}（$\beta_S=\frac19$，$\beta_C=\frac13$，\cref{fig:method-neighbourhoods}）。$U_H$ 上 (CS1) 的对象是 $r=\frac1{D_g}[(\Delta_1-\delta_1)\Delta_2+\delta_1(\Delta_2-\delta_2)-\Delta_1'\Delta_2']$，
+其中 $\Delta_i-\delta_i=(t_i-D_i)/(D_it_i)$（$t_1-D_1=\frac{m^2}Pk^+-m^2$）与 $\Delta_i'$ 相对于 $1/D_i$ 都是 $O(m^2/t_H^2)=O(\lambda^{4/3})$，$\|k\|\to\infty$ 时 $r\sim m^2/\|k\|^6$。
+$U_{C_1}$ 上（$|k^+|\ge\frac12\lambda^{1/9}$，$|k^-|,|\mathbf k_T|\le\lambda^{1/3}$），(CS1) 的对象 $(1-T_{C_1})(1-T_S)\Gamma=\frac1{D_g}[\frac1{D_1}\Delta_2-\frac1{e_1}\Delta_2']$ 中的小因子相对为
+$O(\lambda^{2-1/9}+\lambda^{1/3})$；(CS2) 的对象是\cref{eq:method-CC2}的 $C_{C_2}\Gamma$（在该盒子上为 $O(\lambda^{2/3}L)$，前提是 $k^-$ 围道离开 $0$ 一个 $\lambda$ 的幂次）与 $C_H\Gamma$；$U_{C_2}$ 上的情形与之对称。
+$U_S$ 上 (CS1) 的对象是 $(1-T_S)\Gamma$：在满足\cref{asm:appN-separation}(iii) 的围道上（这里 $v_A(p_1)=m^2/2$），$|e_1|\ge c(P|k^-|+m^2)$，被删去的 $-(m^2/P)k^+-k^2$ 相对 $\le C|k^+|/P\le C\lambda^{1/9}$。
+
+\textbf{(4) 软近似只在变形的围道上成立。}对 $k=(z,\lambda^2/z,\lambda)$（$\lambda^2\ll z\ll1$），$D_g$ 与 $D_1$ 的极点分居实轴两侧，围道只能在其间穿过实轴。若在 $k^-\approx0$ 处穿过，$|e_1|\approx m^2$
+而被删去的 $-k^2\approx\mathbf k_T^2\approx m^2$，误差为 $O(1)$；若在 $\Real k^-\approx\mathbf k_T^2/(4k^+)$ 附近穿过，误差 $\sim z$。例如 $\lambda=10^{-2}$、$z=0.03$ 时两者分别为 $0.958$ 与 $0.036$
+（\cref{fig:method-sudakov-plane}）。% check: w10_glauber.py (5)
+这是“近似只在变形的围道上成立”的最简单实例。
+
+\textbf{(5) 值与极点相消。}
+\begin{equation}\label{eq:method-tri-values}
+\int C_H\Gamma=\frac{1}{\tilde Q^2}\Bigl(\frac{\mu^2}{\tilde Q^2}\Bigr)^{\varepsilon}\mathcal A,\quad
+\int C_{C_1}\Gamma=\int C_{C_2}\Gamma=-\frac{1}{\tilde Q^2}\Bigl(\frac{\mu^2}{m^2}\Bigr)^{\varepsilon}\mathcal A,\quad
+\int C_S\Gamma=\frac{1}{\tilde Q^2}\Bigl(\frac{\mu^2\tilde Q^2}{m^4}\Bigr)^{\varepsilon}\mathcal B,
+\end{equation}
+$\mathcal A=\frac{\Gamma(1+\varepsilon)\Gamma(1-\varepsilon)^2}{\varepsilon^2\Gamma(1-2\varepsilon)}=\ee^{-\gamma_E\varepsilon}(\varepsilon^{-2}-\frac{\zeta_2}2+O(\varepsilon))$，
+$\mathcal B=\frac{\Gamma(1+\varepsilon)^2\Gamma(1-\varepsilon)}{\varepsilon^2}=\ee^{-\gamma_E\varepsilon}(\varepsilon^{-2}+\frac{3\zeta_2}2+O(\varepsilon))$。记 $\ell_Q=\ln\frac{\mu^2}{\tilde Q^2}$，$\ell_m=\ln\frac{\mu^2}{m^2}$：
+$\varepsilon^{-2}$ 的系数 $1-2+1=0$，$\varepsilon^{-1}$ 的系数 $\ell_Q-2\ell_m+(2\ell_m-\ell_Q)=0$，有限部分 $\frac12[\ell_Q^2-2\ell_m^2+(2\ell_m-\ell_Q)^2]+2\zeta_2=(\ell_Q-\ell_m)^2+2\zeta_2$，即
+\begin{equation}\label{eq:method-tri-sum}
+\sum_R\int C_R\Gamma\Big|_{\varepsilon\to0}=\frac1{\tilde Q^2}\Bigl[\ln^2\frac{\tilde Q^2}{m^2}+\frac{\pi^2}3\Bigr],\qquad
+\int r=-\frac{4m^2}{Q^4}+\frac{m^4}{Q^6}\Bigl(L^2-15+\frac{\pi^2}3\Bigr)+O\Bigl(\frac{m^6}{Q^8}L^2\Bigr),
+\end{equation}
+$L=\ln(Q^2/m^2)$。$C_H$ 的极点是红外的、$C_S$ 的是紫外的、$C_{C_i}$ 兼有二者——这就是\cref{cor:method-removing-eps}的逐图相消。余项是完整的 $\lambda^2$ 压低，\emph{在次领头幂次没有对数}：
+精确积分的次领头项 $t(2L^2-4L-4+\frac{2\pi^2}3)$（$t=m^2/Q^2$，\cref{ex:sudakov-offshell}）中的对数由减除项通过 $\tilde Q^2\ne Q^2$ 再现（\cref{prop:appN-triangle-exact}(d)）；
+而一般论证在 $U_S$ 上只保证 $O(\lambda^{1/9})$。
+
+\textbf{(6) 零区与取值约定。}在光锥表示中，零区项 $T_{C_1}T_S\Gamma=1/(D_ge_1h_2)$ 的 $k^-$ 积分只取 $D_g$ 的极点（$k^+>0$；$k^+<0$ 时为零），
+再在 $2-2\varepsilon$ 维中作 $\mathbf k_T$ 积分，得到形式表达式
+\begin{equation}\label{eq:method-zerobin}
+\int T_{C_1}T_S\Gamma=\frac{\Gamma(1+\varepsilon)}{\varepsilon\,\tilde Q^2}\Bigl(\frac{\mu^2}{m^2}\Bigr)^{\varepsilon}\int_0^\infty\frac{\dd\sigma_1}{\sigma_1^{1+\varepsilon}}
+=\frac{\Gamma(1+\varepsilon)}{\varepsilon\,\tilde Q^2}\Bigl(\frac{\mu^2}{m^2}\Bigr)^{\varepsilon}\Bigl(\frac1{\varepsilon_{\rm UV}}-\frac1{\varepsilon_{\rm IR}}\Bigr),\qquad\sigma_1=\frac{k^+}P .
+\end{equation}
+它对任何 $\varepsilon$ 都发散（$\mathbf k_T$ 积分要求 $\varepsilon>0$，$\sigma_1\to0$ 端要求 $\varepsilon<0$），取值约定\cref{asm:appN-values}(V2) 赋予它零；(V1) 在此成立：$T_{C_1}\Gamma$ 的 Feynman 参数表示的延拓恰好等于绝对收敛的 $\int C_{C_1}\Gamma$。% check: w10_zerobin.py
+在参数空间中对 $[0,1]$ 作软展开则会得到 $-1/\varepsilon$（值依赖于表示，\cref{rem:ir-regions-values}）。外线在壳无质量时（纯维数正规化）一切两两重叠都无标度，不留下显式零区项；用截断时它们是必需的（\cref{ex:ir-regions-toy}）。
+
+\textbf{地位。}恒等式、各项的值与余项都是精确的。在 $k^-$ 留数表示中，纤维化形式的 (CS1)--(CS3) 对本例已完整验证，四个减除项的纤维化值与其协变值精确相同（附录~N 的\cref{prop:appN-triangle-cs}(a)(b)）；
+由这些纤维化界推出积分形式的减除定理 $|\int\Gamma-\sum_R\int C_R\Gamma|\le C\lambda^aL^K$（而不必构造变形的四维围道），还需要 $\Gamma$ 本身的纤维化值等于其协变值，\cref{prop:appN-triangle-cs}(c) 把这一步写成以此为前提的蕴涵式。
+\cref{thm:appN-subtraction}形式下、变形四维围道上一致的积分界即使对本例也没有写出。本例在一张图上演示了\cref{asm:appN-collins}，并不对一般的图验证它。
+\uses{thm:method-subtraction,ex:method-naive-induction,prop:appN-triangle-exact,prop:appN-triangle-cs,ex:sudakov-offshell,rem:ir-regions-values}
+\end{example}
+% VF-REF-2, VF-REF-3
+
+%%% BEGIN fig:method-coeff-minus-coll
+\begin{figure}[htbp]
+\centering
+% photons, photon vertices and the cut, common to all graphs (origin: bottom centre of a graph)
+\newcommand{\fbCMCphot}{%
+  \draw[photon] (-1.22,1.95) -- (-0.88,1.4);
+  \draw[photon] (0.88,1.4) -- (1.22,1.95);
+  \node[vertex] at (-0.88,1.4) {}; \node[vertex] at (0.88,1.4) {};
+  \draw[cut] (0,-0.18) -- (0,2.02);}
+% collinear approximation: operator vertices, Wilson line between them, Born struck quark on top;
+% #1 = position of the arrow on the Wilson line
+\newcommand{\fbCMCapprox}[1]{%
+  \draw[quark] (-0.88,0.92) -- (-0.88,1.4);
+  \draw[quark=0.78] (-0.88,1.4) -- (0.88,1.4);
+  \draw[quark] (0.88,1.4) -- (0.88,0.92);
+  \draw[wilson=#1] (-0.88,0.92) -- (0.88,0.92);
+  \node[opvertex] at (-0.88,0.92) {}; \node[opvertex] at (0.88,0.92) {};
+  \fbCMCphot}
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,align=center,anchor=north,inner sep=1pt},
+  fb row/.style={font=\small,anchor=east},
+  fb frame/.style={rounded corners=3pt,line width=0.6pt}]
+  % ======================= row 1: one-loop DIS cut graphs (gamma* q) =======================
+  % (i) ISR squared
+  \begin{scope}[xshift=0cm]
+    \draw[quark] (-0.88,0) -- (-0.88,0.58);
+    \draw[quark] (-0.88,0.58) -- (-0.88,1.4);
+    \draw[quark=0.78] (-0.88,1.4) -- (0.88,1.4);
+    \draw[quark] (0.88,1.4) -- (0.88,0.58);
+    \draw[quark] (0.88,0.58) -- (0.88,0);
+    \draw[gluon] (-0.88,0.58) -- (0.88,0.58);
+    \fbCMCphot
+    \node[vertex] at (-0.88,0.58) {}; \node[vertex] at (0.88,0.58) {};
+    \node[font=\scriptsize,below,inner sep=1.5pt] at (-0.88,0) {$p$};
+    \node[font=\scriptsize,right,inner sep=1.5pt] at (-1.12,1.98) {$q$};
+    \node[fb lab] at (0,-0.36) {初态辐射\\的平方};
+  \end{scope}
+  % (ii) ISR--FSR interference
+  \begin{scope}[xshift=2.9cm]
+    \draw[quark] (-0.88,0) -- (-0.88,0.58);
+    \draw[quark] (-0.88,0.58) -- (-0.88,1.4);
+    \draw[quark=0.3] (-0.88,1.4) -- (0.46,1.4);
+    \draw[quark] (0.46,1.4) -- (0.88,1.4);
+    \draw[quark] (0.88,1.4) -- (0.88,0);
+    \draw[gluon] (-0.88,0.58) to[out=0,in=-90] (0.46,1.4);
+    \fbCMCphot
+    \node[vertex] at (-0.88,0.58) {}; \node[vertex] at (0.46,1.4) {};
+    \node[fb lab] at (0,-0.36) {ISR--FSR 干涉\\（+镜像）};
+  \end{scope}
+  % (iii) FSR squared
+  \begin{scope}[xshift=5.8cm]
+    \draw[quark] (-0.88,0) -- (-0.88,1.4);
+    \draw[quark] (-0.88,1.4) -- (-0.46,1.4);
+    \draw[quark=0.27] (-0.46,1.4) -- (0.46,1.4);
+    \draw[quark] (0.46,1.4) -- (0.88,1.4);
+    \draw[quark] (0.88,1.4) -- (0.88,0);
+    \draw[gluon] (-0.46,1.4) arc[start angle=180,end angle=0,radius=0.46];
+    \fbCMCphot
+    \node[vertex] at (-0.46,1.4) {}; \node[vertex] at (0.46,1.4) {};
+    \node[fb lab] at (0,-0.36) {末态辐射\\的平方};
+  \end{scope}
+  % (iv) virtual vertex correction
+  \begin{scope}[xshift=8.7cm]
+    \draw[quark] (-0.88,0) -- (-0.88,0.58);
+    \draw[quark] (-0.88,0.58) -- (-0.88,1.4);
+    \draw[quark] (-0.88,1.4) -- (-0.35,1.4);
+    \draw[quark=0.65] (-0.35,1.4) -- (0.88,1.4);
+    \draw[quark] (0.88,1.4) -- (0.88,0);
+    \draw[gluon] (-0.88,0.58) to[out=0,in=-90] (-0.35,1.4);
+    \fbCMCphot
+    \node[vertex] at (-0.88,0.58) {}; \node[vertex] at (-0.35,1.4) {};
+    \node[fb lab] at (0,-0.36) {顶点虚修正\\（+镜像）};
+  \end{scope}
+  % ======================= row 2: collinear approximations T_A Gamma = (PDF graph) x Born =======================
+  \begin{scope}[yshift=-4.05cm]
+    % (i') ladder graph of the PDF operator
+    \begin{scope}[xshift=0cm]
+      \draw[quark] (-0.88,0) -- (-0.88,0.42);
+      \draw[quark] (-0.88,0.42) -- (-0.88,0.92);
+      \draw[quark] (0.88,0.92) -- (0.88,0.42);
+      \draw[quark] (0.88,0.42) -- (0.88,0);
+      \draw[gluon] (-0.88,0.42) -- (0.88,0.42);
+      \fbCMCapprox{0.25}
+      \node[vertex] at (-0.88,0.42) {}; \node[vertex] at (0.88,0.42) {};
+      \node[font=\scriptsize,below,inner sep=1.5pt] at (-0.88,0) {$p$};
+      \node[fb lab] at (0,-0.36) {PDF 算符的\\梯形图};
+    \end{scope}
+    % (ii') real Wilson-line graph
+    \begin{scope}[xshift=2.9cm]
+      \draw[quark] (-0.88,0) -- (-0.88,0.42);
+      \draw[quark] (-0.88,0.42) -- (-0.88,0.92);
+      \draw[quark] (0.88,0.92) -- (0.88,0);
+      \draw[gluon] (-0.88,0.42) to[out=0,in=-90] (0.46,0.92);
+      \fbCMCapprox{0.22}
+      \node[vertex] at (-0.88,0.42) {}; \node[vertex] at (0.46,0.92) {};
+      \node[fb lab] at (0,-0.36) {Wilson 线实图\\（+镜像）};
+    \end{scope}
+    % (iii') no target-collinear region
+    \begin{scope}[xshift=5.8cm]
+      \node[font=\large] at (0,0.9) {$0$};
+      \node[fb lab] at (0,-0.36) {无靶共线区};
+    \end{scope}
+    % (iv') virtual Wilson-line graph
+    \begin{scope}[xshift=8.7cm]
+      \draw[quark] (-0.88,0) -- (-0.88,0.42);
+      \draw[quark] (-0.88,0.42) -- (-0.88,0.92);
+      \draw[quark] (0.88,0.92) -- (0.88,0);
+      \draw[gluon] (-0.88,0.42) to[out=0,in=-90] (-0.35,0.92);
+      \fbCMCapprox{0.72}
+      \node[vertex] at (-0.88,0.42) {}; \node[vertex] at (-0.35,0.92) {};
+      \node[fb lab] at (0,-0.36) {Wilson 线虚图\\（+镜像）};
+    \end{scope}
+  \end{scope}
+  % ======================= colour frames, row labels, result =======================
+  \begin{scope}[on background layer]
+    \foreach \x/\c in {0/green,2.9/blue,5.8/gray,8.7/orange}
+      \draw[fb frame,draw=\c!55!black,fill=\c!6] (\x-1.4,-5.3) rectangle (\x+1.4,2.2);
+  \end{scope}
+  \node[fb row] at (-1.5,0.9) {$\Gamma^{(1)}$};
+  \node[fb row] at (-1.5,-3.15) {$-\,T_A\Gamma^{(1)}$};
+  \foreach \x in {0,2.9,5.8,8.7} \node[font=\large] at (\x,-1.62) {$-$};
+  \draw[decorate,decoration={brace,amplitude=5pt},line width=0.6pt] (10.25,2.15) -- (10.25,-5.25);
+  \node[anchor=west,align=left,font=\small] at (10.45,-1.55) {各列之和\\[3pt]$=C_H\Gamma^{(1)}$\\[3pt]$=\dfrac{\as}{2\pi}\,C_2^q$\\[1pt]{\footnotesize（$\mu=Q$）}};
+\end{tikzpicture}
+\caption{单圈 DIS 系数函数 = 割图减去其共线近似（$\gamma^*q$ 道，Feynman 规范；竖直红色虚线为末态割线，左侧为振幅）。
+上行为 $\order{\as}$ 割图 $\Gamma^{(1)}$，下行为其靶共线近似 $T_A\Gamma^{(1)}=f^{(1)}_{q/q}\otimes{\rm Born}$：PDF 算符的割图（$\otimes$ 为算符顶点，双线为沿 $n_B$ 的 Wilson 线）乘以领头阶硬部分；同色框中的图一一对应。
+初态辐射的平方对应 PDF 算符的梯形图，ISR--FSR 干涉对应胶子连到割线另一侧 Wilson 线的实图，顶点虚修正对应同侧的 Wilson 线虚图（外线自能无标度，未画出）；末态辐射没有靶共线区，不需减除。
+各列之差的和即硬区减除项 $C_H\Gamma^{(1)}$，在 $\mu=Q$ 时为 $\frac{\as}{2\pi}C_2^q$；纯维数正规化中下行各图无标度，只留下 $\MSbar$ 抵消项，$C_A\Gamma^{(1)}=-\frac{\as}{2\pi}\frac1\varepsilon P_{qq}$（VF-DIS-6，VF-PDF-3）。}
+\label{fig:method-coeff-minus-coll}
+\end{figure}
+%%% END fig:method-coeff-minus-coll
+
+\begin{example}[减除语言中的单圈 DIS]\label{ex:method-dis-oneloop}
+夸克靶上的单圈 DIS（$\gamma^*q$ 道，Feynman 规范，纯维数正规化），区域为靶共线区 $A$ 与硬区 $H$。单圈割图之和为
+\begin{equation}\label{eq:method-dis-gamma1}
+\frac{\hat F_2^{q(1)}}{ze_q^2}=\frac{\as}{2\pi}\Bigl(\frac{\mu^2}{Q^2}\Bigr)^{\varepsilon}\Bigl[-\frac1\varepsilon P_{qq}(z)+C_2^q(z)+O(\varepsilon)\Bigr] :
+\end{equation}
+实辐射给出 $C_F\{\frac2{\varepsilon^2}\delta(1-z)+\frac1\varepsilon[-2\mathcal D_0+1+z+\frac32\delta(1-z)]\}$，虚修正给出 $C_F[-\frac2{\varepsilon^2}-\frac3\varepsilon]\delta(1-z)$，双极点 $2-2=0$，
+单极点之和为 $-P_{qq}=-C_F[2\mathcal D_0-(1+z)+\frac32\delta(1-z)]$，有限部分之和为（$\mathcal D_k=[\ln^k(1-z)/(1-z)]_+$）
+\begin{equation}\label{eq:method-C2q}
+C_2^q=C_F\Bigl[2\mathcal D_1-\frac32\mathcal D_0-(1+z)\ln(1-z)-\frac{1+z^2}{1-z}\ln z+3+2z-\Bigl(\frac92+\frac{\pi^2}3\Bigr)\delta(1-z)\Bigr] .
+\end{equation}
+靶共线近似 $T_A\Gamma^{(1)}$ 是单圈部分子 PDF 的割图乘以领头阶硬部分；在纯维数正规化中这些图无标度，裸的单圈部分子 PDF 为零，$\overline{\rm MS}$ 重整化后只剩抵消项（\cref{prop:pdf-partonic-dr}）：
+\begin{equation}\label{eq:method-dis-CA}
+C_A\Gamma^{(1)}=f^{(1)}_{q/q}\otimes{\rm Born}=-\frac{\as}{2\pi}\frac1\varepsilon P_{qq},\qquad
+C_H\Gamma^{(1)}=\Gamma^{(1)}-C_A\Gamma^{(1)}=\frac{\as}{2\pi}\Bigl[C_2^q+P_{qq}\ln\frac{Q^2}{\mu^2}\Bigr] ;
+\end{equation}
+$\mu=Q$ 时 $C_H\Gamma^{(1)}=\frac{\as}{2\pi}C_2^q$：系数函数\emph{就是}减除后的图。$C_A\Gamma^{(1)}$ 中的 $1/\varepsilon$ 原是紫外抵消项，现在扮演红外极点：部分子 PDF“等于 $\delta(1-x)$”只对裸 PDF 成立，
+重整化的部分子 PDF 由红外极点组成——这一记账若不写明，共线极点在系数函数中的相消就无从理解，也最易出符号错误。\Cref{fig:method-coeff-minus-coll}逐图画出“系数函数 $=$ 割图减去其共线近似”；
+用胶子质量作红外正规子时，同一组 PDF 图正是\cref{prop:pdf-pqq-operator}中由算符定义算出 $P_{qq}$ 的图。（我们用符号计算核对了\cref{eq:method-C2q,eq:method-dis-CA}。）% check: w10_extra.py (c)
+\uses{def:method-subtraction,prop:pdf-partonic-dr,prop:pdf-pqq-operator}
+\end{example}
+% VF-DIS-3, VF-DIS-4, VF-DIS-6, VF-PDF-5
+
+% ---------------------------------------------------------------------
+\section{幺正性：末态相互作用与软因子}\label{sec:method-unitarity}
+
+软胶子化为 Wilson 线之后，还剩软因子本身与硬散射之后的相互作用（末态相互作用）；两者都由对末态求和——幺正性——处理。本节的结论只能在 Glauber 区处理完之后使用（\cref{sec:method-glauber}）。
+
+\begin{lemma}[软因子的幺正性 \tagR]\label{lem:method-soft-unitarity}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设观测量不约束软动量。对末态切割求和后，所有 Wilson 线位于同一点的软因子为
+\begin{equation}\label{eq:method-soft-one}
+S=\frac1{N_c}\Trc\,\langle0|\bigl(W_{n_A}W_{n_B}\bigr)^\dagger(0)\,\bigl(W_{n_A}W_{n_B}\bigr)(0)|0\rangle=1 ,
+\end{equation}
+其中振幅一侧取 Feynman 规则给出的编时积、共轭一侧取反编时积，$W_{n_B}$ 取反夸克所需的表示。对过去指向的线，编时积就是相互作用绘景中的演化算符 $T[\mathcal U^{(-)}]=U_I(0,-\infty)$，它是幺正的；
+未来指向的线同理给出 $U_I(\infty,0)$。在维数正规化中，树图以外的每一张软因子图都是无标度的。（本引理只涉及算符与部分子态。）
+\uses{def:prelim-wilson,prop:prelim-wilson-covariance}
+\end{lemma}
+
+\begin{proof}
+(1) 观测量不约束软动量，故软末态 $|X\rangle$ 被完全求和，$\sum_X|X\rangle\langle X|=1$（在规范固定理论的整个态空间中；割图层次上这对应于对一切切割求和，包括 $-g$ 极化与鬼场切割），
+于是 $S=\frac1{N_c}\Trc\langle0|\bar T[\mathcal U^\dagger]\,T[\mathcal U]|0\rangle$，$\mathcal U=W_{n_A}W_{n_B}$。(2) 对过去指向的直线 $W[0,-\infty v]=P\exp\bigl(\ii g\int_{-\infty}^0\dd s\,v\cdot A(sv)\bigr)$，
+只要 $v^0>0$，就可以用时间 $t=sv^0$ 作参数：$s$ 越大越晚，路径次序（离终点近者在左）与时间次序一致。于是两条线的编时积是
+$T\exp\bigl(\ii\int_{-\infty}^0\dd t\,V(t)\bigr)$，$V(t)=g\sum_iv_i\cdot A^a(tv_i/v_i^0)\,T_i^a/v_i^0$——以厄米的 $V(t)$ 为相互作用的演化算符 $U_I(0,-\infty)$，它满足 $U_I^\dagger U_I=1$，且 $\bar T[\mathcal U^\dagger]=U_I^\dagger$。
+（这里起作用的是 $v^0>0$：每条线在时间上单调地从 $-\infty$ 走到 $0$。对类时而非类光的过去指向线，若写成路径排序的算符 $W[-\infty v,0]$，其路径次序是\emph{反}时间次序，
+而因子化与 Feynman 规则产生的是编时积；本引理只涉及后者。）因此 $S=\frac1{N_c}\Trc\langle0|U_I^\dagger U_I|0\rangle=1$。
+(3) 维数正规化：所有 Wilson 线位于同一点，图中既无外动量也无质量，而程函因子在 $n_i\to\alpha_in_i$（$\alpha_i>0$）下不变，故树图以外的每张图都是无标度积分，其值为零，与 (2) 一致。
+\end{proof}
+
+对比：TMD 因子化中两组 Wilson 线位于 $0$ 与 $\mathbf b_T$，$\tilde S(\mathbf b_T)\ne1$（第~14~章）；“软因子为 $1$”只对共线单举截面成立。
+
+末态相互作用相消的最简单形式如下。在光锥排序微扰论（LCOPT）中对内线的负分量作留数积分后，硬顶点之后的部分是能量分母 $a_f=\mathcal E-d_f$ 的链，振幅一侧为 $(a_f+\ii\epsilon)^{-1}$，
+共轭一侧为 $(a_f-\ii\epsilon)^{-1}$，被切割的态给出 $2\epsilon/(a_c^2+\epsilon^2)=\ii[(a_c+\ii\epsilon)^{-1}-(a_c-\ii\epsilon)^{-1}]$；对切割位置 $c$ 求和，相邻项伸缩相消：
+\begin{equation}\label{eq:method-cutsum}
+\begin{aligned}
+&\sum_{c=1}^{N}\Bigl[\prod_{f>c}\frac{1}{a_f-\ii\epsilon}\Bigr]\frac{2\epsilon}{a_c^2+\epsilon^2}\Bigl[\prod_{f<c}\frac{1}{a_f+\ii\epsilon}\Bigr]\\
+&\qquad=\ii\prod_{f=1}^{N}\frac{1}{a_f+\ii\epsilon}-\ii\prod_{f=1}^{N}\frac{1}{a_f-\ii\epsilon} ,
+\end{aligned}
+\end{equation}
+对每个 $\epsilon>0$ 精确成立。再以测度 $\dd\mathcal E/(2\pi)$ 对 $\mathcal E$ 积分：$N\ge2$ 时右边每项的极点都在同一侧且按 $\mathcal E^{-N}$ 衰减，积分为零；$N=1$ 时为 $1$。所以硬散射之后的相互作用在对切割求和后相消
+（我们对 $N\le5$ 作了符号核对，对 $N\le8$ 在随机有理点上作了精确核对）。% check: w10_unitarity.py, w10_cutsum_exact.py
+这是附录~O 割位置恒等式（\cref{lem:appO-cut-position}）无插入时的特例，即 Veltman 最大时间方程的光锥形式。
+
+\begin{proposition}[末态相互作用的幺正性相消 \tagA]\label{prop:method-fsi}
+不受观测量约束的末态相互作用在对切割求和后相消：要么末态喷注在前向振幅中不被钳夹（DIS：在非物理区它是硬部分的一部分），要么相互作用由幺正性相消（Drell--Yan 的旁观者）。
+（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{lem:method-soft-unitarity,thm:prelim-cutting-rules,lem:appO-cut-position,lem:appO-unitarity,asm:appN-cutsum,asm:appO-lcopt}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 切割规则（\cref{thm:prelim-cutting-rules}）把截面写成对切割求和的割图；关键是它们要有\emph{公共的}积分域与被积函数，才能逐点组合——这正是\cref{asm:appN-cutsum}的 (CU1)：
+在 LCOPT 中，未被切割的线的负分量用留数积掉，被切割的线用 $\delta$ 函数积掉，剩下正分量与横向分量作为公共的积分变量。
+(2) 在这一表示中，割位置恒等式（\cref{lem:appO-cut-position}，即\cref{eq:method-cutsum}加上软胶子插入）表明：移动切割跨过最晚的顶点只改变该顶点的权重；
+于是在闭时路径形式（\cref{lem:appO-unitarity}，\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appO-lcopt}）中，一个喷注内部、晚于一切插入的末态相互作用精确地消失，喷注因子化为
+$\langle P|\bar T\{\cdots\}\,T\{\cdots\}|P\rangle$ 的形式；对软因子，这一步与\cref{lem:method-soft-unitarity}结合。
+(3) DIS 的被击出夸克喷注：在非物理区 $|x|>1$ 的前向 Compton 振幅中它不被钳夹，可以变形离壳，成为硬部分的一部分（由此到矩与 $x$ 空间的两条途径见第~10~章）。
+(4) 单个割图与胶子质量都不能代替 (1)：当 $\lambda$ 是被测量的变量时单个割图对任何 $\varepsilon>0$ 都不绝对可积，不同切割的积分流形维数不同、被切割的线不能变形；
+胶子质量则破坏非阿贝尔 Ward 恒等式。文献：\cite{LibbySterman1978a}，\cite{CollinsSoperSterman1988}，\cite[第~14.4~节]{Collins2011}，\cite{AybatSterman2009}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}割位置恒等式本身是数学，闭时路径形式在\cref{asm:appO-lcopt}之下是完整的演绎；尚未证明的是：(i) LCOPT 在所有阶、包括紫外重整化与零模在内与协变微扰论等价（\cref{asm:appO-lcopt}，\tagA），
+(ii) 割图求和后的公共表示在被测变量存在时具有减除结构所需的性质（\cref{asm:appN-cutsum}的 (CU1)--(CU3)，\tagA；DIS 的情形见第~10~章\cref{prop:disall-two-routes}）。这两条决定了本命题的等级 [A]（误差类型：所用的近似是 E-S 型的）。
+附带指出一个常见的误解：单个割图并不是“幺正的”，相消只发生在对切割求和之后（\cref{eq:method-cutsum}）。文献中对 Drell--Yan 旁观者的这一步的系统讨论见\cite{CollinsSoperSterman1988}与\cite[第~14.4~节]{Collins2011}。
+
+% ---------------------------------------------------------------------
+\section{Glauber 区与围道变形}\label{sec:method-glauber}
+
+在 Glauber 区（\cref{def:ir-glauber}）中 $(p_A+k)^2\simeq2p_A^+k^--2\mathbf p_{A,T}\cdot\mathbf k_T-\mathbf k_T^2$ 里的 $\mathbf k_T^2$ 不可忽略，软近似的误差是 $O(1)$；其贡献是领头幂次的，
+必须由围道变形避开或证明相消。
+
+\begin{proposition}[两条程函线之间的单胶子交换 \tagR]\label{prop:method-glauber-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈。）记 $n_A\cdot k=k^-$，$n_B\cdot k=k^+$。对两条过去指向的程函线，
+\begin{equation}\label{eq:method-glauber-oneloop}
+\int_{-\infty}^{\infty}\!\dd k^-\,\frac{1}{(k^-+i0)(-k^++i0)(2k^+k^--\mathbf k_T^2+i0)}=
+\begin{cases}0,&k^+>0,\\[2pt]-\dfrac{2\pi\ii}{\mathbf k_T^2\,k^+},&k^+<0;\end{cases}
+\end{equation}
+而过去与未来指向的 $A$ 线之差为 $\frac1{k^-+i0}-\frac1{k^--i0}=-2\pi\ii\,\delta(k^-)$。
+后者把交换的胶子固定在 $k^-=0$，即 Glauber（Coulomb）相位，$\propto\int\dd^2k_T/\mathbf k_T^2$。（本命题只涉及程函线的 Feynman 积分。）
+\uses{prop:prelim-wilson-rules,def:ir-glauber}
+\end{proposition}
+% VF-WL-12
+
+\begin{proof}
+由程函规则（\cref{prop:prelim-wilson-rules}），过去指向的 $A$ 线吸收 $k$ 给出 $\ii/(k^-+i0)$，过去指向的 $B$ 线吸收 $-k$ 给出 $\ii/(-k^++i0)$，胶子传播子为 $-\ii/(k^2+i0)$，
+$k^2=2k^+k^--\mathbf k_T^2$；于是 $k^-$ 积分的被积函数（去掉常数）即\cref{eq:method-glauber-oneloop}左边。它按 $(k^-)^{-2}$ 衰减，可在上半平面闭合。$A$ 线的极点 $k^-=-i0$ 在下半平面；
+胶子极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 当 $k^+>0$ 时在下半平面、当 $k^+<0$ 时在上半平面。$k^+>0$ 时上半平面无极点，积分为零；$k^+<0$ 时取胶子极点的留数：
+$2\pi\ii\cdot\frac1{2k^+}\cdot\bigl[\frac{\mathbf k_T^2}{2k^+}\cdot(-k^+)\bigr]^{-1}=-\frac{2\pi\ii}{\mathbf k_T^2k^+}$。后一式是 Sokhotski--Plemelj 公式：$\frac1{x+i0}-\frac1{x-i0}=-2\pi\ii\,\delta(x)$。
+（我们也作了数值核对。）% check: w10_glauber.py (1)
+\end{proof}
+
+\begin{example}[单胶子交换的极点图]\label{ex:method-glauber-oneloop}
+对过去—过去的线，$k^+>0$ 时两个极点同侧，Glauber 区无害；$k^+<0$ 时胶子极点越到另一侧，但位于 $|k^-|=\mathbf k_T^2/(2|k^+|)$，对 Glauber 标度的 $k^+$ 远在 Glauber 区之外。
+把 $A$ 线换成未来指向的，极点移到上半平面，两者之差 $-2\pi\ii\delta(k^-)$ 正好落在 Glauber 区的中心 $k^-=0$。这一相位在共线单举截面中由幺正性相消（\cref{lem:method-soft-unitarity}），但在 TMD 观测量中留下可观测的后果
+（Sivers 函数的符号，第~14~章），并在强子—强子碰撞产生背对背强子的 TMD 观测量中导致因子化破坏（第~18~章）。
+
+物理图的情形见\cref{fig:glauber-contour}：在那里，复 $k^-$ 平面中的极点来自 $k$ 所流经的 $A$ 共线传播子，位于 Glauber 带 $|k^-|\sim\mathbf k_T^2/Q$ 中。(a) 若这些极点都在同一侧，围道可以推出 Glauber 带；
+(b) 若旁观者线（末态）与活动部分子线（初态）的极点分居两侧，围道被钳住，这就是 Glauber 钳夹。需要补充的是：离开 Glauber 区须沿 $e_G$ 同时形变两个分量（\cref{fig:method-glauber-direction}）——
+只形变 $k^-$（即使形变到 $|k^-|\sim|\mathbf k_T|$）只能使一个喷注上的软近似成立，动量仍留在 Glauber 楔中（\cref{prop:method-glauber-deformation}(b)）。
+\uses{prop:method-glauber-oneloop}
+\end{example}
+
+%%% BEGIN fig:glauber-contour
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  t2 contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  t2 contour/.default=0.5,
+  t2 ax/.style={lcaxis,gray!60!black},
+  t2 band/.style={fill=red!9,draw=none},
+  t2 lab/.style={font=\footnotesize}]
+  % ======================= (a) all A-collinear poles on one side =======================
+  \begin{scope}
+    \fill[t2 band] (-0.55,-1.3) rectangle (0.55,1.45);
+    \draw[red!45,line width=0.4pt,dash pattern=on 2pt off 1.5pt] (-0.55,-1.3) -- (-0.55,1.45) (0.55,-1.3) -- (0.55,1.45);
+    \draw[t2 ax] (-2.4,0) -- (2.5,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.3) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.5] (-2.3,0) -- (-1.75,0) .. controls (-1.4,0) and (-1.25,1.05) .. (0,1.05)
+        .. controls (1.25,1.05) and (1.4,0) .. (1.75,0) -- (2.3,0);
+    \pic at (-0.32,-0.17) {t2 pole}; \pic at (0.1,-0.27) {t2 pole}; \pic at (0.38,-0.12) {t2 pole};
+    \node[t2 lab,anchor=east,align=right] at (-0.66,-0.62) {同侧的 $A$\\共线极点};
+    \node[t2 lab,anchor=south west] at (0.9,0.95) {$|k^-|\sim|k_T|$};
+    \node[t2 lab,text=red!55!black,anchor=south] at (0,1.62) {Glauber 区};
+    \node at (0,-1.9) {(a)\ 极点同侧：围道可移出 Glauber 区};
+  \end{scope}
+  % ======================= (b) poles on both sides: Glauber pinch =======================
+  \begin{scope}[xshift=6.4cm]
+    \fill[t2 band] (-0.55,-1.3) rectangle (0.55,1.45);
+    \draw[red!45,line width=0.4pt,dash pattern=on 2pt off 1.5pt] (-0.55,-1.3) -- (-0.55,1.45) (0.55,-1.3) -- (0.55,1.45);
+    \draw[t2 ax] (-2.4,0) -- (2.5,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.3) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.82] (-2.3,0) -- (2.3,0);
+    \pic at (0.15,0.19) {t2 pole}; \pic at (-0.15,-0.19) {t2 pole};
+    \draw[gray!60!black,line width=0.45pt] (0.24,0.27) -- (0.75,0.72) node[right,t2 lab,text=black,align=left] {活动部分子线\\（进入 $H$）};
+    \draw[gray!60!black,line width=0.45pt] (-0.24,-0.27) -- (-0.75,-0.72) node[left,t2 lab,text=black] {旁观者线};
+    \node[t2 lab,text=red!55!black,anchor=south] at (0,1.62) {Glauber 区};
+    \node at (0,-1.9) {(b)\ 极点异侧：围道被钳在 Glauber 区};
+  \end{scope}
+\end{tikzpicture}
+\caption{软胶子动量 $k$（固定 $k^+$、$k_T$，$k_T\sim\lambda Q$）在复 $k^-$ 平面上的 Glauber 区分析。阴影带为 Glauber 区 $|k^-|\lesssim k_T^2/Q$；
+图中极点来自 $k$ 流经的 $A$ 共线传播子，位于 $|k^-|\sim k_T^2/Q$。约定 $k$ 在附着顶点从 $A$ 子图流出，并取末态旁观者动量 $p_X$ 固定：
+Glauber 顶点之前的旁观者线 $l_s=p_X+k$ 中 $k$ 与大分量 $l_s^+$ 同向，极点在下半平面；进入 $H$ 的活动部分子线 $l_a=P_A-p_X-k$ 中 $k$ 与 $l_a^+$ 反向，极点在上半平面（$k$ 流入时上下互换）。
+$B$ 共线线与胶子传播子本身给出的 $k^-$ 极点位于 $|k^-|\sim Q$，在图外。
+(a)~所有 $A$ 共线极点在同一侧：围道可向另一侧变形到 $|k^-|\sim|k_T|$，在那里软近似成立；
+(b)~旁观者线与活动部分子线的极点分居两侧：围道被钳在 Glauber 区内（Glauber 钳夹）。
+仅有 $k^-$ 钳夹并不致命：若胶子另一端的线（如 DIS 中出射的被击出夸克）给出的 $k^+$ 极点都在同一侧，仍可把 $k^+$ 围道变形到 $|k^+|\sim|k_T|$，使该端的程函近似成立；
+Drell--Yan 中 $B$ 一侧的 $k^+$ 围道同样被钳住，这一钳夹只有在对末态切割求和之后才被消除（\cref{fig:glauber-exchange}）。}
+\label{fig:glauber-contour}
+\end{figure}
+%%% END fig:glauber-contour
+
+\begin{proposition}[Glauber 区的围道变形判据 \tagA]\label{prop:method-glauber-deformation}
+设软动量 $k$ 连接两个共线子图 $J_A$、$J_B$，$G_\delta=\{|k^+k^-|\le\delta\,\mathbf k_T^2\}$。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 若携带 $k$ 的 $J_A$ 线的 $k^-$ 极点都在同一个半平面，则可以变形 $k^-$；软线自身的极点把变形幅度限制在 $\kappa\sim\mathbf k_T^2/|k^+|$（\cref{lem:method-i0-compat}）。
+\item 在 Glauber 区（$k^\pm\sim\lambda^2$，$k_T\sim\lambda$）中，只形变一个分量，即使形变到 $\sim|\mathbf k_T|$，也只有 $|k^+k^-|\sim\lambda^3\ll\mathbf k_T^2$：动量仍在 $G_\delta$ 中，
+  软近似只对“看见”被形变分量的那一个喷注成立，对另一个喷注仍然失效。
+\item 离开 $G_\delta$ 需要沿 $e_G=n_B-n_A=(-1^+,+1^-,\mathbf 0_T)$（$e_G^2=-2$，$n_A\cdot e_G=+1$，$n_B\cdot e_G=-1$）\emph{同时}形变 $k^+$ 与 $k^-$，符号相互协调、幅度 $\sim|\mathbf k_T|$；
+  这种形变只使分母更加类时：
+  \begin{equation}\label{eq:method-eG}
+  (l+\ii t\sigma f\,e_G)^2-m^2=(l^2-m^2+2t^2f^2)+2\ii t\sigma f\,(l^+-l^-) ;
+  \end{equation}
+  在把附着于一个喷注的插入用等光锥时刻局域化改写之后，这种形变是可能的。对色单态单举 Drell--Yan，这一步在附录~O 中完成（\cref{prop:appO-target}，\cref{thm:appO-main}，\tagR，$R_{\mathrm{cond}}$）；
+  一般情形它是模板定理 (H3) 的一部分。
+\end{enumerate}
+障碍是两侧都有极点的 Glauber 钳夹（如强子—强子碰撞中旁观者之间的相互作用）；对单举观测量，先由\cref{prop:method-fsi}去掉末态极点，此后的形变才可能。（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{lem:method-i0-compat,prop:ir-glauber-trapping,prop:method-fsi,def:ir-glauber,prop:appO-target,thm:appO-main,asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}
+\end{proposition}
+% VF-REF-7, VF-GLA-4
+
+
+\begin{proofsketch}
+(1) 极点半平面规则：携带 $l+sk$、正分量大的线，$s=+1$ 时其 $k^-$ 极点在下半平面，$s=-1$ 时在上半平面；所以 $k$ 流经的线全是初态线或全是末态线时极点同侧。
+在 Drell--Yan 中每个强子的子图都既有初态（活动部分子）又有末态（旁观者）线，故 $k^-$ 被 $J_A$ 钳住、$k^+$ 被 $J_B$ 钳住；在 DIS 中靶子图钳住 $k^-$，但另一端只有末态的被击出夸克，$k^+$ 可以变形；
+在 $e^+e^-$ 中全是末态线，什么也不被钳住。单圈的判据是\cref{prop:ir-glauber-trapping}。(2) (a) 由\cref{lem:method-i0-compat}。(3) (b)：形变后 $|k^-|\lesssim|\mathbf k_T|\sim\lambda$ 而 $k^+\sim\lambda^2$ 未变，
+$J_A$ 的分母中 $2p_A^+k^-\sim\lambda$ 压过 $2\mathbf p_{A,T}\cdot\mathbf k_T,\mathbf k_T^2\sim\lambda^2$，$J_A$ 上的软近似成立；但 $J_B$ 的分母中 $2p_B^-k^+\sim\lambda^2$ 与 $\mathbf k_T^2$ 同阶，$J_B$ 上的软近似仍然失效。
+(4) (c)：令 $\tau=t\sigma f$，$(l+\ii\tau e_G)^2=l^2+2\ii\tau\,l\cdot e_G-\tau^2e_G^2$，而 $l\cdot e_G=l^+-l^-$、$e_G^2=-2$，即得\cref{eq:method-eG}。对振幅一侧（$\sigma=+1$）流入 $J_A$ 的软动量，
+$\Imag k^->0$、$\Imag k^+<0$；$J_A$ 的初态线（$l^+$ 大）获得正的虚部，$J_B$ 的初态线（携带 $-k$，$l^-$ 大）同样获得正的虚部，二者都与 Feynman 传播子的 $+i0$ 一致；实部增加 $2t^2f^2>0$。
+形变后 $|k^+||k^-|\ge|\Imag k^+||\Imag k^-|=\kappa^2\mathbf k_T^2$（幅度 $\kappa|\mathbf k_T|$），对 $\delta<\kappa^2$ 离开 $G_\delta$。(5) 这种两分量形变对一般的图类是否存在，
+附录~O 只对图类 $\mathcal G_0$ 与分级构型作了构造（\cref{prop:appO-target}），并在\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}等假设之下导出色单态单举 Drell--Yan 的 Glauber 相消（\cref{thm:appO-main}）。
+（以上关于幂次的陈述只是 E-S 型的。）
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[A]。精确形式在附录~O：\cref{prop:appO-target}（\tagR，$R_{\mathrm{PT}}$，图类 $\mathcal G_0$ 与分级构型的形变目标）与\cref{thm:appO-main}（\tagR，$R_{\mathrm{cond}}$），
+前提包括\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}（均 \tagA；完整的前提列表见该定理）；其中\cref{asm:appO-deformation}的 (b)(c)(d) 即使对阿贝尔的 $\mathcal G_0$ 也需要。
+Collins 在\cite[第~14.4.8~节]{Collins2011}中把这一步列为尚未解决的问题。常见的说法“把 $k^-$ 围道推到 $|k^-|\sim|\mathbf k_T|$ 就离开了 Glauber 区”是错误的：
+一个分量的形变留在 $G_\delta$ 中，两个分量都必须沿 $e_G$ 移动（\cref{rem:method-two-component}）。以混合光锥序形式表述的 Glauber 相消全阶论证纲要见 Aybat--Sterman\cite{AybatSterman2009}；
+Diehl 等人\cite{Diehl:2015bca}沿 Collins--Soper--Sterman 与 Collins 的光锥微扰论路线，澄清了单 Drell--Yan 论证中的若干问题，并把 Glauber 相消推广到双 Drell--Yan 的所有阶。
+
+%%% BEGIN fig:method-glauber-direction
+\begin{figure}[htbp]
+\centering
+% real (k^+,k^-) plane with the Glauber wedge G_delta = {|k^+ k^-| <= delta k_T^2}; units |k_T| = 1, delta = 0.12
+\newcommand{\fbGwedge}{%
+  \fill[red!9] plot[domain=1.6:0.075,samples=40] (\x,{0.12/\x})
+      -- plot[domain=0.075:1.6,samples=40] ({-\x},{0.12/\x})
+      -- plot[domain=1.6:0.075,samples=40] ({-\x},{-0.12/\x})
+      -- plot[domain=0.075:1.6,samples=40] (\x,{-0.12/\x}) -- cycle;
+  \foreach \s/\t in {1/1,-1/1,1/-1,-1/-1}
+    \draw[red!55!black,line width=0.5pt] plot[domain=0.075:1.6,samples=40] ({\s*\x},{\t*0.12/\x});
+  \draw[lcaxis] (-1.7,0) -- (1.8,0) node[right=0pt,font=\footnotesize] {$k^+$};
+  \draw[lcaxis] (0,-1.7) -- (0,1.8) node[above=0pt,font=\footnotesize] {$k^-$};
+  \draw[red!50!black,line width=0.4pt] (1.0,-0.06) -- (1.22,-0.45);
+  \node[font=\footnotesize,text=red!50!black,anchor=north,inner sep=1pt] at (1.25,-0.45) {$G_\delta$};
+  \fill (0.07,0.07) circle[radius=1.6pt];}
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb text/.style={font=\footnotesize,align=center,anchor=north,inner sep=1pt},
+  fb pole/.pic={\draw[line width=0.9pt,line cap=round] (-0.075,-0.075)--(0.075,0.075) (-0.075,0.075)--(0.075,-0.075);},
+  fb def/.style={line width=1.3pt,-{Stealth[length=6pt,width=5pt]}},
+  fb contour/.style={draw=blue!60!black,line width=1.0pt},
+  fb carrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}}]
+  % ======================= (a) one-component deformation stays in G_delta =======================
+  \begin{scope}[x=1.15cm,y=1.15cm]
+    \fbGwedge
+    \draw[fb def,red!65!black] (0.07,0.12) -- (0.07,1.3);
+    \node[fb lab,anchor=west,text=red!55!black] at (0.14,1.3) {$\Imag k^-\sim|\mathbf k_T|$};
+    \node[font=\small,anchor=south west] at (-1.75,1.6) {(a)};
+    \node[fb text] at (0,-1.87) {只形变 $k^-$（$\kappa\lesssim|\mathbf k_T|$）：\\$|k^+k^-|\sim\lambda^3\ll k_T^2$，\\仍在 $G_\delta$ 中};
+  \end{scope}
+  % ======================= (b) the soft line's own pole limits a one-component deformation =======================
+  \begin{scope}[xshift=5.15cm]
+    \draw[lcaxis] (-2.1,0) -- (2.1,0) node[right=0pt,font=\footnotesize] {$\Real k^-$};
+    \draw[lcaxis] (0,-1.2) -- (0,1.75) node[above=0pt,font=\footnotesize] {$\Imag k^-$};
+    \draw[fb contour,fb carrow=0.08,fb carrow=0.92] (-2.05,0) -- (-1.0,0) to[out=0,in=180] (0.55,0.78)
+        to[out=0,in=180] (1.75,0) -- (2.05,0);
+    \pic at (0.45,-0.16) {fb pole}; \pic at (0.8,-0.16) {fb pole}; \pic at (1.15,-0.16) {fb pole};
+    \node[fb lab,anchor=north] at (0.85,-0.25) {$J_A$ 的极点};
+    \pic[red!60!black] at (-1.45,0.16) {fb pole};
+    \node[fb lab,anchor=south,text=red!55!black] at (-1.45,0.26) {软线极点};
+    \draw[{Stealth[length=3.6pt,width=3pt]}-{Stealth[length=3.6pt,width=3pt]},line width=0.5pt] (0.55,0.04) -- (0.55,0.74);
+    \node[fb lab,anchor=west] at (0.59,0.4) {$\kappa$};
+    \node[font=\small,anchor=south west] at (-2.1,1.38) {(b)};
+    \node[fb text] at (0,-2.15) {$k^+<0$：软线极点 $k^-=\frac{k_T^2-\ii0}{2k^+}$\\在上半平面，只形变 $k^-$ 的\\幅度 $\kappa\lesssim k_T^2/|k^+|$};
+  \end{scope}
+  % ======================= (c) simultaneous deformation along e_G leaves G_delta =======================
+  \begin{scope}[xshift=10.35cm,x=1.15cm,y=1.15cm]
+    \fbGwedge
+    \draw[fb def,green!45!black] (0.03,0.11) -- (-0.92,1.06);
+    \node[fb lab,anchor=north east,text=green!30!black] at (-0.5,0.5) {$e_G$};
+    \node[font=\small,anchor=south west] at (-1.75,1.6) {(c)};
+    \node[fb text] at (0,-1.87) {沿 $e_G=n_B-n_A$ 同时形变：\\$\Imag k^->0$，$\Imag k^+<0$，\\幅度 $\sim|\mathbf k_T|$：离开 $G_\delta$};
+  \end{scope}
+  % identity below the panels
+  \node[font=\footnotesize,anchor=north] at (5.15,-3.82) {所有分母更类时：\ $(l+\ii t\sigma f e_G)^2-m^2=(l^2-m^2+2t^2f^2)+2\ii t\sigma f\,(l^+-l^-)$，\quad $e_G=(-1^+,+1^-,\mathbf 0_T)$};
+\end{tikzpicture}
+\caption{离开 Glauber 区需要沿 $e_G=n_B-n_A$ 同时形变两个光锥分量（示意；(a)、(c) 以 $|\mathbf k_T|$ 为单位，红色阴影为 Glauber 楔 $G_\delta=\{|k^+k^-|\le\delta k_T^2\}$，复形变量画在同一平面中）。
+(a)~对 Glauber 动量 $k^\pm\sim\lambda^2$、$k_T\sim\lambda$ 只形变 $k^-$，即使形变到 $|\mathbf k_T|$ 量级，仍有 $|k^+k^-|\sim\lambda^3\ll k_T^2$，动量留在 $G_\delta$ 中；
+(b)~$k^+<0$ 时软线自身的极点位于上半平面，与 $J_A$ 线的极点分居实轴两侧，把只形变 $k^-$ 的幅度限制在 $\kappa\sim k_T^2/|k^+|$（\cref{lem:method-i0-compat}）；
+(c)~振幅一侧（$\sigma=+1$）流入 $J_A$ 的软动量沿 $e_G$ 形变（$\Imag k^->0$、$\Imag k^+<0$），幅度 $\sim|\mathbf k_T|$，离开 $G_\delta$，且使所有分母更类时（VF-REF-7；\cref{prop:method-glauber-deformation}）。}
+\label{fig:method-glauber-direction}
+\end{figure}
+%%% END fig:method-glauber-direction
+
+\begin{remark}[一个分量的形变为何不够]\label{rem:method-two-component}
+\Cref{fig:method-glauber-direction}画出\cref{prop:method-glauber-deformation}(b)(c) 的几何：(a) Glauber 楔 $G_\delta$ 由双曲线 $|k^+k^-|=\delta\mathbf k_T^2$ 围成，对 $k^\pm\sim\lambda^2$ 只形变 $k^-$，
+点沿竖直方向留在楔中；(b) $k^+<0$ 时软线自身的极点在上半平面，把只形变 $k^-$ 的幅度限制在 $\kappa\sim\mathbf k_T^2/|k^+|$（\cref{lem:method-i0-compat}(b)）；(c) 振幅一侧（$\sigma=+1$）流入 $J_A$ 的软动量沿 $e_G$ 形变，
+$\Imag k^->0$、$\Imag k^+<0$，幅度 $\sim|\mathbf k_T|$，离开 $G_\delta$，并按\cref{eq:method-eG}使一切分母更加类时。数值上，$\lambda=10^{-2},10^{-3},10^{-4}$ 时，单分量形变后
+$|k^+k^-|/\mathbf k_T^2=0.008,\,0.0008,\,0.00008$（$\propto\lambda$），而沿 $e_G$、$\kappa=\frac12$ 的形变给出 $|k^+||k^-|/\mathbf k_T^2=0.25=\kappa^2$。% check: w10_glauber.py (4)
+因此不能说把 $k^-$ 围道推到 $|k^-|\sim|\mathbf k_T|$ 就离开了 Glauber 区。
+\end{remark}
+
+% ---------------------------------------------------------------------
+\section{模板定理；因子化标度与方案}\label{sec:method-template}
+
+后面各章只需对各自的过程逐条验证下面的 (H1)--(H5)；第~18~章则指出因子化破坏时失效的是哪一条。
+
+\begin{theorem}[因子化模板定理 \tagA]\label{thm:method-template}
+设观测量 $\sigma$ 的共线方向为 $n_A,n_B,\ldots$，并假设：
+\begin{enumerate}[label=\textbf{(H\arabic*)},leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 其领头区域是\cref{thm:ir-leading-regions}的区域（加上 Glauber 区），且幂次计数在积分范数下成立（\cref{asm:appN-envelope,asm:appN-separation}）；
+\item 在 $H$--$J$ 界面上共线近似成立，K 胶子退耦为 Wilson 线（\cref{lem:method-ward-multi,prop:method-collinear-wilson}；精确形式\cref{asm:appN-ward-product}）；
+\item 在把围道移出 Glauber 区、或证明 Glauber 贡献显式相消之后，软近似成立，软胶子退耦（\cref{prop:method-glauber-deformation,prop:method-soft-wilson}；
+  对 Drell--Yan 型过程，其精确形式是\cref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs}）；
+\item 不受观测量约束的末态相互作用由幺正性相消，软因子或者为 $1$（共线因子化），或者是 Wilson 线的明确定义的真空矩阵元（TMD）（\cref{lem:method-soft-unitarity,prop:method-fsi}，\cref{asm:appN-cutsum}，\cref{asm:appO-lcopt}）；
+\item 减除项与定义 PDF、FF（或 TMD）的算符的重整化矩阵元一致（\cref{thm:method-subtraction}，\cref{asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}；TMD 另需\cref{asm:appN-tmd}）。
+\end{enumerate}
+则
+\begin{equation}\label{eq:method-template}
+\sigma=\sum_{ij}H_{ij}\otimes f_{i/A}\otimes f_{j/B}\,[\otimes S]+\order{\lambda^p} ,
+\end{equation}
+其中 $H_{ij}$ 可以用部分子外态计算（\cref{prop:pdf-partonic-dr}）。
+
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2、MA4）。
+% errtype: E-S
+\uses{thm:ir-leading-regions,lem:method-ward-multi,prop:method-collinear-wilson,prop:method-soft-wilson,prop:method-glauber-deformation,lem:method-soft-unitarity,prop:method-fsi,thm:method-subtraction,prop:pdf-partonic-dr,asm:intro-bridge,asm:appN-envelope,asm:appN-separation,asm:appN-ward-product,asm:appN-cutsum,asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}
+\end{theorem}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{3.3cm}@{}}
+\toprule
+假设 & 精确形式（标签） & 地位 & 逐过程验证于\\
+\midrule
+(H1) & \cref{thm:ir-leading-regions}（标度陈述）；\cref{asm:appN-envelope,asm:appN-separation} & [A]（标度陈述 E-S；积分形式未证） & \cref{prop:disall-regions}，\cref{prop:tmd-h1h5}\\
+(H2) & \cref{lem:method-ward-multi}；\cref{asm:appN-ward-product}；具名缺口\cref{asm:appN-brst-nonlocal} & [A]；阿贝尔与 $n\le2$ 树图 [R]；缺口 [C] & \cref{prop:disall-h2}\\
+(H3) & \cref{prop:method-glauber-deformation}；Drell--Yan 型：\cref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs} & [A]；DIS、$e^+e^-$ 平凡 & \cref{prop:disall-h3h4}，\cref{thm:dy-factorization}\\
+(H4) & \cref{lem:method-soft-unitarity,prop:method-fsi}；\cref{asm:appN-cutsum,asm:appO-lcopt} & [A]；软因子的幺正性 [R] & \cref{prop:disall-h3h4}，\cref{thm:coll-sia}\\
+(H5) & \cref{asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}（TMD 另加\cref{asm:appN-tmd}） & [A]；(V1)(V2) 为约定 & \cref{prop:disall-h5}，\cref{prop:tmd-h1h5}\\
+\bottomrule
+\end{tabularx}
+\caption{模板定理（\cref{thm:method-template}）的假设 (H1)--(H5) 与附录~N、附录~O 中编号假设的对应。最后一列是各过程章节中验证相应假设的陈述：第~10~章（DIS）、第~11~章（单举湮灭）、
+第~12~章（Drell--Yan）、第~14~章（小 $q_T$ 的 Drell--Yan）。}
+\label{tab:method-hypotheses}
+\end{table}
+
+\begin{proofsketch}
+从 (H1)--(H5) 出发的演绎如下（固定 $\as$ 的阶，部分子外态带红外正规子）。
+(1) \emph{减除。}由 (H1) 与 (H5)（\cref{thm:method-subtraction}），对每个（割图求和后的）被积函数 $\Gamma=\sum_RC_R\Gamma+r$，$r$ 在积分范数下被压低，每个 $C_R\Gamma$ 绝对可积。
+(2) \emph{减除项的结构。}$C_R\Gamma=T_RX_R$：$T_R$ 在每个 $H$--$J$ 界面插入共线投影、在每个 $S$--$J$ 界面插入软投影；分解为 K 与 G 部分后，由 (H2)，超出最小部分子内容的 G 胶子只给出压低的贡献。
+(3) \emph{共线 Wilson 线。}对图与 $A$ 共线 K 胶子的一切附着求和，由 (H2)，$C_R\Gamma=H_R(\hat k)\otimes J_A^W\otimes\cdots$，$J_A^W$ 附有沿 $n_B$ 的 Wilson 线；固定 $k^+=\xi P_A^+$ 积掉 $k^-,\mathbf k_T$，
+得到定义 PDF 的光线算符的矩阵元（减去其零区重叠）；$B$ 同理。
+(4) \emph{软 Wilson 线。}由 (H3)，在离开 Glauber 区的围道上软近似成立，对附着求和后软胶子化为沿 $n_A$、$n_B$ 的 Wilson 线，$S_R$ 是它们的真空矩阵元。
+(5) \emph{末态与软因子。}由 (H4)，不受约束的末态相互作用相消；共线因子化中所有 Wilson 线位于一点，软因子为 $1$；TMD 中它保留为 $\tilde S(\mathbf b_T)$。
+(6) \emph{重组与重整化。}固定硬部分、对喷注与软图求和，得到完整的裸算符矩阵元，零区重叠由嵌套的减除扣除；由 (H5)，减除项等于 $\overline{\rm MS}$ 重整化的算符矩阵元，
+对硬图求和并作递归减除得到与靶无关的系数：$H^{[n]}=\hat\sigma^{[n]}-\sum_{m<n}H^{[m]}\otimes[f\otimes f]^{[n-m]}_{\text{部分子}}$，在纯维数正规化中用部分子外态计算（\cref{prop:pdf-partonic-dr}）。
+由此得到\cref{eq:method-template}的部分子形式；换成强子态是\cref{asm:intro-bridge}的 (Br1)--(Br3)。（各步的幂次陈述是 E-S 型的。）
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[A] 同时反映了\cref{thm:method-subtraction}的地位与各假设的地位；(H$i$) 与编号假设的对应见\cref{tab:method-hypotheses}，每个过程章节都在自己的状态段落中逐条验证。
+决定 [A] 的最弱环节是：\cref{asm:appN-collins}（连同\cref{asm:appN-envelope,asm:appN-separation,asm:appN-contour}）——积分范数下的减除估计；\cref{asm:appN-ward-product}——含鬼场的多胶子 Ward 恒等式；
+对 Drell--Yan 型过程还有\cref{asm:appO-mixing}(c)、\cref{asm:appO-deformation}(b)--(d) 与\cref{asm:appO-rewritten-cs}（\cite[第~14.4.8~节]{Collins2011}）；对强子则是\cref{asm:intro-bridge}（\tagC）。
+(H2) 中有一个具名缺口：多定域光线算符的 BRST 分类（\cref{asm:appN-brst-nonlocal}，\tagC；Collins\cite[第~11.3.2~节]{Collins2011}明确假定它），它包含在文献论证的等级之中，在此点名，
+并由每个 Feynman 规范的过程章节重提；它只是\cref{thm:appN-structure}的形式前提，因而该条件定理的内容等级为 [C]。误差类型：所断言的是 E-N，文献中存在的是 E-S。
+上述演绎的精确条件形式是附录~N 的\cref{thm:appN-structure}（\tagR，$R_{\mathrm{cond}}$），本定理不以它为前提。文献：\cite{CollinsSoperSterman1989}，\cite[第~10、11、14~章]{Collins2011}。
+
+\begin{proposition}[因子化标度与方案 \tagR]\label{prop:method-scale-scheme}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设系数函数定义为 $\overline{\rm MS}$ 减除后的部分子截面：对单强子过程，$\hat\sigma_j=\sum_iC_i\otimes f_{i/j}$，
+其中 $\hat\sigma_j$ 是纯维数正规化中（用 $\as(\mu)$ 表示的）裸部分子截面，$f_{i/j}$ 是 $\overline{\rm MS}$ 重整化的部分子 PDF（双强子过程有两个卷积）。则：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item $\dfrac{\partial C_i}{\partial\ln\mu_F^2}=-\sum_kC_k\otimes\mathcal P_{ki}$，$\mathcal P$ 是\cref{thm:pdf-dglap}的 DGLAP 核；
+\item 方案变换 $f'=Z\otimes f$ 与 $C'=C\otimes Z^{-1}$ 保持 $C\otimes f$ 不变（\cref{rem:pdf-schemes}）；
+\item 若把 $C$ 用另一标度 $\mu_R$ 处的 $\as(\mu_R)$ 展开，其 $\mu_R$ 依赖由 $\beta$ 函数（\cref{prop:prelim-beta}）固定：$\bigl(\partial_{\ln\mu_R^2}+\beta(\as)\partial_{\as}\bigr)C=0$。
+\end{enumerate}
+因此，若因子化公式（\cref{def:intro-factorization}）成立，$\sigma=C\otimes f$ 的 $\mu_F$ 依赖逐阶相消，截断到 $\as^N$ 时剩余的标度依赖是 $O(\as^{N+1})$。（本命题只涉及部分子态的系数函数。）
+\uses{def:intro-factorization,thm:pdf-dglap,prop:prelim-beta,rem:pdf-schemes}
+\end{proposition}
+
+\begin{proof}
+(a) 纯维数正规化中裸部分子 PDF 是 $\delta_{ij}\delta(1-\xi)$（无标度），故 $f_{i/j}=Z_{ij}$（$f_{\rm ren}=Z\otimes f_{\rm bare}$），于是 $C=\hat\sigma\otimes Z^{-1}$（矩阵卷积）。
+裸截面作为裸耦合的函数不依赖于 $\mu$；用 $\as(\mu)$ 表示时，这一无关性是逐阶的。于是
+$\frac{\partial C}{\partial\ln\mu^2}=\hat\sigma\otimes\frac{\partial Z^{-1}}{\partial\ln\mu^2}=-\hat\sigma\otimes Z^{-1}\otimes\frac{\partial Z}{\partial\ln\mu^2}\otimes Z^{-1}=-C\otimes\mathcal P$，
+其中 $\mathcal P=\frac{\partial Z}{\partial\ln\mu^2}\otimes Z^{-1}$ 正是\cref{thm:pdf-dglap}中的核：由 $f_{\rm ren}=Z\otimes f_{\rm bare}$ 得 $\partial f_{\rm ren}/\partial\ln\mu^2=\mathcal P\otimes f_{\rm ren}$。
+（$\mathcal P$ 在单圈为 $\frac{\as}{2\pi}P$；这一等式对 $\varepsilon$ 的 Laurent 级数逐阶成立，若 $C$ 在 $\varepsilon=0$ 有限，则对有限的 $C$ 成立。）
+(b) $C'\otimes f'=C\otimes Z^{-1}\otimes Z\otimes f=C\otimes f$。(c) $C$ 作为物理量不依赖于用哪个标度的耦合表示，即 $\dd C/\dd\ln\mu_R^2=0$；把 $\dd\as/\dd\ln\mu_R^2=\beta(\as)$ 代入即得所述方程。
+例如对领头阶为 $\as^0$ 的过程，$C=c_0+\as(\mu_R)c_1+\as^2(\mu_R)[c_2+\frac{\beta_0}{4\pi}c_1\ln\frac{\mu_R^2}{\mu_F^2}]+\cdots$。最后一句：$\dd(C\otimes f)/\dd\ln\mu_F^2=-C\otimes\mathcal P\otimes f+C\otimes\mathcal P\otimes f=0$，
+截断后的残差来自被截掉的高阶项。我们用符号计算核对了两圈层次的对数结构。% check: w10_scale.py
+\end{proof}
+
+逻辑次序是：DGLAP 方程来自算符重整化（\cref{thm:pdf-dglap}），在任何因子化定理之前成立；标度无关性是推论，而不是反过来——从 $\sigma$ 的 $\mu_F$ 无关性“导出”DGLAP 再用 DGLAP“证明”$\mu_F$ 无关性是循环论证。
+同样，把标度在 $2$ 倍范围内变动来估计理论误差只是一种约定：因子化保证的只是剩余的标度依赖属于更高阶。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章涉及的常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+\item 「软因子总是相消、总是 $1$」——只对共线单举截面成立（\cref{lem:method-soft-unitarity}）；在 TMD 因子化中软因子是本质的，以平方根的方式并入 TMD（第~14~章）。
+\item 「纯维数正规化中夸克里的夸克 PDF 是 $\delta(1-x)$，所以什么也没发生」——这只对裸 PDF 成立；重整化的部分子 PDF 由红外极点组成，紫外抵消项被重新解释为红外极点（\cref{ex:method-dis-oneloop}）。
+\item 「把 $\mu_R,\mu_F$ 变动 $2$ 倍就给出理论误差」——这是没有定理支持的约定（\cref{prop:method-scale-scheme}）。
+\item 「把 $k^-$ 围道推到 $|k^-|\sim|\mathbf k_T|$ 就离开了 Glauber 区」——单分量形变留在 $G_\delta$ 中，必须沿 $e_G$ 同时形变两个分量（\cref{rem:method-two-component}）。
+\item 「可以对减除项逐项作归纳来证明减除定理」——单个链项一般不可积，只有分组表达式被压低（\cref{ex:method-naive-induction}）。
+\item 「先对原图用 Ward 恒等式」——Ward 恒等式只对近似之后的被积函数使用，次序是“近似 $\to$ Ward 恒等式 $\to$ Wilson 线”（\cref{sec:method-strategy}）。
+\item 「由 $\sigma$ 的标度无关性导出 DGLAP」——循环论证；DGLAP 来自算符重整化（\cref{prop:method-scale-scheme}）。
+\item 「Collins 减除法与 BPHZ 一样严格」——Minkowski 空间中没有 Weinberg 定理的类比，减除定理是 [A]（\cref{thm:method-subtraction}）。
+\item 「软因子为 $1$ 可以在处理 Glauber 区之前使用」——幺正性论证要求软胶子已化为 Wilson 线，即 Glauber 区已被处理（\cref{sec:method-unitarity}）。
+\end{itemize}
+\end{tcolorbox}
+
+\paragraph{本章小结。}全阶因子化证明的六步（区域、近似、Grammer--Yennie 分解、Ward 恒等式、Glauber 区与幺正性、减除）汇总为模板定理。在精确层次上严格成立的是组合学、Ward 恒等式的单胶子与树图情形、
+$i0$ 相容性与局部精度；以编号假设明确列出而未证明的是一般图的减除条件（\cref{asm:appN-collins}）、积分形式的幂次计数（\cref{asm:appN-envelope,asm:appN-separation}）、多胶子 Ward 恒等式的乘积结构
+（\cref{asm:appN-ward-product}，连同具名缺口\cref{asm:appN-brst-nonlocal}）与 Drell--Yan 型过程的 Glauber 输入（附录~O）。下表列出章内陈述与附录中精确形式的对应。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+本章陈述 & 精确形式（附录） & 区别（假设，误差类型）\\
+\midrule
+\cref{thm:method-subtraction}（[A]） & \cref{thm:appN-subtraction}（[R, $R_{\mathrm{cond}}$]） & 对给定 $\Gamma$ 的 (CS1)--(CS3) 与\cref{asm:appN-contour}(a) 为前提；本章的 [A] 是\cref{asm:appN-collins}；E-N（文献中为 E-S）\\
+\cref{lem:method-collinear-accuracy,lem:method-soft-accuracy}（[A]） & \cref{lem:method-local-accuracy}（[R, $R_{\mathrm{cond}}$]）与\cref{lem:appN-error-table} & 标度陈述 E-S 对积分范数 E-N，前提\cref{asm:appN-envelope,asm:appN-separation}\\
+\cref{lem:method-ward-multi}（[A]） & \cref{asm:appN-ward-product}；附录~F 的\cref{prop:appF-induction} & 乘积结构与减除的重组作为编号假设；具名缺口\cref{asm:appN-brst-nonlocal}（[C]）\\
+\cref{prop:method-fsi}（[A]） & \cref{lem:appO-unitarity}（[R, $R_{\mathrm{cond}}$]） & 前提\cref{asm:appO-lcopt}；割图求和的公共表示\cref{asm:appN-cutsum}\\
+\cref{prop:method-glauber-deformation}（[A]） & \cref{prop:appO-target}（[R, $R_{\mathrm{PT}}$]），\cref{thm:appO-main}（[R, $R_{\mathrm{cond}}$]） & 图类 $\mathcal G_0$ 与分级构型的形变目标；色单态单举 Drell--Yan 在\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}等假设之下；E-W $\to$ E-N\\
+\cref{thm:method-template}（[A]） & \cref{thm:appN-subtraction}（[R, $R_{\mathrm{cond}}$]）与假设登记表；装配后的结构定理\cref{thm:appN-structure}（[R, $R_{\mathrm{cond}}$]） & 各过程的前提逐个列出（\cref{tab:method-hypotheses}）；\cref{thm:appN-structure}的内容等级为 [C]（经由具名缺口\cref{asm:appN-brst-nonlocal}）\\
+\bottomrule
+\end{tabularx}
+\caption{第~9~章的陈述与附录~N、附录~O（及附录~F）中精确形式的对应。}
+\label{tab:method-correspondence}
+\end{table}

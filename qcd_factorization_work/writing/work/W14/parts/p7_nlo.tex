@@ -1,0 +1,302 @@
+% =====================================================================
+\section{\texorpdfstring{$\order{\as}$}{O(alpha_s)} 系数函数}\label{sec:dy-nlo}
+% =====================================================================
+
+\cref{thm:dy-factorization}中唯一可以逐阶算出的因子是硬函数。本节在 $\MSbar$ 方案中把它算到 $\order{\as}$。这一计算只涉及部分子态，与\cref{thm:dy-factorization}的地位无关：取无质量部分子作初态、用维数正规化正规化其红外发散，我们将看到，软发散在实、虚修正之间相消，剩下的初态共线发散恰好由两个 $\MSbar$ 部分子分布的抵消项消去——这本身就是因子化在单圈上的一个非平凡检验。对 $y$ 积分之后硬函数只依赖于 $z=Q^2/\hat s$；按\cref{def:dy-kin}的归一化，因子化公式写成
+\begin{multline}\label{eq:dy-fact-nlo}
+\frac{\dd\sigma}{\dd Q^2}=\frac{\sigma_0}{s}\sum_qe_q^2\int_0^1\!\dd x_1\,\dd x_2\,\dd z\;\delta(x_1x_2z-\tau)\\
+\times\Big\{\big[q\bar q+\bar qq\big]\Delta_{q\bar q}(z)+\big[g\,(q+\bar q)+(q+\bar q)\,g\big]\Delta_{qg}(z)\Big\}+\order{\as^2},
+\end{multline}
+% VF-DY-8
+方括号中第一个因子取 $x_1$（强子 $A$）、第二个取 $x_2$（强子 $B$），部分子分布都取在标度 $\mu_F$；$\Delta_{qg}$ 是一个味为 $q$ 的夸克（或反夸克）与一个胶子的系数。等价地，$\hat s\,\dd\hat\sigma_{ij}/\dd Q^2=\sigma_0e_q^2\Delta_{ij}(z)$ 是扣除共线发散之后的部分子截面。记 $a\equiv\as(\mu_R)/(2\pi)$，$\mathcal D_k(z)\equiv[\ln^k(1-z)/(1-z)]_+$（\cref{def:prelim-plus}）；光滑函数乘加号分布一律按乘积约定理解，$g\mathcal D_k=g(1)\mathcal D_k+\frac{g-g(1)}{1-z}\ln^k(1-z)$。图形见\cref{fig:dy-oneloop}。
+
+%%% BEGIN fig:dy-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\footnotesize}]
+  % ======================= row 1:  q qbar channel =======================
+  % (a) q qbar -> gamma* g, gluon off the quark
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (-2.0,1.15); \coordinate (E2) at (-2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E1)$);
+    \draw[quark] (E1) -- (G); \draw[quark] (G) -- (V);
+    \draw[quark] (V) -- (E2);
+    \draw[photon] (V) -- (1.45,0);
+    \draw[gluon] (G) -- (0.55,1.2);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.45] (E1) -- (G);
+    \path[mom'={$p_2$},mom pos=0.6] (E2) -- (V);
+    \path[mom'={$q$},mom sep=0.28cm] (V) -- (1.45,0);
+    \path[mom={$k$},mom pos=0.55] (G) -- (0.55,1.2);
+    \node[t2 lab,anchor=east] at (E1) {$q$};  \node[t2 lab,anchor=east] at (E2) {$\bar q$};
+    \node[t2 lab,anchor=west] at (1.45,0) {$\gamma^*$}; \node[t2 lab,anchor=west] at (0.55,1.2) {$g$};
+    \node at (-0.3,-1.8) {(a)};
+  \end{scope}
+  % (b) q qbar -> gamma* g, gluon off the antiquark
+  \begin{scope}[xshift=5.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (-2.0,1.15); \coordinate (E2) at (-2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E2)$);
+    \draw[quark] (E1) -- (V);
+    \draw[quark] (V) -- (G); \draw[quark] (G) -- (E2);
+    \draw[photon] (V) -- (1.45,0);
+    \draw[gluon] (G) -- (0.55,-1.2);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.6] (E1) -- (V);
+    \path[mom'={$p_2$},mom pos=0.45] (E2) -- (G);
+    \path[mom'={$q$},mom sep=0.28cm] (V) -- (1.45,0);
+    \path[mom'={$k$},mom pos=0.55] (G) -- (0.55,-1.2);
+    \node[t2 lab,anchor=east] at (E1) {$q$};  \node[t2 lab,anchor=east] at (E2) {$\bar q$};
+    \node[t2 lab,anchor=west] at (1.45,0) {$\gamma^*$}; \node[t2 lab,anchor=west] at (0.55,-1.2) {$g$};
+    \node at (-0.3,-1.8) {(b)};
+  \end{scope}
+  % (c) virtual vertex correction
+  \begin{scope}[xshift=10.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (-2.0,1.15); \coordinate (E2) at (-2.0,-1.15);
+    \coordinate (G1) at ($(V)!0.56!(E1)$); \coordinate (G2) at ($(V)!0.56!(E2)$);
+    \draw[quark] (E1) -- (G1); \draw[quark] (G1) -- (V);
+    \draw[quark] (V) -- (G2); \draw[quark] (G2) -- (E2);
+    \draw[photon] (V) -- (1.45,0);
+    \draw[gluon] (G1) -- (G2);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.45] (E1) -- (G1);
+    \path[mom'={$p_2$},mom pos=0.45] (E2) -- (G2);
+    \path[mom'={$q$},mom sep=0.28cm] (V) -- (1.45,0);
+    \node[t2 lab,anchor=east] at (E1) {$q$};  \node[t2 lab,anchor=east] at (E2) {$\bar q$};
+    \node[t2 lab,anchor=west] at (1.45,0) {$\gamma^*$};
+    \node at (-0.3,-1.8) {(c)};
+  \end{scope}
+  % ======================= row 2:  q g channel =======================
+  % (d) s-channel
+  \begin{scope}[xshift=2.3cm,yshift=-4.1cm]
+    \coordinate (V1) at (-0.55,0); \coordinate (V2) at (0.65,0);
+    \draw[quark] (-2.0,1.05) -- (V1);
+    \draw[gluon] (-2.0,-1.05) -- (V1);
+    \draw[quark] (V1) -- (V2);
+    \draw[photon] (V2) -- (1.95,1.05);
+    \draw[quark] (V2) -- (1.95,-1.05);
+    \foreach \p in {V1,V2} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.45] (-2.0,1.05) -- (V1);
+    \path[mom'={$p_2$},mom pos=0.45] (-2.0,-1.05) -- (V1);
+    \path[mom={$q$},mom pos=0.6] (V2) -- (1.95,1.05);
+    \path[mom'={$k$},mom pos=0.6] (V2) -- (1.95,-1.05);
+    \node[t2 lab,anchor=east] at (-2.0,1.05) {$q$};  \node[t2 lab,anchor=east] at (-2.0,-1.05) {$g$};
+    \node[t2 lab,anchor=west] at (1.95,1.05) {$\gamma^*$}; \node[t2 lab,anchor=west] at (1.95,-1.05) {$q$};
+    \node at (0,-1.8) {(d)};
+  \end{scope}
+  % (e) t-channel
+  \begin{scope}[xshift=8.0cm,yshift=-4.1cm]
+    \coordinate (V1) at (0,0.72); \coordinate (V2) at (0,-0.72);
+    \draw[quark] (-1.85,0.72) -- (V1);
+    \draw[photon] (V1) -- (1.85,0.72);
+    \draw[quark] (V1) -- (V2);
+    \draw[gluon] (-1.85,-0.72) -- (V2);
+    \draw[quark] (V2) -- (1.85,-0.72);
+    \foreach \p in {V1,V2} \node[vertex] at (\p) {};
+    \path[mom={$p_1$},mom pos=0.5] (-1.85,0.72) -- (V1);
+    \path[mom'={$p_2$},mom pos=0.5] (-1.85,-0.72) -- (V2);
+    \path[mom={$q$},mom pos=0.5] (V1) -- (1.85,0.72);
+    \path[mom'={$k$},mom pos=0.5] (V2) -- (1.85,-0.72);
+    \node[t2 lab,anchor=east] at (-1.85,0.72) {$q$};  \node[t2 lab,anchor=east] at (-1.85,-0.72) {$g$};
+    \node[t2 lab,anchor=west] at (1.85,0.72) {$\gamma^*$}; \node[t2 lab,anchor=west] at (1.85,-0.72) {$q$};
+    \node at (0,-1.8) {(e)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Drell--Yan 过程 $\order{\as}$ 修正的部分子图（振幅层次，时间自左向右）。上排为 $q\bar q$ 道：(a)、(b)~$q(p_1)\,\bar q(p_2)\to\gamma^*(q)\,g(k)$ 的两个实辐射图，
+(c)~单圈顶点修正（与 Born 振幅干涉；无质量外线自能在维数正规化中为零）。下排为 $qg$ 道 $q(p_1)\,g(p_2)\to\gamma^*(q)\,q(k)$ 的两个图：(d)~$s$ 道（内夸克线动量 $p_1+p_2$），(e)~$t$ 道（内夸克线动量 $p_1-q$）
+（$\bar q g$ 道的图由电荷共轭得到）。入射反夸克线上的费米子数箭头背离顶点，动量箭头另行标出。}
+\label{fig:dy-oneloop}
+\end{figure}
+%%% END fig:dy-oneloop
+
+\begin{proposition}[$\order{\as}$ 的 $\MSbar$ 系数函数 \tagR]\label{prop:dy-nlo}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本命题是单圈（$\order{\as}$）的显式陈述。（本命题只涉及部分子态。）在常规维数正规化（$D=4-2\varepsilon$，外胶子按 $D-2$ 个极化态平均）与 $\MSbar$ 方案下，\cref{eq:dy-fact-nlo}中的系数为
+\begin{align}
+\Delta_{q\bar q}&=\delta(1-z)+a\,C_F\Big[4(1+z^2)\mathcal D_1(z)-2\,\frac{1+z^2}{1-z}\ln z+\Big(\frac{2\pi^2}{3}-8\Big)\delta(1-z)\Big]\nonumber\\
+&\qquad+2a\,P_{qq}(z)\ln\frac{Q^2}{\mu_F^2}+\order{\as^2},\label{eq:dy-Dqq}\\
+\Delta_{qg}&=a\,T_F\Big[\big(z^2+(1-z)^2\big)\ln\frac{(1-z)^2}{z}+\frac12+3z-\frac72z^2\Big]+a\,P_{qg}(z)\ln\frac{Q^2}{\mu_F^2}+\order{\as^2},\label{eq:dy-Dqg}
+\end{align}
+% VF-DY-8
+其中 $P_{qq}=C_F\big[\frac{1+z^2}{1-z}\big]_+=C_F\big[2\mathcal D_0-(1+z)+\frac32\delta(1-z)\big]$ 与 $P_{qg}=T_F\big[z^2+(1-z)^2\big]$ 是领头阶分裂函数（\cref{prop:pdf-lo-kernels}，\tagR，$R_{\mathrm{PT}}$），$4(1+z^2)\mathcal D_1=8\mathcal D_1-4(1+z)\ln(1-z)$（乘积约定）。系数在此阶不依赖于 $\mu_R$。
+\uses{def:dy-kin,prop:dy-born,def:prelim-plus,prop:pdf-lo-kernels,prop:sudakov-oneloop,lem:prelim-plus-expansion,prop:pdf-partonic-dr,lem:appC-phase-space}
+\end{proposition}
+
+\begin{proof}
+分六步。记 $L\equiv\ln(\mu^2/Q^2)$，$\mu$ 是维数正规化的标度，在此阶等于 $\mu_R$。
+
+\emph{第一步：质量因子化的结构。}对部分子初态，\cref{eq:dy-bare}的裸系数含有初态共线发散。因子化公式对部分子“靶”的形式为
+\[
+\Delta^{\rm bare}_{ij}(z,\varepsilon)=\sum_{k,l}\big(\Gamma_{ki}\otimes\Gamma_{lj}\otimes\Delta_{kl}\big)(z),\qquad
+\Gamma_{ki}(x)=\delta_{ki}\delta(1-x)-\frac{a}{\varepsilon}\Big(\frac{\mu^2}{\mu_F^2}\Big)^{\varepsilon}P_{ki}(x)+\order{a^2},
+\]
+$\otimes$ 为 Mellin 卷积。$\Gamma_{ki}$ 是部分子 $i$ 中部分子 $k$ 的 $\MSbar$ 分布：在纯维数正规化中裸分布为 $\delta_{ki}\delta(1-x)$，$\MSbar$ 重整化留下的纯极点是红外极点（\cref{prop:pdf-partonic-dr}，\tagR，$R_{\mathrm{PT}}$）；因子 $(\mu^2/\mu_F^2)^\varepsilon$ 在此阶把 $\as(\mu_F)$ 换成 $\as(\mu)$。展开到 $\order{a}$：$q\bar q$ 道的两条入射夸克线各有一个抵消项；$qg$ 道中胶子分裂出的反夸克与夸克湮灭，抵消项为 $f_{\bar q/g}\otimes\hat\sigma_{q\bar q}$（$P_{\bar qg}=P_{qg}$）。以上标 $(1)$ 记 $a^1$ 的系数，
+\begin{equation}\label{eq:dy-mf}
+\Delta^{(1)}_{q\bar q}=\Delta^{{\rm bare},(1)}_{q\bar q}+\frac2\varepsilon\Big(\frac{\mu^2}{\mu_F^2}\Big)^{\varepsilon}P_{qq},\qquad
+\Delta^{(1)}_{qg}=\Delta^{{\rm bare},(1)}_{qg}+\frac1\varepsilon\Big(\frac{\mu^2}{\mu_F^2}\Big)^{\varepsilon}P_{qg}.
+\end{equation}
+% VF-DY-9
+抵消项乘的是 $\Delta^{(0)}_{q\bar q}=\delta(1-z)$，即 $D$ 维 Born 项除以它自身；这正是\cref{eq:dy-bare}除以 $(1-\varepsilon)$ 的原因（\cref{prop:dy-born}）。余下的任务是：精确到 $\varepsilon$ 的所有阶算出 $\order{a}$ 的 $\Delta^{\rm bare}$，证明它的极点恰被\cref{eq:dy-mf}抵消，并读出有限部分。
+
+\emph{第二步：实辐射矩阵元。}实辐射图是\cref{fig:dy-oneloop}(a)(b)（$q\bar q\to\gamma^*g$）与 (d)(e)（$qg\to\gamma^*q$）。$q\bar q$ 道记 $\hat t=(p_1-k)^2$、$\hat u=(p_2-k)^2$，$qg$ 道记 $\hat t=(p_2-k)^2$、$\hat u=(p_1-k)^2$，都有 $\hat s+\hat t+\hat u=Q^2$。光子指标的极化求和取 $-g_{\mu\nu}$（流守恒）；唯一外胶子的极化求和也可取 $-g_{\alpha\beta}$，因为只有一个外胶子时 $k_\alpha M^{\mu\alpha}=0$ 与阿贝尔情形相同，不需要鬼场。在 $D$ 维中求迹得 $\sum|H|^2=e_q^2g_0^2C_FN_c\,T_{q\bar q}$ 与 $\sum|H|^2=e_q^2g_0^2T_F(N_c^2-1)\,T_{qg}$，$g_0^2=4\pi\as\mu^{2\varepsilon}S_\varepsilon^{-1}$，
+\begin{align}
+T_{q\bar q}&=8(1-\varepsilon)\Big[(1-\varepsilon)\Big(\frac{\hat u}{\hat t}+\frac{\hat t}{\hat u}\Big)+\frac{2\hat sQ^2}{\hat t\hat u}-2\varepsilon\Big],\label{eq:dy-Tqq}\\
+T_{qg}&=-8(1-\varepsilon)\Big[(1-\varepsilon)\Big(\frac{\hat s}{\hat t}+\frac{\hat t}{\hat s}\Big)+\frac{2\hat uQ^2}{\hat s\hat t}-2\varepsilon\Big],\label{eq:dy-Tqg}
+\end{align}
+% VF-DY-3
+二者由交叉相联系：$T_{qg}(\hat s,\hat t,\hat u)=-T_{q\bar q}(\hat s\to\hat u,\hat t\to\hat s,\hat u\to\hat t)$。代入\cref{eq:dy-bare}，计入初态平均（$q\bar q$：$\frac14\cdot\frac1{N_c^2}$；$qg$：$\frac12\cdot\frac{1}{2(1-\varepsilon)}\cdot\frac{1}{N_c(N_c^2-1)}$），得
+\[
+\Delta^R_{q\bar q}=\frac{g_0^2C_F}{8\pi(1-\varepsilon)}\int\dd\Phi_2\,T_{q\bar q},\qquad
+\Delta^R_{qg}=\frac{g_0^2T_F}{8\pi(1-\varepsilon)^2}\int\dd\Phi_2\,T_{qg}.
+\]
+
+\emph{第三步：相空间与 $v$ 积分。}在部分子质心系中以 $v=(1-\cos\theta)/2$ 参数化（$\theta$ 为末态胶子或夸克相对于 $p_1$ 的极角），$D$ 维两体相空间为（\cref{lem:appC-phase-space}）
+\[
+\dd\Phi_2=\frac{1}{8\pi}\Big(\frac{4\pi}{\hat s}\Big)^{\varepsilon}\frac{(1-z)^{1-2\varepsilon}}{\Gamma(1-\varepsilon)}\,[v(1-v)]^{-\varepsilon}\dd v,
+\]
+% VF-DY-4
+$q\bar q$ 道 $\hat t=-\hat s(1-z)v$、$\hat u=-\hat s(1-z)(1-v)$，$qg$ 道 $\hat u=-\hat s(1-z)v$、$\hat t=-\hat s(1-z)(1-v)$。于是 $q\bar q$ 道的被积函数为
+$T_{q\bar q}=8(1-\varepsilon)\big[(1-\varepsilon)\big(\frac{1-v}{v}+\frac{v}{1-v}\big)+\frac{2z}{(1-z)^2v(1-v)}-2\varepsilon\big]$，
+对 $v$ 的积分都是 Beta 函数；记 $G_\varepsilon\equiv\Gamma(1-\varepsilon)^2/\Gamma(1-2\varepsilon)$，
+\[
+\int_0^1\!\frac{(1-v)^{1-\varepsilon}}{v^{1+\varepsilon}}\,\dd v=-\frac{(1-\varepsilon)\,G_\varepsilon}{\varepsilon(1-2\varepsilon)},\qquad
+\int_0^1\!\frac{\dd v}{[v(1-v)]^{1+\varepsilon}}=-\frac{2G_\varepsilon}{\varepsilon},\qquad
+\int_0^1\![v(1-v)]^{-\varepsilon}\dd v=\frac{G_\varepsilon}{1-2\varepsilon},
+\]
+从而
+\[
+\int_0^1\!\dd v\,[v(1-v)]^{-\varepsilon}\,T_{q\bar q}=-\frac{16(1-\varepsilon)}{\varepsilon}\,G_\varepsilon\,\frac{1+z^2+2\varepsilon^2(1-z)^2/(1-2\varepsilon)}{(1-z)^2}.
+\]
+$v\to0,1$ 的共线奇异性成为 $1/\varepsilon$，$z\to1$ 的软奇异性与相空间的 $(1-z)^{1-2\varepsilon}$ 合成 $(1-z)^{-1-2\varepsilon}$。再用 $\hat s=Q^2/z$ 与 $g_0^2(4\pi/\hat s)^\varepsilon=4\pi\as(\mu^2/Q^2)^\varepsilon z^\varepsilon\ee^{\varepsilon\gamma_E}$，并记 $K_r(\varepsilon)\equiv\ee^{\varepsilon\gamma_E}\Gamma(1-\varepsilon)/\Gamma(1-2\varepsilon)$，得
+\begin{equation}\label{eq:dy-real-qq}
+\Delta^R_{q\bar q}=-a\,\frac{2C_F}{\varepsilon}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}K_r(\varepsilon)\,z^{\varepsilon}(1-z)^{-1-2\varepsilon}\Big[1+z^2+\frac{2\varepsilon^2(1-z)^2}{1-2\varepsilon}\Big].
+\end{equation}
+% VF-DY-5
+$qg$ 道的同样计算（所需积分为 $B(1-\varepsilon,-\varepsilon)$、$B(1-\varepsilon,2-\varepsilon)$、$B(2-\varepsilon,-\varepsilon)$ 与 $B(1-\varepsilon,1-\varepsilon)$）给出
+\begin{equation}\label{eq:dy-real-qg}
+\Delta^R_{qg}=-a\,\frac{T_F}{2\varepsilon}\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}K_r(\varepsilon)\,\frac{z^{\varepsilon}(1-z)^{-2\varepsilon}}{(1-\varepsilon)(1-2\varepsilon)}\Big[2\big(z^2+(1-z)^2\big)-\varepsilon(5z^2-6z+7)+\varepsilon^2(1+z)^2\Big];
+\end{equation}
+% VF-DY-5
+多出的 $\frac1{1-\varepsilon}$ 来自胶子极化平均。这一道只有 $\hat t\to0$（$v\to1$）的共线极点，没有软奇异性。
+
+\emph{第四步：虚修正。}单圈虚修正只有顶点修正（\cref{fig:dy-oneloop}(c)）：无质量外线的自能是无标度积分，在维数正规化中为零，$Z_1=Z_2$，耦合的重整化在此阶不出现。\cref{prop:sudakov-oneloop}（\tagR，$R_{\mathrm{PT}}$）给出精确到 $\varepsilon$ 的所有阶的形状因子
+\[
+F=1+\frac{\as}{4\pi}C_F\Big(\frac{\mu^2}{-q^2-\ii0}\Big)^{\varepsilon}f(\varepsilon),\qquad
+f(\varepsilon)=-K_v(\varepsilon)\,\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)},
+\]
+其中 $K_v(\varepsilon)\equiv\ee^{\varepsilon\gamma_E}\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)/\Gamma(1-2\varepsilon)$。
+对 DY 的类时 $q^2=Q^2>0$，$(-q^2-\ii0)^{-\varepsilon}=(Q^2)^{-\varepsilon}\ee^{\ii\pi\varepsilon}$。对无质量在壳夸克，顶点修正向 Born 结构的投影是精确的；与 Born 振幅的干涉给出
+\begin{equation}\label{eq:dy-virt}
+\Delta^V=2\Real F^{(1)}\,\delta(1-z)=a\,C_F\Big(\frac{\mu^2}{Q^2}\Big)^{\varepsilon}\cos(\pi\varepsilon)\,f(\varepsilon)\,\delta(1-z).
+\end{equation}
+% VF-DY-6
+虚部 $\Imag F^{(1)}=\frac{\as C_F}{4\pi}\big(\frac{\mu^2}{Q^2}\big)^{\varepsilon}\sin(\pi\varepsilon)f(\varepsilon)=-\frac{\as C_F}{2}\big(\frac1\varepsilon+L+\frac32\big)+\order{\varepsilon}$ 是入射 $q\bar q$ 对之间红外发散的 Coulomb 相位；它不进入此阶的 $2\Real F$，到 $\order{\as^2}$ 才通过 $|F|^2$ 进入截面。
+
+\emph{第五步：按分布展开。}由\cref{lem:prelim-plus-expansion}（取 $a=2$），在 $[0,1]$ 上
+\[
+(1-z)^{-1-2\varepsilon}=-\frac{\delta(1-z)}{2\varepsilon}+\sum_{k\ge0}\frac{(-2\varepsilon)^k}{k!}\,\mathcal D_k(z);
+\]
+又 $K_r=1-\frac32\zeta_2\varepsilon^2+\order{\varepsilon^3}$，$K_v=1-\frac12\zeta_2\varepsilon^2+\order{\varepsilon^3}$，$\cos(\pi\varepsilon)=1-3\zeta_2\varepsilon^2+\order{\varepsilon^4}$，$f=-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\zeta_2+\order{\varepsilon}$。把\cref{eq:dy-real-qq,eq:dy-real-qg,eq:dy-virt}写成 $\delta(1-z)$、$\mathcal D_k$ 与正规函数的组合，即得\cref{tab:dy-laurent}。以实辐射 $q\bar q$ 项为例：$\delta(1-z)$ 只来自展开式的第一项，在 $z=1$ 处 $z^\varepsilon$ 与方括号合为 $2$，给出 $\frac{2C_F}{\varepsilon^2}(\frac{\mu^2}{Q^2})^\varepsilon K_r=\frac{2C_F}{\varepsilon^2}+\frac{2C_FL}{\varepsilon}+C_F(L^2-3\zeta_2)+\order{\varepsilon}$，而 $3\zeta_2=\pi^2/2$；$\mathcal D_0$ 项用 $(1+z^2)\mathcal D_0=2\mathcal D_0-(1+z)$；$\order{\varepsilon^0}$ 的 $\mathcal D_1$ 项来自 $-\frac{2C_F}{\varepsilon}(-2\varepsilon)(1+z^2)\mathcal D_1=4C_F(1+z^2)\mathcal D_1$；$z^\varepsilon=1+\varepsilon\ln z+\dots$ 给出正规的 $-2C_F\frac{1+z^2}{1-z}\ln z$。
+
+\begin{table}[htbp]
+\centering
+\caption{$\order{\as}$ 各部分的 Laurent 展开（单位 $a=\as/2\pi$；$L=\ln(\mu^2/Q^2)$，$\delta\equiv\delta(1-z)$）}
+\label{tab:dy-laurent}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+ & $\varepsilon^{-2}$ & $\varepsilon^{-1}$ & $\varepsilon^0$\\
+\midrule
+实辐射 $q\bar q$ & $2C_F\delta$ & $2C_FL\delta-4C_F\mathcal D_0+2C_F(1+z)$ & $C_F(L^2-\frac{\pi^2}{2})\delta-4C_FL\mathcal D_0+8C_F\mathcal D_1+2C_F(1+z)L$\\
+ & & & $\ -4C_F(1+z)\ln(1-z)-2C_F\frac{1+z^2}{1-z}\ln z$\\
+虚修正 & $-2C_F\delta$ & $-C_F(3+2L)\delta$ & $C_F\big(-L^2-3L-8+\frac{7\pi^2}{6}\big)\delta$\\
+实辐射 $qg$ & --- & $-P_{qg}$ & $T_F\big[(z^2+(1-z)^2)\ln\frac{(1-z)^2}{z}+\frac{1+6z-7z^2}{2}\big]-P_{qg}L$\\
+\bottomrule
+\end{tabular}
+\end{table}
+% VF-DY-7
+
+\emph{第六步：求和与质量因子化。}$q\bar q$ 道实、虚之和的 $\varepsilon^{-2}$ 项相消（软双极点）；$\varepsilon^{-1}$ 项为
+\[
+2C_FL\delta-4C_F\mathcal D_0+2C_F(1+z)-C_F(3+2L)\delta=-2C_F\Big[2\mathcal D_0-(1+z)+\frac32\delta\Big]=-2P_{qq},
+\]
+即剩下的极点恰为 $-\frac2\varepsilon P_{qq}$，每条入射部分子线一个共线极点；它与\cref{eq:dy-mf}的抵消项
+\[
+\frac2\varepsilon\Big(\frac{\mu^2}{\mu_F^2}\Big)^{\varepsilon}P_{qq}=\frac2\varepsilon P_{qq}+2\Big(L+\ln\frac{Q^2}{\mu_F^2}\Big)P_{qq}+\order{\varepsilon}
+\]
+相消。有限部分中，$\delta$ 的系数为 $C_F(L^2-\frac{\pi^2}2)+C_F(-L^2-3L-8+\frac{7\pi^2}6)+3C_FL=C_F(\frac{2\pi^2}3-8)$；$L\mathcal D_0$ 与 $(1+z)L$ 项在实辐射与抵消项之间相消；剩下的 $8C_F\mathcal D_1-4C_F(1+z)\ln(1-z)-2C_F\frac{1+z^2}{1-z}\ln z+2P_{qq}\ln\frac{Q^2}{\mu_F^2}$ 就是\cref{eq:dy-Dqq}。$qg$ 道的极点 $-\frac1\varepsilon P_{qg}$ 与抵消项 $\frac1\varepsilon(\frac{\mu^2}{\mu_F^2})^\varepsilon P_{qg}$ 相消，$L$ 项相消，剩下\cref{eq:dy-Dqg}。两道的结果都不含 $L$，故此阶没有 $\mu_R$ 依赖。
+\end{proof}
+
+结果中有两点值得注意。其一，$\delta$ 项的 $\frac{2\pi^2}3=-\frac{\pi^2}2+\frac{\pi^2}6+\pi^2$，三项分别来自实辐射的 $K_r$、虚修正的 $K_v$ 与类时延拓的 $\cos\pi\varepsilon$；最后一项是单圈时类时与类空形状因子之比 $|F(q^2)/F(-q^2)|^2-1=aC_F\pi^2$，即“$\pi^2$ 增强”。其二，$\Delta_{qg}$ 的有限部分依赖于胶子极化平均的约定（\cref{ex:dy-nlo}(c)）。结果与 Duhr、Dulat、Mistlberger 附件中的 NLO 项（换算其展开参数 $\as/\pi$ 后）逐项一致，包括 $\mu_F$ 项\cite{Duhr:2020sdp}；形状因子与\cite{MochVermaserenVogt2005}一致到 $\varepsilon^4$，阈值常数与\cite{Moch:2005ky}一致（\cref{ex:dy-threshold}）。早期的 $\order{\as}$ 计算见\cite{AltarelliEllisMartinelli1979}与\cite{KubarAndrePaige1979}：前者用由轻子产生定出的部分子分布表示截面，即 DIS 方案（\cref{rem:dy-dis-scheme}）；后者指出红外与质量奇异性可以一致地吸收进夸克分布（均据其摘要）；上面的 $\MSbar$ 形式是按现代约定整理的，不应直接归于这两篇文章。完整的 $\order{\as^2}$ 结果见\cite{HambergVanNeervenMatsuura1991}，$\order{\as^3}$ 见\cite{Duhr:2020seh}（中性流）与\cite{Duhr:2020sdp}（带电流）。
+
+\begin{example}[$\order{\as}$ 系数函数的完整推导]\label{ex:dy-nlo}
+\cref{prop:dy-nlo}的证明写出了推导的每一步；这里把它落实为可以逐项手算或直接数值重复的检验，并指出三个改变有限部分的约定。取 $\mu_F=Q$，$C_F=\frac43$，$T_F=\frac12$。
+
+\emph{(a) 逐项的一阶矩。}对试探函数 $h\equiv1$，乘积约定给出
+\[
+\big\langle4(1+z^2)\mathcal D_1,1\big\rangle=4\int_0^1(z^2-1)\frac{\ln(1-z)}{1-z}\dd z=-4\int_0^1(1+z)\ln(1-z)\dd z=7;
+\]由 $\int_0^1\frac{\ln z}{1-z}\dd z=-\zeta_2$ 与 $\int_0^1\frac{z^2\ln z}{1-z}\dd z=\frac54-\zeta_2$，$-2\int_0^1\frac{1+z^2}{1-z}\ln z\,\dd z=4\zeta_2-\frac52$；$\delta$ 项贡献 $4\zeta_2-8$。三项相加，
+\[
+\int_0^1\Delta^{(1)}_{q\bar q}\,\dd z=C_F\Big(8\zeta_2-\frac72\Big)=12.879297\ldots,
+\]
+$qg$ 道三项为 $2\int_0^1(z^2+(1-z)^2)\ln(1-z)\dd z=-\frac{13}9$、$-\int_0^1(z^2+(1-z)^2)\ln z\,\dd z=\frac{13}{18}$、$\int_0^1(\frac12+3z-\frac72z^2)\dd z=\frac56$，和为 $\frac{T_F}9$。同样，二阶矩为 $C_F(8\zeta_2+\frac{13}{18})$ 与 $-\frac{11}{18}T_F$。
+% VF-DY-14
+
+\emph{(b) 在有限 $\varepsilon$ 上的数值核对。}对 $\varepsilon<0$（$D>4$），\cref{eq:dy-real-qq,eq:dy-real-qg,eq:dy-virt}与抵消项作用在光滑试探函数上的积分全部收敛，可以直接计算。取 $h(z)=z^3$、$L=0.37$、$\ln(Q^2/\mu_F^2)=0.21$，在 $\varepsilon=-0.001,\dots,-0.008$ 上算出 $\langle\Delta^{{\rm bare},(1)}+\text{抵消项},h\rangle$ 并拟合 Laurent 级数：$\varepsilon^{-2}$、$\varepsilon^{-1}$ 的系数小于 $2\times10^{-14}$，有限部分 $28.279889305624$ 与\cref{eq:dy-Dqq}的 $28.279889305640$ 相差 $2\times10^{-11}$；$qg$ 道同样一致到 $10^{-12}$。有限部分与 $L$ 无关，正是“此阶没有 $\mu_R$ 依赖”的数值表现。
+
+\emph{(c) 改变有限部分的三个约定。}(i) 若把加号作用于整个 $\frac{(1+z^2)\ln(1-z)}{1-z}$，由 $-\int_0^1(1+z)\ln(1-z)\dd z=\frac74$ 得 $(1+z^2)\mathcal D_1=\big[\frac{(1+z^2)\ln(1-z)}{1-z}\big]_++\frac74\delta(1-z)$，$\delta$ 项的系数变为 $C_F(\frac{2\pi^2}3-1)$，差 $7C_F$。(ii) 若胶子极化按 $\frac12$ 而不按 $\frac1{2(1-\varepsilon)}$ 平均，$\Delta_{qg}\to\Delta_{qg}+P_{qg}$，这是另一个方案。(iii) 若裸系数按四维 Born 项归一化（不除以 $1-\varepsilon$）而抵消项仍取 $\frac2\varepsilon P_{qq}$，则因 $(1-\varepsilon)(-\frac2\varepsilon P_{qq})=-\frac2\varepsilon P_{qq}+2P_{qq}$，$\Delta_{q\bar q}$ 会多出 $2P_{qq}$。
+% VF-DY-12, VF-CONV-6
+\uses{prop:dy-nlo}
+\end{example}
+
+\begin{proposition}[$\mu_F$ 无关性 \tagR]\label{prop:dy-scale}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本命题是 $\order{\as}$ 的显式陈述。设部分子分布 $f_i(x;\mu_F)$ 满足 DGLAP 方程（\cref{thm:pdf-dglap}，\tagR，$R_{\mathrm{PT}}$），则以\cref{prop:dy-nlo}的系数构成的\cref{eq:dy-fact-nlo}满足
+\[
+\frac{\dd}{\dd\ln\mu_F^2}\,\frac{\dd\sigma}{\dd Q^2}=\order{\as^2}.
+\]
+% VF-DY-11
+非微扰地位：\cref{asm:intro-composite}（MA0；用于强子态的 DGLAP 方程，部分子态无需）。
+\uses{prop:dy-nlo,thm:pdf-dglap,lem:prelim-mellin,asm:intro-composite}
+\end{proposition}
+
+\begin{proof}
+固定 $Q^2$ 与 $\mu_F$，把\cref{eq:dy-fact-nlo}中 $s/\sigma_0$ 乘以截面的那部分看作 $\tau$ 的函数 $\mathcal F(\tau)$，取 Mellin 矩 $g_N\equiv\int_0^1x^{N-1}g(x)\dd x$。由\cref{lem:prelim-mellin}，$\int_0^1\dd\tau\,\tau^{N-1}\int\dd x_1\dd x_2\dd z\,\delta(x_1x_2z-\tau)f(x_1)g(x_2)h(z)=f_Ng_Nh_N$，故
+\[
+\mathcal F_N=\sum_qe_q^2\Big\{\big(q_N^A\bar q_N^B+\bar q_N^Aq_N^B\big)\Delta_{q\bar q,N}+\big[g_N^A(q_N^B+\bar q_N^B)+(q_N^A+\bar q_N^A)g_N^B\big]\Delta_{qg,N}\Big\}.
+\]
+记 $\ell_F\equiv\ln(\mu_F^2/Q^2)$ 与 $\gamma_{ij}(N)=\int_0^1z^{N-1}P_{ij}(z)\dd z$。由\cref{prop:dy-nlo}，$\partial_{\ell_F}\Delta_{q\bar q,N}=-2a\gamma_{qq}+\order{a^2}$，$\partial_{\ell_F}\Delta_{qg,N}=-a\gamma_{qg}+\order{a^2}$；由 DGLAP 方程，$\partial_{\ell_F}q_N=a(\gamma_{qq}q_N+\gamma_{qg}g_N)+\order{a^2}$（$\bar q_N$ 同，$\gamma_{\bar q\bar q}=\gamma_{qq}$，$\gamma_{\bar qg}=\gamma_{qg}$），而 $\partial_{\ell_F}g_N=\order{a}$ 只在乘以 $\Delta_{qg,N}=\order{a}$ 时出现。于是
+\begin{multline*}
+\partial_{\ell_F}\mathcal F_N=a\sum_qe_q^2\Big\{(\gamma_{qq}q^A+\gamma_{qg}g^A)\bar q^B+q^A(\gamma_{qq}\bar q^B+\gamma_{qg}g^B)\\
++(\gamma_{qq}\bar q^A+\gamma_{qg}g^A)q^B+\bar q^A(\gamma_{qq}q^B+\gamma_{qg}g^B)\\
+-2\gamma_{qq}\big(q^A\bar q^B+\bar q^Aq^B\big)-\gamma_{qg}\big[g^A(q^B+\bar q^B)+(q^A+\bar q^A)g^B\big]\Big\}+\order{a^2}=\order{a^2}
+\end{multline*}
+（指标 $N$ 省去）：$\gamma_{qq}$ 项在 $q\bar q$ 道内相消；$\gamma_{qg}$ 项（夸克或反夸克由胶子产生）与 $qg$ 道相消。所有矩在 $\order{a}$ 都与 $\mu_F$ 无关，由 Mellin 反演的唯一性（\cref{lem:prelim-mellin}），$\mathcal F(\tau)$ 亦然。
+\end{proof}
+
+在 $x$ 空间用试探分布直接计算，这一相消也成立，残差为 $3\times10^{-13}$。应当强调\cref{prop:dy-scale}说了什么：残余的 $\mu_F$ 依赖属于 $\order{\as^2}$；$\mu_R$ 依赖在 $\order{\as^2}$ 才出现，正比于 $\beta_0\ln(\mu_R^2/\mu_F^2)\,\Delta^{(1)}$。实践中常把 $\mu_F$、$\mu_R$ 在 $Q/2$ 与 $2Q$ 之间变化所得的变化当作“理论误差”，这只是一种约定：因子化只保证残余依赖属于更高阶，并不给出被截掉的高阶项的大小。
+
+\begin{remark}[DIS 方案中的 DY 与 PDF 的普适性]\label{rem:dy-dis-scheme}
+DIS 方案用 $F_2$ 定义夸克分布：$q^{\rm DIS}=q+a\,[C_2^q\otimes q+C_2^g\otimes g]$，其中 $C_2^{q,g}$ 是 $\MSbar$ 的 DIS 系数函数（\cref{prop:disall-nlo}，\tagR，$R_{\mathrm{PT}}$；归一化为 $F_2/x=\sum_qe_q^2\{q+\bar q+a[C_2^q\otimes(q+\bar q)+2C_2^g\otimes g]\}$；方案变换见\cref{prop:disall-dis-scheme}）。把\cref{eq:dy-fact-nlo}中的 $\MSbar$ 分布换成 DIS 方案的分布，$\order{a}$ 的系数变为（取 $\mu_F=Q$）
+\[
+\begin{aligned}
+\Delta^{\rm DIS}_{q\bar q}&=C_F\Big[\Big(1+\frac{4\pi^2}3\Big)\delta(1-z)+2(1+z^2)\mathcal D_1+3\mathcal D_0-6-4z\Big],\\
+\Delta^{\rm DIS}_{qg}&=T_F\Big[\big(z^2+(1-z)^2\big)\ln(1-z)+\frac32-5z+\frac92z^2\Big],
+\end{aligned}
+\]
+% VF-DY-10
+并且精确地有 $\Delta^{\MSbar}_{q\bar q}-2C_2^q=\Delta^{\rm DIS}_{q\bar q}$、$\Delta^{\MSbar}_{qg}-C_2^g=\Delta^{\rm DIS}_{qg}$（我们用符号运算与 50 位精度的数值作了核对；这正是常引的 DIS 方案形式）。这两个恒等式是部分子分布普适性在单圈上的显式检验：DY 的两条入射线与 DIS 的一条入射线的共线发散由同一组分布吸收，换方案时 DY 系数恰好为每条入射线改变一个 $C_2$。比较文献中的公式时还须注意加号分布的约定（\cref{ex:dy-nlo}(c)(i)，差 $7C_F\delta(1-z)$）；这只是约定的说明。
+\end{remark}
+
+\begin{example}[大 $N$ 极限]\label{ex:dy-threshold}
+取 $\mu_F=Q$ 与 Mellin 矩 $\Delta_{q\bar q,N}=\int_0^1z^{N-1}\Delta_{q\bar q}(z)\dd z$。由\cref{lem:prelim-mellin}，$\langle\mathcal D_0,z^{N-1}\rangle=-S_1(N-1)$，$\langle\mathcal D_1,z^{N-1}\rangle=\frac12\big[S_1(N-1)^2+S_2(N-1)\big]$，其中 $S_k(n)=\sum_{j=1}^nj^{-k}$；又 $\int_0^1z^{N-1}\frac{\ln z}{1-z}\dd z=-\psi'(N)=\order{1/N}$。乘积约定给出 $\langle(1+z^2)\mathcal D_1,z^{N-1}\rangle=\langle\mathcal D_1,z^{N-1}\rangle+\langle\mathcal D_1,z^{N+1}\rangle$，于是
+\[
+\langle4(1+z^2)\mathcal D_1,z^{N-1}\rangle=2\big[S_1(N-1)^2+S_2(N-1)+S_1(N+1)^2+S_2(N+1)\big].
+\]
+用 $S_1(N)=\ln\bar N+\order{1/N}$（$\bar N=N\ee^{\gamma_E}$）与 $S_2(N)=\zeta_2+\order{1/N}$，并加上 $\delta$ 项的 $4\zeta_2-8$，
+\[
+\Delta_{q\bar q,N}=1+a\,C_F\big[4\ln^2\bar N+8\zeta_2-8\big]+\order{\frac{\ln N}{N}} .
+\]
+% VF-DY-14
+数值上（$C_F=\frac43$），$N=10,\,100,\,1000,\,10^4$ 时精确的 $\Delta^{(1)}_{q\bar q,N}$ 为 $52.540$、$150.391$、$305.718$、$517.798$，渐近式给出 $51.110$、$150.117$、$305.678$、$517.793$；差值的领头渐近形式是 $4C_F\ln\bar N/N$（来自 $S_1(N-1)=\ln\bar N-\frac1{2N}+\dots$ 与 $S_1(N+1)=\ln\bar N+\frac3{2N}+\dots$），二者之比依次为 $0.931$、$0.991$、$0.9990$、$0.9999$，符合 $\order{\ln N/N}$。$qg$ 道不含 $\mathcal D_k$，$\Delta_{qg,N}=\order{\ln N/N}$。双对数 $4\ln^2\bar N$ 来自阈值 $z\to1$ 处的软胶子辐射，在 $\as^n$ 阶为 $\ln^{2n}\bar N$，其重求和见第~13~章（\cref{prop:thr-oneloop}）。按 $a_s=\as/4\pi$ 换算，$2\Delta^{(1)}_{q\bar q,N}=C_F\big[8\ln^2N+16\gamma_E\ln N-16+16\zeta_2+8\gamma_E^2\big]$，常数项与\cite{Moch:2005ky}的阈值常数一致。
+\uses{prop:dy-nlo,lem:prelim-mellin}
+\end{example}

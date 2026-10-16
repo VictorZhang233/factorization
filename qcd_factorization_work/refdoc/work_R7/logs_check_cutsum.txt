@@ -1,0 +1,46 @@
+Lemma E.24, generic complex weights:
+  n=0: sum_j T_j=(1.0 + 0.0j)  RHS=(1.0 + 0.0j)  |diff|=0.0  PASS
+  n=1: sum_j T_j=(-0.6975690901 + 0.3013377369j)  RHS=(-0.6975690901 + 0.3013377369j)  |diff|=1.28e-41  PASS
+  n=2: sum_j T_j=(0.8966842781 - 5.264759474j)  RHS=(0.8966842781 - 5.264759474j)  |diff|=9.18e-41  PASS
+  n=3: sum_j T_j=(1.931332714 - 0.3189629483j)  RHS=(1.931332714 - 0.3189629483j)  |diff|=1.24e-40  PASS
+  n=4: sum_j T_j=(0.1688799291 + 1.015774363j)  RHS=(0.1688799291 + 1.015774363j)  |diff|=2.57e-41  PASS
+  n=5: sum_j T_j=(-0.09278495164 - 0.02713691538j)  RHS=(-0.09278495164 - 0.02713691538j)  |diff|=1.35e-41  PASS
+  n=6: sum_j T_j=(-75.5392812 + 107.1800585j)  RHS=(-75.5392812 + 107.1800585j)  |diff|=4.65e-39  PASS
+Lemma E.24(a): all internal vertices (alpha=beta) -> sum_j T_j = delta_{n0}:
+  n=0: (1.0 + 0.0j)  PASS
+  n=1: (0.0 + 0.0j)  PASS
+  n=2: (4.59177e-41 + 1.14794e-41j)  PASS
+  n=3: (0.0 + 4.59177e-41j)  PASS
+  n=4: (-3.44383e-41 + 1.14794e-41j)  PASS
+  n=5: (-2.29589e-40 - 2.29589e-40j)  PASS
+  n=6: (2.52548e-40 + 4.76397e-40j)  PASS
+Lemma E.24(b): insertion patterns (amp insertion beta=0, conj insertion alpha=0):
+  pattern IAI   : sum T_j=(-0.46737891 - 0.045494013j)  nonzero RHS terms at m=[2]  PASS
+  pattern AIC   : sum T_j=(-0.53918596 + 1.4672281j)  nonzero RHS terms at m=[1, 3]  PASS
+  pattern ICA   : sum T_j=(0.0 + 0.0j)  nonzero RHS terms at m=[]  PASS
+  pattern AAI   : sum T_j=(0.14234211 - 0.40205622j)  nonzero RHS terms at m=[2]  PASS
+  pattern IAICI : sum T_j=(-0.32011118 - 0.66681333j)  nonzero RHS terms at m=[2, 4]  PASS
+  pattern CIA   : sum T_j=(0.0 + 0.0j)  nonzero RHS terms at m=[]  PASS
+  pattern AICIA : sum T_j=(0.0 + 0.0j)  nonzero RHS terms at m=[]  PASS
+
+Example E.23 (sympy):
+  (E.19):  (i/D1)[i/(k-a)+i/(b-k)] - 1/((k-a)(k-b)) = 0 -> PASS
+  propagator product vs (E.19)/(2a^+ 2s1^+): 0 -> PASS
+  (E.20) a=0.3, b=1.1: numeric=(3.125e-6 + 1.25j)  i/(b-a)=(3.1249999999804684e-06+1.2499999999921874j)  PASS
+  (E.20) a=-0.7, b=0.2: numeric=(2.4691358e-6 + 1.1111111j)  i/(b-a)=(2.469135802456943e-06+1.1111111111056242j)  PASS
+  (E.20) a=1.3, b=-0.4: numeric=(-5.1099548 - 0.018038356j)  i/(b-a)=(6.920415224903915e-07-0.5882352941168328j)  FAIL
+  ordering (I) alone, symmetric cutoff: (1.19366e-5 + 0.625j);  ordering (II): (-4.37676e-5 + 0.625j);  sum: (-3.1831e-5 + 1.25j);  i/D1=(0.0 + 1.25j)
+   -> each ordering gets weight 1/2 of i/D1 under symmetric truncation (Note E.29(2)): PASS
+
+(E.10): int dl/2pi e^{-i l tau} i/(2l+(l-E)) = [th(l+)th(tau)+th(-l+)th(-tau)] e^{-iE tau}/(2|l+|):
+  l+=+0.7, tau=+1.3: residue=(0.33041308 - 0.36545609j)  formula=(0.33041308 - 0.36545609j)  PASS
+  l+=+0.7, tau=-1.3: residue=0  formula=(0.0 + 0.0j)  PASS
+  l+=-0.7, tau=+1.3: residue=0  formula=(0.0 + 0.0j)  PASS
+  l+=-0.7, tau=-1.3: residue=(0.33041308 - 0.36545609j)  formula=(0.33041308 - 0.36545609j)  PASS
+
+Lemma E.16(i): l-slash = g+ l- + g- l+ - gT.lT and (E.15):
+  l-slash decomposition: True
+  (E.15) identity: True
+  gamma+ gamma+ = 0 (Note E.17): True
+
+ALL E.24 CHECKS PASS

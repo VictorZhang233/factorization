@@ -1,0 +1,27 @@
+% =====================================================================================
+% ch15_scet.tex —— 第 15 章 有效场论方法：SCET（writer W18）
+% 来源：FINAL_OUTLINE_v2 Ch15；research/c_scet（DERIVATION.md、tex/c_scet_scet.tex、tex/c_scet_thrust.tex）；
+% 核验脚本：writing/work/W18/w18_s1_lagrangian.py … w18_s5_rapidity_glauber.py（日志在 writing/work/W18/logs/）。
+% 约定：本章 SCET 矢量 n=(1,0,0,1)、nbar=(1,0,0,-1)；D=∂-igA；W[b,a]=P exp(ig∫_a^b dz·A)，离 b 近的点在左。
+% =====================================================================================
+\chapter{有效场论方法：SCET}\label{ch:scet}
+
+第~9~章把全阶因子化证明组织成“区域—近似—Ward 恒等式—减除—Glauber 区”五步。软—共线有效理论（soft-collinear effective theory，SCET）\cite{BauerFlemingLuke2000,BauerEtAl2001,BauerStewart2001,BauerPirjolStewart2002,BauerEtAl2002}把同样的内容改写成有效场论的语言：每个领头区域对应一种场（\emph{模式}），硬子图对应匹配系数，区域近似对应拉氏量的多极展开，Ward 恒等式给出的 Wilson 线对应有效理论的规范对称性，Collins 减除对应\emph{零箱}（zero-bin）减除。本章依次给出：模式与场的标度、领头阶共线拉氏量与共线 Wilson 线（[R]，树图层次的精确结果）；共线与超软规范对称性和 Bauer--Pirjol--Stewart（BPS）超软退耦定理（[R]，作为领头阶 SCET 拉氏量的恒等式，全部条件逐条列出）；SCET$_{\rm II}$、零箱减除与快度发散（[R] 与 [A]）；Glauber 算符及其与附录~O 光锥序证明的对照（[A]）；推力分布的因子化 $H\,J\otimes J\otimes S$（[A]），连同其一圈因子与重整化群（RG）一致性（[R]）以及领头对数（LL）重求和（[A]）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:scet-scalings,prop:scet-gauge,thm:scet-decoupling}（\tagR，$R_{\mathrm{def}}$；后两者作为领头阶 SCET 拉氏量的恒等式）；\cref{prop:scet-lagrangian,prop:scet-wilson,prop:scet-scet2,prop:scet-hard-matching,prop:scet-thrust-oneloop}（\tagR，$R_{\mathrm{PT}}$，树图或单圈）。\par
+\textbf{给出全阶论证：}\cref{prop:scet-rapidity-rg,prop:scet-glauber-operators,thm:scet-thrust,prop:scet-ll}（\tagA；作为 QCD 陈述继承模式完备性，即\cref{asm:intro-bridge}(Br1) 与\cref{asm:appN-envelope}）。\par
+\textbf{没有证明：}模式完备性本身（它就是第~4~章的区域分析，\cref{thm:ir-leading-regions}）；强子对撞中 Glauber 贡献的相消（Rothstein--Stewart：单独的相位相消“远不是因子化的证明”）；他们预告的完整 SCET Drell--Yan 证明（据我们截至 2026 年 10 月的 INSPIRE 检索，尚未发表）。
+\end{tcolorbox}
+
+SCET 中的“全阶证明”依赖三条前提，它们与图形方法的三处困难一一对应：模式完备对应区域完备与幂次计数（第~4~章，\cref{asm:appN-envelope}），零箱减除的自洽对应减除的组合学（第~9~章，\cref{asm:appN-collins}），Glauber 拉氏量与快度正规子对应 Glauber 区的围道变形（附录~O）。精确的表述与对照表放在本章最后（\cref{rem:scet-assumptions}）。由此可见，SCET 证明并不比 Collins 的图形证明更严格；二者互补。
+
+\paragraph{本章的约定。}
+本章（且只有本章）使用 SCET 文献的光锥矢量 $n=(1,0,0,1)$、$\bar n=(1,0,0,-1)$，$n^2=\bar n^2=0$，$n\cdot\bar n=2$，
+\begin{equation}\label{eq:scet-decomp}
+p^\mu=\bar n\cdot p\,\frac{n^\mu}{2}+n\cdot p\,\frac{\bar n^\mu}{2}+p_\perp^\mu,\qquad
+\bar n\cdot p=\sqrt2\,p^+,\quad n\cdot p=\sqrt2\,p^-,\qquad p^2=\bar n\cdot p\,n\cdot p+p_\perp^2 ,
+\end{equation}
+$p_\perp^2=-\bm p_{\mathrm T}^2$。与其余各章的对应是 $n=\sqrt2\,n_A$、$\bar n=\sqrt2\,n_B$：$n$ 共线粒子（$\bar n\cdot p$ 大）沿 $+z$ 运动，即其余各章的“$A$ 共线”。动量的标度一律写成三元组 $(\bar n\cdot p,\,n\cdot p,\,p_\perp)$；Rothstein--Stewart~\cite{RothsteinStewart2016}与许多 SCET 文献按 $(n\cdot p,\bar n\cdot p,p_\perp)$ 排列，引用时须交换前两项。推力的加号分布在 $\tau=0$ 处减除，星号分布的定义见\cref{sec:scet-rg}；Laplace 变换采用 Becher--Schwartz 的约定。Dirac 投影算符记作 $P_n\equiv\frac{\sla n\bar{\sla n}}{4}$、$P_{\bar n}\equiv\frac{\bar{\sla n}\sla n}{4}$：由 $\sla n^2=\bar{\sla n}^2=0$、$\sla n\bar{\sla n}+\bar{\sla n}\sla n=4$ 得 $P_n^2=P_n$、$P_n+P_{\bar n}=1$、$P_nP_{\bar n}=0$、$\sla nP_n=0$，又 $\gamma^0P_n^\dagger\gamma^0=P_{\bar n}$，而 $\gamma_\perp^\mu$ 与 $\sla n$、$\bar{\sla n}$ 都反对易，从而与 $P_n$、$P_{\bar n}$ 对易。协变导数 $D_\mu=\partial_\mu-\ii gA_\mu$ 与 Bauer--Fleming--Pirjol--Stewart（BFPS）\cite{BauerEtAl2001}及 BPS\cite{BauerPirjolStewart2002}相同，故引用其公式时不必改变 $g$ 的符号。

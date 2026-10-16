@@ -1,0 +1,122 @@
+% =====================================================================================================
+% ch08_pdf.tex  —  第 8 章  严格核心 III：部分子分布与碎裂函数的算符定义
+% writer W09 (spec v2.3.1; LEAD_DECISIONS LA-1…LA-16). Scripts and logs: writing/work/W09/ (v1–v10).
+% =====================================================================================================
+\chapter{严格核心 III：部分子分布与碎裂函数的算符定义}\label{ch:pdf}
+
+本章把部分子分布函数（parton distribution function，PDF）与碎裂函数（fragmentation function，FF）定义为规范不变、经过重整化的算符矩阵元，并在任何因子化定理之前证明它们的基本性质。这一次序本身是严格性的要求：若把 PDF 定义为“DIS 中乘在系数函数前面的量”，普适性就成了定义而不是定理。各结论的严格性等级见下面的方框；推广到强子态的结论另需\cref{asm:intro-wightman}、\cref{asm:intro-composite}。矩关系的全阶证明见\cref{app:appL}，所用的矩问题引理见\cref{app:appK}。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:pdf-invariance}、\cref{lem:pdf-wilson-moments}（\tagR，$R_{\mathrm{def}}$）；\cref{thm:pdf-support-pt}、\cref{thm:pdf-moments-local}、\cref{thm:pdf-dglap}、\cref{prop:pdf-lo-kernels}、\cref{prop:pdf-pqq-operator}、\cref{prop:pdf-partonic-dr}、\cref{prop:pdf-local-anomalous}、\cref{prop:pdf-sum-rules}（\tagR，$R_{\mathrm{PT}}$；强子版本需\cref{asm:intro-composite}）；\cref{thm:pdf-dis-xspace}（\tagR，$R_{\mathrm{OPE}}$）；\cref{prop:pdf-timelike-dglap}的单圈内容(b)（\tagR，$R_{\mathrm{PT}}$）。\par
+\textbf{给出全阶论证：}\cref{prop:pdf-support-hadron}（\tagA）；\cref{prop:pdf-timelike-dglap}（\tagA；碎裂函数的乘法可重整性是独立输入，\cref{asm:appN-multren}(Z1)）。\par
+\textbf{没有证明：}$\MSbar$ PDF 在某一非微扰标度以上的正定性（\cref{conj:pdf-positivity}，\tagC；在所有标度上非负是错的）；数密度诠释（启发式，\cref{rem:pdf-number-density}）；非定域算符的 BRST 分类（\cref{ch:front}讨论其矩约化）。
+\end{tcolorbox}
+
+% -----------------------------------------------------------------------------------------------------
+\section{定义：夸克、反夸克与胶子分布}\label{sec:pdf-definitions}
+
+部分子模型的图像是：高速强子中部分子间的相互作用因时间膨胀而变慢，硬碰撞“看到”的是一组近似自由、各带加号动量份额 $\xi$ 的部分子。把“份额为 $\xi$ 的夸克数密度”变成定义，Collins 与 Soper 的做法\cite{CollinsSoper1982a}（较早的步骤见\cite{Soper:1976jc,Soper:1979fq}；系统叙述见\cite[第~6.3~节、第~7.5--7.6~节]{Collins2011}）是：用好分量 $\gamma^+\psi$ 计数，用沿光锥的 Wilson 线保证规范不变，再在 $\MSbar$ 中重整化计数中的紫外发散。
+
+\paragraph{约定。}
+光锥坐标与 $n_A=(1^+,0^-,\bm 0_{\mathrm T})$、$n_B=(0^+,1^-,\bm 0_{\mathrm T})$ 如\cref{def:prelim-lightfront}：$n_B\cdot v=v^+$，$\sla n_B=\gamma^+$。强子 $H$ 沿 $+z$ 运动，$P=(P^+,\frac{M^2}{2P^+},\bm 0_{\mathrm T})$；分离矢量 $w=(0^+,w^-,\bm 0_{\mathrm T})=w^-n_B$。$D_\mu=\partial_\mu-\ii gA^a_\mu t^a$，Wilson 线 $W[b,a]=P\exp\big(\ii g\int_a^b\dd z\cdot A\big)$，离 $b$ 近的点在左（\cref{def:prelim-wilson}）；沿 $n_B$ 有 $\dd z\cdot A=\dd z^-A^+$，故
+\begin{equation}\label{eq:pdf-W}
+W[w,0]=P\exp\Big(\ii g\!\int_0^{w^-}\!\dd z^-A^{+}_a(z^-n_B)t^a\Big),\qquad \partial_{w^-}W[w,0]=\ii g\,A^+(w)\,W[w,0].
+\end{equation}
+态归一为 $\langle P'|P\rangle=2P^+(2\pi)^3\delta(P'^+-P^+)\delta^{(2)}(\bm P'_{\mathrm T}-\bm P_{\mathrm T})$，于是 $\langle P|T^{\mu\nu}|P\rangle=2P^\mu P^\nu$，$\bar u\gamma^\mu u=2p^\mu$。矩阵元一律取连通部分 $\langle\cdots\rangle_{\mathrm c}$，对算符的色指标求和，对靶的色与自旋（极化）求平均。
+
+\begin{definition}[夸克分布]\label{def:pdf-quark}
+强子 $H$ 中味道为 $q$ 的夸克分布为
+\begin{equation}\label{eq:pdf-fq}
+f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii\xi P^+w^-}\,\big\langle P\big|\bar\psi_q(w)\gamma^+W[w,0]\,\psi_q(0)\big|P\big\rangle_{\mathrm c},
+\end{equation}
+% VF-PDF-1
+$W[w,0]$ 如\cref{eq:pdf-W}。在维数正规化 $D=4-2\varepsilon$ 中\cref{eq:pdf-fq}定义的是裸分布 $f^{\mathrm{bare}}$。$\MSbar$ 分布 $f_{q/H}(\xi;\mu)$ 按如下约定定义：把 $x>0$ 处的各密度 $f_i(x)$（$i$ 遍历各味道的夸克、反夸克与胶子，后两者的定义紧接在后）排成列矢量，
+\begin{equation}\label{eq:pdf-Z}
+\begin{gathered}
+f^{\mathrm{ren}}_i=\sum_jZ_{ij}\otimes f^{\mathrm{bare}}_j,\qquad (Z\otimes f)(x)=\int_x^1\frac{\dd z}{z}\,Z(z)\,f\Big(\frac xz\Big),\\
+Z_{qq}(x)=\delta(1-x)-\frac{\as}{2\pi}\frac1\varepsilon P_{qq}(x)+\order{\as^2},
+\end{gathered}
+\end{equation}
+% VF-PDF-4
+其中 $Z_{ij}$ 是支撑在 $[0,1]$ 上、用 $\as(\mu)$（$g_0^2=4\pi\as\mu^{2\varepsilon}S_\varepsilon^{-1}Z_g^2$，$S_\varepsilon=(4\pi)^\varepsilon\ee^{-\varepsilon\gamma_E}$，\cref{def:prelim-msbar}）表示时只含 $\varepsilon$ 极点的分布。
+\uses{def:prelim-wilson,def:prelim-lightfront,def:prelim-msbar}
+\end{definition}
+
+相反的约定 $f^{\mathrm{bare}}=Z'\otimes f^{\mathrm{ren}}$ 有 $Z'_{qq}=\delta+\frac{\as}{2\pi}\frac1\varepsilon P_{qq}+\cdots$，本书只用\cref{eq:pdf-Z}。与靶无关的卷积核 $Z$ 的存在性不是定义的一部分，而是\cref{thm:pdf-moments-local}的内容（证明见\cref{app:appL}）；在那之前我们只对部分子靶使用它。因子 $1/(4\pi)$ 使自由夸克给出 $\delta(1-\xi)$（\cref{prop:pdf-invariance}）。在两个场之间插入末态完备集，用平移 $\langle X|\psi(w)\cdots\rangle\propto\ee^{-\ii(P-p_X)\cdot w}$ 并完成 $w^-$ 积分，得割图表示（\cref{fig:pdf-operator}；图中的 $n$ 即本书的 $n_B$）
+\begin{equation}\label{eq:pdf-cut}
+f_{q/H}(\xi)=\sum_X\tfrac12\,\delta\big(\xi P^+-(P-p_X)^+\big)\,
+\langle P|\bar\psi(0)W[0,\infty n_B]|X\rangle\,\gamma^+\,\langle X|W[\infty n_B,0]\psi(0)|P\rangle ,
+\end{equation}
+其中用了合成律 $W[w,0]=W[w,\infty n_B]W[\infty n_B,0]$；同样 $W[w,0]=W[w,-\infty n_B]W[-\infty n_B,0]$，故对共线 PDF，Wilson 线伸向未来还是过去无关紧要（对横动量依赖分布则不然，\cref{rem:pdf-gauge-residual}）。由\cref{eq:pdf-cut}，Wilson 线上无胶子附着时算符顶点的 Feynman 规则是 $\frac12\gamma^+\delta(k^+-\xi P^+)$（配合 $\int\dd^4k/(2\pi)^4$）。
+
+%%% BEGIN fig:pdf-operator
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \coordinate (ol) at (-1.9,2.4); \coordinate (or) at (1.9,2.4);
+  \coordinate (bl) at (-1.9,0);   \coordinate (br) at (1.9,0);
+  % remnant X crossing the cut (drawn first; the blobs cover the ends)
+  \foreach \y in {0.24,0,-0.24} \draw[plain] (bl) ++(0,\y) -- ++(3.8,0);
+  \draw[quark] (-1.9,0.43) -- (ol);
+  \draw[wilson=0.25] (ol) -- (or);
+  \draw[quark] (or) -- (1.9,0.43);
+  \draw[t1 hadron] (-3.65,0) -- (bl);
+  \draw[t1 hadron] (br) -- (3.65,0);
+  \draw[hadron blob] (bl) ellipse[x radius=0.82,y radius=0.45];
+  \draw[hadron blob] (br) ellipse[x radius=0.82,y radius=0.45];
+  \node[opvertex] at (ol) {}; \node[opvertex] at (or) {};
+  \draw[cut] (0,-0.85) -- (0,3.0);
+  % labels
+  \path[mom={$k$},mom pos=0.62] (-1.9,0.45) -- (ol);
+  \path[mom={$k$},mom pos=0.38] (or) -- (1.9,0.45);
+  \node[left,font=\small] at (-2.02,0.92) {$k^+=\xi P^+$};
+  \node[above left,inner sep=3pt] at (ol) {$\psi(0)$};
+  \node[above right,inner sep=3pt] at (or) {$\bar\psi(w)$};
+  \node[below,font=\footnotesize,inner sep=4pt] at (-0.95,2.4) {$W[\infty n,0]$};
+  \node[below,font=\footnotesize,inner sep=4pt] at (0.95,2.4) {$W[w,\infty n]$};
+  \path[mom={$P$},mom sep=0.3cm] (-3.65,0) -- (-2.72,0);
+  \path[mom={$P$},mom sep=0.3cm] (2.72,0) -- (3.65,0);
+  \node[font=\small] at (0.42,-0.62) {$X$};
+\end{tikzpicture}
+\caption{夸克分布函数的割图表示。在定义
+$f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii\xi P^+w^-}\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle$
+（$w=w^-n$，$n$ 为满足 $n\cdot v=v^+$ 的光锥矢量）中插入末态完备集并完成 $w^-$ 积分，得
+$f_{q/H}(\xi)=\sum_X\tfrac12\,\delta\big(\xi P^+-(P-p_X)^+\big)\,\langle P|\bar\psi(0)W[0,\infty n]|X\rangle\,\gamma^+\,\langle X|W[\infty n,0]\psi(0)|P\rangle$。
+割线左侧为振幅、右侧为共轭振幅，$X$ 为穿过割线的剩余部分。两个 $\otimes$ 为非定域算符的两端，算符顶点的 Feynman 规则为
+$\tfrac12\gamma^+\delta(k^+-\xi P^+)$（配合 $\int\dd^4k/(2\pi)^4$，Wilson 线上无胶子附着时）；
+双线为 Wilson 线 $W[w,0]=W[w,\infty n]\,W[\infty n,0]$，被末态割线分为振幅中的 $W[\infty n,0]$ 与共轭振幅中的 $W[w,\infty n]$。
+箭头表示费米子数（色）流向。}
+\label{fig:pdf-operator}
+\end{figure}
+%%% END fig:pdf-operator
+
+\begin{definition}[反夸克分布]\label{def:pdf-antiquark}
+反夸克分布定义为 $f_{\bar q/H}(\xi)\equiv-f_{q/H}(-\xi)$；$x>0$ 时记 $q(x)=f_{q/H}(x)$，$\bar q(x)=f_{\bar q/H}(x)=-f_{q/H}(-x)$。它与用电荷共轭场 $\psi^c=C\bar\psi^{\tp}$（$C=\ii\gamma^2\gamma^0$）及其共轭表示中的 Wilson 线 $W^*$ 直接写出的定义 $\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}\langle P|\bar\psi^c(w)\gamma^+W^*[w,0]\psi^c(0)|P\rangle_{\mathrm c}$ 相同。
+% VF-PDF-1
+\uses{def:pdf-quark}
+\end{definition}
+
+等价性：由 $C^{-1}\gamma^\mu C=-\gamma^{\mu\tp}$、$\bar\psi^c=-\psi^{\tp}C^{-1}$，并把 Grassmann 双线性式转置（产生一个负号与一个反对易子），用 $W^{*\tp}[w,0]=W[0,w]$，
+\begin{equation}\label{eq:pdf-cconj}
+\bar\psi^c(w)\gamma^+W^*[w,0]\psi^c(0)=-\bar\psi(0)\gamma^+W[0,w]\psi(w)+(\text{c 数}).
+\end{equation}
+c 数与态无关，不出现在连通矩阵元中；再由平移不变性与代换 $w^-\to-w^-$ 即得 $-f_{q/H}(-\xi)$。于是 $f_q$ 是 $[-1,1]$ 上的对象：$\xi>0$ 部分是夸克密度，$\xi<0$ 部分是反号的反夸克密度。
+
+\begin{definition}[胶子分布]\label{def:pdf-gluon}
+强子 $H$ 中的胶子分布为
+\begin{equation}\label{eq:pdf-fg}
+\begin{gathered}
+f_{g/H}(\xi)=\sum_{j}\int\frac{\dd w^-}{2\pi\,\xi P^+}\,\ee^{-\ii\xi P^+w^-}\,\big\langle P\big|G^{+j}_a(w)\,W^{(A)}_{ab}[w,0]\,G^{+j}_b(0)\big|P\big\rangle_{\mathrm c},\\
+W^{(A)}_{ab}[w,0]=2\Tr\big[t^aW[w,0]\,t^bW[0,w]\big],
+\end{gathered}
+\end{equation}
+% VF-PDF-2
+$j$ 遍历 $D-2$ 个横向指标。$f_g$ 是奇分布，$f_g(-\xi)=-f_g(\xi)$（$\xi f_g$ 是偶分布；这也固定了 $1/\xi$ 在 $\xi=0$ 处的含义），$x>0$ 时 $g(x)=f_g(x)$。部分子胶子靶按 $\MSbar$ 约定对 $D-2=2(1-\varepsilon)$ 个极化求平均（色平均 $\frac1{N_c^2-1}$）；改为对 2 个极化求平均会使 DIS 的 $C_2^g\to C_2^g+P_{qg}$、Drell--Yan 的 $\Delta_{qg}\to\Delta_{qg}+P_{qg}$。$f_g$ 与夸克分布一起按\cref{eq:pdf-Z}重整化。
+% VF-CONV-6
+\uses{def:prelim-wilson,def:pdf-quark}
+\end{definition}
+
+在 $A^+=0$ 规范中 $G^{+j}=\partial^+A^j$，因子 $1/(\xi P^+)=1/k^+$ 把算符 $\propto(k^+)^2A^jA^j$ 变成“胶子数”（与标量场的数密度 $\propto k^+|\phi|^2$ 同形）；一般规范中的组合 $k^+A^j-k^jA^+$ 即 Grammer--Yennie 分解中领头的 G 部分（比较\cref{prop:ir-super-leading}与\cref{ch:method}的\cref{prop:method-gy-suppression}）。

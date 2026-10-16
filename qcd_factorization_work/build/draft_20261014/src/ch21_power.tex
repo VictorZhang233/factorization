@@ -1,0 +1,629 @@
+%% =====================================================================
+%% 第 21 章  幂次修正、次领头幂次、重整化子与非微扰地位
+%% (WRITER_SPEC_v2 §1.1: key power, file ch21_power.tex; writer W24)
+%% =====================================================================
+\chapter{幂次修正、次领头幂次、重整化子与非微扰地位}\label{ch:power}
+
+前面各章的因子化定理都是渐近展开的领头项，再加一个“被幂次压低”的余项。本章讨论这个余项本身：它的结构、它在什么意义下可以被控制，以及“精确到幂次修正”在 QCD 中究竟是什么意思。领头幂次之外的严格性远不如领头幂次整齐：DIS 矩的扭度 4 修正有以 OPE 为前提的严格算符结构（\cref{prop:dis-twist4}），其 $x$ 空间形式只有全阶论证；单自旋不对称的扭度 3 因子化只在有限阶得到验证；次领头幂次（next-to-leading power，NLP）的因子化因端点发散而只能逐个过程地重建；幂次修正的定义本身又与微扰级数的阶乘发散（重整化子，renormalon）纠缠在一起。可以完整证明的是：树图层次的次软定理、OPE 基的重排自由、微扰 $\varphi^4_4$ 中 OPE 的收敛（证明见文献），以及大 $\beta_0$ 极限与二维大 $N_c$ 模型中的结果。最后一节说明本书全部因子化定理作为关于强子的陈述处于什么地位。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:power-next-to-soft}（\tagR，$R_{\mathrm{PT}}$，树图层次）；\cref{prop:power-rearrangement}（\tagR，$R_{\mathrm{def}}$）；\cref{thm:power-ope-convergence}（\tagR，$R_{\mathrm{PT}}$，有质量欧氏 $\varphi^4_4$ 的每一阶；完整证明在文献中）；\cref{prop:power-adler-large-beta0}、\cref{prop:power-thooft-model}（\tagP：分别在大 $\beta_0$ 极限与二维大 $N_c$ 模型中完整证明）。\par
+\textbf{给出全阶论证：}\cref{prop:power-dis-twist4-x}（\tagA，$x$ 空间；瓶颈：次领头幂次的区域分析只给出 E-S 型陈述，领头扭度部分继承\cref{thm:disall-factorization}的瓶颈，如 \cref{asm:appN-collins}）。\par
+\textbf{没有证明：}一般的次领头幂次因子化（\cref{prop:power-nlp-endpoint}，\tagP）；强子—强子单自旋不对称的扭度 3 因子化（\cref{conj:power-twist3-pp}，\tagC）；红外重整化子与高扭度的一般对应（\cref{conj:power-renormalon-ht}，\tagC）；QCD 作为四维量子场论的构造与非微扰 OPE（\cref{rem:power-np-status}，\cref{asm:intro-wightman}、\cref{asm:intro-np-ope}）。
+\end{tcolorbox}
+
+\cref{sec:power-twist4}与\cref{sec:power-twist3}讨论 DIS 的扭度 4 与单自旋不对称的扭度 3，\cref{sec:power-nlp}证明次软定理并说明端点发散，\cref{sec:power-ope-basis}证明 OPE 基的重排自由，\cref{sec:power-renormalons}在大 $\beta_0$ 极限下完整分析 Adler 函数的 Borel 平面，\cref{sec:power-np}给出非微扰地位与三个非微扰“实验室”。本章沿用全书的约定（$D_\mu=\partial_\mu-\ii gA^a_\mu t^a$，$\MSbar$，$\mu^2\dd\as/\dd\mu^2=-\frac{\beta_0}{4\pi}\as^2+\dots$，$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$）；$\Lambda$ 为 $\Lambda_{\MSbar}$（\cref{def:qcd-lambda}）或同量级的强子标度，$Q$ 为硬标度。
+
+\begin{tcolorbox}[enhanced,breakable,title=常见误解（本章）,fonttitle=\bfseries,
+  colback=yellow!3!white,colframe=orange!60!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\begin{enumerate}[label=(\arabic*),leftmargin=1.6em,itemsep=1pt,topsep=1pt]
+\item % M10
+\textbf{“幂次修正总是 $O(\Lambda^2/Q^2)$。”}事件形状的平均值有 $1/Q$ 修正\cite{DokshitzerWebber1995}，锥形喷注按 $1/(Q\delta)$\cite{Korchemsky:1994is}；扭度 3 的自旋不对称是 $O(M/Q)$；大 $x$ 处实际参数是 $\Lambda^2/[Q^2(1-x)]$（\cref{ex:power-twist4-largex}），核靶中有 $A^{1/3}$ 增强（\cref{prop:disall-nuclear}）。
+\item % critic C11
+\textbf{“余项是 $O(\Lambda^2/Q^2)$，因为高扭度算符的量纲高 2。”}这是 OPE 的陈述，对单举 DIS 与 $e^+e^-$ 的矩在非微扰 OPE 的前提下成立（\cref{asm:intro-np-ope}）；对 Drell--Yan，扭度 4 的广义因子化只有全阶论证（\cref{thm:dy-higher-twist}，\tagA），“没有 $\Lambda/Q$ 项”只有重整化子分析的证据（\cref{prop:power-renormalon-examples}）。
+\item % M22
+\textbf{“领头幂次因子化可以直接推广到次领头幂次。”}次领头幂次的卷积一般在端点发散，须逐个过程重新因子化（\cref{prop:power-nlp-endpoint}）；Drell--Yan 在 $m^4/s^2$ 处因子化已知失效（\cref{prop:dy-twist6-failure}，\tagV）。
+\item % critic O20
+\textbf{“重整化子与高扭度一一对应是已证明的。”}只在大 $\beta_0$ 极限与二维 $O(N)$ $\sigma$ 模型中确立（\tagP），一般情形是\cref{conj:power-renormalon-ht}。
+\item % M28 ; critic O21
+\textbf{“[R] 是对真实 QCD 的证明；强子层次的因子化有非微扰证明。”}QCD 尚未被构造，[R] 总带限定语（\cref{def:intro-tags}）；非微扰的“实验室”只有微扰 $\varphi^4_4$ 中 OPE 的收敛、't Hooft 模型与格点证据（\cref{sec:power-np}）。
+\end{enumerate}
+\end{tcolorbox}
+
+%% ---------------------------------------------------------------------
+\section{DIS 的扭度 4：从矩到 \texorpdfstring{$x$}{x} 空间}\label{sec:power-twist4}
+
+单举 DIS 是幂次修正唯一有完整算符结构的强子过程。对偶数 $n$，OPE 给出
+\begin{equation}\label{eq:power-moments-tw4}
+M_2^{(n)}(Q^2)\equiv\int_0^1\!\dd x\,x^{n-2}F_2
+=\sum_iC^{(n)}_{2,i}A^{(n)}_i+\frac1{Q^2}\sum_jC^{(n),\tau=4}_{2,j}A^{(n),\tau=4}_j+O\Big(\frac{1}{Q^4}\Big),
+\end{equation}
+第二项来自扭度 4 的夸克—胶子与四夸克定域算符（\cref{prop:dis-twist4}，\tagR，$R_{\mathrm{OPE}}$）；扭度 2 算符的迹项给出另一类、纯运动学的靶质量修正（\cref{prop:dis-tmc}）。按\cref{lem:dis-twist-classification}的共线扭度计数（$\psi_+$、$G^{+j}$、$D^j$ 为 1，$D^+$ 为 0），强子与硬部分之间每多一条横向部分子就多一个 $1/Q$（\cref{fig:higher-twist}）；扭度 3 项在非极化 DIS 中没有可用的横向矢量而为零，故第一个修正是 $1/Q^2$。
+
+固定 $n$ 的扭度 4 算符是一族：$n-2$ 个 $D^+$ 可以分配到不同的场上。对所有 $n$ 重新求和，得到场位于同一条光锥直线 $z=(0^+,z^-,\mathbf0_T)$ 的不同点上、相邻场由沿 $n_B$ 的直 Wilson 线（\cref{def:prelim-wilson}）连成的规范不变算符；其矩阵元关于各光锥分离的 Fourier 变换即扭度 4 关联函数 $T^{(4)}_i([x])$，$[x]$ 为独立的动量分数（三个场两个，四个场三个）。典型代表是 Ellis--Furmanski--Petronzio “横向基”中的 $\bar\psi\gamma^+D_\perp^jD_{\perp j}\psi$ 型关联与四夸克关联，其中横向以外的协变导数已用运动方程消去\cite{EllisFurmanskiPetronzio1982,EllisFurmanskiPetronzio1983}；在 $A^+=0$ 规范下它们是只依赖于纵向动量分数（均在 $[0,1]$ 内）的多部分子分布\cite{Jaffe1983}。
+
+\begin{proposition}[DIS 扭度 4 修正的 $x$ 空间形式 \tagA]\label{prop:power-dis-twist4-x}
+设 $0<x<1$ 固定，$W^2\gg\Lambda^2$。当 $Q\to\infty$ 时，强子靶的非极化结构函数满足
+\begin{equation}\label{eq:power-twist4-x}
+F_2(x,Q^2)=F_2^{\mathrm{tw2}}(x,Q^2)+\frac{1}{Q^2}\sum_i\int\!\dd x_1\,\dd x_2\,H_i\Big(x_1,x_2,x;\frac{Q^2}{\mu^2},\as(\mu)\Big)\,T^{(4)}_i(x_1,x_2;\mu)+R_4(x,Q),
+\end{equation}
+其中 $F_2^{\mathrm{tw2}}$ 是扭度 2 的贡献（\cref{thm:disall-factorization}的领头项，加上由扭度 2 矩阵元决定的靶质量修正，其 $x$ 空间形式与处方有关，\cref{prop:dis-tmc}），$T^{(4)}_i$ 是一组完备的扭度 4 光锥关联函数（对四场关联函数，$\int\dd x_1\dd x_2$ 理解为对全部独立动量分数的积分），$H_i$ 是与靶无关的微扰硬函数，$R_4=O(\Lambda^4/Q^4)$（至多差对数），系数依赖于 $x$，在 $x\to1$、$x\to0$ 时不均匀。并且：(a) $1/Q^2$ 项的矩 $\int_0^1\dd x\,x^{n-2}(\cdots)$ 等于\eqref{eq:power-moments-tw4}的扭度 4 项；(b) 对核靶，$T^{(4)}_i$ 含按 $A^{1/3}$ 增强的双重散射部分（\cref{prop:disall-nuclear}）。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2、MA4）。
+% errtype: E-S
+\uses{prop:dis-twist4,prop:dis-tmc,thm:disall-factorization,asm:intro-bridge}
+\end{proposition}
+
+\begin{proofsketch}
+1.~由\cref{prop:dis-twist4}，每个偶数矩的 $1/Q^2$ 项是扭度 4 定域算符的贡献。2.~自旋 $n$ 的扭度 4 定域算符是光锥算符在各分离点处 Taylor 展开的系数，故 $A^{(n),\tau=4}_j$ 是 $T^{(4)}_i$ 的多重矩的线性组合；\eqref{eq:power-twist4-x}对 $x$ 取矩即得 (a)。反之，固定 $n$ 的矩只确定 $H_i$ 的有限多个矩，推不出 $x$ 空间公式。3.~（共线展开）在割图中把硬部分对部分子横动量展开到二阶，加上额外一两条共线胶子接入硬部分的图，用 Ward 恒等式组合成规范不变的横向协变导数，得到“硬函数 $\otimes$ 关联函数”的形式\cite{EllisFurmanskiPetronzio1982,EllisFurmanskiPetronzio1983}；树图硬函数见\cite{Jaffe:1982pm,EllisFurmanskiPetronzio1983}，使规范不变性显然的推导见\cite{Qiu:1988dn}。4.~（只被论证的一步）在 $1/Q^2$ 阶，主导区域恰是领头区域展开到二阶与额外共线部分子接入硬部分的区域，软区与 Glauber 区不给出新的贡献（单个强子，末态单举求和，参见\cref{thm:disall-factorization}）；此步只给出 E-S 型陈述。完整论证见\cite{EllisFurmanskiPetronzio1983,Qiu:1988dn}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+矩空间的结构是 $R_{\mathrm{OPE}}$ 严格的；$x$ 空间形式为 \tagA，最弱的一步是第 4 步的次领头幂次区域分析（E-S 型）——它相当于把\cref{asm:intro-bridge}(Br1) 推广到次领头幂次，而编号假设只覆盖领头幂次。$F_2^{\mathrm{tw2}}$ 经由\cref{thm:disall-factorization}（\tagA）继承 \cref{asm:appN-collins}、\cref{asm:appN-envelope}、\cref{asm:appN-separation}、\cref{asm:appN-cutsum}、\cref{asm:appN-ward-product}、\cref{asm:appN-uv}、\cref{asm:appN-multren}，以及该论证中被明确假定的一步（\cref{asm:appN-brst-nonlocal}，[C]；\cite[第~11.3.2~节]{Collins2011}）。此外，扭度 4 与领头扭度通过重整化子歧义混合（\cref{conj:power-renormalon-ht}，本章稍后），扭度 2 系数只在相对 $O(\Lambda^2/Q^2)$ 内有意义（\cref{prop:power-rearrangement}）。升级途径：次领头幂次区域分析的积分范数估计，以及\cref{thm:disall-factorization}本身的升级。
+
+\begin{example}[扭度展开在 $x\to1$ 处的增强]\label{ex:power-twist4-largex}
+设 $q(x)=(1-x)^b$，$M_n[q]\equiv\int_0^1x^{n-1}q=B(n,b+1)\to\Gamma(b+1)n^{-b-1}$。修正 $\delta q=c\,b\,(1-x)^{b-1}$ 的矩为 $c\,b\,B(n,b)=c\,(n+b)M_n[q]$（用 $\Gamma(b+1)=b\Gamma(b)$、$\Gamma(n+b+1)=(n+b)\Gamma(n+b)$）。所以“矩的修正随 $n$ 线性增长”与“相对修正 $\delta q/q=c\,b/(1-x)$”是同一件事；取 $c\sim\Lambda^2/Q^2$，大 $x$ 处的实际展开参数是 $\Lambda^2/[Q^2(1-x)]$，对应于大 $x$ 处真正的硬标度 $Q\sqrt{1-x}$（末态质量 $W^2\simeq Q^2(1-x)/x$）。扭度 4 的“重整化子模型”正有这种行为：大 $\beta_0$ 近似中 $u=1$ 的重整化子留数给出的 $F_2$ 形状含 $-4/[1-x]_+$ 与 $-\delta'(1-x)$\cite[式~(5.33)]{Beneke1999}，二者的矩分别为 $4S_1(n-1)\sim4\ln n$ 与 $-(n-1)$；与单胶子线相联系的重整化子修正按 $[\Lambda^2/(Q^2(1-x))]^n$ 增长\cite[式~(5.37)]{Beneke1999}（参见\cite{BenekeBraun1995b,DasguptaWebber1996}）。该模型只给形状不给归一化，而拟合所得的“扭度 4 修正”会随扭度 2 项微扰阶数的提高而减小\cite[第~5.2.4~节]{Beneke1999}——二者不能被干净地分开。（以上 Mellin 关系均用符号计算核对过。）
+\uses{prop:power-dis-twist4-x}
+\end{example}
+
+%% ---------------------------------------------------------------------
+\section{扭度 3 与单自旋不对称}\label{sec:power-twist3}
+
+横向单自旋不对称 $A_N=[\dd\sigma(S_{\mathrm T})-\dd\sigma(-S_{\mathrm T})]/[\dd\sigma(S_{\mathrm T})+\dd\sigma(-S_{\mathrm T})]$ 在领头扭度的共线因子化中为零：它正比于“朴素 T 奇”的结构 $\mathbf S_{\mathrm T}\cdot(\mathbf P_A\times\mathbf P_h)$，要求振幅之间有相对相位，又要求螺旋度翻转，而无质量夸克的手征在微扰论中守恒；微扰 QCD 对产生夸克横向极化的预言在标度极限下为零\cite{Kane:1978nd}。当 $P_{h\mathrm T}\ll Q$ 时，相应的机制是 TMD 中的 Sivers 函数（第~14~章）；当 $P_{h\mathrm T}\sim Q$ 时，不对称是扭度 3 效应：强子经夸克—胶子—夸克关联与硬部分相连，相位来自硬部分中传播子的极点。基本对象是 Efremov--Teryaev--Qiu--Sterman（ETQS）函数 $T_F(x_1,x_2)$（\cref{def:tmd-etqs}）\cite{Efremov:1981sh,EfremovTeryaev1985,QiuSterman1991c}，其对角值 $T_F(x,x)$ 称为胶子极点矩阵元；在两种描述都适用的区域 $\Lambda\ll q_{\mathrm T}\ll Q$，二者在单圈上一致\cite{Ji:2006ub}（\cref{prop:tmd-twist3-matching}）。
+
+\begin{proposition}[SIDIS 型过程中的扭度 3 共线因子化 \tagP]\label{prop:power-twist3-sidis}
+在至多一个初态强子的过程中（如 $P_{h\mathrm T}\sim Q$ 的半单举 DIS），或两个初态强子而被测末态为色单态、其余末态单举求和的过程中（如 $q_{\mathrm T}\sim Q$ 的 Drell--Yan）——统称“SIDIS 型”——横向单自旋不对称在扭度 3 上具有共线因子化形式：自旋相关截面写成硬函数与 $T_F(x,x)$（及其导数）、其他扭度 3 关联函数和未极化分布或碎裂函数的卷积，余项为更高幂次。具体地：(a) 这一形式在特定过程中已在单圈与 NLO 上验证\cite{Ji:2006ub,Vogelsang:2009pj}；(b) $T_F(x,x)$ 的标度演化已经确定：最初的结果互有出入（\cite{Braun:2009mi}与\cite{Kang:2008ey}），分歧的来源后来被找出，各组结果得到调和\cite{Kang:2012em,Schafer:2012ra}；(c) $T_F(x,x)$ 与 SIDIS 中 Sivers 函数的第一个横动量矩由
+\begin{equation}\label{eq:power-TF-sivers}
+g\,T_F(x,x)=\mp\int\!\dd^2k_{\mathrm T}\,\frac{\mathbf k_{\mathrm T}^2}{M}\,f^{\perp q}_{1T}(x,k_{\mathrm T})\Big|_{\mathrm{SIDIS}}
+\end{equation}
+相联系，符号与归一化依赖于约定\cite{Boer:2003cm}（本书的约定见\cref{prop:tmd-twist3-matching}）。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{def:tmd-etqs,prop:tmd-twist3-matching,asm:intro-bridge}
+\end{proposition}
+
+\begin{proofsketch}
+1.~把硬部分对部分子横动量展开到一阶，并加上多一条共线胶子接入硬部分的图，用 Ward 恒等式组合成规范不变的夸克—胶子—夸克关联（与\cref{prop:power-dis-twist4-x}同一方法，停在一阶）；所需相位来自硬部分中传播子的极点，把关联函数钉在 $T_F(x,x)$ 等点上（\cref{ex:power-sgp}）。2.~单圈匹配与 NLO 计算见\cite{Ji:2006ub,Vogelsang:2009pj}，演化见\cite{Braun:2009mi,Kang:2008ey,Kang:2012em,Schafer:2012ra}。3.~\eqref{eq:power-TF-sivers}在算符层面由 Sivers 函数的 $k_{\mathrm T}$ 矩导出\cite{Boer:2003cm}；在 $D_\mu=\partial_\mu+\ii gA_\mu$、$\epsilon^{0123}=+1$、Trento 约定下右边取负号\cite[式~(10)]{Kang:2011hk}，换到本书的 $D_\mu=\partial_\mu-\ii gA_\mu$ 而保持 $T_F$ 的定义式不变时 $gG^{\mu\nu}$ 变号，右边随之反号。完整论证见所引文献；不存在全阶论证。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+证据都是有限阶、过程特定的（单圈与 NLO 计算、单圈匹配、领头阶演化），没有次领头幂次的区域分析或积分范数估计，故为 \tagP。\eqref{eq:power-TF-sivers}受紫外减除方案的影响，不是唯一的恒等式\cite[第~II~节]{Kang:2011hk}。唯象上，SIDIS 中拟合的 Sivers 矩与 $pp$ 中拟合的 $T_F(x,x)$ 大小相当而符号相反（“符号失配”）\cite{Kang:2011hk}；同时拟合 SIDIS、Drell--Yan、$e^+e^-$ 与 $pp$ 数据的全局分析认为各种单自旋不对称有共同起源，并认为这指向失配的解决\cite{Cammarota:2020qcw}。升级途径：扭度 3 区域分析的全阶论证，以及胶子极点矩阵元的方案无关定义。
+
+\begin{conjecture}[强子—强子碰撞中单举强子单自旋不对称的扭度 3 因子化 \tagC]\label{conj:power-twist3-pp}
+$p^\uparrow p\to hX$ 中大横动量单举强子\cite{QiuSterman1991c,Qiu:1998ia}与 $p^\uparrow p\to\gamma X$ 中直接光子\cite{QiuSterman1992}的单自旋不对称，在扭度 3 上具有\cref{prop:power-twist3-sidis}那样的共线因子化形式。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{prop:power-twist3-sidis,conj:dy-coloured-final,asm:intro-bridge}
+\end{conjecture}
+
+\paragraph{地位与缺口}
+末态含大横动量的带色部分子（直接光子的领头阶子过程 $qg\to\gamma q$、$q\bar q\to\gamma g$ 中反冲的部分子），旁观者与它之间的 Glauber 交换未被全阶分析；即使在领头扭度，带色末态的共线因子化也没有全阶论证（\cref{conj:dy-coloured-final}，\tagC），扭度 3 的陈述继承这一地位。“符号失配”\cite{Kang:2011hk}及其全局分析\cite{Cammarota:2020qcw}检验的是唯象框架，不是因子化本身。升级途径：首先需要领头扭度带色末态因子化的全阶论证。
+
+\begin{example}[最低阶的软胶子极点机制]\label{ex:power-sgp}
+考虑\cref{fig:twist3-ssa}中 $A^\uparrow B\to\gamma X$ 的 Compton 子过程。$P_A=(P_A^+,0^-,\mathbf0_T)$；$T_F$ 提供的胶子（动量 $x_gP_A$，$x_g=x_2-x_1$）在振幅一侧接到末态夸克 $c$ 上，中间的夸克传播子携带 $p_c-x_gP_A$。由 $p_c^2=P_A^2=0$，
+\begin{equation}\label{eq:power-sgp-den}
+(p_c-x_gP_A)^2+\ii0=-2\,p_c\cdot P_A\,(x_g-\ii0),\qquad \frac{1}{x_g-\ii0}=\mathrm P\frac{1}{x_g}+\ii\pi\,\delta(x_g),
+\end{equation}
+其中 $p_c\cdot P_A=p_c^-P_A^+>0$。$\delta$ 函数把胶子的纵向动量分数钉在 $x_g=0$（“软胶子极点”），给出 $\ii\pi$ 与 $T_F(x,x)$；这个 $\ii$ 与 $T_F$ 中的 $\epsilon^{S_{\mathrm T}\sigma n_An_B}$ 相乘，使自旋相关截面为实且非零——树图上传播子的 $\pm\ii0$ 是唯一的相位来源。若胶子接到来自 $B$ 的入射部分子上（Drell--Yan 型的初态相互作用），分母为 $2p_b\cdot P_A(x_g+\ii0)$。在程函极限下（$k$ 为流入夸克线的胶子动量），出射与入射夸克分别给出
+\begin{equation}\label{eq:power-sgp-eik}
+\bar u(p)\,\ii g\gamma^\mu t^a\frac{\ii(\sla p-\sla k)}{(p-k)^2+\ii0}\to\bar u(p)\frac{g\,t^ap^\mu}{p\cdot k-\ii0},\qquad
+\frac{\ii(\sla p+\sla k)}{(p+k)^2+\ii0}\,\ii g\gamma^\mu t^au(p)\to-\frac{g\,t^ap^\mu}{p\cdot k+\ii0}u(p)
+\end{equation}
+（用了 $\bar u(p)\gamma^\mu\sla p=2p^\mu\bar u(p)$、$\sla p\gamma^\mu u(p)=2p^\mu u(p)$；与\cref{prop:prelim-wilson-rules}一致）。相对于各自的主值部分，极点部分在末态相互作用中是 $+\ii\pi\delta$，在初态相互作用中是 $-\ii\pi\delta$；用 Wilson 线的语言，前者构成未来指向的线（$1/(k^+-\ii0)$），后者构成过去指向的线（$1/(k^++\ii0)$），二者之差为 $2\pi\ii\,\delta(k^+)$。因此单自旋不对称在 SIDIS 型与 Drell--Yan 型过程中符号相反，这正是\cref{thm:tmd-sivers-sign}（\tagR，$R_{\mathrm{def}}$）的算符层面符号反转在扭度 3 语言中的对应。在 $pp\to hX$ 中，多种接法带有不同的色因子与 $\pm\ii0$，过程依赖性更复杂，这也是\cref{conj:power-twist3-pp}停留在猜想层次的原因之一。（上述代数均用符号与数值计算核对过。）
+\uses{prop:power-twist3-sidis,thm:tmd-sivers-sign}
+\end{example}
+
+%%% BEGIN fig:twist3-ssa
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 pole/.style={draw=red!70!black,line width=1.6pt,fd arrow=#1},
+  t3 pole/.default=0.5,
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \node[jet blob,ellipse,minimum width=5.6cm,minimum height=1.1cm,inner sep=0pt] (A) at (0,-2.2) {};
+  \node[jetB blob,ellipse,minimum width=5.6cm,minimum height=1.1cm,inner sep=0pt] (B) at (0,2.3) {};
+  \node[hard blob,circle,minimum size=0.84cm,inner sep=0pt] (HL) at (-2.55,0) {};
+  \node[hard blob,circle,minimum size=0.84cm,inner sep=0pt] (HR) at (2.55,0) {};
+  \coordinate (G) at (-0.7,0);
+  % hadrons
+  \draw[t3 hadron] (-4.75,-2.2) -- (A.west);  \draw[t3 hadron] (A.east) -- (4.75,-2.2);
+  \draw[t3 hadron] (-4.75, 2.3) -- (B.west);  \draw[t3 hadron] (B.east) -- (4.75, 2.3);
+  % partons from B (gluons) and from A (quarks x1, x2)
+  \draw[gluon] (-1.75,1.87) -- (HL.105);   \draw[gluon] (HR.75) -- (1.75,1.87);
+  \draw[quark] (-1.75,-1.77) -- (HL.285);   \draw[quark] (HR.255) -- (1.75,-1.77);
+  % soft gluon of the twist-3 correlator, attached to the final-state quark c
+  \draw[gluon] (-0.7,-1.67) -- (G);
+  % final-state quark c (pole propagator in red) and the observed photon
+  \draw[t3 pole=0.55] (HL.east) -- (G);
+  \draw[quark=0.5] (G) -- (HR.west);
+  \draw[photon] (HL.55) .. controls (-1.3,1.2) and (1.3,1.2) .. (HR.125);
+  \node[vertex] at (G) {};
+  \draw[cut] (0,-2.95) -- (0,3.05);
+  % labels
+  \node[t3 lab] at (HL) {$H$};  \node[t3 lab] at (HR) {$H^\dagger$};
+  \node[t3 lab] at (-1.3,-2.25) {$A^{\uparrow}$};  \node[t3 lab] at (-1.3,2.3) {$B$};
+  \node[t3 lab,below=1pt] at (-4.3,-2.25) {$P_A,S_{\mathrm T}$};
+  \node[t3 lab,above=1pt] at (-4.3,2.35) {$P_B$};
+  \path[mom={$x_1P_A$},mom sep=0.27cm,mom length=0.45cm] (-1.75,-1.77) -- (HL.285);
+  \path[mom={$x_2P_A$},mom sep=0.27cm,mom length=0.45cm] (HR.255) -- (1.75,-1.77);
+  \path[mom={$x_gP_A$},mom sep=0.27cm,mom length=0.45cm,mom pos=0.45] (-0.7,-1.67) -- (G);
+  \path[mom={$p_c$},mom sep=0.25cm,mom length=0.4cm] (G) -- (0,0);
+  \node[t3 lab] at (0.62,1.22) {$\gamma$};
+  \node[t3 note,text=red!65!black] at (-1.42,0.25) {极点};
+  \node[t3 note,anchor=north] at (0,-2.95) {$T_F(x_1,x_2)$：夸克--胶子--夸克关联（扭度 3）};
+\end{tikzpicture}
+\caption{Qiu--Sterman 软胶子极点机制（以 $A^{\uparrow}+B\to\gamma+X$ 中的 Compton 子过程 $qg\to\gamma q$ 为例；竖直虚线为末态割线）。
+横向极化强子 $A^{\uparrow}$ 的扭度 3 关联函数 $T_F(x_1,x_2)$ 提供割线两侧的夸克线（$x_1P_A$、$x_2P_A$）与一条胶子线（$x_gP_A$，$x_g\equiv x_2-x_1$），后者与末态夸克 $c$ 相连。
+夹在硬部分与该胶子之间的传播子（红色）携带 $p_c-(x_2-x_1)P_A$，其分母 $\big(p_c-(x_2-x_1)P_A\big)^2+\ii0=-2p_c\cdot P_A\,(x_2-x_1-\ii0)$ 在 $x_2\to x_1$ 时为零：
+$\frac{1}{x_2-x_1-\ii0}$ 的 $\ii\pi\delta(x_2-x_1)$ 部分提供单自旋不对称所需的相位，使结果正比于 $T_F(x,x)$（“软胶子极点”）。
+若胶子与初态部分子相连，$\ii0$ 的符号相反，色因子也不同——这与 Sivers 函数的过程依赖性相对应（参见\cref{fig:sidis-dy-links}）。}
+\label{fig:twist3-ssa}
+\end{figure}
+%%% END fig:twist3-ssa
+
+%% ---------------------------------------------------------------------
+\section{次领头幂次：次软定理与端点发散}\label{sec:power-nlp}
+
+次领头幂次（NLP）修正相对于领头项只多压低一个小参数的幂次：阈值附近的 $(1-z)^0$ 项（第~13~章）、$q_{\mathrm T}^2/Q^2$ 项、$m/Q$ 型质量修正等。来源有两类：软辐射在其能量上的次领头展开，树图层次上由次软定理完全确定；领头幂次中没有的新结构（软夸克交换、次领头共线相互作用），它们引入在端点发散的新卷积。
+
+\subsection{树图层次的次软定理}
+
+\begin{proposition}[次软定理 \tagR]\label{prop:power-next-to-soft}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（树图层次。）设自旋为 0 或 $\frac12$、质量为 $m_i$ 的带电粒子与光子最小耦合（$D_\mu=\partial_\mu-\ii eQA_\mu$；中性粒子任意），$\mathcal M_n(p_1,\dots,p_n)$ 是树图振幅，外线动量全取出射，第 $i$ 条外线的电荷为 $eQ_i$（$\sum_iQ_i=0$），且所论运动学点附近各内线均不在壳。令 $\mathcal M_{n+1}(k,\varepsilon;p_1,\dots,p_n)$ 为多一个出射光子（$k^2=0$，$\varepsilon\cdot k=0$，$\sum_ip_i+k=0$，外线在壳）的树图振幅，$k=\lambda\hat k$，$\lambda\to0$。
+(a)（Low，含自旋）
+\begin{equation}\label{eq:power-lbk}
+\mathcal M_{n+1}=-e\sum_iQ_i\Big[\frac{\varepsilon^*\!\cdot p_i}{k\cdot p_i}+\frac{\varepsilon^*_\mu k_\nu J_i^{\mu\nu}}{k\cdot p_i}\Big]\mathcal M_n+O(\lambda),\qquad
+J_i^{\mu\nu}=p_i^\mu\partial_i^\nu-p_i^\nu\partial_i^\mu+\Sigma_i^{\mu\nu},
+\end{equation}
+其中 $\partial_i^\nu\equiv\partial/\partial p_{i\nu}$ 作用于截去外线波函数、由同一组 Feynman 规则光滑延拓的振幅（结果与延拓的选取无关）；$\Sigma_i^{\mu\nu}$ 对标量为零，对出射费米子为 $\bar u(p_i)\mapsto-\frac{\ii}{2}\bar u(p_i)\sigma^{\mu\nu}$，对出射反费米子为 $v(p_i)\mapsto\frac{\ii}{2}\sigma^{\mu\nu}v(p_i)$（入射情形由交叉得到），$\sigma^{\mu\nu}=\frac{\ii}{2}[\gamma^\mu,\gamma^\nu]$。
+(b)（Burnett--Kroll）对光子极化与全部自旋求和，
+\begin{equation}\label{eq:power-bk}
+\sum|\mathcal M_{n+1}|^2=-e^2\sum_{i,j}\frac{Q_iQ_j}{(p_i\cdot k)(p_j\cdot k)}\Big[p_i\cdot p_j+p_{i\mu}k_\nu L_j^{\mu\nu}\Big]\sum|\mathcal M_n|^2+O(\lambda^0),
+\end{equation}
+$L_j^{\mu\nu}=p_j^\mu\partial_j^\nu-p_j^\nu\partial_j^\mu$ 作用于对自旋求和的非辐射平方振幅；于是辐射截面的前两项只依赖于非极化的非辐射截面。
+（本命题只涉及部分子振幅。）
+\uses{prop:qcd-soft-collinear-limits,lem:method-ward-abelian}
+\end{proposition}
+
+\begin{proof}
+\emph{1.~外线发射。}光子接在带电外线上的图称为外线发射，其余为内线发射。顶点为 $\ii eQ(p+p')^\mu$（标量，沿粒子流）与 $\ii eQ\gamma^\mu$（费米子），与 QCD 顶点 $\ii g\gamma^\mu t^a$ 的约定一致。设第 $i$ 条外线出射，发射前动量为 $p_i+k$，传播子分母为 $2p_i\cdot k$。对标量，顶点乘传播子为 $\ii eQ_i(2p_i+k)\cdot\varepsilon^*\,\ii/(2p_i\cdot k)=-eQ_i\,\varepsilon^*\!\cdot p_i/(k\cdot p_i)$。对费米子，由 $\bar u(p)\gamma^\mu(\sla p+m)=2p^\mu\bar u(p)$，
+\begin{equation*}
+\bar u(p_i)\,\ii eQ_i\sla\varepsilon^*\,\frac{\ii(\sla p_i+\sla k+m_i)}{2p_i\cdot k}=-eQ_i\,\bar u(p_i)\Big[\frac{\varepsilon^*\!\cdot p_i}{k\cdot p_i}+\frac{\sla\varepsilon^*\sla k}{2\,k\cdot p_i}\Big],
+\end{equation*}
+而 $\sla\varepsilon^*\sla k=-\ii\sigma^{\mu\nu}\varepsilon^*_\mu k_\nu$（$\gamma^\mu\gamma^\nu=g^{\mu\nu}-\ii\sigma^{\mu\nu}$，$\varepsilon^*\!\cdot k=0$），即第二项是 $\varepsilon^*_\mu k_\nu\Sigma_i^{\mu\nu}/(k\cdot p_i)$；反费米子（用 $(\sla p+m)v(p)=0$）与入射粒子同理。图的其余部分是非辐射振幅在 $(\dots,p_i+k,\dots)$ 处的值（满足动量守恒），等于 $\mathcal M_n+k_\nu\partial_i^\nu\mathcal M_n+O(k^2)$。故外线发射之和（去掉 $\varepsilon^*_\mu$）为
+\begin{equation}\label{eq:power-lbk-ext}
+E^\mu=-e\sum_iQ_i\Big[\frac{p_i^\mu}{k\cdot p_i}\big(1+k_\nu\partial_i^\nu\big)+\frac{k_\nu\Sigma_i^{\mu\nu}}{k\cdot p_i}\Big]\mathcal M_n+O(\lambda).
+\end{equation}
+\emph{2.~内线发射。}内线发射之和 $I^\mu(k)$ 在 $k=0$ 处解析，$I^\mu=I^\mu(0)+O(\lambda)$。树图阿贝尔 Ward 恒等式给出 $k_\mu(E^\mu+I^\mu)=0$：沿每条带电线对光子插入求和，相邻传播子满足伸缩恒等式（费米子线即\cref{lem:method-ward-abelian}所依据的恒等式，标量线为 $(2p+k)\cdot k=[(p+k)^2-m^2]-[p^2-m^2]$），两端在壳时边界项为零。其 $O(\lambda^0)$ 项是 $-e\sum_iQ_i\mathcal M_n=0$（$k_\mu k_\nu\Sigma^{\mu\nu}=0$），$O(\lambda)$ 项给出 $k_\mu\big[I^\mu(0)-e\sum_iQ_i\partial_i^\mu\mathcal M_n\big]=0$。类光矢量张成闵氏空间，故 $I^\mu(0)=e\sum_iQ_i\partial_i^\mu\mathcal M_n$。
+\emph{3.~合并。}$\varepsilon^*_\mu(E^\mu+I^\mu)$ 的 $O(\lambda^0)$ 部分含 $(\varepsilon^*\!\cdot p_i)(k\cdot\partial_i)-(k\cdot p_i)(\varepsilon^*\!\cdot\partial_i)=\varepsilon^*_\mu k_\nu(p_i^\mu\partial_i^\nu-p_i^\nu\partial_i^\mu)$，即得\eqref{eq:power-lbk}。
+\emph{4.~与延拓无关。}两种延拓之差在在壳、动量守恒的流形上为零，局部地形如 $\sum_ja_j(p_j^2-m_j^2)+b_\mu P^\mu$，$P=\sum_jp_j$。$L_i^{\mu\nu}(p_i^2-m_i^2)=0$。对第二种项，辐射运动学中 $P=-k$：领头项的改变为 $+e(b\cdot k)\sum_iQ_i\frac{\varepsilon^*\cdot p_i}{k\cdot p_i}$；次领头项中 $L_i$ 作用于 $b\cdot P$ 贡献 $-e(k\cdot b)\sum_iQ_i\frac{\varepsilon^*\cdot p_i}{k\cdot p_i}+e(\varepsilon^*\!\cdot b)\sum_iQ_i$，后者为零。两者相消。
+\emph{5.~Burnett--Kroll。}完整振幅满足 Ward 恒等式，可用 $\sum\varepsilon_\rho\varepsilon^*_\mu\to-g_{\rho\mu}$。领头项的平方给出\eqref{eq:power-bk}的第一项；交叉项为 $-e^2\sum_{i,j}Q_iQ_jp_{i\mu}k_\nu\,2\Real[\mathcal M_n^*J_j^{\mu\nu}\mathcal M_n]/[(k\cdot p_i)(k\cdot p_j)]$。对自旋求和后 $2\Real[\mathcal M_n^*J_j\mathcal M_n]=L_j\sum|\mathcal M_n|^2$：轨道部分是实的一阶微分算符；对费米子线 $\sum_s|\bar u(p)\tilde{\mathcal M}|^2=\TrD[(\sla p+m)\tilde{\mathcal M}\bar{\tilde{\mathcal M}}]$，自旋项贡献 $\TrD\big[{-\frac{\ii}{2}}[\sla p,\sigma^{\mu\nu}]\tilde{\mathcal M}\bar{\tilde{\mathcal M}}\big]$，由 $[\sla p,\sigma^{\mu\nu}]=2\ii(p^\mu\gamma^\nu-p^\nu\gamma^\mu)$，它等于 $L^{\mu\nu}$ 作用于投影算符 $\sla p+m$ 所得之项。这就证明了 (b)。（在标量与旋量 QED 的树图过程中作了数值核对：\eqref{eq:power-lbk}的误差按 $\lambda$ 变化，去掉自旋项则为 $O(\lambda^0)$；\eqref{eq:power-bk}的误差为 $O(\lambda^0)$。）
+\end{proof}
+
+\eqref{eq:power-lbk}的领头项是\cref{prop:qcd-soft-collinear-limits}(a) 中软极限的阿贝尔形式（整体符号随荷算符的约定而定；按本书的顶点，出射夸克发射出射胶子给出 $-g\,t^a\varepsilon^*\!\cdot p/(k\cdot p)$）。定理属于 Low\cite{Low1958}，非极化推广属于 Burnett 与 Kroll\cite{BurnettKroll1968}；软胶子的树图推导完全平行（$eQ_i$ 换成色荷算符，电荷守恒换成色守恒）。
+
+\paragraph{树图之外。}
+推导用到“内线发射在 $k=0$ 处解析”，这在圈图中不再成立：存在与外线共线的圈动量区域。Del Duca 指出高能下 Low 定理只在光子动量趋于零时成立，并把它推广到更大的光子动量区域，那里出现依赖于外线结构的项\cite{DelDuca1990}；以此为基础，次领头幂次阈值对数被组织成含“辐射喷注函数”的普适构件，朴素的次软定理在圈图层次上失效\cite{Bonocore:2015esa,Bonocore:2016awd}，Drell--Yan 中的检验已到 N$^3$LO\cite{Bahjat-Abbas:2018hpv}。因此圈图层次的次软因子化在 QCD 中是 \tagA，它是次领头幂次阈值因子化（\cref{prop:thr-nlp}，\tagP）的出发点。
+
+\subsection{端点发散}
+
+示意：设某量在领头对数精度上为
+\begin{equation}\label{eq:power-endpoint-toy}
+A(\rho)=\int_\rho^1\frac{\dd z}{z}\ln\frac{z}{\rho}=\frac12\ln^2\frac1\rho,\qquad\rho=\frac{m^2}{Q^2}\ll1 .
+\end{equation}
+若先在固定 $z$ 处对 $\rho$ 展开（因子化公式中各单标度函数分别展开所做的事），对 $z\in[0,1]$ 的积分在 $z\to0$ 处发散；以 $z^\eta$ 正规化，$\int_0^1\dd z\,z^{-1+\eta}(\ln z+\ln\frac1\rho)=-\eta^{-2}+\eta^{-1}\ln\frac1\rho$ 只剩纯极点。有限的双对数要靠描述端点区 $z\lesssim\rho$ 的另一项（真实问题中是软夸克区）抵消极点才能恢复：减去 $\int_0^\rho$ 的同一被积函数后，$\eta\to0$ 时恰得 $A(\rho)$。这些极点来自卷积本身，不能靠对各函数分别作 $\MSbar$ 重整化消除。经 $b$ 夸克圈的 $h\to\gamma\gamma$ 振幅的领头双对数正是如此，其级数的第一项是 $\mathcal M_0\hat L^2/2$，$\hat L$ 为 $\ln(-M_h^2/m_b^2)$ 型大对数（第~24~章）。% VF-FRO-9
+
+\begin{proposition}[次领头幂次因子化与端点发散 \tagP]\label{prop:power-nlp-endpoint}
+在次领头幂次，因子化公式中单标度函数对动量分数的卷积，在各函数于 $d=4$ 中（$\MSbar$）重整化之后一般在端点发散，所产生的极点不能通过对各函数分别重整化来消除。消除端点发散的“重新因子化”只在逐个过程中实现：Drell--Yan 与胶子融合产生 Higgs 的阈值区次领头幂次领头对数重求和\cite{Beneke:2018gvs,Beneke:2019mua}；经 $b$ 夸克圈的 $h\to\gamma\gamma$ 的重整化端点因子化定理\cite{Liu:2019oav,Liu:2020wbn}；% VF-FRO-9
+轻夸克诱导的 $gg\to h$\cite{Liu:2022ajh}；次领头幂次的 $\bar B\to X_s\gamma$\cite{Hurth:2023paz}；大 $x$ 处 DIS 的非对角道\cite{Beneke:2020ibj}与“胶子推力”中的端点因子化条件\cite{Beneke:2022obx}；次领头幂次的 DIS 与 PDF 因子化\cite{Beneke:2026miy}（预印本）。阈值 Drell--Yan 在次领头幂次的因子化只在去掉维数正规子之前成立\cite{Beneke:2019oqx}。（本命题是关于微扰论中次领头幂次因子化公式的陈述。）
+\uses{prop:power-next-to-soft,prop:thr-nlp}
+\end{proposition}
+
+\begin{proofsketch}
+1.~（机制）软夸克交换或次领头共线相互作用使硬函数在端点附近按 $1/z$ 变化，而矩阵元在 $z\to0$ 处趋于非零，卷积如\eqref{eq:power-endpoint-toy}中先展开后积分的被积函数；维数正规化中表现为不属于任何单个函数的 $1/\varepsilon^k$ 极点\cite{Liu:2019oav,Beneke:2019oqx}。2.~（重新因子化条件）在已解决的情形中，某一项被积函数在 $z\to0$ 处的领头行为与另一项（如软夸克区的项）算符性地相等；$h\to\gamma\gamma$ 的两个 $D$ 维条件先在 NLO 上验证\cite{Liu:2019oav}，后在 SCET 内被证明\cite[第~3~节]{Liu:2020wbn}，由此得到各项分别有限、对所有阶成立的形式\cite{Liu:2020wbn}；胶子推力中的条件在 $O(\as)$ 上得到检验\cite{Beneke:2022obx}。3.~其余情形在领头对数精度上由 $d$ 维一致性关系完成\cite{Beneke:2018gvs,Beneke:2019mua,Beneke:2020ibj}，另见\cite{Hurth:2023paz,Beneke:2026miy}。完整论证见所引文献；前沿现状见第~24~章（\cref{thm:front-hgg,prop:front-nlp-threshold,prop:front-nlp-ll,prop:front-nlp-dis}）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+没有一般的次领头幂次因子化定理；已有结果是逐个过程的，大多只到领头对数精度，或依赖 SCET 自身的前提（模式完备与 Glauber 模式的缺席，\cref{asm:front-scet-modes}）。$h\to\gamma\gamma$ 的重整化定理对所有阶成立（在 SCET 内为 \tagA）；阈值 Drell--Yan 只有裸的 $d$ 维因子化（\tagP）。$B\to M_1M_2$ 幂次修正中的端点发散尚未被重新因子化（\cref{prop:heavy-qcdf-endpoint}，\tagV）。文献中报告的分歧（例如 $h\to\gamma\gamma$ 三圈振幅的次领头对数与较早的预言不一致\cite{Liu:2020wbn,Akhoury:2001mz}，SIDIS 的次领头幂次计算与较早推导的差别\cite{Rodini:2023plb}）与次领头幂次 TMD 中被假定的 Glauber 相消（\cref{conj:front-glauber-nlp}）见第~24~章，本书不作裁决。升级途径：一般过程的次领头幂次区域分析与端点重新因子化的系统构造。
+
+%% ---------------------------------------------------------------------
+\section{OPE 基的重排与“实用 OPE”}\label{sec:power-ope-basis}
+
+OPE 中“系数是短距离部分、矩阵元是长距离部分”的划分在领头幂次之外并不唯一：算符基可以按量纲向下重排，系数随之改变，而展开连同余项不变。在无质量 QCD 的 $\MSbar$ 方案中，微扰论的每一阶不同量纲的算符都不混合；但 $\Lambda$（\cref{def:qcd-lambda}）与 $\mu$ 无关，$\Lambda^2/Q^2=\exp[-4\pi/(\beta_0\as(Q))]$（单圈）对 $\as$ 的任何幂次都是零，它带来的歧义在微扰论中看不见，在非微扰层次上却真实存在。
+
+\begin{proposition}[OPE 基的重排自由 \tagR]\label{prop:power-rearrangement}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）（本命题是关于展开的代数陈述。）设 $\{O_i\}$ 是有限多个规范不变定域算符，量纲为 $d_i$，$\Lambda>0$ 是与 $\mu$ 无关的固定质量标度，$\langle\cdot\rangle$ 为某个固定态（真空或强子）中的矩阵元，且对 $|q|\ge q_0$ 有
+\begin{equation}\label{eq:power-ope-N}
+\tilde T(q)=\sum_{d_i\le N}\tilde C_i(q)\langle O_i\rangle+R_N(q),\quad
+|\tilde C_i(q)|\le K|q|^{2-d_i}\ln^k|q|,\quad |R_N(q)|\le K|q|^{2-N-\delta}\ln^k|q|
+\end{equation}
+（估计形式与\cref{asm:intro-np-ope}(O1) 相同）。对任意常数 $\kappa_{ij}$（$d_j<d_i$）令
+\begin{equation}\label{eq:power-rearr}
+O'_i=O_i+\sum_{d_j<d_i}\kappa_{ij}\Lambda^{d_i-d_j}O_j,\qquad
+\tilde C'_j=\tilde C_j-\sum_{d_i>d_j}\tilde C'_i\,\kappa_{ij}\Lambda^{d_i-d_j}\quad(\text{自上而下求解}).
+\end{equation}
+(a) $\sum_{d_i\le N}\tilde C'_i\langle O'_i\rangle=\sum_{d_i\le N}\tilde C_i\langle O_i\rangle$ 恒成立，余项不变，且对 $|q|\ge\max(q_0,\Lambda)$ 有 $|\tilde C'_j|\le K'|q|^{2-d_j}\ln^k|q|$。因此若有与 $O_j$ 量子数相同、量纲 $d_i>d_j$ 的算符，$O_j$ 的系数只在相对 $O((\Lambda/|q|)^{d_i-d_j}\ln^k|q|)$ 的精度内由展开确定；DIS 中扭度 2 的系数只在相对 $O(\frac{\Lambda^2}{Q^2}\ln^kQ)$ 内有意义，除非算符基以非微扰方式固定（例如高扭度算符的格点归一化，第~22~章）。
+(b) 若只重排扭度 $\ge4$ 的算符（$\kappa_{ij}$ 只连接同一自旋、扭度之差 $\ge2$ 的算符），扭度 2 系数的改变对每个 $K$ 都是 $o(\as(Q)^K)$；凡是只把扭度 2 系数确定为 $\as(Q)$ 的渐近级数的陈述（如\cref{thm:dis-moments-np}(i)）都不受影响。
+\uses{def:dis-twist,def:qcd-lambda}
+\end{proposition}
+
+\begin{proof}
+(a) 代入 $O'_i$，交换求和次序，再用 $\tilde C'_j$ 的定义：
+\begin{equation*}
+\sum_i\tilde C'_i\langle O'_i\rangle=\sum_j\Big[\tilde C'_j+\sum_{d_i>d_j}\tilde C'_i\kappa_{ij}\Lambda^{d_i-d_j}\Big]\langle O_j\rangle=\sum_j\tilde C_j\langle O_j\rangle .
+\end{equation*}
+$O'_i$ 只含量纲 $\le d_i$ 的算符，截断 $d_i\le N$ 不变，余项仍是 $R_N$。量纲最高的系数不变；对量纲向下归纳，若对 $d_i>d_j$ 已有 $|\tilde C'_i|\le K_i|q|^{2-d_i}\ln^k|q|$，则对 $|q|\ge\Lambda$，
+\begin{equation*}
+|\tilde C'_j-\tilde C_j|\le\sum_{d_i>d_j}K_i|\kappa_{ij}|\,|q|^{2-d_j}(\Lambda/|q|)^{d_i-d_j}\ln^k|q|\le K''|q|^{2-d_j}\ln^k|q| ,
+\end{equation*}
+故 $\tilde C'_j$ 满足同样的估计，且与 $\tilde C_j$ 只差相对 $O((\Lambda/|q|)^{d_i-d_j}\ln^k|q|)$ 的项。两组 $\{O_i,\tilde C_i\}$、$\{O'_i,\tilde C'_i\}$ 都满足\eqref{eq:power-ope-N}，展开本身无法区分它们——这就是“只在该精度内有意义”的含义。DIS 中自旋 $n$ 的扭度 4 算符比同自旋的扭度 2 算符量纲高 2（\cref{def:dis-twist}）。若高扭度算符的归一化由非微扰条件固定，$\kappa_{ij}$ 便不再任意。
+(b) 此时 $d_i-d_j\ge2$，由 (a)，扭度 2 系数的改变是相对 $O(\frac{\Lambda^2}{Q^2}\ln^kQ)$ 的；单圈下 $\Lambda^2=Q^2\ee^{-4\pi/(\beta_0\as(Q))}$，而 $\lim_{\as\to0^+}\as^{-K}\ee^{-4\pi/(\beta_0\as)}=0$ 对每个 $K$ 成立，乘上 $\ln^kQ\sim\as^{-k}$ 仍然如此。
+\end{proof}
+
+重排与算符重整化群相容：$\Lambda$ 与 $\mu$ 无关，若 $\{O_i\}$ 的混合是三角形的（\cref{asm:intro-composite}(C1)），$\{O'_i\}$ 亦然，混合矩阵只经历一个与 $\mu$ 无关的三角形相似变换。数值例子（Adler 函数中胶子凝聚的定义与 $u=2$ 重整化子）见\cref{ex:power-renormalon-chain}。
+
+\begin{remark}[“实用 OPE”与重整化子吸收的两个猜想性成分]\label{rem:power-practical-ope}
+求和规则的实践\cite{ShifmanVainshteinZakharov1979a}引入因子化标度 $\Lambda\ll\mu_F\ll Q$，把圈动量 $|k|>\mu_F$ 的部分算进系数、$|k|<\mu_F$ 的部分算进凝聚；凝聚中正比于 $\mu_F^4$ 的项与单位算符系数中的 $\mu_F^4/Q^4$ 项相消\cite[第~2.3~节]{Beneke1999}。这一划分作为定义并不成立：它依赖于圈动量的取法，对胶子动量的硬截断又破坏规范不变性，而所需的规范不变光滑截断目前并不存在。维数正规化中没有幂次混合，取而代之的是系数级数中的红外重整化子（\cref{sec:power-renormalons}），不同求和处方相差 $(\Lambda^2/Q^2)^p\as(Q)^{-\gamma}[1+O(\as)]$ 型的项。把它吸收进高维算符的重新定义（\cref{prop:power-rearrangement}）恰好需要两个猜想性成分：其一，Borel 变换沿正实轴（在奇点附近绕行）可解析延拓，使 Borel 积分作为求和处方有定义；其二，重整化子留数可以因子化，其 $\as$ 依赖与高维算符系数的重整化群行为相匹配（\eqref{eq:power-rearr}中常数 $\kappa_{ij}$ 给出的 $Q$ 依赖 $\Lambda^{d_i-d_j}\tilde C'_i(Q)$ 必须与歧义的 $Q$ 依赖一致）。二者在大 $\beta_0$ 极限的已算例子中成立：Adler 函数 $u=2$ 处是单极点，与 $\as G^2$ 在该极限下无反常维度一致（\cref{prop:power-adler-large-beta0}）；DIS 纵向结构函数中扭度 2 系数的第一个红外重整化子与扭度 4 矩阵元的紫外重整化子精确相消\cite[第~4.2.2~节]{Beneke1999}。一般情形是 Mueller 与 David 的猜想（\cref{conj:power-renormalon-ht}）。
+\end{remark}
+
+%% ---------------------------------------------------------------------
+\section{重整化子}\label{sec:power-renormalons}
+
+除了图的数目随阶数阶乘增长之外，QCD 微扰级数还有一个更具体的发散机制：圈积分内部的跑动耦合。设某量在一阶上是 $\as\int_0^{Q^2}\dd k^2\,(k^2/Q^4)\cdots$，被积函数在软区按 $k^2/Q^2$ 变化；把圈内耦合换成 $\as(k^2)=\as\sum_n[\frac{\beta_0\as}{4\pi}\ln\frac{Q^2}{k^2}]^n$（$\as\equiv\as(Q^2)$）并逐项积分，$\int_0^{Q^2}\dd k^2\,k^2Q^{-4}\ln^n(Q^2/k^2)=n!/2^{n+1}$，第 $n+1$ 阶系数按 $n!(\beta_0/8\pi)^n$ 增长。这种由软（或硬）圈动量区产生的阶乘增长称为重整化子\cite{tHooft1979}；上面的级数不能被唯一地求和，其歧义恰为 $(\Lambda^2/Q^2)^2$ 量级。
+
+\begin{definition}[Borel 变换与重整化子]\label{def:power-borel}
+设 $R\simeq\sum_{n\ge0}r_n\as^{n+1}$ 是用 $\MSbar$ 耦合 $\as\equiv\as(\mu)$ 表示的形式幂级数。(i) 其 Borel 变换为 $B[R](t)\equiv\sum_nr_nt^n/n!$；若 $B[R]$ 在原点附近收敛、能沿 $[0,\infty)$ 解析延拓（至多绕过孤立奇点）且在无穷远处至多指数增长，则 $\tilde R\equiv\int_0^\infty\dd t\,\ee^{-t/\as}B[R](t)$ 称为 $R$ 的 Borel 积分。(ii) Borel 变量取为 $u\equiv\beta_0t/(4\pi)$（$\beta_0$ 见\cref{prop:prelim-beta}）。(iii) $B[R]$ 在 $u=u_0\ne0$ 处的奇点，若来自圈动量远小于（远大于）硬标度的区域，称为红外（紫外）重整化子；前者位于 $u_0>0$，后者位于 $u_0<0$。
+\uses{prop:prelim-beta,def:qcd-lambda}
+\end{definition}
+
+由 $\int_0^\infty\dd t\,\ee^{-t/\as}t^n/n!=\as^{n+1}$，Borel 积分存在时 $R$ 是它的渐近展开。单圈下 $\as(\mu)=4\pi/[\beta_0\ln(\mu^2/\Lambda^2)]$（\cref{def:qcd-lambda}），故
+\begin{equation}\label{eq:power-borel-lambda}
+\ee^{-t/\as(\mu)}=\exp\Big[-u\ln\frac{\mu^2}{\Lambda^2}\Big]=\Big(\frac{\Lambda^2}{\mu^2}\Big)^{u},
+\end{equation}
+即 Borel 平面上 $u=u_0$ 处的结构对应于 $(\Lambda^2/\mu^2)^{u_0}$。（采用 $\mu\,\dd\as/\dd\mu=-\beta_0'\as^2$、$\beta_0'=\beta_0/(2\pi)$ 并定义 $u=\beta_0't/2$，得到的是同一个 $u$；比较文献中的 Borel 平面时须先核对归一化，见第~23~章。）
+
+\begin{lemma}[极点、阶乘增长与 Borel 积分的歧义]\label{lem:power-borel-pole}
+设 $B[R]=K(u_0-u)^{-m-1}+\tilde B(u)$，$u_0\ne0$，整数 $m\ge0$，$\tilde B$ 在 $|u|<|u_0|+\eta$ 内解析。(a) 对任意 $0<\eta'<\eta$，
+\begin{equation*}
+r_n=\frac{K}{m!\,u_0^{m+1}}\,n!\,n^m\Big(\frac{\beta_0}{4\pi u_0}\Big)^n\big[1+O(n^{-1})\big]+O\Big(n!\Big(\frac{\beta_0}{4\pi(|u_0|+\eta')}\Big)^n\Big),
+\end{equation*}
+$u_0>0$ 时系数最终同号，$u_0<0$ 时正负交错。(b) 设 $u_0>0$，$B[R]$ 在正实轴的一个邻域中除 $u_0$ 外解析，且在无穷远处增长慢于 $\ee^{4\pi u/(\beta_0\as)}$；以在正实轴上方、下方绕过 $u_0$ 的路径 $C_\pm$ 定义 $\tilde R_\pm=\frac{4\pi}{\beta_0}\int_{C_\pm}\dd u\,\ee^{-4\pi u/(\beta_0\as)}B[R](u)$，则
+\begin{equation*}
+\tilde R_+-\tilde R_-=2\pi\ii\,\frac{4\pi}{\beta_0}\,\frac{K}{m!}\Big(\frac{4\pi}{\beta_0\as(\mu)}\Big)^m\ee^{-4\pi u_0/(\beta_0\as(\mu))}
+=2\pi\ii\,\frac{4\pi}{\beta_0}\,\frac{K}{m!}\ln^m\!\frac{\mu^2}{\Lambda^2}\Big(\frac{\Lambda^2}{\mu^2}\Big)^{u_0}
+\end{equation*}
+（后一式用了单圈的\eqref{eq:power-borel-lambda}）。
+\uses{def:power-borel}
+\end{lemma}
+
+\begin{proof}
+(a) $B[R]=\sum_nb_nu^n$ 与 $r_n=n!(\beta_0/4\pi)^nb_n$ 等价。$(u_0-u)^{-m-1}=u_0^{-m-1}\sum_n\binom{n+m}{m}(u/u_0)^n$ 给出极点部分 $b_n=K\binom{n+m}{m}u_0^{-n-m-1}$，而 $\binom{n+m}{m}=\frac{n^m}{m!}[1+O(1/n)]$；由 Cauchy 估计，$\tilde B$ 的 Taylor 系数为 $O((|u_0|+\eta')^{-n})$。(b) $C_+-C_-$ 是顺时针绕 $u_0$ 一周的闭路径。记 $w\equiv4\pi/(\beta_0\as)$，$\ee^{-wu}K(u_0-u)^{-m-1}$ 在 $u_0$ 的留数为 $(-1)^{m+1}\frac{K}{m!}\frac{\dd^m}{\dd u^m}\ee^{-wu}\big|_{u_0}=-\frac{K}{m!}w^m\ee^{-wu_0}$；顺时针积分为 $-2\pi\ii$ 乘留数，$\tilde B$ 不贡献。
+\end{proof}
+
+因此 $u_0>0$ 的红外重整化子同时意味着系数按 $n!(\beta_0/4\pi u_0)^n$ 不变号地增长，以及 Borel 积分有 $(\Lambda^2/Q^2)^{u_0}$ 量级（取 $\mu\sim Q$）、与求和处方有关的歧义；紫外重整化子给出交错增长，不在积分路径上。由 (a)，$|r_n\as^{n+1}|$ 在 $n\simeq4\pi u_0/(\beta_0\as)$ 处最小，其值正比于 $\ee^{-4\pi u_0/(\beta_0\as)}$：最小项处截断的误差与歧义同量级。
+
+\subsection{大 \texorpdfstring{$\beta_0$}{beta0} 极限中的 Adler 函数}
+
+Adler 函数 $D(Q^2)\equiv-12\pi^2Q^2\,\dd\Pi(-Q^2)/\dd Q^2$（\cref{def:ee-adler}）是有限的、只依赖于 $Q$ 的欧氏量，$D/R_0=1+\frac{3C_F}{4}\frac{\as}{\pi}+O(\as^2)$（$R_0=N_c\sum_qe_q^2$）。考虑\cref{fig:renormalon-chain}(b)：单胶子骨架图的胶子线上插入 $n$ 个费米子泡，它们在 $\as^{n+1}$ 阶恰好给出最高次幂 $n_f^n$。每个 $\MSbar$ 重整化的无质量夸克泡使胶子传播子的横向部分乘以
+\begin{equation}\label{eq:power-bubble}
+\bar\Pi(k^2)=\frac{\as T_Fn_f}{3\pi}\Big[\ln\frac{-k^2}{\mu^2}-\frac53\Big],\qquad -\frac53=6\int_0^1\!\dd x\,x(1-x)\ln[x(1-x)] .
+\end{equation}
+“大 $\beta_0$ 近似”（朴素非阿贝尔化）\cite{BenekeBraun1995a}对每个 $n$ 只保留 $n_f^n$ 项，再作替换 $T_Fn_f\to-\frac34\beta_0$；几何级数求和后
+\begin{equation}\label{eq:power-dressed}
+\frac{\as}{1-\bar\Pi}\;\longrightarrow\;\frac{\as(\mu)}{1+\frac{\beta_0\as(\mu)}{4\pi}\ln\frac{-k^2\ee^{-5/3}}{\mu^2}}=\as\big(-k^2\ee^{-5/3}\big)\quad(\text{单圈}),
+\end{equation}
+即胶子两端的耦合换成以 $-k^2\ee^{-5/3}$ 为标度的跑动耦合；纵向（规范相关）部分不被修饰，只在 $n=0$ 出现，并在 $D$ 中相消。对夸克圈动量与胶子动量的方向积分后，记 $\hat k^2\equiv-k^2/Q^2>0$，
+\begin{equation}\label{eq:power-F-rep}
+\frac{D}{R_0}-1=\sum_{n\ge0}\as\int_0^\infty\frac{\dd\hat k^2}{\hat k^2}\,F(\hat k^2)\Big[-\frac{\beta_0\as}{4\pi}\ln\frac{\hat k^2Q^2\ee^{-5/3}}{\mu^2}\Big]^n ,
+\end{equation}
+其中“胶子虚度分布” $F$ 满足 $\int_0^\infty\frac{\dd\hat k^2}{\hat k^2}F=\frac{3C_F}{4\pi}$，两端行为为\cite[式~(2.19)--(2.21)]{Beneke1999}
+\begin{equation}\label{eq:power-F-asym}
+F=\frac{3C_F}{2\pi}\hat k^4+O(\hat k^6\ln\hat k^2)\ \ (\hat k\to0),\qquad
+F=\frac{C_F}{3\pi}\,\frac{\ln\hat k^2+\frac56}{\hat k^2}+O\Big(\frac{\ln\hat k^2}{\hat k^4}\Big)\ \ (\hat k\to\infty).
+\end{equation}
+定义大 $\beta_0$ 系数 $\hat d_n$ 与归一化的 Borel 变换 $\hat B_D$：
+\begin{equation}\label{eq:power-dhat}
+\frac{D}{R_0}-1=\frac{3C_F}{4}\,\frac{\as}{\pi}\sum_{n\ge0}\hat d_n\Big(\frac{\beta_0\as}{4\pi}\Big)^n,\qquad
+B\Big[\frac{D}{R_0}-1\Big](t)=\frac{3C_F}{4\pi}\,\hat B_D(u),\qquad \hat B_D(u)=\sum_{n\ge0}\frac{\hat d_n}{n!}u^n ;
+\end{equation}
+用第~6~章的记号 $D/R_0=\sum_nd_na^n$（$a=\as/\pi$，$b_0=\beta_0/4$），$d_{n+1}\supset\frac{3C_F}{4}\hat d_n(-\frac{T_Fn_f}{3})^n$。
+
+%%% BEGIN fig:renormalon-chain
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 bubble/.pic={\draw[quark=0.55] (-0.25,0) arc[start angle=180,end angle=0,radius=0.25];
+                  \draw[quark=0.55] (0.25,0) arc[start angle=0,end angle=-180,radius=0.25];
+                  \node[t3 sv] at (-0.25,0) {}; \node[t3 sv] at (0.25,0) {};},
+  t3 sv/.style={circle,fill,draw=none,inner sep=0pt,minimum size=2.8pt},
+  t3 bracket/.style={draw=gray!55!black,line width=0.5pt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ============ (a) one-loop vertex with a dressed gluon ============
+  \begin{scope}
+    \coordinate (V) at (0,1.7);  \coordinate (Pin) at (-3.4,-1.0);  \coordinate (Pout) at (3.4,-1.0);
+    \coordinate (A) at (-2.38,-0.19);  \coordinate (B) at (2.38,-0.19);
+    \draw[photon] (0,2.95) -- (V);
+    \draw[quark] (Pin) -- (A);  \draw[quark] (A) -- (V);  \draw[quark] (V) -- (B);  \draw[quark] (B) -- (Pout);
+    \draw[gluon] (A) -- (-1.83,-0.19);  \pic at (-1.58,-0.19) {t3 bubble};
+    \draw[gluon] (-1.33,-0.19) -- (-0.78,-0.19);  \pic at (-0.53,-0.19) {t3 bubble};
+    \node[font=\small] at (0,-0.19) {$\cdots$};
+    \pic at (0.53,-0.19) {t3 bubble};  \draw[gluon] (0.78,-0.19) -- (1.33,-0.19);
+    \pic at (1.58,-0.19) {t3 bubble};  \draw[gluon] (1.83,-0.19) -- (B);
+    \foreach \p in {V,A,B} \node[vertex] at (\p) {};
+    \draw[t3 bracket] (-1.83,-0.6) -- (-1.83,-0.7) -- (1.83,-0.7) -- (1.83,-0.6);
+    \node[t3 note,below=1pt] at (0,-0.7) {$n$ 个费米子泡};
+    \node[t3 lab,right=1pt] at (0,2.75) {$\gamma^*$};
+    \path[mom={$k$},mom sep=0.3cm,mom pos=0.5] (A) -- (-1.83,-0.19);
+    \node[t3 lab] at (0,-1.65) {(a)};
+  \end{scope}
+  % ============ (b) Adler function: vacuum polarization with a dressed gluon ============
+  \begin{scope}[xshift=7.6cm]
+    \coordinate (L) at (-1.7,0); \coordinate (R) at (1.7,0);
+    \coordinate (T) at (0,1.55); \coordinate (Bm) at (0,-1.55);
+    \draw[photon] (-3.0,0) -- (L);  \draw[photon] (R) -- (3.0,0);
+    \draw[quark] (L) arc[start angle=180,end angle=90,x radius=1.7,y radius=1.55];
+    \draw[quark] (T) arc[start angle=90,end angle=0,x radius=1.7,y radius=1.55];
+    \draw[quark] (R) arc[start angle=0,end angle=-90,x radius=1.7,y radius=1.55];
+    \draw[quark] (Bm) arc[start angle=-90,end angle=-180,x radius=1.7,y radius=1.55];
+    \draw[gluon] (T) -- (0,1.1);  \pic[rotate=90] at (0,0.85) {t3 bubble};
+    \draw[gluon] (0,0.6) -- (0,0.22);
+    \node[font=\small] at (0,0) {$\vdots$};
+    \draw[gluon] (0,-0.22) -- (0,-0.6);  \pic[rotate=90] at (0,-0.85) {t3 bubble};
+    \draw[gluon] (0,-1.1) -- (Bm);
+    \foreach \p in {L,R,T,Bm} \node[vertex] at (\p) {};
+    \node[t3 lab,above=1pt] at (-2.45,0.08) {$j^\mu$};
+    \node[t3 lab,above=1pt] at (2.45,0.08) {$j^\nu$};
+    \path[mom'={$q$},mom sep=0.3cm,mom length=0.45cm] (-3.0,0) -- (L);
+    \node[t3 note,anchor=west] at (0.25,0) {$n$ 个泡};
+    \node[t3 lab] at (0,-2.1) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{重整化子链图（大 $\beta_0$ 近似）。胶子传播子插入 $n$ 个费米子泡：(a)~夸克--光子顶点的单圈修正；(b)~Adler 函数（流--流关联函数）中的相应图（另有两个自能型图，未画出）。
+在 $\MSbar$ 方案中每个泡给出因子 $\frac{\alpha_sT_Fn_f}{3\pi}\big[\ln\frac{-k^2}{\mu^2}-\frac53\big]$（相对于裸胶子传播子）；
+保留 $n_f$ 的最高次幂后作替换 $\frac43T_Fn_f\to-\beta_0$（“朴素非阿贝尔化”）并对 $n$ 求和，相当于把胶子两端的耦合换成以 $-k^2\ee^{-5/3}$ 为标度的单圈跑动耦合
+$\alpha_s(\mu)\big/\big[1+\frac{\beta_0\alpha_s(\mu)}{4\pi}\ln\frac{-k^2\ee^{-5/3}}{\mu^2}\big]$。
+固定 $n$ 时，圈积分中 $|k^2|\ll Q^2$ 的区域给出随 $n$ 阶乘增长的系数 $\sim n!\,\big(\frac{\beta_0}{4\pi p}\big)^n\alpha_s^{n+1}$（红外重整化子，$p=1,2,\dots$），相应 Borel 积分的不确定性 $\propto(\Lambda^2/Q^2)^p$，与高扭度贡献的量级相同；
+$|k^2|\gg Q^2$ 的区域给出符号交错的紫外重整化子（见正文）。}
+\label{fig:renormalon-chain}
+\end{figure}
+%%% END fig:renormalon-chain
+
+\begin{proposition}[大 $\beta_0$ 极限下的 Adler 函数 \tagP]\label{prop:power-adler-large-beta0}
+在大 $\beta_0$（泡链）近似中，即按\eqref{eq:power-F-rep}、\eqref{eq:power-dhat}的定义：
+(a)（闭式）在 $\MSbar$ 方案中，
+\begin{equation}\label{eq:power-adler-borel}
+\hat B_D(u)=\frac{32}{3(2-u)}\Big(\frac{\mu^2\ee^{5/3}}{Q^2}\Big)^{u}\sum_{k=2}^\infty\frac{(-1)^k\,k}{[k^2-(1-u)^2]^2}
+\end{equation}
+\cite[式~(5.10)]{Beneke1999}（原始推导见\cite{Beneke1993,Broadhurst1993}；$\ee^{5u/3}$ 即\eqref{eq:power-bubble}中的 $-\frac53$），它是 $u$ 的亚纯函数。
+(b)（红外重整化子）$\hat B_D$ 在 $u=2$ 有单极点，$\hat B_D\simeq2\ee^{10/3}(\mu^2/Q^2)^2/(2-u)$，在 $u=3,4,\dots$ 有二阶极点；在 $u=1$ 处没有极点，$\hat B_D(1)=(\frac{32}{3}-8\zeta_3)\ee^{5/3}\mu^2/Q^2$——这与\cref{thm:ee-ope}的 OPE 中不存在量纲为 2 的规范不变算符相一致。
+(c)（$u=2$ 与胶子凝聚）$u=2$ 的极点来自 $F$ 的 $\hat k^4$ 项，而这一项恰好等于 OPE 中 $\langle\frac{\as}{\pi}G^2\rangle/Q^4$ 的系数 $2\pi^2/N_c$ 乘以自由胶子场在软动量区的凝聚密度；相应的 Borel 积分歧义 $\pm\ii\pi\frac{6C_F}{\beta_0}\ee^{10/3}\frac{\Lambda^4}{Q^4}$（$\mu=Q$，单圈 $\Lambda$）与 $\frac{2\pi^2}{N_c}\langle\frac{\as}{\pi}G^2\rangle/Q^4$ 形式相同。
+(d)（紫外重整化子）$\hat B_D$ 在 $u=-1,-2,\dots$ 有二阶极点，$u\to-1$ 时 $\hat B_D\simeq\ee^{-5/3}\frac{Q^2}{\mu^2}\big[\frac{4/9}{(1+u)^2}+\frac{10/9+\frac49\ln(\mu^2/Q^2)}{1+u}\big]$；它们给出正负交错的阶乘增长，在 $\mu=Q$ 处支配 $\hat d_n$ 的大阶行为，且不在 Borel 积分路径上。
+（本命题只涉及微扰级数。）
+\uses{def:power-borel,lem:power-borel-pole,def:ee-adler,thm:ee-ope}
+\end{proposition}
+
+\begin{proof}
+\emph{Borel 变换即 Mellin 变换。}对\eqref{eq:power-F-rep}逐项作 Borel 变换，$\sum_n[-\frac{\beta_0}{4\pi}L]^nt^n/n!=\ee^{-uL}$（$L\equiv\ln(\hat k^2Q^2\ee^{-5/3}/\mu^2)$），故
+\begin{equation}\label{eq:power-mellin}
+B\Big[\frac{D}{R_0}-1\Big](u)=\Big(\frac{\mu^2\ee^{5/3}}{Q^2}\Big)^u\int_0^\infty\frac{\dd\hat k^2}{\hat k^2}F(\hat k^2)\,(\hat k^2)^{-u}.
+\end{equation}
+由\eqref{eq:power-F-asym}，积分在 $-1<\Real u<2$ 中绝对收敛；对 $|u|<1$，$\sum_n|uL|^n/n!=\ee^{|u||L|}$ 乘 $F$ 可积，求和与积分可交换，再解析延拓到整个带域。这一 Mellin 变换已被精确算出，结果即\eqref{eq:power-adler-borel}\cite{Beneke1993,Broadhurst1993,Beneke1999}，这是 (a)。
+
+\emph{奇点。}令 $a=1-u$。由 $\frac{k}{(k^2-a^2)^2}=\frac1{4a}\big[\frac{1}{(k-a)^2}-\frac{1}{(k+a)^2}\big]$ 与 $\sum_{j\ge0}\frac{(-1)^j}{(j+c)^2}=\frac14\big[\psi'(\frac c2)-\psi'(\frac{c+1}2)\big]$，
+\begin{equation}\label{eq:power-S-trigamma}
+S(u)\equiv\sum_{k\ge2}\frac{(-1)^kk}{[k^2-(1-u)^2]^2}=\frac{\psi'(\frac{1+u}2)-\psi'(\frac{2+u}2)-\psi'(\frac{3-u}2)+\psi'(\frac{4-u}2)}{16(1-u)}.
+\end{equation}
+$\psi'$ 只在非正整数处有二阶极点，故 $S$ 的奇点是 $u=-1,-2,\dots$ 与 $u=3,4,\dots$ 处的二阶极点：在 $u=1\pm k$（$k\ge2$）附近第 $k$ 项 $\simeq\frac{(-1)^k}{4k(u-1\mp k)^2}$，系数非零。$u=1$ 时分子为零，奇点可去，$S(1)=\sum_{k\ge2}(-1)^k/k^3=1-\frac34\zeta_3$。前置因子 $\frac{1}{2-u}$ 在 $u=2$ 给出单极点，$S(2)=\frac3{16}\ne0$，留数为 $\frac{32}{3}\cdot\frac{3}{16}\ee^{10/3}(\mu^2/Q^2)^2$。在 $u=-1$ 处作 Laurent 展开（$\frac{32}{9}\cdot\frac18=\frac49$），$(\mu^2\ee^{5/3}/Q^2)^u$ 的展开贡献 $\ln(\mu^2\ee^{5/3}/Q^2)$ 乘双极点系数，得 (d) 中的形式；由\cref{lem:power-borel-pole}(a)，离原点最近的 $u=-1$ 支配大阶行为。这就证明了 (b)(d)。
+
+\emph{$u=2$ 的来源。}若 $F=c_2\hat k^4+o(\hat k^4)$，则 $\int_0^1\frac{\dd\hat k^2}{\hat k^2}c_2\hat k^{4-2u}=\frac{c_2}{2-u}$：$u=2$ 的单极点完全来自软胶子区，$\frac{3C_F}{4\pi}\cdot2\ee^{10/3}=c_2\ee^{10/3}$ 给出 $c_2=\frac{3C_F}{2\pi}$，与\eqref{eq:power-F-asym}一致；$u=1$ 的极点需要 $F$ 中的 $\hat k^2$ 项，而软展开从 $\hat k^4$ 开始。按\cref{thm:ee-ope}，$D/R_0$ 中胶子凝聚项为 $\frac{2\pi^2}{N_c}\langle\frac{\as}{\pi}G^2\rangle/Q^4$（由 $\Pi(-Q^2)\supset\sum_qe_q^2\langle\frac{\as}{\pi}G^2\rangle/(12Q^4)$）。用自由欧氏传播子 $\delta^{ab}(\delta_{\mu\nu}-k_\mu k_\nu/k^2)/k^2$ 计算软区凝聚，
+\begin{equation}\label{eq:power-soft-condensate}
+\langle G^a_{\mu\nu}G^a_{\mu\nu}\rangle_{\mathrm{soft}}=2(N_c^2-1)\!\int\!\frac{\dd^4k}{(2\pi)^4}\,\frac{3k^2}{k^2}=\frac{3(N_c^2-1)}{8\pi^2}\!\int\!\dd k^2\,k^2,
+\qquad
+\frac{2\pi^2}{N_c}\,\frac{\as}{\pi}\,\frac{\langle G^2\rangle_{\mathrm{soft}}}{Q^4}=\as\,\frac{3C_F}{2\pi}\!\int\!\frac{\dd\hat k^2}{\hat k^2}\hat k^4
+\end{equation}
+（$N_c^2-1=2N_cC_F$，$\dd^4k=\pi^2k^2\dd k^2$），正是\eqref{eq:power-F-rep}中 $n=0$ 项的软区部分；歧义由\cref{lem:power-borel-pole}(b)（$m=0$，$u_0=2$，$K=\frac{3C_F}{4\pi}\cdot2\ee^{10/3}(\mu^2/Q^2)^2$）得到。这就证明了 (c)。
+\end{proof}
+
+\paragraph{地位与缺口}
+只有大 $\beta_0$ 极限是确立的（\tagP）：泡链是规范不变的图类，$\hat d_n$ 精确给出 $n_f^n$ 项，但替换 $T_Fn_f\to-\frac34\beta_0$ 是没有全阶控制的近似；在它之外，极点变成强度依赖于反常维度与 $\beta_1$ 的割线，还会出现新的奇点\cite[第~3~节]{Beneke1999}。闭式\eqref{eq:power-adler-borel}取自文献，其转录由\cref{ex:power-renormalon-chain}(iii) 中与独立计算的精确比较核对。把 $u=2$ 的歧义解释为真空胶子凝聚的不确定性需要非微扰 OPE（\cref{conj:ee-np-ope}，\tagC；\cref{asm:intro-np-ope}）；重整化子只告诉我们幂次修正如何随 $Q$ 变化，不给出其大小\cite[第~4.2.1~节]{Beneke1999}。升级途径：在泡链之外确定奇点的完整结构。
+
+%%% BEGIN fig:power-borel-plane
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1.3cm,y=1cm,
+  fd2 pole/.pic={\draw[line width=1.05pt,line cap=round] (-0.09,-0.09)--(0.09,0.09) (-0.09,0.09)--(0.09,-0.09);},
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 contour/.style={draw=#1,line width=1.0pt,postaction={decorate,decoration={markings,
+      mark=at position 0.5 with {\arrow{Stealth[length=5.5pt,width=4.6pt]}}}}},
+  fd2 pointer/.style={draw=#1,line width=0.45pt,-{Stealth[length=3.5pt,width=3pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % axes
+  \draw[fd2 ax] (-3.75,0) -- (6.05,0) node[right] {$\Real u$};
+  \draw[fd2 ax] (0,-0.75) -- (0,1.75) node[left] {$\Imag u$};
+  \foreach \u in {-3,-2,-1,1,2,3,4,5} \draw[gray!60!black,line width=0.4pt] (\u,-0.05) -- (\u,0.05);
+  \foreach \u in {-3,-2,-1,1,2,3,4,5} \node[fd2 note] at (\u,-0.5) {$\u$};
+  \node[fd2 note,anchor=north east] at (-0.03,-0.04) {$0$};
+  % Borel integration paths above and below the positive axis
+  \draw[fd2 contour=blue!60!black] (0,0) .. controls (0.3,0.22) and (0.55,0.24) .. (0.9,0.24) -- (5.5,0.24);
+  \draw[fd2 contour=blue!60!black] (0,0) .. controls (0.3,-0.22) and (0.55,-0.24) .. (0.9,-0.24) -- (5.5,-0.24);
+  \node[fd2 lab,text=blue!50!black,anchor=west] at (5.5,0.28) {$C_+$};
+  \node[fd2 lab,text=blue!50!black,anchor=west] at (5.5,-0.28) {$C_-$};
+  % IR renormalons (u = 2,3,...), UV renormalons (u = -1,-2,...), no pole at u = 1
+  \foreach \u in {2,3,4,5} \pic[red!70!black] at (\u,0) {fd2 pole};
+  \foreach \u in {-1,-2,-3} \pic[gray!55!black] at (\u,0) {fd2 pole};
+  \draw[line width=0.9pt,fill=white] (1,0) circle[radius=0.085];
+  % annotations
+  \node[fd2 note,text=red!60!black] at (3.5,0.72) {红外重整化子：$u=2,3,\dots$};
+  \node[fd2 note,align=center,text=gray!40!black] at (-1.95,0.82) {紫外重整化子：$u=-1,-2,\dots$\\（符号交错，不在积分路径上）};
+  \draw[fd2 pointer=gray!60!black] (0.78,-1.02) -- (0.97,-0.12);
+  \node[fd2 note,anchor=north east] at (0.95,-0.98) {无 $u=1$ 极点：不存在量纲为 2 的规范不变算符};
+  \draw[fd2 pointer=red!60!black] (2.12,-1.0) -- (2.02,-0.12);
+  \node[fd2 note,align=left,anchor=north west,text=red!50!black] at (1.75,-0.96) {$u=2$：沿 $C_+$ 与 $C_-$ 积分之差 $\propto(\Lambda^2/Q^2)^2$，\\对应 OPE 中的凝聚项 $\langle\frac{\alpha_s}{\pi}G^2\rangle/Q^4$};
+  \node[fd2 lab] at (1.15,-2.7) {$D(Q^2)=\displaystyle\int_0^\infty\!\dd t\,\ee^{-t/\alpha_s(Q)}B[D](t)$，\quad $u=\dfrac{\beta_0t}{4\pi}$，\quad $\ee^{-t/\alpha_s(Q)}=\Big(\dfrac{\Lambda^2}{Q^2}\Big)^{u}$};
+\end{tikzpicture}
+\caption{大 $\beta_0$（泡链）近似下 Adler 函数 $D(Q^2)$ 的 Borel 平面（\cref{prop:power-adler-large-beta0}，部分 [P]；Borel 变换按\cref{def:power-borel}：$R=\sum_nr_n\alpha_s^{n+1}$，$B[R](t)=\sum_nr_nt^n/n!$，$u=\beta_0t/(4\pi)$，单圈跑动下 $\ee^{-t/\alpha_s(Q)}=(\Lambda^2/Q^2)^u$）。
+红外重整化子极点位于正实轴 $u=2,3,\dots$（红叉），使沿正实轴的 Borel 积分不确定：绕到极点上方（$C_+$）或下方（$C_-$）的两种积分之差在 $u=u_0$ 处正比于 $(\Lambda^2/Q^2)^{u_0}$。
+$u=1$ 处没有极点（空心圆），这与不存在量纲为 2 的规范不变算符相一致；$u=2$ 的极点与 OPE 中的胶子凝聚项 $\langle\frac{\alpha_s}{\pi}G^2\rangle/Q^4$ 相对应。紫外重整化子位于 $u=-1,-2,\dots$（灰叉）。
+只有大 $\beta_0$ 极限中的这一结构是确立的；红外重整化子与高扭度之间的一般对应是猜想（\cref{conj:power-renormalon-ht}，[C]）。}
+\label{fig:power-borel-plane}
+\end{figure}
+%%% END fig:power-borel-plane
+
+\begin{example}[带 $n$ 个费米子泡的单胶子]\label{ex:power-renormalon-chain}
+\emph{(i) 阶乘从哪里来。}取 $\mu=Q$，\eqref{eq:power-F-rep}的第 $n$ 项为 $\as^{n+1}(\frac{\beta_0}{4\pi})^n\int\frac{\dd\hat k^2}{\hat k^2}F\,(-L)^n$，$L=\ln\hat k^2-\frac53$。软区 $F\simeq\frac{3C_F}{2\pi}\ee^{2L+10/3}$ 给出 $\frac{3C_F}{2\pi}\ee^{10/3}\int_{-\infty}\dd L\,\ee^{2L}(-L)^n=\frac{3C_F}{2\pi}\ee^{10/3}\frac{n!}{2^{n+1}}$，即 $\hat d_n\supset\ee^{10/3}n!/2^n$（不变号，$u=2$ 的单极点）；硬区 $F\simeq\frac{C_F}{3\pi}(L+\frac52)\ee^{-L-5/3}$ 给出 $\frac{C_F}{3\pi}\ee^{-5/3}\int^\infty\dd L\,\ee^{-L}(L+\frac52)(-L)^n=\frac{C_F}{3\pi}\ee^{-5/3}(-1)^nn!(n+\frac72)$，即 $\hat d_n\supset\frac49\ee^{-5/3}(-1)^nn!(n+\frac72)$（交错；因子 $n$ 反映二阶极点，$n+\frac72=(n+1)+\frac52$ 中的 $\frac52$ 是 (d) 中两系数之比 $\frac{10/9}{4/9}$）。二者是\cref{lem:power-borel-pole}(a) 在 $(u_0,m)=(2,0)$ 与 $(-1,1)$ 时的具体形式。
+
+\emph{(ii) 数值。}\cref{tab:power-adler-coeffs}列出 $\hat d_n$ 以及 $u=-1,2,-2$ 三个极点的 Laurent 主部的贡献：$n\lesssim5$ 处红外与紫外贡献大量相消，$n\gtrsim6$ 后 $u=-1$ 的交错增长占主导。
+
+\begin{table}[htbp]
+\centering\small
+\caption{大 $\beta_0$ 极限中 Adler 函数的系数（$\MSbar$，$\mu=Q$）。“UV$(-1)$”“IR$(2)$”“UV$(-2)$”是\eqref{eq:power-adler-borel}在相应极点处的 Laurent 主部对 $\hat d_n$ 的贡献（与\cite[表~5]{Beneke1999}一致）；最后两列是 $n_f=3$ 时 $D/R_0$ 中 $a^{n+1}$（$a=\as/\pi$）的系数：大 $\beta_0$ 近似 $\frac{3C_F}{4}\hat d_n(\beta_0/4)^n$ 与精确值。}
+\label{tab:power-adler-coeffs}
+\begin{tabular}{@{}rrrrrrr@{}}
+\toprule
+$n$ & $\hat d_n$ & UV$(-1)$ & IR$(2)$ & UV$(-2)$ & 大 $\beta_0$（$n_f=3$） & 精确（$n_f=3$）\\
+\midrule
+0 & 1 & 0.294 & 28.03 & $-0.011$ & 1 & 1 \\
+1 & 0.6918 & $-0.378$ & 14.02 & 0.006 & 1.556 & 1.640 \\
+2 & 3.1034 & 0.923 & 14.02 & $-0.007$ & 15.71 & 6.371 \\
+3 & 2.1800 & $-3.274$ & 21.02 & 0.013 & 24.83 & 49.08 \\
+4 & 30.740 & 15.11 & 42.05 & $-0.028$ & 787.8 & --- \\
+5 & $-34.534$ & $-85.62$ & 105.1 & 0.078 & $-1991$ & --- \\
+6 & 759.74 & 574.2 & 315.4 & $-0.256$ & $9.857\times10^4$ & --- \\
+7 & $-3691.4$ & $-4442$ & 1104 & 0.975 & $-1.078\times10^6$ & --- \\
+8 & 42251 & 38923 & 4415 & $-4.214$ & $2.775\times10^7$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\emph{(iii) 闭式的独立核对。}由\eqref{eq:power-adler-borel}得 $\hat d_1=\frac{11}{2}-4\zeta_3$、$\hat d_2=\frac{302}{9}-\frac{76}{3}\zeta_3$、$\hat d_3=\frac{6131}{27}-\frac{406}{3}\zeta_3-60\zeta_5$。对 SU(3)，$\hat d_n(-\frac{n_f}6)^n$ 应等于 $d_{n+1}$ 中的 $n_f^n$ 项：$n=1$ 给出 $-(\frac{11}{12}-\frac23\zeta_3)n_f$，即 $r_2=d_2$ 的 $n_f$ 项（\cref{cor:ee-R-alphas}）；$n=2$ 给出 $(\frac{151}{162}-\frac{19}{27}\zeta_3)n_f^2$，经 $r_3=d_3-\frac{\pi^2}{3}b_0^2d_1$ 得 $r_3$ 的 $n_f^2$ 项 $-0.00518$，与三圈结果\cite{GorishniiKataevLarin1991,SurguladzeSamuel1991}一致（数值形式见\cite[式~(5)]{BaikovChetyrkinKuhn2008}）；$n=3$ 给出 $(-\frac{6131}{5832}+\frac{203}{324}\zeta_3+\frac5{18}\zeta_5)n_f^3$，与 $O(\as^4)$ 计算中的 $n_f^3$ 项\cite[式~(4)]{BaikovChetyrkinKuhn2008}精确相同；$\hat d_0,\dots,\hat d_8$ 与\cite[表~4]{Beneke1999}一致。表的最后两列显示近似本身的质量：$a^2$ 处很好，$a^3$ 处高估一倍多，$a^4$ 处低估约一半（精确值取自 $r_2$ 的公式、\cite[表~4]{Beneke1999}与\cite[式~(8)]{BaikovChetyrkinKuhn2008}）。
+
+\emph{(iv) 歧义与凝聚的定义。}由 (c)，$u=2$ 歧义的量度（虚部除以 $\pi$）是 $\frac{6C_F}{\beta_0}\ee^{10/3}\Lambda^4/Q^4$；取 $n_f=3$、$\Lambda=215\,\mathrm{MeV}$（由 $\as(m_\tau)=0.33$ 的单圈关系，\cite[脚注~42]{Beneke1999}），得 $0.053\,\mathrm{GeV}^4/Q^4$（同一表达式见\cite[式~(5.12)]{Beneke1999}），等价于把 $\langle\frac{\as}{\pi}G^2\rangle$ 改变 $0.008\,\mathrm{GeV}^4$；唯象的胶子凝聚项约为 $0.08\,\mathrm{GeV}^4/Q^4$\cite[式~(5.13)]{Beneke1999}，即 $\langle\frac{\as}{\pi}G^2\rangle\approx0.012\,\mathrm{GeV}^4$。二者同量级：在这一近似中，“胶子凝聚”的定义本身就有与其大小相当的歧义。这正是\cref{prop:power-rearrangement}的重排 $O_G'=O_G+\kappa\Lambda^4\mathbb 1$：$\as G^2$ 在大 $\beta_0$ 极限中没有反常维度，单极点的歧义恰好正比于 $\Lambda^4/Q^4$，常数 $\kappa$ 就足以吸收它。
+
+\emph{(v) 类时量。}$\hat B_D$ 对 $Q$ 的依赖只是 $(Q^2)^{-u}$；由围道公式（\cref{prop:ee-contour}）与 $\frac1{2\pi}\int_{-\pi}^{\pi}\dd\theta\,\ee^{-\ii u\theta}=\frac{\sin\pi u}{\pi u}$，$B[R](u)=\frac{\sin\pi u}{\pi u}B[D](u)$\cite[式~(5.15)]{Beneke1999}，$u=2$ 的单极点被消去。这是近似的人为结果：在它之外奇点是割线，延拓到闵氏区只削弱而不消除它们\cite[第~5.2.1~节]{Beneke1999}。（(i)--(v) 中的数值与恒等式均用高精度数值与符号计算核对过。）
+\uses{prop:power-adler-large-beta0,prop:ee-contour}
+\end{example}
+
+\subsection{其他过程与可解模型}
+
+若单胶子被积函数在软区按 $\hat k^{2p}$ 变化，红外重整化子就位于 $u=p$，相应的幂次修正为 $(\Lambda^2/Q^2)^p$；线性红外敏感的量（$p=\frac12$）有 $\Lambda/Q$ 修正。
+
+\begin{proposition}[若干过程中的重整化子与幂次修正 \tagP]\label{prop:power-renormalon-examples}
+在大 $\beta_0$（泡链）近似中：(a) DIS 非单态结构函数（$F_1,F_2,F_3,g_1$）的系数函数中，泡链只产生 $1/Q^2$ 与 $1/Q^4$ 两种幂次修正\cite{DasguptaWebber1996}；(b) 单举 Drell--Yan 在保留阈值重求和指数的全部高阶项之后，$u=\frac12$ 的极点相消，没有 $1/Q$ 修正，领头幂次修正在矩空间中为 $N^2\Lambda^2/Q^2$\cite{BenekeBraun1995b}（对比：\cite{Korchemsky:1994is}在重求和截面中得到 $1/Q$ 修正）；(c) $e^+e^-$ 碎裂中纵向与横向截面各有 $1/Q$ 修正，在总截面中相消（在紫外主导的假设下）\cite{BenekeBraunMagnea1997}；(d) 事件形状的平均值有 $1/Q$ 修正\cite{DokshitzerWebber1995}，锥形喷注截面的非微扰修正按 $1/(Q\delta)$ 变化\cite{Korchemsky:1994is}；(e) 重夸克极点质量在 $u=\frac12$ 有红外重整化子，其歧义正比于 $\Lambda$\cite{Bigi:1994em,Beneke:1994sw}；(f) 对准部分子分布，重整化子方法给出领头幂次修正的 $x$ 依赖，其大小受归一化程序的强烈影响\cite{Braun:2018brg}。此外：(g) 格点 plaquette 的微扰级数（计算到 $O(\alpha^{35})$）清楚地显示出量纲 4 重整化子（与胶子凝聚相联系）对高阶增长的主导\cite{Bali:2014fea}；(h)（已证明的模型情形）二维 $O(N)$ 非线性 $\sigma$ 模型的 $1/N$ 展开中，重整化子在算符展开的不同项之间相消，给出无歧义的求和\cite{David:1982qv}（综述\cite{Novikov:1984ac}），在 $1/N$ 的次领头阶，自能的 OPE 对耦合的所有阶得到，没有 OPE 之外的“非标准”幂次修正\cite{Beneke:1998eq}；(i)（构造性结果）二维有质量 Gross--Neveu 模型可以被完全构造，其 Schwinger 函数满足 Osterwalder--Schrader 公理，并且是重整化微扰级数的 Borel 和\cite{Feldman:1986ax}，另见借助收敛的微扰展开对其连续极限的控制\cite{Gawedzki:1985ez}。
+（本命题是关于大 $\beta_0$ 近似中的微扰级数、格点数值与可解模型的陈述。）
+\uses{def:power-borel,lem:power-borel-pole,prop:power-adler-large-beta0}
+\end{proposition}
+
+\begin{proofsketch}
+(a)--(f) 都是单胶子加泡链的分析：耦合换成 $\as(-k^2\ee^{-5/3})$（\eqref{eq:power-dressed}），Borel 变换把胶子传播子变成 $(-k^2)^{-1-u}$ 型的解析正规化形式（与\eqref{eq:power-mellin}同理），红外重整化子的位置由被积函数的软区幂次决定（\cref{lem:power-borel-pole}）。以极点质量为例：$k\ll m$ 区的单圈自能等价于静态色荷的 Coulomb 自能，$\delta m_{\mathrm{IR}}=\frac12\int\frac{\dd^3k}{(2\pi)^3}\frac{4\pi C_F\as}{\mathbf k^2}=\frac{C_F}{\pi}\int\dd k\,\as$；$\as\to\as(k^2\ee^{-5/3})$ 后其 Borel 变换为 $\frac{C_F}{\pi}\int_0\dd k\,(k^2\ee^{-5/3}/\mu^2)^{-u}$，而 $\int_0^{k_0}\dd k\,k^{-2u}=k_0^{1-2u}/(1-2u)$ 在 $u=\frac12$ 有极点，$B\simeq\frac{C_F\ee^{5/6}\mu}{2\pi}(\frac12-u)^{-1}$。由\cref{lem:power-borel-pole}，$r_n\simeq\frac{C_F\ee^{5/6}}{\pi}\mu\,n!(\frac{\beta_0}{2\pi})^n$（与\cite[式~(5.84)]{Beneke1999}一致），歧义（虚部除以 $\pi$）为 $\frac{2C_F}{\beta_0}\ee^{5/6}\Lambda$——来自大距离上的 Coulomb 场能。其余：(b) 见\cite{BenekeBraun1995b}与\cite[第~5.3.4~节]{Beneke1999}；(h) 在 $1/N$ 展开中可显式看到凝聚定义的歧义与系数函数的歧义相消\cite{David:1982qv,Beneke:1998eq}（\cite[第~4.1~节]{Beneke1999}）；(g)(i) 及其余各项见所引文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+(a)--(f) 是大 $\beta_0$ 近似中的陈述（\tagP），泡链之外没有控制，其中几项另有前提：(c) 依赖紫外主导的假设，(d) 中 Dokshitzer--Webber 的结果依赖红外正则的有效耦合这一模型假设；(b) 在文献中有过争论（\cite{Korchemsky:1994is}与\cite{BenekeBraun1995b}结论不同），大 $\beta_0$ 的结果是证据而非证明，所以“Drell--Yan 的幂次修正是 $1/Q^2$”作为定理是猜想。(g) 是格点数值证据。(h)(i) 是二维渐近自由、有动力学质量产生的模型中的结果，不是 QCD，作为关于 QCD 的陈述只是 \tagP（Gross--Neveu 模型的构造性结果只在其摘要的层次上引用）。前沿结果：Wilson 线自能的线性重整化子与领头重整化子重求和见第~22~章（\cref{prop:lamet-lrr,prop:lamet-bvz}），Gross--Neveu 与 $O(N)$ 模型中扭度展开的收敛与发散见第~23~章（\cref{thm:yzliu-gn-convergence,prop:yzliu-on-factorial}）。
+
+\begin{conjecture}[红外重整化子与高扭度的一般对应 \tagC]\label{conj:power-renormalon-ht}
+设一个可观测量具有 OPE（或扭度展开）$T(Q)\simeq\sum_i\tilde C_i(Q,\as)\langle\!\langle O_i\rangle\!\rangle$，$\tilde C_i\propto Q^{2-d_i}\times$（$\as(Q)$ 的级数）。若扭度最低项的系数级数在 $u=p>0$ 处有红外重整化子，则：(i) 展开中存在量子数相同、量纲高 $2p$ 的算符；(ii) 对系数级数的每一种容许的求和处方，都有高维算符矩阵元的相应定义，使处方依赖在和中逐个幂次地相消——即领头扭度系数函数的红外重整化子歧义与高扭度矩阵元的紫外歧义一一对应地相消\cite{Mueller1985,David:1983gz,David:1985xj,Novikov:1984rf,tHooft1979}。
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}（MA0、MA4）。
+\uses{prop:power-renormalon-examples,rem:power-practical-ope,asm:intro-wightman,asm:intro-composite,asm:intro-np-ope,asm:intro-af-coeff}
+\end{conjecture}
+
+\paragraph{地位与缺口}
+QCD 中没有 OPE 的非微扰定义（\cref{asm:intro-np-ope}，\cref{conj:ee-np-ope}），(ii) 中“矩阵元的相应定义”在 QCD 中无从谈起。这一对应只在以下情形中确立：大 $\beta_0$ 极限中的 Adler 函数（\cref{prop:power-adler-large-beta0}(c)，\cref{ex:power-renormalon-chain}(iv)）与 DIS 纵向结构函数\cite[第~4.2.2~节]{Beneke1999}，以及二维 $O(N)$ $\sigma$ 模型的大 $N$ 展开（\cref{prop:power-renormalon-examples}(h)）。Mueller 分析了红外重整化子可能的位置，并发现对某些红外安全量非微扰修正按 $1/Q^4$ 消失\cite{Mueller1985}；David 指出定域算符的真空期望值一般不能被无歧义地定义，并讨论了这对 OPE 地位的影响\cite{David:1983gz,David:1985xj}；Novikov 等人在若干模型中给出用辅助归一化点无歧义地定义系数与矩阵元的程序\cite{Novikov:1984rf}。在大 $\beta_0$ 之外，(i) 要求奇点的类型与高维算符的反常维度相容，这只在个别情形中被检查过\cite[第~5.2.1~节]{Beneke1999}。升级途径：QCD 中非微扰 OPE 的定义（第~25~章的开放问题）。
+
+%% ---------------------------------------------------------------------
+\section{非微扰地位与可解模型}\label{sec:power-np}
+
+领头幂次之外的一切，最终都依赖于我们对 QCD 非微扰结构的了解。本节先集中说明全书的非微扰地位，再介绍三个能真正非微扰地检验 OPE 与部分子图像的“实验室”。
+
+\begin{remark}[非微扰地位]\label{rem:power-np-status}
+\begin{enumerate}[label=(\roman*),leftmargin=1.8em,itemsep=1pt,topsep=2pt]
+\item 本书的每个因子化定理，要么是重整化微扰论中关于红外正规化的部分子态的陈述（\tagR，$R_{\mathrm{PT}}$，或 \tagA），要么是关于微扰论加编号假设 \cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}、\cref{asm:intro-growth}、\cref{asm:intro-bridge} 的陈述（\cref{def:intro-MA}）。QCD 尚未作为四维量子场论被构造（四维 Yang--Mills 理论的存在性与质量间隙是千禧年问题之一），所以“对强子严格”永远意味着“在所列非微扰假设之下证明完整”（$R_{\mathrm{cond}}$），[R] 本身从不意味着对真实世界 QCD 的数学证明。% M28
+\item 在\cref{asm:intro-wightman}之下有真正的非微扰定理：谱函数的解析性与正定性（\cref{prop:ee-analytic}）、有限减除色散关系（\cref{prop:dis-dispersion-np}），以及另加非微扰 OPE 的 DIS 矩定理（\cref{thm:dis-moments-np}）；部分子分布的支撑（\cref{prop:pdf-support-hadron}，\tagA）与求和规则（\cref{prop:pdf-sum-rules}）也属于这一层次。最干净的非微扰连接是定域扭度 2 矩阵元的格点计算（第~22~章的\cref{prop:lattice-moments}）：它提供矩阵元，不检验强子截面的因子化。
+\item 幂次压低的逐阶含义：每一阶的余项在积分范数下被 $O(\lambda^aL^K)$ 控制并对维数正规子一致（\cref{def:method-power-suppressed}），常数随阶数增长，这些界不能对 $\as$ 求和；展开是渐近的，而重整化子表明微扰级数与幂次修正不能被干净地分开。
+\item 一般方法给出的指数可以远非最优。单圈离壳三角图中，一般估计（\cref{lem:appN-error-table}）在软区只保证相对 $O(\lambda^{1/9})$ 的误差，而精确余项是完整的一个幂次、次领头幂次无对数：$\int r=-\frac{4m^2}{Q^4}+\frac{m^4}{Q^6}(L^2-15+\frac{\pi^2}{3})+O(\frac{m^6}{Q^8}L^2)$，$L=\ln(Q^2/m^2)$（\cref{prop:appN-triangle-exact}(d)）；在纤维化积分范数下余项被 $C\lambda^2L^2$ 控制（\cref{prop:appN-triangle-cs}）。
+\item 公理化场论中，OPE 可在一个相空间条件下被非微扰地导出\cite{Bostelmann:2005rr}（据该文摘要），该条件对 QCD 尚未建立。
+\item 非微扰效应可以对 $\as$ 的任何幂次都不可见：瞬子贡献 $\propto\ee^{-2\pi/\as(Q)}=(\Lambda/Q)^{\beta_0}$（单圈），对偶性破坏在 OPE 的幂次展开中不可见（\cref{conj:ee-duality}）；二者与\cref{asm:intro-af-coeff}作为渐近陈述相容。
+\item 可解模型给出相反的教训：二维 $U(N)$ Gross--Neveu 模型中扭度展开在 $1/N$ 的领头阶绝对收敛，而超可重整的二维 $O(N)$ 模型中动量空间的幂次展开因阶乘增强而发散、坐标空间的展开收敛（第~23~章的\cref{thm:yzliu-gn-convergence,prop:yzliu-on-factorial}）。它们是模型结果，不证明 QCD 中扭度展开的收敛或发散。
+\end{enumerate}
+\end{remark}
+
+\subsection{微扰 \texorpdfstring{$\varphi^4_4$}{phi4} 中 OPE 的收敛}
+
+\begin{theorem}[微扰 $\varphi^4_4$ 中 OPE 的收敛性 \tagR]\label{thm:power-ope-convergence}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（本定理只涉及 $\varphi^4_4$ 模型的微扰论。）考虑四维欧氏空间中质量 $m>0$ 的厄米标量场 $g\varphi^4$ 理论，取定圈数 $l$。复合场 $O_A=\partial^{w_1}\varphi\cdots\partial^{w_n}\varphi$ 的量纲为 $[A]=n+\sum_i|w_i|$；旁观场为 $\varphi(f_{p_i})=\int\dd^4x\,\varphi(x)f_{p_i}(x)$，$f_{p_i}$ 光滑，$\hat f_{p_i}$ 的支撑在以 $p_i$ 为心、半径 $\epsilon$ 的球内。把 OPE $O_A(x)O_B(0)\sim\sum_C\mathcal C^C_{AB}(x)O_C(0)$ 的求和限于 $[C]-[A]-[B]\le\Delta$，则在 $l$ 圈阶有
+\begin{multline}\label{eq:power-hk}
+\Big|\Big\langle O_A(x)O_B(0)\prod_{i=1}^n\varphi(f_{p_i})\Big\rangle-\sum_C\mathcal C^C_{AB}(x)\Big\langle O_C(0)\prod_{i=1}^n\varphi(f_{p_i})\Big\rangle\Big|
+\le m^{[A]+[B]+n}\sqrt{[A]!\,[B]!}\,\tilde K^{[A]+[B]}\prod_i\sup|\hat f_{p_i}|\\
+\times\Big(\sup\big(1,\tfrac{|\vec p|_n}{m}\big)\Big)^{2([A]+[B])(n+2l+1)+3n}\sum_{\lambda=0}^{n/2+2l}\frac{\ln^\lambda\sup(1,\frac{|\vec p|_n}{m})}{2^\lambda\lambda!}
+\cdot\frac{1}{\sqrt{\Delta!}}\Big(\tilde K\,m|x|\sup\big(1,\tfrac{|\vec p|_n}{m}\big)^{n+2l+1}\Big)^{\Delta},
+\end{multline}
+其中 $\tilde K$ 只依赖于 $n$ 与 $l$，$|\vec p|_n\equiv\sup_{J\subset\{1,\dots,n\}}|\sum_{i\in J}p_i|$\cite[定理~3]{Hollands:2011gf}。由于对任意 $c$ 有 $c^\Delta/\sqrt{\Delta!}\to0$，在每一圈阶上 OPE 在每个固定的 $|x|$ 处收敛，而不只是渐近成立。
+% VF-FRO-4
+% uses: none
+\end{theorem}
+
+\begin{proofsketch}
+证明\cite{Hollands:2011gf}采用 Wilson--Wegner--Polchinski 重整化群流方程：引入红外截断与紫外截断 $\Lambda_0$，对带复合算符插入的连通截肢 Green 函数，在圈数与外腿数上归纳地给出对 $\Lambda_0$ 一致的界；关键是一个能在归纳中自我复制、同时控制 OPE 余项的归纳假设。完整证明见\cite[定理~3 及其证明]{Hollands:2011gf}；无质量情形见\cite{Holland:2014pna}，弯曲时空中微扰 OPE 的构造见\cite{Hollands:2006ag}（二者均据摘要）。
+\end{proofsketch}
+
+收敛性依赖于旁观场所代表的“态”（$\hat f_{p_i}$ 的支撑越不紧，收敛越差），不涉及圈数展开本身的收敛，在闵氏空间中只能期望对类空分离成立\cite{Hollands:2011gf}。这是模型陈述：对 QCD，微扰 OPE 是全阶论证（\cref{thm:dis-ope}，\tagA），其收敛性是猜想；更多严格的 OPE 结果（纯 Yang--Mills、共形场论中的光线 OPE 等）见第~24~章（\cref{prop:front-ope-scalar,prop:front-ope-ym,conj:front-ope-convergence,rem:front-ope-qcd-status}）。
+
+\subsection{二维大 \texorpdfstring{$N_c$}{Nc} 的 't Hooft 模型}
+
+二维 QCD 在 $N_c\to\infty$ 时可解\cite{tHooft1974}：夸克被禁闭、介子谱离散，深度非弹散射却仍可精确计算。取光锥坐标 $x^\pm=(x^0\pm x^1)/\sqrt2$ 与规范 $A^+=A_-=0$，则 $G^a_{+-}=-\partial_-A^a_+$，$A_+$ 没有传播自由度，其“传播子” $\ii\delta^{ab}/(k^+)^2$ 与 $k^-$ 无关（$k^+=0$ 处以截断 $|k^+|>\lambda$ 理解），顶点为 $\ii g\gamma^+t^a$；在 $N_c\to\infty$、$m_0^2\equiv g^2N_c/(2\pi)$ 固定时只剩彩虹自能与梯形图。彩虹自能 $\Sigma=-\ii\frac{g^2N_c}{4\pi}\gamma^+(\frac1\lambda-\frac{1}{p^+})$ 只依赖于 $p^+$，故单胶子结果即精确解，夸克传播子分母为 $2p^+p^--(m^2-m_0^2)-m_0^2|p^+|/\lambda+\ii0$：$\lambda\to0$ 时夸克极点被推到无穷远。对夸克（味 $a$）—反夸克（味 $b$）的 Bethe--Salpeter 振幅求梯形和，令 $\phi(x)=\int\dd k^-\,\Psi(xP^+,k^-)$；核与 $k^-$ 无关，$k^-$ 积分由留数完成，两个极点只在 $0<x<1$ 时位于实轴两侧，故 $\phi$ 的支撑在 $[0,1]$ 内。与 $\lambda$ 有关的项相消后得到 't Hooft 方程\cite{tHooft1974}
+\begin{equation}\label{eq:power-thooft-eq}
+\mu^2\phi(x)=\Big(\frac{m_a^2-m_0^2}{x}+\frac{m_b^2-m_0^2}{1-x}\Big)\phi(x)-m_0^2\,\mathrm{f.p.}\!\!\int_0^1\!\dd y\,\frac{\phi(y)}{(y-x)^2},\qquad\mu^2=2P^+P^-,
+\end{equation}
+f.p.\ 为 Hadamard 有限部分。由 $\mathrm{f.p.}\int_0^1\dd y\,(y-x)^{-2}=-\frac1x-\frac1{1-x}$，它等价于下面第一式，对应的二次型为第二式：
+\begin{gather}
+\mu^2\phi(x)=\Big(\frac{m_a^2}{x}+\frac{m_b^2}{1-x}\Big)\phi(x)-m_0^2\,\mathrm{P}\!\!\int_0^1\!\dd y\,\frac{\phi(y)-\phi(x)}{(y-x)^2},\label{eq:power-thooft-pv}\\
+\langle\phi,H\phi\rangle=\int_0^1\!\dd x\Big(\frac{m_a^2}{x}+\frac{m_b^2}{1-x}\Big)|\phi(x)|^2+\frac{m_0^2}{2}\int_0^1\!\!\int_0^1\!\dd x\,\dd y\,\frac{|\phi(x)-\phi(y)|^2}{(x-y)^2}\;\ge0 .\label{eq:power-thooft-form}
+\end{gather}
+
+\begin{proposition}['t Hooft 模型 \tagP]\label{prop:power-thooft-model}
+（在二维 QCD 的 $N_c\to\infty$ 极限中精确；作为关于 QCD 的陈述只是部分的。）在上述模型中：(a) 介子的质量与光锥波函数由\eqref{eq:power-thooft-eq}的本征值问题给出；谱离散、非负，$m_a=m_b=0$ 时最低态无质量且 $\phi_0=1$；$x\to0$ 时 $\phi_n\sim x^{\beta_a}$，$\pi\beta_a\cot(\pi\beta_a)=1-m_a^2/m_0^2$（$x\to1$ 处同理）；高激发态满足 $\mu_n^2\simeq\pi^2m_0^2\,n$。(b) 介子 $n$ 的夸克与反夸克分布为 $q_n(x)=|\phi_n(x)|^2$、$\bar q_n(x)=|\phi_n(1-x)|^2$，支撑在 $[0,1]$ 内，满足 $\int_0^1q_n=1$ 与 $\int_0^1x\,[q_n+\bar q_n]\,\dd x=1$（胶子不携带动量）。(c) 在 Bjorken 极限下，介子的深度非弹结构函数标度化，并且（对末态的离散共振取平均，即作为 $x$ 的分布弱收敛）等于以 (b) 中分布表示的部分子模型结果，修正是 $m_0^2/Q^2$、$m_a^2/Q^2$ 的幂次，没有对数型的标度破坏\cite{Einhorn1976}。这是规范理论中从第一原理非微扰地算出束缚态部分子分布的一个例子；该模型中的准部分子分布见第~23~章（\cref{prop:yzliu-2dqcd}）。
+（本命题只涉及二维大 $N_c$ 模型。）
+\uses{def:pdf-quark}
+\end{proposition}
+
+\begin{proof}
+(a) 等价性由上述有限部分恒等式给出；\eqref{eq:power-thooft-form}由\eqref{eq:power-thooft-pv}关于 $x,y$ 对称化得到，两项都非负，故 $\mu^2\ge0$。$m_a=m_b=0$ 时第一项消失，第二项对常数为零，故 $\phi_0=1$、$\mu_0^2=0$（手征极限下无质量的“$\pi$ 介子”）。把 $\phi\simeq x^\beta$ 代入\eqref{eq:power-thooft-eq}并保留 $x\to0$ 时最奇异的项，用 $\mathrm{f.p.}\int_0^\infty\dd y\,y^\beta(y-x)^{-2}=-\pi\beta\cot(\pi\beta)\,x^{\beta-1}$（$-1<\beta<1$），得 $(m_a^2-m_0^2)+m_0^2\pi\beta\cot(\pi\beta)=0$。对高度振荡的 $\phi_n\simeq\sqrt2\sin(n\pi x)$，主值核作用于 $\ee^{\ii ky}$ 给出 $\pi|k|\ee^{\ii kx}$，故 $\mu_n^2\simeq\pi^2m_0^2n$。$H$ 是 $L^2[0,1]$ 上预解式为紧的正自伴算符，故谱离散、本征函数完备\cite{tHooft1974,Einhorn1976}。
+(b) 光锥规范中 Wilson 线为 1，部分子分布（\cref{def:pdf-quark}的二维形式）是 $x^+=0$ 上数密度算符的矩阵元；$N_c\to\infty$ 时介子价夸克—反夸克分量的波函数就是 $\phi_n$，更高的 Fock 分量被 $1/N_c$ 压低\cite{Einhorn1976}，故夸克动量分数的几率密度为 $|\phi_n(x)|^2$，反夸克携带 $1-x$；归一化给出数目求和规则，$x+(1-x)=1$ 给出动量求和规则，支撑来自 (a)。
+(c) Bjorken 极限下被击夸克在长度为 $O(1/q^-)$ 的光锥时间间隔内传播；耦合 $g^2$ 有质量平方的量纲，每次瞬时相互作用的插入都带来 $m_0^2/Q^2$ 量级的压低，故结构函数等于“手提包”项，即 (b) 中分布的部分子模型表达式；二维中没有对数发散的重整化，因而没有对数。固定 $Q^2$ 时结构函数是 $x$ 的一串 $\delta$ 函数，相邻共振的间距按 $m_0^2/Q^2$ 趋于零，所以标度化在分布意义下成立。对全部末态求和精确再现部分子模型，已由 Einhorn 明确验证（同时验证了 Drell--Yan--West 关系与 Bloom--Gilman 对偶）\cite{Einhorn1976}；电流振幅的构造与幺正性见\cite{CallanCooteGross1976}。（上述积分、等价形式、正定性、零模、端点指数与谱的渐近行为都用符号与数值计算核对过。）
+\end{proof}
+
+\paragraph{地位与缺口}
+作为关于 QCD 的陈述这是 \tagP：模型在二维（无横向自由度、胶子不传播、超可重整，因而没有对数型标度破坏、Sudakov 对数与 Glauber 问题）并取 $N_c\to\infty$；谱的完备性依赖于所引的分析，(c) 中对末态共振的求和由\cite{Einhorn1976}完成。它说明禁闭本身不破坏部分子模型意义下的因子化、束缚态的部分子分布可以从第一原理算出；它不说明四维 QCD 中的任何东西（\cref{asm:intro-bridge}的地位不因此改变）。
+
+\paragraph{第三个“实验室”：格点。}
+格点 QCD 提供非微扰的数值证据（不是证明）：它计算定域算符的矩阵元，如扭度 2 算符的矩（第~22~章），也检验重整化子的预言（\cref{prop:power-renormalon-examples}(g)）；它不检验强子截面的因子化本身，% critic C12
+其从欧氏关联函数到光锥分布的匹配又依赖于自己的因子化定理（第~22~章）。
+
+\begin{table}[htbp]
+\centering\small
+\caption{本章陈述的地位一览。“性质”一栏说明陈述成立的意义。}
+\label{tab:power-status}
+\begin{tabular}{@{}p{3.3cm}p{3.4cm}p{1.6cm}p{2.2cm}p{3.5cm}@{}}
+\toprule
+陈述 & 标签 & 等级 & 性质 & 主要缺口 \\
+\midrule
+DIS 扭度 4（$x$ 空间） & \cref{prop:power-dis-twist4-x} & \tagA & E-S & 次领头幂次区域分析；重整化子混合 \\
+SIDIS 型扭度 3 SSA & \cref{prop:power-twist3-sidis} & \tagP & 有限阶 & 无全阶论证 \\
+$pp$ 中扭度 3 SSA & \cref{conj:power-twist3-pp} & \tagC & --- & 带色末态 \\
+次软定理 & \cref{prop:power-next-to-soft} & \tagR & 树图，精确 & 圈图层次为 \tagA \\
+NLP 端点发散 & \cref{prop:power-nlp-endpoint} & \tagP & 逐个过程 & 无一般定理 \\
+OPE 基的重排 & \cref{prop:power-rearrangement} & \tagR & 代数恒等式 & --- \\
+大 $\beta_0$ Adler 函数 & \cref{prop:power-adler-large-beta0} & \tagP & 极限中精确 & 朴素非阿贝尔化 \\
+重整化子的例子；模型 & \cref{prop:power-renormalon-examples} & \tagP & 近似／模型 & 大 $\beta_0$ 之外无控制 \\
+重整化子 $\leftrightarrow$ 高扭度 & \cref{conj:power-renormalon-ht} & \tagC & --- & 无非微扰 OPE \\
+$\varphi^4_4$ 中 OPE 收敛 & \cref{thm:power-ope-convergence} & \tagR & 每阶显式界 & 模型；QCD 中为猜想 \\
+'t Hooft 模型 & \cref{prop:power-thooft-model} & \tagP & 模型中精确 & 二维，$N_c\to\infty$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{本章小结。}
+领头幂次之外，严格性迅速下降（\cref{tab:power-status}）：可以完整证明的是代数性与模型中的陈述；DIS 扭度 4 的 $x$ 空间形式有全阶论证；扭度 3 单自旋不对称与次领头幂次因子化只在有限阶与特定过程中得到验证；重整化子与高扭度的一般对应及强子—强子碰撞中的扭度 3 因子化是猜想。贯穿全章的一点是：超出领头幂次后，“微扰系数”与“非微扰矩阵元”的划分本身就有与幂次修正同量级的歧义（\cref{prop:power-rearrangement}，\cref{ex:power-renormalon-chain}），因此“精确到幂次修正”只有在幂次修正项被定义之后才有确切含义——这正是\cref{asm:intro-bridge}(Br3) 所表达的内容。

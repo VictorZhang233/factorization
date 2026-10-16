@@ -1,0 +1,98 @@
+% =====================================================================================================
+% appL_lightray.tex  —  附录 L  光线算符与定域算符：矩关系的全阶证明
+% writer W09 (spec v2.3.1; LEAD_DECISIONS LA-1…LA-16). Checks: writing/work/W09/v8_appL.py (72/72 PASS),
+% v11_appKL_extra.py (b),(f),(g) (22/22 PASS), v4_moments.py; research/c_pdf s4 (8/8 PASS).
+% Circularity check of N04 / MD7 (FINAL_OUTLINE_v2 0.12): the proof of prop:appL-renormalized uses only the
+% renormalization of LOCAL operators (thm:prelim-composite-renorm); see the paragraph after its proof.
+% =====================================================================================================
+\chapter{光线算符与定域算符：矩关系的全阶证明}\label{app:appL}
+
+本附录是\cref{thm:pdf-moments-local}的证明：PDF 的 Mellin 矩等于扭度 2 定域算符的矩阵元，对裸算符与对 $\MSbar$ 重整化的量都成立。证明分三步，各成一节：顶点层次的均差恒等式（\cref{lem:appL-divided-differences}，纯数学）；裸算符的矩关系（\cref{prop:appL-bare}，$[R,R_{\mathrm{def}}]$）；重整化后的矩关系与与靶无关的卷积核（\cref{prop:appL-renormalized}，$[R,R_{\mathrm{PT}}]$，只涉及部分子态）。输入只有\cref{def:pdf-quark}、\cref{def:pdf-gluon}、\cref{def:pdf-lightray}中的算符，Wilson 线的展开（\cref{prop:appB-rules}），定域规范不变算符的重整化（\cref{thm:prelim-composite-renorm}），微扰论中的支撑（\cref{thm:pdf-support-pt}），以及\cref{app:appK}的矩唯一性；证明不预设非定域算符的 BRST 分类。记号同\cref{ch:pdf}：$w=w^-n_B$，$\partial_{w^-}=n_B\cdot\partial=\partial^+$，$A^+=n_B\cdot A$，$\partial_{w^-}W[w,0]=\ii gA^+(w)W[w,0]$。
+
+% -----------------------------------------------------------------------------------------------------
+\section{顶点：均差恒等式}\label{sec:appL-vertices}
+
+设光线算符的顶点不注入动量（前向矩阵元中由整体动量守恒保证）。$m$ 个胶子依次附着在 Wilson 线上，动量 $q_1,\dots,q_m$ 流入（$q_1$ 最靠近 $\psi(0)$ 一端），夸克动量 $k_1$ 由 $\psi(0)$ 流入；记 $\kappa_0=k_1^+$，$\kappa_i=k_1^++q_1^++\dots+q_i^+$，流出夸克的加号动量为 $\kappa_m$。函数 $\phi$ 的均差递归地定义为 $\phi[\kappa_0]=\phi(\kappa_0)$，$\phi[\kappa_0,\dots,\kappa_j]=(\phi[\kappa_1,\dots,\kappa_j]-\phi[\kappa_0,\dots,\kappa_{j-1}])/(\kappa_j-\kappa_0)$（节点重合时取连续延拓）；对互异节点，$\phi[x_0,\dots,x_k]=\sum_j\phi(x_j)/\prod_{l\ne j}(x_j-x_l)$。$h_r(\kappa_0,\dots,\kappa_m)=\sum_{0\le i_1\le\dots\le i_r\le m}\kappa_{i_1}\cdots\kappa_{i_r}$ 是 $r$ 次完全齐次对称多项式（$h_0=1$；$r<0$ 时 $h_r=0$）。
+
+\begin{lemma}[均差恒等式]\label{lem:appL-divided-differences}
+记 $e_w(x)=\ee^{\ii xw}$。
+(a) $x^p[\kappa_0,\dots,\kappa_m]=h_{p-m}(\kappa_0,\dots,\kappa_m)$（$p\ge0$）。
+(b) 对一切实数 $w$，
+$E_m(w)\equiv\ii^m\int_0^w\!\dd s_m\int_0^{s_m}\!\dd s_{m-1}\cdots\int_0^{s_2}\!\dd s_1\,\ee^{\ii\kappa_mw-\ii\sum_jq_j^+s_j}=e_w[\kappa_0,\dots,\kappa_m]$
+（定向积分；$w>0$ 时即 $0<s_1<\dots<s_m<w$ 上的积分）。
+(c) 对固定的附着次序（色因子 $t^{a_m}\cdots t^{a_1}$），$\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}O_q(w^-)$ 的 $m$ 胶子顶点为 $g^m\,n_B^{\mu_m}\cdots n_B^{\mu_1}\,t^{a_m}\cdots t^{a_1}\gamma^+\cdot\frac12\,\delta(x-\xi P^+)[\kappa_0,\dots,\kappa_m]$（均差作用于 $x$），其 $n$ 阶矩为
+\begin{equation}\label{eq:appL-vertex}
+\int\dd\xi\,\xi^{n-1}(\cdots)=\frac{g^m\,n_B^{\mu_m}\cdots n_B^{\mu_1}\,t^{a_m}\cdots t^{a_1}\gamma^+\,h_{n-1-m}(\kappa_0,\dots,\kappa_m)}{2(P^+)^n},
+\end{equation}
+恰为 $\bar\psi\gamma^+(\ii D^+)^{n-1}\psi$ 的 $m$ 胶子顶点（同一附着次序）除以 $2(P^+)^n$；$m\ge n$ 时两者都为零。$m=1$ 时 $h_{n-2}(k_1^+,k_2^+)=\sum_{j=0}^{n-2}(k_2^+)^j(k_1^+)^{n-2-j}$，$k_2=k_1+q_1$。
+\uses{def:pdf-lightray,prop:appB-rules}
+\end{lemma}
+% VF-PDF-12 (m = 1). General m: v8 (a) (m <= 4, n <= 9), v11 (b) (induction step, w of both signs, m <= 3).
+
+\begin{proof}
+(a) 对 $m$ 归纳；$m=0$ 时两边都是 $\kappa_0^p$。按单项式是否含 $\kappa_j$（或 $\kappa_0$）分类，
+$h_r(\kappa_0,\dots,\kappa_j)=h_r(\kappa_0,\dots,\kappa_{j-1})+\kappa_jh_{r-1}(\kappa_0,\dots,\kappa_j)=h_r(\kappa_1,\dots,\kappa_j)+\kappa_0h_{r-1}(\kappa_0,\dots,\kappa_j)$，
+相减得 $h_r(\kappa_1,\dots,\kappa_j)-h_r(\kappa_0,\dots,\kappa_{j-1})=(\kappa_j-\kappa_0)\,h_{r-1}(\kappa_0,\dots,\kappa_j)$，代入均差的递归式即完成归纳；两边都是节点的多项式，重合节点由连续性得到。
+(b) 对 $m$ 归纳；$m=0$ 时两边都是 $\ee^{\ii\kappa_0w}$。分出最外层积分并用 $\kappa_m-q_m^+=\kappa_{m-1}$，得 $E_m(w)=\ii\int_0^w\ee^{\ii\kappa_m(w-s)}E_{m-1}(s)\,\dd s$，其中 $E_{m-1}$ 以 $\kappa_0,\dots,\kappa_{m-1}$ 为节点。对单个节点 $x$，$\ii\int_0^w\ee^{\ii\kappa_m(w-s)}\ee^{\ii xs}\,\dd s=\frac{\ee^{\ii xw}-\ee^{\ii\kappa_mw}}{x-\kappa_m}=e_w[x,\kappa_m]$（对 $w$ 的两种符号都成立）。该积分对 $x$ 线性，由归纳假设 $E_{m-1}(s)=e_s[\kappa_0,\dots,\kappa_{m-1}]$ 得 $E_m(w)=g_w[\kappa_0,\dots,\kappa_{m-1}]$，$g_w(x)\equiv e_w[x,\kappa_m]$。由显式公式与 $\sum_{j=0}^{k}1/\prod_{l\ne j}(x_j-x_l)=0$（常数的 $k\ge1$ 阶均差）可直接验证 $(\phi[\,\cdot\,,y])[x_0,\dots,x_{k-1}]=\phi[x_0,\dots,x_{k-1},y]$，故 $E_m(w)=e_w[\kappa_0,\dots,\kappa_m]$。
+(c) 由\cref{prop:appB-rules}所用的路径排序展开（路径参数在 $[0,w^-]$ 上，后面的点在左），$W[w,0]$ 的 $m$ 胶子项为 $(\ii g)^m\int_0^{w^-}\!\dd s_m\cdots\int_0^{s_2}\!\dd s_1\,A^+(s_mn_B)\cdots A^+(s_1n_B)$。代入 $A^+(sn_B)=\int\frac{\dd^4q}{(2\pi)^4}\ee^{-\ii q^+s}\tilde A^+(q)$（$q\cdot sn_B=q^+s$）与 $\bar\psi(w)$ 的因子 $\ee^{\ii\kappa_mw^-}$，$w^-$ 依赖为 $(\ii g)^m\ee^{\ii\kappa_mw^-}\int\ee^{-\ii\sum_jq_j^+s_j}=g^mE_m(w^-)=g^m\,e_{w^-}[\kappa_0,\dots,\kappa_m]$。均差与 Fourier 变换可交换，$\int\frac{\dd w^-}{4\pi}\ee^{-\ii\xi P^+w^-}\ee^{\ii xw^-}=\frac12\delta(x-\xi P^+)$，这给出顶点；$\int\dd\xi\,\xi^{n-1}\frac12\delta(x-\xi P^+)=\frac{x^{n-1}}{2(P^+)^n}$，由 (a) 得\cref{eq:appL-vertex}。另一方面 $\ii D^+=\ii\partial^++gA^+$。$(\ii D^+)^{n-1}$ 中含 $m$ 个按 $A^+(q_m)\cdots A^+(q_1)$ 次序排列的 $gA^+$ 的项，由各段 $\ii\partial^+$ 的个数 $p_0,\dots,p_m$ 标记（$\sum_ip_i=n-1-m$；$p_0$ 个在 $A^+(q_1)$ 右侧，$p_i$ 个在 $A^+(q_i)$ 与 $A^+(q_{i+1})$ 之间，$p_m$ 个在 $A^+(q_m)$ 左侧）。位于 $A^+(q_i)$ 与 $A^+(q_{i+1})$ 之间的 $\ii\partial^+$ 作用于其右侧的 $\psi(k_1),A^+(q_1),\dots,A^+(q_i)$，给出 $\kappa_i$；故该项为 $g^m\prod_i\kappa_i^{p_i}$，对 $(p_0,\dots,p_m)$ 求和即 $g^mh_{n-1-m}(\kappa_0,\dots,\kappa_m)$。
+\end{proof}
+
+$m=1$ 即\cref{lem:pdf-wilson-moments}中的单胶子顶点；$m=2$ 给出二阶均差，即定域算符的双胶子顶点。胶子光线算符的伴随 Wilson 线给出同样的均差，色矩阵换为伴随生成元 $(T^a)_{bc}=-\ii f^{abc}$；场强 $G^{+j}$ 中所含的胶子场是两边共有的。
+
+% -----------------------------------------------------------------------------------------------------
+\section{裸算符的矩}\label{sec:appL-bare}
+
+\begin{proposition}[裸算符恒等式 \tagR]\label{prop:appL-bare}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）
+设 $|P\rangle$ 是使裸分布 $f_q$、$f_g$ 支撑在 $[-1,1]$ 上的态。则 $M_q(w^-)$、$M_g(w^-)$（\cref{def:pdf-lightray}）是 $w^-$ 的整函数，并且对 $n\ge1$（胶子 $n\ge2$）
+\begin{gather}
+\int_{-1}^1\dd\xi\,\xi^{n-1}f_q(\xi)=\frac{1}{2P^+}\Big(\frac{-\ii}{P^+}\Big)^{n-1}M_q^{(n-1)}(0)=\frac{\langle P|\bar\psi\gamma^+(\ii D^+)^{n-1}\psi|P\rangle}{2(P^+)^n},\label{eq:appL-bare-q}\\
+\int_{-1}^1\dd\xi\,\xi^{n-1}f_g(\xi)=\frac{(-\ii)^{n-2}M_g^{(n-2)}(0)}{(P^+)^n}=\frac{\langle P|O^{(n)}_g|P\rangle}{(P^+)^n},\qquad O^{(n)}_g=\sum_jG^{+j}_a\big[(\ii D^+)^{n-2}G^{+j}\big]_a,\label{eq:appL-bare-g}
+\end{gather}
+其中场、耦合与矩阵元都是裸的，伴随表示中 $(D^+X)_a=\partial^+X_a+gf^{abc}A^+_bX_c$。由 $f_{\bar q}(\xi)=-f_q(-\xi)$，\cref{eq:appL-bare-q}左边等于 $\int_0^1x^{n-1}[q+(-1)^n\bar q]$；由 $f_g$ 的奇性，奇数 $n$ 时\cref{eq:appL-bare-g}两边为零，偶数 $n$ 时 $\int_0^1x^{n-1}g=\langle O^{(n)}_g\rangle/(2(P^+)^n)$。以左作用的导数写，\cref{eq:appL-bare-q}中间一项等于 $\langle P|\bar\psi(-\ii\overleftarrow{D}{}^+)^{n-1}\gamma^+\psi|P\rangle/(2(P^+)^n)$；两种写法只在前向矩阵元中相等。
+\uses{lem:appL-divided-differences,def:pdf-lightray,def:pdf-quark,def:pdf-gluon,def:dis-twist}
+\end{proposition}
+
+\begin{proof}
+(1) \emph{矩 $=$ 导数。}$M_q(w^-)=2P^+\int\dd\xi\,\ee^{\ii\xi P^+w^-}f_q(\xi)$，$M_g(w^-)=(P^+)^2\int\dd\xi\,\ee^{\ii\xi P^+w^-}\xi f_g(\xi)$（\cref{def:pdf-lightray}）。$f_q$、$\xi f_g$ 支撑在 $[-1,1]$ 上，故 $M_q$、$M_g$ 是整函数\cite[定理~7.3.1]{Hormander2003}，且可在配对号下求导：$M_q^{(n-1)}(0)=2P^+(\ii P^+)^{n-1}\int\xi^{n-1}f_q$，$M_g^{(n-2)}(0)=(P^+)^2(\ii P^+)^{n-2}\int\xi^{n-1}f_g$。这给出两式的第一个等号。
+(2) \emph{导数 $=$ 定域算符。}由 $\partial_{w^-}W[w,0]=\ii gA^+(w)W[w,0]$，$\partial_{w^-}[\bar\psi(w)W[w,0]]=[\bar\psi\overleftarrow{D}{}^+](w)\,W[w,0]$，$\bar\psi\overleftarrow{D}_\mu\equiv\partial_\mu\bar\psi+\ii g\bar\psi A_\mu$；$\bar\psi\overleftarrow{D}{}^+$ 与 $\bar\psi$ 同样变换，故可迭代：$\partial^k_{w^-}[\bar\psi W](w)=[\bar\psi(\overleftarrow{D}{}^+)^k](w)W[w,0]$。在 $w=0$ 处 $W=1$，得 $M_q^{(n-1)}(0)=\langle P|\bar\psi(\overleftarrow{D}{}^+)^{n-1}\gamma^+\psi|P\rangle$，即左作用形式；在顶点层次这就是\cref{lem:appL-divided-differences}(c)。
+(3) \emph{把导数移到右边。}对按基础表示变换的 $\chi,\chi'$，$\partial^+(\bar\chi\gamma^+\chi')=(\bar\chi\overleftarrow{D}{}^+)\gamma^+\chi'+\bar\chi\gamma^+(D^+\chi')$（$\ii gA^+$ 项相消）。记 $V_{k,l}=\bar\psi(-\ii\overleftarrow{D}{}^+)^k\gamma^+(\ii D^+)^l\psi$，得 $V_{k+1,l}=V_{k,l+1}-\ii\partial^+V_{k,l}$。前向矩阵元中 $\langle P|\partial^+V|P\rangle=0$（平移不变性），故 $\langle V_{n-1,0}\rangle=\langle V_{0,n-1}\rangle$，即\cref{eq:appL-bare-q}的第二个等号；在非前向矩阵元中 $\langle P'|\partial^+V|P\rangle=\ii(P'-P)^+\langle P'|V|P\rangle\ne0$，两种写法不同。
+(4) \emph{胶子。}伴随 Wilson 线满足 $\partial_{w^-}W^{(A)}_{ab}[w,0]=-gf^{acd}A^+_c(w)W^{(A)}_{db}[w,0]$，故 $\partial_{w^-}[G^{+j}_a(w)W^{(A)}_{ab}[w,0]]=[(D^+G^{+j})_a](w)\,W^{(A)}_{ab}[w,0]$，迭代得 $M_g^{(n-2)}(0)=\sum_j\langle P|[(D^+)^{n-2}G^{+j}]_aG^{+j}_a|P\rangle$。对伴随场 $X,Y$，$\partial^+(X_aY_a)=(D^+X)_aY_a+X_a(D^+Y)_a$，所以在前向矩阵元中每把一个导数移到右边产生一个负号：$\langle[(D^+)^{n-2}G]_aG_a\rangle=(-1)^{n-2}\langle G_a[(D^+)^{n-2}G]_a\rangle$。代入 (1)，$\int\xi^{n-1}f_g=(-\ii)^{n-2}(-1)^{n-2}\langle G(D^+)^{n-2}G\rangle/(P^+)^n=\langle O^{(n)}_g\rangle/(P^+)^n$。由\cref{def:pdf-gluon}，$f_g$ 是奇分布，$\int_{-1}^1\xi^{n-1}f_g=[1+(-1)^n]\int_0^1x^{n-1}g$，其余结论随之得到。
+\end{proof}
+% (1),(4): v8 (c),(d) (SU(2), SU(3) adjoint Wilson line), v11 (g); (3): left/right derivatives, c_pdf s4(a).
+
+对红外正规化的部分子态，支撑的假设由\cref{thm:pdf-support-pt}保证；对强子态，它与“光线算符作为缓增分布存在”一起是\cref{asm:intro-composite}(C3) 的内容。左、右作用的形式只在前向矩阵元中相等，因此广义部分子分布的矩含有全导数项（\cref{def:excl-gpd}）。
+
+% -----------------------------------------------------------------------------------------------------
+\section{重整化后的矩关系}\label{sec:appL-renormalized}
+
+裸恒等式对每个裸矩阵元成立，但两边分别需要重整化：PDF 用卷积核 $Z$（\cref{def:pdf-quark}），定域算符用矩阵 $Z_O(N)$（\cref{thm:prelim-composite-renorm}）。要证明的是二者相容，并且 $Z$ 与靶无关。记 C 偶扇区为 $(\{q_k+\bar q_k\},g)$，C 奇扇区为 $\{q_k-\bar q_k\}$；在 $[-1,1]$ 的表述中它们分别是 $f_{q_k}$ 的奇部分与 $f_g$、$f_{q_k}$ 的偶部分，分别只由偶数与奇数阶矩探测。$Z(N)\equiv\int_0^1z^{N-1}Z(z)\,\dd z$。
+
+\begin{proposition}[重整化后的矩关系 \tagR]\label{prop:appL-renormalized}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+在维数正规化与 $\MSbar$ 中逐阶地：
+(a) 存在唯一的味道矩阵值分布 $Z(z)$（支撑在 $[0,1]$ 上；用 $\as(\mu)$ 表示时为 $\delta(1-z)\mathbb 1$ 加 $\varepsilon$ 的纯极点；在每个扇区内作用），使得对一切红外正规化的部分子态，$f^{\mathrm{ren}}=Z\otimes f^{\mathrm{bare}}$ 有限；$Z$ 由一组部分子靶上的极小减除构造，与靶无关。
+(b) $Z(N)=Z_O(N)$：$Z$ 的 Mellin 矩等于扭度 2 定域算符在物理矩阵元中的重整化矩阵（$[O^{(N)}]_\mu=Z_O(N)\,O^{(N)}$；偶数 $N$ 在 C 偶扇区，奇数 $N$ 在 C 奇扇区）。
+(c) \cref{eq:appL-bare-q}、\cref{eq:appL-bare-g}对重整化的量成立：$\int_{-1}^1\xi^{n-1}f_q(\xi;\mu)\,\dd\xi=\langle P|[\bar\psi\gamma^+(\ii D^+)^{n-1}\psi]_\mu|P\rangle/(2(P^+)^n)$，胶子同理。
+（本命题只涉及部分子态。）
+\uses{prop:appL-bare,thm:prelim-composite-renorm,def:prelim-msbar,lem:appK-hausdorff,lem:appK-compact,thm:pdf-support-pt}
+\end{proposition}
+
+\begin{proof}
+在一个扇区内论证，乘积按味道指标理解；“红外正规化”指红外发散由维数正规化以外的方式正规化，并且外线满足\cref{thm:prelim-composite-renorm}的条件。
+(1) \emph{构造与唯一性。}取一组红外正规化的在壳部分子靶 $j$（扇区的每个分量一个）。部分子 PDF 的矩阵 $F_{ij}=f^{\mathrm{bare}}_{i/j}=\delta_{ij}\delta(1-\xi)+\order{\as}$（裸耦合已用 $\as(\mu)$ 表示）在卷积代数中可逆。逐阶递推
+$Z^{(k)}=-\mathrm{PP}\big[F^{(k)}+\sum_{0<l<k}Z^{(l)}\otimes F^{(k-l)}\big]$（$\mathrm{PP}$ 为 $\varepsilon$ 的极点部分，上标为 $\as$ 的阶）给出纯极点的 $Z$，使 $Z\otimes F$ 逐阶有限。若纯极点的 $Z'$ 也使 $Z'\otimes F$ 有限，则 $Z'\otimes Z^{-1}=(Z'\otimes F)\otimes(Z\otimes F)^{-1}$ 既有限，又是 $\mathbb 1$ 加纯极点（这类级数在乘法与求逆下封闭），故等于 $\mathbb 1$。由\cref{thm:pdf-support-pt}，$F$ 支撑在 $[-1,1]$ 上，卷积保持这一性质，故 $Z$ 支撑在 $[0,1]$ 上。（C 偶扇区中 $Z_{gq}$、$Z_{gg}$ 在 $z\to0$ 有 $1/z$ 行为；该扇区的分布是奇分布，零阶矩为零，卷积有意义。）
+(2) \emph{矩：$Z(N)=Z_O(N)$。}Mellin 卷积定理对 $[-1,1]$ 上的分布同样成立：$\int\xi^{N-1}(Z\otimes f)\,\dd\xi=Z(N)\int\xi^{N-1}f\,\dd\xi$。故 $Z(N)F(N)$ 有限，$F(N)_{ij}=\int\xi^{N-1}f^{\mathrm{bare}}_{i/j}\,\dd\xi$。由\cref{prop:appL-bare}，$F(N)_{ij}=\langle j|O^{(N)}_i|j\rangle_{\mathrm{bare}}/(2(p^+)^N)$；由\cref{thm:prelim-composite-renorm}，对这些外态，扭度 2 算符的矩阵元在 $\{O_q,O_g\}$ 内重整化（与 BRST 恰当算符、运动方程算符以及全导数算符的混合在这些前向矩阵元中不出现），即 $Z_O(N)F(N)$ 有限，且 $Z_O(N)$ 是 $\mathbb 1$ 加纯极点。于是 $Z_O(N)Z(N)^{-1}=[Z_O(N)F(N)][Z(N)F(N)]^{-1}$ 有限且为 $\mathbb 1$ 加纯极点，故 $Z_O(N)=Z(N)$（极小减除的唯一性）。
+(3) \emph{对一切部分子态有限。}对任一红外正规化的部分子态，令 $R=Z\otimes f^{\mathrm{bare}}$。由 (2) 与\cref{prop:appL-bare}，$\int\xi^{N-1}R\,\dd\xi=Z_O(N)\int\xi^{N-1}f^{\mathrm{bare}}\dd\xi=\langle[O^{(N)}]_\mu\rangle/(2(P^+)^N)$ 有限。逐阶地，$R$ 的每个极点系数是支撑在 $[-1,1]$ 上（\cref{thm:pdf-support-pt}）、在其扇区中有确定奇偶性的分布，其该奇偶的矩全为零，另一奇偶的矩自动为零；由\cref{lem:appK-compact}（对测度即\cref{lem:appK-hausdorff}），它为零。所以 $R$ 有限：(a) 成立，且 $Z$ 与靶无关。
+(4) 由 (2)(3)，取矩与重整化可交换，即得 (c)。
+\end{proof}
+
+单圈时 (b) 可以逐图且对 $\varepsilon$ 精确地检验：PDF 的梯形图、Wilson 线图、自能图分别对应定域算符的顶角图、算符—胶子图、自能图，$n$ 阶矩的总和为 $A_\varepsilon[\frac{(1-\varepsilon)^2}{(n-\varepsilon)(n+1-\varepsilon)}-2\sum_{i=1}^{n-1}\frac1{i+1-\varepsilon}-\frac{1-\varepsilon}{2-\varepsilon}]$，其极点系数为 $\frac{\as}{2\pi}\frac{\gamma_{qq}(n)}{\varepsilon}$（\cref{ex:pdf-moments-exact}；我们对 $n\le14$ 逐一核对）。
+% VF-PDF-13; v8 (e).
+
+(2) 用到\cref{thm:prelim-composite-renorm}的条件：外线须红外正规化（或动量转移非零）。对在壳无质量胶子的前向矩阵元，若只用维数正规化同时正规化红外发散，与外来（BRST 恰当）算符的混合不必退耦（Hamberg 与 van Neerven 的难题\cite{Hamberg:1991qt}，以及\cite{Collins:1994ee}）；本命题因此只对红外正规化的外态陈述。对强子态，同样的代数在\cref{asm:intro-wightman}与\cref{asm:intro-composite}(C3) 之下成立，这就是\cref{thm:pdf-moments-local}的非微扰地位行。
+
+\paragraph{非定域算符的分类没有被预设。}
+上述证明只用到\emph{定域}规范不变算符的重整化（\cref{thm:prelim-composite-renorm}）、裸恒等式（\cref{prop:appL-bare}）、支撑（\cref{thm:pdf-support-pt}）与矩的唯一性（\cref{lem:appK-compact}）；与靶无关的核 $Z$ 是由部分子靶构造的，其重整化性质是从定域算符经矩“继承”来的，而不是假设光线算符在 BRST 意义下乘法重整化。所以\cref{ch:front}以本命题为输入作光线算符重整化的矩约化（\cref{prop:front-brst-bilocal}）时不构成循环。光线算符是定域算符的生成函数、重整化的光线算符由重整化的定域算符给出，这一思路在一般的非前向情形见\cite[式~(2.4)、(2.6)、(3.1)、(3.2)]{Braun:2019qtp}；\cite[第~11.4~节]{Collins2011}对 PDF 的重整化矩阵断言了同样的三角形式。
+
+\cref{thm:pdf-moments-local}的证明至此完成：其裸部分是\cref{prop:appL-bare}（支撑由\cref{thm:pdf-support-pt}保证），重整化部分与“与靶无关的核 $Z$ 存在，且 $Z(N)=Z_O(N)$”是\cref{prop:appL-renormalized}。

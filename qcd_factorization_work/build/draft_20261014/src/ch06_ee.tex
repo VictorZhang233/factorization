@@ -1,0 +1,831 @@
+% =====================================================================
+%  ch06_ee.tex —— 第 6 章  严格核心 I：e+e- 湮灭总截面（writer W06）
+%  公式核对脚本：writing/work/W06/*.py（日志 writing/work/W06/logs/）
+% =====================================================================
+\chapter{严格核心 I：$e^+e^-$ 湮灭总截面}\label{ch:ee}
+
+在讨论带强子初态的因子化之前，先看一个几乎“没有因子化可谈”的过程：$e^+e^-\to\text{强子}$ 的总截面。初态是无色的轻子，强子末态被全部求和，截面因而只依赖于电磁流的两点关联函数 $\Pi(q^2)$，$R(s)$ 恰是 $\Pi$ 在类时实轴上的虚部（\cref{prop:ee-R-ImPi}）。这里没有部分子分布，也没有碎裂函数，“因子化定理”退化为一句话：$R$ 等于一个可以逐阶计算的短程量，$R=R_0[1+\order{\as}]$。正因为如此简单，它是检验全书严格性分级（\cref{def:intro-tags}）的最佳实验室：公理化的解析性、重整化微扰论、以 OPE 为条件的陈述与非微扰的夸克—强子对偶，在这里可以被干净地彼此分开（\cref{rem:ee-status-layout}），而后面的每一个过程都会以更复杂的形式重复这四个层次。
+
+物理上的难点在红外。末态的每一类部分子截面——$q\bar q$、$q\bar qg$、$q\bar qgg$、……——在无质量 QCD 中都含有软发散与共线发散，在 $D=4-2\varepsilon$ 维中表现为 $\as^n$ 阶直到 $\varepsilon^{-2n}$ 的极点；只有对全部简并末态求和，这些极点才相消（KLN 定理，\cref{thm:ir-kln}，\tagA）。本章的主结论是\cref{thm:ee-R-finite}：$R(s)\equiv12\pi\Imag\Pi(s+\ii0)$ 的微扰展开在每一阶红外有限，并且是 $\ln(s/\mu^2)$ 的多项式（\tagR，$R_{\mathrm{PT}}$）。证明完全绕开闵氏空间的钳夹分析：欧氏区的 Green 函数红外有限（\cref{thm:ee-euclid-ir}）；无质量传播子型积分只有一个标度，使每一阶 $\varepsilon$ 展开的系数都是 $\ln(-q^2/\mu^2)$ 的多项式（\cref{lem:ee-single-scale}）；而多项式的解析延拓是平凡的。$\order{\as}$ 的系数由割图与欧氏两圈关联函数两种独立方法算出，二者在 $\varepsilon\to0$ \emph{之前}就逐项一致（\cref{prop:ee-cutting-exact}）。$R$ 与 $D$ 维部分子割图之和的等同（\cref{cor:ee-cuts}）以及含夸克 QCD 的欧氏 OPE（\cref{thm:ee-ope}）只有全阶论证（\tagA）；非微扰凝聚与对偶是猜想（\cref{conj:ee-np-ope,conj:ee-duality}，\tagC）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{thm:ee-R-finite,thm:ee-euclid-ir,lem:ee-single-scale,prop:ee-adler-rg,prop:ee-oneloop,prop:ee-twoloop,prop:ee-cutting-exact,cor:ee-R-alphas}（\tagR，$R_{\mathrm{PT}}$；\cref{thm:ee-euclid-ir}所用的收敛定理引自文献）；\cref{prop:ee-R-ImPi,prop:ee-analytic,prop:ee-adler-dispersion,prop:ee-contour,prop:ee-smearing}（\tagR，$R_{\mathrm{def}}$；对强子态需\cref{asm:intro-wightman}）。\par
+\textbf{给出全阶论证：}\cref{cor:ee-cuts}（\tagA；瓶颈：无质量维数正规化中含鬼场的割图规则，\cref{rem:prelim-cutting-dr}）；\cref{thm:ee-ope}（\tagA；瓶颈：含夸克 QCD 的微扰 OPE）。\par
+\textbf{没有证明：}非微扰 OPE 与凝聚（\cref{conj:ee-np-ope}，\tagC；\cref{asm:intro-np-ope}）；夸克—强子对偶（\cref{conj:ee-duality}，\tagC）；在复 $q^2$ 处使用 OPE（\cref{rem:ee-complex-ope}）；微扰 $R(s)$ 的逐点意义。
+\end{tcolorbox}
+
+本章的展开参数是 $a\equiv\as(\mu)/\pi$（记号约定见\cref{tab:front-notation}），对数记号为 $L\equiv\ln(-q^2/\mu^2)$（欧氏区 $q^2<0$）与 $\ell\equiv\ln(s/\mu^2)$（$s>0$）；$D=4-2\varepsilon$，裸耦合 $g_0^2=4\pi\as\mu_0^{2\varepsilon}$（$\mu_0$ 为裸标度），并记
+\begin{equation}\label{eq:ee-cGamma}
+c_\Gamma\equiv\frac{\Gamma(1+\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(1-2\varepsilon)},\qquad
+G(a,b)\equiv\frac{\Gamma(a+b-\frac D2)\Gamma(\frac D2-a)\Gamma(\frac D2-b)}{\Gamma(a)\Gamma(b)\Gamma(D-a-b)} ,
+\end{equation}
+$G(a,b)$ 是单圈两点积分的系数（\cref{lem:appC-bubble}）。本章的安排如下：\cref{sec:ee-R}与\cref{sec:ee-analytic}建立 $R$、$\Pi$ 与 Adler 函数之间的关系及其解析性；\cref{sec:ee-euclid}证明欧氏红外有限性并导出重整化群结构；\cref{sec:ee-theorem}证明主定理；\cref{sec:ee-oneloop}在 $\order{\as}$ 用两种方法验证它；\cref{sec:ee-higher}讨论高阶系数与 $\pi^2$ 项；\cref{sec:ee-ope}与\cref{sec:ee-duality}讨论非微扰层次：OPE、凝聚与对偶。
+
+% ---------------------------------------------------------------------
+\section{$R$ 比与流关联函数}\label{sec:ee-R}
+
+在 $\sqrt s\ll M_Z$ 的能区，$e^+e^-$ 湮灭由单个虚光子传递；轻子一侧是 QED，强子一侧只经由电磁流的矩阵元出现，对末态求和后截面只依赖于一个标量函数。
+
+\begin{definition}[$R$ 比]\label{def:ee-R}
+在单光子交换、电磁耦合 $\alpha$ 的最低阶并忽略轻子质量时，定义
+\begin{equation}\label{eq:ee-Rdef}
+R(s)\equiv\frac{\sigma(e^+e^-\to\text{强子})}{\sigma(e^+e^-\to\mu^+\mu^-)},\qquad
+\sigma(e^+e^-\to\mu^+\mu^-)=\frac{4\pi\alpha^2}{3s},
+\end{equation}
+$s=(k_1+k_2)^2$，$k_{1,2}$ 是 $e^\mp$ 的动量。记 $R_0\equiv N_c\sum_qe_q^2$，求和遍及该能区可以产生的夸克味，$e_q$ 以质子电荷为单位；$n_f=3,4,5$ 时 $R_0=2,\ \frac{10}3,\ \frac{11}3$。% VF-EE-1
+% uses: none
+\end{definition}
+
+电磁流 $j^\mu=\sum_qe_q\bar q\gamma^\mu q$ 守恒且规范不变。按\cref{tab:front-notation}的约定定义% VF-CONV-12
+\begin{align}
+\Pi^{\mu\nu}(q)&\equiv\ii\!\int\!\dd^4x\,\ee^{\ii q\cdot x}\langle0|T\,j^\mu(x)j^\nu(0)|0\rangle=(q^\mu q^\nu-q^2g^{\mu\nu})\,\Pi(q^2), \label{eq:ee-Pidef}\\
+W^{\mu\nu}(q)&\equiv\int\!\dd^4x\,\ee^{\ii q\cdot x}\langle0|j^\mu(x)j^\nu(0)|0\rangle
+=\sum_X(2\pi)^4\delta^4(q-p_X)\,\langle0|j^\mu(0)|X\rangle\langle X|j^\nu(0)|0\rangle . \label{eq:ee-Wdef}
+\end{align}
+$\Pi^{\mu\nu}$ 的张量结构来自 Lorentz 协变性与流守恒（至多相差接触项，见\allowbreak\cref{sec:ee-analytic}）。\cref{prop:prelim-optical}（\tagR，$R_{\mathrm{def}}$）给出 $W^{\mu\nu}=2\Imag\Pi^{\mu\nu}$（$q^0>0$）；$W^{\mu\nu}$ 在横向子空间中半正定，故 $\Imag\Pi(s+\ii0)\ge0$。与 Peskin--Schroeder 的真空极化（$\Pi^{\mu\nu}_{\rm PS}=(q^2g^{\mu\nu}-q^\mu q^\nu)\Pi_{\rm PS}$）相比，在 $e$ 的最低阶 $\Pi_{\rm PS}=-e^2\Pi$。
+
+\begin{proposition}[$R=12\pi\,\Imag\Pi$ \tagR]\label{prop:ee-R-ImPi}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）在\cref{def:ee-R}的条件下，
+\begin{equation}\label{eq:ee-RImPi}
+\sigma(e^+e^-\to\text{强子})=\frac{16\pi^2\alpha^2}{s}\,\Imag\Pi(s+\ii0),\qquad R(s)=12\pi\,\Imag\Pi(s+\ii0).
+\end{equation}
+% VF-CONV-12
+非微扰地位：\cref{asm:intro-wightman}（MA0：末态的完备性与谱条件）。
+\uses{def:ee-R,prop:prelim-optical,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+在 $\alpha$ 的最低阶，振幅为 $\mathcal M=(e^2/s)\,\bar v(k_2)\gamma_\mu u(k_1)\langle X|j^\mu(0)|0\rangle$（光子传播子 $-\ii g_{\mu\nu}/q^2$，$q=k_1+k_2$；整体相位无关紧要）。轻子自旋平均给出 $L_{\mu\nu}\equiv\frac14\TrD[\sla k_2\gamma_\mu\sla k_1\gamma_\nu]=k_{1\mu}k_{2\nu}+k_{2\mu}k_{1\nu}-g_{\mu\nu}k_1\!\cdot\!k_2$。乘以通量因子 $1/(2s)$ 并对 $X$ 求和，由\cref{eq:ee-Wdef}与 $W^{\nu\mu}=2\Imag\Pi^{\nu\mu}$（\cref{prop:prelim-optical}），
+\[
+\sigma=\frac{e^4}{2s^3}\,L_{\mu\nu}W^{\nu\mu}(q)=\frac{e^4}{s^3}\,\Imag\Pi(s+\ii0)\,L_{\mu\nu}\big(q^\mu q^\nu-q^2g^{\mu\nu}\big).
+\]
+由 $k_i^2=0$、$k_1\cdot k_2=s/2$：$L_{\mu\nu}q^\mu q^\nu=2(k_1\cdot q)(k_2\cdot q)-s\,k_1\cdot k_2=0$（轻子流守恒），$L_{\mu\nu}g^{\mu\nu}=-s$，故 $L_{\mu\nu}(q^\mu q^\nu-q^2g^{\mu\nu})=s^2$，$\sigma=e^4\Imag\Pi/s=16\pi^2\alpha^2\Imag\Pi/s$。对单个点状轻子（$N_c=1$，电荷 $1$），\cref{eq:ee-ImPi0}给出 $\Imag\Pi_\mu=1/(12\pi)$，即 $\sigma_{\mu\mu}=4\pi\alpha^2/(3s)$；相除得 $R=12\pi\Imag\Pi$。对强子末态求和用到末态的完备性，即非微扰地位一行所列的假设。
+\end{proof}
+对自由无质量夸克，单圈关联函数给出
+\begin{equation}\label{eq:ee-ImPi0}
+\Imag\Pi_0(s+\ii0)=\frac{N_c}{12\pi}\sum_qe_q^2,\qquad R=R_0,\qquad \sigma_0=\frac{4\pi\alpha^2}{3s}R_0 ,
+\end{equation}
+% VF-EE-1, VF-EE-3
+$D$ 维中的完整计算（$\overline{\rm MS}$ 形式 $\Pi_0=\frac{N_ce_q^2}{12\pi^2}(\frac53-L)$）见\cref{ex:prelim-vacpol}。
+
+\paragraph{$D$ 维的记账。}\cref{sec:ee-oneloop}在 $D=4-2\varepsilon$ 维中分别计算实辐射与虚修正，那时只比较强子一侧的量。定义
+\begin{equation}\label{eq:ee-rho}
+\rho(s)\equiv-g_{\mu\nu}W^{\mu\nu}(q)=2(D-1)\,s\,\Imag\Pi(s+\ii0),
+\end{equation}
+第二个等号在任意 $D$ 中成立，因为 $-g_{\mu\nu}(q^\mu q^\nu-q^2g^{\mu\nu})=(D-1)q^2$。领头阶 $\rho_0=N_ce_q^2\,2(D-2)s\,\Phi_2$，其中 $-g_{\mu\nu}\TrD[\sla p_1\gamma^\mu\sla p_2\gamma^\nu]=2(D-2)s$，$\Phi_2$ 是 $D$ 维两体相空间（\cref{lem:appC-phase-space}）。由于各阶的极点在 $\rho$ 的和中相消（\cref{thm:ee-R-finite}），
+\begin{equation}\label{eq:ee-Rratio}
+\frac{R^{(n)}}{R_0}=\lim_{\varepsilon\to0}\frac{\rho^{(n)}}{\rho_0}
+\end{equation}
+与轻子一侧如何延拓到 $D$ 维无关。
+
+% ---------------------------------------------------------------------
+\section{解析性、谱表示与 Adler 函数}\label{sec:ee-analytic}
+
+$R$ 是 $\Pi$ 在割线上的虚部，而微扰论最可靠的区域是远离一切阈的欧氏区 $q^2<0$。连接两者的解析性在两个独立的层次上成立：微扰论的每一阶由 Feynman 积分直接读出（\cref{lem:ee-single-scale}）；非微扰地则来自 Wightman 公理（\cref{prop:ee-analytic}），只在\cref{asm:intro-wightman}之下成立。
+
+\begin{lemma}[无质量传播子型图的单标度结构 \tagR]\label{lem:ee-single-scale}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 $n_f$ 味无质量 QCD（任意协变规范）的维数正规化（\cref{def:qcd-dimreg}）中，记 $a_0\equiv g_0^2\mu_0^{-2\varepsilon}/(4\pi^2)$。$\Pi$ 的每个裸的 $(n+1)$ 圈贡献都具有形式
+\begin{equation}\label{eq:ee-single-scale}
+\Pi^{[n+1]}_{\rm bare}(q^2)=a_0^n\,c_n(\varepsilon)\,(\mu_0^2)^{n\varepsilon}\,(-q^2-\ii0)^{-(n+1)\varepsilon},
+\end{equation}
+% VF-EE-15
+$c_n(\varepsilon)$ 与 $q^2$ 无关，是 $\varepsilon$ 的亚纯函数，对实的 $\varepsilon$ 为实数。特别地，在不是 $c_n$ 极点的固定 $\varepsilon$ 处，每一阶在 $q^2\in\mathbb C\setminus[0,\infty)$ 上解析，割线上的边值由 $(-s\mp\ii0)^{-k\varepsilon}=s^{-k\varepsilon}\ee^{\pm\ii\pi k\varepsilon}$（$s>0$）给出。（本引理只涉及 Feynman 图。）
+\uses{def:ir-landau-setup,def:qcd-dimreg}
+\end{lemma}
+\begin{proof}
+(1)~\emph{量纲与 Lorentz 不变性。}每个 $(n+1)$ 圈图用 $-g_{\mu\nu}/[(D-1)q^2]$ 投影后是标量积分 $I(q)=\int\prod_l\frac{\dd^Dk_l}{(2\pi)^D}N(k,q)\prod_j(D_j+\ii0)^{-\nu_j}$ 之和，$N$ 是标量积的多项式，内线无质量。对欧氏的 $q$，在 $D$ 的收敛区内令 $k_l=\lambda k'_l$ 得 $I(\lambda q)=\lambda^\omega I(q)$，这一齐次性随解析延拓保持；转动不变性使 $I=C(-q^2)^{\omega/2}$，$C$ 与 $q$ 无关。各个闵氏积分 $I$ 经 Wick 转动带有 $\ii$ 的幂次，但它们在 $\Pi$ 中与\cref{eq:ee-Pidef}的因子 $\ii$ 及顶点因子组合后，欧氏区的 $\Pi$ 是实的欧氏积分（那里没有割线），故 $c_n$ 对实的 $\varepsilon$ 为实数。$\Pi$ 的量纲是 $-2\varepsilon$，$g_0^{2n}=(4\pi^2a_0)^n\mu_0^{2n\varepsilon}$ 带量纲 $2n\varepsilon$，故 $q^2$ 的幂次是 $-(n+1)\varepsilon$。
+
+(2)~\emph{解析性与 $\ii0$。}由\cref{def:ir-landau-setup}的参数表示，外动量只经由第二 Symanzik 多项式进入（分子只带来 $\alpha$ 的多项式与 $\mathcal F$ 的其他幂次）。对 $q$ 从一个流顶点流入、从另一个流出的无质量两点图，
+\begin{equation}\label{eq:ee-F0}
+\mathcal F(\alpha)=-q^2\,\mathcal F_0(\alpha),\qquad \mathcal F_0(\alpha)=\sum_{T^2}\ \prod_{j\notin T^2}\alpha_j\ \ge0 ,
+\end{equation}
+求和遍及把两个流顶点分开的生成 2-森林\cite{Bogner:2010kv}。对 $q^2\in\mathbb C\setminus[0,\infty)$，$-q^2\mathcal F_0$ 不落在负实轴上，积分解析；$q^2=s>0$ 时 $-\ii0$ 规定 $(-s\mathcal F_0-\ii0)^c=\mathcal F_0^cs^c\ee^{-\ii\pi c}$。由恒等定理，(1) 的结果延拓为 $I=C(-q^2-\ii0)^{\omega/2}$。
+
+(3)~\emph{亚纯性。}维数正规化的积分由对 $D$ 的解析延拓定义，是 $\varepsilon$ 的亚纯函数，在 $\varepsilon=0$ 附近只有有限阶极点\cite{tHooftVeltman1972,Collins1984}；有限个图相加即得 $c_n$。
+\end{proof}
+例如 $n=0$ 时 $\Pi_0=N_ce_q^2\frac{2(D-2)}{D-1}\frac{G(1,1)}{(4\pi)^{D/2}}(-q^2-\ii0)^{-\varepsilon}$（\cref{ex:prelim-vacpol}），$n=1$ 见\cref{prop:ee-twoloop}。这一结构保证了每一阶的 $\varepsilon$ 展开系数都是 $\ln(-q^2/\mu^2)$ 的多项式，是\cref{thm:ee-R-finite}的关键输入。
+
+\begin{proposition}[解析性与正定性 \tagR]\label{prop:ee-analytic}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设\cref{asm:intro-wightman}成立。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{谱表示。}存在支撑在 $[s_0,\infty)$ 上的正测度（$s_0=4m_\pi^2$，电磁流道中最低的强子阈；其绝对连续部分为 $\pi^{-1}\Imag\Pi(s+\ii0)\,\dd s$，下文为书写简便统一记作 $\pi^{-1}\Imag\Pi(s)\,\dd s$），使 $\Pi(q^2)$ 在 $\mathbb C\setminus[s_0,\infty)$ 上解析，$\Pi(q^{2*})=\Pi(q^2)^*$，$\Imag\Pi(s+\ii0)\ge0$，且对某个整数 $N\ge1$ 与任意 $\mu^2>0$，
+\begin{equation}\label{eq:ee-KL}
+\Pi(q^2)=P_{N-1}(q^2)+\frac{(q^2+\mu^2)^N}{\pi}\int_{s_0}^\infty\!\dd s\,\frac{\Imag\Pi(s)}{(s+\mu^2)^N(s-q^2-\ii0)} ,
+\end{equation}
+$P_{N-1}$ 是次数不超过 $N-1$ 的多项式（编时乘积的接触项）。（无质量微扰论中逐阶的相应解析性见\cref{lem:ee-single-scale}，那里 $s_0=0$。）
+\item \emph{一次减除的确切条件。}下列三条等价：
+(i)~对某个（从而一切）$\mu^2>0$，$\int_{s_0}^\infty\dd s\,\Imag\Pi(s)/(s+\mu^2)^2<\infty$，即 $\int^\infty\dd s\,\Imag\Pi(s)/s^2<\infty$；
+(ii)~$Q^2\int_{s_0}^\infty\dd s\,R(s)/(s+Q^2)^2$ 对某一个（从而一切）欧氏点 $Q^2>0$ 有限，即下文 Adler 函数的色散积分在一个欧氏点有限；
+(iii)~适当选取接触项后一次减除即够：
+\begin{equation}\label{eq:ee-once}
+\Pi(q^2)-\Pi(-\mu^2)=\frac{q^2+\mu^2}{\pi}\int_{s_0}^\infty\!\dd s\,\frac{\Imag\Pi(s)}{(s-q^2-\ii0)(s+\mu^2)} .
+\end{equation}
+减除点取在欧氏区，因为对无质量夸克 $\Pi(0)$ 红外发散（微扰论中 $\Pi\sim-\frac{R_0}{12\pi^2}\ln(-q^2)$）。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}（MA0：Källén--Lehmann 表示、正定谱密度、多项式有界）。
+\uses{prop:ee-R-ImPi,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+(a)~这是 Källén--Lehmann 表示：由\cref{asm:intro-wightman}(W1)(W2)，\cref{eq:ee-Wdef}是缓增分布，协变性与流守恒给出 $W^{\mu\nu}=(q^\mu q^\nu-q^2g^{\mu\nu})\,2\Imag\Pi\,\theta(q^0)$；度规正定给出 $\varepsilon^*_\mu W^{\mu\nu}\varepsilon_\nu=\sum_X(2\pi)^4\delta^4(q-p_X)|\langle X|\varepsilon\cdot j|0\rangle|^2\ge0$；谱条件给出支撑 $q^2\ge s_0$（$\alpha$ 的最低阶无光子末态，能与 $1^{--}$ 的流耦合的最轻强子态是 $\pi^+\pi^-$）；缓增性给出 $N$。编时乘积是对易子的推迟延拓，在相差多项式（$\delta^4(x)$ 及其导数）的意义下由 Wightman 函数确定，即\cref{eq:ee-KL}；实性来自 $j^\mu$ 的厄米性。
+
+(b)~(i)$\Leftrightarrow$(ii)：被积函数非负；对 $s\ge Q^2$ 有 $(2s)^{-2}\le(s+Q^2)^{-2}\le s^{-2}$，在 $[s_0,Q^2]$ 上 $(s+Q^2)^{-2}\le Q^{-4}$ 且谱测度局部有限，故 (ii) 收敛当且仅当 $\int^\infty\Imag\Pi/s^2<\infty$；同理 (i) 与 $\mu^2$ 无关。正定性是本质的：振荡的谱函数可以使积分条件收敛而绝对发散。
+(i)$\Rightarrow$(iii)：由有限几何级数，
+\begin{equation}\label{eq:ee-geom}
+\begin{split}
+\frac{(q^2+\mu^2)^N}{(s+\mu^2)^N(s-q^2)}&=\frac{q^2+\mu^2}{(s+\mu^2)(s-q^2)}-\sum_{k=1}^{N-1}\frac{(q^2+\mu^2)^k}{(s+\mu^2)^{k+1}} .
+\end{split}
+\end{equation}
+在 (i) 之下 $c_k\equiv\frac1\pi\int\dd s\,\Imag\Pi(s)(s+\mu^2)^{-k-1}<\infty$（$k\ge1$），代入\cref{eq:ee-KL}，$\Pi(q^2)$ 等于\cref{eq:ee-once}右边的积分加上多项式 $P_{N-1}(q^2)-\sum_{k=1}^{N-1}c_k(q^2+\mu^2)^k$；后者在 $q^2=-\mu^2$ 处等于 $\Pi(-\mu^2)$，其非常数部分是 $\Pi^{\mu\nu}$ 的接触项 $(q^\mu q^\nu-q^2g^{\mu\nu})(q^2)^k$，可由编时乘积的定义去掉。
+(iii)$\Rightarrow$(i)：在 $q^2=-2\mu^2$ 处\cref{eq:ee-once}的被积函数定号，其绝对收敛即 (i)。在微扰论中编时乘积由重整化确定到只差一个常数（$\Pi^{\mu\nu}$ 的超表观发散度为 $2$，横向性只允许 $(q^\mu q^\nu-q^2g^{\mu\nu})\times$常数），(iii) 的“适当选取”是自动的。
+\end{proof}
+条件 (i) 在 QCD 中被期望成立（渐近自由使 $R\to R_0$），但这已是微扰论与强子之间的桥接（\cref{asm:intro-bridge}），不是公理的推论。
+
+\begin{definition}[Adler 函数]\label{def:ee-adler}
+对欧氏的 $Q^2=-q^2>0$，定义 Adler 函数\cite{Adler1974}
+\[
+D(Q^2)\equiv-12\pi^2Q^2\,\frac{\dd\Pi(-Q^2)}{\dd Q^2}.
+\]
+$D$ 无量纲，不受 $\Pi$ 的加法重整化（接触常数）的影响；对自由夸克，$\Pi_0=\frac{R_0}{12\pi^2}(\frac53-L)$ 给出 $D=R_0$。
+\uses{def:ee-R}
+\end{definition}
+
+\begin{proposition}[Adler 函数的色散表示 \tagR]\label{prop:ee-adler-dispersion}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）在\cref{prop:ee-analytic}(b) 的等价条件下，
+\begin{equation}\label{eq:ee-adler-disp}
+D(Q^2)=Q^2\int_0^\infty\!\dd s\,\frac{R(s)}{(s+Q^2)^2}\qquad(R(s)\equiv0,\ s<s_0),
+\end{equation}
+% VF-EE-14
+右边对 $Q^2\in\mathbb C\setminus(-\infty,-s_0]$ 解析，在 $Q^2>0$ 上为正。若 $R\equiv R_c$ 为常数（$s_0=0$），则 $D\equiv R_c$。
+非微扰地位：对强子谱函数需\cref{asm:intro-wightman}（MA0，经由\cref{prop:ee-analytic}）；对微扰论的固定阶（$s_0=0$）无需假设。
+\uses{def:ee-adler,prop:ee-analytic,prop:ee-R-ImPi,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+在\cref{eq:ee-once}中令 $q^2=-Q^2$ 并对 $Q^2$ 求导：$\frac{\dd}{\dd Q^2}\frac{\mu^2-Q^2}{(s+Q^2)(s+\mu^2)}=-\frac{1}{(s+Q^2)^2}$，故 $\frac{\dd\Pi(-Q^2)}{\dd Q^2}=-\frac1\pi\int\dd s\,\frac{\Imag\Pi(s)}{(s+Q^2)^2}$（对 $Q^2\ge Q_0^2>0$，被积函数及其导数被 $\Imag\Pi(s)(s+Q_0^2)^{-2}$ 的常数倍控制，可在积分号下求导）。于是 $D=12\pi Q^2\int\Imag\Pi/(s+Q^2)^2$，用 $R=12\pi\Imag\Pi$（\cref{prop:ee-R-ImPi}）即得\cref{eq:ee-adler-disp}，结果与 $\mu^2$ 无关。在 $\mathbb C\setminus(-\infty,-s_0]$ 的紧子集上 $|s+Q^2|^{-2}\le C(s+1)^{-2}$ 一致成立，故积分解析。最后 $Q^2\int_0^\infty\dd s\,(s+Q^2)^{-2}=1$。
+\end{proof}
+核 $Q^2/(s+Q^2)^2$ 正定、积分为 $1$：$D$ 是 $R$ 的一种“欧氏抹平”，对共振不敏感；回到逐点的 $R(s)$ 需要解析延拓（\cref{prop:ee-contour}）。
+
+% ---------------------------------------------------------------------
+\section{欧氏红外有限性与重整化群}\label{sec:ee-euclid}
+
+闵氏空间中，无质量传播子在整个光锥上奇异，红外发散来自钳夹面（\cref{sec:ir-landau}与\cref{sec:ir-pinch}）。欧氏空间简单得多：Wick 转动后 $k_E^2=0$ 当且仅当 $k_E=0$，被积函数只在某些内线动量为零处奇异。这些点确实是 Landau 方程的解（\cref{rem:ir-euclid-corners}），是否发散只取决于其附近的幂次计数。称欧氏外动量非例外，如果它们的任何真部分和都不为零；两点函数在 $q\ne0$ 时自动非例外。$\Pi$ 的 $\overline{\rm MS}$ 重整化定义为（\cref{def:prelim-msbar}，$S_\varepsilon=(4\pi)^\varepsilon\ee^{-\varepsilon\gamma_E}$）
+\begin{equation}\label{eq:ee-PiMS}
+\hat\Pi\equiv\mu^{2\varepsilon}S_\varepsilon^{-1}\,\Pi_{\rm bare}\big|_{g_0^2=4\pi\as(\mu)\mu^{2\varepsilon}S_\varepsilon^{-1}Z_g^2},\qquad
+\Pi_{\overline{\rm MS}}(q^2;\mu,\as(\mu);\varepsilon)\equiv\hat\Pi-Z_\Pi(\as(\mu),\varepsilon),
+\end{equation}
+$Z_\Pi$ 与 $q$ 无关，各阶系数是 $\varepsilon$ 的纯极点，由有限性确定。$\hat\Pi$ 恰是 QCD$\times$QED 中光子自能在 $e$ 的最低阶乘在 $e^2$ 上的因子，$Z_\Pi$ 是光子场重整化的相应部分；它与 $q$ 无关，因为 $\Pi^{\mu\nu}$ 的超表观发散部分是 $q$ 的二次多项式，横向性只允许 $(q^\mu q^\nu-q^2g^{\mu\nu})\times$常数。
+
+\begin{theorem}[欧氏红外有限性 \tagR]\label{thm:ee-euclid-ir}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设可重整的场论只含无质量场，且没有超可重整耦合（每个相互作用项的量纲恰为 $4$）。则在非例外的欧氏外动量处，用 $\overline{\rm MS}$（或带辅助质量的 BPHZL）重整化的 Green 函数在微扰论的每一阶都有限。无质量 QCD 在任意协变规范中满足这些条件；特别地，$\Pi_{\overline{\rm MS}}(q^2)$ 在 $q^2<0$ 处每一阶有限，且与规范参数无关。（本定理只涉及部分子态的 Green 函数。）
+\uses{thm:qcd-renormalizability,def:prelim-msbar,def:qcd-dimreg,prop:qcd-xi-independence,prop:qcd-superficial-degree,lem:prelim-scaleless}
+\end{theorem}
+\begin{proofsketch}
+\emph{第 1 步（紫外）。}由\cref{thm:qcd-renormalizability}（\tagR，$R_{\mathrm{PT}}$），$\overline{\rm MS}$ 抵消项是被重整子图外动量的多项式，不在非零动量处产生奇点；减除不在零动量处进行（零动量的 BPHZ 减除在无质量理论中会制造红外发散，故 BPHZL 引入辅助质量\cite{LowensteinZimmermann1975}）。
+
+\emph{第 2 步（奇点的位置）。}设 $S$ 是同时取零动量的一组内线，其余内线 $H$ 的动量不为零；$S$ 上的 $L_S$ 个独立软圈动量按 $\lambda\to0$ 标度。记 $N_g,N_q,N_c$ 为软的胶子、夸克、鬼场线数，$V_3=n_{ggg}+n_{qqg}+n_{ccg}$ 与 $V_4$ 为\emph{全部}连线都软的三、四点顶点数。
+
+\emph{第 3 步（红外度）。}测度给出 $\lambda^{4L_S}$；每条软胶子线与鬼场线给出 $\lambda^{-2}$（协变规范中 $(1-\xi)k_\mu k_\nu/k^4$ 一项标度相同），每条软夸克线给出 $\lambda^{-1}$；全软的三胶子顶点与鬼场顶点（$-gf^{abc}p^\mu$，$p$ 为出射鬼场动量）各带因子 $\lambda$；连接 $S$ 与 $H$ 的顶点的动量因子为 $\order{1}$ 或更小，只会改善收敛。于是当
+\begin{equation}\label{eq:ee-irdeg}
+d(S)\equiv4L_S-2N_g-N_q-2N_c+n_{ggg}+n_{ccg}>0
+\end{equation}
+时 $S$ 附近的积分按幂次计数收敛。当 $H$ 连通时（硬岛的情形见第 4 步），每个全软顶点给出软动量的一个独立约束（$S$ 的每个连通分支都与 $H$ 相连），故 $L_S=N_S-V_3-V_4$，$N_S\equiv N_g+N_q+N_c$。设 $A$ 为落在与 $H$ 相连的顶点上的软线端点数（附着数），$A_q$、$A_c$ 为其中的夸克与鬼场端点数，则数端点得 $2N_S=3V_3+4V_4+A$，$2N_q=2n_{qqg}+A_q$，$2N_c=2n_{ccg}+A_c$。用 $-2N_g-N_q-2N_c=-2N_S+N_q$，
+\begin{equation}\label{eq:ee-irdeg2}
+\begin{split}
+d(S)&=2N_S+N_q-4V_3-4V_4+n_{ggg}+n_{ccg}\\
+&=(3V_3+4V_4+A)+\big(n_{qqg}+\tfrac12A_q\big)-4V_3-4V_4+n_{ggg}+n_{ccg}=A+\tfrac12A_q .
+\end{split}
+\end{equation}
+% VF-EE-13 (writer re-derived)
+
+\emph{第 4 步（$A\ge2$）。}附着一次的分支经唯一的附着线与其余部分相连，动量守恒使该线动量恒为零：这是零动量线上的蝌蚪图，在无质量维数正规化中是无标度积分而为零（\cref{lem:prelim-scaleless}），也被 $\langle A_\mu\rangle=0$ 禁止。若 $H$ 有不含流顶点的分支（“硬岛”），其外线全软，整体按质量量纲标度为 $\lambda^{4-E_g-\frac32E_q-E_c}$；由\cref{prop:qcd-superficial-degree}（\tagR，$R_{\mathrm{def}}$），这恰是把硬岛的线全部算作软线时\cref{eq:ee-irdeg}给出的标度，故把硬岛并入 $S$，$A$ 只计附着在含流顶点的分支上的端点。因此 $d(S)=A+\frac12A_q\ge2$：一切零动量区域都可积。最小情形是两条硬线之间交换一个软胶子：$\lambda^4\cdot\lambda^{-2}$。
+
+\emph{第 5、6 步（收敛定理与 QCD）。}“一切软子集 $d(S)>0$、一切紫外子图已重整”蕴含积分绝对收敛：这是无质量传播子的幂次计数定理，BPHZL 情形见\cite{LowensteinZimmermann1975,Lowenstein:1975ps}，维数重整化情形见\cite{BreitenlohnerMaison1977a,Breitenlohner:1975hg,Breitenlohner:1976te}；非例外动量处逐点有限的物理层面的一般证明见\cite{PoggioQuinn1976}；无质量理论中 Feynman 振幅红外奇异性的早期系统分析见\cite{Symanzik1973,KinoshitaUkawa1976}。\cref{rem:ir-euclid-corners}中的零动量 Landau 解正是第 2 步的位形。无质量 QCD 的每个相互作用项（$\bar\psi\sla A\psi$，$AA\partial A$，$AAAA$，$\partial\bar c\,Ac$）的红外维数都恰为 $4$（夸克 $\frac32$，胶子与鬼场 $1$，导数 $+1$）。$\Pi^{\mu\nu}$ 是 QCD$\times$QED 中光子这一基本场在 $e^2$ 阶的自能，$q\ne0$ 时非例外；规范不变流的关联函数与规范参数无关（\cref{prop:qcd-xi-independence}(b)，\tagR，$R_{\mathrm{PT}}$）。完整论证见\cite{LowensteinZimmermann1975,Lowenstein:1975ps,Breitenlohner:1975hg,Breitenlohner:1976te}与\cite{PoggioQuinn1976}。
+\end{proofsketch}
+
+\paragraph{关于所引定理的适用范围。}\cite{Breitenlohner:1976te}要求每个相互作用项的红外次数不小于 $4$；如上所示，这对协变规范中的无质量 QCD（包括 Faddeev--Popov 鬼场项）成立。不过 Breitenlohner--Maison 只在例子中提到带矢量型费米子的 Yang--Mills 场，没有明确讨论鬼场，而且其存在性定理是关于缓增分布的陈述；非例外动量处的逐点陈述是\cite{PoggioQuinn1976}（对 BPHZL 减除为\cite{LowensteinZimmermann1975}）的结果。对本章唯一需要的流两点函数，分布意义下的陈述已经足够：由\cref{lem:ee-single-scale}，它的每一阶是有限个 $(Q^2)^{-k\varepsilon}$ 与一个常数之和，$\varepsilon$ 展开的各个负幂系数是 $L$ 的多项式；若这些系数与任意试验函数的积分都为零，则它们逐点为零（这正是\cref{thm:ee-R-finite}证明中的多项式论证），所以分布意义下的有限极限就是逐点的有限极限。纯 Yang--Mills 中规范不变算符关联函数的全阶紫外与红外控制见\cite{Frob:2015uqy}。
+
+\begin{example}[两圈图的软子集]\label{ex:ee-soft-sets}
+以\cref{fig:ee-oneloop}(d) 的胶子交换图为例。记流顶点为 $J_1$（$q$ 流入）与 $J_2$（$q$ 流出），胶子顶点为 $a$、$b$，四条夸克线为 $q_1=J_1a$、$q_2=aJ_2$、$q_3=J_2b$、$q_4=bJ_1$，胶子线为 $g=ab$。能同时取零动量、而其余线保持一般动量的线集合 $S$ 受两条约束：一个顶点上若只剩一条非软线，动量守恒迫使它也为软；$q\ne0$ 必须经由硬线从 $J_1$ 流到 $J_2$。满足约束的 $S$ 恰有九个。$\{g\}$：$\lambda^4\cdot\lambda^{-2}$，$A=2$，$A_q=0$，$d=2$。单条夸克线 $\{q_i\}$（四个）：$\lambda^4\cdot\lambda^{-1}$，$A=A_q=2$，$d=3$。$\{q_1,q_2,g\}$ 与 $\{q_3,q_4,g\}$：各含一个全软顶点，$L_S=3-1=2$，$\lambda^8\cdot\lambda^{-1-1-2}$，$A=3$，$A_q=2$，$d=4$。$\{q_1,q_3\}$ 与 $\{q_2,q_4\}$：$L_S=2$，$\lambda^8\cdot\lambda^{-2}$，$A=A_q=4$，$d=6$。每一种情形的直接计数都与\cref{eq:ee-irdeg2}的 $d=A+\frac12A_q$ 一致，最小值 $2$ 来自两条硬夸克线之间的单个软胶子。在自能图（\cref{fig:ee-oneloop}(e)）中还出现硬岛：当自能圈两侧的夸克线变软、而圈内的胶子与夸克保持一般动量时，自能子图的外线全软；按第 4 步把它并入 $S$，即整条上方夸克线连同自能圈为软，$L_S=2$，$\lambda^{8}\cdot\lambda^{-1-1-1-2}$，$A=A_q=2$，$d=3$。
+\uses{thm:ee-euclid-ir}
+\end{example}
+
+\begin{proposition}[Adler 函数的重整化群 \tagR]\label{prop:ee-adler-rg}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在无质量 QCD 中，以\cref{eq:ee-PiMS}定义 $\Pi_{\overline{\rm MS}}$，记 $L=\ln(Q^2/\mu^2)$，$Q^2=-q^2>0$。则：
+(a)~$\big(\mu^2\partial_{\mu^2}+\beta(\as)\partial_{\as}\big)\Pi_{\overline{\rm MS}}=\gamma_\Pi(\as)$ 与 $q$ 无关（是接触项），$\gamma_\Pi=\frac{R_0}{12\pi^2}[1+d_1a+\order{a^2}]$；
+(b)~$\big(\mu^2\partial_{\mu^2}+\beta(\as)\partial_{\as}\big)D=0$，从而 $D(Q^2)=R_0\,d\big(a(Q^2)\big)$，$d(a)=1+d_1a+d_2a^2+\cdots$，$a(Q^2)$ 是 $\mu^2=Q^2$ 处的跑动耦合；
+(c)~在 $a^n$ 阶，$\Pi_{\overline{\rm MS}}$ 是 $L$ 的多项式，次数不超过 $\max(1,n)$（$d_1b_0\ne0$ 时恰为此次数）；$D$ 的 $a^n$（$n\ge1$）系数是 $L$ 的次数不超过 $n-1$ 的多项式。% VF-EE-9
+（本命题只涉及部分子态的 Green 函数。）
+\uses{def:ee-adler,prop:prelim-rg,prop:qcd-rge,lem:ee-single-scale,thm:ee-euclid-ir}
+\end{proposition}
+\begin{proof}
+(a)~记 $F\equiv\Pi_{\overline{\rm MS}}=\hat\Pi-Z_\Pi$。固定 $g_0$ 与 $\varepsilon$ 时 $\Pi_{\rm bare}$ 与 $\mu$ 无关，故 $\mu^2\frac{\dd\hat\Pi}{\dd\mu^2}=\varepsilon\hat\Pi$；$D$ 维中 $\mu^2\frac{\dd\as}{\dd\mu^2}=-\varepsilon\as+\beta(\as)$（\cref{prop:qcd-rge}，\tagR，$R_{\mathrm{PT}}$）。于是
+\begin{equation}\label{eq:ee-rge-eps}
+\mu^2\frac{\dd F}{\dd\mu^2}-\varepsilon F=\varepsilon\big(Z_\Pi+\as Z_\Pi'\big)-\beta(\as)Z_\Pi'\equiv\hat\gamma(\as,\varepsilon),\qquad Z_\Pi'\equiv\partial_{\as}Z_\Pi .
+\end{equation}
+右边与 $q$ 无关。左边在 $\varepsilon\to0$ 时有有限极限：由\cref{thm:ee-euclid-ir}，$F$ 在 $q^2<0$ 处每一阶有限，而由\cref{lem:ee-single-scale}，它每一阶是有限个 $(Q^2/\mu^2)^{-k\varepsilon}$ 与一个常数之和，$\varepsilon$ 展开系数是 $L$ 的多项式，对 $\mu^2$ 求导保持有限性。故 $\hat\gamma$ 有有限极限 $\gamma_\Pi$。写 $Z_\Pi=\sum_{j\ge1}z_j(\as)\varepsilon^{-j}$，则 $\hat\gamma=(z_1+\as z_1')+\sum_{j\ge1}\varepsilon^{-j}[z_{j+1}+\as z_{j+1}'-\beta z_j']$；有限性迫使方括号为零（'t~Hooft 一致性条件），且 $\gamma_\Pi=\frac{\dd}{\dd\as}(\as z_1)$。取 $\varepsilon=0$ 即得 (a) 的第一句。由 $D=-12\pi^2\partial_L\Pi_{\overline{\rm MS}}$，(a) 也可写成 $\gamma_\Pi=\frac{D}{12\pi^2}+\beta\partial_{\as}\Pi_{\overline{\rm MS}}$；在 $L=0$ 处取值，$\beta=\order{\as^2}$，即得 $\gamma_\Pi$ 的展开。
+
+(b)~固定 $Q^2$ 时 $\mu^2\partial_{\mu^2}=-\partial_L$，(a) 写成 $(-\partial_L+\beta\partial_{\as})\Pi_{\overline{\rm MS}}=\gamma_\Pi$；对 $L$ 求导，右边消失，而 $D=-12\pi^2\partial_L\Pi_{\overline{\rm MS}}$，故 $(-\partial_L+\beta\partial_{\as})D=0$。$D$ 是 $Q^2/\mu^2$ 与 $\as(\mu)$ 的无量纲、有限、与 $\mu$ 无关的函数，由\cref{prop:prelim-rg}（\tagR，$R_{\mathrm{PT}}$；特征线法）$D(L,\as(\mu))=D(0,\as(Q^2))\equiv R_0\,d(a(Q^2))$；$d(0)=1$ 来自自由夸克（\cref{def:ee-adler}）。
+
+(c)~记 $\mu^2\frac{\dd a}{\dd\mu^2}=-b_0a^2-b_1a^3-b_2a^4-\cdots$，$b_0=\frac{\beta_0}4$，$b_1=\frac{\beta_1}{16}$，$b_2=\frac{\beta_2}{64}$（\cref{tab:front-notation}第 8 行）。固定 $\mu$ 时 $\frac{\dd a(Q^2)}{\dd L}=-b_0a(Q^2)^2-\cdots$，$a(Q^2)|_{L=0}=a$，逐阶求解得
+\begin{equation}\label{eq:ee-arun}
+a(Q^2)=a-b_0La^2+\big(b_0^2L^2-b_1L\big)a^3+\big(-b_0^3L^3+\tfrac52b_0b_1L^2-b_2L\big)a^4+\order{a^5}.
+\end{equation}
+代入 $D=R_0d(a(Q^2))$，$D$ 的 $a^n$ 系数是 $L$ 的次数不超过 $n-1$ 的多项式，首项 $R_0d_1(-b_0L)^{n-1}$。积分 $D=-12\pi^2\partial_L\Pi_{\overline{\rm MS}}$ 得 $\Pi_{\overline{\rm MS}}(L)=\Pi_{\overline{\rm MS}}(0)-\frac1{12\pi^2}\int_0^L\dd L'\,D(L')$，$\Pi_{\overline{\rm MS}}(0)=\sum_nc_na^n$ 与 $q$ 无关；故 $a^0$ 阶是 $L$ 的一次式，$a^n$（$n\ge1$）阶次数不超过 $n$，$d_1b_0\ne0$ 时首项 $-\frac{R_0d_1(-b_0)^{n-1}}{12\pi^2n}L^n$ 不为零。
+\end{proof}
+常数 $c_n$（如 $c_0=\frac53\frac{R_0}{12\pi^2}$）依赖于方案，是接触项，不进入 $D$ 与 $R$；$d_n$ 不受 $\Pi$ 的加法重整化影响，但 $n\ge2$ 时依赖于 $\as$ 的方案。
+
+% ---------------------------------------------------------------------
+\section{主定理：$R(s)$ 的红外有限性}\label{sec:ee-theorem}
+
+逻辑关系如下：解析性与单标度结构给出从欧氏区到割线的延拓，欧氏红外有限性与紫外重整化给出欧氏区的有限性，重整化群给出多项式结构，合起来即\cref{thm:ee-R-finite}；$\order{\as}$ 的显式计算是独立检验，再加割图规则才得到与部分子末态求和的等同（\tagA）。
+
+\begin{center}
+\begin{tikzpicture}[
+  fbox/.style={draw=gray!60!black,rounded corners=2pt,align=center,font=\footnotesize,inner sep=3pt,line width=0.5pt},
+  fR/.style={fbox,fill=OliveGreen!8},
+  fA/.style={fbox,fill=RoyalBlue!8},
+  farr/.style={-{Stealth[length=4pt,width=3.5pt]},line width=0.55pt,gray!50!black}]
+  \node[fR,text width=3.25cm] (imp) at (0,0)     {\cref{prop:ee-R-ImPi}、\cref{prop:ee-analytic}\\$R=12\pi\Imag\Pi$；解析性};
+  \node[fR,text width=3.25cm] (ss)  at (3.85,0)  {\cref{lem:ee-single-scale}\\单标度结构};
+  \node[fR,text width=3.25cm] (eu)  at (7.7,0)   {\cref{thm:ee-euclid-ir}\\欧氏红外有限};
+  \node[fR,text width=3.25cm] (rg)  at (11.55,0) {\cref{prop:ee-adler-rg}\\对 $L$ 的多项式结构};
+  \node[fR,text width=8.2cm]  (thm) at (5.775,-1.35) {\cref{thm:ee-R-finite}：$R^{(n)}$ 有限，且是 $\ln(s/\mu^2)$ 的多项式};
+  \node[fR,text width=3.6cm] (ex)  at (0.15,-2.75)  {\cref{prop:ee-oneloop,prop:ee-twoloop,prop:ee-cutting-exact}\\$\order{\as}$ 的两种计算};
+  \node[fR,text width=3.4cm] (al)  at (5.775,-2.75) {\cref{prop:ee-contour}、\cref{cor:ee-R-alphas}\\$r_n$ 与 $d_n$};
+  \node[fA,text width=3.6cm] (cut) at (11.4,-2.75) {\cref{cor:ee-cuts}（\tagA）\\$R=$ 割图之和；\cref{rem:prelim-cutting-dr}};
+  \foreach \n in {imp,ss,eu,rg} \draw[farr] (\n.south) -- (\n.south |- thm.north);
+  \draw[farr] (thm.south) -- (al.north);
+  \draw[farr] (thm.south -| cut.north) -- (cut.north);
+  \draw[farr] (ex.east) -- (al.west);
+  \draw[farr,dashed] (ex.south) -- ++(0,-0.35) -| (cut.south);
+\end{tikzpicture}
+\end{center}
+
+\begin{theorem}[$R(s)$ 在微扰论每一阶的红外有限性 \tagR]\label{thm:ee-R-finite}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 $n_f$ 味无质量 QCD 中，以\cref{eq:ee-PiMS}定义 $\Pi_{\overline{\rm MS}}$，令 $R^{(n)}(s;\varepsilon)$ 为 $12\pi\Imag\Pi_{\overline{\rm MS}}(s+\ii0;\varepsilon)$ 中 $a^n$（$a=\as(\mu)/\pi$）的系数，圈积分取 $D$ 维，$q^2=s+\ii0$ 处的值由裸表达式在固定 $\varepsilon$ 下的解析延拓（\cref{lem:ee-single-scale}）给出。则对每个 $n$：
+(i)~$\lim_{\varepsilon\to0}R^{(n)}(s;\varepsilon)$ 存在；
+(ii)~$n\ge1$ 时该极限是 $\ln(s/\mu^2)$ 的次数不超过 $n-1$ 的实系数多项式，$R^{(0)}=R_0$；
+(iii)~该极限等于欧氏区的 $\lim_{\varepsilon\to0}\Pi^{(n)}_{\overline{\rm MS}}$（$L=\ln(-q^2/\mu^2)$ 的多项式）在 $L\to\ln(s/\mu^2)-\ii\pi$ 处的值的 $12\pi$ 倍虚部。
+非微扰地位：\cref{asm:intro-wightman}（MA0）、\cref{asm:intro-bridge}（MA1+MA2）。
+\uses{prop:ee-R-ImPi,lem:ee-single-scale,thm:ee-euclid-ir,prop:ee-adler-rg}
+\end{theorem}
+\begin{proof}
+(a)~\emph{欧氏区。}由\cref{thm:ee-euclid-ir}，对 $q^2<0$，$\Pi^{(n)}_{\overline{\rm MS}}(q^2;\varepsilon)$ 在 $\varepsilon\to0$ 时对每个实的 $L$ 有有限极限。
+
+(b)~\emph{多项式结构。}由\cref{lem:ee-single-scale}，$\hat\Pi=\mu^{2\varepsilon}S_\varepsilon^{-1}\sum_ma_0^mc_m(\varepsilon)(\mu_0^2)^{m\varepsilon}(Q^2)^{-(m+1)\varepsilon}$，$Q^2=-q^2-\ii0$；代入 $a_0^m(\mu_0^2)^{m\varepsilon}=(a\mu^{2\varepsilon}S_\varepsilon^{-1}Z_g^2)^m$ 并按 $a$ 展开，
+\begin{equation}\label{eq:ee-structure}
+\Pi^{(n)}_{\overline{\rm MS}}(q^2;\varepsilon)=\sum_{k=1}^{n+1}C_{n,k}(\varepsilon)\Big(\frac{Q^2}{\mu^2}\Big)^{-k\varepsilon}-z^{(n)}(\varepsilon),
+\end{equation}
+$C_{n,k}=c_{k-1}S_\varepsilon^{-k}[Z_g^{2(k-1)}]_{a^{n-k+1}}$ 是 $\varepsilon$ 的亚纯函数，$z^{(n)}$（$Z_\Pi$ 的 $a^n$ 系数）是 $1/\varepsilon$ 的不含常数项的多项式。代入 $(Q^2/\mu^2)^{-k\varepsilon}=\sum_j(-k\varepsilon L)^j/j!$，$\varepsilon^m$ 的系数
+$p_{n,m}(L)=\sum_k\sum_{j\ge0}C_{n,k}^{[m-j]}(-kL)^j/j!-z^{(n)}_m$
+是 $L$ 的多项式（$C^{[i]}$ 为 Laurent 系数，极点阶数有限）。由 (a)，$m<0$ 时 $p_{n,m}(L)=0$ 对一切实 $L$ 成立，故作为多项式恒为零，在复的 $L$ 处也为零。
+
+(c)~\emph{延拓与 $\varepsilon\to0$ 可交换。}固定 $\varepsilon$ 时 $\Pi^{(n)}_{\overline{\rm MS}}$ 在 $\mathbb C\setminus[0,\infty)$ 上解析（\cref{lem:ee-single-scale}），在 $q^2=s+\ii0$ 处的值由\cref{eq:ee-structure}在 $L=\ell-\ii\pi$ 处给出。对固定的复 $L$，$\ee^{-k\varepsilon L}$ 的级数绝对收敛，Laurent 系数仍是 $p_{n,m}(L)$，于是
+\[
+\Pi^{(n)}_{\overline{\rm MS}}(s+\ii0;\varepsilon)=\sum_{m\ge0}p_{n,m}(\ell-\ii\pi)\,\varepsilon^m\ \xrightarrow{\ \varepsilon\to0\ }\ p_{n,0}(\ell-\ii\pi)=\Big[\lim_{\varepsilon\to0}\Pi^{(n)}_{\overline{\rm MS}}\Big]_{L\to\ell-\ii\pi}.
+\]
+这证明了 (i) 与 (iii)。欧氏区的 $\Pi$ 为实，$p_{n,0}$ 的系数为实，故 $R^{(n)}=12\pi\Imag p_{n,0}(\ell-\ii\pi)$ 是 $\ell$ 的实系数多项式。
+
+(d)~\emph{次数。}由\cref{prop:ee-adler-rg}(c)，$p_{n,0}$ 的次数不超过 $\max(1,n)$；$(\ell-\ii\pi)^j$ 的虚部是 $\ell$ 的 $j-1$ 次多项式（首项 $-j\pi\ell^{j-1}$），故 $n\ge1$ 时 $R^{(n)}$ 的次数不超过 $n-1$。$n=0$ 时由\cref{prop:ee-adler-rg}(c) 的证明，$p_{0,0}=c_0-\frac{R_0}{12\pi^2}L$，$\Imag p_{0,0}(\ell-\ii\pi)=\frac{R_0}{12\pi}$，$R^{(0)}=R_0$（与\cref{eq:ee-ImPi0}一致）。
+\end{proof}
+强子 $R(s)$ 与这一级数的关系及其逐点意义见\cref{sec:ee-duality}。证明只用欧氏信息与解析延拓，是 Poggio--Quinn\cite{PoggioQuinn1976}的推论“物理不连续性也红外有限”在本书约定下的完整写出；$R$ 由 $12\pi\Imag\Pi$ \emph{定义}（由幺正性它就是物理截面），与 $D$ 维部分子割图之和的等同是另一陈述（\cref{cor:ee-cuts}，\tagA）。闵氏空间中独立的全阶论证见 Sterman\cite{Sterman:1976jh,Sterman1978a,Sterman1978b}；重整化 Feynman 积分（含零质量）的 $\ii0\to0$ 边值作为缓增分布存在\cite{LowensteinSpeer1976}。
+
+% ---------------------------------------------------------------------
+\section{$\order{\as}$：实—虚相消与两圈关联函数}\label{sec:ee-oneloop}
+
+本节在 $\order{\as}$ 用两种独立方法验证\cref{thm:ee-R-finite}：割图方法（虚修正与实辐射各含 $1/\varepsilon^2$ 极点，只有其和有限，\cref{prop:ee-oneloop}）与欧氏方法（两圈关联函数，从不出现红外极点，\cref{prop:ee-twoloop}）；二者在任意 $\varepsilon$ 下逐项相等（\cref{prop:ee-cutting-exact}）。所涉及的图见\cref{fig:ee-oneloop}。
+
+\begin{proposition}[$\order{\as}$ 的实辐射与虚修正 \tagR]\label{prop:ee-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈，即 $\order{\as}$。）用\cref{eq:ee-rho}的 $\rho$ 与公共归一化 $N_\varepsilon\equiv\frac{\as C_F}{2\pi}\big(\frac{4\pi\mu_0^2}{s}\big)^{\varepsilon}c_\Gamma$，两部分子割线上的虚修正与三部分子割线上的实辐射分别为
+\begin{align}
+\frac{\rho_V}{\rho_0}&=2\Real F^{(1)}(s+\ii0)=N_\varepsilon\cos(\pi\varepsilon)\,f(\varepsilon)=N_\varepsilon\Big[-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\pi^2+\order{\varepsilon}\Big], \label{eq:ee-virt}\\
+\frac{\rho_R}{\rho_0}&=\frac{\as C_F}{2\pi}\Big(\frac{4\pi\mu_0^2}{s}\Big)^{\varepsilon}\frac{2(1-2\varepsilon)(2-2\varepsilon+\varepsilon^2)\,\Gamma^2(1-\varepsilon)}{\varepsilon^2(1-3\varepsilon)(2-3\varepsilon)\,\Gamma(1-3\varepsilon)}\notag\\
+&=N_\varepsilon\Big[\frac2{\varepsilon^2}+\frac3\varepsilon+\frac{19}2-\pi^2+\order{\varepsilon}\Big], \label{eq:ee-real}
+\end{align}
+% VF-EE-4, VF-EE-5
+其中 $f(\varepsilon)\equiv-\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)}$；两式的闭式精确到 $\varepsilon$ 的一切阶。其和
+\begin{equation}\label{eq:ee-R1}
+\frac{\rho_V+\rho_R}{\rho_0}=N_\varepsilon\Big[\frac32+\order{\varepsilon}\Big]\quad\Longrightarrow\quad R=R_0\Big(1+\frac{3C_F}4\,\frac{\as}\pi\Big)+\order{\as^2},
+\end{equation}
+% VF-EE-6
+SU(3) 中即 $R=R_0(1+\as/\pi)$。\emph{警告：}实、虚两部分各自的常数依赖于公共归一化：两种 $\Gamma$ 前因子相差 $\Gamma^2(1-\varepsilon)/\Gamma(1-3\varepsilon)=c_\Gamma\big(1-\frac{\pi^2}2\varepsilon^2+\order{\varepsilon^3}\big)$，恰好把实辐射的常数 $\frac{19}2$ 变成 $\frac{19}2-\pi^2$；只有同一归一化下的和才与归一化无关。（本命题只涉及部分子态。）
+\uses{def:ee-R,prop:ee-R-ImPi,prop:sudakov-oneloop,def:prelim-dr-conventions,lem:appC-phase-space}
+\end{proposition}
+\begin{proof}
+\emph{(1) 记账。}$\order{\as}$ 的 $\rho$ 有两类贡献（\cref{fig:ee-oneloop}）：$q\bar q$ 末态上 Born 振幅与单圈顶点的干涉 $\rho_V$，以及 $q\bar qg$ 末态的实辐射 $\rho_R$；无质量外线的自能是无标度积分，为零（\cref{def:prelim-dr-conventions}）。由\cref{prop:ee-R-ImPi}与\cref{eq:ee-Rratio}，$aR^{(1)}=R_0\lim_{\varepsilon\to0}(\rho_V+\rho_R)/\rho_0$；这一阶不需要耦合常数重整化。
+
+\emph{(2) 虚修正。}对无质量夸克，手征守恒只允许 $\langle q\bar q|j^\mu|0\rangle=e_qF(q^2)\bar u\gamma^\mu v$，故 $\rho_V=2\Real F^{(1)}\rho_0$。由\cref{prop:sudakov-oneloop}（\tagR，$R_{\mathrm{PT}}$；推导见\cref{sec:appC-formfactor}），$F^{(1)}=-\frac{\as C_F}{4\pi}\big(\frac{4\pi\mu_0^2}{-q^2-\ii0}\big)^{\varepsilon}c_\Gamma\frac{2-\varepsilon+2\varepsilon^2}{\varepsilon^2(1-2\varepsilon)}$；$q^2=s+\ii0$ 处 $(-s-\ii0)^{-\varepsilon}=s^{-\varepsilon}\ee^{\ii\pi\varepsilon}$，故 $2\Real F^{(1)}=N_\varepsilon\cos(\pi\varepsilon)f(\varepsilon)$。由 $\cos\pi\varepsilon=1-\frac{\pi^2}2\varepsilon^2+\cdots$ 与 $f=-\frac2{\varepsilon^2}-\frac3\varepsilon-8-16\varepsilon+\cdots$ 得\cref{eq:ee-virt}：$+\pi^2$ 来自 $(-\frac2{\varepsilon^2})(-\frac{\pi^2}2\varepsilon^2)$，是类时延拓的效应；发散的相位不进入 $|F|^2$。
+
+\emph{(3) 实辐射。}$\gamma^*(q)\to q(p_1)\bar q(p_2)g(k)$ 的振幅为
+\[
+\mathcal M^\nu=-g_0e_qt^a\,\bar u(p_1)\Big[\frac{\gamma^\alpha(\sla p_1+\sla k)\gamma^\nu}{s_{13}}-\frac{\gamma^\nu(\sla p_2+\sla k)\gamma^\alpha}{s_{23}}\Big]v(p_2)\,\varepsilon^*_\alpha(k),\qquad s_{ij}=2p_i\cdot p_j,\ p_3\equiv k .
+\]
+由 $\bar u(p_1)\sla k(\sla p_1+\sla k)=s_{13}\bar u(p_1)$ 与 $(\sla p_2+\sla k)\sla kv(p_2)=s_{23}v(p_2)$ 得 $k_\alpha\mathcal M^{\alpha\nu}=0$，故胶子极化求和取 $-g_{\alpha\beta}$ 是精确的。令 $y_{ij}=s_{ij}/s$（$y_{12}+y_{13}+y_{23}=1$），$D$ 维的迹给出
+\begin{equation}\label{eq:ee-realme}
+-g_{\mu\nu}\sum_{\rm pol,col}\mathcal M^\mu\mathcal M^{\nu*}=8(1-\varepsilon)g_0^2C_FN_ce_q^2\Big[(1-\varepsilon)\Big(\frac{y_{13}}{y_{23}}+\frac{y_{23}}{y_{13}}\Big)+\frac{2y_{12}}{y_{13}y_{23}}-2\varepsilon\Big] ,
+\end{equation}
+四维时即 $\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=\frac{C_F\as}{2\pi}\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$，$x_i=1-y_{jk}$。由\cref{lem:appC-phase-space}，三体相空间与单纯形上的 Dirichlet 积分为
+\[
+\dd\Phi_3=\frac{(4\pi)^{2\varepsilon-3}s^{1-2\varepsilon}}{2\Gamma(2-2\varepsilon)}\,\dd y_{13}\dd y_{23}\,(y_{12}y_{13}y_{23})^{-\varepsilon},\qquad
+\int[\dd y]\,y_{12}^{a-1}y_{13}^{b-1}y_{23}^{c-1}=\frac{\Gamma(a)\Gamma(b)\Gamma(c)}{\Gamma(a+b+c)} .
+\]
+方括号三类项依次取 $(a,b,c)=(1-\varepsilon,2-\varepsilon,-\varepsilon)$（及对称者）、$(2-\varepsilon,-\varepsilon,-\varepsilon)$、$(1-\varepsilon,1-\varepsilon,1-\varepsilon)$；用 $\Gamma(2-\varepsilon)=(1-\varepsilon)\Gamma(1-\varepsilon)$、$\Gamma(-\varepsilon)=-\Gamma(1-\varepsilon)/\varepsilon$、$\Gamma(3-3\varepsilon)=(2-3\varepsilon)\Gamma(2-3\varepsilon)$ 及 $(1-\varepsilon)(2-3\varepsilon)-\varepsilon(1-\varepsilon)^2-\varepsilon^3=(1-2\varepsilon)(2-2\varepsilon+\varepsilon^2)$，
+\[
+I(\varepsilon)\equiv\int[\dd y]\,(y_{12}y_{13}y_{23})^{-\varepsilon}\big[\cdots\big]=\frac{2\Gamma^3(1-\varepsilon)}{\varepsilon^2\Gamma(3-3\varepsilon)}\,(1-2\varepsilon)(2-2\varepsilon+\varepsilon^2).
+\]
+除以 $\rho_0=N_ce_q^2(1-\varepsilon)s(4\pi/s)^\varepsilon\Gamma(1-\varepsilon)/[2\pi\Gamma(2-2\varepsilon)]$ 得 $\frac{\rho_R}{\rho_0}=8\pi g_0^2C_F\frac{(4\pi)^{\varepsilon-3}s^{-\varepsilon}}{\Gamma(1-\varepsilon)}I(\varepsilon)$，即\cref{eq:ee-real}的闭式。展开：$\frac{2(1-2\varepsilon)(2-2\varepsilon+\varepsilon^2)}{(1-3\varepsilon)(2-3\varepsilon)}=2+3\varepsilon+\frac{19}2\varepsilon^2+\order{\varepsilon^3}$，而由 $\ln\Gamma(1+x)=-\gamma_Ex+\frac{\pi^2}{12}x^2+\order{x^3}$，$\Gamma^2(1-\varepsilon)/\Gamma(1-3\varepsilon)=c_\Gamma(1-\frac{\pi^2}2\varepsilon^2+\cdots)$。
+
+\emph{(4) 求和。}$1/\varepsilon^2$ 与 $1/\varepsilon$ 极点精确相消，有限部分 $-8+\pi^2+\frac{19}2-\pi^2=\frac32$，故 $aR^{(1)}/R_0=\frac{\as C_F}{2\pi}\cdot\frac32=\frac{3C_F}4\frac{\as}\pi$。警告由 (3) 的展开直接可见。
+\end{proof}
+这就是 Appelquist--Georgi\cite{AppelquistGeorgi1973}与 Zee\cite{Zee1973}的 $R=R_0(1+\as/\pi)$；教科书中的推导见\cite{EllisStirlingWebber1996}。上述每一步我们都用独立编写的计算机代数程序精确到 $\varepsilon$ 的一切阶核对过。
+
+\begin{example}[KLN 的作用与局限]\label{ex:ee-quark-spectrum}
+\cref{prop:ee-oneloop}的两项正是遍举截面 $\sigma(q\bar q)^{(1)}/\sigma_0$ 与 $\sigma(q\bar qg)/\sigma_0$，% VF-EE-11
+各含 $\pm2/\varepsilon^2$ 的软—共线极点，只有对简并末态求和才有限：这是 Kinoshita--Lee--Nauenberg 定理\cite{Kinoshita1962,LeeNauenberg1964}（\cref{thm:ir-kln}，\tagA）的最简单实例。初态无色，故只需对\emph{末态}求和；有色初态时非阿贝尔 Bloch--Nordsieck 相消的失效\cite{DoriaFrenkelTaylor1980,DiLietoEtAl1981}与此无关（一般过程中对初态或末态之一的简并态求和即可，但通常须计入前向散射以及不连通图与连通图的干涉\cite{Frye:2018xjj}）。再看一个单举但不红外安全的量：夸克能谱 $\dd\sigma/\dd x$，$x=2E_q/\sqrt s=1-y_{23}$。由\cref{eq:ee-realme}与 $\dd\Phi_3$，$\frac1{\rho_0}\frac{\dd\rho_R}{\dd y_{13}\dd y_{23}}=\frac{\as C_F}{2\pi}\big(\frac{4\pi\mu_0^2}{s}\big)^\varepsilon\frac{(y_{12}y_{13}y_{23})^{-\varepsilon}}{\Gamma(1-\varepsilon)}[\cdots]$。固定 $x<1$ 时 $y_{13}\in[0,x]$ 包含夸克与胶子共线的区域，那里方括号趋于 $y_{13}^{-1}[(1-\varepsilon)(1-x)+\frac{2x}{1-x}]$，而 $\int_0\dd y_{13}\,y_{13}^{-1-\varepsilon}=-\frac{x^{-\varepsilon}}\varepsilon+\cdots$，于是
+\begin{equation}\label{eq:ee-xspec}
+\frac1{\sigma_0}\frac{\dd\sigma}{\dd x}\Big|_{\text{极点}}=-\frac1\varepsilon\,\frac{\as}{2\pi}\,C_F\,\frac{(1-x)^2+2x}{1-x}=-\frac1\varepsilon\,\frac{\as}{2\pi}\,P_{qq}(x)\qquad(x<1),
+\end{equation}
+$P_{qq}=C_F[\frac{1+x^2}{1-x}]_+$。连同 $x=1$ 处的虚修正与软端点，矩 $\int_0^1x^n\frac{\dd\sigma}{\dd x}$ 的 $1/\varepsilon^2$ 都相消，$1/\varepsilon$ 的系数（单位 $\frac{\as}{2\pi}$）为 $-\int_0^1x^nP_{qq}=0,\frac43C_F,\frac{25}{12}C_F,\frac{157}{60}C_F$（$n=0,\dots,3$；例如 $n=1$ 时 $-C_F\int_0^1(x-1)\frac{1+x^2}{1-x}=\frac43C_F$）。$n=0$ 是总截面，由夸克数守恒而有限；$n\ge1$ 的剩余共线极点由后文定义的 $\overline{\rm MS}$ 碎裂函数（\cref{def:pdf-ff}）吸收，这就是后文单举湮灭的因子化（\cref{thm:coll-sia}，\tagA）的出发点。KLN 只保护对全部简并态求和的量。
+\uses{prop:ee-oneloop,thm:ir-kln}
+\end{example}
+
+%%% BEGIN fig:ee-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 cutlab/.style={font=\scriptsize,text=red!65!black},
+  t2 cut0/.style={cut,draw=red!30},
+  t2 cutlab0/.style={font=\scriptsize,text=red!35}]
+  % ======================= row 1: amplitudes =======================
+  % (a) virtual vertex correction
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G1) at ($(V)!0.56!(E1)$); \coordinate (G2) at ($(V)!0.56!(E2)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon] (G1) -- (G2);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \node at (0.3,-1.75) {(a)\ $\mathcal M_V$};
+  \end{scope}
+  % (b) real emission off the quark
+  \begin{scope}[xshift=5.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E1)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (G); \draw[quark] (G) -- (E1);
+    \draw[quark] (E2) -- (V);
+    \draw[gluon] (G) -- (2.1,0.05);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.55] (G) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.7] (V) -- (E2);
+    \path[mom'={$k$},mom pos=0.6] (G) -- (2.1,0.05);
+    \node at (0.3,-1.75) {(b)\ $\mathcal M_q$};
+  \end{scope}
+  % (c) real emission off the antiquark
+  \begin{scope}[xshift=10.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E2)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (E1);
+    \draw[quark] (E2) -- (G); \draw[quark] (G) -- (V);
+    \draw[gluon] (G) -- (2.1,-0.05);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.7] (V) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G) -- (E2);
+    \path[mom={$k$},mom pos=0.6] (G) -- (2.1,-0.05);
+    \node at (0.3,-1.75) {(c)\ $\mathcal M_{\bar q}$};
+  \end{scope}
+  % ======================= row 2: two-loop vacuum polarization with cuts =======================
+  % loop: centre C=(0.3,0), radii 1.15 x 0.85; L=(-0.85,0), R=(1.45,0); fermion number flows L -> top -> R -> bottom -> L
+  \begin{scope}[yshift=-4.3cm]
+    % (d) vertex type
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (T) at ($(0.3,0)+(125:1.15 and 0.85)$); \coordinate (B) at ($(0.3,0)+(-55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.7] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.7] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (T) -- (B);
+    \foreach \p in {L,R,T,B} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[cut] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[cut] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab] {2};
+    \node at (0.3,-2.15) {(d)};
+  \end{scope}
+  \begin{scope}[xshift=5.0cm,yshift=-4.3cm]
+    % (e) self-energy on the quark line
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (T1) at ($(0.3,0)+(125:1.15 and 0.85)$); \coordinate (T2) at ($(0.3,0)+(55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.61] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.67] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (T1) .. controls ($(T1)+(0.05,0.75)$) and ($(T2)+(-0.05,0.75)$) .. (T2);
+    \foreach \p in {L,R,T1,T2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[t2 cut0] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab0] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[t2 cut0] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab0] {2};
+    \node at (0.3,-2.15) {(e)};
+  \end{scope}
+  \begin{scope}[xshift=10.0cm,yshift=-4.3cm]
+    % (f) self-energy on the antiquark line
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (B1) at ($(0.3,0)+(-125:1.15 and 0.85)$); \coordinate (B2) at ($(0.3,0)+(-55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.33] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.39] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (B2) .. controls ($(B2)+(-0.05,-0.75)$) and ($(B1)+(0.05,-0.75)$) .. (B1);
+    \foreach \p in {L,R,B1,B2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[t2 cut0] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab0] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[t2 cut0] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab0] {2};
+    \node at (0.3,-2.15) {(f)};
+  \end{scope}
+\end{tikzpicture}
+\caption{$e^+e^-\to$ 强子总截面的 $\order{\as}$ 修正。上排：振幅层次的图——(a)~单圈顶点修正 $\mathcal M_V$，(b)、(c)~夸克或反夸克辐射一个实胶子 $\mathcal M_q$、$\mathcal M_{\bar q}$
+（无质量外线的自能修正在维数正规化中是无标度积分，为零，故未画出）。下排：电磁流关联函数 $\Pi$ 的三个两圈图及其全部切割（虚线上方的数字为被切粒子数）。
+(d)~两粒子切割给出 $2\Real(\mathcal M_0^*\mathcal M_V)$（$\mathcal M_0$ 为 Born 振幅），三粒子切割给出干涉项 $2\Real(\mathcal M_q\mathcal M_{\bar q}^*)$；
+(e)、(f)~三粒子切割给出 $|\mathcal M_q|^2$、$|\mathcal M_{\bar q}|^2$，两粒子切割（浅色）对应在壳无质量外线上的自能，在维数正规化中为零。
+由切割规则，所有切割之和等于 $2\Imag\Pi$ 在 $\order{\as}$ 的贡献：虚、实两部分各含 $1/\varepsilon^2$ 极点，其和有限，给出 $R=R_0\big(1+\tfrac34C_F\,\as/\pi\big)$。}
+\label{fig:ee-oneloop}
+\end{figure}
+%%% END fig:ee-oneloop
+
+\begin{proposition}[欧氏两圈关联函数 \tagR]\label{prop:ee-twoloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（两圈，即 $\order{g_0^2}$。）对一味夸克，流关联函数的两圈裸贡献精确到 $\varepsilon$ 的一切阶为
+\begin{equation}\label{eq:ee-Pi2bare}
+\Pi^{(1)}_{\rm bare}=N_ce_q^2C_F\,\frac{g_0^2(Q^2)^{-2\varepsilon}}{(4\pi)^D}\Big[r_1\,G(1,1)^2+r_2\,G(1,1)\,G(1+\varepsilon,1)\Big],\qquad Q^2=-q^2-\ii0,
+\end{equation}
+\begin{gather*}
+r_1=-\frac{4(1-\varepsilon)(2-\varepsilon+2\varepsilon^2)}{\varepsilon(3-2\varepsilon)},\qquad
+r_2=\frac{16(1-\varepsilon)(1-2\varepsilon)(2-2\varepsilon+\varepsilon^2)}{\varepsilon(3-2\varepsilon)(2-3\varepsilon)},\\
+G(1+\varepsilon,1)=\frac{\Gamma(2\varepsilon)\Gamma(1-2\varepsilon)\Gamma(1-\varepsilon)}{\Gamma(1+\varepsilon)\Gamma(2-3\varepsilon)} ;
+\end{gather*}
+% VF-EE-7
+它满足 $q_\mu q_\nu\Pi^{\mu\nu}=0$（精确到 $\varepsilon$ 的一切阶）。$\overline{\rm MS}$ 重整化后，对全部夸克味求和，
+\begin{equation}\label{eq:ee-PiMSbar}
+\Pi_{\overline{\rm MS}}(q^2)=\frac{R_0}{12\pi^2}\Big[\frac53-L+a\,\frac{3C_F}4\Big(\frac{55}{12}-4\zeta_3-L\Big)\Big]+\order{a^2},\qquad
+D(Q^2)=R_0\Big(1+\frac{3C_F}4\,a\Big)+\order{a^2} .
+\end{equation}
+常数 $\frac53$ 与 $\frac{55}{12}-4\zeta_3$ 依赖于方案（接触项），$L$ 的系数不依赖。（本命题只涉及部分子态的 Green 函数。）
+\uses{def:prelim-msbar,def:prelim-feynman-rules,lem:appC-bubble,lem:appC-ibp}
+\end{proposition}
+\begin{proofsketch}
+(1)~\emph{图与因子。}$\order{g_0^2}$ 有三个图（\cref{fig:ee-oneloop}(d)--(f)）：胶子连接两条夸克线的 V，自能插入 S$_1$、S$_2$。由\cref{def:prelim-feynman-rules}（Feynman 规范），每个图带因子 $\ii\cdot(-1)\cdot(\ii g_0)^2\cdot(-\ii)\cdot\ii^4\cdot C_FN_c=g_0^2C_FN_c$（依次来自 $\Pi^{\mu\nu}$ 的定义、费米子圈、两个顶点、胶子与四个夸克传播子）。取 $r=k+l$，Wick 转动后分母属于两圈传播子拓扑
+\begin{equation}\label{eq:ee-topo}
+\begin{gathered}
+D_1=k^2,\quad D_2=(k-q)^2,\quad D_3=r^2,\quad D_4=(r-q)^2,\quad D_5=(k-r)^2;\\
+\mathrm V:(1,1,1,1,1),\qquad \mathrm S_1:(2,1,1,0,1),\qquad \mathrm S_2:(1,2,0,1,1)
+\end{gathered}
+\end{equation}
+（括号内为各分母的幂次）。
+(2)~\emph{分子。}用 $-g_{\mu\nu}$（得 $\Pi$）与 $q_\mu q_\nu$（检验 Ward 恒等式）投影，算出 $D$ 维的迹；五个标量积都是 $D_i$ 与 $Q^2$ 的线性组合，每个图化为 $\hat I(a)\equiv\int\!\!\int\frac{\dd^Dk\,\dd^Dr}{\pi^D}\prod_iD_i^{-a_i}$（欧氏，乘以 $(Q^2)^{D-\sum a_i}$）之和。
+(3)~\emph{积分。}$a_5\le0$ 时积分分解为两个单圈积分之积（\cref{lem:appC-bubble}及其张量公式）；$a_1,\dots,a_4$ 中某个 $\le0$ 时先做的单圈子积分给出非整数幂的传播子，再由 $G(n,m+\varepsilon)$ 完成；全为正时用 Chetyrkin--Tkachov 的三角规则\cite{ChetyrkinTkachov1981,Tkachov1981}（\cref{lem:appC-ibp}）降低 $a_3$、$a_4$ 或 $a_5$；例如 $\hat I(1,1,1,1,1)=6\zeta_3+\order{\varepsilon}$。
+(4)~\emph{结果。}全部积分化为两种超越结构 $G(1,1)^2$ 与 $G(1,1)G(1+\varepsilon,1)$，即\cref{eq:ee-Pi2bare}；$q_\mu q_\nu\Pi^{\mu\nu}=0$ 精确成立。$r_1$ 含形状因子的多项式 $2-\varepsilon+2\varepsilon^2$，$r_2$ 含实辐射的多项式 $2-2\varepsilon+\varepsilon^2$，分别对应两粒子割与三粒子割（下文的切割恒等式把这一对应精确化）。
+(5)~\emph{逐图的极点。}乘以 $\mu^{2\varepsilon}S_\varepsilon^{-1}$，以 $aC_F\frac{N_ce_q^2}{12\pi^2}$ 为单位（Feynman 规范）：
+\[
+\begin{aligned}
+\mathrm V&=\tfrac{1}{4\varepsilon^2}+\tfrac{1}{\varepsilon}\big(\tfrac{17}{12}-\tfrac L2\big)+\tfrac{L^2}2-\tfrac{17}6L-3\zeta_3-\tfrac{\pi^2}{24}+\tfrac{259}{36},\\
+\mathrm S_1+\mathrm S_2&=-\tfrac{1}{4\varepsilon^2}+\tfrac1\varepsilon\big(\tfrac L2-\tfrac{25}{24}\big)-\tfrac{L^2}2+\tfrac{25}{12}L+\tfrac{\pi^2}{24}-\tfrac{541}{144},
+\end{aligned}
+\]
+和为 $\frac{3}{8\varepsilon}+\frac{55}{16}-3\zeta_3-\frac34L+\order{\varepsilon}$：$1/\varepsilon^2$ 与非局域的 $L/\varepsilon$ 相消（子发散按 Ward 恒等式 $Z_1=Z_2$ 相消），剩下的局域单极点由 $Z_\Pi$ 吸收。
+(6)~\emph{$\overline{\rm MS}$。}单圈：$12\pi^2\mu^{2\varepsilon}S_\varepsilon^{-1}\Pi_0/(N_ce_q^2)=\frac1\varepsilon+\frac53-L+\order{\varepsilon}$；两圈：去掉 $\frac3{8\varepsilon}$ 后剩 $\frac34(\frac{55}{12}-4\zeta_3-L)$。对各味求和即得\cref{eq:ee-PiMSbar}，$D=-12\pi^2\partial_L\Pi_{\overline{\rm MS}}$。完整论证见\cref{sec:appG-ee}；我们用独立编写的计算机代数程序（自编的 $D$ 维迹、张量公式与分部积分递推）逐图重复了这一计算，结果精确一致。
+\end{proofsketch}
+两圈的局域极点也给出 $\gamma_\Pi=\frac{R_0}{12\pi^2}(1+\frac{3C_F}4a)+\order{a^2}$（\cref{prop:ee-adler-rg}(a)）。
+
+\begin{example}[欧氏两圈路线]\label{ex:ee-twoloop-route}
+按\cref{thm:ee-R-finite}(iii)，在\cref{eq:ee-PiMSbar}中代入 $L\to\ell-\ii\pi$：$\Imag(\frac53-L)=\pi$，$\Imag[\frac{3C_F}4(\frac{55}{12}-4\zeta_3-L)]=\frac{3C_F}4\pi$，故 $\Imag\Pi(s+\ii0)=\frac{R_0}{12\pi}(1+\frac{3C_F}4a)$，$R=R_0(1+\frac{3C_F}4\frac{\as}\pi)$，与\cref{eq:ee-R1}一致。这是\cref{thm:ee-R-finite}最直接的演示：裸的两圈 $\Pi$ 只有一个局域的（紫外的）单极点，依赖方案的常数是接触项，在 $R$ 中消失，$R$ 只由 $L$ 的系数（即 $D$）决定；割图方法中 $\pm2/\varepsilon^2$ 的红外极点在这里根本不出现。
+\uses{prop:ee-twoloop,thm:ee-R-finite}
+\end{example}
+
+\begin{proposition}[$O(g^2)$ 处精确到 $\varepsilon$ 的切割恒等式 \tagR]\label{prop:ee-cutting-exact}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（$\order{g_0^2}$ 阶。）对一切 $\varepsilon$（各 $\Gamma$ 函数的极点除外），
+\begin{equation}\label{eq:ee-cutexact}
+2(D-1)\,s\,\Imag\Pi^{(1)}_{\rm bare}(s+\ii0)=\rho_V+\rho_R ,
+\end{equation}
+% VF-EE-8
+而且逐项成立：\cref{eq:ee-Pi2bare}中 $r_1G(1,1)^2$ 一项等于 $\rho_V$（两粒子割），$r_2G(1,1)G(1+\varepsilon,1)$ 一项等于 $\rho_R$（三粒子割），$\rho_{V,R}$ 取\cref{prop:ee-oneloop}的闭式（以 $g_0^2=4\pi\as\mu_0^{2\varepsilon}$ 表示）。（本命题只涉及部分子态。）
+\uses{prop:ee-oneloop,prop:ee-twoloop}
+\end{proposition}
+\begin{proof}
+记 $P\equiv N_ce_q^2C_Fg_0^2\,s\,(4\pi/s)^{2\varepsilon}/(4\pi)^4$，$G_{11}\equiv G(1,1)$。由 $(-s-\ii0)^{-2\varepsilon}=s^{-2\varepsilon}\ee^{2\pi\ii\varepsilon}$，
+\[
+2(D-1)\,s\,\Imag\Pi^{(1)}_{\rm bare}(s+\ii0)=2(3-2\varepsilon)P\sin(2\pi\varepsilon)\big[r_1G_{11}^2+r_2G_{11}G_{1+\varepsilon,1}\big],\qquad G_{11}=\frac{\Gamma(\varepsilon)\Gamma^2(1-\varepsilon)}{\Gamma(2-2\varepsilon)} .
+\]反复用 $\Gamma(z)\Gamma(1-z)=\pi/\sin\pi z$（$z=\varepsilon,2\varepsilon$）与 $\sin2\pi\varepsilon=2\sin\pi\varepsilon\cos\pi\varepsilon$。另一方面，$\frac{\as}{2\pi}(\frac{4\pi\mu_0^2}{s})^\varepsilon=\frac{g_0^2}{8\pi^2}(\frac{4\pi}s)^\varepsilon$，$\rho_0=N_ce_q^2(1-\varepsilon)s(4\pi/s)^\varepsilon\Gamma(1-\varepsilon)/[2\pi\Gamma(2-2\varepsilon)]$。
+
+\emph{第一项。}$2(3-2\varepsilon)r_1=-8(1-\varepsilon)(2-\varepsilon+2\varepsilon^2)/\varepsilon$，$G_{11}^2\sin2\pi\varepsilon=2\pi\cos(\pi\varepsilon)\Gamma(\varepsilon)\Gamma^3(1-\varepsilon)/\Gamma^2(2-2\varepsilon)$，故第一项为 $-16\pi P\cos(\pi\varepsilon)(1-\varepsilon)(2-\varepsilon+2\varepsilon^2)\Gamma(\varepsilon)\Gamma^3(1-\varepsilon)/[\varepsilon\Gamma^2(2-2\varepsilon)]$。而 $\rho_V=2\Real F^{(1)}\rho_0=16\pi P\,c_\Gamma\cos(\pi\varepsilon)f(\varepsilon)(1-\varepsilon)\Gamma(1-\varepsilon)/\Gamma(2-2\varepsilon)$；由 $c_\Gamma/[\varepsilon(1-2\varepsilon)]=\Gamma(\varepsilon)\Gamma^2(1-\varepsilon)/\Gamma(2-2\varepsilon)$，$c_\Gamma f=-(2-\varepsilon+2\varepsilon^2)\Gamma(\varepsilon)\Gamma^2(1-\varepsilon)/[\varepsilon\Gamma(2-2\varepsilon)]$，故 $\rho_V$ 恰等于第一项。
+
+\emph{第二项。}$2(3-2\varepsilon)r_2=32(1-\varepsilon)(1-2\varepsilon)(2-2\varepsilon+\varepsilon^2)/[\varepsilon(2-3\varepsilon)]$，由 $\Gamma(2\varepsilon)\Gamma(1-2\varepsilon)\sin2\pi\varepsilon=\pi$ 与 $\Gamma(\varepsilon)/\Gamma(1+\varepsilon)=1/\varepsilon$，$G_{11}G_{1+\varepsilon,1}\sin2\pi\varepsilon=\pi\Gamma^3(1-\varepsilon)/[\varepsilon\Gamma(2-2\varepsilon)\Gamma(2-3\varepsilon)]$，第二项为 $32\pi P(1-\varepsilon)(1-2\varepsilon)(2-2\varepsilon+\varepsilon^2)\Gamma^3(1-\varepsilon)/[\varepsilon^2(2-3\varepsilon)\Gamma(2-2\varepsilon)\Gamma(2-3\varepsilon)]$；用 $(1-3\varepsilon)\Gamma(1-3\varepsilon)=\Gamma(2-3\varepsilon)$，$\rho_R=\frac{\rho_R}{\rho_0}\rho_0$ 恰为同一表达式。
+\end{proof}
+这是 $\order{g^2}$ 的幺正性在 $D$ 维中的直接验证：欧氏两圈积分与闵氏相空间积分在 $\varepsilon\to0$ \emph{之前}就一致，两种超越结构与两类割线一一对应（我们还在若干 $\varepsilon$ 值上以数十位精度作了数值核对）。这一逐项恒等式是本书给出的推导，依据是维数正规化中标准的幺正性\cite{Cutkosky1960,Veltman1963,tHooftVeltman1974}，不主张其新颖性。
+
+\begin{corollary}[与部分子末态求和的等同；KLN \tagA]\label{cor:ee-cuts}
+在 $n_f$ 味无质量 QCD 中，\cref{thm:ee-R-finite}的 $R^{(n)}$ 等于 $\gamma^*\to$ 部分子的全部割图之和，即对一切部分子末态（物理极化）求 $D$ 维截面之和，包括 $\overline{\rm MS}$ 抵消项的插入，再取 $\varepsilon\to0$。每一类割线单独含有直到 $\varepsilon^{-2n}$ 的极点，只有全部求和才有限；对 $e^+e^-$ 只需对末态的简并态求和（\cref{fig:ee-cutsum-disc}）。（本推论只涉及部分子态。）
+\uses{thm:ee-R-finite,thm:prelim-cutting-rules,rem:prelim-cutting-dr,prop:prelim-unitarity,prop:ee-cutting-exact}
+\end{corollary}
+\begin{proofsketch}
+(1)~对每个 $D$ 维无质量图，把两个流顶点分开的全部割线之和等于该图的不连续性 $2\Imag\Pi_{\rm graph}(s+\ii0)$：最大时间方程（\cref{thm:prelim-cutting-rules}，\tagR，$R_{\mathrm{PT}}$），其无质量维数正规化形式是\cref{rem:prelim-cutting-dr}（\tagA）。(2)~鬼场割线与非物理极化的割线相消（\cref{prop:prelim-unitarity}，\tagR，$R_{\mathrm{PT}}$），割线之和等于物理末态之和。(3)~$Z_\Pi$ 为实且与 $q$ 无关，没有不连续性；耦合常数抵消项对应割图中的抵消项顶点。(4)~由\cref{thm:ee-R-finite}，每一阶的和有限且等于 $R^{(n)}$；每发射一个部分子至多带来 $\varepsilon^{-2}$。(5)~$\order{g^2}$ 由\cref{prop:ee-cutting-exact}精确验证。割图规则见\cite{Cutkosky1960,Veltman1963,tHooftVeltman1974}，鬼场与幺正性见\cite{tHooftVeltman1972b,KugoOjima1979}；完整论证见\cite{Sterman1978a,Sterman1978b}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}最弱的一步是无质量、以维数正规化为红外正规子的 $D$ 维割图规则（含鬼场）：最大时间方程与 BRST 幺正性各自是标准的，但没有一篇文献把这一情形写到完全严格（\cref{rem:prelim-cutting-dr}，\tagA）。这一缺口不是某个幂次估计的缺口，而是一个恒等式（亚纯函数之间的等式）的完整证明，所以误差类型的分级在这里不适用。它不影响\cref{thm:ee-R-finite}，那里 $R$ 由 $12\pi\Imag\Pi$ 定义（由整个理论的幺正性，它就是物理截面）。若把割图之和取作 $R^{(n)}$ 的定义，其有限性目前只有全阶论证；$\order{g^2}$ 的精确验证（\cref{prop:ee-cutting-exact}）与 Sterman 在闵氏空间中的全阶论证\cite{Sterman1978a,Sterman1978b}是证据。提升为 \tagR 需要维数正规化中无质量、含鬼场的割图规则的完整证明（例如由 BRST 不变的最大时间方程出发）。
+
+% ---------------------------------------------------------------------
+\section{高阶：$\pi^2$ 项与已知系数}\label{sec:ee-higher}
+
+Adler 函数是跑动耦合 $a(Q^2)$ 的幂级数，系数 $d_n$ 不含 $\ln(Q^2/\mu^2)$；而延拓到类时轴时，跑动耦合的相位在 $R$ 的系数 $r_n$ 中留下正比于 $\pi^2$ 的项。
+
+\begin{proposition}[围道公式 \tagR]\label{prop:ee-contour}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $\Pi$ 满足\cref{prop:ee-analytic}(b) 的条件（或为微扰论某一固定阶的 $\Pi_{\overline{\rm MS}}$），$s>0$，且边值 $\Pi(s\pm\ii0)$ 存在（微扰论中对一切 $s>0$ 成立；对强子谱函数，例如当 $R$ 在 $s$ 附近 Hölder 连续时成立）。则
+\begin{equation}\label{eq:ee-contour}
+R(s)=\frac1{2\pi}\lim_{\delta\to0^+}\int_{-\pi+\delta}^{\pi-\delta}\!\dd\theta\,D\big(s\,\ee^{\ii\theta}\big),
+\end{equation}
+% VF-EE-9
+$D$ 是\cref{prop:ee-adler-dispersion}中 Adler 函数在 $\mathbb C\setminus(-\infty,-s_0]$ 上的延拓；路径 $Q^2=s\ee^{\ii\theta}$ 在 $q^2$ 平面中是圆周 $|q^2|=s$，自 $s+\ii0$ 逆时针到 $s-\ii0$（\cref{fig:ee-pi-plane}）。
+非微扰地位：对强子谱函数需\cref{asm:intro-wightman}（MA0，经由\cref{prop:ee-analytic}）；对微扰论的固定阶无需假设。
+\uses{def:ee-adler,prop:ee-adler-dispersion,prop:ee-analytic,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+由实性 $\Pi(q^{2*})=\Pi(q^2)^*$（\cref{prop:ee-analytic}(a)），$2\ii\Imag\Pi(s+\ii0)=\Pi(s+\ii0)-\Pi(s-\ii0)$。记 $\tilde\Pi(Q^2)\equiv\Pi(-Q^2)$，它在 $\mathbb C\setminus(-\infty,-s_0]$ 上解析，$\Pi(s\pm\ii0)=\lim_{\delta\to0^+}\tilde\Pi(s\ee^{\mp\ii(\pi-\delta)})$。在开圆弧 $Q^2=s\ee^{\ii\theta}$ 上，由\cref{def:ee-adler}及其延拓（\cref{prop:ee-adler-dispersion}），$\frac{\dd}{\dd\theta}\tilde\Pi(s\ee^{\ii\theta})=\ii Q^2\frac{\dd\tilde\Pi}{\dd Q^2}=-\frac{\ii}{12\pi^2}D(s\ee^{\ii\theta})$。积分并令 $\delta\to0^+$，$\Pi(s+\ii0)-\Pi(s-\ii0)=\frac{\ii}{12\pi^2}\lim_\delta\int_{-\pi+\delta}^{\pi-\delta}D\,\dd\theta$，故 $R=12\pi\Imag\Pi(s+\ii0)=\frac{12\pi}{2\ii}\cdot\frac{\ii}{12\pi^2}\lim_\delta\int D\,\dd\theta$。微扰论的固定阶中 $\Pi_{\overline{\rm MS}}$ 与 $D$ 是主值对数 $L$ 的多项式，在闭圆弧上连续，极限平凡。
+\end{proof}
+
+%%% BEGIN fig:ee-pi-plane
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fa lab/.style={font=\footnotesize},
+  fa contour/.style={draw=blue!65!black,line width=1.1pt,postaction={decorate,decoration={markings,
+      mark=at position 0.13 with {\arrow{Stealth[length=6pt,width=5pt]}},
+      mark=at position 0.5 with {\arrow{Stealth[length=6pt,width=5pt]}},
+      mark=at position 0.87 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  fa cutline/.style={draw=black,line width=1.0pt,decorate,decoration={zigzag,amplitude=1.7pt,segment length=4.6pt}},
+  fa sm/.style={circle,draw=red!65!black,fill=white,line width=0.8pt,inner sep=0pt,minimum size=5.5pt}]
+  \draw[lcaxis] (-4.0,0) -- (4.7,0) node[fa lab,anchor=west] {$\Real q^2$};
+  \draw[lcaxis] (0,-3.15) -- (0,3.3) node[fa lab,left] {$\Imag q^2$};
+  \draw[fa cutline] (0,0) -- (4.35,0);
+  % contour of the contour formula: |q^2| = s, counter-clockwise from s+i0 to s-i0
+  \draw[fa contour] (2.5:2.3) arc[start angle=2.5,end angle=357.5,radius=2.3];
+  \node[fa lab,anchor=south west,inner sep=1.5pt] at (2.32,0.08) {$s+\ii0$};
+  \node[fa lab,anchor=north west,inner sep=1.5pt] at (2.32,-0.08) {$s-\ii0$};
+  \node[fa lab,text=blue!55!black,anchor=south east] at (135:2.38) {$|q^2|=s$};
+  % smearing points s pm i Delta
+  \draw[red!65!black,line width=0.5pt,dash pattern=on 1.5pt off 1.5pt] (2.3,-1.2) -- (2.3,1.2);
+  \node[fa sm] at (2.3,1.2) {};
+  \node[fa sm] at (2.3,-1.2) {};
+  \node[fa lab,text=red!55!black,anchor=west] at (2.42,1.2) {$s+\ii\Delta$};
+  \node[fa lab,text=red!55!black,anchor=west] at (2.42,-1.2) {$s-\ii\Delta$};
+  % Euclidean point
+  \fill (-1.3,0) circle[radius=2.2pt];
+  \node[fa lab,anchor=north] at (-1.3,-0.08) {$-Q^2$};
+  \node[fa lab,align=center,anchor=south] at (-1.3,0.18) {PT 可靠\\（欧氏区）};
+  % cut and resonance region
+  \draw[gray!60!black,line width=0.45pt] (3.9,0.1) -- (3.9,0.6);
+  \node[fa lab,anchor=south,inner sep=1.5pt] at (3.9,0.6) {割线 $[0,\infty)$};
+  \draw[gray!60!black,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}] (0.82,-0.6) -- (0.36,-0.1);
+  \node[fa lab,anchor=north west,align=left,inner sep=1pt] at (0.72,-0.56) {共振区\\（小 $s$）};
+\end{tikzpicture}
+\caption{流关联函数 $\Pi(q^2)$ 的解析结构：割线 $[0,\infty)$、欧氏点 $-Q^2$、围道公式 $R(s)=\frac1{2\pi}\int_{-\pi}^{\pi}\dd\theta\,D(s\ee^{\ii\theta})$ 的积分路径 $|q^2|=s$
+（$D$ 的宗量 $Q^2=-q^2$ 走遍该圆周，在 $q^2$ 平面中即自 $s+\ii0$ 逆时针到 $s-\ii0$）以及抹平所用的点 $s\pm\ii\Delta$。在复 $q^2$ 处使用 OPE 是额外的假设（\cref{rem:ee-complex-ope}）。}
+\label{fig:ee-pi-plane}
+\end{figure}
+%%% END fig:ee-pi-plane
+
+\begin{corollary}[$R(s)$ 的微扰展开 \tagR]\label{cor:ee-R-alphas}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）对光子交换与 $n_f$ 味无质量夸克，在 $\overline{\rm MS}$ 中取 $\mu^2=s$，$a=\as(s)/\pi$，
+\begin{equation}\label{eq:ee-Rexp}
+R(s)=R_0\big[1+r_1a+r_2a^2+r_3a^3+r_4a^4+\order{a^5}\big],
+\end{equation}
+其中 (i)~$r_1=\frac34C_F$（SU(3) 中为 $1$）；(ii)~记 $D(Q^2)=R_0d(a(Q^2))$，$d=1+\sum_nd_na^n$，$b_0=\frac{\beta_0}4$，$b_1=\frac{\beta_1}{16}$，则
+\begin{equation}\label{eq:ee-rn-dn}
+r_1=d_1,\qquad r_2=d_2,\qquad r_3=d_3-\frac{\pi^2}3b_0^2d_1,\qquad r_4=d_4-\pi^2\Big(b_0^2d_2+\frac56b_0b_1d_1\Big);
+\end{equation}
+% VF-EE-9
+(iii)~（文献结果，此处只引用）$r_2=d_2=-\frac3{32}C_F^2+C_FC_A\big(\frac{123}{32}-\frac{11}4\zeta_3\big)-C_FT_Fn_f\big(\frac{11}8-\zeta_3\big)$，SU(3) 中 $r_2=\frac{365}{24}-11\zeta_3-n_f\big(\frac{11}{12}-\frac23\zeta_3\big)=1.9857-0.1153\,n_f$；% VF-EE-10
+(iv)~正比于 $(\sum_qe_q)^2$ 的单态项在 $a^2$ 阶为零，自 $a^3$ 起出现。（本推论是关于微扰系数的陈述，只涉及部分子态；它与强子 $R(s)$ 的关系见\cref{sec:ee-duality}。）
+\uses{thm:ee-R-finite,prop:ee-oneloop,prop:ee-twoloop,prop:ee-adler-rg,prop:ee-contour}
+\end{corollary}
+\begin{proof}
+(i)~由\cref{prop:ee-oneloop}（或\cref{prop:ee-twoloop}与\cref{thm:ee-R-finite}(iii)），$R^{(1)}=\frac34C_FR_0$。
+(ii)~由\cref{prop:ee-contour}与\cref{prop:ee-adler-rg}(b)，$R=\frac{R_0}{2\pi}\int_{-\pi}^{\pi}\dd\theta\,d(a(s\ee^{\ii\theta}))$，而由\cref{eq:ee-arun}（$\mu^2=s$，$L=\ii\theta$），$a(s\ee^{\ii\theta})=a+c_2a^2+c_3a^3+c_4a^4+\cdots$，$c_2=-b_0\ii\theta$，$c_3=b_0^2(\ii\theta)^2-b_1\ii\theta$，$c_4=-b_0^3(\ii\theta)^3+\frac52b_0b_1(\ii\theta)^2-b_2\ii\theta$。$d$ 的 $a^3$、$a^4$ 系数分别是 $d_1c_3+2d_2c_2+d_3$ 与 $d_1c_4+d_2(c_2^2+2c_3)+3d_3c_2+d_4$。对 $\theta$ 平均：奇次幂为零，$\langle\theta^2\rangle=\frac{\pi^2}3$，故 $\langle c_2\rangle=0$，$\langle c_2^2\rangle=\langle c_3\rangle=-\frac{\pi^2}3b_0^2$，$\langle c_4\rangle=-\frac56\pi^2b_0b_1$，即得\cref{eq:ee-rn-dn}。
+(iii)~$\overline{\rm MS}$ 中 SU(3) 的数值由 Chetyrkin、Kataev 与 Tkachov\cite{ChetyrkinKataevTkachov1979}以及 Dine 与 Sapirstein\cite{DineSapirstein1979}算出，Celmaster 与 Gonsalves\cite{CelmasterGonsalves1980a}在 MOM 方案中计算并与之一致；一般规范群的形式见 Baikov、Chetyrkin 与 Kühn 的文章\cite{Baikov:2010je}，代入 $C_F=\frac43$、$C_A=3$、$T_F=\frac12$ 即化为 SU(3) 的数值（我们核对了这一算术）；$R(s)$ 微扰级数的综述见\cite{ChetyrkinKuhnKwiatkowski1996}。
+(iv)~单态项来自两个流分别连在两个不同夸克圈上的图，每个圈对味求和给出 $\sum_qe_q$。$a^2$ 阶时两圈之间只交换两个胶子，每个圈有一个光子顶点与两个胶子顶点，色因子 $\Tr(t^at^b)=\frac12\delta^{ab}$ 在圈的反向下不变；而由电荷共轭，把费米子圈反向使 $n$ 个矢量顶点的 Dirac 迹乘以 $(-1)^n$，$n=3$ 时两种取向相消（Furry 定理\cite{Furry:1937zz}）。$a^3$ 阶交换三个胶子（$n=4$），两种取向之和正比于 $\Tr(t^at^bt^c)+\Tr(t^ct^bt^a)=\frac12d^{abc}$，单态项正比于 $d^{abc}d^{abc}\ne0$。
+\end{proof}
+不取 $\mu^2=s$ 时，$a(\mu)^n$ 的系数是 $\ln(s/\mu^2)$ 的次数不超过 $n-1$ 的多项式，例如 $R^{(2)}(\mu)/R_0=d_2-b_0d_1\ln(s/\mu^2)$。更高阶的系数只作为文献结果引用：对 SU(3)、$\overline{\rm MS}$、$\mu^2=s$，
+\begin{equation}\label{eq:ee-r3}
+r_3=-6.63694-1.20013\,n_f-0.00518\,n_f^2-1.2395\,\eta,\qquad \eta\equiv\frac{(\sum_qe_q)^2}{3\sum_qe_q^2},
+\end{equation}
+其中 $-1.2395\eta$ 来自单态项 $(\sum_qe_q)^2(\frac{55}{72}-\frac53\zeta_3)a^3$\cite{GorishniiKataevLarin1991,SurguladzeSamuel1991}；$n_f=5$ 时 $r_3=-12.805$。Gorishny、Kataev 与 Larin 1988 年发表的 $a^3$ 系数\cite{Gorishnii:1988bc}有误，1991 年由 Surguladze 与 Samuel\cite{SurguladzeSamuel1991}以及原作者\cite{GorishniiKataevLarin1991}分别更正为上式（附录~Q 第~20~条，\cref{sec:appQ-errata}）；四阶系数见\cite{BaikovChetyrkinKuhn2008}。
+
+\cref{fig:ee-cutsum-disc}从割图一侧概括本章的结构：各类割线各自发散而其和有限，割线之和是前向函数的不连续性，由 Cauchy 定理它等于离开实轴的圆周上的积分——即围道公式与\cref{thm:ee-R-finite}的几何内容。
+
+%%% BEGIN fig:ee-cutsum-disc
+\begin{figure}[htbp]
+\centering
+% three-loop ladder graph of the current correlator (origin at its centre); #1 = cut path
+\newcommand{\fbEEladder}[1]{%
+  \draw[photon] (-1.85,0) -- (-1.25,0);
+  \draw[photon] (1.25,0) -- (1.85,0);
+  \draw[plain] (-1.25,0) to[out=62,in=180] (-0.62,0.72) -- (-0.42,0.72);
+  \draw[plain] (-0.42,0.72) -- (0.42,0.72);
+  \draw[quark=0.55] (0.42,0.72) -- (0.62,0.72) to[out=0,in=118] (1.25,0);
+  \draw[plain] (1.25,0) to[out=-118,in=0] (0.62,-0.72) -- (0.42,-0.72);
+  \draw[plain] (0.42,-0.72) -- (-0.42,-0.72);
+  \draw[quark=0.55] (-0.42,-0.72) -- (-0.62,-0.72) to[out=180,in=-62] (-1.25,0);
+  \draw[gluon] (-0.42,0.72) -- (-0.42,-0.72);
+  \draw[gluon] (0.42,0.72) -- (0.42,-0.72);
+  \foreach \p in {(-1.25,0),(1.25,0),(-0.42,0.72),(0.42,0.72),(-0.42,-0.72),(0.42,-0.72)} \node[vertex] at \p {};
+  \draw[cut] #1;}
+% reduced diagram of e+e- (origin at its centre); #1 = 1 draws the cut, 0 the forward box
+\newcommand{\fbEEred}[1]{%
+  \node[hard blob,circle,minimum size=0.42cm,inner sep=0pt] (H)  at (-1.13,0) {};
+  \node[hard blob,circle,minimum size=0.42cm,inner sep=0pt] (Hd) at ( 1.13,0) {};
+  \node[jet blob,ellipse,minimum width=1.42cm,minimum height=0.46cm,inner sep=0pt] (J1) at (0, 0.78) {};
+  \node[jetB blob,ellipse,minimum width=1.42cm,minimum height=0.46cm,inner sep=0pt] (J2) at (0,-0.78) {};
+  \node[soft blob,circle,minimum size=0.46cm,inner sep=0pt] (S) at (0,0) {};
+  \draw[photon] (-1.5,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (1.5,0);
+  \draw[quark] (H.70) -- (J1.188);
+  \draw[quark] (J1.352) -- (Hd.110);
+  \draw[quark] (Hd.250) -- (J2.8);
+  \draw[quark] (J2.172) -- (H.290);
+  \draw[gluon] (S.140) -- (-0.36,0.56);
+  \draw[gluon] (S.40) -- (0.36,0.56);
+  \draw[gluon] (S.220) -- (-0.36,-0.56);
+  \draw[gluon] (S.320) -- (0.36,-0.56);
+  \ifnum#1=1 \node[font=\scriptsize,inner sep=0pt,anchor=east] at ($(S.west)+(-0.04,0)$) {$S$};\else \node[font=\scriptsize] at (S) {$S$};\fi
+  \node[font=\scriptsize] at (-0.47,0.78) {$J_1$};
+  \node[font=\scriptsize] at (-0.47,-0.78) {$J_2$};
+  \node[font=\scriptsize,anchor=north] at (H.south) {$H$};
+  \node[font=\scriptsize,anchor=north] at (Hd.south) {$H^\dagger$};
+  \ifnum#1=1 \draw[cut] (0,1.18) -- (0,-1.18);
+  \else \draw[draw=gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt,rounded corners=4pt]
+          (-0.9,-1.14) rectangle (0.9,1.14);
+  \fi}
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize},
+  fb note/.style={font=\scriptsize,text=red!55!black},
+  fb bcut/.style={draw,line width=0.9pt,decorate,decoration={zigzag,segment length=4.2pt,amplitude=1.6pt}},
+  fb contour/.style={draw=blue!60!black,line width=0.9pt},
+  fb carrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}}]
+  % ======================= (a) cut classes of one O(alpha_s^2) graph =======================
+  \begin{scope}
+    \fbEEladder{(0,1.05) -- (0,-1.05)}
+    \node[fb lab] at (0,-1.38) {两粒子割线 $q\bar q$};
+    \node[fb note] at (0,-1.76) {单类至多 $1/\varepsilon^4$ 极点};
+  \end{scope}
+  \begin{scope}[xshift=4.35cm]
+    \fbEEladder{(-0.79,0.96) -- (0.09,-0.96)}
+    \node[fb lab] at (0,-1.38) {三粒子割线 $q\bar qg$};
+    \node[fb note] at (0,-1.76) {单类至多 $1/\varepsilon^4$ 极点};
+  \end{scope}
+  \begin{scope}[xshift=8.7cm]
+    \fbEEladder{(-0.91,0.965) -- (0.91,-0.965)}
+    \node[fb lab] at (0,-1.38) {四粒子割线 $q\bar qgg$};
+    \node[fb note] at (0,-1.76) {单类至多 $1/\varepsilon^4$ 极点};
+  \end{scope}
+  % hand-made brace and the statement
+  \draw[gray!45!black,line width=0.7pt] (-1.7,-2.0) to[out=-90,in=180] (-1.5,-2.2) -- (4.15,-2.2)
+       to[out=0,in=90] (4.35,-2.4) to[out=90,in=180] (4.55,-2.2) -- (10.2,-2.2) to[out=0,in=-90] (10.4,-2.0);
+  \node[font=\small] at (4.35,-2.75) {对全部割线求和（连同 $\MSbar$ 抵消项）：红外极点相消 $\;\Longrightarrow\;$ 有限};
+  \node[font=\footnotesize,text=gray!30!black] at (4.35,-3.25) {（单态项 $\propto(\sum_qe_q)^2$ 自 $\order{\as^3}$ 起：Furry 定理）};
+  \node[font=\small,anchor=west] at (-2.0,1.2) {(a)};
+  % ======================= (b) cut sum = discontinuity of the forward function =======================
+  \begin{scope}[yshift=-5.7cm]
+    \node[font=\small,anchor=west] at (-2.0,1.45) {(b)};
+    \node[font=\large] at (-1.55,0) {$\displaystyle\sum_{C}$};
+    \begin{scope}[xshift=0.4cm]\fbEEred{1}\end{scope}
+    \node[font=\normalsize] at (2.78,0) {$=\ \Disc_s$};
+    \begin{scope}[xshift=5.25cm]\fbEEred{0}\end{scope}
+    \node[fb lab,anchor=north] at (0.4,-1.28) {割线只穿过 $J_1$、$J_2$、$S$};
+    \node[fb lab,anchor=north,align=center] at (5.25,-1.28) {前向（编时）组合 $F(s)$};
+    % complex s plane
+    \begin{scope}[xshift=10.0cm]
+      \draw[lcaxis] (-1.95,0) -- (2.7,0) node[right,font=\footnotesize,inner sep=2pt] {$\Real s$};
+      \draw[lcaxis] (0,-1.8) -- (0,1.95) node[left,font=\footnotesize] {$\Imag s$};
+      \draw[fb bcut] (0,0) -- (2.45,0);
+      \draw[fb contour,fb carrow=0.2,fb carrow=0.5,fb carrow=0.8] (5:1.45) arc[start angle=5,end angle=355,radius=1.45];
+      \fill[blue!60!black] (5:1.45) circle[radius=1.5pt];
+      \fill[blue!60!black] (-5:1.45) circle[radius=1.5pt];
+      \node[font=\scriptsize,anchor=south west,inner sep=1pt] at ($(5:1.45)+(0.04,0.07)$) {$s+\ii0$};
+      \node[font=\scriptsize,anchor=north west,inner sep=1pt] at ($(-5:1.45)+(0.04,-0.07)$) {$s-\ii0$};
+      \node[font=\scriptsize,text=blue!55!black,anchor=south east,inner sep=1pt] at (132:1.5) {$|z|=s$：无钳夹};
+      \node[font=\scriptsize,align=left,text=gray!25!black,anchor=north west,inner sep=1pt] at (1.62,-0.62) {钳夹（Landau\\奇点）只在\\实轴上};
+      \node[font=\scriptsize,anchor=north] at (0.35,-1.95) {$F(s+\ii0)-F(s-\ii0)=-\displaystyle\int_{|z|=s}\!\dd z\,F'(z)$};
+    \end{scope}
+  \end{scope}
+\end{tikzpicture}
+\caption{割线求和与前向函数的不连续性（$e^+e^-$ 总截面；红色虚线为末态割线，左侧为振幅，右侧为共轭振幅）。
+(a)~$\order{\as^2}$ 的一个三圈流关联函数图（夸克圈上两条胶子横档）的三类割线：两粒子 $q\bar q$、三粒子 $q\bar qg$ 与四粒子 $q\bar qgg$（每类只画一例，其余割线位置与镜像未画出）。
+每类割图单独含有直到 $1/\varepsilon^4$ 的软、共线极点，只有对全部割线求和（连同 $\MSbar$ 抵消项）才有限（\cref{cor:ee-cuts}）；
+两个夸克圈各连一个光子的单态项 $\propto(\sum_qe_q)^2$ 由 Furry 定理自 $\order{\as^3}$ 起才出现。
+(b)~在钳夹面附近，割线只能穿过末态喷注 $J_1$、$J_2$ 与软子图 $S$，不能穿过 $H$、$H^\dagger$；对固定的 $H$、$H^\dagger$，由幺正性，对这些割线求和等于不加割线的前向（编时）组合 $F$（虚线框）的不连续性 $F(s+\ii0)-F(s-\ii0)$。
+$F$ 是 $s$ 的解析函数，钳夹（Landau 奇点）只出现在实轴的割线上；由 Cauchy 定理，不连续性等于沿圆周 $|z|=s$ 的积分，圆周除两端外离实轴 $\order{s}$，那里没有钳夹，只剩欧氏区可计算的部分（围道公式，\cref{prop:ee-contour}）。}
+\label{fig:ee-cutsum-disc}
+\end{figure}
+%%% END fig:ee-cutsum-disc
+
+\begin{example}[$O(a^3)$ 的 $\pi^2$ 项]\label{ex:ee-pi2}
+\cref{eq:ee-rn-dn}中的 $-\frac{\pi^2}3b_0^2d_1$ 完全来自围道公式：它是跑动耦合在圆周 $|Q^2|=s$ 上的相位 $\ln(Q^2/s)=\ii\theta$ 平方后的平均，与动力学无关。SU(3) 中 $d_1=1$，$b_0=\frac{11}4-\frac{n_f}6$，$\frac{\pi^2}3b_0^2=16.655,\ 14.279,\ 12.086$（$n_f=3,4,5$）。% VF-EE-9
+与\cref{eq:ee-r3}比较（$\eta=0,\frac2{15},\frac1{33}$）：$r_3=-10.284,\ -11.686,\ -12.805$，于是欧氏系数 $d_3=r_3+\frac{\pi^2}3b_0^2=6.371,\ 2.593,\ -0.719$。对 $n_f=4,5$，$\pi^2$ 项与 $r_3$ 同号、大小相近，构成 $r_3$ 的主体；对 $n_f=3$ 它甚至超过 $|r_3|$，而 $d_3$ 与之部分抵消。数值上，例如 $\sqrt s=20\,\mathrm{GeV}$、$n_f=5$：由 $\as(M_Z)=0.1180$\cite[式~(9.25)]{ParticleDataGroup:2024cfk}按两圈跑动得 $\as(20\,\mathrm{GeV})=0.153$，$a=0.0488$，$R/R_0=1+0.0488+0.0034-0.0015+\cdots$，其中 $a^3$ 项的 $-0.0014$ 来自 $\pi^2$ 项，欧氏系数 $d_3$ 只贡献 $-0.0001$。$R(s)$ 高阶系数中相当大的一部分只是“欧氏量 $\to$ 类时量”的运动学效应\cite{KrasnikovPivovarov1982,KataevStarshenko1995}；按围道公式把这些项全部保留是组织级数的一种处方，不是定理，不同处方的差别属于更高阶，其大小与重整化子有关（\cref{sec:power-renormalons}）。
+% VF-QCD-7 (alpha_s(M_Z)=0.1180; two-loop running to 20 GeV: w06_numeric_example.py)
+\uses{prop:ee-contour,cor:ee-R-alphas}
+\end{example}
+
+\begin{remark}[四个逻辑层次]\label{rem:ee-status-layout}
+本章的结论分属四个彼此独立的层次，不应混为一谈：(i)~Wightman 公理之下的解析性，包括一次减除的确切条件（\cref{prop:ee-analytic}，在\cref{asm:intro-wightman}之下）及围道公式；(ii)~微扰论（\cref{thm:ee-R-finite}，\tagR，$R_{\mathrm{PT}}$；与割图之和等同为 \tagA）；(iii)~以 OPE 为条件的陈述（\cref{thm:ee-ope}，\tagA；凝聚\cref{conj:ee-np-ope}，\tagC，前提\cref{asm:intro-np-ope}）；(iv)~抹平恒等式（\cref{prop:ee-smearing}，\tagR，$R_{\mathrm{def}}$）与它的可计算性（\cref{conj:ee-duality}，\tagC）。常见的混淆是把 (ii) 当作强子 $R(s)$ 的逐点陈述，或把 (iv) 中的恒等式当作对偶的证明：恒等式只说抹平的 $R$ 等于 $\Pi$ 在复点上的值，而用微扰论或 OPE 计算这个值正是 (iii)、(iv) 中未被证明的部分。
+\end{remark}
+
+% ---------------------------------------------------------------------
+\section{欧氏 OPE 与凝聚}\label{sec:ee-ope}
+
+微扰论不能告诉我们 $D(Q^2)$ 与强子世界的偏差有多大。算符乘积展开（OPE）把偏差组织成 $1/Q^2$ 的幂次：系数由短程物理决定，长程物理进入算符的矩阵元，对流关联函数即真空期望值（“凝聚”）。本节区分微扰论中的 OPE（\tagA）、凝聚的非微扰意义（\tagC）与在复 $q^2$ 处使用 OPE 的额外假设。
+
+\begin{theorem}[流关联函数的欧氏 OPE \tagA]\label{thm:ee-ope}
+在重整化微扰论中，对带红外正规化部分子外态的 Green 函数，当欧氏的 $Q^2=-q^2\to\infty$ 时，
+\begin{equation}\label{eq:ee-ope}
+\begin{split}
+\ii\!\int\!\dd^4x\,\ee^{\ii q\cdot x}\,T\{j^\mu(x)j^\nu(0)\}&=(q^\mu q^\nu-q^2g^{\mu\nu})\Big[C_{\mathbb 1}(Q^2)\,\mathbb 1+\sum_qC_q(Q^2)\,\frac{m_q\bar qq}{Q^4}\\
+&\qquad+C_G(Q^2)\,\frac{1}{Q^4}\,\frac{\as}\pi G^a_{\rho\sigma}G^{a\rho\sigma}\Big]+\order{Q^{-6}},
+\end{split}
+\end{equation}
+理解为插入 Green 函数后的渐近展开（余项可乘以 $\ln Q^2$ 的幂；量纲 $\le4$ 的 BRST 恰当算符与运动方程算符的物理矩阵元为零，未写出）；系数与外态及红外正规化无关。对无质量夸克展开中没有 $1/Q^2$ 项，因为不存在量纲为 $2$ 的规范不变局域算符；夸克有质量时 $1/Q^2$ 项只来自 $C_{\mathbb 1}\ni-\frac{N_ce_q^2}{2\pi^2}\frac{m_q^2}{Q^2}$。领头阶系数为
+\begin{equation}\label{eq:ee-ope-coeff}
+C_q=2e_q^2\big[1+\order{\as}\big],\qquad C_G=\frac1{12}\sum_qe_q^2\big[1+\order{\as}\big]=\frac{R_0}{12N_c}\big[1+\order{\as}\big],
+\end{equation}
+$C_{\mathbb 1}=\Pi_{\rm PT}$ 是微扰的关联函数（\cref{prop:ee-twoloop}），归一化与\cref{eq:ee-Pidef}相同。% VF-CONV-12
+（本定理只涉及部分子态的 Green 函数。）
+\uses{thm:prelim-composite-renorm,thm:ee-euclid-ir,def:ee-adler,prop:ee-twoloop}
+\end{theorem}
+\begin{proofsketch}
+(1)~\emph{Zimmermann 恒等式与 Weinberg 定理。}对规范不变流的欧氏两点函数，在 BPHZ 或 BPHZL 重整化的微扰论中，编时乘积减去展开到量纲 $N$ 的正规乘积之和，被积函数有改善的紫外幂次；Weinberg 定理逐图给出余项界 $\order{Q^{2-N}}$（取对数）。非例外欧氏点处的红外有限性由\cref{thm:ee-euclid-ir}保证。
+(2)~\emph{协变性与量纲。}流守恒给出 $(q^\mu q^\nu-q^2g^{\mu\nu})$；量纲为 $d$ 的算符的系数按 $(Q^2)^{-d/2}$ 乘以 $\ln Q^2$ 的多项式标度。量纲 $\le4$ 的 Lorentz 标量、规范不变、宇称偶的局域算符只有 $\mathbb 1$、$m_q\bar qq$（手征性使 $\bar qq$ 与 $m_q$ 同时出现）与 $G^aG^a$；$A^a_\mu A^{a\mu}$ 不规范不变。
+(3)~\emph{规范变算符。}由\cref{thm:prelim-composite-renorm}（\tagR，$R_{\mathrm{PT}}$），规范不变算符在重整化下只与规范不变算符、BRST 恰当算符和运动方程算符混合；后两类算符在物理态之间的矩阵元为零，因此不必在\cref{eq:ee-ope}中写出。（在微扰论中，量纲为正的算符的无质量真空期望值都是无标度积分，本身为零；在非微扰的真空中 BRST 恰当算符的期望值为零，则属于\cref{asm:intro-np-ope}的内容。）
+(4)~\emph{领头系数。}$m_q^2$ 项来自有质量单圈 $\Pi=-\frac{N_ce_q^2}{2\pi^2}\int_0^1\dd x\,x(1-x)\ln\frac{m_q^2+x(1-x)Q^2}{\mu^2}$ 的展开；$C_q$ 由把一条夸克线换成非定域凝聚 $\langle\bar q^\beta(0)q^\alpha(x)\rangle=\frac{\langle\bar qq\rangle}{4N_c}[\delta^{\alpha\beta}-\frac{\ii m_q}4\sla x^{\alpha\beta}+\cdots]$（第二项来自运动方程 $\ii\sla\partial q=m_qq$）得到，四个贡献之和自动横向；$C_G$ 由两个软胶子的前向振幅对胶子动量展开到二阶、再取常数场强的真空平均 $\langle g^2G^a_{\alpha\beta}G^b_{\gamma\delta}\rangle=\frac{\delta^{ab}(g_{\alpha\gamma}g_{\beta\delta}-g_{\alpha\delta}g_{\beta\gamma})}{12(N_c^2-1)}\langle g^2G^2\rangle$ 得到。我们独立完成了这两项计算（含 Ward 恒等式与平均方式无关性的检验），与 Shifman--Vainshtein--Zakharov\cite{ShifmanVainshteinZakharov1979a,ShifmanVainshteinZakharov1979b}及\cite[式~(45)]{Colangelo:2000dp}（$\Pi$ 的定义与本书相同）一致。完整论证见\cite{Zimmermann1973}（标量理论）、\cite[第~12.8~节]{Collins1984}与\cref{sec:appM-massless}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}OPE 在重整化微扰论中的全阶证明，对标量理论由 Zimmermann 给出\cite{Zimmermann1973}，对纯 Yang--Mills 的规范不变算符由 Hollands 给出\cite{Hollands:2007zg}；对含夸克的 QCD，Collins 断言它“is proved in a gauge theory the same way as in any other theory”\cite[第~12.8~节]{Collins1984}（在规范理论中与在其他理论中以同样的方式证明），Izubuchi 等人称之为广泛采用的假定\cite[第~II~节]{IzubuchiEtAl2018}——因此是全阶论证（\tagA）。最弱的一步是含夸克与鬼场的规范理论中 Zimmermann 恒等式与完整算符基（规范变算符、鬼场算符、evanescent 算符）的处理（逐图的点态界 E-P，仅在所引定理适用之处）；无质量 QCD 中的细节与缺口见\cref{sec:appM-massless}，完整的地位讨论在后文\cref{thm:dis-ope}（\tagA）处重复并引用本处，OPE 的严格结果汇总于\cref{rem:front-ope-qcd-status}。真空 Adler 函数的 OPE 没有 $1/Q^2$ 项；凝聚项只在\cref{asm:intro-np-ope}之下有非微扰意义——在微扰论中无质量真空期望值都是无标度的，为零。提升为 \tagR 需要对含夸克 QCD 的规范不变流写出 Zimmermann 水平的完整证明。
+
+取真空期望值并换成 Adler 函数（$\Pi\ni C/Q^4$ 给出 $D\ni24\pi^2C/Q^4$），得
+\begin{equation}\label{eq:ee-adler-ope}
+D(Q^2)=R_0\,d\big(a(Q^2)\big)+\frac{1}{Q^4}\sum_qe_q^2\Big[48\pi^2\langle m_q\bar qq\rangle+2\pi^2\Big\langle\frac{\as}\pi G^2\Big\rangle\Big]+\order{Q^{-6}} ;
+\end{equation}
+对 SU(3)，胶子凝聚项为 $R_0\frac{2\pi^2}3\langle\frac{\as}\pi G^2\rangle/Q^4$。其非微扰内容就是下面的猜想。
+
+\begin{conjecture}[非微扰 OPE 与凝聚 \tagC]\label{conj:ee-np-ope}
+\cref{thm:ee-ope}的展开在 QCD 的真空态之间非微扰地成立，系数不变：$\Pi(-Q^2)=C_{\mathbb 1}+\sum_qC_q\frac{\langle m_q\bar qq\rangle}{Q^4}+C_G\frac{\langle\frac{\as}\pi G^2\rangle}{Q^4}+\order{Q^{-6}}$（$Q^2\to\infty$ 的渐近展开），凝聚是非微扰参数。这是\cref{asm:intro-np-ope}的真空部分。$\langle G^2\rangle$ 的定义不能比 $C_{\mathbb 1}$ 的领头红外重整化子（Borel 平面上 $u=2$ 的极点）的歧义更精确。
+\uses{thm:ee-ope}
+\end{conjecture}
+
+\paragraph{地位与缺口}QCD 中没有 OPE 的非微扰定义（\tagC）。在代数量子场论中 OPE 可以作为相空间性质的推论得到\cite{Bostelmann:2005rr}，但所需的性质在 QCD 中未被建立。Novikov 等人在模型中讨论了 OPE 是否会失效以及用归一化点 $\mu$ 分离短程与长程贡献\cite{Novikov:1984rf}；David 指出凝聚的定义与红外重整化子的歧义纠缠在一起\cite{David:1983gz,David:1985xj}。与之相容的是：大 $\beta_0$ 极限下 Adler 函数的 Borel 变换在 $u=1$ 处没有红外重整化子极点，第一个红外极点在 $u=2$，对应胶子凝聚（\cref{prop:power-adler-large-beta0}，\tagP，只在该极限中成立）。至于 OPE 作为幂次展开本身的收敛性（而不仅是渐近性），严格结果只有欧氏 $\varphi^4_4$ 理论在每个固定圈阶上的收敛性（有质量情形\cite{Hollands:2011gf}，无质量情形\cite{Holland:2014pna}）——这是固定圈阶的陈述，不涉及非微扰的凝聚；格点上的数值结果是证据而不是证明。解除这一猜想需要 QCD 中 OPE 的非微扰定义与证明。
+
+\begin{remark}[复 $q^2$ 处的 OPE 是额外假设]\label{rem:ee-complex-ope}
+\cref{sec:appM-np}中“OPE 成立”的各项条件 (OPE1)--(OPE5) 与\cref{asm:intro-np-ope}(O1) 都是欧氏的陈述：余项界对欧氏 $q$ 的方向一致成立。把 OPE 用在复的 $q^2$ 处——例如抹平恒等式的点 $s\pm\ii\Delta$（\cref{fig:ee-pi-plane}），或围道公式中靠近 $s\pm\ii0$ 的部分——需要渐近展开在那里同样成立，这是额外的假设，正是\cref{conj:ee-duality}(a) 的输入；在割线附近 OPE 的余项完全不受控制，这是局域对偶无法由 OPE 推出的原因。
+\end{remark}
+
+% ---------------------------------------------------------------------
+\section{类时区：抹平与对偶}\label{sec:ee-duality}
+
+实验的 $R(s)$ 在 $\rho$、$\omega$、$\phi$、$J/\psi$ 等共振处剧烈变化，而微扰的 $R(s)$ 是 $\ln s$ 的光滑多项式，两者在共振附近不能逐点相等。Poggio、Quinn 与 Weinberg 提出比较在宽度 $\Delta$ 上抹平的 $R$\cite{PoggioQuinnWeinberg1976}。抹平本身是恒等式（\cref{prop:ee-smearing}），用微扰论计算抹平量则是猜想（\cref{conj:ee-duality}）。
+
+\begin{proposition}[Poggio--Quinn--Weinberg 抹平恒等式 \tagR]\label{prop:ee-smearing}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）在\cref{prop:ee-analytic}(b) 的条件下，对实的 $s$ 与 $\Delta>0$，
+\begin{equation}\label{eq:ee-smearing}
+\bar R(s,\Delta)\equiv\frac\Delta\pi\int_0^\infty\!\dd s'\,\frac{R(s')}{(s'-s)^2+\Delta^2}=\frac{12\pi}{2\ii}\big[\Pi(s+\ii\Delta)-\Pi(s-\ii\Delta)\big].
+\end{equation}
+% VF-EE-14
+非微扰地位：\cref{asm:intro-wightman}（MA0）。
+\uses{prop:ee-analytic,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+\cref{eq:ee-once}的核可写为 $\frac{z+\mu^2}{(s'-z)(s'+\mu^2)}=\frac1{s'-z}-\frac1{s'+\mu^2}$，故对 $z\notin[s_0,\infty)$（积分绝对收敛）
+\[
+\Pi(z)-\Pi(-\mu^2)=\frac1\pi\int\dd s'\,\Imag\Pi(s')\Big[\frac1{s'-z}-\frac1{s'+\mu^2}\Big].
+\]
+取 $z=s+\ii\Delta$ 与 $z^*$ 相减，$\Pi(z)-\Pi(z^*)=\frac1\pi\int\dd s'\,\Imag\Pi(s')\frac{z-z^*}{(s'-z)(s'-z^*)}=\frac{2\ii\Delta}\pi\int\dd s'\,\frac{\Imag\Pi(s')}{(s'-s)^2+\Delta^2}$；乘以 $12\pi/(2\ii)$ 并用 $R=12\pi\Imag\Pi$ 即得。
+\end{proof}
+例如领头阶无质量微扰论中 $R=R_0\theta(s')$、$\Pi_0=\frac{R_0}{12\pi^2}(\frac53-\ln\frac{-q^2}{\mu^2})$；对 $s>0$，两边都等于 $R_0[1-\frac1\pi\arctan\frac\Delta s]$，$\Delta\to0$ 时趋于 $R_0$。右边只需要 $\Pi$ 在离开实轴距离 $\Delta$ 的点上的值（\cref{fig:ee-pi-plane}）。
+
+\begin{conjecture}[夸克—强子对偶 \tagC]\label{conj:ee-duality}
+(a)~（全局对偶）当 $\Delta\sim s$ 时，$\bar R(s,\Delta)=\bar R_{\rm PT}(s,\Delta)+\order{\Lambda^4/\Delta^2}$，其中 $\bar R_{\rm PT}$ 是把微扰的 $\Pi$ 代入\cref{eq:ee-smearing}右边所得，$\order{\Lambda^4/\Delta^2}$ 是量纲为 $4$ 的凝聚项给出的修正（$\Lambda^4$ 代表凝聚的大小）；这依赖于非微扰 OPE 在复点 $s\pm\ii\Delta$ 处成立（\cref{rem:ee-complex-ope}）。
+(b)~（局域对偶）逐点的 $R(s)=R_{\rm PT}(s)+(\text{幂次修正})$ 不受 OPE 控制：在 $1/Q^2$ 展开中不可见的项（例如随 $s$ 振荡的项）对欧氏量的贡献是指数压低的，却可以在类时轴上逐点出现。
+\uses{prop:ee-smearing,conj:ee-np-ope,rem:ee-complex-ope}
+\end{conjecture}
+
+\paragraph{地位与缺口}两部分都是猜想（\tagC）。(a) 的输入是\cref{conj:ee-np-ope}与 OPE 在复平面上成立的额外假设（\cref{rem:ee-complex-ope}）；对 $\Delta\sim s$，宗量离开割线 $\order{s}$，这一假设看似温和，但没有证明。(b) 更强：对偶破坏项按定义不出现在 OPE 中，既不能由 OPE 推出，也不能由 OPE 排除。基于瞬子的模型给出按幂次衰减的振荡项，基于共振的模型给出另一种形式；这些只是示例\cite{Shifman2000}。实验与微扰论在抹平量上的一致是相容性的证据，不是证明。证明 (a) 需要 $\Pi$ 在复平面上的非微扰控制；局域对偶关系到一切逐点使用微扰论的类时量（例如后文\cref{thm:heavy-inclusive-b}（\tagA）的地位讨论）。
+
+\begin{remark}[常见误解]\label{rem:ee-misconceptions}
+(1)~“微扰的 $R(s)$ 在 $s$ 上逐点成立”：不对。\cref{thm:ee-R-finite}是关于微扰系数的陈述；与强子 $R(s)$ 的比较只对欧氏量（\cref{prop:ee-adler-dispersion}）或抹平量（\cref{prop:ee-smearing}）有意义，局域对偶是猜想（\cref{conj:ee-duality}(b)）。
+(2)~“$\order{\as^2}$ 有正比于 $(\sum_qe_q)^2$ 的单态项”：不对，两胶子交换的单态贡献由 Furry 定理消失，单态项自 $\order{\as^3}$ 起（\cref{cor:ee-R-alphas}(iv)）。
+(3)~“$R$ 的有限性来自维数正规化”或“需要 $D$ 维割图规则”：维数正规化只正规化红外发散，各割图单独发散（\cref{ex:ee-quark-spectrum}）；\cref{thm:ee-R-finite}只用欧氏有限性与解析延拓，割图规则只用于\cref{cor:ee-cuts}（\tagA）。
+\end{remark}
+
+\paragraph{本章小结}本章在最简单的过程中把四个逻辑层次彼此分开。(i)~微扰论：$R(s)$ 的微扰展开每一阶红外有限，且是 $\ln(s/\mu^2)$ 的多项式（\cref{thm:ee-R-finite}，\tagR）；证明只需要欧氏有限性、单标度结构与重整化群，$\order{\as}$ 的系数由割图与欧氏两圈两种独立计算在任意 $\varepsilon$ 下逐项核对；与 $D$ 维部分子割图之和的等同只有全阶论证（\cref{cor:ee-cuts}，\tagA）。(ii)~解析性：谱表示、一次减除的确切条件、围道公式与抹平恒等式都是 Wightman 结构之下由定义推出的结论（\tagR，$R_{\mathrm{def}}$）。(iii)~OPE：微扰 OPE 是全阶论证（\tagA），凝聚的非微扰意义是猜想（\tagC）。(iv)~对偶：抹平量的可计算性与局域对偶都是猜想（\tagC）。这一分层贯穿全书。在 DIS 中（\cref{sec:dis-ope}），欧氏 OPE 只覆盖长度 $\order{M/Q}$ 的一段，强子的矩还需要正定性与色散关系；而一旦初态带色、或末态只被部分测量，“欧氏有限性加平凡的解析延拓”这条捷径就不复存在，必须直接面对闵氏空间中的钳夹（\cref{sec:ir-pinch}）与全阶因子化的一般方法（后文\cref{thm:method-template}，\tagA）。

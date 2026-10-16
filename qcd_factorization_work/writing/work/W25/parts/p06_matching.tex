@@ -1,0 +1,202 @@
+\section{匹配定理：假设、三条证明路线与依赖结构}\label{sec:lattice-matching}
+
+匹配定理被拆成一条蕴含链：编号假设 $\Rightarrow$ 坐标空间因子化 $\Rightarrow$ 动量空间因子化；每一步的证明是完整的，链的强度由最弱的假设决定（\cref{tab:lamet-dependency}与\cref{fig:lamet-dependency}；格点量与光锥量之间的总体关系见\cref{fig:lattice-matching}）。三条证明路线是 Izubuchi--Ji--Jin--Stewart--Zhao 的 OPE 路线\cite{IzubuchiEtAl2018}、Ma--Qiu 的共线减除路线\cite{Ma:2014jla}与“好的格点截面”\cite{MaQiu2018}。
+
+%%% FIGBLOCK fig:lattice-matching
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\caption{LaMET 匹配定理的依赖结构（仿 Lean 的蓝图；行为\cref{sec:lamet-renorm}至\cref{sec:lattice-matching}的陈述以及后文用到的结点）。“蕴含”：由所列直接前提推出该陈述的那一步的地位（[R]：本书给出完整证明；“概要”：只有全阶论证；“文献”：文献中的显式计算；“数学”：纯数学）。“等级”：陈述本身的等级，条件定理给出内容等级。“最弱前提”：决定该等级的输入。定义与第~2、3、8~章的定义性前提从略。}
+\label{tab:lamet-dependency}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.75cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.85cm}>{\raggedright\arraybackslash}p{0.95cm}>{\raggedright\arraybackslash}p{1.15cm}>{\raggedright\arraybackslash}p{2.45cm}@{}}
+\toprule
+陈述 & 内容 & 直接前提 & 蕴含 & 等级 & 最弱前提 \\
+\midrule
+\cref{asm:lamet-aux-renorm} & QCD$+$类空静态辅助场可重整 & — & — & [A] & 自身（只有断言） \\
+\cref{prop:lattice-renormalizability} & $z\neq0$ 的乘法可重整性 & \cref{asm:lamet-aux-renorm}、\cref{thm:prelim-composite-renorm} & 概要 & [A] & \cref{asm:lamet-aux-renorm} \\
+\cref{prop:lamet-ad-spacelike} & 类空与类时反常维度相同 & \cref{prop:lattice-renormalizability} & 概要 & [A] & \cref{asm:lamet-aux-renorm} \\
+\cref{lem:lamet-lorentzian} & 残余线性项的 Lorentz 抹平 & — & 数学 & — & — \\
+\cref{prop:lamet-lrr} & 线性重整子与 LRR & \cref{lem:lamet-lorentzian}、\cref{prop:power-renormalon-examples}、\cref{prop:lattice-renormalizability} & 概要 & [P] & 只对泡链成立 \\
+\cref{prop:lamet-euclid-minkowski} & 欧氏与 Minkowski 矩阵元等同 & — & 概要 & [A] & 文献的论证 \\
+\cref{prop:lamet-support} & 逐图支撑在 $[-1,1]$ & — & [R] & [R] & — \\
+\cref{cor:lamet-entire} & ITD 是指数型整函数 & \cref{prop:lamet-support}、\cref{thm:pdf-support-pt} & [R] & [R] & — \\
+\cref{prop:lamet-oneloop} & 单圈匹配核 & \cref{prop:pdf-partonic-dr}、\cref{prop:pdf-lo-kernels} & [R] & [R] & — \\
+\cref{prop:lamet-tails} & 尾部、矩与卷积定义域 & \cref{prop:lamet-oneloop} & [R] & [R] & — \\
+\cref{prop:lamet-twoloop} & 两圈非单态核 & \cref{prop:lamet-oneloop} & 文献 & [R] & — \\
+\cref{prop:lamet-polarized} & 极化、横度与扭度 3 & \cref{prop:lattice-renormalizability} & 文献 & [P] & 只有单圈 \\
+\cref{asm:lamet-ope} & 类空 OPE（重整化微扰论） & \cref{prop:lattice-renormalizability}、\cref{asm:lamet-aux-renorm} & — & [A] & 自身（无 Zimmermann 级定理） \\
+\cref{thm:lamet-coordinate} & 坐标空间因子化（部分子） & \cref{asm:lamet-ope}、\cref{prop:lattice-renormalizability}、\cref{cor:lamet-entire} & [R] & 内容 [A] & \cref{asm:lamet-ope} \\
+\cref{thm:lamet-parton-momentum} & 动量空间形式，宗量 $|y|P^z$ & \cref{thm:lamet-coordinate}、\cref{prop:lamet-tails} & [R] & 内容 [A] & \cref{asm:lamet-ope} \\
+\cref{rem:lamet-early-form} & 早期形式不成立 & \cref{thm:lamet-parton-momentum}、\cref{prop:lamet-oneloop} & [R] & [V] & — \\
+\cref{prop:lamet-cfp} & 光锥规范中的共线减除路线 & \cref{prop:lattice-renormalizability}、\cref{thm:pdf-dglap} & 概要 & [A] & 光锥规范中的减除 \\
+\cref{thm:lamet-lcs} & 好的格点截面 & \cref{thm:dis-ope}、\cref{cor:lamet-entire} & 概要 & [A] & \cref{thm:dis-ope} \\
+\cref{thm:lattice-lamet} & 部分子匹配（全阶） & \cref{thm:lamet-parton-momentum} 或\cref{prop:lamet-cfp} & — & [A] & 两条路线各自的瓶颈 \\
+\cref{prop:lamet-gluon-singlet} & 单态夸克与胶子：带混合的匹配 & \cref{thm:lattice-lamet}、\cref{prop:pdf-lo-kernels} & — & [A] & 同上 \\
+\cref{prop:lamet-tmc} & 精确靶质量修正 & \cref{asm:lamet-ope}、\cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum} & [R] & 内容 [A] & \cref{asm:lamet-ope} \\
+\cref{lem:lamet-fourier} & $z^2\leftrightarrow\partial_x^2$ & \cref{cor:lamet-entire} & 数学 & — & — \\
+\cref{asm:lamet-uniform}、\cref{asm:lamet-twist4}、\cref{asm:lamet-large-z} & 对 Ioffe 时间一致、扭度 4 的结构、大距离控制 & \cref{thm:lamet-coordinate}、\cref{prop:lamet-tmc}、\cref{prop:lamet-support} & — & [C] & 自身（非微扰） \\
+\cref{thm:lamet-hadronic} & 强子匹配与 $\Lambda^2/P_z^2$ 修正 & \cref{thm:lattice-lamet}、\cref{prop:lamet-tmc}、\cref{lem:lamet-fourier} 与三个 [C] 假设 & [R] & 内容 [C] & 三个 [C] 假设 \\
+\cref{prop:lamet-scheme-validity} & 方案 $X$ 中的动量空间匹配 & \cref{thm:lattice-lamet}、\cref{prop:lamet-hybrid-kernel} & 概要 & [A]（混合） & \cref{asm:lamet-ope}；比值与 RI/MOM 在大 $|z|$ 处另需 $Z'_X$ 微扰（[C]） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%%% FIGBLOCK fig:lamet-dependency
+
+\begin{assumption}[类空 Wilson 线算符的短距离 OPE（重整化微扰论） \tagA]\label{asm:lamet-ope}
+\begin{enumerate}[label=(OP\arabic*),leftmargin=3.2em,itemsep=1pt,topsep=2pt]
+\item 当 $z^2\to0$（固定 $\lambda$）时，在重整化微扰论中，对 $\Gamma=\gamma^\alpha\in\{\gamma^0,\gamma^z\}$，
+\begin{equation}\label{eq:lamet-ope}
+\begin{split}
+O^R_{\Gamma}(z,\mu)=\sum_{n\ge0}\frac{\ii^n}{n!}\,z_{\mu_1}\cdots z_{\mu_n}\Big[&C^\Gamma_n(-z^2\mu^2)\,O_1^{\alpha\mu_1\cdots\mu_n}(\mu)\\
+&+C'^\Gamma_n(-z^2\mu^2)\,O_2^{\alpha\mu_1\cdots\mu_n}(\mu)\Big]+(\text{扭度}\ge4),
+\end{split}
+\end{equation}
+其中 $O_1^{\alpha\mu_1\cdots\mu_n}=\mathcal S\,\bar\psi\gamma^\alpha\ii D^{\mu_1}\cdots\ii D^{\mu_n}\psi-\text{迹}$ 与 $O_2$ 是无迹对称的扭度 2 夸克与胶子算符（\cref{def:dis-twist}），$C_n=1+\order{\as}$，$C'_n=\order{\as}$（非单态为零）；对 $\Gamma=\gamma^z$，同为扭度 2 的结构 $(z^\alpha/z^2)z_{\mu_0}\cdots z_{\mu_n}O_1^{\mu_0\cdots\mu_n}$ 的前向矩阵元与第一项同形，已并入 $C^{\gamma^z}_n$。在本书约定（$D=\partial-\ii gA$）下 Taylor 展开的相位是 $\ii^n$，前向矩阵元为 $\sum_nC_n\frac{(\ii\lambda)^n}{n!}a_{n+1}$；用 $D=\partial+\ii gA$ 的文献写作 $(-\ii)^n$。
+\item 对无质量在壳的部分子态没有别的标度：逐阶地，领头扭度的表达式对所有 $z$ 成立。
+\end{enumerate}
+地位：全阶论证——文献\cite[第~II~节]{IzubuchiEtAl2018}由辅助场的定域化（非定域算符化为扩展理论中定域算符之积）加上通常的 OPE 论证得出，并称 OPE 对 QCD“被广泛假定成立”；据我们截至 2026 年 10 月的文献检索（INSPIRE），尚未见 Wilson 线算符的 Zimmermann 级 OPE 定理。证明所需见\cref{tab:lamet-dependency}下的说明。
+文献：\cite[第~II~节]{IzubuchiEtAl2018}，\cite{Radyushkin2017,Braun:2007wv,Ji:2017oey}。
+被使用于：\cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum}、\cref{prop:lamet-tmc}、\cref{prop:lamet-sdf}、\cref{thm:lamet-quasi-gpd}。
+解除途径：对扩展理论用带各向异性幂次计数的 Zimmermann 森林公式；或把流方程方法的 OPE 定理（参见\cite{Frob:2016mzv}，预印本）推广到带静态辅助场的理论。
+\uses{prop:lattice-renormalizability, asm:lamet-aux-renorm, def:dis-twist}
+\end{assumption}
+
+\paragraph{地位与缺口}
+\tagA：论证依赖\cref{asm:lamet-aux-renorm}与扩展理论中尚未写出的 OPE 定理（缺口见\cref{tab:lamet-dependency}下的说明）；本章全部坐标空间与动量空间的匹配定理的内容等级由它决定。
+
+\begin{theorem}[坐标空间因子化（赝分布形式） \tagR]\label{thm:lamet-coordinate}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{prop:lattice-renormalizability}）。对部分子态，在领头扭度、对 $\as$ 的所有阶，
+\begin{equation}\label{eq:lamet-coord-fact}
+\begin{gathered}
+\tilde h(\lambda,z^2;\mu_R)=\int_{-1}^1\dd\alpha\,\mathcal C\Big(\alpha,-z^2\mu^2,\frac{\mu_R}\mu\Big)I(\alpha\lambda,\mu),\\
+\mathcal C(\alpha,-z^2\mu^2)\equiv\int\frac{\dd\lambda}{2\pi}\ee^{-\ii\alpha\lambda}\sum_nC_n(-z^2\mu^2)\frac{(\ii\lambda)^n}{n!},\qquad{\rm supp}\,\mathcal C\subset[-1,1];
+\end{gathered}
+\end{equation}% VF-LAM-6
+等价地 $\mathcal P(x,-z^2)=\int_{-1}^1\frac{\dd y}{|y|}\mathcal C(\frac xy,-z^2\mu^2)f(y,\mu)$，且 $\int_{-1}^1\dd x\,x^n\mathcal P(x,-z^2)=C_n(-z^2\mu^2)\,a_{n+1}(\mu)$，$a_{n+1}=\int\dd y\,y^nf(y,\mu)$。单圈与两圈的 $\mathcal C$ 见\cref{sec:lamet-oneloop}。（本定理只涉及部分子态；强子情形见本章后文。）
+\uses{asm:lamet-ope, prop:lattice-renormalizability, prop:lamet-support, cor:lamet-entire, def:lattice-quasi, def:pdf-lightray, thm:pdf-moments-local}
+\end{theorem}
+
+\begin{proof}
+仿\cite[第~II--III~节]{IzubuchiEtAl2018}。(1) 由\cref{prop:lattice-renormalizability}（\tagA），$z\neq0$ 处 $O^R_\Gamma(z,\mu)$ 有定义，其矩阵元有限。
+(2) 把 (OP1) 代入前向部分子矩阵元。对无质量部分子 $\langle p|O_1^{\mu_0\cdots\mu_n}|p\rangle=2a_{n+1}(p^{\mu_0}\cdots p^{\mu_n}-\text{迹})$，迹项 $\propto p^2=0$，$a_{n+1}=\int\dd y\,y^nf(y)$ 由\cref{thm:pdf-moments-local}（\tagR，$R_{\mathrm{PT}}$）给出（对部分子态）；于是 $z_{\mu_1}\cdots z_{\mu_n}\langle p|O_1^{\alpha\mu_1\cdots\mu_n}|p\rangle=2p^\alpha(p\cdot z)^na_{n+1}$，由 (OP2)，对所有 $z$，
+\[
+\tilde h(\lambda,z^2)=\sum_nC_n(-z^2\mu^2)\frac{(\ii\lambda)^n}{n!}a_{n+1}\qquad(\text{单态情形另加 }C'_n\text{ 与胶子矩}).
+\]
+(3) 系数函数的支撑。在每一阶，部分子态的 $\tilde h$ 是有限个 Feynman 图（含算符的 $\MSbar$ 抵消项图）之和，由\cref{prop:lamet-support}其 $\lambda$-Fourier 变换 $\mathcal P$ 支撑在 $[-1,1]$；部分子分布 $f_{i/j}$ 在维数正规化中是 $\delta_{ij}\delta(1-y)$ 加上支撑在 $[-1,1]$ 中的纯极点项。令 $\mathcal C$ 为 $\mathcal P=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$ 的逐阶解：在 $\as$ 的第 $k$ 阶，$\mathcal C^{(k)}=\mathcal P^{(k)}-\sum_{l<k}\mathcal C^{(l)}\otimes f^{(k-l)}$。由\cref{cor:lamet-entire}，${\rm supp}\,\mathcal C\subset[-1,1]$（两个分别支撑在 $[-1,1]$ 中的分布在乘法卷积 $x=\alpha y$ 下的像仍支撑在 $[-1,1]$ 中）；红外极点在差中相消，$\mathcal C$ 在 $\varepsilon\to0$ 时有限。
+(4) 重求和。比较 $\lambda=0$ 处的 Taylor 系数：由 (2)，$\tilde h$ 的第 $n$ 个系数是 $\frac{\ii^n}{n!}C_na_{n+1}$；由 $\mathcal P=\mathcal C\otimes f$，它又等于 $\frac{\ii^n}{n!}\big(\int\dd\alpha\,\alpha^n\mathcal C\big)a_{n+1}$。对夸克靶 $a_{n+1}=1+\order{\as}\neq0$，故逐阶 $C_n=\int\dd\alpha\,\alpha^n\mathcal C(\alpha)$，从而 $\sum_nC_n\frac{(\ii\lambda)^n}{n!}=\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\mathcal C(\alpha)$，它是指数型 $\le1$ 的整函数（\cref{cor:lamet-entire}），也就是“所有 $a_{n+1}=1$ 的靶”的赝 PDF。于是对任一部分子靶
+\[
+\sum_n\frac{(\ii\lambda)^n}{n!}\int\dd\alpha\,\alpha^n\mathcal C(\alpha)\int\dd y\,y^nf(y)=\int\dd\alpha\,\mathcal C(\alpha)\int\dd y\,f(y)\,\ee^{\ii\alpha y\lambda}=\int\dd\alpha\,\mathcal C(\alpha)\,I(\alpha\lambda),
+\]
+求和与积分的交换是允许的：$\mathcal C$ 与 $f$ 是紧支撑分布，而 $\sum_n(\ii\alpha y\lambda)^n/n!$ 在 $|\alpha y|\le1$ 上连同各阶导数一致收敛于 $\ee^{\ii\alpha y\lambda}$。这就是\cref{eq:lamet-coord-fact}（$I$ 由\cref{def:pdf-lightray}的光线算符给出）。
+(5) 在固定 $z^2$ 下对 $\lambda$ 作 Fourier 变换：$\mathcal P(x)=\int\dd y\,f(y)\int\dd\alpha\,\mathcal C(\alpha)\delta(x-\alpha y)=\int\frac{\dd y}{|y|}\mathcal C(\frac xy)f(y)$；矩是 $\lambda=0$ 处的 Taylor 系数，$\int\dd x\,x^n\mathcal P=(-\ii\partial_\lambda)^n\tilde h|_{\lambda=0}=C_na_{n+1}$。
+\end{proof}
+
+内容等级为 \tagA（来自\cref{asm:lamet-ope}与\cref{prop:lattice-renormalizability}）。赝 PDF 的矩存在，因为求矩时 $z^2$ 固定；准 PDF 的矩涉及 $C_n(\lambda^2\mu^2/P_z^2)$ 对 $\lambda$ 的导数，含 $\ln\lambda^2$，所以不存在（\cref{prop:lamet-tails}）。短距离因子化在 $|z|\lesssim0.2$--$0.3$ fm 处使用这个定理（\cref{sec:lamet-sdf}）。
+
+\begin{theorem}[动量空间形式与部分子动量 \tagR]\label{thm:lamet-parton-momentum}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{thm:lamet-coordinate}、\cref{prop:lattice-renormalizability}）。设 $\int_{-1}^1|f(y)|\dd y<\infty$（对比值核，$\int|yf(y)|\dd y<\infty$ 即足够；混合核与 $\MSbar$ 需要同样的小 $y$ 条件；对物理的夸克分布，$\order1$ 项合成 $q-\bar q$，见\cref{prop:lamet-tails}）。则
+\begin{equation}\label{eq:lamet-mom-fact}
+\begin{gathered}
+\tilde q(x,P^z;\mu_R)=\int_{-1}^1\frac{\dd y}{|y|}\,C\Big(\frac xy,\frac{\mu_R}\mu,\frac\mu{|y|P^z}\Big)f(y,\mu),\\
+C\Big(\xi,\frac\mu{p^z}\Big)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii\xi\lambda}\int_{-1}^1\dd\alpha\,\ee^{\ii\alpha\lambda}\,\mathcal C\Big(\alpha,\frac{\lambda^2\mu^2}{p_z^2}\Big);
+\end{gathered}
+\end{equation}% VF-LAM-6
+匹配核的宗量是\emph{部分子}动量 $p^z=|y|P^z$；准 PDF 与赝 PDF 是同一函数的两种 Fourier 表示：$\tilde q(x,P^z)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\int_{-1}^1\dd y\,\ee^{\ii y\lambda}\mathcal P\big(y,\frac{\lambda^2}{P_z^2}\big)$。
+（本定理只涉及部分子态；强子情形见本章后文。）
+\uses{thm:lamet-coordinate, asm:lamet-ope, prop:lattice-renormalizability, def:lattice-quasi, prop:lamet-tails}
+\end{theorem}
+
+\begin{proof}
+记 $\hat{\mathcal C}(\tau,\rho)=\int\dd\alpha\,\ee^{\ii\alpha\tau}\mathcal C(\alpha,\rho)$。由\cref{thm:lamet-coordinate}，$\tilde h(\lambda,z^2)=\int\dd y\,f(y)\,\hat{\mathcal C}(y\lambda,-z^2\mu^2)$。按\cref{def:lattice-quasi}，沿射线 $z^2=-\lambda^2/P_z^2$ 作 Fourier 变换；对检验函数 $\varphi$，记 $\hat\varphi(\lambda)=\int\dd x\,\ee^{-\ii x\lambda}\varphi(x)$，则
+\[
+\int\dd x\,\varphi(x)\tilde q(x)=\int\frac{\dd\lambda}{2\pi}\hat\varphi(\lambda)\int\dd y\,f(y)\,\hat{\mathcal C}\Big(y\lambda,\frac{\lambda^2\mu^2}{P_z^2}\Big).
+\]
+对每个 $y\neq0$ 作代换 $\lambda'=y\lambda$：$\dd\lambda=\dd\lambda'/|y|$，$\lambda^2/P_z^2=\lambda'^2/(yP^z)^2$，$\hat\varphi(\lambda'/y)=\int\dd x\,\ee^{-\ii(x/y)\lambda'}\varphi(x)$，于是内层积分化为 $\int\dd x\,\varphi(x)\frac1{|y|}C\big(\frac xy,\frac\mu{|y|P^z}\big)$，$C$ 如\cref{eq:lamet-mom-fact}所定义（作为分布）。交换 $y$ 与 $\lambda$ 积分的次序是允许的：$\hat\varphi$ 速降；在每一阶，$\hat{\mathcal C}(\tau,\rho)$ 对 $\tau$ 至多多项式增长，对 $\rho$ 至多按 $\ln\rho$ 的幂次增长；被积函数中的 $\rho=\lambda^2\mu^2/P_z^2$ 与 $y$ 无关，$y\to0$ 时 $\hat{\mathcal C}(y\lambda,\rho)\to\hat{\mathcal C}(0,\rho)=C_0(\rho)$，故 $\int|f|<\infty$ 时二重积分绝对收敛。比值方案中 $\hat{\mathcal C}^{\rm ratio}(0,\rho)=1$ 恒成立：树图项 $\ee^{\ii y\lambda}$ 给出 $f$ 本身，而树图以外的部分在 $\tau=y\lambda\to0$ 时为 $\order{|y\lambda|}$（乘以 $\ln\rho$ 的幂），所以 $\int|yf|<\infty$ 即足够；物理夸克分布的情形把 $y$ 与 $-y$ 的贡献合并，见\cref{prop:lamet-tails}。代换中 $\lambda^2/P_z^2\to\lambda'^2/(yP^z)^2$ 说明 $\mathcal C$ 的第二个宗量变成 $\lambda'^2\mu^2/p_z^2$，$p^z=|y|P^z$。最后一式由 $\tilde h(\lambda,z^2)=\int\dd y\,\ee^{\ii y\lambda}\mathcal P(y,-z^2)$（\cref{thm:lamet-coordinate}）在射线上取值得出。
+\end{proof}
+
+内容等级为 \tagA；在单圈，\cref{eq:lamet-CMS,eq:lamet-Cratio}正是\cref{eq:lamet-coord-kernel}与比值核的这一变换。
+
+\begin{remark}[以强子动量为变量的早期匹配形式不成立 \tagV]\label{rem:lamet-early-form}
+文献\cite[式~(11)]{Ji2013}中的早期形式
+\[
+\tilde q(x,\mu,P^z)=\int_x^1\frac{\dd y}y\,Z\Big(\frac xy,\frac\mu{P^z}\Big)q(y,\mu)
+\]
+在 $\order{\as}$ 是错的：由\cref{thm:lamet-parton-momentum}，核依赖于 $\mu/(|y|P^z)$；把 $|y|P^z$ 换成 $P^z$ 使 $\ell_p=\ln\frac{\mu^2}{4y^2P_z^2}$ 改变 $\ln y^2$，由\cref{eq:lamet-CMS}，
+\begin{equation}\label{eq:lamet-early-diff}
+\begin{split}
+C\Big(\xi,\frac\mu{P^z}\Big)-C\Big(\xi,\frac\mu{|y|P^z}\Big)&=-\frac{\as C_F}\pi\ln|y|\,\frac{1+\xi^2}{(1-\xi)_+}\,\theta(0<\xi<1)\\
+&=-\frac{\as}\pi\ln|y|\Big[P_{qq}(\xi)-\frac32C_F\delta(1-\xi)\Big],
+\end{split}
+\end{equation}% VF-LAM-19
+比值方案中为 $-\frac{\as}\pi\ln|y|\,P_{qq}(\xi)$。它对 $\tilde q$ 的贡献 $-\frac{\as}\pi\int\frac{\dd y}{|y|}\ln|y|[P_{qq}-\frac32C_F\delta](\frac xy)f(y)$ 对一般的 $f$ 不为零（只有 $f$ 集中在 $|y|=1$ 时才为零）。早期的积分范围 $\int_x^1$ 也太小：它漏掉了 $|y|<|x|$ 与 $y<0$。
+\uses{thm:lamet-parton-momentum, prop:lamet-oneloop}
+\end{remark}
+
+\cref{eq:lamet-early-diff}的推导：$C^{\MSbar}$ 只通过 $a\{-\ell_p[\frac{1+\xi^2}{1-\xi}]_++\frac32\ell_p\delta(1-\xi)\}$ 依赖于 $\ell_p$，$\Delta\ell_p=2\ln|y|$，故差为 $-2a\ln|y|\{[\frac{1+\xi^2}{1-\xi}]_+-\frac32\delta\}=-2a\ln|y|\frac{1+\xi^2}{(1-\xi)_+}$，后一等号用到 $\frac{1+\xi^2}{(1-\xi)_+}=[\frac{1+\xi^2}{1-\xi}]_+-\frac32\delta(1-\xi)$（以检验函数直接验证）与 $P_{qq}=C_F[\frac{1+\xi^2}{1-\xi}]_+$。
+
+\paragraph{地位与缺口}
+\tagV，证据类型：显式的单圈计算\cite{IzubuchiEtAl2018}。这一更正来自原作者参与的后续工作：\cite[式~(27)]{IzubuchiEtAl2018}及其后的讨论明确指出匹配系数依赖于 $p^z=|y|P^z$ 而不是早期文献所取的 $P^z$；准 GPD 的情形更早见于\cite{Ji:2015qla}（附录~Q 第~17~条）。正确形式就是\cref{thm:lamet-parton-momentum}（\tagR，$R_{\mathrm{cond}}$，内容 \tagA）。
+
+\begin{proposition}[光锥规范下的共线减除路线（Ma--Qiu） \tagA]\label{prop:lamet-cfp}
+在光锥规范 $n_B\cdot A=A^+=0$ 中，在壳无质量夸克的准 PDF 有 2PI 梯形分解 $\tilde f=C_0\sum_iK^i$，算符及其重整化完全包含在顶层核 $C_0$ 中；用共线投影算子（光锥 PDF 的割顶点）
+$\hat{\mathcal P}W\equiv\int\frac{\dd^4k}{(2\pi)^4}\delta\big(x-\frac{n_B\cdot k}{n_B\cdot p}\big)\frac{\Tr[\sla n_BW\sla p]}{4\,n_B\cdot p}+\text{UVCT}$，
+\begin{equation}\label{eq:lamet-cfp}
+\tilde f^{\rm ren}=\Big[C_{\rm ren}\frac1{1-(1-\hat{\mathcal P})K}\Big]\Big[\frac1{1-\hat{\mathcal P}K}\Big]=f_{q/q}\otimes C+\order{(\tilde xP^z)^{-2}},
+\end{equation}
+第二个因子是夸克的光锥 PDF，第一个因子是共线（红外）安全的；这独立于\cref{asm:lamet-ope}地给出\cref{thm:lamet-parton-momentum}的动量空间形式。（本命题只涉及部分子态。）
+\uses{def:lattice-quasi, prop:lattice-renormalizability, def:pdf-quark, thm:pdf-dglap}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+\cite{Ma:2014jla}，\cite[第~III.B~节]{JiEtAl2021}：(1) 把夸克的准 PDF 写成前向“割顶点”图，顶点为 $\frac{\gamma^z}{2P^z}\delta(\tilde x-k^z/P^z)$（或 $\gamma^0$）；软发散在实发射与虚修正之间相消（$[\delta(1-\tilde x-y)-\delta(1-\tilde x)]$ 结构，流守恒）。(2) 在 $A^+=0$ 规范中，领头共线区域是 2PI 核的梯形\cite{EllisEtAl1979,CurciFurmanskiPetronzio1980}，带类空 Wilson 线的算符及其乘法重整化（\cref{prop:lattice-renormalizability}）都在顶层核 $C_0$ 中。(3) 反复插入 $\hat{\mathcal P}+(1-\hat{\mathcal P})$，$(1-\hat{\mathcal P})K$ 共线有限，得\cref{eq:lamet-cfp}；第二个因子按\cref{def:pdf-quark}的割顶点就是光锥 PDF，其重整化给出 DGLAP（\cref{thm:pdf-dglap}）。(4) Feynman 规范中：共线区域 $k^z\simeq k^+/\sqrt2$，$\gamma^z\to\gamma^+/\sqrt2$，准顶点化为光锥顶点；纵向极化的 $A^+$ 胶子附着在类空 Wilson 线上时带有 $1/P^z$ 的压低，被推动因子补偿——在 $A^+=0$ 中它们不出现；含 $k_1,\dots,k_i$ 共线的区域 $R_i$ 以“类似 BPHZ 关系”的方式递归减除\cite[第~III.B~节]{JiEtAl2021}。（幂次计数步骤只给出 E-S 型陈述。）完整论证见\cite{Ma:2014jla}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA（CFP/Collins 式的共线因子化，参见\cref{thm:method-template}与第~9~章的方法）。只停留在概要层次的几点是：类空 Wilson 线存在时光锥规范的伪极点 $1/(n_B\cdot k)$；$C_0$ 不含共线发散这一断言；等时算符的割顶点表示。若在 Feynman 规范中进行，$A^+$ 胶子的处理需要\cref{lem:method-ward-multi}型的多胶子 Ward 恒等式，其中被明确假定的一步是\cref{asm:appN-brst-nonlocal}（\tagC）。\emph{这里不存在 Glauber 问题或末态相互作用问题}：只有一个强子、没有被测量的末态、场位于类空间隔上，第~12~章 Drell--Yan 中的 Glauber 障碍不可能出现（准 TMD 的情形见\cref{sec:lattice-tmd}）。文献\cite{JiEtAl2021}写道：“虽然证明只针对微扰的自由夸克态，因子化公式被广泛相信在非微扰层次也成立”——后一半正是本章\cref{sec:lamet-power}中三个 \tagC 假设所表达的内容。
+
+\begin{theorem}[“好的格点截面”的因子化（Ma--Qiu） \tagA]\label{thm:lamet-lcs}
+对\cref{def:lattice-quasi}(iv) 意义下好的格点截面，
+\begin{equation}\label{eq:lamet-lcs}
+\begin{gathered}
+\sigma_n(\omega,\eta^2,P^2)=\sum_a\int_{-1}^1\frac{\dd x}x\,f_a(x,\mu)\,K^a_n(x\omega,\eta^2,x^2P^2,\mu)+\order{\eta^2\Lambda^2},\\
+K^a_n=\sum_J\frac2{S_a}W^{(J,a)}_n\Sigma_J(x\omega,x^2P^2\eta^2),
+\end{gathered}
+\end{equation}
+其中 $\Sigma_J(\omega,P^2\eta^2)=\sum_i\binom{J-i}i\omega^{J-2i}\big(-\frac{P^2\eta^2}4\big)^i$ 是精确的靶质量求和（$S_a$ 为自旋自由度，$W^{(J,a)}_n$ 为第 $J$ 个定域算符的 Wilson 系数）；对部分子态，系数函数是 $\omega$ 的整函数（\cref{cor:lamet-entire}），所以逐阶地陈述对所有 $\omega$ 成立。领头阶的例子：Wilson 线双线性算符 $K^{q(0)}_q=2x\omega\,\ee^{\ii x\omega}$（$\int\frac{\dd x}x f\,K^{q(0)}_q=2\omega I(\omega)$，即\cref{eq:lamet-lc-itd}）；标量流 $K^{q(0)}_S=\frac{\ii}{\pi^2}x\omega(\ee^{\ii x\omega}-\ee^{-\ii x\omega})$（按\cite{MaQiu2018}的归一化），其动量空间形式在 $\tilde\omega^2>1$ 处有割线，所以只在 $\tilde\omega^2<1$ 时是“好的”。（本定理只涉及部分子态。）
+\uses{thm:dis-ope, thm:pdf-moments-local, cor:lamet-entire, def:lattice-quasi}
+\end{theorem}
+
+\begin{proofsketch}
+(1) $|\omega|\ll1$ 时作两个定域流的 OPE（\cref{thm:dis-ope}，\tagA）；(2) 定域算符的前向矩阵元由\cref{thm:pdf-moments-local}给出 PDF 的矩，迹项按\cref{eq:lamet-ji-moments}的同一 Gegenbauer 结构求和，给出 $\Sigma_J$；(3) 关于 $\omega$ 的解析性：文献\cite{MaQiu2018}指出，在短距离固定 $\eta$ 而增大 $\omega$ 时“不会引入新的微扰发散”，$\sigma_n$ 保持解析，唯一可能的奇点在 $\omega=\infty$；其精确形式是\cref{cor:lamet-entire}。完整论证见\cite{MaQiu2018}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA：这条路线只需要普通 QCD 中定域流的 OPE，不需要\cref{asm:lamet-ope}；对部分子态，沿\cref{thm:dis-moments}的路线可以把它写成以 OPE 为前提的陈述。强子剩余项 $\order{\eta^2\Lambda^2}$ 从 $|\omega|\ll1$ 推广到有限 $\omega$ 需要\cref{asm:lamet-uniform}的 (UI-a)（\tagC）。相关的做法（证据，均据其摘要）：重夸克 Compton 张量\cite{DetmoldLin2006}，NNLO 加扭度 4 的位置空间流关联函数（DA）\cite{Braun:2007wv}，Feynman--Hellmann 方法\cite{ChambersEtAl2017}，欧氏强子张量\cite{Liu:1993cv}，以及用流—流关联函数的 LaMET\cite{Zhang:2026lle}（预印本；据其摘要）——“重整化性质简单、没有线性幂次发散”，代价是需要四点函数。
+
+\begin{theorem}[LaMET 匹配定理（部分子态、领头幂次、全阶） \tagA]\label{thm:lattice-lamet}
+对部分子态、在领头幂次、对所有阶，$\tilde q_\Gamma(x,P^z;\mu_R)=\int_{-1}^1\frac{\dd y}{|y|}C_\Gamma\big(\frac xy,\frac{\mu_R}\mu,\frac\mu{|y|P^z}\big)f(y,\mu)$，核 $C_\Gamma$ 红外安全、可微扰计算；这一陈述由两条独立路线得出：OPE 路线（\cref{thm:lamet-parton-momentum}，内容 \tagA）与共线减除路线（\cref{prop:lamet-cfp}）。（本定理只涉及部分子态；强子层次见本章后文，其内容等级为 [C]。）
+\uses{thm:lamet-parton-momentum, prop:lamet-cfp, prop:lattice-renormalizability, prop:lamet-tails}
+\end{theorem}
+
+\begin{proofsketch}
+任一条路线都给出所述的形式：(A) OPE 路线，即\cref{thm:lamet-parton-momentum}（其前提见该定理的前提句；它的内容等级 \tagA 来自 OPE 假设）；(B) 共线减除路线，即\cref{prop:lamet-cfp}。两条路线中算符的重整化都由\cref{prop:lattice-renormalizability}处理；卷积的定义域由\cref{prop:lamet-tails}给出。文献：\cite{IzubuchiEtAl2018,Ma:2014jla,MaQiu2018,JiEtAl2021}，综述\cite{Constantinou:2020hdm}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\tagA；瓶颈：路线 A 是\cref{asm:lamet-ope}（及其前提\cref{asm:lamet-aux-renorm}），路线 B 是光锥规范中只有概要的几步（\cref{prop:lamet-cfp}的地位段）。幂次计数各步只给出 E-S 型陈述。两条路线的弱点不同，这是本定理可信度的主要来源，但两者都不是 Zimmermann 级的证明。不要写“准 PDF 匹配定理对强子严格成立”：强子层次的陈述是\cref{thm:lamet-hadronic}，其内容等级为 \tagC。
+
+\begin{proposition}[单态夸克与胶子准 PDF：带混合的匹配 \tagA]\label{prop:lamet-gluon-singlet}
+逆匹配形式\cite{JiEtAl2021}：$q_i(x)=\int\frac{\dd y}{|y|}\big[\sum_j\tilde C_{q_iq_j}\tilde q_j(y)+\tilde C_{qg}\tilde g(y)\big]$，$g(x)=\int\frac{\dd y}{|y|}\big[\sum_j\tilde C_{gq}\tilde q_j(y)+\tilde C_{gg}\tilde g(y)\big]$（核的宗量为 $\frac xy$ 与 $\frac\mu{|y|P^z}$），加上幂次修正；算符在重整化下不混合（\cref{prop:lattice-renormalizability}(c)），混合只出现在匹配中。动量空间卷积的小 $y$ 收敛性：对夸克核由\cref{prop:lamet-tails}(iii) 给出（$\MSbar$ 与混合方案需要同样的小 $y$ 条件，比值方案只需 $\int|yf|<\infty$，物理夸克分布的 $\order1$ 项合成 $q-\bar q$）；胶子核与混合核不在其范围内。
+（本命题只涉及部分子态；强子层次的处理与非单态情形相同。）
+\uses{thm:lattice-lamet, prop:lattice-renormalizability, prop:lamet-tails, prop:pdf-lo-kernels}
+\end{proposition}
+
+\paragraph{地位与缺口}
+\tagA（继承\cref{thm:lattice-lamet}；混合结构与\cref{prop:pdf-lo-kernels}的单态 DGLAP 一致）。单圈核：带混合的 RI/MOM 核\cite{Wang:2019tgg}，赝胶子分布\cite{Balitsky:2019krf}，统一的前向/非前向单态核\cite{Yao:2022vtp}（均据其摘要）——我们的材料中没有独立的核对，所以不列 \tagR 的单圈条目。不能说“对 Regge 型单态分布只有比值或混合型方案收敛”：对夸克核这是错的（\cref{prop:lamet-tails}），对胶子核则没有分析。
+
+\paragraph{完整证明\cref{asm:lamet-ope}需要什么。}
+对可重整标量理论中定域算符的 T 积，短距离展开是重整化微扰论的定理（Wilson\cite{Wilson1969}，Zimmermann\cite{Zimmermann1973}）。非定域算符是扩展理论（\cref{asm:lamet-aux-renorm}）中两个定域复合算符之积 $\bar J(z)J(0)$，所以\cref{asm:lamet-ope}可由扩展理论的一个 OPE 定理推出。缺口有二：(i) $Q$ 的传播子 $\theta(x^z)\delta(x^0)\delta^2(x_\perp)$ 不是 Lorentz 协变的，Zimmermann 森林公式的幂次计数须改用各向异性的发散度重做（图形法的“三维/四维”计数只为重整化写出）；(ii) $\det(\ii n\cdot D)$ 取为常数在维数正规化中合法，但非协变传播子的 $\delta(0)$ 型项需要小心。两者都是技术性的，没有已知反例，两圈与三圈计算与 OPE 结构一致——这是把\cref{asm:lamet-ope}定为 \tagA 而不是 \tagC 的理由。

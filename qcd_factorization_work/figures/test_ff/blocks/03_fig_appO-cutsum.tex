@@ -1,0 +1,112 @@
+%%% BEGIN fig:appO-cutsum
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff chain/.style={draw=blue!55!black,fill=blue!12,line width=0.6pt},
+  ff soft/.style={gluon,draw=green!45!black},
+  ff ins/.style={circle,draw=green!40!black,fill=green!45!black,inner sep=0pt,minimum size=4.2pt},
+  ff lab/.style={font=\footnotesize},
+  ff note/.style={font=\footnotesize,text=black!70},
+  ff w/.style={font=\footnotesize,text=black!80},
+  ff ctp/.style={draw=black!70,line width=0.9pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5pt,width=4.5pt]}}}}},
+  ff ctp/.default=0.5,
+  ff unit/.style={fill=gray!16,draw=gray!55,line width=0.4pt,rounded corners=2pt}]
+  % ================================================================ (a) cut-position identity
+  \begin{scope}
+    \node[font=\small,anchor=west] at (-0.55,2.3) {(a)\ 割位置恒等式（含插入）};
+    % closed-time-path order of the chain
+    \draw[lcaxis,gray!60!black] (0.35,1.5) -- (8.45,1.5);
+    \node[ff note,anchor=south] at (4.4,1.52) {闭时路序：振幅一侧 $\tau$ 递增，然后共轭一侧 $\tau$ 递减};
+    % chain of final states between V_H and V_H^dagger
+    \fill[ff chain] (0.3,-0.2) rectangle (8.5,0.2);
+    \filldraw[hard blob] (0,0) circle[radius=0.3];
+    \filldraw[hard blob] (8.8,0) circle[radius=0.3];
+    \node[ff lab,anchor=north] at (0,-0.33) {$V_H$};
+    \node[ff lab,anchor=north] at (8.8,-0.33) {$V_H^\dagger$};
+    \foreach \x/\v in {2.2/1,4.4/2,6.6/3} {
+      \node[vertex] at (\x,0) {};
+      \node[ff lab,anchor=south] at (\x,0.22) {$v_\v$};
+    }
+    % insertions: v_1 on the amplitude side, v_3 on the conjugate side
+    \draw[ff soft] (2.2,-1.0) -- (2.2,-0.02);
+    \draw[ff soft] (6.6,-1.0) -- (6.6,-0.02);
+    \node[ff ins] at (2.2,0) {};  \node[ff ins] at (6.6,0) {};
+    \node[ff lab,anchor=north] at (2.2,-1.03) {振幅插入 $O_a$};
+    \node[ff lab,anchor=north] at (6.6,-1.03) {共轭插入 $O_b'$};
+    \node[ff lab,anchor=north] at (4.4,-0.27) {内部顶点};
+    % weights of the vertices
+    \node[ff w,anchor=north] at (2.2,-1.48) {$\alpha_1$，$\beta_1=0$};
+    \node[ff w,anchor=north] at (4.4,-1.48) {$\alpha_2=\beta_2$};
+    \node[ff w,anchor=north] at (6.6,-1.48) {$\alpha_3=0$，$\beta_3$};
+    % cut positions through the states s_0 ... s_3
+    \foreach \x/\j in {1.1/0,3.3/1,5.5/2,7.7/3} {
+      \draw[cut] (\x,-0.55) -- (\x,0.85);
+      \node[font=\footnotesize,text=red!65!black,anchor=south] at (\x,0.86) {$j=\j$};
+      \node[ff lab,anchor=south west,inner sep=1pt] at (\x+0.04,0.2) {$s_\j$};
+    }
+    % table of weights
+    \node[anchor=west,font=\footnotesize] at (9.55,0.2) {%
+      \renewcommand{\arraystretch}{1.12}%
+      \begin{tabular}{@{}c@{\quad}l@{}}
+        \toprule
+        $j$ & 割线穿过 $s_j$ 的权重 $W_j$\\
+        \midrule
+        0 & $\beta_1\beta_2\beta_3=0$\\
+        1 & $\alpha_1\beta_2\beta_3$\\
+        2 & $\alpha_1\alpha_2\beta_3$\\
+        3 & $\alpha_1\alpha_2\alpha_3=0$\\
+        \bottomrule
+      \end{tabular}};
+    % result
+    \node[anchor=north,font=\small,align=center] at (6.6,-2.05) {%
+      $\displaystyle\sum_{j=0}^{3}\mathcal T_j=-\ii\,\alpha_1\beta_2\beta_3\!\int\!\frac{\dd\mathcal E}{2\pi}\,H_1(\mathcal E)
+       +\ii\,\alpha_1\alpha_2\beta_3\!\int\!\frac{\dd\mathcal E}{2\pi}\,H_3(\mathcal E)$，\\[3pt]
+      $\displaystyle H_m(\mathcal E)=\prod_{i<m}\frac{1}{\mathcal E-E_i+\ii0}\prod_{i\ge m}\frac{1}{\mathcal E-E_i-\ii0}$};
+  \end{scope}
+  % ================================================================ (b) closed-time-path form
+  \begin{scope}[yshift=-6.3cm]
+    \node[font=\small,anchor=west] at (-0.55,1.5) {(b)\ 闭时路形式};
+    % part later than all insertions: U^dagger U = 1
+    \fill[ff unit] (4.1,-1.8) rectangle (8.4,0.78);
+    \node[ff note,anchor=south] at (6.25,0.12) {$\tau>\tau_{\max}$：$U^\dagger U=1$};
+    % branches: amplitude (upper, T order) and conjugate (lower, anti-T order)
+    \draw[ff ctp] (0,0) -- (7.7,0);
+    \draw[ff ctp=0.72] (7.7,-1.2) -- (0,-1.2);
+    \draw[draw=black!70,line width=0.9pt] (7.7,0) arc[start angle=90,end angle=-90,radius=0.6];
+    \filldraw[hard blob] (0,0) circle[radius=0.22];
+    \filldraw[hard blob] (0,-1.2) circle[radius=0.22];
+    \node[ff lab,anchor=east] at (-0.28,0) {$V_H(0)$};
+    \node[ff lab,anchor=east] at (-0.28,-1.2) {$V_H^\dagger(0)$};
+    \node[ff note,anchor=north west] at (0.3,-0.05) {振幅（${\rm T}$ 序）};
+    \node[ff note,anchor=south west] at (0.3,-1.15) {共轭振幅（$\bar{\rm T}$ 序）};
+    % insertions
+    \draw[ff soft] (2.2,0.95) -- (2.2,0.03);   \node[ff ins] at (2.2,0) {};
+    \draw[ff soft] (4.0,-2.15) -- (4.0,-1.23); \node[ff ins] at (4.0,-1.2) {};
+    \node[ff lab,anchor=west] at (2.32,0.75) {$O_a(\tau_a)$};
+    \node[ff lab,anchor=west] at (4.12,-2.0) {$O_b'^\dagger(\tau_b')$};
+    % internal final-state interactions of J_A later than all insertions (they cancel)
+    \foreach \x in {5.2,6.6} { \node[vertex] at (\x,0) {}; \node[vertex] at (\x,-1.2) {}; }
+    \node[ff note,anchor=center] at (5.9,-0.6) {$J_A$ 内部的末态相互作用};
+    % cut = final time
+    \draw[cut] (8.3,-1.75) -- (8.3,0.9);
+    \node[font=\footnotesize,text=red!65!black,anchor=west,align=left] at (8.45,-0.6) {割线\\（最终时刻 $\tau_f$）};
+    % time axis
+    \draw[lcaxis,gray!60!black] (0,-2.6) -- (9.6,-2.6) node[below left=1pt and -2pt,font=\footnotesize] {$\tau$};
+    \foreach \x/\t in {0/0,2.2/{\tau_a},4.0/{\tau_b'=\tau_{\max}},8.3/{\tau_f}} {
+      \draw[gray!60!black,line width=0.5pt] (\x,-2.6) -- ++(0,0.08);
+      \node[font=\footnotesize,below] at (\x,-2.6) {$\t$};
+    }
+    % operator form after the sum over cuts
+    \node[anchor=north,font=\small] at (4.8,-3.25) {%
+      对割线求和：\quad$\sum_C\;\longrightarrow\;\langle P_A|\,\bar{\rm T}\big\{V_H^\dagger(0)\textstyle\prod_bO_b'^\dagger(\tau_b')\big\}\,
+      {\rm T}\big\{V_H(0)\textstyle\prod_aO_a(\tau_a)\big\}|P_A\rangle$};
+  \end{scope}
+\end{tikzpicture}
+\caption{割图求和的幺正性（\cref{lem:appO-cut-position}、\cref{lem:appO-unitarity}）。
+(a)~$J_A$ 末态部分的一条链按闭时路序排列，割线穿过态 $s_j$ 的项 $\mathcal T_j$ 带权重 $W_j=\prod_{i\le j}\alpha_i\prod_{i>j}\beta_i$：振幅插入只在振幅一侧（$\beta=0$），共轭插入只在共轭一侧（$\alpha=0$），内部顶点两侧权重相同（$\alpha=\beta$，\cref{lem:appJ-cut-hermiticity}）。
+把割线移过最晚的顶点只改变该顶点的权重，故“$v_2$ 最晚”的贡献 $\propto\alpha_2-\beta_2$ 消失，对割位置求和后只剩插入顶点给出的至多两项（$H_m$ 即“$v_m$ 最晚”）。
+(b)~闭时路形式：对割线求和后 $J_A$ 成为图下所示的矩阵元，晚于所有插入的 $J_A$ 内部相互作用在两支上合成 $U^\dagger U=1$，即同一喷注内部的末态相互作用精确相消；软线把 $\tau>0$ 的插入固定在各自一侧，它们无法在 $J_A$ 内配对，这正是 Glauber 钳夹的来源。}
+\label{fig:appO-cutsum}
+\end{figure}
+%%% END fig:appO-cutsum

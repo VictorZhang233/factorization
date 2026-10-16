@@ -1,0 +1,45 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.8\textwidth,height=6.4cm,xmin=0,xmax=16.6,ymin=0,ymax=1.25,
+  axis lines=left,axis line style={gray!60!black},clip=false,
+  xlabel={Ioffe 时间 $\lambda=P\cdot z$},ylabel={$|z|/\mathrm{fm}$},
+  xtick={0,2,...,16},ytick={0,0.2,...,1.2},
+  yticklabel style={/pgf/number format/fixed,/pgf/number format/fixed zerofill,/pgf/number format/precision=1},
+  tick label style={font=\scriptsize},label style={font=\small},
+  every axis x label/.style={at={(axis description cs:0.5,-0.13)},anchor=north},
+  every axis y label/.style={at={(axis description cs:-0.075,0.5)},rotate=90,anchor=south}]
+  % lattice data region (schematic) and short-distance band
+  \fill[gray!9] (axis cs:0,0) rectangle (axis cs:15,1.0);
+  \draw[gray!50,line width=0.4pt,dash pattern=on 3pt off 2pt] (axis cs:0,1.0) -- (axis cs:15,1.0) -- (axis cs:15,0);
+  \fill[blue!11] (axis cs:0,0) rectangle (axis cs:16.6,0.3);
+  % pseudo-distributions: fixed z^2
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.1) -- (axis cs:16.6,0.1);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.2) -- (axis cs:16.6,0.2);
+  \draw[black!75,line width=0.7pt,dotted] (axis cs:0,0.3) -- (axis cs:16.6,0.3);
+  % quasi-distributions: fixed P^z, |z| = 0.1973 lambda/(P^z/GeV) fm
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:6.335,samples=2] {0.1973*x/1};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:12.67,samples=2] {0.1973*x/2};
+  \addplot[red!65!black,line width=0.9pt,dashed,domain=0:16.6,samples=2] {0.1973*x/3};
+  % light-cone ITD on the lambda axis
+  \draw[blue!55!black,line width=2.2pt,line cap=butt] (axis cs:0,0) -- (axis cs:16.6,0);
+  % labels
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:6.335,1.25) {$P^z=1$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=south] at (axis cs:12.67,1.25) {$P^z=2$ GeV};
+  \node[font=\scriptsize,text=red!55!black,anchor=west] at (axis cs:16.6,1.092) {$P^z=3$ GeV};
+  \node[font=\footnotesize,text=red!50!black,align=left,anchor=west,inner sep=1.2pt] at (axis cs:0.6,1.135) {准分布：固定 $P^z$\\[-1pt]（射线 $|z|=|\lambda|/P^z$）};
+  \draw[red!55!black,line width=0.55pt,-{Stealth[length=4.5pt,width=3.8pt]}] (axis cs:6.9,0.97) to[bend left=14] node[pos=0.55,above right=-1pt,font=\footnotesize] {$P^z\to\infty$} (axis cs:13.4,0.6);
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.3) {$|z|=0.3$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.2) {$|z|=0.2$ fm};
+  \node[font=\footnotesize,anchor=west] at (axis cs:16.6,0.1) {$|z|=0.1$ fm};
+  \node[font=\footnotesize,anchor=west,align=left] at (axis cs:16.6,0.52) {赝分布：\\[-1pt]固定 $z^2$};
+  \node[font=\footnotesize,text=blue!45!black,anchor=north west,align=left] at (axis cs:16.6,-0.02) {光锥 ITD $I(\lambda)$\\[-1pt]（$z^2=0$）};
+  \node[font=\footnotesize,fill=blue!11,inner sep=1.5pt] at (axis cs:9.6,0.15) {短距离因子化（SDF）};
+  \node[font=\footnotesize,text=gray!45!black,anchor=south east] at (axis cs:14.85,0.33) {格点数据区（示意）};
+\end{axis}
+\end{tikzpicture}
+\caption{Ioffe 时间 $\lambda=P\cdot z$（$=-P^zz$，等时类空间隔 $z^\mu=z\hat e_z^\mu$）与间隔 $|z|$ 平面上的三种表示（图中只画 $\lambda\ge0$；$\hbar c=0.1973$ GeV\,fm）。光锥 ITD $I(\lambda)=\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x)$ 位于 $z^2=0$（粗线）；
+固定 $z^2$ 的水平线（点线）给出赝分布：对 $\lambda$ 作 Fourier 变换，支集为 $[-1,1]$；固定 $P^z$ 的射线 $|z|=|\lambda|/P^z$（虚线，$P^z=1,2,3$ GeV）给出准分布：$z$ 与 $\lambda$ 同时变化，$P^z$ 增大时射线趋向光锥轴。
+短距离因子化只用阴影带（$|z|\lesssim0.3$ fm）内的数据，准分布的 Fourier 变换则需要整条射线（长距离部分见正文）；灰色矩形示意格点数据所及的范围。}
+\label{fig:lamet-ioffe}
+\end{figure}

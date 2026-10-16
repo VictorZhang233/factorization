@@ -1,0 +1,145 @@
+%%% BEGIN fig:dvcs-handbag
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 gapline/.style={draw=white,line width=5pt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs in {a/0, b/7.1} {
+  \begin{scope}[xshift=\xs cm]
+    \node[hadron blob,ellipse,minimum width=2.6cm,minimum height=0.9cm,inner sep=0pt] (F) at (0,0) {GPD};
+    \coordinate (V1) at (-0.75,2.1); \coordinate (V2) at (0.75,2.1);
+    \coordinate (Fl) at (-0.75,0.37); \coordinate (Fr) at (0.75,0.37);
+    \coordinate (Pq) at (-1.35,4.25); \coordinate (Pqp) at (1.35,4.25);
+    \draw[t3 hadron] (-2.9,0) -- (F.west);  \draw[t3 hadron] (F.east) -- (2.9,0);
+    \draw[quark] (Fl) -- (V1);  \draw[quark] (V1) -- (V2);  \draw[quark] (V2) -- (Fr);
+    \if a\panel
+      \draw[photon] (Pq) -- (V1);  \draw[photon] (V2) -- (Pqp);
+      \path[mom'={},mom sep=0.22cm,mom length=0.45cm] (Pq) -- (V1);
+      \path[mom={},mom sep=0.22cm,mom length=0.45cm] (V2) -- (Pqp);
+    \else
+      \draw[photon] (Pq) -- (V2);
+      \draw[t3 gapline] ($(V1)!0.25!(Pqp)$) -- ($(V1)!0.47!(Pqp)$);
+      \draw[photon] (V1) -- (Pqp);
+      \path[mom'={},mom sep=0.22cm,mom length=0.45cm,mom pos=0.25] (Pq) -- (V2);
+      \path[mom={},mom sep=0.22cm,mom length=0.45cm,mom pos=0.75] (V1) -- (Pqp);
+    \fi
+    \node[vertex] at (V1) {}; \node[vertex] at (V2) {};
+    \node[t3 lab,above left=-1pt] at (Pq) {$\gamma^*(q)$};
+    \node[t3 lab,above right=-1pt] at (Pqp) {$\gamma(q')$};
+    \path[mom={$(x+\xi)\bar P^+$},mom sep=0.26cm,mom length=0.5cm] (Fl) -- (V1);
+    \path[mom={$(x-\xi)\bar P^+$},mom sep=0.26cm,mom length=0.5cm] (V2) -- (Fr);
+    \path[mom'={$P$},mom sep=0.26cm,mom length=0.5cm] (-2.9,0) -- (F.west);
+    \path[mom'={$P'$},mom sep=0.26cm,mom length=0.5cm] (F.east) -- (2.9,0);
+    \node[t3 note,below=2pt] at (F.south) {$H,E,\tilde H,\tilde E\,(x,\xi,t)$};
+    \node[t3 lab] at (0,-1.3) {(\panel)};
+  \end{scope}}
+\end{tikzpicture}
+\caption{深度虚康普顿散射（DVCS）$\gamma^*(q)+p(P)\to\gamma(q')+p(P')$ 的领头阶图：(a)~手提包图；(b)~交叉图（两光子交叉，交叉处无顶点）。
+灰色团为广义部分子分布（GPD）的关联函数；$\bar P=\frac12(P+P')$，$\xi=\frac{P^+-P'^+}{P^++P'^+}$，$t=(P'-P)^2$。
+离开团的部分子带正光锥动量 $(x+\xi)\bar P^+$，回到团的部分子带 $(x-\xi)\bar P^+$，二者之差 $2\xi\bar P^+=P^+-P'^+$ 交给硬散射。
+在 Bjorken 极限下，(a) 中硬夸克传播子的分母为 $\frac{Q^2}{2\xi}(x-\xi+\ii0)$，(b) 中为 $-\frac{Q^2}{2\xi}(x+\xi-\ii0)$，
+故系数函数含 $\frac1{x-\xi+\ii0}$ 与 $\frac1{x+\xi-\ii0}$，其虚部取 GPD 在 $x=\pm\xi$ 处的值。
+图中按 DGLAP 区 $x>\xi$ 标注动量；当 $-\xi<x<\xi$（ERBL 区）时，右侧部分子的正光锥动量为负，应理解为由靶发射的夸克--反夸克对。}
+\label{fig:dvcs-handbag}
+\end{figure}
+%%% END fig:dvcs-handbag
+
+%%% BEGIN fig:meson-production
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \node[hadron blob,ellipse,minimum width=3.0cm,minimum height=1.0cm,inner sep=0pt] (F) at (0,0) {GPD};
+  \node[jetB blob,ellipse,minimum width=1.6cm,minimum height=0.8cm,inner sep=0pt] (M) at (0.9,4.3) {};
+  \coordinate (Fl) at (-0.95,0.39);  \coordinate (Fr) at (0.95,0.39);
+  \coordinate (G1) at (-0.95,1.7);   \coordinate (G2) at (0.95,1.7);
+  \coordinate (V) at (-0.95,3.0);
+  \coordinate (Mq) at (0.30,4.036);  \coordinate (Mb) at (1.20,3.93);
+  \coordinate (Qs) at (-2.6,3.9);
+  % hard kernel
+  \draw[region] (-1.45,1.2) rectangle (1.42,3.45);
+  \draw[t3 hadron] (-3.2,0) -- (F.west);  \draw[t3 hadron] (F.east) -- (3.2,0);
+  \draw[t3 hadron] (M.east) -- (3.0,4.3);
+  \draw[gluon] (G1) -- (G2);
+  \draw[photon] (Qs) -- (V);
+  \draw[quark] (Fl) -- (G1);  \draw[quark] (G1) -- (V);  \draw[quark] (V) -- (Mq);
+  \draw[quark] (Mb) -- (G2);  \draw[quark] (G2) -- (Fr);
+  \foreach \p in {G1,G2,V} \node[vertex] at (\p) {};
+  \node[jetB blob,ellipse,minimum width=1.6cm,minimum height=0.8cm,inner sep=0pt] at (0.9,4.3) {};
+  % labels
+  \node[t3 lab,above left=-1pt] at (Qs) {$\gamma^*_L(q)$};
+  \path[mom'={},mom sep=0.22cm,mom length=0.45cm] (Qs) -- (V);
+  \path[mom={$(x+\xi)\bar P^+$},mom sep=0.26cm,mom length=0.45cm,mom pos=0.34] (Fl) -- (G1);
+  \path[mom={$(x-\xi)\bar P^+$},mom sep=0.26cm,mom length=0.45cm,mom pos=0.66] (G2) -- (Fr);
+  \path[mom={$zq'$},mom sep=0.24cm,mom length=0.42cm,mom pos=0.6] (V) -- (Mq);
+  \path[mom'={$(1-z)q'$},mom sep=0.24cm,mom length=0.42cm,mom pos=0.86] (G2) -- (Mb);
+  \path[mom'={$P$},mom sep=0.26cm,mom length=0.5cm] (-3.2,0) -- (F.west);
+  \path[mom'={$P'$},mom sep=0.26cm,mom length=0.5cm] (F.east) -- (3.2,0);
+  \node[t3 lab,right=1pt] at (3.0,4.3) {$M(q')$};
+  \node[t3 lab,above=1pt] at (M.north) {$\phi_M(z)$};
+  \node[t3 note,below=2pt] at (F.south) {$F^q(x,\xi,t)$};
+  \node[t3 lab,anchor=east] at (-1.5,1.55) {$T_H$};
+\end{tikzpicture}
+\caption{硬遍举介子产生 $\gamma^*_L(q)+p(P)\to M(q')+p(P')$ 的一个领头阶图（夸克 GPD 的贡献；记号同\cref{fig:dvcs-handbag}）。
+下方灰色团为 GPD 关联函数 $F^q(x,\xi,t)$，按介子的量子数取 $H^q,E^q$ 或 $\tilde H^q,\tilde E^q$；上方橙色团为介子的光锥分布振幅 $\phi_M(z)$，其中夸克带动量 $zq'$，反夸克带 $(1-z)q'$；
+虚线框内为硬散射核 $T_H$，领头阶含一个硬胶子交换。振幅的因子化形式为
+$\mathcal M=\sum_q\int_{-1}^{1}\dd x\int_0^1\dd z\,F^q(x,\xi,t)\,T^q_H(x,\xi,z;Q,\mu)\,\phi_M(z;\mu)+\text{幂次修正}$（Collins--Frankfurt--Strikman 1997），
+只对纵向极化的 $\gamma^*$ 成立（全阶论证 [A]）。对横向极化光子，相应的扭度 3 卷积在端点 $z\to0,1$ 处发散，标准的共线因子化不成立。
+对矢量介子，胶子 GPD 在同一阶也有贡献（图略）。}
+\label{fig:meson-production}
+\end{figure}
+%%% END fig:meson-production
+
+%%% BEGIN fig:pion-ff
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \foreach \panel/\ys/\xv/\xg in {a/0/-0.9/0.9, b/-4.35/0.9/-0.9} {
+  \begin{scope}[yshift=\ys cm]
+    \node[jet blob,ellipse,minimum width=0.7cm,minimum height=2.0cm,inner sep=0pt] (L) at (-3.0,0) {};
+    \node[jetB blob,ellipse,minimum width=0.7cm,minimum height=2.0cm,inner sep=0pt] (R) at (3.0,0) {};
+    \coordinate (Lq) at (-2.769,0.75);  \coordinate (Rq) at (2.769,0.75);
+    \coordinate (Lb) at (-2.769,-0.75); \coordinate (Rb) at (2.769,-0.75);
+    \coordinate (V) at (\xv,0.75); \coordinate (G1) at (\xg,0.75); \coordinate (G2) at (\xg,-0.75);
+    \coordinate (Qs) at ($(V)+(-0.9,1.25)$);
+    \draw[t3 hadron] (-4.3,0) -- (L.west);  \draw[t3 hadron] (R.east) -- (4.3,0);
+    \draw[gluon] (G1) -- (G2);
+    \draw[photon] (Qs) -- (V);
+    % quark line (fermion number left -> right)
+    \ifdim \xv pt<\xg pt
+      \draw[quark] (Lq) -- (V); \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (Rq);
+    \else
+      \draw[quark] (Lq) -- (G1); \draw[quark] (G1) -- (V); \draw[quark] (V) -- (Rq);
+    \fi
+    % antiquark line (fermion number right -> left, momentum left -> right)
+    \draw[quark] (Rb) -- (G2);  \draw[quark] (G2) -- (Lb);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \node[t3 lab,above left=-1pt] at (Qs) {$\gamma^*(q)$};
+    \path[mom={},mom sep=0.22cm,mom length=0.45cm] (Qs) -- (V);
+    \path[mom={$\pi(P)$},mom sep=0.26cm,mom length=0.5cm] (-4.3,0) -- (L.west);
+    \path[mom={$\pi(P')$},mom sep=0.26cm,mom length=0.5cm] (R.east) -- (4.3,0);
+    \path[mom={$xP$},mom sep=0.22cm,mom length=0.5cm] (Lq) -- ($(Lq)+(1.87,0)$);
+    \path[mom={$yP'$},mom sep=0.22cm,mom length=0.5cm] ($(Rq)+(-1.87,0)$) -- (Rq);
+    \path[mom'={$(1-x)P$},mom sep=0.22cm,mom length=0.5cm] (Lb) -- (G2);
+    \path[mom'={$(1-y)P'$},mom sep=0.22cm,mom length=0.5cm] (G2) -- (Rb);
+    \node[t3 lab,below=1pt] at (L.south) {$\phi(x)$};
+    \node[t3 lab,below=1pt] at (R.south) {$\phi^*(y)$};
+    \node[t3 lab,anchor=west] at (4.75,0) {(\panel)};
+  \end{scope}}
+\end{tikzpicture}
+\caption{$\pi$ 介子电磁形状因子的领头阶硬散射图（$F_\pi(Q^2)$ 由 $\langle\pi(P')|j^\mu|\pi(P)\rangle=(P+P')^\mu F_\pi(Q^2)$ 定义，$Q^2=-q^2$）。
+入射 $\pi$ 介子以分布振幅 $\phi(x)$ 分裂为共线的夸克（$xP$）与反夸克（$(1-x)P$），出射 $\pi$ 介子由 $yP'$ 与 $(1-y)P'$ 组成（$\phi^*(y)$）；
+蓝、橙两色分别表示与 $P$、$P'$ 共线的子图。为使反夸克转向 $P'$ 方向，必须交换一个硬胶子：(a)~光子先于胶子作用于夸克，内夸克线 $(xP+q)^2=-(1-x)Q^2$；
+(b)~胶子先于光子，内夸克线 $(yP'-q)^2=-(1-y)Q^2$；两图中胶子虚度均为 $-(1-x)(1-y)Q^2$（$m_\pi\to0$，$2P\cdot P'=Q^2$）。
+领头阶共有 4 个图，另两个是光子作用于反夸克的对应图。反夸克线上的箭头（费米子数）与其动量方向相反。
+结果为 $F_\pi(Q^2)=\int_0^1\!\dd x\,\dd y\,\phi^*(y)\,T_H(x,y,Q^2)\,\phi(x)$；当不与光子相连的反夸克的动量分数 $1-x$ 或 $1-y\to0$ 时，内线虚度趋于零，这就是端点区域。}
+\label{fig:pion-ff}
+\end{figure}
+%%% END fig:pion-ff

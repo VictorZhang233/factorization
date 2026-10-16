@@ -1,0 +1,66 @@
+%%% BEGIN fig:dis-twist-graphical
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff tw/.style={font=\footnotesize,text=black!75,inner sep=1pt},
+  ff ttl/.style={font=\small,align=center}]
+  % one panel of the forward Compton amplitude T^{mu nu}: target blob at (0,0), hard part H at (0,2.0)
+  % #1 x shift, #2 letter, #3 twist, #4 power of lambda, #5 sum of the twists, #6 extra lines
+  \def\ffpanel#1#2#3#4#5#6{%
+  \begin{scope}[xshift=#1cm]
+    \draw[photon] (-0.5,2.95) -- (-0.5,2.2);
+    \draw[photon] (0.5,2.2) -- (0.5,2.95);
+    \node[ff lab,above] at (-0.5,2.95) {$q$};
+    \node[ff lab,above] at (0.5,2.95) {$q$};
+    \draw[ff hadron] (-1.6,0) -- (-0.9,0);
+    \draw[ff hadron] (0.9,0) -- (1.6,0);
+    \node[ff lab,above] at (-1.38,0.02) {$P$};
+    \node[ff lab,above] at (1.38,0.02) {$P$};
+    \draw[quark] (-0.68,0.15) -- (-0.68,1.85);
+    \draw[quark] (0.68,1.85) -- (0.68,0.15);
+    \node[ff lab,anchor=east] at (-0.74,1.0) {$\psi_+$};
+    \node[ff lab,anchor=west] at (0.74,1.0) {$\bar\psi_+$};
+    #6
+    \draw[hard blob] (0,2.0) ellipse (0.95 and 0.36);
+    \draw[hadron blob] (0,0) ellipse (0.95 and 0.38);
+    \node at (0,2.0) {$H$};
+    \node[ff tw] at (0,-0.66) {$t=#5$};
+    \node[ff ttl] at (0,-1.2) {(#2)\ 扭度~#3：$\lambda^{#4}$};
+  \end{scope}}
+  % (a) handbag; longitudinally polarized gluons (twist 0) may be added at no cost
+  \ffpanel{0}{a}{2}{0}{1+1+0+\cdots}{%
+    \draw[longit] (-0.05,0.2) -- (-0.05,1.8);  \longitmark{(-0.05,0.2)}{(-0.05,1.8)}
+    \node[ff lab,anchor=west,text=blue!50!black] at (0.1,0.6) {$A^+$};}
+  % (b) one transverse gluon (twist 1)
+  \ffpanel{3.75}{b}{3}{1}{1+1+1}{%
+    \draw[gluon] (-0.05,0.2) -- (-0.05,1.8);
+    \node[ff lab,anchor=west] at (0.1,0.6) {$A_T$};}
+  % (c) one extra quark pair (twist 1 + 1)
+  \ffpanel{7.5}{c}{4}{2}{1+1+1+1}{%
+    \draw[quark] (-0.24,0.2) -- (-0.24,1.8);
+    \draw[quark] (0.24,1.8) -- (0.24,0.2);}
+  % table of collinear twists t = d - h of the building blocks (lem:dis-twist-classification)
+  \node[anchor=west,font=\footnotesize] at (9.55,1.05) {%
+    \renewcommand{\arraystretch}{1.15}\setlength{\tabcolsep}{4pt}%
+    \begin{tabular}{@{}lc@{}}
+      \toprule
+      场分量 & $t=d-h$\\
+      \midrule
+      $\psi_+,\ \bar\psi_+$ & 1\\
+      $\psi_-,\ \bar\psi_-$ & 2\\
+      $A^+$（$D^+$） & 0\\
+      $A_T$（$D^j$，$F^{+j}$） & 1\\
+      $A^-$（$D^-$） & 2\\
+      \bottomrule
+    \end{tabular}};
+\end{tikzpicture}
+\caption{扭度与额外部分子（前向 Compton 振幅 $T^{\mu\nu}$，示意；下方浅灰椭圆为靶 $P$，上方为硬部分 $H$，波浪线为虚光子）。
+连接靶与 $H$ 的各场分量的共线扭度 $t=d-h$（右表，\cref{lem:dis-twist-classification}）相加即该类图的扭度，其贡献相对于手提包图按 $\lambda^{t-2}$ 压低（$\lambda\sim M/Q$，$M$ 为强子尺度）。
+(a)~扭度 2：一对好分量夸克 $\psi_+$、$\bar\psi_+$；附加任意多条纵向极化（$A^+$，蓝色带点）胶子不改变幂次，它们求和成 Wilson 线；
+(b)~每多一条横向胶子 $A_T$（即 $F^{+j}$）压低 $\lambda$（扭度 3）；(c)~每多一对夸克压低 $\lambda^2$（扭度 4），两条横向胶子同样如此。
+非极化 DIS 中奇扭度算符的系数在无质量微扰论中为零（\cref{prop:dis-chiral-suppression}），第一个幂次修正是扭度 4 的 $1/Q^2$ 项（\cref{prop:dis-twist4}；比较\cref{fig:higher-twist}）。}
+\label{fig:dis-twist-graphical}
+\end{figure}
+%%% END fig:dis-twist-graphical

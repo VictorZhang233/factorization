@@ -1,0 +1,23 @@
+anom2 with bump c: Re=0 at E_R = (-c**2*lambda**2*m**2 + p_R**2)/(2*m) ;  Im there = (c**3*lambda**3*m + 2*epsilon)/2
+   (positive for lam>0, c>0 or eps>0; zero only at lam*c = 0 and eps = 0)
+anom1 with bump c: Im = -c*lambda*p_R + c*lambda*Abs(E_R) + 2*c*lambda*Abs(p_R) + epsilon  >= lam c (|E_R| + |p_R|) + eps
+
+numerics (m=1, Q=1, bump width 2, grid h=0.004 on [-6,6]^2):
+  eps=0.100  orig   lam=0:  I = 4.50137595-0.95512198j
+  eps=0.100  anom1  lam=1.0:  I = 4.50137446-0.95514178j
+  eps=0.100  anom2  lam=1.0:  I = 4.50137595-0.95512198j
+  eps=0.100  bad    lam=1.0:  I = 1.08482937+6.66148279j
+  eps -> 0+ reference (natural deformation, eps=0):        I = 4.97406465-1.11088240j
+  eps=0      anom1  lam=1:  I = 4.97406652-1.11090305j   |I - ref| = 2.07e-05
+  eps=0      anom2  lam=1:  I = 4.97406339-1.11089256j   |I - ref| = 1.02e-05
+  eps=0      bad    lam=1:  I = -0.00000000+6.83019434j   |I - ref| = 9.37e+00
+  eps=0.050  orig  lam=0:  I = 4.72824610-1.02917993j   |I - ref| = 2.59e-01
+  eps=0.020  orig  lam=0:  I = 4.87333530-1.07722535j   |I - ref| = 1.06e-01
+PASS anom1 (eps=0.1) reproduces the undeformed integral
+PASS anom2 (eps=0.1) reproduces the undeformed integral
+PASS bad tangent deformation (eps=0.1) changes the integral (crosses the pole)
+PASS anom2 at eps=0 equals the eps->0+ limit
+PASS anom1 at eps=0 equals the eps->0+ limit
+PASS bad deformation at eps=0 does not
+
+SUMMARY: 6/6 checks passed

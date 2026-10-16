@@ -1,0 +1,90 @@
+% =====================================================================
+\section{Glauber 问题及其在单举 DY 中的解决}\label{sec:dy-glauber}
+% =====================================================================
+
+上两节表明：在单个割图中，旁观者之间交换的 Glauber 胶子在 $k^-$ 与 $k^+$ 上同时被钳住，软近似在实轴上又不成立。CSS 与 Bodwin 的全阶论证\cite{CollinsSoperSterman1985b,CollinsSoperSterman1988,Bodwin1985}与 Collins 的教科书处理\cite[第~14.4~节]{Collins2011}用下面的五步绕开这一障碍：(i) 对旁观者的末态割线求和，末态相互作用由幺正性相消；(ii) 余下的极点只来自初态线，位于同一侧；(iii) 把软动量沿 $e_G$ 同时形变出 Glauber 区；(iv) 在变形后的围道上做程函近似，用 Ward 恒等式把软胶子收成指向过去的 Wilson 线；(v) 对 $q_T$ 积分的截面，软因子由幺正性等于 $1$，共线因子就是 DIS 中的部分子分布。\cref{app:appO}把这五步写成一个逐步或者被证明、或者被列为编号假设的条件定理（\cref{thm:appO-main}，步骤 (O-1)--(O-8)）。本节给出各步的章内陈述，指明它们在附录中的精确形式；\cref{tab:dy-status}（\cref{sec:dy-theorem}）汇总每一步的地位与误差类型。
+
+\paragraph{末态相互作用的幺正性相消。}
+
+\begin{lemma}[旁观者末态相互作用的幺正性相消 \tagA]\label{lem:dy-fsi}
+对旁观者系统的全部末态割线求和（截面对 $X$ 单举，测量只涉及轻子对），硬散射之后的相互作用相消：在每个光锥序的末态链中，把割线移过最后一个内部顶点只改变该顶点的权重；对割线位置求和后，末态相互作用的贡献等于去掉这些相互作用后的未割子图。（本引理只涉及部分子态。）
+% errtype: E-S
+\uses{prop:method-fsi,lem:appO-unitarity,asm:appO-lcopt,lem:appO-cut-position,lem:appJ-cut-hermiticity}
+\end{lemma}
+
+\begin{proofsketch}
+这是\cref{prop:method-fsi}（全阶论证，\tagA）对 DY 旁观者的情形，精确形式是\cref{lem:appO-unitarity}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appO-lcopt}）。(1) 由\cref{asm:appO-lcopt}，$J_A$ 可写成光锥序形式；固定两侧初态的排序，把 $V_H$ 之后的顶点按闭时路径排列为 $v_1,\dots,v_n$，相邻中间态为 $s_0,\dots,s_n$，能量 $E_i=\sum_{l\in s_i}E(l)$。割线穿过 $s_j$ 时，振幅一侧给出 $\prod_{i<j}(\mathcal E-E_i+\ii0)^{-1}$，割线给出 $2\pi\delta(\mathcal E-E_j)$，共轭一侧给出 $\prod_{i>j}(\mathcal E-E_i-\ii0)^{-1}$，其中 $\mathcal E$ 是末态的总光锥能量，测量不约束它。(2) 记 $a_i=(\mathcal E-E_i+\ii\eta)^{-1}$、$b_i=(\mathcal E-E_i-\ii\eta)^{-1}$，则 $2\pi\delta(\mathcal E-E_j)\to2\eta/[(\mathcal E-E_j)^2+\eta^2]=\ii(a_j-b_j)$，令 $P_j=\prod_{i\le j}a_i\prod_{i>j}b_i$，得逐项伸缩求和的精确恒等式
+\[
+\sum_{j=0}^{n}\Big[\prod_{i<j}a_i\Big]\ii(a_j-b_j)\Big[\prod_{i>j}b_i\Big]=\sum_{j=0}^n\ii\,(P_j-P_{j-1})=\ii\prod_{i=0}^na_i-\ii\prod_{i=0}^nb_i ,
+\]
+% VF-GLA-5
+对 $\mathcal E$ 积分时（$\int\dd\mathcal E/2\pi$），$n\ge1$ 时两个乘积都至少衰减为 $\mathcal E^{-2}$ 且全部极点各在同一半平面，故积分为零；$n=0$ 时积分为 $1$。这里用到内部顶点在割线两侧的权重相等，即割图规则的 Hermite 性，对鬼场与三胶子顶点由\cref{lem:appJ-cut-hermiticity}（\tagR，$R_{\mathrm{def}}$）保证。(3) 有软胶子附着的顶点在两侧权重不同，不能这样配对：割线求和后只剩下这些插入（\cref{lem:appO-cut-position}），其闭时路径形式为 $\langle P_A|\bar{\rm T}\{V_H^\dagger\cdots\}{\rm T}\{V_H\cdots\}|P_A\rangle$，$J_A$ 内部的末态相互作用不出现。文献：\cite{CollinsSoperSterman1985b,CollinsSoperSterman1988,Bodwin1985}与\cite[第~14.4~节]{Collins2011}；光锥微扰论的版本见\cite[第~4~节]{Diehl:2015bca}。完整论证见\cref{sec:appO-unitarity}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}\tagA。割线位置恒等式本身是精确的代数恒等式；在\cref{asm:appO-lcopt}（\tagA：零模、瞬时圈与端点贡献在领头幂次不出现）之下，闭时路径形式是严格的（\cref{lem:appO-unitarity}）。全阶论证的等级来自前提：领头区域的标度陈述（\cref{prop:dy-regions}，E-S）与光锥序微扰论对全部图的适用性，后者在所有阶都没有作为定理证明，文献中只有零模与等价性的部分结果。唯一的物理输入是“测量不约束旁观者的末态”：若测量末态强子或加快度间隙，测量投影不与光锥演化对易，相消失效（\cref{prop:break-measurement}）。“单个割图本身就是幺正的”是错误的说法：相消只在对割线求和后发生。
+
+\paragraph{单个割图中的 Wilson 线指向未来。}在讨论形变之前，先看一个常被误解的事实：在单个割图里，软胶子“看到”的强子 $A$ 的色荷沿什么方向延伸。
+
+\begin{example}[单个割图给出未来指向的 Wilson 线 \tagR]\label{ex:dy-future-vs-past}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）在单个割图的振幅一侧，设强子 $A$ 的活动部分子 $a$（色荷 $Q_a$）与旁观者 $s$（色荷 $Q_s$）耦合到软胶子 $k$（$k$ 流入 $J_A$），在程函近似下只保留依赖于 $n_A\cdot k=k^-$ 的因子（规则见\cref{prop:prelim-wilson-rules}（\tagR，$R_{\mathrm{def}}$），去掉耦合 $\ii g\,n_A\cdot\tilde A$）。活动部分子在 $V_H$ 处被湮灭，只存在于 $\tau<0$，给出指向过去的因子 $\ii Q_a/(k^-+\ii0)$；旁观者从强子顶点一直存在到末态，其 $V_H$ 之前与之后的两段分别给出 $\ii Q_s/(k^-+\ii0)$ 与 $-\ii Q_s/(k^--\ii0)$。对色单态强子，作用在强子态上有 $Q_s=-Q_a$（阿贝尔情形为电荷，非阿贝尔情形为色荷算符），于是
+\begin{equation}\label{eq:dy-future}
+\frac{\ii Q_a}{k^-+\ii0}+\ii Q_s\Big[\frac1{k^-+\ii0}-\frac1{k^--\ii0}\Big]=\frac{\ii Q_a}{k^--\ii0}=Q_s\cdot\frac{-\ii}{k^--\ii0}.
+\end{equation}
+% VF-REF-11
+右边是一条从硬顶点指向未来、携带旁观者色荷 $Q_s$ 的半无限程函线 $W[\infty n_A,0]$ 的单胶子因子，而不是指向过去的线 $W[0,-\infty n_A]$。
+\uses{prop:prelim-wilson-rules}
+\end{example}
+
+推导只是代数：左边 $=(Q_a+Q_s)\frac{\ii}{k^-+\ii0}+Q_s\frac{-\ii}{k^--\ii0}$，第一项因 $Q_a+Q_s=0$ 而消失。由 $\frac1{k^-+\ii0}-\frac1{k^--\ii0}=-2\pi\ii\,\delta(k^-)$，旁观者的项等于 $Q_s\,2\pi\delta(k^-)$：一条完整的直程函线只吸收 $k^-=0$ 的胶子，这正是\cref{prop:method-glauber-oneloop}中的 Glauber（Coulomb）相位。物理图像很清楚：在硬碰撞之前，色单态强子对波长大于其尺度的软胶子是不可见的；硬碰撞取走活动部分子之后，留下的旁观者系统带有净色荷 $-Q_a$，像一个从 $\tau=0$ 出发、飞向未来的色源那样辐射（这一半经典图像见\cite[第~9.3~节]{CollinsSoperSterman1989}）。因子化公式中出现的却是指向过去的线：它们只有在对割图求和、把旁观者的耦合局域到 $V_H$ 的光锥时刻、并把余下的依赖改写为只含初态分母之后才出现（\cref{prop:dy-deformation}，精确形式\cref{prop:appO-past-wilson}，\tagA）。对共线部分子分布，Wilson 线的方向无关紧要（\cref{prop:dy-universality}）；对 TMD 分布，它决定订书钉形 Wilson 线的方向与 Sivers 函数的符号（\cref{thm:tmd-sivers-sign}，\tagR，$R_{\mathrm{def}}$）。“单个割图中的软 Wilson 线已经是指向过去的”是一个常见的误解。
+
+\paragraph{同时形变与指向过去的 Wilson 线。}
+
+\begin{proposition}[移除末态极点后的围道变形 \tagA]\label{prop:dy-deformation}
+在对割图求和之后，耦合到软胶子的 $A$ 共线线的剩余 $k^-$ 极点可以全部移到同一侧（$B$ 共线线的 $k^+$ 极点亦然），软动量可以沿 $e_G=n_B-n_A$ 同时形变出 Glauber 区；在变形后的围道上 Grammer--Yennie 近似成立，软胶子耦合的程函因子取指向过去的处方。（本命题只涉及部分子态。）
+% errtype: E-W
+\uses{prop:method-glauber-deformation,lem:dy-fsi,lem:dy-poles-orientation,lem:appO-unitarity,lem:appO-equal-time,lem:appO-joint-localization,prop:appO-one-sided,prop:appO-target,prop:appO-eikonal,prop:appO-past-wilson,asm:appO-mixing,asm:appO-deformation,asm:appO-envelope,asm:appO-rewritten-cs,prop:appO-ss-cancel}
+\end{proposition}
+
+\begin{proofsketch}
+按\cref{app:appO}的链条，共六步。(1) 割图求和后，$J_A$、$J_B$ 取闭时路径形式，各喷注内部的末态相互作用消失，只剩软插入（\cref{lem:dy-fsi}，\cref{lem:appO-unitarity}）。(2) 等光锥时刻局域化：在 Glauber 窗口内，外因子 $R(k^-)$ 在 $|k^-|<\Lambda$ 内解析而喷注的能量标度 $\lambda_J\ll\Lambda$，于是一个插入的 $k^-$ 积分等于 $R(0)$ 乘以插入在 $\tau=0^\pm$ 处的等时值，误差 $\order{\lambda_J/\Lambda}$（\cref{lem:appO-equal-time}）；旁观者插入的两个等时值相等，因为 $V_H$ 与作用于旁观者的算符对易，这一插入只传递 $\mathbf k_T$；同一部分子上的多个非对易插入由带次序权重的联合局域化处理（\cref{lem:appO-joint-localization}，\tagR，$R_{\mathrm{PT}}$）。(3) 单侧改写（\cref{prop:appO-one-sided}，\tagR，$R_{\mathrm{cond}}$）：把每个可局域插入的喷注因子换成其等时值乘以整函数载子 $\phi(k^-/w)/w$，$\phi(x)=2\sqrt\pi\,\ee^{-x^2}$；改写后每个未割的软 $k^-$ 在 $J_A$ 中或者只出现在初态分母中，或者只出现在载子中，与原被积函数弱等价（E-W），所需的纤维积分包络是\cref{asm:appO-envelope}；非重合的旁观者—旁观者交换在族求和后相消（\cref{prop:appO-ss-cancel}，\tagR，$R_{\mathrm{cond}}$），重合交换（非阿贝尔情形）需要\cref{asm:appO-mixing}(c)。(4) 同时形变：$k^-\to k^-+\ii\sigma\kappa\psi|\mathbf k_T|$、$k^+\to k^+-\ii\sigma\kappa\psi|\mathbf k_T|$，即沿 $e_G$ 形变；由
+$(l+\ii t\sigma fe_G)^2-m^2=(l^2-m^2+2t^2f^2)+2\ii t\sigma f(l^+-l^-)$（\cref{prop:method-glauber-deformation}，\tagA），形变只使实部更类时，初态分母的虚部单调增大；对类 $\mathcal G_0$ 与分级构型，变形后 $|k^+||k^-|\ge c\,\mathbf k_T^2$，$c=\min(\kappa^2,\delta/2)$（\cref{prop:appO-target}，\tagR，$R_{\mathrm{PT}}$），一般情形是\cref{asm:appO-deformation}(a)。只推一个分量不够：$|k^+k^-|$ 仍是 $\order{\lambda^3}$。(5) 在变形后的围道上程函近似的相对误差为 $\order{\lambda/\kappa}$（逐点，E-P），而在实轴上的 Glauber 区内它是 $\order{1}$（\cref{prop:appO-eikonal}，\tagR，$R_{\mathrm{PT}}$）。(6) 在变形围道上 $\sigma\Imag(n_A\cdot K)\ge0$，唯一相容的处方是 $+\ii\sigma0$，即指向过去的 $W[0,-\infty n_A]$；对附着求和、用 Ward 恒等式即得 Wilson 线（\cref{prop:appO-past-wilson}，\tagA，逐项匹配归入\cref{asm:appO-rewritten-cs}）。Collins 的步骤是：区域分解、割线求和、“away from initial-state singularities”的形变（末态奇点被越过，但在割线求和后相消）、指向过去的 Grammer--Yennie 近似、Ward 恒等式\cite[第~14.4.1~节]{Collins2011}；混合光锥序与“钳夹变为初、末态形变方向之间的不匹配”这一看法来自\cite{AybatSterman2009}（这是一个纲要，不是证明）。完整论证见\cref{sec:appO-rewriting}与\cref{sec:appO-wilson}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}\tagA。各步的地位（\cref{tab:dy-status}）：(1)(2)(4)(5) 在所述假设下有完整证明（误差类型依次为精确、E-F、精确、E-P）；最弱的是 (3) 与 (6)。它们依赖：\cref{asm:appO-mixing}（(a$'$)(b) 处理一般软子图，(c) 处理重合连接的完整图集相消）、\cref{asm:appO-deformation}（(b)(c)(d)：与区域集合代数的相容性、软角区、H-发射端点与重合的 SA/AS 插入；\emph{即使对阿贝尔图与类 $\mathcal G_0$ 也需要}）、\cref{asm:appO-envelope}、\cref{asm:appO-rewritten-cs}，全部为 \tagA。因此在截面层次上，DY 的 Glauber 相消没有任何一部分是无条件的。Collins 在“Issues remaining”中承认了这一步的状况\cite[第~14.4.8~节]{Collins2011}。要提升本命题的等级，需要证明这四个假设（特别是重合连接的完整图集相消与软角区），以及单侧改写所用的\cref{asm:appO-lcopt}、\cref{asm:appN-envelope}、\cref{asm:appN-separation}；在此之前，本命题的精确内容是附录中以它们为前提的条件定理（\cref{thm:appO-main}）。
+
+第 (2) 步的最简单实例——一个旁观者模型中两个光锥序项之和恰好等于两个协变传播子之积、其 $k^-$ 积分只是一次等时刻的横动量转移——见\cref{ex:dy-spectator-lcopt}。
+
+\begin{lemma}[软因子为 1 \tagA]\label{lem:dy-soft}
+在\cref{prop:dy-deformation}的形变之后，软胶子退耦为指向过去的 Wilson 线 $W[0,-\infty n_A]$ 与 $W[0,-\infty n_B]$；对 $q_T$ 积分的单举 DY 截面，软因子
+\[
+S=\sum_{X_s}\langle0|\bar{\rm T}\big[\mathcal U^{(-)\dagger}\big]|X_s\rangle\langle X_s|{\rm T}\big[\mathcal U^{(-)}\big]|0\rangle,\qquad
+\mathcal U^{(-)}=W[0,-\infty n_A]\,W[0,-\infty n_B],
+\]
+等于 $1$。（本引理只涉及部分子态。）
+\uses{prop:dy-deformation,lem:method-soft-unitarity,prop:appO-past-wilson}
+\end{lemma}
+
+\begin{proofsketch}
+(1) 由\cref{prop:dy-deformation}与\cref{prop:appO-past-wilson}，对软胶子在 $J_A$（$J_B$）上的全部附着求和，得到沿 $n_A$（$n_B$）、在 $V_H$ 处终止的指向过去的 Wilson 线，色荷在活动部分子的表示中。(2) 对 $q_T$ 积分的截面不约束软动量，对软末态 $X_s$ 求完备和，$S=\langle0|\bar{\rm T}[\mathcal U^{(-)\dagger}]\,{\rm T}[\mathcal U^{(-)}]|0\rangle$；对指向过去的类光线（$v^0>0$），编时乘积就是相互作用绘景的演化算符 ${\rm T}[\mathcal U^{(-)}]=U_I(0,-\infty)$，它是幺正的，故 $S=1$（\cref{lem:method-soft-unitarity}，\tagR，$R_{\mathrm{def}}$）；在维数正规化中，树图以上的每个图都是无标度的。(3) Collins 用时间反演不变性把过去与未来指向的软因子等同起来\cite[第~13.17~节与第~14.4.6~节]{Collins2011}；Bodwin--Brodsky--Lepage 的初态相位\cite{BodwinBrodskyLepage1981}“do not break factorization; rather they get moved into the parton densities”\cite[第~14.4.7~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}\tagA。等级继承自\cref{prop:dy-deformation}：一旦软耦合退耦为 Wilson 线，(2) 是严格的（\cref{lem:method-soft-unitarity}，$R_{\mathrm{def}}$）。“软因子为 1”只对共线单举截面成立：对 $q_T$ 微分的 DY，软因子 $\tilde S(\mathbf b_T)\neq1$，含快度发散，并通过定义吸收进 TMD 分布（\cref{def:tmd-soft}；\cref{thm:tmd-factorization}，\tagA）。逻辑次序上，幺正性只能在 Glauber 区处理之后使用：在实轴上的 Glauber 区内，软耦合还不是 Wilson 线。
+
+\begin{proposition}[DY 与 DIS 的共线 PDF 是同一对象 \tagR]\label{prop:dy-universality}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）对 $w=(0^+,w^-,\mathbf 0_T)=w^-n_B$，
+\begin{equation}\label{eq:dy-universality}
+W[w,-\infty n_B]\,W[-\infty n_B,0]=W[w,0]=W[w,\infty n_B]\,W[\infty n_B,0] .
+\end{equation}
+因此由指向过去的 Wilson 线（DY）与指向未来的 Wilson 线（DIS）构成的共线夸克分布算符都等于\cref{def:pdf-quark}中的同一个算符 $\bar\psi(w)\gamma^+W[w,0]\psi(0)$，胶子分布同理。（本命题是算符恒等式。）
+\uses{prop:prelim-wilson-covariance,def:pdf-quark}
+\end{proposition}
+
+\begin{proof}
+三个点 $0$、$w$、$\pm\infty n_B$ 都在同一条类光直线 $\{\lambda n_B\}$ 上，半无限线理解为有限线段 $L\to\infty$ 的极限（带绝热正规子）。对同一直线上的点，路径排序的复合律与沿同一路径往返的线互逆（\cref{prop:prelim-wilson-covariance}，\tagR，$R_{\mathrm{def}}$）给出
+\[
+W[-Ln_B,0]=W[-Ln_B,w]\,W[w,0],\qquad W[w,-Ln_B]\,W[-Ln_B,w]=1
+\]
+（从 $0$ 经 $w$ 到 $-Ln_B$ 是同一直线上的路径，无论 $w^-$ 的正负；沿直线来回的部分由第二式消去）。两式相乘得 $W[w,-Ln_B]\,W[-Ln_B,0]=W[w,0]$；令 $L\to\infty$ 即得左边的等式。把 $-L$ 换成 $+L$ 得右边的等式。代入共线分布的定义即得结论。
+\end{proof}
+
+这一恒等式说明，Wilson 线方向的问题对共线因子化是无害的：DY 中的“指向过去”与 DIS 中的“指向未来”给出同一个部分子分布，这就是部分子分布普适性的算符根据（在单圈上的显式检验见\cref{rem:dy-dis-scheme}）。对 TMD 分布，算符的两个端点有横向间隔 $\mathbf b_T$，订书钉形的线不能收缩成直线段，方向成为物理的（\cref{thm:tmd-sivers-sign}）。在强子态之间取矩阵元时，还需要复合算符的存在性（\cref{asm:intro-composite}），这对 DIS 与 DY 是同一个假设。

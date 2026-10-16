@@ -1,0 +1,90 @@
+%%% BEGIN fig:sidis-dy-links
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ======================= (a) SIDIS: final-state interaction =======================
+  \begin{scope}
+    \node[hadron blob,ellipse,minimum width=1.7cm,minimum height=0.95cm,inner sep=0pt] (A) at (0,0) {};
+    \coordinate (V) at (0.3,1.95); \coordinate (G) at (2.15,1.95); \coordinate (Gp) at (2.15,0);
+    \draw[t3 hadron] (-2.1,0) -- (A.west);
+    \draw[plain] (A.east) -- (3.6,0);
+    \draw[gluon] (Gp) -- (G);
+    \draw[quark] (0.3,0.44) -- (V);
+    \draw[photon] (-1.55,2.85) -- (V);
+    \draw[quark] (V) -- (G);  \draw[quark] (G) -- (3.6,1.95);
+    \foreach \p in {V,G,Gp} \node[vertex] at (\p) {};
+    \node[t3 lab] at (A) {$A$};
+    \node[t3 lab,above left=-1pt] at (-1.55,2.85) {$\gamma^*(q)$};
+    \path[mom'={},mom sep=0.24cm] (-1.55,2.85) -- (V);
+    \path[mom={$k$},mom sep=0.24cm] (0.3,0.44) -- (V);
+    \path[mom={$p-\ell$},mom sep=0.24cm] (V) -- (G);
+    \path[mom={$p$},mom sep=0.24cm] (G) -- (3.6,1.95);
+    \path[mom'={$\ell$},mom sep=0.26cm] (Gp) -- (G);
+    \path[mom'={$P$},mom sep=0.26cm] (-2.1,0) -- (-0.95,0);
+    \node[t3 lab,right] at (3.6,0) {$X$};
+    \node[t3 note,right] at (3.6,1.95) {$p\parallel n$};
+    % eikonal approximation and the resulting Wilson line
+    \node[t3 lab] at (1.0,-1.2) {$\dfrac{1}{(p-\ell)^2+\ii0}\simeq\dfrac{-1}{2p^-(\ell^+-\ii0)}$};
+    \draw[gluon] (1.6,-3.05) -- (1.6,-2.35);
+    \draw[wilson plain] (0.2,-2.35) -- (3.0,-2.35);
+    \path[t3 warrow=0.8] (0.2,-2.35) -- (3.0,-2.35);
+    \node[vertex] at (1.6,-2.35) {};  \node[opvertex] at (0.2,-2.35) {};
+    \node[t3 lab,left=2pt] at (0.2,-2.35) {$0$};
+    \node[t3 lab,right=1pt] at (3.0,-2.35) {$+\infty n$};
+    \node[t3 note,right=1pt] at (1.6,-2.95) {$\ell$};
+    \node[t3 lab] at (1.0,-3.5) {$W[\infty n,0]$：未来指向};
+    \node[t3 lab] at (1.0,-4.2) {(a)\ SIDIS：末态相互作用};
+  \end{scope}
+  % ======================= (b) Drell--Yan: initial-state interaction =======================
+  \begin{scope}[xshift=7.6cm]
+    \node[hadron blob,ellipse,minimum width=1.7cm,minimum height=0.95cm,inner sep=0pt] (A) at (0,0) {};
+    \node[jetB blob,ellipse,minimum width=0.8cm,minimum height=0.62cm,inner sep=0pt] (B) at (3.3,1.95) {};
+    \coordinate (V) at (0.3,1.95); \coordinate (G) at (2.15,1.95); \coordinate (Gp) at (2.15,0);
+    \draw[t3 hadron] (-2.1,0) -- (A.west);
+    \draw[t3 hadron] (4.45,1.95) -- (B.east);
+    \draw[plain] (A.east) -- (3.6,0);
+    \draw[plain] (B.north east) -- ++(0.45,0.5);
+    \draw[gluon] (Gp) -- (G);
+    \draw[quark] (0.3,0.44) -- (V);
+    \draw[photon] (V) -- (-1.55,2.85);
+    \draw[quark] (V) -- (G);  \draw[quark] (G) -- (B.west);
+    \foreach \p in {V,G,Gp} \node[vertex] at (\p) {};
+    \node[t3 lab] at (A) {$A$};  \node[t3 lab] at (B) {$B$};
+    \node[t3 lab,above left=-1pt] at (-1.55,2.85) {$\gamma^*(q)$};
+    \path[mom={},mom sep=0.24cm] (V) -- (-1.55,2.85);
+    \path[mom={$k$},mom sep=0.24cm] (0.3,0.44) -- (V);
+    \path[mom'={$p+\ell$},mom sep=0.24cm] (G) -- (V);
+    \path[mom'={$p$},mom sep=0.24cm,mom length=0.45cm] (B.west) -- (G);
+    \path[mom'={$\ell$},mom sep=0.26cm] (Gp) -- (G);
+    \path[mom'={$P_A$},mom sep=0.26cm] (-2.1,0) -- (-0.95,0);
+    \path[mom={$P_B$},mom sep=0.26cm,mom length=0.45cm] (4.45,1.95) -- (3.72,1.95);
+    \node[t3 lab,right] at (3.6,0) {$X_A$};
+    \node[t3 note,right=-1pt] at ($(B.north east)+(0.45,0.5)$) {$X_B$};
+    % eikonal approximation and the resulting Wilson line
+    \node[t3 lab] at (1.0,-1.2) {$\dfrac{1}{(p+\ell)^2+\ii0}\simeq\dfrac{1}{2p^-(\ell^++\ii0)}$};
+    \draw[gluon] (1.6,-3.05) -- (1.6,-2.35);
+    \draw[wilson plain] (3.0,-2.35) -- (0.2,-2.35);
+    \path[t3 warrow=0.8] (3.0,-2.35) -- (0.2,-2.35);
+    \node[vertex] at (1.6,-2.35) {};  \node[opvertex] at (3.0,-2.35) {};
+    \node[t3 lab,right=2pt] at (3.0,-2.35) {$0$};
+    \node[t3 lab,left=1pt] at (0.2,-2.35) {$-\infty n$};
+    \node[t3 note,right=1pt] at (1.6,-2.95) {$\ell$};
+    \node[t3 lab] at (1.6,-3.5) {$W[-\infty n,0]$：过去指向};
+    \node[t3 lab] at (1.3,-4.2) {(b)\ Drell--Yan：初态相互作用};
+  \end{scope}
+\end{tikzpicture}
+\caption{单胶子交换如何决定 TMD 中 Wilson 线的方向。$n$ 为满足 $n\cdot v=v^+$ 的光型矢量，$\ell$ 为由强子 $A$ 的残余流入本征（eikonal）线的胶子动量，$n\cdot\ell=\ell^+$。
+(a)~SIDIS：被击出的夸克（末态，$p\parallel n$）与靶残余 $X$ 交换胶子（末态相互作用）；在本征近似下夸克传播子化为 $-1/[2p^-(\ell^+-\ii0)]$，
+与未来指向的 $W[\infty n,0]$ 的单胶子 Feynman 规则 $g\,t^a n^\mu/(n\cdot\ell-\ii0)$ 一致。
+(b)~Drell--Yan：强子 $B$ 的入射反夸克（$p\parallel n$）在湮灭之前与 $A$ 的残余 $X_A$ 交换胶子（初态相互作用）；传播子化为 $1/[2p^-(\ell^++\ii0)]$，
+对应过去指向的 $W[-\infty n,0]$，其单胶子规则为 $g\,t^a n^\mu/(n\cdot\ell+\ii0)$。两图拓扑相同，夸克线上的箭头均为费米子数流向：(b) 中反夸克的费米子数由湮灭顶点指向 $B$，其动量则流入顶点。
+两种本征因子之差 $\frac{1}{\ell^+-\ii0}-\frac{1}{\ell^++\ii0}=2\pi\ii\,\delta(\ell^+)$ 为 Glauber（Coulomb）相位项：它在对 $\boldsymbol k_{\mathrm T}$ 积分的共线 PDF 中相消，
+在 TMD 中则保留下来，使 Sivers 函数在两过程中反号，$f_{1T}^{\perp q}\big|_{\mathrm{SIDIS}}=-f_{1T}^{\perp q}\big|_{\mathrm{DY}}$（参见\cref{fig:tmd-staple}）。}
+\label{fig:sidis-dy-links}
+\end{figure}
+%%% END fig:sidis-dy-links

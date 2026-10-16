@@ -1,0 +1,59 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fe dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) the 1v1 graph =======================
+  \begin{scope}
+    \node[jet blob,ellipse,minimum width=2.6cm,minimum height=0.8cm,inner sep=0pt] (A) at (0,-2.55) {$A$};
+    \node[jetB blob,ellipse,minimum width=2.6cm,minimum height=0.8cm,inner sep=0pt] (B) at (0,2.55) {$B$};
+    \node[hard blob,circle,minimum size=0.72cm,inner sep=0pt] (H1) at (-1.45,0) {$H_1$};
+    \node[hard blob,circle,minimum size=0.72cm,inner sep=0pt] (H2) at (1.45,0) {$H_2$};
+    \coordinate (sA) at (0,-1.3); \coordinate (sB) at (0,1.3);
+    \draw[fe hadron] (-2.6,-2.55) -- (A.west);  \draw[fe hadron] (A.east) -- (2.6,-2.55);
+    \draw[fe hadron] (-2.6,2.55) -- (B.west);   \draw[fe hadron] (B.east) -- (2.6,2.55);
+    \draw[gluon] (A.north) -- (sA);
+    \draw[gluon] (B.south) -- (sB);
+    % closed quark loop sA -> H1 -> sB -> H2 -> sA
+    \draw[quark] (sA) -- (H1.300);
+    \draw[quark] (H1.60) -- (sB);
+    \draw[quark] (sB) -- (H2.120);
+    \draw[quark] (H2.240) -- (sA);
+    \node[vertex] at (sA) {}; \node[vertex] at (sB) {};
+    \draw[photon] (H1.west) -- (-2.75,0);
+    \draw[photon] (H2.east) -- (2.75,0);
+    \draw[fe dim] (H1.east) -- node[fe lab,above=1pt] {$y$} (H2.west);
+    \node[fe lab,anchor=north west,inner sep=1pt] at (-2.75,-0.05) {$\gamma^*_1$};
+    \node[fe lab,anchor=north east,inner sep=1pt] at (2.75,-0.05) {$\gamma^*_2$};
+    \node[fe lab,anchor=west,align=left] at (0.2,-1.55) {$1\to2$ 劈裂};
+    \node[fe lab,anchor=west,align=left] at (0.2,1.55) {$1\to2$ 劈裂};
+    \node[fe lab,align=center,anchor=north] at (0,-3.05) {小 $y$：$F\propto1/y^2$；$y\sim1/Q$ 时此图\\也是单部分子散射的单圈图};
+    \node at (0,-4.55) {(a)\ “1v1”图：重复计数};
+  \end{scope}
+  % ======================= (b) cut-off function and subtraction =======================
+  \begin{scope}[xshift=4.5cm,yshift=-2.55cm]
+    \fill[red!6] (0.05,0.05) rectangle (1.85,2.45);
+    \fill[blue!5] (3.55,0.05) rectangle (6.85,2.45);
+    \draw[lcaxis] (0,0) -- (7.2,0) node[right=1pt,fe lab] {$y$};
+    \draw[lcaxis] (0,0) -- (0,3.7);
+    \draw[gray!60,densely dotted,line width=0.5pt] (0,2.6) -- (6.9,2.6);
+    \node[fe lab,anchor=east] at (0,2.6) {$1$};
+    \draw[blue!60!black,line width=1.1pt] plot[domain=0.2:6.9,samples=80,smooth] (\x,{2.6/(1+exp(-2.3*(\x-2.6)))});
+    \node[fe lab,text=blue!55!black,anchor=south east] at (6.8,2.62) {$\Phi^2(y\nu)$};
+    \draw[gray!60!black,line width=0.5pt] (2.6,0.1) -- (2.6,-0.1);
+    \node[fe lab,anchor=north] at (2.6,-0.08) {$y\sim1/\nu$，$\nu\sim Q$};
+    \node[fe lab,align=center] at (0.95,1.75) {小 $y$};
+    \node[fe lab,align=center,text=red!50!black] at (0.95,1.0) {$\sigma_{\rm DPS}\simeq\sigma_{\rm sub}$\\剩 SPS};
+    \node[fe lab,align=center] at (5.2,1.75) {大 $y$};
+    \node[fe lab,align=center,text=blue!50!black] at (5.2,1.0) {$\sigma_{\rm SPS}\simeq\sigma_{\rm sub}$\\剩 DPS};
+    \node[anchor=south] at (3.5,3.75) {$\sigma=\sigma_{\rm SPS}+\sigma_{\rm DPS}-\sigma_{\rm sub}$};
+    \node[fe lab,align=center,anchor=north] at (3.5,-0.6) {$\sigma_{\rm sub}$：两个 DPD 都换成固定阶劈裂形式的 DPS 公式};
+    \node at (3.5,-2.0) {(b)\ 截断函数 $\Phi(y\nu)$ 与减除项};
+  \end{scope}
+\end{tikzpicture}
+\caption{双部分子散射与单部分子散射在小 $y$ 处的重复计数及其减除：$\sigma=\sigma_{\rm SPS}+\sigma_{\rm DPS}-\sigma_{\rm sub}$（VF-FRO-13）。
+(a)~两个强子各经微扰 $1\to2$ 劈裂提供两个部分子（小横向间距 $y$ 处双部分子分布 $F\propto1/y^2$），图中闭合的夸克圈在 $y\sim1/Q$ 时正是单部分子散射的单圈图，两种计算重复计入同一区域；
+(b)~DPS 公式中的截断函数 $\Phi(y\nu)$（$\Phi(u)\to1$，$u\gg1$；小 $u$ 处 $\Phi=O(u^\delta)$；曲线为示意）压低小 $y$ 区：小 $y$ 处 $\Phi$ 依赖在 $\sigma_{\rm DPS}$ 与 $\sigma_{\rm sub}$ 之间相消，只剩 SPS，大 $y$ 处 $\sigma_{\rm SPS}\simeq\sigma_{\rm sub}$，只剩 DPS。}
+\label{fig:front-dps-double-counting}
+\end{figure}

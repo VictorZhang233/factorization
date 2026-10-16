@@ -1,0 +1,172 @@
+%%% BEGIN fig:appO-flowchart
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff box/.style={draw=black!55,line width=0.6pt,rounded corners=2pt,fill=gray!3},
+  ff title/.style={font=\footnotesize\bfseries,inner sep=0pt,anchor=north west},
+  ff err/.style={font=\scriptsize,text=black!65,inner sep=0pt,anchor=north east},
+  ff key/.style={font=\scriptsize,text=black!75,inner sep=0pt,anchor=north west},
+  ff row/.style={font=\scriptsize,text=black!60,inner sep=0pt,anchor=west},
+  ff tag/.style={draw,line width=0.45pt,rounded corners=1pt,inner xsep=1.8pt,inner ysep=0pt,minimum height=3.7mm,
+                 font=\scriptsize,anchor=west},
+  ff R/.style={ff tag,fill=OliveGreen!15,draw=OliveGreen!65!black},
+  ff Rc/.style={ff R,dash pattern=on 1.6pt off 1pt},
+  ff A/.style={ff tag,fill=RoyalBlue!15,draw=RoyalBlue!65!black},
+  ff M/.style={ff tag,fill=white,draw=black!60},
+  ff D/.style={ff tag,fill=none,draw=black!45,line width=0.35pt},
+  ff asm/.style={draw=orange!65!black,fill=orange!8,line width=0.6pt,dash pattern=on 2.4pt off 1.4pt,rounded corners=1pt,
+                 font=\scriptsize,align=left,text width=5.0cm,inner sep=2.2pt,anchor=north west},
+  ff asmN/.style={ff asm,draw=gray!60!black,fill=gray!7},
+  ff badge/.style={draw=orange!65!black,fill=orange!8,line width=0.6pt,dash pattern=on 2.4pt off 1.4pt,rounded corners=1pt,
+                   font=\scriptsize,inner sep=2.2pt,anchor=west},
+  ff appN/.style={draw=OliveGreen!65!black,fill=OliveGreen!8,line width=0.6pt,rounded corners=2pt,font=\scriptsize,
+                  align=center,inner sep=3pt},
+  ff flow/.style={draw=black!65,line width=0.75pt,-{Stealth[length=4.2pt,width=3.6pt]}},
+  ff use/.style={draw=orange!65!black,line width=0.55pt,dash pattern=on 2.4pt off 1.4pt,-{Stealth[length=3.6pt,width=3pt]}},
+  ff useN/.style={ff use,draw=gray!55!black}]
+  % ------------------------------------------------------------------ geometry
+  % step boxes: x in [0,9.9]; assumption column: x in [10.55,15.8]
+  \def\ffR{9.9}
+  % ================================================================== (O-1)
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-1)\quad 区域、积分域与窗口};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：无};
+  \node[ff D] (a1) at (0.15,-0.66) {\cref{def:appO-leading-data}};
+  \node[ff D,right=1.2mm of a1] (a2) {\cref{def:appO-windows}};
+  \node[ff D,right=1.2mm of a2] (a3) {\cref{def:appO-weak-equivalence}};
+  \node[ff key] at (0.15,-0.98) {领头区域 $R$ 与支配集 $U_R$；类 $\mathcal G_0$；窗口 $\Theta_j$ 与软角区 $K_R$；弱等价 $\doteq_R$};
+  % ================================================================== (O-2)
+  \begin{scope}[yshift=-1.83cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-2)\quad 光锥序微扰论中的领头幂次形式};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-S、E-P；其余精确};
+  \node[ff R] (b1) at (0.15,-0.66) {\cref{lem:appO-lcopt}};
+  \node[ff R,right=1.2mm of b1] (b2) {\cref{lem:appO-numerators}};
+  \node[ff R,right=1.2mm of b2] (b3) {\cref{lem:appO-orientation}};
+  \node[ff R,right=1.2mm of b3] (b4) {\cref{lem:appO-glauber-pc}};
+  \node[ff Rc,right=1.2mm of b4] (b5) {\cref{lem:appO-hard-locality}};
+  \node[ff key] at (0.15,-0.98) {$J_A$：时间 $\tau=x^+$，能量 $l^-$；$J_B$：时间 $x^-$，能量 $l^+$；$V_H$ 位于 $\tau=0$};
+  \end{scope}
+  % ================================================================== (O-3)
+  \begin{scope}[yshift=-3.66cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-2.86);
+  \node[ff title] at (0.15,-0.12) {(O-3)\quad 割图求和与单侧改写};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：精确；E-F；E-W};
+  \node[ff row] at (0.15,-0.66) {割图求和};
+  \node[ff M] (c1) at (1.75,-0.66) {\cref{lem:appO-cut-position}};
+  \node[ff Rc,right=1.2mm of c1] (c2) {\cref{lem:appO-unitarity}};
+  \node[ff row] at (0.15,-1.13) {等时局域化};
+  \node[ff M] (c3) at (1.75,-1.13) {\cref{lem:appO-equal-time}};
+  \node[ff R,right=1.2mm of c3] (c4) {\cref{lem:appO-insertion-values}};
+  \node[ff Rc,right=1.2mm of c4] (c5) {\cref{prop:appO-ss-localize}};
+  \node[ff R,right=1.2mm of c5] (c6) {\cref{lem:appO-joint-localization}};
+  \node[ff row] at (0.15,-1.60) {旁观者交换};
+  \node[ff R] (c7) at (1.75,-1.60) {\cref{lem:appO-glauber-operator}};
+  \node[ff Rc,right=1.2mm of c7] (c8) {\cref{prop:appO-ss-cancel}};
+  \node[ff row] at (0.15,-2.07) {单侧改写};
+  \node[ff M] (c9) at (1.75,-2.07) {\cref{lem:appO-carrier}};
+  \node[ff D,right=1.2mm of c9] (c10) {\cref{def:appO-rewriting}};
+  \node[ff Rc,right=1.2mm of c10] (c11) {\cref{prop:appO-one-sided}};
+  \node[ff key] at (0.15,-2.42) {$\sum_C$：最大时刻配对；插入局域于 $\tau=0$；整函数载子 $\phi(x)=2\sqrt\pi\,\ee^{-x^2}$};
+  \end{scope}
+  % ================================================================== (O-4)
+  \begin{scope}[yshift=-7.02cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-4)\quad 减除（链）项与改写相容};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-W};
+  \node[ff D] (d1) at (0.15,-0.66) {\cref{def:appO-rewriting}};
+  \node[ff Rc,right=1.2mm of d1] (d2) {\cref{prop:appO-one-sided}};
+  \node[font=\scriptsize,text=black!60,anchor=west,right=2mm of d2,inner sep=0pt] {（链项部分；需 \cref{asm:appN-separation}(ii)）};
+  \node[ff key] at (0.15,-0.98) {先 $T_c$、后改写：$C_{R'}\tilde F\equiv\mathfrak r_RC_{R'}F_\Gamma$；(ET1)(ET2) 保持，$\lambda_J$ 不增};
+  \end{scope}
+  % ================================================================== (O-5)
+  \begin{scope}[yshift=-8.85cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-5)\quad 同时形变：形变目标};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：精确（几何）};
+  \node[ff D] (e1) at (0.15,-0.66) {\cref{def:appO-deformation-map}};
+  \node[ff R,right=1.2mm of e1] (e2) {\cref{lem:appO-no-crossing}};
+  \node[ff D,right=1.2mm of e2] (e3) {\cref{def:appO-graded}};
+  \node[ff D,right=1.2mm of e3] (e4) {\cref{def:appO-target}};
+  \node[ff R,right=1.2mm of e4] (e5) {\cref{prop:appO-target}};
+  \node[ff key] at (0.15,-0.98) {$k^-\to k^-+\ii\sigma\kappa\psi|\mathbf k_T|$，$k^+\to k^+-\ii\sigma\kappa\psi|\mathbf k_T|$（直接线，沿 $e_G=n_B-n_A$）};
+  \end{scope}
+  % ================================================================== (O-6)
+  \begin{scope}[yshift=-10.68cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-6)\quad 程函近似与指向过去的 Wilson 线};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-P（于 $\Omega$ 上）};
+  \node[ff R] (f1) at (0.15,-0.66) {\cref{prop:appO-eikonal}};
+  \node[ff A,right=1.2mm of f1] (f2) {\cref{prop:appO-past-wilson}};
+  \node[font=\scriptsize,text=black!60,anchor=west,right=2mm of f2,inner sep=0pt] {（需 \cref{asm:appN-ward-product}）};
+  \node[ff key] at (0.15,-0.98) {程函分母 $n_A\cdot K+\ii\sigma0$：$W[0,-\infty n_A]$、$W[0,-\infty n_B]$（指向过去）};
+  \end{scope}
+  % ================================================================== (O-7)
+  \begin{scope}[yshift=-12.51cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-7)\quad 软因子 $=1$，共线因子 $=$ DIS 的 PDF};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：精确};
+  \node[ff R] (g1) at (0.15,-0.66) {\cref{lem:method-soft-unitarity}};
+  \node[ff key] at (0.15,-0.98) {$S^{(-)}$ 由指向过去的 Wilson 线构成，对软末态求和后 $\mathcal U^{(-)\dagger}\mathcal U^{(-)}=1$};
+  \end{scope}
+  % ================================================================== (O-8)
+  \begin{scope}[yshift=-14.34cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-8)\quad 主定理与附录 N 的接口};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-W};
+  \node[ff Rc] (h1) at (0.15,-0.66) {\cref{thm:appO-main}};
+  \node[ff Rc,right=1.2mm of h1] (h2) {\cref{cor:appO-interface}};
+  \node[ff Rc,right=1.2mm of h2] (h3) {\cref{prop:appO-tmd}};
+  \node[ff key] at (0.15,-0.98) {(Gla-a)--(Gla-c)：弱等价、单侧取向（$\eta=-1$）、形变目标};
+  \end{scope}
+  % ------------------------------------------------------------------ step arrows
+  \foreach \ya/\yb in {-1.33/-1.83, -3.16/-3.66, -6.52/-7.02, -8.35/-8.85, -10.18/-10.68, -12.01/-12.51, -13.84/-14.34}
+    \draw[ff flow] (4.95,\ya) -- (4.95,\yb);
+  % ------------------------------------------------------------------ App N (green) and the users
+  \node[ff appN,anchor=north] (N) at (4.95,-16.17)
+    {附录 N：\cref{prop:appN-dy}（DY 的减除定理）、\cref{prop:appN-tmd-window}（TMD 窗口）};
+  \draw[ff flow] (4.95,-15.67) -- (N.north);
+  \node[font=\scriptsize,anchor=north west,inner sep=0pt] (U0) at (0.15,-16.98) {使用者：};
+  \node[ff A,right=1mm of U0] (U1) {\cref{thm:dy-factorization}};
+  \node[ff A,right=1.2mm of U1] (U2) {\cref{lem:tmd-glauber}};
+  \node[ff A,right=1.2mm of U2] (U3) {\cref{prop:method-glauber-deformation}};
+  \node[font=\scriptsize,text=black!65,anchor=west,right=1.5mm of U3,inner sep=0pt] {（第 12、14、9 章，全阶论证 [A]）};
+  % ------------------------------------------------------------------ assumptions (orange, dashed)
+  \node[ff asm] (L) at (10.55,-2.25) {\cref{asm:appO-lcopt}\ 光锥序微扰论的适用性：\\无零模与端点贡献；瞬时圈取值，(i)(ii)};
+  \node[ff asm] (X) at (10.55,-4.30) {\cref{asm:appO-mixing}\ Glauber--软混合与重合连接：\\(a)(b) 一般软子图；(c) 完整图集相消};
+  \node[ff asm] (V) at (10.55,-5.70) {\cref{asm:appO-envelope}\ 纤维积分误差的可积包络};
+  \node[ff asmN] (NN) at (10.55,-6.75) {附录 N 的共同输入（与 DIS、$e^+e^-$\\共用）：\cref{asm:appN-envelope}、\cref{asm:appN-separation}、\\\cref{asm:appN-ward-product}};
+  \node[ff asm] (F) at (10.55,-8.75) {\cref{asm:appO-deformation}\ (a) 一般构型的形变；\\(b) 与集代数 $\mathfrak B$ 相容；(c) 软角区；\\(d) H-发射端点与重合 SA/AS 插入};
+  \node[ff asm] (C) at (10.55,-10.85) {\cref{asm:appO-rewritten-cs}\ 改写形式与族求和形式的\\(CS1)(CS2)（含处方的逐项匹配）};
+  % uses: assumption -> step (east side of the step boxes)
+  \draw[ff use] (L.west) -- (\ffR,-2.50);
+  \draw[ff use] (L.west) -- (\ffR,-3.95);
+  \draw[ff use] (X.west) -- (\ffR,-4.70);
+  \draw[ff use] (V.west) -- (\ffR,-5.85);
+  \draw[ff use] (V.west) -- (\ffR,-7.40);
+  \draw[ff useN] (NN.west) -- (\ffR,-6.20);
+  \draw[ff useN] (NN.west) -- (\ffR,-7.70);
+  \draw[ff use] (F.west) -- (\ffR,-9.50);
+  \draw[ff use] (C.west) -- (\ffR,-11.50);
+  % (O-8) uses asm:appO-deformation (b)(c) and asm:appO-rewritten-cs again: short badges
+  \node[ff badge] (F8) at (10.55,-14.72) {\cref{asm:appO-deformation}(b)(c)};
+  \node[ff badge] (C8) at (10.55,-15.22) {\cref{asm:appO-rewritten-cs}};
+  \draw[ff use] (F8.west) -- (\ffR,-14.72);
+  \draw[ff use] (C8.west) -- (\ffR,-15.22);
+  % ------------------------------------------------------------------ legend
+  \begin{scope}[yshift=-17.75cm]
+    \node[ff R] (l1) at (0,0) {\phantom{O}};   \node[font=\scriptsize,anchor=west,right=0.8mm of l1,inner sep=0pt] (m1) {无条件证明（$R_{\rm PT}$/$R_{\rm def}$）};
+    \node[ff Rc,right=3mm of m1] (l2) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l2,inner sep=0pt] (m2) {在编号假设下证明（$R_{\rm cond}$）};
+    \node[ff M,right=3mm of m2] (l3) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l3,inner sep=0pt] (m3) {数学引理};
+    \node[ff A,right=3mm of m3] (l4) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l4,inner sep=0pt] (m4) {全阶论证 [A]};
+    \node[ff D,right=3mm of m4] (l5) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l5,inner sep=0pt] (m5) {定义};
+    \node[ff tag,draw=orange!65!black,fill=orange!8,line width=0.6pt,dash pattern=on 2.4pt off 1.4pt,right=3mm of m5] (l6) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l6,inner sep=0pt] {编号假设};
+  \end{scope}
+\end{tikzpicture}
+\caption{附录~O 中单举色单态 Drell--Yan 的 Glauber 区相消条件证明的结构：步骤 (O-1)--(O-8) 自上而下，每个框列出建立该步的陈述（框的样式同附录~P 的依赖图，见图例）、该步的误差类型（E-S 标度陈述、E-P 逐点界、E-F 纤维积分界、E-W 弱等价）与要点。
+橙色虚线框为附录~O 的编号假设，虚线箭头指向使用它们的步骤；灰色虚线框为与 DIS、$e^+e^-$ 共用的附录~N 输入。
+\cref{asm:appO-deformation} 的 (b)(c)(d) 即使对阿贝尔理论的类 $\mathcal G_0$ 也需要，因此在截面层次上 DY 的 Glauber 相消没有一步是无条件的。
+步骤 (O-8) 经 \cref{cor:appO-interface} 与 \cref{prop:appO-tmd} 把结果交给附录~N 的减除定理，供第~12、14、9~章的全阶论证使用。}
+\label{fig:appO-flowchart}
+\end{figure}
+%%% END fig:appO-flowchart

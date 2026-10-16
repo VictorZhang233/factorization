@@ -1,0 +1,44 @@
+%%% BEGIN fig:higher-twist
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs/\ng/\ttl in {a/0/0/{扭度 2：两部分子}, b/5.15/1/{三部分子（$qgq$）关联}, c/10.3/2/{四部分子关联（扭度 4）}} {
+  \begin{scope}[xshift=\xs cm]
+    \coordinate (VL) at (-1.15,2.1); \coordinate (VR) at (1.15,2.1);
+    \coordinate (GL) at (-0.5,2.1);  \coordinate (GR) at (0.5,2.1);
+    % spectators crossing the cut (the blobs cover their ends)
+    \foreach \y in {0.2,0,-0.2} \draw[plain] (-1.15,\y) -- (1.15,\y);
+    \draw[t3 hadron] (-2.3,0) -- (-1.77,0);  \draw[t3 hadron] (1.77,0) -- (2.3,0);
+    \draw[photon] (-2.0,2.9) -- (VL);  \draw[photon] (VR) -- (2.0,2.9);
+    \ifnum\ng>0 \draw[gluon] (-0.74,0.32) -- (GL); \fi
+    \ifnum\ng>1 \draw[gluon] (0.74,0.32) -- (GR); \fi
+    \draw[quark] (-1.15,0.42) -- (VL);  \draw[quark] (VR) -- (1.15,0.42);
+    \ifcase\ng
+      \draw[quark=0.3] (VL) -- (VR);
+    \or
+      \draw[quark] (VL) -- (GL);  \draw[quark=0.62] (GL) -- (VR);
+    \or
+      \draw[quark] (VL) -- (GL);  \draw[quark=0.25] (GL) -- (GR);  \draw[quark] (GR) -- (VR);
+    \fi
+    \node[hadron blob,ellipse,minimum width=1.24cm,minimum height=0.84cm,inner sep=0pt] at (-1.15,0) {};
+    \node[hadron blob,ellipse,minimum width=1.24cm,minimum height=0.84cm,inner sep=0pt] at (1.15,0) {};
+    \node[vertex] at (VL) {}; \node[vertex] at (VR) {};
+    \ifnum\ng>0 \node[vertex] at (GL) {}; \fi
+    \ifnum\ng>1 \node[vertex] at (GR) {}; \fi
+    \draw[cut] (0,-0.72) -- (0,2.78);
+    \node[t3 lab,above left=-1pt] at (-2.0,2.9) {$\gamma^*$};
+    \node[t3 note] at (-1.15,0) {$P$};  \node[t3 note] at (1.15,0) {$P$};
+    \node[t3 lab] at (0,-1.15) {(\panel)\ \ttl};
+  \end{scope}}
+\end{tikzpicture}
+\caption{DIS 强子张量的扭度展开（割图；竖直虚线为末态割线）。(a)~扭度 2 的手提包图：强子经割线两侧各一条夸克线与硬部分相连。
+(b)~强子另外经一条横向极化的胶子（光锥规范 $A^+=0$ 中的 $A_{\mathrm T}$）与硬部分相连，即夸克--胶子--夸克关联（算符 $\bar\psi\gamma^+G^{+\alpha}\psi$ 为扭度 3）；
+按幂次计数，每多一条与硬部分相连的横向极化部分子，贡献就多一个 $1/Q$ 压低。在非极化 DIS 中，$1/Q$ 项因前向矩阵元中没有可用的横向矢量而为零；
+(b) 类图对部分子横动量展开到一阶的项，与 (a) 展开到二阶的项以及 (c) 类图合并为规范不变的扭度 4 矩阵元（如 $\bar\psi\gamma^+D_{\mathrm T}D_{\mathrm T}\psi$），
+给出结构函数的 $1/Q^2$ 修正（Ellis--Furmanski--Petronzio 的共线展开）。(c)~割线两侧各多一条胶子的四部分子关联直接属于扭度 4；四夸克关联亦属此列（图略）。}
+\label{fig:higher-twist}
+\end{figure}
+%%% END fig:higher-twist

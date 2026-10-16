@@ -1,0 +1,197 @@
+%%% BEGIN fig:disall-heavy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb heavy/.style={draw,solid,line width=1.5pt,postaction={decorate,solid,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.6pt,line width=0.8pt]{Stealth[length=7pt,width=6pt]}}}}},
+  fb heavy/.default=0.5]
+  % ======================= (a) LO photon--gluon fusion with massive quarks =======================
+  \begin{scope}
+    \coordinate (B) at (0,0.75); \coordinate (A) at (0,-0.75);
+    \draw[photon] (-1.6,0.75) -- (B);
+    \draw[gluon] (-1.6,-0.75) -- (A);
+    \draw[fb heavy] (B) -- (1.55,0.75);
+    \draw[fb heavy] (A) -- (B);
+    \draw[fb heavy] (1.55,-0.75) -- (A);
+    \node[vertex] at (A) {}; \node[vertex] at (B) {};
+    \path[mom={$q$},mom sep=0.26cm] (-1.6,0.75) -- (B);
+    \path[mom'={$k$},mom sep=0.3cm] (-1.6,-0.75) -- (A);
+    \path[mom={$p_1$},mom sep=0.28cm] (B) -- (1.55,0.75);
+    \path[mom'={$p_2$},mom sep=0.3cm] (A) -- (1.55,-0.75);
+    \node[fb lab,anchor=east] at (-1.62,0.75) {$\gamma^*$};
+    \node[fb lab,anchor=east] at (-1.62,-0.75) {$g$};
+    \node[fb lab,anchor=west] at (1.57,0.75) {$Q$};
+    \node[fb lab,anchor=west] at (1.57,-0.75) {$\bar Q$};
+    \node[fb lab,anchor=west,align=left] at (2.3,0) {$+$\ 交叉图\\\phantom{$+$\ }（$p_1\leftrightarrow p_2$）};
+    \node[font=\small,anchor=north] at (0.85,-1.45) {(a)\ 领头阶 $\gamma^*g\to Q\bar Q$（保留 $m$）};
+  \end{scope}
+  % ======================= (b) ACOT/CWZ subtraction term =======================
+  \begin{scope}[xshift=8.15cm]
+    \coordinate (B) at (0,0.75);
+    \node[jet blob,ellipse,minimum width=1.55cm,minimum height=0.9cm,inner sep=0pt] (F) at (0,-0.75) {};
+    \draw[gluon] (-1.75,-0.75) -- (F.west);
+    \draw[photon] (-1.6,0.75) -- (B);
+    \draw[fb heavy=0.55] (F.north) -- (B);
+    \draw[fb heavy] (B) -- (1.55,0.75);
+    \draw[fb heavy=0.6] (1.6,-1.25) -- (F.-25);
+    \node[vertex] at (B) {};
+    \node[font=\footnotesize] at (F) {$f_{Q/g}$};
+    \path[mom={$q$},mom sep=0.26cm] (-1.6,0.75) -- (B);
+    \path[mom'={$k$},mom sep=0.3cm] (-1.75,-0.75) -- (F.west);
+    \node[fb lab,anchor=east] at (-1.62,0.75) {$\gamma^*$};
+    \node[fb lab,anchor=east] at (-1.77,-0.75) {$g$};
+    \node[fb lab,anchor=west] at (1.57,0.75) {$Q$};
+    \node[fb lab,anchor=west] at (1.62,-1.25) {$\bar Q$};
+    \node[fb lab,anchor=east] at (-0.06,0.02) {$Q$};
+    \node[fb lab,anchor=west,text=gray!30!black] at (0.14,0.38) {$\hat\sigma(\gamma^*Q\to Q)$};
+    \node[font=\small,anchor=north] at (0,-1.45) {(b)\ 减除项 $f_{Q/g}\otimes\hat\sigma(\gamma^*Q\to Q)$};
+  \end{scope}
+  \node[font=\Large] at (5.45,0) {$-$};
+\end{tikzpicture}
+\caption{含重夸克质量的 DIS（粗线为质量 $m$ 的重夸克 $Q$）。(a)~领头阶的光子—胶子融合，保留完整的质量依赖，两图之和的平方给出领头阶的胶子道系数；
+(b)~变味（ACOT/CWZ）方案中的减除项 ${f_{Q/g}\otimes\hat\sigma(\gamma^*Q\to Q)}$：胶子先在重夸克分布 $f_{Q/g}$（蓝色，靶共线）中分裂为 $Q\bar Q$，其中的 $Q$ 再发生领头阶散射 $\gamma^*Q\to Q$。
+二者之差在 $m\to0$ 时抵消 (a) 中的共线对数 $\ln(Q^2/m^2)P_{qg}$，给出对 $m/Q$ 一致有效的系数函数（\cref{thm:disall-heavy}，\cref{ex:disall-heavy-lo}）。}
+\label{fig:disall-heavy}
+\end{figure}
+%%% END fig:disall-heavy
+
+%%% BEGIN fig:disall-ladder-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb kern/.style={font=\scriptsize,inner sep=1pt,text=gray!25!black},
+  fb R2/.style={region,draw=blue!60!black,line width=0.7pt},
+  fb R1/.style={region,draw=orange!75!black,line width=0.7pt},
+  fb RH/.style={region,draw=gray!55!black,line width=0.7pt}]
+  \def\fbX{1.2}
+  % ======================= the two-rung ladder (cut graph; amplitude on the left) =======================
+  % left rail (amplitude): p -> rung K_1 -> k_1 -> rung K_2 -> k_2 -> photon vertex
+  \draw[quark] (-\fbX,0) -- (-\fbX,1.1);
+  \draw[quark] (-\fbX,1.1) -- (-\fbX,2.3);
+  \draw[quark] (-\fbX,2.3) -- (-\fbX,3.5);
+  % right rail (conjugate amplitude)
+  \draw[quark] (\fbX,3.5) -- (\fbX,2.3);
+  \draw[quark] (\fbX,2.3) -- (\fbX,1.1);
+  \draw[quark] (\fbX,1.1) -- (\fbX,0);
+  % struck quark and photons (H_0)
+  \draw[quark=0.25] (-\fbX,3.5) -- (\fbX,3.5);
+  \draw[photon] (-1.62,4.72) -- (-\fbX,3.5);
+  \draw[photon] (\fbX,3.5) -- (1.62,4.72);
+  % rungs: real gluons crossing the cut
+  \foreach \y in {1.1,2.3} {
+    \draw[gluon] (-\fbX,\y) -- (\fbX,\y);
+    \node[vertex] at (-\fbX,\y) {}; \node[vertex] at (\fbX,\y) {};}
+  \node[vertex] at (-\fbX,3.5) {}; \node[vertex] at (\fbX,3.5) {};
+  \draw[cut] (0,-0.35) -- (0,4.75);
+  % momenta and kernels
+  \path[mom'={$k_1$},mom sep=0.25cm,mom length=0.45cm] (-\fbX,1.1) -- (-\fbX,2.3);
+  \path[mom'={$k_2$},mom sep=0.25cm,mom length=0.45cm,mom pos=0.42] (-\fbX,2.3) -- (-\fbX,3.5);
+  \node[fb lab,anchor=north] at (-\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north] at (\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north,text=gray!30!black] at (0,-0.42) {$p^2=-m^2$};
+  \node[fb lab,anchor=south east] at (-1.62,4.72) {$q$};
+  \node[fb kern,anchor=south] at (0.6,1.25) {$K_1$};
+  \node[fb kern,anchor=south] at (0.6,2.45) {$K_2$};
+  \node[fb kern,anchor=south] at (-0.6,3.53) {$\mathsf H_0$};
+  % nested hard subgraphs of the three regions
+  \draw[fb R2] (-1.55,3.24) rectangle (1.55,3.98);
+  \draw[fb R1] (-1.78,2.04) rectangle (1.78,4.14);
+  \draw[fb RH] (-2.01,0.84) rectangle (2.01,4.3);
+  \node[font=\scriptsize,text=blue!55!black,anchor=south,inner sep=1pt] at (0.72,3.25) {$R_2$};
+  \node[font=\scriptsize,text=orange!65!black,anchor=south east,inner sep=1pt] at (1.76,2.06) {$R_1$};
+  \node[font=\scriptsize,text=gray!35!black,anchor=south east,inner sep=1pt] at (1.99,0.86) {$R_H$};
+  % ======================= the regions and the grouped remainder =======================
+  \node[anchor=north west,align=left,font=\footnotesize] (T) at (2.65,4.3) {%
+    区域链 $R_2<R_1<R_H$（虚线框为硬子图）：\\[3pt]
+    {\color{blue!55!black}$R_2$}：两级横档都与 $p$ 共线；\\[1pt]
+    {\color{orange!65!black}$R_1$}：上级横档为硬，下级横档共线；\\[1pt]
+    {\color{gray!35!black}$R_H$}：全部为硬——给出两圈系数函数。\\[6pt]
+    分组余项：\\[2pt]
+    \quad$r=(1-T_H)(1-T_1)(1-T_2)\,\Gamma=\Delta\mathsf H_0\,\Delta K_2\,\Delta K_1$};
+  \node[anchor=north west,align=left,font=\footnotesize,text width=6.1cm,draw=red!50!black,line width=0.5pt,
+        rounded corners=2pt,fill=red!3,inner sep=4pt] at ($(T.south west)+(0.05,-0.2)$)
+    {单个链项 $T_H(1-T_2)\Gamma$ 在 $U_{R_2}$ 上不可积（在 $k_1\parallel\hat p$ 处有无质量共线奇点），因而分组是必要的。};
+\end{tikzpicture}
+\caption{DIS 两级梯形图（外夸克离壳 $p^2=-m^2$，内线无质量；竖直红色虚线为末态割线，左侧为振幅）的三个区域 $R_2<R_1<R_H$ 与分组余项。
+$\Gamma=\mathsf H_0(k_2)\,K_2(k_2,k_1)\,K_1(k_1,p)$，$\mathsf H_0$ 为含两个光子顶点的顶端夸克线，$K_2$、$K_1$ 为上、下两级横档；虚线框依次为 $R_2$、$R_1$、$R_H$ 的硬子图。
+分组余项 $r=\Delta\mathsf H_0\Delta K_2\Delta K_1$（$\Delta$ 表示相应因子减去其共线近似）；包含全硬区域 $R_H$ 才能得到两圈系数函数（\cref{ex:disall-ladder}）。}
+\label{fig:disall-ladder-regions}
+\end{figure}
+%%% END fig:disall-ladder-regions
+
+%%% BEGIN fig:disall-seed
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb op/.style={font=\large},
+  fb hregion/.style={hard blob,fill=gray!22,draw=gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt}]
+  % ======================= left: one K gluon attached to the hard part =======================
+  \begin{scope}
+    \coordinate (V) at (-0.4,1.55);       % photon vertex
+    \coordinate (G) at (1.0,2.3);         % attachment of the K gluon on the struck quark
+    \coordinate (E) at (2.05,2.86);       % outgoing struck quark
+    \begin{scope}[on background layer]
+      \draw[fb hregion,rotate around={28.2:(0.3,1.92)}] (0.3,1.92) ellipse[x radius=1.12,y radius=0.42];
+    \end{scope}
+    \node[jet blob,ellipse,minimum width=1.9cm,minimum height=0.7cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.45,0) {$A$};
+    \draw[photon] (-1.75,2.3) -- (V);
+    \draw[quark] (-0.4,0.34) -- (V);
+    \draw[quark] (V) -- (G);
+    \draw[quark] (G) -- (E);
+    \draw[longit] (0.6,0.33) to[out=72,in=-108] (G);
+    \fill[blue!60!black] ($(G)+(-0.06,-0.19)$) circle[radius=1.7pt];
+    \node[vertex] at (V) {}; \node[vertex] at (G) {};
+    \path[mom'={$q$},mom sep=0.24cm,mom length=0.45cm] (-1.75,2.3) -- (V);
+    \path[mom={$l$},mom sep=0.24cm,mom length=0.45cm] (-0.4,0.34) -- (V);
+    \path[mom={$p'-k$},mom sep=0.3cm,mom length=0.42cm,mom pos=0.42] (V) -- (G);
+    \path[mom={$p'$},mom sep=0.24cm,mom length=0.42cm] (G) -- (E);
+    \path[mom'={$k$},mom sep=0.26cm,mom length=0.45cm,mom pos=0.45] (0.6,0.33) to[out=72,in=-108] (G);
+    \node[fb lab,text=gray!35!black] at ($(G)+(0.42,-0.36)$) {$H$};
+    \node[fb lab,anchor=north] at (0.08,-0.42) {$k_\mu H^\mu_a=g\,t^a\,H_0$};
+    \node[font=\large,anchor=east] at (-1.75,1.2) {$\displaystyle\sum_{H\text{ 内的附着}}$};
+  \end{scope}
+  \node[fb op] at (2.75,1.4) {$=$};
+  % ======================= middle: H_0 =======================
+  \begin{scope}[xshift=4.55cm]
+    \coordinate (V) at (-0.25,1.65);
+    \draw[photon] (-1.3,2.35) -- (V);
+    \draw[quark] (-0.25,0.6) -- (V);
+    \draw[quark] (V) -- (1.15,2.4);
+    \node[vertex] at (V) {};
+    \path[mom={$l+k$},mom sep=0.24cm,mom length=0.45cm] (-0.25,0.6) -- (V);
+    \path[mom={$p'$},mom sep=0.24cm,mom length=0.42cm] (V) -- (1.15,2.4);
+    \node[fb lab] at (0.6,1.42) {$H_0$};
+  \end{scope}
+  \node[fb op] at (6.15,1.4) {$\times$};
+  % ======================= right: the Wilson-line vertex of the PDF operator =======================
+  \begin{scope}[xshift=7.75cm]
+    \coordinate (O) at (-0.35,1.65);     % operator vertex psi(0)
+    \coordinate (W) at (1.75,2.8);       % towards infinity along n_B
+    \coordinate (Y) at ($(O)!0.5!(W)$);
+    \node[jet blob,ellipse,minimum width=1.9cm,minimum height=0.7cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.45,0) {$A$};
+    \draw[quark] (-0.35,0.34) -- (O);
+    \draw[wilson=0.78] (O) -- (W);
+    \node[opvertex] at (O) {};
+    \draw[longit] (0.55,0.33) to[out=70,in=-110] (Y);
+    \node[vertex] at (Y) {};
+    \path[mom'={$k$},mom sep=0.26cm,mom length=0.45cm,mom pos=0.45] (0.55,0.33) to[out=70,in=-110] (Y);
+    \node[fb lab,anchor=east] at ($(O)+(-0.12,0.05)$) {$\psi(0)$};
+    \node[fb lab,anchor=west] at (W) {$\infty n_B$};
+    \node[fb lab,anchor=north west] at ($(Y)+(0.12,-0.06)$) {$\ii g\,t^a n_B^\alpha$};
+    \node[fb lab,anchor=south east] at ($($(O)!0.5!(Y)$)+(-0.02,0.12)$) {$\dfrac{-\ii}{n_B\cdot k-\ii0}$};
+    \node[fb lab,anchor=north] at (0.4,-0.42) {$W^{(1)}[\infty n_B,0]$：未来指向};
+  \end{scope}
+  % summary formula
+  \node[font=\footnotesize,anchor=north] at (4.4,-1.15) {$H_\mu\,\dfrac{k^\mu n_B^\alpha}{n_B\cdot k-\ii0}=\Big[\ii g\,t^an_B^\alpha\,\dfrac{-\ii}{n_B\cdot k-\ii0}\Big]H_0=W^{(1)}[\infty n_B,0]\,H_0$};
+\end{tikzpicture}
+\caption{DIS 中 PDF Wilson 线的种子（VF-WL-8，\cref{prop:method-ward-tree}）：一个来自靶共线子图 $A$ 的 K 胶子（蓝色，流入硬部分的动量为 $k$，圆点标出带标量极化 $k_\mu$ 的硬端）对硬部分 $H$ 的所有附着之和（领头阶即附着在末态被击夸克 $p'$ 上），
+经 Ward 恒等式 $k_\mu H^\mu_a=g\,t^aH_0$ 化为去掉该胶子、入射动量为 $l+k$ 的硬部分 $H_0$，乘以夸克场 $\psi(0)$ 处出发、沿 $n_B$ 的未来指向 Wilson 线 $W^{(1)}[\infty n_B,0]$ 的单胶子项（双线箭头为路径方向 $0\to\infty n_B$）。
+程函传播子中的 $-\ii0$ 继承自被替代的被击夸克传播子：$(p'-k)^2+\ii0\simeq-2p'^-k^++\ii0$ 的极点位于 $k^+$ 上半平面；Drell--Yan 中同样的附着落在入射反夸克上，给出 $+\ii0$。}
+\label{fig:disall-seed}
+\end{figure}
+%%% END fig:disall-seed

@@ -1,0 +1,61 @@
+% ---------------------------------------------------------------------
+\section{高阶：$\pi^2$ 项与已知系数}\label{sec:ee-higher}
+
+Adler 函数是跑动耦合 $a(Q^2)$ 的幂级数，系数 $d_n$ 不含 $\ln(Q^2/\mu^2)$；而延拓到类时轴时，跑动耦合的相位在 $R$ 的系数 $r_n$ 中留下正比于 $\pi^2$ 的项。
+
+\begin{proposition}[围道公式 \tagR]\label{prop:ee-contour}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $\Pi$ 满足\cref{prop:ee-analytic}(b) 的条件（或为微扰论某一固定阶的 $\Pi_{\overline{\rm MS}}$），$s>0$，且边值 $\Pi(s\pm\ii0)$ 存在（微扰论中对一切 $s>0$ 成立；对强子谱函数，例如当 $R$ 在 $s$ 附近 Hölder 连续时成立）。则
+\begin{equation}\label{eq:ee-contour}
+R(s)=\frac1{2\pi}\lim_{\delta\to0^+}\int_{-\pi+\delta}^{\pi-\delta}\!\dd\theta\,D\big(s\,\ee^{\ii\theta}\big),
+\end{equation}
+% VF-EE-9
+$D$ 是\cref{prop:ee-adler-dispersion}中 Adler 函数在 $\mathbb C\setminus(-\infty,-s_0]$ 上的延拓；路径 $Q^2=s\ee^{\ii\theta}$ 在 $q^2$ 平面中是圆周 $|q^2|=s$，自 $s+\ii0$ 逆时针到 $s-\ii0$（\cref{fig:ee-pi-plane}）。
+非微扰地位：对强子谱函数需\cref{asm:intro-wightman}（MA0，经由\cref{prop:ee-analytic}）；对微扰论的固定阶无需假设。
+\uses{def:ee-adler,prop:ee-adler-dispersion,prop:ee-analytic,asm:intro-wightman}
+\end{proposition}
+\begin{proof}
+由实性 $\Pi(q^{2*})=\Pi(q^2)^*$（\cref{prop:ee-analytic}(a)），$2\ii\Imag\Pi(s+\ii0)=\Pi(s+\ii0)-\Pi(s-\ii0)$。记 $\tilde\Pi(Q^2)\equiv\Pi(-Q^2)$，它在 $\mathbb C\setminus(-\infty,-s_0]$ 上解析，$\Pi(s\pm\ii0)=\lim_{\delta\to0^+}\tilde\Pi(s\ee^{\mp\ii(\pi-\delta)})$。在开圆弧 $Q^2=s\ee^{\ii\theta}$ 上，由\cref{def:ee-adler}及其延拓（\cref{prop:ee-adler-dispersion}），$\frac{\dd}{\dd\theta}\tilde\Pi(s\ee^{\ii\theta})=\ii Q^2\frac{\dd\tilde\Pi}{\dd Q^2}=-\frac{\ii}{12\pi^2}D(s\ee^{\ii\theta})$。积分并令 $\delta\to0^+$，$\Pi(s+\ii0)-\Pi(s-\ii0)=\frac{\ii}{12\pi^2}\lim_\delta\int_{-\pi+\delta}^{\pi-\delta}D\,\dd\theta$，故 $R=12\pi\Imag\Pi(s+\ii0)=\frac{12\pi}{2\ii}\cdot\frac{\ii}{12\pi^2}\lim_\delta\int D\,\dd\theta$。微扰论的固定阶中 $\Pi_{\overline{\rm MS}}$ 与 $D$ 是主值对数 $L$ 的多项式，在闭圆弧上连续，极限平凡。
+\end{proof}
+
+%%FIG:fig_ee_pi_plane%%
+
+\begin{corollary}[$R(s)$ 的微扰展开 \tagR]\label{cor:ee-R-alphas}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）对光子交换与 $n_f$ 味无质量夸克，在 $\overline{\rm MS}$ 中取 $\mu^2=s$，$a=\as(s)/\pi$，
+\begin{equation}\label{eq:ee-Rexp}
+R(s)=R_0\big[1+r_1a+r_2a^2+r_3a^3+r_4a^4+\order{a^5}\big],
+\end{equation}
+其中 (i)~$r_1=\frac34C_F$（SU(3) 中为 $1$）；(ii)~记 $D(Q^2)=R_0d(a(Q^2))$，$d=1+\sum_nd_na^n$，$b_0=\frac{\beta_0}4$，$b_1=\frac{\beta_1}{16}$，则
+\begin{equation}\label{eq:ee-rn-dn}
+r_1=d_1,\qquad r_2=d_2,\qquad r_3=d_3-\frac{\pi^2}3b_0^2d_1,\qquad r_4=d_4-\pi^2\Big(b_0^2d_2+\frac56b_0b_1d_1\Big);
+\end{equation}
+% VF-EE-9
+(iii)~（文献结果，此处只引用）$r_2=d_2=-\frac3{32}C_F^2+C_FC_A\big(\frac{123}{32}-\frac{11}4\zeta_3\big)-C_FT_Fn_f\big(\frac{11}8-\zeta_3\big)$，SU(3) 中 $r_2=\frac{365}{24}-11\zeta_3-n_f\big(\frac{11}{12}-\frac23\zeta_3\big)=1.9857-0.1153\,n_f$；% VF-EE-10
+(iv)~正比于 $(\sum_qe_q)^2$ 的单态项在 $a^2$ 阶为零，自 $a^3$ 起出现。（本推论是关于微扰系数的陈述，只涉及部分子态；它与强子 $R(s)$ 的关系见\cref{sec:ee-duality}。）
+\uses{thm:ee-R-finite,prop:ee-oneloop,prop:ee-twoloop,prop:ee-adler-rg,prop:ee-contour}
+\end{corollary}
+\begin{proof}
+(i)~由\cref{prop:ee-oneloop}（或\cref{prop:ee-twoloop}与\cref{thm:ee-R-finite}(iii)），$R^{(1)}=\frac34C_FR_0$。
+(ii)~由\cref{prop:ee-contour}与\cref{prop:ee-adler-rg}(b)，$R=\frac{R_0}{2\pi}\int_{-\pi}^{\pi}\dd\theta\,d(a(s\ee^{\ii\theta}))$，而由\cref{eq:ee-arun}（$\mu^2=s$，$L=\ii\theta$），$a(s\ee^{\ii\theta})=a+c_2a^2+c_3a^3+c_4a^4+\cdots$，$c_2=-b_0\ii\theta$，$c_3=b_0^2(\ii\theta)^2-b_1\ii\theta$，$c_4=-b_0^3(\ii\theta)^3+\frac52b_0b_1(\ii\theta)^2-b_2\ii\theta$。$d$ 的 $a^3$、$a^4$ 系数分别是 $d_1c_3+2d_2c_2+d_3$ 与 $d_1c_4+d_2(c_2^2+2c_3)+3d_3c_2+d_4$。对 $\theta$ 平均：奇次幂为零，$\langle\theta^2\rangle=\frac{\pi^2}3$，故 $\langle c_2\rangle=0$，$\langle c_2^2\rangle=\langle c_3\rangle=-\frac{\pi^2}3b_0^2$，$\langle c_4\rangle=-\frac56\pi^2b_0b_1$，即得\cref{eq:ee-rn-dn}。
+(iii)~$\overline{\rm MS}$ 中 SU(3) 的数值由 Chetyrkin、Kataev 与 Tkachov\cite{ChetyrkinKataevTkachov1979}以及 Dine 与 Sapirstein\cite{DineSapirstein1979}算出，Celmaster 与 Gonsalves\cite{CelmasterGonsalves1980a}在 MOM 方案中计算并与之一致；一般规范群的形式见 Baikov、Chetyrkin 与 Kühn 的文章\cite{Baikov:2010je}，代入 $C_F=\frac43$、$C_A=3$、$T_F=\frac12$ 即化为 SU(3) 的数值（我们核对了这一算术）；$R(s)$ 微扰级数的综述见\cite{ChetyrkinKuhnKwiatkowski1996}。
+(iv)~单态项来自两个流分别连在两个不同夸克圈上的图，每个圈对味求和给出 $\sum_qe_q$。$a^2$ 阶时两圈之间只交换两个胶子，每个圈有一个光子顶点与两个胶子顶点，色因子 $\Tr(t^at^b)=\frac12\delta^{ab}$ 在圈的反向下不变；而由电荷共轭，把费米子圈反向使 $n$ 个矢量顶点的 Dirac 迹乘以 $(-1)^n$，$n=3$ 时两种取向相消（Furry 定理\cite{Furry:1937zz}）。$a^3$ 阶交换三个胶子（$n=4$），两种取向之和正比于 $\Tr(t^at^bt^c)+\Tr(t^ct^bt^a)=\frac12d^{abc}$，单态项正比于 $d^{abc}d^{abc}\ne0$。
+\end{proof}
+不取 $\mu^2=s$ 时，$a(\mu)^n$ 的系数是 $\ln(s/\mu^2)$ 的次数不超过 $n-1$ 的多项式，例如 $R^{(2)}(\mu)/R_0=d_2-b_0d_1\ln(s/\mu^2)$。更高阶的系数只作为文献结果引用：对 SU(3)、$\overline{\rm MS}$、$\mu^2=s$，
+\begin{equation}\label{eq:ee-r3}
+r_3=-6.63694-1.20013\,n_f-0.00518\,n_f^2-1.2395\,\eta,\qquad \eta\equiv\frac{(\sum_qe_q)^2}{3\sum_qe_q^2},
+\end{equation}
+其中 $-1.2395\eta$ 来自单态项 $(\sum_qe_q)^2(\frac{55}{72}-\frac53\zeta_3)a^3$\cite{GorishniiKataevLarin1991,SurguladzeSamuel1991}；$n_f=5$ 时 $r_3=-12.805$。Gorishny、Kataev 与 Larin 1988 年发表的 $a^3$ 系数\cite{Gorishnii:1988bc}有误，1991 年由 Surguladze 与 Samuel\cite{SurguladzeSamuel1991}以及原作者\cite{GorishniiKataevLarin1991}分别更正为上式（附录~Q 第~20~条，\cref{sec:appQ-errata}）；四阶系数见\cite{BaikovChetyrkinKuhn2008}。
+
+\cref{fig:ee-cutsum-disc}从割图一侧概括本章的结构：各类割线各自发散而其和有限，割线之和是前向函数的不连续性，由 Cauchy 定理它等于离开实轴的圆周上的积分——即围道公式与\cref{thm:ee-R-finite}的几何内容。
+
+%%FIG:fig_ee_cutsum_disc%%
+
+\begin{example}[$O(a^3)$ 的 $\pi^2$ 项]\label{ex:ee-pi2}
+\cref{eq:ee-rn-dn}中的 $-\frac{\pi^2}3b_0^2d_1$ 完全来自围道公式：它是跑动耦合在圆周 $|Q^2|=s$ 上的相位 $\ln(Q^2/s)=\ii\theta$ 平方后的平均，与动力学无关。SU(3) 中 $d_1=1$，$b_0=\frac{11}4-\frac{n_f}6$，$\frac{\pi^2}3b_0^2=16.655,\ 14.279,\ 12.086$（$n_f=3,4,5$）。% VF-EE-9
+与\cref{eq:ee-r3}比较（$\eta=0,\frac2{15},\frac1{33}$）：$r_3=-10.284,\ -11.686,\ -12.805$，于是欧氏系数 $d_3=r_3+\frac{\pi^2}3b_0^2=6.371,\ 2.593,\ -0.719$。对 $n_f=4,5$，$\pi^2$ 项与 $r_3$ 同号、大小相近，构成 $r_3$ 的主体；对 $n_f=3$ 它甚至超过 $|r_3|$，而 $d_3$ 与之部分抵消。数值上，例如 $\sqrt s=20\,\mathrm{GeV}$、$n_f=5$：由 $\as(M_Z)=0.1180$\cite[式~(9.25)]{ParticleDataGroup:2024cfk}按两圈跑动得 $\as(20\,\mathrm{GeV})=0.153$，$a=0.0488$，$R/R_0=1+0.0488+0.0034-0.0015+\cdots$，其中 $a^3$ 项的 $-0.0014$ 来自 $\pi^2$ 项，欧氏系数 $d_3$ 只贡献 $-0.0001$。$R(s)$ 高阶系数中相当大的一部分只是“欧氏量 $\to$ 类时量”的运动学效应\cite{KrasnikovPivovarov1982,KataevStarshenko1995}；按围道公式把这些项全部保留是组织级数的一种处方，不是定理，不同处方的差别属于更高阶，其大小与重整化子有关（\cref{sec:power-renormalons}）。
+% VF-QCD-7 (alpha_s(M_Z)=0.1180; two-loop running to 20 GeV: w06_numeric_example.py)
+\uses{prop:ee-contour,cor:ee-R-alphas}
+\end{example}
+
+\begin{remark}[四个逻辑层次]\label{rem:ee-status-layout}
+本章的结论分属四个彼此独立的层次，不应混为一谈：(i)~Wightman 公理之下的解析性，包括一次减除的确切条件（\cref{prop:ee-analytic}，在\cref{asm:intro-wightman}之下）及围道公式；(ii)~微扰论（\cref{thm:ee-R-finite}，\tagR，$R_{\mathrm{PT}}$；与割图之和等同为 \tagA）；(iii)~以 OPE 为条件的陈述（\cref{thm:ee-ope}，\tagA；凝聚\cref{conj:ee-np-ope}，\tagC，前提\cref{asm:intro-np-ope}）；(iv)~抹平恒等式（\cref{prop:ee-smearing}，\tagR，$R_{\mathrm{def}}$）与它的可计算性（\cref{conj:ee-duality}，\tagC）。常见的混淆是把 (ii) 当作强子 $R(s)$ 的逐点陈述，或把 (iv) 中的恒等式当作对偶的证明：恒等式只说抹平的 $R$ 等于 $\Pi$ 在复点上的值，而用微扰论或 OPE 计算这个值正是 (iii)、(iv) 中未被证明的部分。
+\end{remark}

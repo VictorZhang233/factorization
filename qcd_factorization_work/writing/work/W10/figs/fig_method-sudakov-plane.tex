@@ -1,0 +1,74 @@
+%%% BEGIN fig:method-sudakov-plane
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb tick/.style={font=\scriptsize},
+  fb grid/.style={draw=gray!45,line width=0.4pt,dash pattern=on 1pt off 2pt},
+  fb hyp/.style={draw=black!60,line width=0.6pt},
+  fb patch/.style={circle,draw=black!70,line width=0.6pt,minimum size=0.62cm,inner sep=0pt,font=\small},
+  fb pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  fb contour/.style={draw=blue!60!black,line width=1.0pt},
+  fb carrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}}]
+  % ======================= (a) the (ln|k^+|, ln|k^-|) plane =======================
+  \begin{scope}[x=1.15cm,y=1.15cm]
+    % soft--collinear overlap strips (hatched)
+    \fill[pattern=north east lines,pattern color=green!45!black] (-2,-2.15) rectangle (0,-1.85);
+    \fill[pattern=north east lines,pattern color=green!45!black] (-2.15,-2) rectangle (-1.85,0);
+    % axes, ticks, grid
+    \draw[lcaxis] (-2.85,-2.85) -- (1.1,-2.85) node[below=1pt,font=\small] {$\ln|k^+|$};
+    \draw[lcaxis] (-2.85,-2.85) -- (-2.85,1.1) node[left=1pt,font=\small] {$\ln|k^-|$};
+    \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (\v,-2.85) -- ++(0,0.07);
+      \node[fb tick,below] at (\v,-2.85) {$\t$};
+      \draw[line width=0.5pt] (-2.85,\v) -- ++(0.07,0);
+      \node[fb tick,left] at (-2.85,\v) {$\t$};
+      \draw[fb grid] (\v,-2.78) -- (\v,0.95);
+      \draw[fb grid] (-2.78,\v) -- (0.95,\v);
+    }
+    % lines of constant k^+ k^-
+    \draw[fb hyp] (0.75,-0.75) -- (-0.98,0.98) node[left=1pt,fb lab,text=black!70] {$k^+k^-\sim Q^2$};
+    \draw[fb hyp,line width=1.0pt] (-2.62,0.62) -- (0.62,-2.62) node[right=1pt,fb lab,text=black!85] {$k^+k^-\sim m^2$};
+    % the family k=(z, lambda^2/z, lambda) between C1 and C2
+    \draw[red!60!black,line width=1.6pt,dash pattern=on 4pt off 2pt] (-1.72,-0.28) -- (-0.28,-1.72);
+    % regions of the off-shell triangle
+    \node[fb patch,fill=gray!35] (H) at (0,0) {$H$};
+    \node[fb patch,fill=blue!20] (C1) at (0,-2) {$C_1$};
+    \node[fb patch,fill=orange!25] (C2) at (-2,0) {$C_2$};
+    \node[fb patch,fill=green!25] (S) at (-2,-2) {$S$};
+    \draw[black!70,line width=0.6pt,fill=white] (-1,-1) circle[radius=2.3pt];
+    \draw[black!60,line width=0.4pt] (-1.06,-1.06) -- (-1.3,-1.4);
+    \node[font=\scriptsize,inner sep=1pt,anchor=north] at (-1.36,-1.4) {$(\lambda,\lambda,\lambda)$};
+    \node[fb lab,text=red!55!black,anchor=north west,align=left] at (0.02,-0.97) {$k=(z,\lambda^2/z,\lambda)$\\$\lambda^2\ll z\ll1$：见 (b)};
+    \node[fb lab,text=green!30!black] at (-1,-2.42) {软—共线重叠};
+    \node[font=\small,anchor=south west] at (-3.75,1.15) {(a)};
+  \end{scope}
+  % ======================= (b) complex k^- plane =======================
+  \begin{scope}[xshift=5.55cm,yshift=-1.4cm]
+    \fill[red!12] (0,0) circle[radius=0.42];
+    \draw[lcaxis] (-2.3,0) -- (3.2,0) node[right=1pt,font=\small] {$\Real k^-$};
+    \draw[lcaxis] (0,-1.25) -- (0,1.85) node[left=1pt,font=\small] {$\Imag k^-$};
+    % contour: lower half plane on the left, crossing near k_T^2/(4k^+), upper half plane on the right
+    \draw[fb contour,fb carrow=0.18,fb carrow=0.86] (-2.2,-1.0) .. controls (-0.6,-1.0) and (0.55,-0.55) .. (1.1,0)
+         .. controls (1.6,0.45) and (2.25,0.95) .. (3.05,0.95);
+    \pic at (-0.22,0.2) {fb pole};
+    \pic at (2.2,-0.2) {fb pole};
+    \fill[blue!60!black] (1.1,0) circle[radius=1.5pt];
+    \node[fb lab,anchor=south] at (-0.22,0.3) {$D_1$};
+    \node[fb lab,anchor=north] at (2.2,-0.3) {$D_g$};
+    \draw[gray!50!black,line width=0.4pt] (1.12,0.07) -- (1.28,1.18) node[above,fb lab] {$\Real k^-\approx\dfrac{k_T^2}{4k^+}$};
+    \draw[red!50!black,line width=0.4pt] (-0.32,0.28) -- (-0.62,0.56);
+    \node[fb lab,text=red!55!black,anchor=south east,align=right] at (-0.58,0.5) {$k^-\approx0$：\\软近似失效};
+    \node[fb lab,anchor=north west,align=left] at (-2.2,-1.42) {$D_1$：$k^-\approx-\dfrac{m^2+k_T^2}{2P}+\ii0$\\[2pt]$D_g$：$k^-=\dfrac{k_T^2-\ii0}{2k^+}$};
+    \node[font=\small,anchor=south west] at (-2.3,1.55) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈离壳三角图（$p_i^2=-m^2$，$\lambda=m/Q$）的区域与 Collins 减除中的软—共线重叠（\cref{ex:method-sudakov-subtraction}）。
+(a)~$(\ln|k^+|,\ln|k^-|)$ 平面（以 $\ln(1/\lambda)$ 为单位，$k_T$ 取 $k_T^2\sim|k^+k^-|$ 的典型值）：区域 $H$、$C_1$、$C_2$、$S$ 位于正方形的四角，其中软区 $S\sim Q(\lambda^2,\lambda^2,\lambda^2)$ 是\cref{def:ir-scalings}的超软标度（$k\sim m^2/Q$）；
+粗斜线 $k^+k^-\sim m^2$ 是 $k_T\sim\lambda Q$ 的在壳线 $k_T^2=2k^+k^-$，经过 $C_1$、$C_2$ 与“软中心”$(\lambda,\lambda,\lambda)$；绿色阴影带为软—共线重叠，减除项在重叠区相消的方式由分组表达式决定。
+(b)~对 $k=(z,\lambda^2/z,\lambda)$（$\lambda^2\ll z\ll1$，红色虚线），胶子线 $D_g$ 与夸克线 $D_1$ 的 $k^-$ 极点分居实轴两侧、相距 $\sim\lambda^2Q/z$，围道只能在两极点之间穿过实轴；
+软近似只在 $\Real k^-\sim k_T^2/(4k^+)$ 附近穿过实轴的围道上成立，在 $k^-\approx0$ 附近（红色区域）失效（\cref{lem:method-i0-compat}）。}
+\label{fig:method-sudakov-plane}
+\end{figure}
+%%% END fig:method-sudakov-plane

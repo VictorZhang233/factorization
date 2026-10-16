@@ -1,0 +1,281 @@
+% =====================================================================================
+% c_scet_bdecays.tex —— 非轻 B 衰变：B → M1 M2 的 QCD 因子化（BBNS）及其端点发散；B → Dπ 的全阶因子化（BPS）
+% （第 14 章后半，或按审稿人建议移入“重夸克物理”一章；research/c_scet，DERIVATION.md §5）
+% 验证脚本：scripts/s4_bbns.py（26 项），全部通过。所引原文方程均已在 arXiv 源文件中重新查对：
+%   BBNS 2001（hep-ph/0104110）式 (Heff)(fact)(ai)(FM)(vgegenb)(Hiexpr)(Xdef)(XAdef)(XHparam)(XAparam) 及表 1；
+%   BBNS 2000（hep-ph/0006124）第 7 节；BN 2003（hep-ph/0308039）式 (XAdef)(XAmodel)(XHparam) 及情形 S3；
+%   BPS 2001（hep-ph/0107002）。
+% =====================================================================================
+
+\section{非轻衰变 \texorpdfstring{$B\to M_1M_2$}{B -> M1 M2} 的 QCD 因子化}\label{sec:qcdf}
+
+两体非轻衰变是“遍举”因子化（第~13~章）与重夸克展开相结合的场合：$B$ 介子衰变为两个能量 $E\simeq m_b/2$ 的介子，
+硬标度为 $m_b$，同时出现软标度 $\Lambda$ 与硬共线标度 $\sqrt{m_b\Lambda}$。本节给出 Beneke--Buchalla--Neubert--Sachrajda（BBNS）的
+QCD 因子化公式~\cite{BenekeEtAl1999,BenekeEtAl2000,BenekeEtAl2001,BenekeNeubert2003}，说明在领头幂次哪些部分已被证明，
+并指出次领头幂次中的端点发散如何使标准因子化失效。
+% XREF: ch:exclusive (第 13 章)
+
+\subsection{有效哈密顿量与约定}
+以 $b\to s$ 为例（BBNS 2001 的约定），
+\begin{equation}\label{eq:qcdf-Heff}
+\mathcal H_{\rm eff}=\frac{G_F}{\sqrt2}\sum_{p=u,c}\lambda_p\Big(C_1Q_1^p+C_2Q_2^p+\sum_{i=3}^{10}C_iQ_i+C_{7\gamma}Q_{7\gamma}+C_{8g}Q_{8g}\Big)+\text{h.c.},
+\qquad \lambda_p=V_{pb}V_{ps}^*,
+\end{equation}
+$Q_1^p=(\bar pb)_{V-A}(\bar sp)_{V-A}$，$Q_2^p=(\bar p_ib_j)_{V-A}(\bar s_jp_i)_{V-A}$（$i,j$ 为色指标），$Q_{3,\dots,10}$ 为 QCD 与电弱企鹅算符。
+NDR 方案的 NLO 系数在 $\mu=m_b$ 处为 $C_1=1.081$、$C_2=-0.190$（BBNS 2001 表~1，输入 $\Lambda^{(5)}_{\MSbar}=0.225$\,GeV 等）。
+轻介子的领头扭度光锥分布振幅 $\Phi_M(x)=6x\bar x\big[1+\sum_{n\geq1}\alpha_n^MC_n^{(3/2)}(2x-1)\big]$，$\int_0^1\Phi_M=1$，
+$\bar x\equiv1-x$；扭度 3 振幅取渐近形式 $\Phi_p(y)=1$，手征增强因子 $r_\chi^M=2\mu_M/m_b$（如 $\mu_\pi=m_\pi^2/(m_u+m_d)$）。
+$B$ 介子分布振幅只以矩 $\int_0^1\frac{\dd\xi}{\xi}\Phi_B(\xi)\equiv\frac{m_B}{\lambda_B}$ 出现（$B$ 介子光锥分布振幅的定义见 \cite{GrozinNeubert1997}）。
+
+\subsection{因子化公式及其地位}
+
+\begin{proposition}[QCD 因子化公式]\label{prop:b-pipi}
+设 $M_1$ 为（可能）接收旁观反夸克的介子，$M_2$ 为由弱顶点产生的“发射”介子，二者均为轻介子。则在 $\Lambda/m_b$ 的领头幂次，
+\begin{equation}\label{eq:qcdf-fact}
+\begin{split}
+\langle M_1M_2|Q_i|\bar B\rangle&=F^{B\to M_1}(m_2^2)\,T^{\rm I}_{M_2,i}*f_{M_2}\Phi_{M_2}
++F^{B\to M_2}(m_1^2)\,T^{\rm I}_{M_1,i}*f_{M_1}\Phi_{M_1}\\
+&\quad+T^{\rm II}_i*f_B\Phi_B*f_{M_1}\Phi_{M_1}*f_{M_2}\Phi_{M_2}+\order{\Lambda/m_b},
+\end{split}
+\end{equation}
+其中 $*$ 表示对光锥动量分数的卷积；第二个形状因子项只在旁观者可以进入任一介子时出现；$T^{\rm I}=1+\order{\as}$
+（朴素因子化加“非因子化”的顶角与企鹅修正），$T^{\rm II}=\order{\as}$（硬旁观者散射）。状态（按审稿意见拆分）：
+\begin{itemize}
+\item 作为领头幂次的因子化陈述：\tagA。$\order{\as}$ 的红外有限性已证明~\cite{BenekeEtAl1999,BenekeEtAl2001}；$T^{\rm I}$ 的红外有限性已显式检验到
+$\order{\as^2}$~\cite{Bell2008,Bell2009,BenekeHuberLi2010,BellEtAl2015,BellEtAl2020}，$T^{\rm II}$ 到 $\order{\as^2}$
+\cite{BenekeJager2006,Kivel2007,Pilipp2008,BenekeYang2006}；SCET 中的全阶分析见 \cite{BauerEtAl2004b,BenekeFeldmann2004,HillNeubert2003}。
+关于长程“粲企鹅”及旁观者项处理的分歧尚未解决（\cref{rem:qcdf-dispute}）。
+\item 次领头幂次的弱湮灭与扭度 3 硬旁观者项：按标准的共线因子化形式计算时卷积发散（\cref{sec:qcdf-endpoint}），故标准因子化 \tagV；
+$X_A$、$X_H$ 参数化是模型，不是定理；对这类端点发散的“再因子化”属 \tagC。
+\end{itemize}
+\end{proposition}
+
+Beneke--Neubert 的表述是：对两个轻介子的末态，“factorization has been proved at order $\alpha_s$ …, but a complete proof has not yet been given”
+\cite{BenekeNeubert2003}。若主作者希望整个命题只用一个标签，则只有在陈述中包含幂次修正时 \tagP 才是恰当的。
+
+\paragraph{幂次计数。}
+重夸克极限下，$F^{B\to\pi}(0)\sim(\Lambda/m_b)^{3/2}$（端点压低），$f_B\sim\Lambda^{3/2}m_b^{-1/2}$，$f_\pi\sim\lambda_B\sim\Lambda$。于是
+\cref{eq:qcdf-fact} 中
+\[
+\begin{gathered}
+\text{形状因子项}\sim F\,m_b^2f_\pi\sim\Lambda^{5/2}m_b^{1/2},\qquad
+\text{硬旁观者项}\sim f_Bf_{M_1}f_{M_2}\,\frac{m_b}{\lambda_B}\sim\Lambda^{5/2}m_b^{1/2},\\
+\frac{f_Bf_{M_1}}{m_B\lambda_BF^{B\to M_1}(0)}=\order{1}:
+\end{gathered}
+\]
+二者同为领头幂次，而硬旁观者项从 $\order{\as}$ 开始；最后一个比值即下文 $H_{M_2M_1}$ 的前置因子（\texttt{s4\_\allowbreak bbns.py}，A 部分）。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.47\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.9]
+  \coordinate (W) at (0,0);
+  \draw[hadron blob] (-2.6,-0.6) ellipse[x radius=0.32cm,y radius=0.75cm]; \node[font=\scriptsize] at (-2.6,-0.6) {$\bar B$};
+  \draw[hadron blob] (2.6,-0.6) ellipse[x radius=0.32cm,y radius=0.75cm]; \node[font=\scriptsize] at (2.6,-0.6) {$M_1$};
+  \draw[hadron blob] (1.0,1.9) ellipse[x radius=0.65cm,y radius=0.28cm]; \node[font=\scriptsize] at (1.0,1.9) {$M_2$};
+  \draw[quark] (-2.35,-0.2) -- node[above,font=\scriptsize]{$b$} (W);
+  \draw[quark] (W) -- (2.35,-0.2);
+  \draw[quark] (2.35,-1.0) -- node[below,font=\scriptsize]{旁观者} (-2.35,-1.0);
+  \draw[quark] (W) -- (0.65,1.7); \draw[quark] (1.35,1.7) -- (W);
+  \draw[gluon] (0.33,0.88) to[out=-10,in=120] (1.4,-0.1);
+  \node[opvertex] at (W) {};
+  \node[font=\scriptsize] at (-0.2,1.15) {$T^{\rm I}$};
+\end{tikzpicture}
+\caption{形状因子项：顶角修正（胶子连接发射对与 $b\to q$ 线）}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.47\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.9]
+  \coordinate (W) at (0,0);
+  \draw[hadron blob] (-2.6,-0.6) ellipse[x radius=0.32cm,y radius=0.75cm]; \node[font=\scriptsize] at (-2.6,-0.6) {$\bar B$};
+  \draw[hadron blob] (2.6,-0.6) ellipse[x radius=0.32cm,y radius=0.75cm]; \node[font=\scriptsize] at (2.6,-0.6) {$M_1$};
+  \draw[hadron blob] (1.0,1.9) ellipse[x radius=0.65cm,y radius=0.28cm]; \node[font=\scriptsize] at (1.0,1.9) {$M_2$};
+  \draw[quark] (-2.35,-0.2) -- (W);
+  \draw[quark] (W) -- (2.35,-0.2);
+  \draw[quark] (2.35,-1.0) -- (-2.35,-1.0);
+  \draw[quark] (W) -- (0.65,1.7); \draw[quark] (1.35,1.7) -- (W);
+  \draw[gluon] (1.1,1.2) to[out=-60,in=90] (1.2,-1.0);
+  \node[vertex] at (1.2,-1.0) {};
+  \node[opvertex] at (W) {};
+  \node[font=\scriptsize,align=center] at (2.05,0.75) {$T^{\rm II}$\\[-1pt]$k^2\!\sim\! m_b\Lambda$};
+\end{tikzpicture}
+\caption{硬旁观者项：胶子由发射对连到旁观者}
+\end{subfigure}
+\caption{QCD 因子化公式 \cref{eq:qcdf-fact} 的两类贡献（各只画一个代表图）。$\otimes$ 为四夸克算符。(a) 中“非因子化”的软与共线发散在
+领头幂次相消（色透明性）；(b) 中旁观者胶子是虚度 $\sim m_b\Lambda$ 的硬共线胶子。}
+\label{fig:qcdf}
+\end{figure}
+
+\subsection{\texorpdfstring{$\order{\as}$}{O(as)} 顶角修正与微扰强相位}
+BBNS 2001 的结果（式 (ai)、(FM)）为
+\begin{equation}\label{eq:qcdf-ai}
+a_{1,\rm I}=C_1+\frac{C_2}{N_c}\Big[1+\frac{C_F\as}{4\pi}V_{M_2}\Big],\qquad
+a_{2,\rm I}=C_2+\frac{C_1}{N_c}\Big[1+\frac{C_F\as}{4\pi}V_{M_2}\Big],\qquad
+a_{1,\rm II}=\frac{C_2}{N_c}\frac{C_F\pi\as}{N_c}H_{M_2M_1},
+\end{equation}
+\begin{equation}\label{eq:qcdf-VM}
+V_M=12\ln\frac{m_b}{\mu}-18+\int_0^1\dd x\,g(x)\Phi_M(x),\qquad
+V_M'=12\ln\frac{m_b}{\mu}-6+\int_0^1\dd x\,g(1-x)\Phi_M(x)\quad(\text{NDR}),
+\end{equation}
+\begin{equation}\label{eq:qcdf-g}
+g(x)=3\Big(\frac{1-2x}{1-x}\ln x-\ii\pi\Big)+\Big[2\,\mathrm{Li}_2(x)-\ln^2x+\frac{2\ln x}{1-x}-(3+2\ii\pi)\ln x-(x\leftrightarrow1-x)\Big].
+\end{equation}
+（BBNS 2001 对 $\pi K$ 写作 $V_K$、$V_\pi$ 等，此处 $M_2$ 为发射介子。）
+
+\begin{proposition}[对数项由 RG 不变性确定]\tagR\label{prop:qcdf-log}
+在 $\order{\as}$，$a_{1,\rm I}$ 与 $a_{2,\rm I}$ 不依赖于 $\mu$，当且仅当 $V_M\ni12\ln\frac{m_b}{\mu}$；这对任意 $N_c$ 成立。常数 $-18$、$-6$ 依赖于方案（NDR）。
+\end{proposition}
+
+\begin{proof}
+设 $\frac{\dd\bm C}{\dd\ln\mu}=\frac{\as}{4\pi}\gamma^{\tp}\bm C$，一圈反常维数矩阵 $\gamma=\begin{pmatrix}-6/N_c&6\\6&-6/N_c\end{pmatrix}$
+（$C_\pm=C_1\pm C_2$ 的本征值 $\gamma_\pm=\pm6(N_c\mp1)/N_c$；在 $\mu=m_b$ 处 $C_+=0.891<1<C_-=1.271$，与 $\gamma_+>0>\gamma_-$ 一致）。于是
+$\frac{\dd}{\dd\ln\mu}\big(C_1+\frac{C_2}{N_c}\big)=\frac{\as}{4\pi}\cdot6C_2\Big(1-\frac1{N_c^2}\Big)=\frac{\as}{4\pi}\frac{12C_F}{N_c}C_2$，
+它恰被 $\frac{C_2}{N_c}\frac{C_F\as}{4\pi}\cdot12\ln\frac{m_b}{\mu}$ 的导数 $-\frac{\as}{4\pi}\frac{12C_F}{N_c}C_2$ 抵消；$a_2$ 同理（\texttt{s4\_\allowbreak bbns.py}，B 部分）。
+\end{proof}
+
+对 Gegenbauer 展开，
+\begin{equation}\label{eq:qcdf-vgegenb}
+\int_0^1\dd x\,g(x)\Phi_M(x)=-\frac12-3\ii\pi+\Big(\frac{11}{2}-3\ii\pi\Big)\alpha_1^M-\frac{21}{20}\alpha_2^M+\cdots
+\end{equation}
+（BBNS 2001 式 (vgegenb)；我们用 mpmath 以 $10^{-20}$ 的精度重算了三个系数）。对称的分布振幅给出 $V_\pi'=V_\pi+12$。在 $\mu=m_b$、渐近分布振幅时
+$V=-18.5-3\ii\pi$：\emph{强相位在领头幂次是 $\order{\as}$ 的微扰量}——这是 QCD 因子化最有特色的预言之一。
+
+\subsection{硬旁观者散射与扭度 3 端点发散}\label{sec:qcdf-endpoint}
+BBNS 2001 式 (Hiexpr)：
+\begin{equation}\label{eq:qcdf-H}
+\begin{aligned}
+H_{K\pi}&=\frac{f_Bf_\pi}{m_B^2F_0^{B\to\pi}(0)}\int_0^1\frac{\dd\xi}{\xi}\Phi_B(\xi)\int_0^1\frac{\dd x}{\bar x}\Phi_K(x)
+\int_0^1\frac{\dd y}{\bar y}\Big[\Phi_\pi(y)+\frac{2\mu_\pi}{m_b}\frac{\bar x}{x}\Phi_p^\pi(y)\Big]\\
+&=\frac{f_Bf_\pi}{m_B\lambda_BF_0^{B\to\pi}(0)}\Big[\langle\bar x^{-1}\rangle_K\langle\bar y^{-1}\rangle_\pi+r_\chi^\pi\langle x^{-1}\rangle_KX_H^\pi\Big],
+\qquad X_H\equiv\int_0^1\frac{\dd y}{1-y}\Phi_p(y).
+\end{aligned}
+\end{equation}
+\begin{enumerate}[label=(\roman*)]
+\item \emph{运动学}：旁观者 $l=\xi p_B$（$\xi\sim\Lambda/m_b$）进入 $M_1$ 并携带份额 $\bar y$ 时，胶子动量平方
+$k^2=-\bar y\,\xi\,m_B^2+\xi^2m_B^2\sim m_b\Lambda$——它是\emph{硬共线}的，而非硬的；BBNS 因此在 $\mu_h=\sqrt{\Lambda_h\mu}$（$\Lambda_h=0.5$\,GeV）处取 $\as$。
+发射顶角处的夸克传播子虚度 $\sim x\bar y\,m_B^2$，为硬。
+\item \emph{扭度 2}：卷积有限，渐近分布振幅时 $\langle\bar x^{-1}\rangle=\langle x^{-1}\rangle=3$。
+\item \emph{扭度 3}：手征增强项形式上是 $\Lambda/m_b$ 压低的，但 $r_\chi\simeq\order{1}$；取 $\Phi_p=1$ 时 $X_H=\int_0^1\frac{\dd y}{1-y}$ 对数发散。
+发散来自旁观者作为\emph{软}夸克进入 $M_1$ 的端点区域，硬散射核不能提供足够的端点压低；物理上它在 $1-y\sim\Lambda/m_b$ 处被截断，
+故 $X_H\sim\ln(m_b/\Lambda)$，其系数可能是复数。
+\end{enumerate}
+
+\subsection{弱湮灭与 \texorpdfstring{$X_A$}{X_A} 模型}
+BBNS 2001 给出弱湮灭的构件 $A_k^{i,f}$（$i$/$f$ 指胶子由初态/末态夸克发射，$k=1,2,3$ 对应 $(V-A)\otimes(V-A)$、$(V-A)\otimes(V+A)$、
+$(-2)(S-P)\otimes(S+P)$），例如
+\begin{equation}\label{eq:qcdf-A1i}
+A_1^i=\pi\as\int_0^1\dd x\,\dd y\,\Big\{\Phi_{M_2}(x)\Phi_{M_1}(y)\Big[\frac{1}{y(1-x\bar y)}+\frac{1}{\bar x^2y}\Big]+r_\chi^{M_1}r_\chi^{M_2}\frac{2}{\bar xy}\Big\}.
+\end{equation}
+即使取渐近分布振幅，这些积分在 $y\to0$ 或 $x\to1$ 处也发散。按 BN 2003 的规则
+$\int_0^1\frac{\dd y}{y}\to X_A$、$\int_0^1\dd y\,\frac{\ln y}{y}\to-\frac12X_A^2$~\cite{BenekeNeubert2003}，我们从被积函数重新导出
+\begin{equation}\label{eq:qcdf-A}
+\begin{gathered}
+A_1^i\simeq A_2^i\simeq\pi\as\Big[18\Big(X_A-4+\frac{\pi^2}{3}\Big)+2r_\chi^{M_1}r_\chi^{M_2}X_A^2\Big],\\
+A_3^i\simeq6\pi\as\big(r_\chi^{M_1}-r_\chi^{M_2}\big)\Big(X_A^2-2X_A+\frac{\pi^2}{3}\Big),\qquad
+A_3^f\simeq6\pi\as\big(r_\chi^{M_1}+r_\chi^{M_2}\big)\big(2X_A^2-X_A\big),
+\end{gathered}
+\end{equation}
+$A_1^f=A_2^f=0$（两个赝标介子），与 BBNS 2001 式 (XAdef)、BN 2003 式 (XAmodel) 一致；有限部分来自
+$36\int\!\!\int\frac{x\bar x\bar y}{1-x\bar y}=18\big(\frac{\pi^2}{3}-3\big)$（\texttt{s4\_\allowbreak bbns.py}，E 部分）。参数化（BBNS 2001 式 (XHparam)(XAparam)，BN 2003）为
+\begin{equation}\label{eq:qcdf-Xparam}
+X_{A,H}=\big(1+\varrho_{A,H}\,\ee^{\ii\varphi_{A,H}}\big)\ln\frac{m_B}{\Lambda_h},\qquad \varrho_{A,H}\leq1,\quad\Lambda_h=0.5\ \text{GeV},\quad \varphi_{A,H}\ \text{任意}：
+\end{equation}
+对“默认值”$\ln(m_B/\Lambda_h)\approx2.4$ 赋予 100\% 的不确定度，$|X|\in[0,2\ln(m_B/\Lambda_h)]$。BN 2003 的情形 S3 取 $\varrho_A=1$、$\varphi_A=-45^\circ$，
+另一变体取 $\varrho_A=2$、$\varphi_A=-60^\circ$。
+
+\begin{remark}[$X_A$ 模型依赖于截断方式]\label{rem:qcdf-prescription}
+同一个发散积分若改用双重截断（$x<1-\delta$、$y>\delta$）正规化，$A_3^i$ 中 $X_A^2$、$X_A$ 与常数项的系数都会改变：$X_A=\ln(1/\delta)=13.8$ 时，
+两种做法之差为 $-21.6$（\texttt{s4\_\allowbreak bbns.py}）。因此 $X_A$ 模型的有限部分依赖于如何截断发散，它不是因子化定理，而是对未知非微扰贡献的参数化。
+在次领头幂次，端点发散的系统处理（例如 Liu--Neubert 对 $h\to\gamma\gamma$ 的再因子化：“endpoint divergences caused by rapidity divergences cancel
+to all orders … endpoint divergences that are regularized dimensionally can be removed by rearranging the terms in the factorization theorem”
+\cite{LiuNeubert2020}；Drell--Yan 阈值区的次领头幂次见 \cite{BenekeEtAl2019}）尚未推广到 $B\to M_1M_2$ 的弱湮灭项。
+\end{remark}
+
+\begin{remark}[关于 SCET 与 QCD 因子化的分歧]\label{rem:qcdf-dispute}
+Bauer--Pirjol--Rothstein--Stewart 用 SCET 推导了 $B\to M_1M_2$ 在 $\Lambda/E_M$、$\Lambda/m_b$ 领头阶的因子化定理，并指出它“apply even if
+$\alpha_s(E_M\Lambda)$ is not perturbative”，同时认为 $c\bar c$ 企鹅“could give long-distance effects at leading order”~\cite{BauerEtAl2004b}。
+BBNS 的评论认为该公式“is equivalent to the corresponding formula in the QCD factorization approach”，数值差异主要来自略去了已知的微扰与幂次修正
+\cite{BenekeEtAl2005}；BPRS 的回复则说“We disagree with their criticisms”~\cite{BauerEtAl2005}。本书只报告这一分歧，不作裁断。
+\end{remark}
+
+% -------------------------------------------------------------------------------------
+\section{\texorpdfstring{$B\to D\pi$}{B -> D pi}：全阶因子化}\label{sec:b-dpi}
+
+对重–轻末态（旁观者进入 $D$），\cref{eq:qcdf-fact} 中没有硬旁观者项：旁观者图
+\[
+\sim G_F\as f_\pi f_Df_B\int\frac{\Phi_B}{\xi}\int\frac{\Phi_D}{\eta}\int\frac{\Phi_\pi}{u}\sim G_F\as m_b\Lambda^2,
+\]
+而领头项 $G_Fm_b^2F^{B\to D}f_\pi\sim G_Fm_b^2\Lambda$，前者被 $\Lambda/m_b$ 压低（BBNS 2000；\texttt{s4\_\allowbreak bbns.py}，A 部分）。弱湮灭同样被压低。
+若旁观者进入轻介子而另一个介子是重的，因子化不成立，但这类振幅也是幂次压低的~\cite{BenekeEtAl2000}。
+
+\begin{theorem}[$B\to D\pi$ 的因子化（Bauer--Pirjol--Stewart）]\tagA\label{thm:b-dpi}
+对 $\bar B^0\to D^+\pi^-$ 与 $B^-\to D^0\pi^-$，在 $Q=\{m_b,m_c,E_\pi\}\gg\Lambda$ 的极限下，算符
+$O_{\bf0}=[\bar c\gamma^\mu P_Lb][\bar d\gamma_\mu P_Lu]$ 与 $O_{\bf8}=[\bar c\gamma^\mu P_LT^ab][\bar d\gamma_\mu P_LT^au]$ 的矩阵元为
+\begin{equation}\label{eq:bdpi-fact}
+\langle D\pi|O_{{\bf0},{\bf8}}|B\rangle=N\,F^{B\to D}(0)\int_0^1\dd x\,T_{{\bf0},{\bf8}}(x,\mu)\,\phi_\pi(x,\mu),\qquad N=\frac{\ii}{2}m_BE_\pi f_\pi,
+\end{equation}
+对 $\as$ 的所有阶成立，修正被 $1/m_b$、$1/m_c$、$1/E_\pi$ 压低~\cite{BauerPirjolStewart2001}。这里 $F^{B\to D}(0)$ 是 $q^2=0$ 处的形状因子
+（在重夸克极限下 $F^{B\to D}(0)=\frac12\sqrt{m_D/m_B}\,(1+m_B/m_D)\,\xi(v\cdot v')$），$T$ 是可计算的短程系数。
+\emph{附加假设}（原文明确声明）：“We will assume that the tail end of wavefunctions are suppressed by $\lambda^a$ with $a>0$”，
+它用来证明弱湮灭与硬旁观者贡献的幂次压低。
+\end{theorem}
+
+\begin{proofsketch}
+(1) \emph{模式}：$b$、$c$ 用 HQET 场；软夸克与胶子（$\sim Q\lambda$，$\lambda=\Lambda/Q$）；$\pi$ 的共线组分；超软模式。
+(2) \emph{树图匹配}到 $Q_{\bf0}=[\bar h_{v'}\Gamma_hh_v][\bar\xi\Gamma_\ell\xi]$ 与 $Q_{\bf8}=[\bar h_{v'}\Gamma_h(W^\dagger T^AW)h_v][\bar\xi\Gamma_\ell T^A\xi]$；
+对色单态算符 $W^\dagger W=1$“encodes … that collinear gluon interactions from the $b$ and $c$ quarks cancel identically to all orders”。
+(3) 在 $\order{\lambda^0}$ 只有 $n\cdot A_s$ 的软胶子与共线粒子耦合，且软动量不进入共线传播子；由 Ward 恒等式它们因子化为
+$S=P\exp\big[\ii g\int n\cdot A_s\big]$。对 $Q_{\bf0}$，$S^\dagger S=1$；对 $Q_{\bf8}$，色迹 $\Tr[\,\cdots W^\dagger T^AW\,]\propto\Tr\,T^A=0$ 使矩阵元为零。
+(4) 共线规范不变性把硬系数限制为 $\bar\xi W\,C(\Pbar_+)\,\Gamma W^\dagger\xi$ 的形式，从而给出与 $\phi_\pi$ 的卷积，$T(x,\mu)=C^1_{\bf0}(\mu,2(2x-1)E_\pi)$。
+原文强调“It is not necessary to assume that the pion state is dominated by the $q\bar q$ Fock state”、“it was not necessary to set the transverse momenta
+of partons to zero”，且证明适用于其他 I 类衰变~\cite{BauerPirjolStewart2001}。BBNS 2000 此前在两圈分析了红外奇异性并证明其相消，但明言
+“the following does not accomplish an all-order `proof'”~\cite{BenekeEtAl2000}；两圈硬散射核见 \cite{HuberKranklLi2016}。
+状态为 \tagA：SCET 中的全阶论证，以上述端点假设与 \cref{rem:eft-assumptions} 为前提。早期的论证见 \cite{Bjorken1989,DuganGrinstein1991,PolitzerWise1991}。
+\end{proofsketch}
+
+\paragraph{色透明性的数值检验。}
+一个软胶子与 $\pi$ 的共线色单态 $q\bar q$ 对的程函耦合在领头幂次相消，剩余是 $\propto k_T/E$ 的偶极项：当 $k_T$ 减小 $10^2$ 倍时，
+相对大小由 $6.9\times10^{-2}$ 降到 $6.6\times10^{-4}$，即 $\order{\Lambda/m_b}$（\texttt{s4\_\allowbreak bbns.py}，F 部分）。这就是步骤 (3) 中 $S^\dagger S=1$ 的物理内容。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=1.0]
+  \coordinate (W) at (0,0);
+  \draw[hadron blob] (-2.7,-0.55) ellipse[x radius=0.32cm,y radius=0.72cm]; \node[font=\scriptsize] at (-2.7,-0.55) {$\bar B$};
+  \draw[hadron blob] (2.7,-0.55) ellipse[x radius=0.32cm,y radius=0.72cm]; \node[font=\scriptsize] at (2.7,-0.55) {$D$};
+  \draw[jet blob] (0.9,2.05) ellipse[x radius=0.7cm,y radius=0.27cm]; \node[font=\scriptsize] at (0.9,2.05) {$\pi$};
+  \draw[quark] (-2.45,-0.17) -- node[above,font=\scriptsize]{$b$} (W);
+  \draw[quark] (W) -- node[above,font=\scriptsize]{$c$} (2.45,-0.17);
+  \draw[quark] (2.45,-0.95) -- (-2.45,-0.95);
+  \draw[quark] (W) -- (0.52,1.85); \draw[quark] (1.28,1.85) -- (W);
+  \draw[gluon] (-1.2,-0.95) to[out=80,in=200] (0.28,1.0);
+  \draw[gluon] (1.6,-0.95) to[out=100,in=-20] (0.95,1.0);
+  \node[vertex] at (0.28,1.0) {}; \node[vertex] at (0.95,1.0) {};
+  \node[opvertex] at (W) {};
+  \node[font=\scriptsize,align=left,anchor=west] at (1.5,1.0) {软胶子与色单态\\[-1pt]共线对的耦合相消};
+\end{tikzpicture}
+\caption{$B\to D\pi$ 的色透明性：点源产生的共线 $q\bar q$ 对是色单态，软胶子与它的程函耦合在领头幂次相消（\cref{thm:b-dpi} 证明的步骤 (3)）。}
+\label{fig:b-dpi}
+\end{figure}
+
+\paragraph{相关结果。}
+色压低的 $\bar B^0\to D^0M^0$：Mantry--Pirjol--Stewart 证明了一个因子化定理，其中色压低振幅与 $W$ 交换/弱湮灭振幅都在最低阶贡献，
+“so no power suppression of annihilation contributions is found”~\cite{MantryPirjolStewart2003}。重–轻形状因子：Beneke--Feldmann 证明了
+形状因子因子化公式在微扰论各阶成立，办法是把端点区域的贡献纳入“普适形状因子”的定义~\cite{BenekeFeldmann2004}；
+Bauer--Pirjol--Stewart 给出了无端点奇异性的另一种分离~\cite{BauerPirjolStewart2003}。
+
+\paragraph{本节状态小结。}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.36\linewidth} l >{\raggedright\arraybackslash}X@{}}
+\toprule
+陈述 & 状态 & 依据 \\
+\midrule
+\cref{thm:b-dpi}（$B\to D\pi$，领头幂次，全阶） & \tagA & BPS 2001（含端点假设）；BBNS 2000 两圈；HKL 2016 两圈核 \\
+\cref{prop:b-pipi}（两个轻介子，领头幂次） & \tagA & $\order{\as}$ 证明；$T^{\rm I}$ 到 $\order{\as^2}$、$T^{\rm II}$ 到 $\order{\as^2}$ 红外有限；SCET 分析；分歧见 \cref{rem:qcdf-dispute} \\
+\cref{prop:qcdf-log}（$12\ln(m_b/\mu)$） & \tagR & RG 不变性 \\
+弱湮灭、扭度 3 旁观者的标准因子化 & \tagV & 卷积显式发散 \\
+$X_A$、$X_H$ 参数化 & 模型 & 依赖截断方式（\cref{rem:qcdf-prescription}） \\
+次领头幂次端点发散的再因子化（$B\to M_1M_2$） & \tagC & 只在其他过程中实现~\cite{LiuNeubert2020} \\
+\bottomrule
+\end{tabularx}
+\end{center}

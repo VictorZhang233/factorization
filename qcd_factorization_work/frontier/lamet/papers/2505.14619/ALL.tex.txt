@@ -1,0 +1,451 @@
+
+%%%%%% FILE: prd_revised.tex
+\documentclass[prd,twocolumn,superscriptaddress,preprintnumbers,showpacs,nofootinbib,notitlepage,floatfix]{revtex4-2}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{slashed}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{mwe}
+\usepackage{mathrsfs}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[normalem]{ulem}
+
+\DeclareMathOperator\Det{Det}
+\DeclareMathOperator\re{Re}
+\DeclareMathOperator\im{Im}
+
+%  shortcuts for citation related commands
+%
+\DeclareRobustCommand{\Eq}[1]{Eq.~\eqref{eq:#1}}
+\DeclareRobustCommand{\eq}[1]{Eq.~\eqref{eq:#1}}
+\DeclareRobustCommand{\Eqs}[2]{Eqs.~\eqref{eq:#1} and \eqref{eq:#2}}
+\DeclareRobustCommand{\eqs}[2]{Eqs.~\eqref{eq:#1} and \eqref{eq:#2}}
+\DeclareRobustCommand{\eqss}[3]{Eqs.~\eqref{eq:#1}, \eqref{eq:#2} and \eqref{eq:#3}}
+\DeclareRobustCommand{\fig}[1]{Fig.~\ref{fig:#1}}
+\DeclareRobustCommand{\figs}[2]{Figs.~\ref{fig:#1} and \ref{fig:#2}}
+\DeclareRobustCommand{\app}[1]{App.~\ref{app:#1}}
+\DeclareRobustCommand{\sec}[1]{Sec.~\ref{sec:#1}}
+\DeclareRobustCommand{\secs}[2]{Secs.~\ref{sec:#1} and \ref{sec:#2}}
+\DeclareRobustCommand{\tbl}[1]{Table~\ref{tbl:#1}}
+\DeclareRobustCommand{\refcite}[1]{Ref.~\cite{#1}}
+\DeclareRobustCommand{\refcites}[1]{Refs.~\cite{#1}}
+
+\DeclareRobustCommand{\eq}[1]{Eq.~(\ref{eq:#1})}
+\DeclareRobustCommand{\eqs}[2]{Eqs.~(\ref{eq:#1}) and (\ref{eq:#2})}
+
+% Draft Editing Macros
+\newcommand{\kl}[1]{{\color{red}{#1}}}
+\newcommand{\kll}[1]{{\color{blue}{#1}}}
+\newcommand{\MS}{{\overline{\mathrm{MS}}}}
+\newcommand{\df}{\mathrm{d}}
+\newcommand{\img}{\mathrm{i}}
+\newcommand{\eps}{\epsilon}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\nn}{\nonumber}
+\newcommand{\bn}{{\bar{n}}}
+\newcommand{\as}{\alpha_s}
+\newcommand{\LQCD}{\Lambda_\mathrm{QCD}}
+\newcommand{\UV}{\mathrm{UV}}
+\newcommand{\IR}{\mathrm{IR}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\TMD}{\mathrm{TMD}}
+\newcommand{\bt}{\vec b_T}
+\newcommand{\kt}{\vec k_T}
+\newcommand{\pt}{\vec p_T}
+\newcommand{\qt}{\vec q_T}
+\newcommand{\ns}{{\rm ns}}
+\newcommand{\pb}{{p{\cdot}b}}
+\newcommand{\cR}{{\tilde R}}
+\newcommand\bets{\begin{table*}}
+\newcommand\eets[1]{\label{tb:#1}\end{table*}}
+\newcommand\scetii{SCET$_{\rm  II}$}
+\newcommand\snb{\slashed{\bar n}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{LaMET's Asymptotic Extrapolation vs. Inverse Problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{Jiunn-Wei Chen}
+% \email{jwc@phys.ntu.edu.tw}
+\affiliation{Department of Physics and Center for Theoretical Physics,
+National Taiwan University, Taipei, Taiwan 106}
+\affiliation{Physics Division, National Center for Theoretical Sciences, Taipei 10617, Taiwan}
+
+\author{Xiang Gao}
+\affiliation{Physics Department, Brookhaven National Laboratory, Upton, New York 11973, USA}
+
+\author{Jinchen He}
+\affiliation{Department of Physics, University of Maryland, College Park, MD 20850, USA}
+\affiliation{Physics Division, Argonne National Laboratory, Lemont, IL 60439, USA}
+
+\author{Jun Hua}
+% \email{junhua@scnu.edu.cn}
+\affiliation{Key Laboratory of Atomic and Subatomic Structure and Quantum Control (MOE), Guangdong Basic Research Center of Excellence for Structure and Fundamental Interactions of Matter, Institute of Quantum Matter, South China Normal University, Guangzhou 510006, China}
+\affiliation{Guangdong-Hong Kong Joint Laboratory of Quantum Matter, Guangdong Provincial Key Laboratory of Nuclear Science, Southern Nuclear Science Computing Center, South China Normal University, Guangzhou 510006, China}
+
+\author{Xiangdong Ji}
+% \email{xji@umd.edu}
+\affiliation{Department of Physics, University of Maryland, College Park, MD 20850, USA}
+
+\author{Andreas Sch\"afer}
+% \email{andreas.schaefer@physik.uni-regensburg.de}
+\affiliation{Institut f\"ur Theoretische Physik, Universit\"at Regensburg, D-93040 Regensburg, Germany}
+\affiliation{Department of Physics, National Taiwan University, Taipei, Taiwan 106}
+
+\author{Yushan Su}
+\affiliation{Department of Physics, University of Maryland, College Park, MD 20850, USA}
+
+\author{Wei Wang}
+% \email{wei.wang@sjtu.edu.cn}
+\affiliation{State Key Laboratory of Dark Matter Physics, School of Physics and Astronomy, Shanghai Jiao Tong University,  Shanghai 200240, China}
+
+\author{Yi-Bo Yang}
+% \email{ybyang@itp.ac.cn}
+\affiliation{CAS Key Laboratory of Theoretical Physics, Institute of Theoretical Physics, Chinese Academy of Sciences, Beijing 100190, China}
+\affiliation{University of Chinese Academy of Sciences, School of Physical Sciences, Beijing 100049, China}
+\affiliation{School of Fundamental Physics and Mathematical Sciences, Hangzhou Institute for Advanced Study, UCAS, Hangzhou 310024, China}
+\affiliation{International Centre for Theoretical Physics Asia-Pacific, Beijing/Hangzhou, China}
+
+\author{Jian-Hui Zhang}
+% \email{zhangjianhui@cuhk.edu.cn}
+\affiliation{School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen 518172, China}
+
+\author{Qi-An Zhang}
+% \email{zhangqa@buaa.edu.cn}
+\affiliation{School of Physics, Beihang University, Beijing 102206, China}
+
+\author{Rui Zhang}
+\affiliation{Physics Division, Argonne National Laboratory, Lemont, IL 60439, USA}
+
+\author{Yong Zhao}
+% \email{yong.zhao@anl.gov}
+\affiliation{Physics Division, Argonne National Laboratory, Lemont, IL 60439, USA}
+
+\begin{abstract}
+
+Large-Momentum Effective Theory (LaMET) is a physics-guided systematic expansion to calculate light-cone parton distributions, including collinear (PDFs) and transverse-momentum-dependent ones, at any fixed momentum fraction $x$ within a range of $[x_{\rm min}, x_{\rm max}]$. It theoretically solves the ill-posed inverse problem that afflicts other theoretical approaches to collinear PDFs, such as short-distance factorizations. 
+Recently, arXiv:2504.17706~\cite{Dutrieux:2025jed} raised practical concerns about whether current or even future lattice data will have sufficient precision in the sub-asymptotic correlation region to support an error-controlled extrapolation---and if not, whether it becomes an inverse problem where the relevant uncertainties cannot be properly quantified. While we agree that not all current lattice data have the desired precision to qualify for an asymptotic extrapolation, some calculations do, and more are expected in the future. We comment on the analysis and results in Ref.~\cite{Dutrieux:2025jed} and argue that a physics-based systematic extrapolation still provides the most reliable error estimates, even when the data quality is not ideal. In contrast, re-framing the long-distance asymptotic extrapolation as a data-driven-only inverse problem with {\it ad hoc} mathematical conditioning could lead to unnecessarily conservative errors.
+
+\end{abstract}
+
+\maketitle
+
+\section{The Problem}
+
+Over the past decade, there has been significant progress in the lattice QCD calculation of parton physics, including parton distribution functions (PDFs), generalized parton distributions (GPDs), and transverse-momentum-dependent distributions (TMDs), etc. During this period, quite a few methods~\cite{Liu:1993cv,Detmold:2005gg,Braun:2007wv,Davoudi:2012ya,Ji:2013dva,Radyushkin:2017cyf,Ma:2017pxb,Chambers:2017dov,Shindler:2023xpd} have been developed to complement the traditional approaches of computing the lowest few moments of the parton distributions, aiming at either higher moments or the $x$-dependence of parton distributions. Among them, Large-Momentum Effective Theory (LaMET)~\cite{Ji:2013dva,Ji:2014gla,Ji:2020ect}, also known as the quasi-PDF method in the calculation of collinear PDFs, provides the most general framework for computing PDFs, GPDs, and TMDs, as well as light-cone wave functions. It has so far been the most widely adopted approach, achieving significant successes across all frontiers of parton physics~\cite{Xiong:2013bka,Lin:2014zya,Ji:2014hxa,Ji:2014lra,Sufian:2014jma,Ji:2015qla,Xiong:2015nua,Alexandrou:2016eyt,Chen:2016utp,Lin:2016qia,Yang:2016nfc,Yang:2016plb,Alexandrou:2017dzj,Alexandrou:2017huk,Alexandrou:2017qpu,Chen:2017mie,Chen:2017mzz,Constantinou:2017sej,Ishikawa:2017iym,Ji:2017oey,Ji:2017rah,Lin:2017ani,Stewart:2017tvs,Xiong:2017jtn,Zhang:2017bzy,Zhang:2017zfe,Alexandrou:2018eet,Alexandrou:2018pbm,Alexandrou:2018yuy,Chen:2018xof,Ebert:2018gzl,Fan:2018dxu,Izubuchi:2018srq,Ji:2018hvs,LatticeParton:2018gjr,Lin:2018pvv,Liu:2018hxv,Liu:2018tox,Zhang:2018diq,Zhang:2018nsy,Zhang:2018rls,Zhao:2018fyu,Alexandrou:2019dax,Alexandrou:2019lfo,Chai:2019rer,Chen:2019lcm,Constantinou:2019vyb,Ebert:2019tvc,Liu:2019urm,Shanahan:2019zcq,Wang:2019msf,Zhang:2019qiq,Alexandrou:2020qtt,Alexandrou:2020uyt,Alexandrou:2020zbe,Bhattacharya:2020cen,Bhattacharya:2020jfj,Chai:2020nxw,Chen:2020arf,Chen:2020iqi,Chen:2020ody,Ebert:2020gxr,Fan:2020nzz,Gao:2020ito,Hua:2020gnw,Ji:2020brr,Ji:2020ect,Ji:2020jeb,LatticeParton:2020uhz,Lin:2020fsj,Lin:2020rxa,Lin:2020ssv,Shanahan:2020zxr,Shugert:2020tgq,Vladimirov:2020ofp,Zhang:2020dkn,Zhang:2020gaj,Zhang:2020rsx,Alexandrou:2021bbo,Alexandrou:2021oih,Bhattacharya:2021moj,Bhattacharya:2021rua,Constantinou:2021nbn,Dodson:2021rdq,Gao:2021hxl,Gao:2021dbh,LatticePartonLPC:2021gpi,Li:2021wvl,Lin:2021brq,Lin:2021ukf,Scapellato:2021uke,Schlemmer:2021aij,Shanahan:2021tst,Bhattacharya:2022aob,Constantinou:2022fqt,Deng:2022gzi,Ebert:2022fmh,Gao:2022iex,Gao:2022uhg,LatticeParton:2022xsd,LatticeParton:2022zqc,LatticePartonCollaborationLPC:2022myp,LatticePartonLPC:2022eev,Scapellato:2022mai,Schindler:2022eva,Zhang:2022xuw,Alexandrou:2023ucc,Avkhadiev:2023poz,Bhattacharya:2023jsc,Bhattacharya:2023nmv,Bhattacharya:2023tik,Cichy:2023dgk,Deng:2023csv,Gao:2023ktu,Gao:2023lny,Holligan:2023jqh,Holligan:2023rex,Ji:2023pba,LatticeParton:2023xdl,LatticePartonLPC:2023pdv,Lin:2023gxz,Zhao:2023ptv,Liu:2023onm,Avkhadiev:2024mgd,Baker:2024zcd,Bollweg:2024zet,Chen:2024rgi,Cloet:2024vbv,Ding:2024saz,Gao:2024fbh,Good:2024iur,Han:2024min,Holligan:2024umc,Holligan:2024wpv,Ji:2024hit,LatticeParton:2024mxp,LatticeParton:2024vck,LatticeParton:2024zko,Miller:2024yfw,Mukherjee:2024xie,Spanoudes:2024kpb,Zhang:2024omt,Bollweg:2025ecn,Bollweg:2025iol,Han:2025odf,Holligan:2025ydm,LPC:2025spt,Zhang:2025hvf,Ji:2025mvk,Ji:2015jwa,Chen:2016fxx,Zhang:2018ggy,Braun:2018brg,Wang:2019tgg,Ji:2021uvr,Su:2022fiu,Zhu:2022bja,Yao:2022vtp,Pang:2024sdl,Han:2024cht}.
+
+LaMET is a physics-guided effective field theory (EFT) expansion of light-cone parton distributions, including the PDFs, GPDs, and TMDs, at any fixed momentum fraction $x$ within a moderate range of $[x_{\rm min}, x_{\rm max}]$~\cite{Ji:2024oka}, in terms of the quark and gluon momentum distributions in a fast moving hadron, aka the quasi distributions~\cite{Ji:2013dva}. As an important advantage, it bypasses the inverse problem (IP) of reconstructing the PDF $x$-dependence from correlations of limited range, which afflicts other theoretical approaches such as the short-distance factorization (SDF), including the pseudo-PDF~\cite{Radyushkin:2017cyf,Orginos:2017kos} and ``good lattice cross section''~\cite{Ma:2017pxb}. The SDF approach has also gained notable traction and led to substantial progress in extracting the lowest Mellin moments and phenomenological fitting of collinear PDFs and GPDs~\cite{Karpie:2017bzm,Orginos:2017kos,Radyushkin:2017lvu,Radyushkin:2017sfi,Karpie:2018zaz,Radyushkin:2018cvn,Radyushkin:2018nbf,Balitsky:2019krf,Joo:2019bzr,Joo:2019jct,Karpie:2019eiq,Radyushkin:2019mye,Radyushkin:2019owq,Sufian:2019bol,Bhat:2020ktg,Bringewatt:2020ixn,DelDebbio:2020rgv,Fan:2020cpa,Joo:2020spy,Li:2020xml,Shugert:2020tgq,Sufian:2020vzb,Zhao:2020bsx,Balitsky:2021bds,Balitsky:2021cwr,Balitsky:2021qsr,Egerer:2021ymv,Fan:2021bcr,HadStruc:2021qdf,HadStruc:2021wmh,Karpie:2021pap,Salas-Chavira:2021wui,Bhat:2022mjv,Bhat:2022zrw,Delmar:2022plq,Fan:2022kcb,Gao:2022uhg,Gao:2022vyh,HadStruc:2022nay,HadStruc:2022yaw,JeffersonLabAngularMomentumJAM:2022aix,Bhattacharya:2023ays,Delmar:2023agv,Dutrieux:2023zpy,Good:2023gai,Karpie:2023nyg,Nurminen:2023qok,Radyushkin:2023ref,Bhattacharya:2024qpp,Bhattacharya:2024wtg,Blossier:2024wyx,Cheng:2024wyu,Cichy:2024afd,Dutrieux:2024rem,HadStruc:2024rix,Karpie:2024bof,Kovner:2024pwl,SanJosePerez:2024axh,SanJosePerez:2024fad,Pang:2024kza,Ji:2025mvk}, despite challenges in controlling the model uncertainty in the latter and its limited applicability to a broader range of parton physics.
+ 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{fig1.pdf}
+    \caption{An illustration of the difference between LaMET and SDF: LaMET in principle utilizes data at all $z$ to sharply resolve the momentum of a parton, though in practice they are usually truncated at $z_L\sim 1.0$~fm due to noisy data and extrapolated using physics-motivated asymptotic forms to $z=\infty$~\cite{Ji:2020brr}. Meanwhile, the SDF can only use data up to about $z_{\rm max}\sim 0.2-0.3$~fm (shaded blue region) to fit a model of the PDF, which constitutes an IP. Plotted are the hybrid-scheme nucleon transversity quasi-PDF matrix elements computed in Ref.~\cite{LatticeParton:2022xsd}. The shaded-red ellipse approximately indicates the sub-asymptotic region where the exponential decay starts to dominate. The concern raised in ~\cite{Dutrieux:2025jed} is whether the data precision in this region allows for a reliable error estimate of the extrapolation; otherwise, it must be treated as an IP.}
+    \label{fig:hz}
+\end{figure}
+
+We illustrate the difference between LaMET and SDF in \fig{hz}, both of which start from the lattice matrix element~\cite{Ji:2013dva,Radyushkin:2017cyf},
+\begin{align}
+    h(z,P) &= {1\over 2P^t}\langle P| \bar{\psi}(z) W(z,0) \gamma^t \psi(0)|P\rangle\,,
+\end{align}
+where $|P\rangle$ is a plane-wave hadron state with momentum $P^\mu=(P^t,0,0,P^z)$, and $W(z,0)$ with $z^\mu=(0,0,0,z)$ is a spatial Wilson line that guarantees the gauge invariance of the correlator. In SDF, the data contain leading-twist information up to about $z=0.2-0.3$~fm, beyond which the framework breaks down. For instance, the average size of the instanton, a non-perturbative gluon configuration, is about 0.3~fm~\cite{Nowak:1996aj,Schafer:1996wv}. At finite momentum $P^z$, only a limited range of leading-twist correlations can be accessed, which is insufficient for a reliable forward determination of the PDFs. Instead, this segment of correlations can be used for phenomenological fittings of the PDFs.
+In contrast, LaMET legitimately utilizes matrix elements at all $z$ to compute the quasi-PDF, thereby providing a sharply-defined momentum fraction $x$ for quarks and gluons. This explains why LaMET can calculate the PDFs at a fixed momentum fraction $x$ through a systematic expansion. This distinction between LaMET and SDF has been extensively discussed in the literature~\cite{Ji:2020ect,Ji:2020brr,Ji:2020byp,Ji:2022ezo,Ji:2024oka}, where it is argued that, given the same lattice data at a large $P^z$, LaMET offers the most accurate determination of a PDF within a moderate range of $x$.
+ 
+Recently, Ref.~\cite{Dutrieux:2025jed} raised practical concerns about whether lattice data in the sub-asymptotic region, i.e., $0.7~\text{fm} \lesssim z \lesssim 1.0~\text{fm}$ presented there, are precise enough for a controlled physical extrapolation to larger $z$. If not, this could adversely impact the Fourier transform (FT) used to obtain quasi-PDFs for the LaMET expansion, rendering the error estimation in the literature possibly unreliable. Various data-driven IP methods~\cite{rietsch1976maximum,burnier2013bayesian,liang2020towards,backus1968resolving,DelDebbio2025Bayesian}
+were proposed to treat the FT, yielding large uncertainties of the reconstructed quasi-PDF, dubbed as ``inverse problem in the LaMET framework''.
+
+In this paper, we directly respond to these concerns. In \sec{theory}, we first briefly review the fundamental difference in the predictive capabilities of LaMET and SDF, based on the extensive discussions in Refs.~\cite{Ji:2020brr,Ji:2020ect,Ji:2020byp,Ji:2022ezo,Ji:2024oka}, emphasizing LaMET as a forward-problem (FP) formalism of calculating, not fitting, parton distributions. Then in \sec{asymptotic} we point out that the alleged IP in LaMET application to lattice data is a standard asymptotic extrapolation problem in lattice QCD, which can be systematically treated with reliable error estimates. In \sec{response}, we examine in detail the criticisms and data analysis in Ref.~\cite{Dutrieux:2025jed}, and conclude that the observed FT errors can be bounded by a theoretical estimate based on asymptotic extrapolation, and the data-driven IP methods used are less reliable as they do not satisfy the physical constraints. We conclude in \sec{end}. Finally, since the authors of Ref.~\cite{Dutrieux:2025jed} recently commented~\cite{Dutrieux:2025axb} on our current paper, we provide a response in \app{reply}.
+
+\section{LaMET As a Forward-Problem Formalism}
+\label{sec:theory}
+
+LaMET is an application of the EFT methods developed by Weinberg and Wilson, among others~\cite{Ji:2024oka}.
+This EFT allows for a systematic expansion of the light-cone observables in terms of similar ones in a large-momentum hadron. Although motivated by lattice QCD, LaMET is applicable to any other theories that can generate
+observables in a large-momentum hadron state, for example, the instanton liquid formalism for hadrons~\cite{Nowak:1996aj,Schafer:1996wv}.
+
+Here is a brief summary of the main idea of LaMET. Light-cone physics corresponds to observables in a hadron with infinite momentum. If the equivalent observables in a large-momentum hadron are known, then the light-cone observables can be obtained through a large-momentum expansion. For example, the light-cone PDF $f(x, \mu)$ can be expanded from the momentum distribution (quasi-PDF) in a hadron of large momentum, $\tilde f(y,P^z)$, through the EFT formula
+\begin{align}\label{eq:lamet2}
+    f(x,\mu) &=  \int_{-\infty}^\infty {dy\over |y|} C\Big({x\over y}, {\mu \over y P^z}\Big) \tilde f(y,P^z) \nn\\
+    &\qquad + {\cal O}\Big( {\Lambda_{\mathrm{QCD}}^2\over (xP^z)^2}, {\Lambda_{\mathrm{QCD}}^2\over ((1-x)P^z)^2}\Big)\,,
+\end{align}
+where $C$ is a perturbative matching kernel, given as a series in the strong coupling $\alpha_s(\mu)$, and the power corrections are controlled by the external parton and spectator momenta $xP^z$ and $(1-x)P^z$, respectively. After taking into account evolution and higher-order perturbative corrections~\cite{Holligan:2023rex,Ji:2023pba,Ji:2024hit}, it is found that the matching at the leading power is reliable within a moderate range of $x\in [x_{\rm min}, x_{\rm max}]$ with $x_{\rm min} \approx 1- x_{\rm max} \sim {\Lambda_{\rm QCD}/(2P^z)}$. Another example of such an EFT expansion in terms of the quasi-PDF 
+can be found in the deep-inelastic scattering cross section in Ref.~\cite{Ji:2024oka}.
+
+The momentum distribution $\tilde f(y,P^z)$ is the starting point of the LaMET expansion for PDFs, which is obtained from the coordinate-space correlation $h(z,P)$ computed on the lattice. The latter is a spatial correlation function that decays exponentially in the \textbf{asymptotic} region $z>z_A$. In contemporary lattice simulations, high-precision data are reachable 
+in the \textbf{sub-asymptotic} region $z_{SA} \le z \le z_A$ before the decay is fully dominant. 
+For the nucleon, one may expect $z_{SA} \sim 0.5$~fm and $z_A \sim 1.2$~fm, which can be more precisely identified with high-quality lattice data. 
+Augmented with a physics-driven systematic extrapolation from the information in the sub-asymptotic region, one can obtain the full coordinate-space
+correlations. The results provide the needed input to calculate the quasi-distributions, 
+\begin{align}\label{eq:qpdf}
+    \tilde f(y, P^z) \equiv P^z\int_{-\infty}^\infty {d z \over 2\pi}e^{iy P^z z} h(z, P)\,.
+\end{align}
+As presented in \eq{qpdf}, the alleged IP in Ref.~\cite{Dutrieux:2025jed} is essentially a matter of convergence and precision of the numerical Fourier integral, which are influenced by the interpolation and extrapolation of lattice data points in $z$-space. The smoothness of correlation functions in a bounded hadron ensures that the interpolation errors are small, while their asymptotic behavior at large distances controls the extrapolation uncertainty.
+
+Since perturbative matching is already encoded in an EFT, it does not introduce an additional IP in the region where the framework is valid. In the literature, the coefficient $C$ in \eq{lamet2} has been derived by inverting the kernel that matches the PDF onto the quasi-PDF\cite{Xiong:2013bka,Izubuchi:2018srq}, which raised the question of whether this procedure constitutes an IP. To address this concern, we note that the leading-power matching kernel can be inverted order by order in $\alpha_s$, since the calculation is performed in the asymptotic limit $P^z \to \infty$ where perturbation theory is valid across the entire kinematic range. However, at finite $P^z$, both perturbation theory and the power expansion break down in certain kinematic regions. As a result, \eq{lamet2} and the expansion of the quasi-PDF in terms of the PDF correspond to two distinct EFT expansions, which cannot be transformed into one another. This comparison is analogous to that between the quasi- and pseudo-PDFs~\cite{Ji:2020brr,Ji:2020ect,Ji:2020byp,Ji:2022ezo,Ji:2024oka}.
+
+In practice, there may still be concern about whether the FT uncertainty at small-$x$ in the quasi-PDF will propagate to moderate $x$ after its convolution with the matching kernel in \eq{lamet2}. First, matching is performed between the collinear modes in the quasi-PDF and those in the PDF~\cite{Ji:2020ect,Ji:2020byp,Ji:2022ezo,Ji:2024oka}, with a hard momentum $xP^z$. In contrast, contributions from soft modes with $x\to0$ are power suppressed. 
+
+This suppression can also be derived from the structure of the matching kernel $C(x/y)$. For example, up to next-to-leading order (NLO),
+\begin{align}
+    C\Big({x\over y}\Big) &= \delta \Big({x\over y}-1\Big) + {\alpha_s \over 2\pi} C^{(1)}\Big({x\over y}\Big)\,,\\
+    C^{(1)}\Big({x\over y}\Big) &= C^{(1)}_r\Big({x\over y}\Big) - \delta\Big({x\over y}-1\Big) \int_{-\infty}^\infty dy' C^{(1)}_r(y')\,.
+\end{align}
+At leading order, matching does not change the quasi-PDF. At NLO, in the limit $|x/y|\gg1$,
+\begin{align}
+    \lim_{|x/y|\gg1}C^{(1)}_r\Big({x\over y}\Big) \propto \Big({y\over x}\Big)^2\,.
+\end{align}
+For finite $x$, the dominant contribution to the matching integral arises from the region $|y| \gtrsim |x|$, while contributions from $|y| \ll x$ are suppressed quadratically. 
+In practice, the range of $x$ targeted in LaMET analyses lies well above the small-$x$ region where FT uncertainties become significant, rendering any contamination from the latter negligible.
+
+Therefore, according to \eqs{lamet2}{qpdf}, LaMET is an FP formalism in the lattice calculation of PDFs at moderate $x$, which is systematically improvable without an adverse IP.
+
+It is important to emphasize that in this formulation, the shapes and mathematical properties of the PDFs are not assumed a \textit{priori}, in contrast to the IP formulation for SDF~\cite{Dutrieux:2025jed}.
+In fact, PDFs are calculated one $x$ at a time, and the $x$-space functions come out as a prediction. Since no connections with partons are made before the large-momentum expansion, and the terms in SDF for the coordinate-space correlations---such as ``higher-twist contamination at large $z$''~\cite{Dutrieux:2025jed}---are irrelevant. 
+It is also unnecessary to invoke a notion of so-called smearing of order $O(\Lambda_{\rm QCD}/P_z)$ in $x$-space~\cite{Dutrieux:2025jed} to understand how LaMET works; in the standard EFT framework, the relevant systematics are accurately described by the power accuracy, which begins at $O(\Lambda_{\rm QCD}^2/P_z^2)$ in LaMET~\cite{Zhang:2023bxs}.
+Moreover, any variation in the PDF---as hypothesized in Ref.~\cite{Dutrieux:2025jed}---must either be predicted by LaMET or lie within its overall uncertainty band. If an undetected large, sharp variation exists in the quasi-PDF, it would correspond to a persistent long-range mode in coordinate space, which is ruled out by color confinement. If such a feature were to appear only in the PDF at moderate $x$, it would require an equally large, oppositely signed variation in the power correction. This would contradict the convergence of the EFT expansion in the region where it is expected to hold. Importantly, this scenario can be readily tested by performing calculations at multiple values of $P^z$, yet no such behavior has been observed so far.
+
+On the other hand, reconstructing the PDFs from a limited segment of the leading-twist correlation in SDF is an IP that has uncontrolled uncertainties without additional physics input. For example, the pseudo-PDF method is based on the SDF of the same $h(z,P)$~\cite{Ji:2017rah,Radyushkin:2017lvu,Izubuchi:2018srq},
+\begin{align}\label{eq:sdf1}
+    h(z,P) &= \int_0^1 d\alpha\ {\cal C}(\alpha,z^2\mu^2) h_{\rm LC}(\alpha\lambda,\mu) + {\cal O}(z^2\Lambda_{\rm QCD}^2)\,,
+\end{align}
+where the quasi light-cone distance $\lambda=zP^z$, and the light-cone correlation function $h_{\rm LC}(\lambda,\mu)$ is the inverse FT of the PDF,
+\begin{align}\label{eq:pdf}
+    f(x,\mu) &\equiv \int_{-\infty}^\infty {d\lambda \over 2\pi}e^{i x\lambda} h_{\rm LC}(\lambda,\mu)\,.
+\end{align}
+Here ${\cal C}$ is the matching kernel, and the power corrections are suppressed by the short distance $z$. 
+After taking into account higher-order perturbative corrections~\cite{Gao:2021hxl,Holligan:2023rex,Zhang:2023bxs}, the SDF is found to be reliable up to $ z=0.2-0.3$~fm, which corresponds to the strong coupling constant $\alpha_s(1/z) \sim 1$ and the breakdown of perturbation theory. As a result, the largest $\lambda$ that can be reached in contemporary lattice simulations is limited to $\lambda_{\rm max}\sim 3.0-4.0$, which is far from the asymptotic region where the light-cone correlation decays algebraically. Therefore, the $x$-dependence of PDFs cannot be calculated directly and must instead be fitted through parametrizations and Bayesian or neural-network approaches with assorted numerical and mathematical assumptions~\cite{Orginos:2017kos,Karpie:2019eiq,DelDebbio:2020rgv,Dutrieux:2024rem}.
+
+\section{Asymptotic Extrapolation for Long-Range Correlations vs. Inverse Problem}
+\label{sec:asymptotic}
+
+To facilitate the LaMET analysis, one needs
+to have coordinate-space correlation functions in a large-momentum hadron at all distances $z\in [0,\infty]$, as information at negative $z$ can be obtained from discrete symmetries. It is well known that lattice QCD cannot produce quality data for $z\gg 1$~fm due to the exponentially worsening signal-to-noise ratio (SNR). Therefore, we cannot have all the data that LaMET requires. Fortunately, physical principles offer important guidance. Even without doing 
+a very challenging calculation, QCD predicts that the correlation function must effectively vanish at sufficiently large $z$ due to color confinement. In fact, more precise theoretical predictions are available. According to dispersion theory, the correlation function decays exponentially at large $z$ with the decay length controlled by the residual mass of a heavy-light meson~\cite{Gao:2021dbh}. Moreover, this mass is an intrinsic property of the correlation function in the sense that it is independent of the external hadron momentum. Through a more detailed analysis~\cite{Ji:2026vir}, one can derive subleading behaviors of the correlation function as well. Armed with these known rigid physics constraints, the lattice data can be reliably extrapolated to larger $z$ in the asymptotic region.
+
+\subsection{Asymptotic Extrapolation}
+
+Asymptotic expansion is essentially a generalization of the Taylor expansion in small parameters, which is widely used in theoretical physics, such as EFTs. It is also one of the most frequently used techniques in lattice QCD analyses, where the physical conditions are imposed as a prior. The precision of calculations is often assessed based on this procedure.
+
+Asymptotic fitting has been employed when extracting the ground-state energy from two-point correlation functions, where the SNR typically decreases exponentially at large Euclidean time separations. A stable extraction relies on whether the correlation functions at finite time have entered the asymptotic region dominated by the ground state, which is typically indicated by a plateau in the standard logarithmic ratio plot. To better describe data at finite time separations, sub-asymptotic contributions from excited states are often included, leading to more sophisticated fits with additional parameters. In more elaborate fits, contributions from two-body scattering states may also be included~\cite{Mondal:2020cmt,Mondal:2020ela,Mondal:2021oot}.
+
+Other examples include continuum and chiral extrapolations~\cite{Chen:2001eg,Arndt:2001ye,Chang:2018uxx}, where subleading effects from finite lattice spacing and unphysical pion masses are derived using EFTs and incorporated into fits to lattice data. In the same spirit, since dispersion relation analysis is a rigorous and model-independent method in theoretical physics, it supports the use of asymptotic extrapolation for spatial correlation functions as a standard and justified procedure.
+
+\subsection{Inverse Problem}
+\label{sec:def-inv}
+
+When data in the sub-asymptotic region is noisy and the number of fit parameters exceeds the number of reliable data points, the fits are unstable. This problem happens frequently in physics, and certain parameters are not well fitted or over-fitted, and the $\chi^2$ will have flat directions in the parameter space. In this case, one should either generate more and better data or limit the number of parameters in the fitting and estimate the errors based on the relevant physics conditions. Nevertheless, it is not usually regarded as an IP in the literature. 
+
+On the other hand, it has been suggested in Ref.~\cite{Dutrieux:2025jed} that in LaMET analysis, if the lattice data have large errors in the sub-asymptotic domain, one should treat the extrapolation as an IP, just like in the case of SDF where $\lambda_{\rm max} \sim 3.0-4.0$ is far from the asymptotic region of the leading-twist correlation function. While the IP method may initially appear to be an attractive option for tackling such problems, it is not suitable for LaMET analysis in its current form in Ref.~\cite{Dutrieux:2025jed}.
+
+IPs arise when there is a limited set of data points, yet there is an extraordinarily large number of parameters or degrees of freedom due to the absence of a coherent physical guidance. To proceed, one typically introduces specific parametrizations or models to reduce the degrees of freedom and make the fit tractable. However, if there are a large number of models possible, it is very difficult to assess the systematic errors, because it is hard to argue, based on physics, which model is better. IPs are generally ill-posed, in contrast to well-posed problems. Mathematically, the ill-posedness of an IP is characterized by three criteria proposed by Jacques Hadamard: ``existence, uniqueness, and stability of the solution with respect to the input data'' \cite{Hadamard:1923,Kirsch:2011}. A problem is considered ill-posed if it fails to meet any of these conditions. The ill-posedness typically manifests as an instability of the solution, which makes error estimation very difficult. 
+
+The global analysis of PDF from experimental data is a standard IP. As a continuous function of the momentum fraction $x$, PDFs are difficult to model. In fact, one might go so far as to say that {\it a PDF is a collection of an infinite number of parameters}. Of course, we believe that it is a continuous function and probably differentiable to a high degree except for $x=0$. A typical modelling of the PDF involves incorporating physics constraints like Regge behavior as $x\to0$ and power counting in the $x\to1$ limit. However, in the middle-$x$ region there is no physics-guided model, one has to interpolate the two end-point behaviors. Thus, unless there is a large number of experimental data points with wide kinematic coverage---which we fortunately have---and the smoothness assumptions are imposed, IP algorithms tend to generate many solutions with hard-to-estimate systematic errors. Indeed, at small and large $x$ where the data are sparse, the uncertainty of the PDF can become extremely large. It is challenging for IP methods to provide a reliable small-$x$ PDF in the absence of data constraints from high-energy experiments.
+
+The lattice QCD data analysis in the SDF framework is of a similar nature where one attempts to reconstruct a continuous PDF from a limited segment of leading-twist correlation. The model uncertainty in fitting the PDFs is difficult to quantify and has been shown to be significantly underestimated when using rigid parameterizations of their functional form---for example, see Refs.~\cite{Khan:2022vot,Chowdhury:2024ymm}. A particular IP method within the SDF framework was introduced in Ref.~\cite{Dutrieux:2024rem}, using the Gaussian Process Regression (GPR) with a logRBF kernel, defined as
+\begin{align}
+    K\left(x, x^{\prime}\right)=\sigma^2 \exp \left(-\frac{\left(\ln (x)-\ln \left(x^{\prime}\right)\right)^2}{2 \ell^2}\right) ~,
+\end{align}
+where the endpoint behaviors at $x = 0$ and $x = 1$ are not constrained by any fixed power-law exponents, as advocated in Ref.~\cite{Dutrieux:2024rem}. While the method is purported to be guided by physical motivations, there remains ambiguity not only in the choice of the kernel form and its hyperparameters but also in the motivations themselves. For example, the decision to fix the prior mean to ensure $100\%$ uncertainty at $x=0$, or to set the threshold of uncertainty in the extrapolation region to be $1.3$ times the error of $h(\lambda_{\rm max},P)$ or $0.3$ times its central value, reflects arbitrary prescriptions rather than principles derived from physical theory. In addition, $l=\ln(2)$ is not the only option to maintain a reasonable flexibility of $x$-dependence, a motivation for the GPR method. To illustrate the model uncertainty behind, an example in the SDF framework is presented in \fig{fx_con}. The transversity PDF is reconstructed from correlation functions at $z=0.26$~fm with proton momenta $P^z = 1.6, 2.0, 2.4, 2.8, 3.2$ GeV on the N203 ensemble, as reported in Ref.~\cite{LatticeParton:2022xsd}. Two sets of hyperparameters are employed for comparison, both of which preserve the smoothness and decorrelation between small and large $x$. As shown in \fig{fx_con}, these two settings lead to distinct posterior reconstructions, revealing a strong sensitivity to the choice of hyperparameters in the GPR method.
+
+\begin{figure}
+    \centering
+     \subfigure[~Reconstruction of the correlation function and its tail in $\lambda$-space.]{\includegraphics[width=0.9\linewidth]{LPC_SDF_N203_lambda_space_uncertainty.pdf}\label{fig:fx_conn_a}}
+     \subfigure[~Reconstruction of the transversity PDF in $x$-space.]{\includegraphics[width=0.9\linewidth]{LPC_SDF_N203_x_space_uncertainty.pdf}\label{fig:fx_conn_b}}
+   \caption{An example of an IP in the SDF framework: reconstruction of the PDF from short-distance correlation functions at $z=0.26$ fm with proton momenta $P^z = 1.6,2.0,2.4,2.8,3.2$ GeV on the N203 ensemble, as reported in Ref.~\cite{LatticeParton:2022xsd}.
+   The reconstruction is performed using the GPR method with the logRBF kernel proposed in Ref.~\cite{Dutrieux:2024rem}. 
+   To illustrate the model uncertainty arising from different hyperparameter choices, two sets of priors are compared: the red band corresponds to $l = 0.7 \approx \ln (2)$, $\sigma^2=16$ and prior mean $f(x) = 4$; the blue band corresponds to $l = 0.2 \approx \ln(1.25) $, $\sigma^2=2$ and prior mean $f(x) = 1$. 
+   }
+    \label{fig:fx_con}
+\end{figure}
+
+With limited lattice data, IP methods that rely primarily on mathematical constraints and minimal physics input often lead to uncontrolled and unrealistic uncertainties. Unlike asymptotic fits, which use rigorous, physically motivated functional forms with a small number of parameters, the IP method presented in Ref.~\cite{Dutrieux:2024rem} allows a broad space of solutions constrained only by abstract assumptions. While such flexibility is valuable for general problems, it limits reliability in extrapolating lattice data to the asymptotic region, where physical insight is essential. Until all the physical constraints in LaMET are fully integrated into IP frameworks, asymptotic analysis remains the most reliable approach for extrapolation.
+
+\subsection{Asymptotic Extrapolation in LaMET}
+\label{sec:phy-con} 
+
+The asymptotic extrapolation in LaMET begins with the physics constraint that spatial correlators in the hadrons decay exponentially, independent of hadron momentum. The asymptotic exponential behavior can be argued on many grounds, as well as derived from a dispersion-relation analysis, such as the one in the appendix of Ref.~\cite{Gao:2021dbh}. One can use the same strategy for the spectral analysis of two-point functions to see when the correlation enters the exponential decay region. While not all lattice calculations have passed this test successfully, certain data sets clearly do.
+
+An example is the zero-momentum lattice correlation function for the nucleon transversity quasi-PDF shown in \fig{lpc_me} from Ref.~\cite{LatticeParton:2022xsd}\footnote{Since Ref.~\cite{LatticeParton:2022xsd} is a state-of-the-art LaMET analysis for nucleon PDFs, we will use it as our example throughout this paper.}, where the exponential decay is clearly visible in the data. We use the standard ground-state fitting to find the decay constant $m_{\rm eff}$ in \fig{lpc_me_b}. The plateau or asymptotic region is reached after $z\sim 0.75$~fm for all lattice ensembles, where the data still have relatively high precision. The mass obtained here corresponds to a ``heavy-light'' meson, which has a linear divergence from the ``heavy quark''~\cite{Gao:2021dbh}. The linear divergence can be renormalized through a particular mass subtraction scheme (a constant shift in \fig{lpc_me_b}), and the residual mass in the renormalized correlator can be chosen to be on the order of $\Lambda_{\rm QCD}$, say, $0.2-0.3$ GeV, which depends on the renormalon regularization scheme in the matching coefficient~\cite{Zhang:2023bxs}. Since the light-cone PDF is renormalon free, this scheme dependence is canceled by the corresponding matching coefficient. Therefore, one can choose a proper scheme to shift the Wilson-line mass subtraction within $O(\Lambda_{\rm QCD})$ while maintaining the perturbative convergence and numerical stability of matching, so that the renormalized correlation function decays faster. This does not change the final uncertainty in the PDF but makes the FT easier to control. Note that this physical mechanism contradicts the interpretation in Ref.~\cite{Dutrieux:2025jed}, which attributes the exponential decay to the pion mass.
+\begin{figure}
+    \centering
+    \subfigure[~Bare matrix elements of the nucleon transversity quasi-PDF at zero momentum from four different lattice ensembles H102, N203, N302, and X650~\cite{LatticeParton:2022xsd}.]{\includegraphics[width=0.9\linewidth]{bare_zero_mom.pdf}\label{fig:lpc_me_a}}
+    \subfigure[~Effective mass ($m_{\mathrm{eff}} (z) = \ln (\tilde{f}^0 (z) / \tilde{f}^0 (z+a))$) extracted from the bare matrix elements, with colored bands indicating the outcomes of constant fits.]{\includegraphics[width=0.9\linewidth]{meff_zero_mom.pdf}\label{fig:lpc_me_b}}
+    \caption{An example of high-precision data in which we see clearly asymptotic exponential decay around $z=1$ fm.}
+    \label{fig:lpc_me}
+\end{figure}
+
+Since the leading exponential decay arises from gluon contributions that are independent of the hadron momentum, we expect the same matrix element to exhibit identical exponential decay behavior in a hadron state with large $P^z$. Therefore, the decay constant fitted from the zero-momentum matrix element can be used to constrain the exponential decay in large-$P^z$ matrix elements. 
+
+The extrapolation can be made more accurate by incorporating the asymptotic behavior of the correlation function, which can be derived from the dispersion relation~\cite{Gao:2021dbh}. For example, at large $z$ the pion matrix element behaves as
+\begin{align}\label{eq:asym}
+    \lim_{z\to\infty}h(z, P^z) &= A(P^z) {e^{-m_{\rm eff} z}\over z^d} e^{-iP^zz}\,,
+\end{align}
+where $A(P^z)$ denotes the product of pion-to-heavy-light meson transition form factors, which decrease with increasing $P^z$, reflecting a Lorentz contraction effect. Therefore, at nonzero $P^z$, the phase factor $e^{-iP^z z}$ predicts that the matrix element will change sign in the asymptotic region, a feature observed in many calculations, such as Refs.~\cite{Dutrieux:2025jed,LatticeParton:2022xsd}, which can be incorporated into extrapolation models. 
+
+While asymptotic extrapolation might be perceived as a model, it is in fact grounded in a rigorous derivation from the dispersion relation, effectively functioning as an EFT expansion. In the asymptotic limit, one typically begins with the leading behavior characterized by a finite number of parameters, and can systematically improve accuracy by including subleading terms. A more accurate and general asymptotic form for extrapolation will be provided in~\cite{Ji:2026vir}. 
+
+Of course, understanding the long tail of correlation functions—such as excited-state contamination—remains a challenging problem in many scenarios. For example, in the hadronic vacuum polarization (HVP) contribution to the muon’s anomalous magnetic moment, control over the tail is achieved through spectral decomposition~\cite{DellaMorte:2017dyu}; by exploiting the positivity of the correlator to impose rigorous upper and lower bounds~\cite{Borsanyi:2016lpl,Budapest-Marseille-Wuppertal:2017okr,RBC:2018dos,Gerardin:2019rua,Djukanovic:2024cmq}; or by using Bayesian model averaging to systematically combine multiple fit models and account for model-selection uncertainty~\cite{Jay:2020jkz,MILC:2024ryz,FermilabLatticeHPQCD:2024ppc}. The asymptotic extrapolation in LaMET faces similar issues and could benefit from techniques developed in such settings with EFT constraints. However, unlike the HVP case---which involves integrating the correlation function with a kernel that enhances the long-range contribution---the FT kernel $\exp(ixP^z z)$ in LaMET naturally suppresses this contribution at finite $x$. Even if uncertainty remains in reconstructing the long tail, the FT kernel still ensures an upper bound on it, provided that the exponential decay is encoded. We demonstrate this in the example in \sec{ft-error} below.
+
+If the lattice data within the sub-asymptotic region $[z_{SA}, z_A]$ (for the nucleon, $z_{SA} \sim 0.5$~fm and $z_A \sim 1.2$~fm) have sufficiently small errors, then the asymptotic extrapolation can be tightly constrained. This level of precision has been demonstrated for the renormalized transversity quasi-PDF matrix elements in Ref.~\cite{LatticeParton:2022xsd}, as shown in \fig{lpc_a}. A reliable extrapolation can be obtained by fitting the asymptotic form to data within a chosen window inside $[z_{SA}, z_A]$. The truncation point $z_L$---beyond which data are replaced by the extrapolated form with its associated error band---may lie either below or above $z_A$, depending on the data precision.
+
+In practical analyses, the asymptotic extrapolations should satisfy the following physical conditions. 
+\begin{enumerate}
+    \item The lattice data should be truncated at a point within the sub-asymptotic and asymptotic regions where they have decreased smoothly to near zero.
+    \item The extrapolation model must preserve the correct asymptotic behavior of the correlation function without introducing unphysical distortions.
+    \item The extrapolated result---including its error---should continue to decrease with increasing $z$, consistent with the asymptotic decay. In cases where oscillations or sign changes are present, the amplitude of oscillation should decay exponentially.
+\end{enumerate}
+Since the exact asymptotic behavior of a correlation function depends on the operator and external state, the parameters used in the extrapolation must be determined on a case-by-case basis. After performing the extrapolation, it remains necessary to estimate the model uncertainty in the FT. While most LaMET analyses have imposed the physical conditions for extrapolation, not all have provided an estimate of the associated uncertainty, as criticized by Ref.~\cite{Dutrieux:2025jed}. In Ref.~\cite{Gao:2021dbh}, such an estimate was obtained by varying the truncation point~\footnote{In Ref.~\cite{Dutrieux:2025axb}, it was pointed out that the pion data points beyond $z_L \sim 0.9$ fm should not be discarded, as they are statistically nonzero. However, since their magnitude continues to grow to unphysically large values, they were ruled out in Ref.~\cite{Gao:2021dbh} based on the pion's size, such as its charge radius of about $0.6$ fm~\cite{Gao:2021xsm}. After all, this is a special case of LaMET analyses. In the future, such a restriction will be relaxed with more dedicated lattice calculations of the long-range correlations.}, the prior for the decay constant, and the extrapolation model. Notably, unphysical power-law decay models were also included to emphasize the differences. It was found that the variations among extrapolations are negligible at moderate $x$, so they are not included in the final error budget.
+
+Nevertheless, when the precision of data in the sub-asymptotic region is not sufficiently high, the FT uncertainty can become non-negligible. In such cases, the method in Ref.~\cite{Gao:2021dbh} may be less reliable, as it does not exhaust the model space. For a more accurate quantification of this error, one can first determine $m_{\rm eff}$, $z_{SA}$ and $z_A$ from high-precision zero-momentum matrix elements and then use them as priors at nonzero momenta. Subsequently, techniques analogous to those used in HVP calculations can be applied to constrain the long-distance tail and yield a more reliable uncertainty estimate~\cite{Ji:2026vir}. Since the asymptotic decay arises from an EFT expansion in which subleading terms fall off more rapidly than the leading contribution, this uncertainty is controllable. A more accurate derivation of the asymptotic form and its corrections~\cite{Ji:2026vir} will refine this estimate.
+
+\section{Comments on Data and Analysis in arXiv:2504.17706}
+\label{sec:response}
+
+The claim about the IP in LaMET in Ref.~\cite{Dutrieux:2025jed} focuses on the practical concern that noisy lattice data in the sub-asymptotic region may prevent a reliable asymptotic extrapolation and, therefore, should be analyzed by IP methods with minimal physics constraints. The authors also provided numerical evidence through tests on a set of nucleon matrix elements, demonstrating that variations among different IP methods with exponential decay still result in considerable differences from moderate to large $x$. This is consistent with our expectation that IP methods with minimal physics input will lead to unnecessarily conservative errors. 
+
+However, we still expect that the asymptotic extrapolation in LaMET is a better option for providing a reliable error estimate even when the data quality is not ideal. Besides, the arguments and data analysis presented in Ref.~\cite{Dutrieux:2025jed} are problematic. First, data precision in the asymptotic region can be improved with realistic resources and new lattice techniques~\cite{Zhang:2025hyo,Wagman:2024rid,Hackett:2024nbe,Gao:2023lny,Zhao:2023ptv}, which the authors described as exponentially hard. In addition, the numerical tests in Ref.~\cite{Dutrieux:2025jed} suffer from several problems, including large errors in the sub-asymptotic region, an incorrect renormalization scheme, and analysis methods that do not satisfy physical constraints. Ultimately, the uncertainty of the FT within the models remains bounded by our estimate from asymptotic extrapolation, which can serve as a realistic quantification of the error given the data quality. Therefore, FT in fact remains under control in the standard LaMET analysis, contrary to the conclusion drawn in~\cite{Dutrieux:2025jed}.
+
+\subsection{Good Precision Achieved in the Asymptotic Region}
+\label{sec:exp-decay}
+
+One major argument of Ref.~\cite{Dutrieux:2025jed} is that it is unlikely for lattice data to exhibit the asymptotic exponential decay behavior before the error becomes too big, due to the exponential loss in the signal-to-noise ratio (SNR). This concern is misplaced for two reasons. First, identifying exponential decay in the data does not necessarily require an unrealistically high SNR. It is not an exponentially hard problem to reduce the errors of the matrix elements at $z\lesssim 1.0$ fm, which can be achieved with higher statistics and new lattice techniques such as the kinematically enhanced hadron interpolation operators~\cite{Zhang:2025hyo}. Second, the extrapolation error is not governed by the SNR itself, but by the absolute sizes of the signal and noise, which set the upper bound on the uncertainty~\cite{Gao:2021dbh}, as explained in \sec{ft-error} below. In other words, even when the data quality is not ideal,
+the LaMET analysis with asymptotic extrapolation can still provide reliable error estimates. 
+
+In the past, high-level precision was not always achieved in LaMET calculations, primarily because the lattice setups were not designed to prioritize higher statistics for large-$z$ matrix elements.
+However, some calculations have already produced sufficiently precise data in the asymptotic region, such as nucleon transversity quasi-PDF~\cite{LatticeParton:2022xsd}, the nucleon unpolarized quasi-GPD~\cite{Holligan:2023jqh}, the pion and kaon quasi distribution amplitudes~\cite{LatticeParton:2022zqc}, and the pion quasi-TMD wave function~\cite{Avkhadiev:2024mgd}.
+In the future, lattice groups can tailor their data production strategies to better meet the requirements of LaMET, such as in the case of spectroscopy calculations.
+
+\subsection{Data Quality and Renormalization Problems}
+\label{sec:ill-method}
+
+Before commenting on the data quality, we would like to point out that using the ratio scheme~\cite{Orginos:2017kos} at large $z$ to obtain the quasi-PDFs is incorrect. First, it introduces uncontrolled non-perturbative effects at intermediate and large $z$, which subsequently contaminate all $x$ after the FT. Second, there is no QCD factorization for a ratio-scheme quasi-PDF in $x$-space despite the studies in early literature~\cite{Radyushkin:2017lvu,Zhang:2018ggy,Izubuchi:2018srq}. In fact, $x$-space factorization has been rigorously established for the $\overline{\mathrm{MS}}$ scheme only, implying that any scheme not perturbatively convertible to it at all $z$---such as the ratio scheme---is not factorizable.
+
+Besides, since Ref.~\cite{Dutrieux:2025jed} aims to demonstrate a problem in LaMET analysis, it should at least adhere to the same procedure when making this claim. As discussed in \sec{asymptotic}, we expect the non-zero momentum matrix element to decay exponentially at the same rate as that in the rest frame. Taking a ratio of matrix elements at different momenta removes this key feature entirely, so no definitive conclusion can be drawn from such an example. Hence, the ratio scheme is logically inconsistent for the purpose of Ref.~\cite{Dutrieux:2025jed}. In order to proceed, we will treat the ratio-scheme matrix elements as ``pseudo data'' for LaMET analysis.
+
+As shown in Figure 3 of Ref.~\cite{Dutrieux:2025jed}, the ratio of matrix elements changes sign and is consistent with zero with increasingly large error bars in the range $8<\lambda<11$ (or $0.75~\text{fm}<z<1.03~\text{fm}$). 
+This ratio after the first zero is small in amplitude due to the Lorentz contraction effect in \eq{asym}. Most of the conclusions in Ref.~\cite{Dutrieux:2025jed} were drawn by analyzing this imprecise ratio, which should be insignificant to the FT when exponential decay is preserved with proper renormalization such as the hybrid scheme~\cite{Ji:2020brr,Holligan:2023rex,Zhang:2023bxs}. However, the sizable errors of data can lead to significant variation in the fits and extrapolations, contributing to the uncertainty of the FT.
+
+This situation, if interpreted as pseudo data within the LaMET framework, can be significantly improved by reducing the errors in the region $0.75~\text{fm} < z <1.03~\text{fm}$ by a factor of two or more, allowing the truncation point to be set at $z_L \sim 1.03$~fm to better satisfy the physical conditions for asymptotic extrapolation. This precision is achievable with a four-fold increase in statistics or by using the kinematically enhanced interpolation operator~\cite{Zhang:2025hyo}, both of which are feasible nowadays.
+
+\subsection{Data-Driven IP Methods May Conflict with Physical Constraints}
+\label{sec:dd}
+
+When data are consistent with zero but have large errors, asymptotic analysis remains a valid method to estimate errors, as discussed in \sec{asymptotic}. Nevertheless, the large uncertainties may prompt some to treat this as an IP and resort to data-driven approaches. However, two fundamental issues arise: first, data-driven fitting alone cannot distinguish whether a model is physical, since many models can fit the data equally well; second, without proper constraints, these approaches risk producing unphysical results in the extrapolation region.
+
+If one treats the ratio-scheme matrix elements as pseudo data for LaMET, then the first issue is exemplified by the Gaussian-decay model used in Ref.~\cite{Dutrieux:2025jed}. Although it is known to contradict the exponential decay of nucleon correlation functions at long range~\footnote{In fact, the exponential decay cancels out in the ratio scheme, but it is even more difficult to justify why the Gaussian-decay would survive.}, the punishment here is not significant. 
+
+The second issue is manifested by the comparison between extrapolations using the exact exponential model (Exact exp) and two Radial-Basis Function (RBF) models with exponential decay (RBF-exp and logRBF-exp) under the Gaussian process regression (GPR) framework. The RBF kernel is defined as~\cite{Dutrieux:2024rem}
+\begin{align}
+    K\left(x, x^{\prime}\right)=\sigma^2 \exp \left(-\frac{\left( x -x^{\prime}\right)^2}{2 \ell^2}\right)\,.
+\end{align}
+Unlike the Exact exp approach, which follows the LaMET procedure of truncation and extrapolation, the GPR methods infer posterior distributions based on all data from $z = 0$ to $1.13$~fm, despite the fact that exponential decay does not apply at smaller $z$. Moreover, despite being motivated by somewhat vague arguments listed in Ref.~\cite{Dutrieux:2024rem}, the choice of RBF kernels and their associated hyperparameters in the GPR framework remains \textit{ad hoc} and subject to model dependence~\cite{Dutrieux:2025jed,Karpie:2019eiq,Dutrieux:2024rem}, and there is no clear mechanism to ensure that they do not distort the physical conditions in the process. As we show below, this can result in unphysical extrapolations---even with high-precision data. Finally, the indiscriminate use of all noisy data also unnecessarily amplifies the fitting errors.
+
+Therefore, the GPR methods in Ref.~\cite{Dutrieux:2025jed} do not qualify as asymptotic extrapolations, and it is difficult to assess their systematic uncertainties. From a theoretical standpoint, comparing them to an asymptotic extrapolation is an apples-to-oranges mismatch.
+
+After all, to further analyze the issue with the GPR fits using RBF-based kernels, we will temporarily treat them as comparable to the asymptotic extrapolation. As it turns out, none of them satisfies all the physical conditions described in \sec{phy-con}. As shown in Figures 3 and 4 in Ref.~\cite{Dutrieux:2025jed}, the RBF-exp and logRBF-exp fits match the data up to $\lambda \sim 8$ (or $z \sim 0.75$~fm), beyond which they begin to deviate, giving the appearance of extrapolations starting at $\lambda_L \sim 8$. However, the matrix elements and their errors in the extrapolation region continue to grow in magnitude before slowly decaying as $\lambda \to \infty$, clearly violating the third physical condition. In particular, even the Exact exp extrapolation slightly violates the first physical condition, since it truncates at $z \sim 0.75$~fm, which is early for the amplitude of $h(z, P)$---including its slope---to decay sufficiently close to zero.
+
+Due to the violations of physical conditions for extrapolation, the FTs are not reliable, so the resulting discrepancies among different quasi distributions in Figure 3 of Ref.~\cite{Dutrieux:2025jed} are in principle overstated. Nevertheless, given the data quality, these violations are acceptable mainly because the error bars of the GPR fits are also large.
+
+For the purpose of comparison, we conducted analogous tests employing identical hyperparameters~\footnote{Unlike Ref.~\cite{Dutrieux:2025jed}, we do not impose a threshold on the uncertainty of the reconstructed tail when determining the hyperparameters, because such a choice is arbitrary. Our purpose is to show that GPR without physical constraints could lead to unphysical extrapolations. While adopting a threshold might help the GPR reconstruction satisfy the conditions in \sec{phy-con}, its physical basis is unclear, so the associated model uncertainty cannot be reliably quantified.}, as indicated in Reference 52 of Ref.~\cite{Dutrieux:2025jed}, using the hybrid-scheme nucleon transversity quasi-PDF matrix elements from Ref.~\cite{LatticeParton:2022xsd}. As shown in \fig{lpc_a}, these matrix elements are much more precise than those in Ref.~\cite{Dutrieux:2025jed} in the region $8<\lambda< 11$ (or $0.85~\text{fm}<z<1.19~\text{fm}$), which allows for truncation at $z_L=1.19$~fm for asymptotic extrapolation, thus significantly reducing the uncertainty of the FT. However, despite using the same range of precise data in $z \le z_L$, the GPR methods produce posteriors whose amplitudes and errors far exceed those of all data in the range $6 < \lambda < 11$, clearly violating the third physical condition. This suggests that the GPR methods used in Ref.~\cite{Dutrieux:2025jed} did not incorporate the exponential decay behavior in their prior settings, particularly when improper correlation lengths are chosen, causing the long-range behavior to be overly influenced by the smaller-$z$ region.
+
+\begin{figure}[htbp]
+    \centering
+    \subfigure[{~Nucleon transversity quasi-PDF matrix elements in the hybrid scheme at $P^z=1.82$ GeV from a lattice of spacing $a=0.085$ fm~\cite{LatticeParton:2022xsd}. The Exact exp, RBF-exp, and logRBF-exp models with different correlation lengths $r$~\cite{Dutrieux:2025jed} are used to extrapolate from $z_L=14a=1.19$ fm. The red data points are fitted exclusively by the Exact exp model.}]
+    {\includegraphics[width=0.9\linewidth]{LPC_H102_P4_Fig3_top.pdf}\label{fig:lpc_a}
+    }
+    \subfigure[{~Quasi-PDFs from different extrapolation models.}]
+    {\includegraphics[width=0.9\linewidth]{LPC_H102_P4_Fig3_middle.pdf}\label{fig:lpc_b}
+    }
+    \subfigure[{~Variation of different FTs around the mean of Exact exp. At moderate $x$ their central values are very close, despite the larger uncertainties of the RBF extrapolations due to violation of physical conditions.}]
+    {\includegraphics[width=0.9\linewidth]{LPC_H102_P4_Fig5.pdf}\label{fig:lpc_c}
+    }
+    \caption{FT tests with the nucleon transversity quasi-PDF matrix elements from Ref.~\cite{LatticeParton:2022xsd}.}
+    \label{fig:lpc}
+\end{figure}
+
+Therefore, the best approach to extrapolating the pseudo data in Ref.~\cite{Dutrieux:2025jed} is through the asymptotic analysis. Its uncertainty can be better controlled by using the decay constant $m_{\rm eff}$---fitted from the zero-momentum matrix element---as input, truncating at a larger $z_L$, and adopting a more accurate asymptotic form for both extrapolation and error estimation.
+
+\subsection{Asymptotic Analysis Provides Realistic Error Estimate Regardless of Data Quality}
+\label{sec:ft-error}
+
+The lattice correlation functions include statistical errors that are correlated and propagate in the FT. Since FT is a linear operation, there are mature statistical methods to handle the error propagation~\cite{Young:2012kg}. In addition to statistical errors, the FT also includes model uncertainty arising from the extrapolation. Another main point advocated in Ref.~\cite{Dutrieux:2025jed} is that when the uncertainty from extrapolation is non-negligible, it cannot be reliably quantified. We disagree. As we show here, the uncertainty can be estimated within asymptotic extrapolation and does not constitute the IP encountered in SDF.
+
+As explained above, a non-negligible model uncertainty is the outcome of insufficient data quality in the sub-asymptotic region, which can be reduced by improving the data precision. To quantify this uncertainty, it suffices to show that it is both bounded from above and systematically reducible. The upper bound can be estimated by evaluating the contribution of the extrapolated region to the Fourier integral. One bound has been derived in the appendix of Ref.~\cite{Gao:2021dbh} as
+\begin{align}\label{eq:bd}
+    \delta f(x, P, \lambda_L) < \frac{4N_x |h(z,P;\lambda_L)|_{\rm max}}{\pi x}\,,
+\end{align}
+where $|h(z,P;\lambda_L)|_{\rm max}$ is the maximal value of $|h(z,P)|$ for $\lambda_L \le \lambda < \infty$~\footnote{We have slightly adapted the derivation in Ref.~\cite{Gao:2021dbh}, which assumed that $|h(\lambda, P)|$ decays monotonically for $\lambda > \lambda_L$. In our version, the derivation also allows for oscillations in this region.}, and $N_x$ is an integer which satisfies $|h'(\lambda_L+2\pi N_x/x)|\ll |x|$ so that the contribution to the Fourier integral from $\lambda > \lambda_L + 2\pi N_x/x$ is negligible.
+
+The upper bound in \eq{bd} applies to both exponential and algebraic decays, typically requiring $N_x \sim \mathcal{O}(1)$ in the former and $N_x \gg 1$ in the latter to saturate the Fourier integral. This contrast is expected: for the same $\lambda_L$, the extrapolated region contributes much less to the Fourier integral in the case of exponential decay, leading to a correspondingly smaller model uncertainty. For exponential decays, this upper bound is usually comparable to or smaller than the other uncertainties in the LaMET analyses,  making it a reasonable estimate of the FT model uncertainty. Moreover, it excessively estimates the true uncertainty, as it assumes that $|h(z, P)|$ can vary arbitrarily between 0 and its maximum value $|h(z, P; \lambda_L)|_{\rm max}$ at each $z$. With a more accurate derivation of the asymptotic behavior of spatial correlations~\cite{Ji:2026vir}, a significantly tighter bound on the model uncertainty can be established for the error budget.
+
+Since the RBF extrapolations in Ref.~\cite{Dutrieux:2025jed} include an exponential-decay component, we assume that they satisfy the conditions used to derive \eq{bd}. Therefore, we may apply the same upper bound to the RBF extrapolations as to the Exact exp extrapolation. The FT model uncertainty can be estimated by the variation of central values across different models, which should persist even when the statistical errors approach zero. Because the extrapolations using the RBF kernel do not satisfy the third physical condition in \sec{phy-con}, we set $|h(z,P;\lambda_L)|_{\rm max} = 0.1$, reflecting the amplitude of the matrix elements in the range $0.75\,\text{fm} < z < 1.03\,\text{fm}$. At $x = 0.5$, taking $N_x = 1$ is sufficient to saturate the Fourier integral, yielding an upper bound of $\sim 0.25$ on the model uncertainty. Meanwhile, according to Figure 3 of Ref.~\cite{Dutrieux:2025jed}, the quasi-PDFs obtained from different models are consistent within errors at finite $x$, despite that their central values differ by an amount that generally decreases with increasing $x$, which is predicted by the upper bound in \eq{bd}. See Figure 5 of Ref.~\cite{Dutrieux:2025jed}. At $x = 0.5$, the spread among central values is around 0.2, implying an uncertainty of about 0.1, which is still bounded by the estimate from \eq{bd}.
+
+Moreover, with the precise data in \fig{lpc_a}, the quasi-PDFs from different extrapolations show significantly better agreement, as illustrated in \figs{lpc_b}{lpc_c}. The variation around the mean of the Exact exp model is less than 0.05 at $x = 0.5$, which is again bounded by the estimated error of $\sim 0.06$, obtained using $|h(z,P;\lambda_L)|_{\rm max} = 0.025$ and $N_x = 1$. Notably, the uncertainties of the GPR fits are much larger, reflecting the uncontrolled model dependence of the GPR method, as the latter can violate the physical conditions for asymptotic extrapolation. See the discussion in \sec{dd}.
+
+Therefore, the FTs in both examples behave just as theoretically expected, with model uncertainties at finite $x$ well bounded by the estimates derived from asymptotic extrapolation. Note that if an extrapolation satisfies all the physical conditions, then $|h(z,P;\lambda_L)|_{\rm max}$ should be suppressed by at least an additional factor of $\exp[-(m_{\rm eff}/P^z)\cdot 2\pi/x ]\sim 0.3$ compared to the estimates we provided above. This corresponds to an upper bound of $\sim 0.075$ for data in Ref.~\cite{Dutrieux:2025jed} and $\sim 0.02$ for the data in Ref.~\cite{LatticeParton:2022xsd}, which are small and can serve as a reasonable estimate of the FT model uncertainty. This estimate can be further tightened by using more accurate sub-asymptotic form and reaching larger $z_L$ to reduce both $|h(z,P;\lambda_L)|_{\rm max}$ and $N_x$, which in turn corresponds to better satisfying the physical conditions for extrapolation.
+
+\subsection{Exponential Decay is the Key to Controlling FT Errors in LaMET}
+\label{sec:misc}
+
+Ref.~\cite{Dutrieux:2025jed} also made the claim that exponential decay plays a minimal role in controlling the FT at moderate to large $x$, so that the IP in LaMET and SDF is essentially the same. This claim is based on the observation that different $z$- and $x$-space reconstruction methods yield similar results for the quasi-PDF, regardless of whether exponential decay is imposed. 
+
+However, the logic behind that conclusion is in fact reversed. It is the asymptotic decay of the pseudo data---not the extrapolation model---that ensures control of the FT. This is why similar results can still be obtained even when the decay behavior is not explicitly built into the model, exactly the first issue with the data-driven methods discussed in \sec{dd}. To match the exponentially decaying data, the extrapolation must also satisfy the corresponding physical behavior, otherwise the systematic errors cannot be reliably estimated.
+
+In contrast, the matrix elements in SDF are limited to $\lambda \lesssim 4.0$---far from the asymptotic region---and decay much more slowly as a power law, which inevitably leads to significantly larger variations across different extrapolation models, as shown in \fig{fx_con}. Imposing any model, even those incorporating exponential decay, does not resolve the IP in this case.
+
+\section{Conclusion}
+\label{sec:end}
+
+In this work, we have explained why the asymptotic analysis in LaMET enables a reliable extrapolation of the long-range lattice matrix elements and controlled FT at finite $x$. This ensures that LaMET can provide a point-by-point calculation---rather than fitting---of the $x$-dependence of parton distributions, which resolves the IP faced by the SDF due to limited range of accessible leading-twist correlations. In addition, we commented on the arguments and data analysis in Ref.~\cite{Dutrieux:2025jed}, and showed that the considerable FT model uncertainty is mainly caused by the insufficient data precision in the sub-asymptotic region, which is not due to the LaMET approach itself and can be systematically improved. Moreover, the observed discrepancies among different extrapolation models are still well bounded by the theoretical estimate from asymptotic extrapolations, thus showing that the FT is under control. This demonstrates that even when the data quality is not ideal, the asymptotic extrapolation in LaMET remains the most reliable approach for completing the FT and providing realistic error estimates. Meanwhile, re-framing the extrapolation as an IP and adopting a data-driven approach with minimal physical constraint is likely to produce unnecessarily conservative errors.\\
+
+\begin{acknowledgments}
+We thank Daniel Hackett, William Good, Yizhuang Liu, Swagato Mukherjee, Fei Yao, and Ismail Zahed for valuable discussions. We also thank Fei Yao for sharing the data of nucleon transversity quasi-PDF.
+This material is based upon work supported by the U.S. Department of Energy, Office of Science, Office of Nuclear Physics through Contract No.~DE-SC0012704 and Contract No.~DE-AC02-06CH11357, the Scientific Discovery through Advanced Computing (SciDAC) award \textit{Fundamental Nuclear Physics at the Exascale and Beyond}, and the \textit{Quark-Gluon Tomography (QGT) Topical Collaboration} with Award DE-SC0023646, and the National Science and Technology Council, Taiwan, under Grants No. 113-2112-M-002-012. This work is supported in part by Natural Science Foundation of China under grant No. 12125503,  12335003, 12375069, 12205106. 
+QAZ is also supported by the Fundamental Research Funds for the Central Universities. JH is supported by Guangdong Major Project of Basic and Applied Basic Research No. 2020B0301030008. YS is also supported by the 2024-2025 JSA/Jefferson Lab graduate fellowship.
+
+\end{acknowledgments}
+
+\appendix
+
+\section{Response to arXiv:2506.24037}
+\label{app:reply}
+
+After the appearance of this paper on arXiv, the same authors of Ref.~\cite{Dutrieux:2025jed} published a comment in arXiv:2506.24037~\cite{Dutrieux:2025axb}, where they clarified that they ``\textit{did not conclude in Ref.~\cite{Dutrieux:2025jed} that it is not possible to quantify or control the uncertainties in the LaMET inverse problem}''. Taken literally, this clarification acknowledges that the FT uncertainty can indeed be controlled and quantified in LaMET. To us, this is the central issue that distinguishes LaMET from SDF, since the latter does not have control over the uncertainty in $x$-space with the same contemporary lattice setup. With this consensus, the quantification of the FT uncertainty in LaMET becomes a practical issue.
+
+However, the authors of Ref.~\cite{Dutrieux:2025jed} adopted a definition of the IP broad enough to encompass LaMET as well as most standard lattice analyses, even though these are not commonly regarded as such by the lattice community. After all, the categorical statements made in Ref.~\cite{Dutrieux:2025axb} are that GPR is better than the asymptotic extrapolation in quantifying the FT uncertainty in LaMET, and that exponential decay has a negligible impact on the GPR reconstruction of the $x$-dependence. Moreover, the authors promoted GPR as a reliable approach for SDF as well, which underscores their statement in Ref.~\cite{Dutrieux:2025jed} that LaMET and SDF share a similar IP, contrary to the main point of this paper.
+
+First of all, as explained in \sec{theory}, the uncertainty in SDF cannot be controlled due to the intrinsic limitation of effective data with the contemporary lattice setup. Even if the GPR reconstruction yields results consistent with the true value in LaMET, this does not imply that the method is similarly reliable in SDF.
+
+Second, we clarify that our proposal is not merely to perform an extrapolation using a rigid model, as claimed in Ref.~\cite{Dutrieux:2025axb}, but to also provide an estimate of the associated uncertainty. While it is true that not all LaMET analyses in the literature have done so, in many cases this is because the uncertainty is either negligible or not dominant compared to other sources of systematics. Nevertheless, as we argued in \sec{phy-con}, a reliable estimate of the FT uncertainty can be obtained by incorporating knowledge of the asymptotic behavior of the correlation function. Key quantities such as the decay constant and the extent of the sub-asymptotic region can be extracted from high-precision zero-momentum matrix elements, which are frame-independent and can serve as priors at nonzero momentum. This approach removes the arbitrariness in implementing the first physical condition, which was criticized in Ref.~\cite{Dutrieux:2025axb}. Furthermore, since the correlation function admits a controlled asymptotic expansion with subleading terms that decay more rapidly, one can estimate the uncertainty from the missing contributions in the same spirit as in EFT calculations~\cite{Ji:2026vir}.
+
+Third, the GPR reconstruction, at least in its current form in Refs.~\cite{Dutrieux:2024rem,Dutrieux:2025jed,Dutrieux:2025axb}, does not allow for a reliable quantification of the FT uncertainty in LaMET. Before elaborating on why, we note that a meaningful uncertainty quantification entails an upper bound that can be systematically improved. This upper bound can be rigorously derived from the asymptotic expansion of the correlation functions~\footnote{The conservative estimate in \eq{bd} is obtained by encoding only the leading exponential decay while leaving the remaining $z$-dependence unspecified, so $N_x$ remains indefinite, though it is expected to be close to 1. However, with more precise knowledge of the asymptotic behavior~\cite{Ji:2026vir}, this upper bound can be tightened without arbitrariness.}, which was acknowledged in Ref.~\cite{Dutrieux:2025axb} as the authors ``\textit{have never doubted that one can produce a reasonable estimate on the maximal uncertainty of the $x$-reconstruction}''. Meanwhile, GPR uses smoothness of the quasi-PDF as the sole physical regulator for solving the FT problem. Unlike the asymptotic decay of correlation functions, this notion of ``smoothness'' is vague and lacks a clear foundation in quantum field theory. In practice, it is primarily governed by the hyperparameters that must be chosen on a case-by-case basis~\cite{Dutrieux:2025axb}, yet the associated model uncertainty still needs to be estimated. Most importantly, smoothness alone does not enable a rigorous derivation of an upper bound on this uncertainty, so its reliable quantification cannot be made.
+
+Finally, the authors continued to use reversed logic in Ref.~\cite{Dutrieux:2025axb} in discussing the role of exponential decay in the extrapolation. It is the exponential decay of the matrix elements themselves, not the reconstruction method, that ensures the FT uncertainty admits a systematically improvable upper bound and is therefore under control~\footnote{Note that exponential decay is a sufficient but not necessary property for the FT to be under control, as other rapidly decaying features would also suffice. However, in LaMET, it is the only relevant physical property of the correlation function.}. The small difference observed between GPR models with and without exponential decay is a consequence of this property, which relaxes the model space for extrapolation. A similar observation was also made in Ref.~\cite{Gao:2021dbh}, where both exponential and power-law decay models produced consistent results. However, when it comes to quantifying the FT uncertainty, a reliable estimate is only possible with knowledge of the asymptotic behavior of the correlation functions.
+
+The authors of Ref.~\cite{Dutrieux:2025axb} also cited the deep-inelastic scattering structure function as a counterexample to our statement that the FT in LaMET is an FP. By expressing the PDF as a convolution of the matching coefficient with the structure function---i.e., as an FP---they argued that this contradicts the paradigm that PDF fitting is an IP. However, the key difference lies in the premise: so far one has not obtained the structure functions at a fixed $Q^2$ over a sufficiently wide range of the Bjorken variable $x_B$ for a reliable interpolation. In contrast, the lattice correlation functions can be computed at fixed $P^z$ within a wide range of $z$ and reliably extrapolated to $z \to \infty$.
+
+Regarding ``point-by-point'' calculation of the PDF in LaMET, we are not referring to point-like features. Rather, our emphasis is on LaMET's capability to calculate, rather than fit, the PDFs. As explained in \sec{theory}, any sharp features of the quasi-PDF or PDF must either be detected or lie within the overall uncertainty band; otherwise, their presence would violate the EFT power expansion or asymptotic decay of the correlation functions. In the example shown in Figure 4 of Ref.~\cite{Dutrieux:2025axb}, the hypothetical bump at $x = 0.5$ corresponds to an oscillatory mode that decays too slowly in coordinate space, which can be ruled out by physical constraints.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliography{Refs}
+\bibliographystyle{apsrev4-1}
+
+\end{document}

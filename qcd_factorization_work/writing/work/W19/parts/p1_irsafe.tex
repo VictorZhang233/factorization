@@ -1,0 +1,250 @@
+%% =====================================================================================
+\section{红外安全的喷注与事件形状}\label{sec:jets-irsafe}
+
+部分子的排他截面是红外发散的：软与共线极限附近实辐射概率按 $\frac{\dd E}{E}\frac{\dd\theta^2}{\theta^2}$ 发散（\cref{prop:qcd-soft-collinear-limits}），$e^+e^-\to q\bar q(g)$ 中实辐射的 $+\frac{2}{\varepsilon^2}$ 与虚修正的 $-\frac{2}{\varepsilon^2}$ 只在二者之和中相消（\cref{prop:ee-oneloop}）。
+相消要求可观测量分辨不出“多了一个零能量部分子”或“一个部分子换成两个严格共线、总动量相同的部分子”——这就是红外安全（\cref{def:qcd-ir-safety-informal}；精确定义为\cref{def:ir-safe}：
+各多重度的权函数 $\mathcal S_n$ 连续，且在加入零能量粒子或严格共线分裂时不变）。强子化对这样的量只有幂次压低的影响（\cref{sec:jets-hadronization}），故喷注可作部分子的代理。
+
+\begin{definition}[红外安全的喷注定义与事件形状]\label{def:jets-algorithms}
+下列可观测量都满足\cref{def:ir-safe}的软条件~(i) 与共线条件~(ii)；推力 $T$ 连续，而 (a)、(c)、(d) 的判据（及事件形状的累积分布）是阶跃函数，
+只在有限能量、有限角度的边界上间断，不在软与共线的奇异构型处。
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item \emph{Sterman--Weinberg 锥}\cite{StermanWeinberg1977}。给定 $0<\epsilon,\delta\ll1$。对单位矢量 $\hat{\bm n}$（锥轴），记
+$E_{\rm out}(\hat{\bm n})=\sum_iE_i\,\Theta\big(\min\{\angle(\bm p_i,\hat{\bm n}),\angle(\bm p_i,-\hat{\bm n})\}-\delta\big)$
+为一对方向相反、半张角为 $\delta$ 的锥之外的总能量。若 $\min_{\hat{\bm n}}E_{\rm out}(\hat{\bm n})<\epsilon\sqrt s$，称事例为\emph{两喷注事例}；
+$\epsilon$ 是\emph{总}能量 $\sqrt s$（不是束流能量 $\sqrt s/2$）的份额。
+\item \emph{推力}（thrust）\cite{Farhi1977}：$T=\max_{\hat{\bm n}}\sum_i|\bm p_i\cdot\hat{\bm n}|/\sum_i|\bm p_i|$，$\tau\equiv1-T$；取得最大值的 $\hat{\bm n}_T$ 为推力轴，
+垂直于它的平面把事例分成半球 R、L，半球质量 $M_{\rm R,L}^2=\big(\sum_{i\in\mathrm{R,L}}p_i\big)^2$。
+\item \emph{逐次合并算法}。对强子对撞中的粒子（或已合并的赝粒子）$i$、$j$，以横动量 $k_{Ti}$、快度 $y_i$、方位角 $\phi_i$ 定义
+$d_{ij}=\min(k_{Ti}^{2p},k_{Tj}^{2p})\,\Delta R_{ij}^2/R^2$、$d_{iB}=k_{Ti}^{2p}$，其中 $\Delta R_{ij}^2=(y_i-y_j)^2+\Delta\phi_{ij}^2$，$\Delta\phi_{ij}\in(-\pi,\pi]$ 为方位角差，$R$ 为喷注半径参数；
+反复取全部 $d_{ij}$、$d_{iB}$ 中的最小者：若为 $d_{ij}$ 则合并 $i$、$j$（四动量相加），若为 $d_{iB}$ 则把 $i$ 记为喷注并移出。
+$p=1$ 为 $k_T$ 算法\cite{CataniEtAl1993kt,EllisSoper1993}，$p=-1$ 为反 $k_T$ 算法\cite{CacciariSalamSoyez2008}。
+\item \emph{无种子锥算法} SISCone\cite{SalamSoyez2007}：精确找出\emph{全部}稳定锥（锥轴与锥内总动量方向一致），再经确定的分裂—合并步骤得到喷注。
+\end{enumerate}
+以粒子为种子迭代寻找稳定锥的锥算法在微扰论的较高阶不是红外安全的；加入“中点”种子只把问题推迟到耦合常数的高一阶\cite{SalamSoyez2007}。
+\uses{def:ir-safe}
+\end{definition}
+
+(a)、(b) 满足条件~(i)、(ii) 可直接验证：零能量粒子不改变能量流；共线分裂的两个粒子同在一锥内或同在锥外，与 $\hat{\bm n}$ 的内积同号，
+$|\lambda\bm p\cdot\hat{\bm n}|+|(1-\lambda)\bm p\cdot\hat{\bm n}|=|\bm p\cdot\hat{\bm n}|$。(c)、(d) 见所引文献。阶跃型判据不满足\cref{def:ir-safe}的连续性要求，这一放宽的处理见\cref{cor:jets-ir-finite}。(a) 见\cref{fig:jets-sw-cone}。
+
+%%% BEGIN fig:jets-sw-cone
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc cone/.style={fill=blue!8,draw=blue!45!black,line width=0.6pt},
+  fc rim/.style={fill=blue!4,draw=blue!45!black,line width=0.6pt},
+  fc ray/.style={draw,solid,line width=0.9pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  \def\fcL{3.6}   % cone length
+  \def\fcH{1.05}  % half-height of the cone base  (tan(delta) = h/L, delta ~ 16 deg)
+  % cones (perspective): lateral surface + elliptic base
+  \draw[fc cone] (0,0) -- (\fcL,\fcH) -- (\fcL,-\fcH) -- cycle;
+  \draw[fc rim] (\fcL,0) ellipse[x radius=0.28,y radius=\fcH];
+  \draw[fc cone] (0,0) -- (-\fcL,\fcH) -- (-\fcL,-\fcH) -- cycle;
+  \draw[fc rim] (-\fcL,0) ellipse[x radius=0.28,y radius=\fcH];
+  % cone axis (its orientation is arbitrary)
+  \draw[gray!60!black,line width=0.45pt,dash pattern=on 3pt off 2pt] (-4.4,0) -- (4.4,0);
+  % half-angle delta
+  \draw[gray!50!black,line width=0.5pt] (2.0,0) arc[start angle=0,end angle=16.26,radius=2.0];
+  \node[fc lab] at (2.22,0.31) {$\delta$};
+  \draw[gray!50!black,line width=0.5pt] (-2.0,0) arc[start angle=180,end angle=196.26,radius=2.0];
+  \node[fc lab] at (-2.22,-0.31) {$\delta$};
+  % particles (directions of flight from the interaction point)
+  \draw[fc ray] (0,0) -- (3.45,0.5);
+  \draw[gluon] (0,0) -- (3.3,-0.62);
+  \draw[fc ray] (0,0) -- (-3.45,0.3);
+  \draw[fc soft] (0,0) -- (0.62,1.72);
+  \node[vertex] at (0,0) {};
+  \node[fc lab,anchor=west] at (3.95,0.62) {$q$};
+  \node[fc lab,anchor=west] at (3.95,-0.62) {$g$（与$q$共线）};
+  \node[fc lab,anchor=east] at (-3.95,0.42) {$\bar q$};
+  \node[fc note,anchor=south,text=green!35!black,align=center] at (0.75,1.78) {锥外的软胶子：$E<\epsilon\sqrt s$};
+  % annotations
+  \node[fc note,align=center,anchor=north] at (0,-1.35) {两喷注事例：两锥之外的总能量$<\epsilon\sqrt s$\\
+     （能量份额$\epsilon$相对于总能量$\sqrt s$，不是束流能量$\sqrt s/2$；$\epsilon<\delta\ll1$）};
+\end{tikzpicture}
+\caption{Sterman--Weinberg 两喷注定义（$e^+e^-$质心系，示意；线段为各粒子的飞行方向）：若存在一对方向相反、半张角为$\delta$的锥（锥轴可任意选取），使两锥之外的总能量小于$\epsilon\sqrt s$，则事例计为两喷注事例。
+$\epsilon$是总能量$\sqrt s$的份额；在$\epsilon<\delta\ll1$时$\order{\alpha_s}$的结果含$4\ln\delta\ln2\epsilon$（若$\epsilon'$取为束流能量的份额，则为$4\ln\delta\ln\epsilon'$；\cref{prop:jets-sw}，VF-EE-12）。}
+\label{fig:jets-sw-cone}
+\end{figure}
+%%% END fig:jets-sw-cone
+
+\begin{proposition}[Sterman--Weinberg 两喷注截面 \tagR]\label{prop:jets-sw}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+在 $\order{\as}$，对\cref{def:jets-algorithms}(a)（$\epsilon$ 为总能量的份额），当 $\epsilon<\delta\ll1$ 时，以 $C_F\as/\pi$ 为展开参数，
+\begin{equation}\label{eq:jets-sw}
+\sigma_{2j}=\sigma_0\Big\{1-\frac{C_F\as}{\pi}\Big[4\ln\delta\ln2\epsilon+3\ln\delta+\frac{\pi^2}{3}-\frac52\Big]\Big\}
++\sigma_0\,\frac{C_F\as}{\pi}\,\order{\epsilon\ln\delta,\ \delta^2\ln\epsilon} .
+\end{equation}
+% VF-EE-12
+(i) 若 $\epsilon'=2\epsilon$ 为束流能量 $\sqrt s/2$ 的份额，则 $4\ln\delta\ln2\epsilon=4\ln\delta\ln\epsilon'$；(ii) 把总能量份额 $\epsilon$ 代入“$4\ln\delta\ln\epsilon$”会使 $\sigma_{2j}/\sigma_0$
+偏差 $4\ln2\,|\ln\delta|\,C_F\as/\pi$（约定问题）；(iii) \cref{eq:jets-sw}只在 $\epsilon\lesssim\delta$ 时成立。（本命题只涉及部分子截面。）
+\uses{def:jets-algorithms,prop:ee-oneloop,prop:qcd-soft-collinear-limits}
+\end{proposition}
+
+\begin{proof}
+\emph{(1) 化为三喷注区的四维积分。}在 $\order{\as}$，$q\bar q$ 末态（含虚修正）总是两喷注事例；$q\bar qg$ 末态分为两喷注区与其补集 $\mathcal R_3$。
+故 $\sigma_{2j}=\sigma_{\rm tot}-\sigma_{3j}$，由\cref{prop:ee-oneloop}，$\sigma_{\rm tot}=\sigma_0\big(1+\frac34\frac{C_F\as}{\pi}\big)$（VF-EE-6）。% VF-EE-6
+软与共线奇异构型 $x_3\to0$、$\theta_{13}\to0$、$\theta_{23}\to0$（\cref{prop:qcd-soft-collinear-limits}）都在两喷注区内部（第 (2) 步），$\mathcal R_3$ 与它们保持有限距离，
+被积函数在其上于 $D=4$ 可积，可先取 $\varepsilon\to0$：由\cref{prop:ee-oneloop}的实辐射矩阵元在 $D=4$ 的形式（VF-EE-5），% VF-EE-5
+\begin{equation}\label{eq:jets-sigma3}
+\frac{\sigma_{3j}}{\sigma_0}=\frac{C_F\as}{2\pi}\,I_{3j},\qquad
+I_{3j}\equiv\int_{\mathcal R_3}\dd x_1\,\dd x_2\,\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)} .
+\end{equation}
+
+\emph{(2) 三部分子的两喷注判据。}三动量之和为零，三部分子共面。事例是两喷注事例，当且仅当
+(a) 某对 $\theta_{ij}\le2\delta$，或 (b) 某个 $x_k<2\epsilon$ 且另两个满足 $\pi-\theta_{ij}\le2\delta$。
+充分性：若 (a)，取锥轴为 $\hat{\bm p}_i$、$\hat{\bm p}_j$ 的角平分线，$i$、$j$ 在半张角 $\theta_{ij}/2\le\delta$ 的锥内，而 $-\bm p_k=\bm p_i+\bm p_j$ 的方向在二者之间的大圆弧上，落在反向锥内；
+若 (b)，取锥轴为 $\hat{\bm p}_i$ 与 $-\hat{\bm p}_j$ 的平分线，锥外只剩能量 $E_k=x_k\sqrt s/2<\epsilon\sqrt s$ 的 $k$。
+必要性：两个部分子同在锥外时锥外能量 $\ge\sqrt s/2$，不可能；三个都在锥内时有两个同在一锥，由球面三角不等式即 (a)；恰有 $k$ 在锥外时 $x_k<2\epsilon$，$i$、$j$ 同锥即 (a)，
+异锥则 $\pi-\theta_{ij}\le2\delta$，即 (b)。
+
+\emph{(3) 变量与边界。}以 $y_{ij}=2p_i\cdot p_j/s$ 表示，$y_{12}=1-x_3$，$y_{13}=1-x_2$，$y_{23}=1-x_1$，$\cos\theta_{ij}=1-2y_{ij}/(x_ix_j)$。令 $y_{13}=x_3v$、$y_{23}=x_3(1-v)$，
+则 $x_1=1-x_3(1-v)$，$x_2=1-x_3v$，$\dd x_1\dd x_2=x_3\dd x_3\dd v$，$x_1^2+x_2^2=N_0-2x_3^2v(1-v)$，$N_0\equiv1+(1-x_3)^2$，故
+\begin{equation}\label{eq:jets-measure}
+\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}\,\dd x_1\,\dd x_2=\Big[\frac{N_0}{v(1-v)}-2x_3^2\Big]\frac{\dd x_3}{x_3}\,\dd v .
+\end{equation}
+令 $d\equiv\sin^2\delta$。由 $1-\cos\theta_{13}>1-\cos2\delta=2d$：$\theta_{13}>2\delta\iff y_{13}>dx_1x_3\iff v>a\equiv\frac{d(1-x_3)}{1-dx_3}$，同理 $\theta_{23}>2\delta\iff1-v>a$。
+由 $x_1x_2=(1-x_3)+x_3^2v(1-v)$ 得 $1+\cos\theta_{12}=\frac{2x_3^2v(1-v)}{x_1x_2}$，故 $\pi-\theta_{12}\le2\delta\iff(1-d)x_3^2v(1-v)\le d(1-x_3)$；
+因 $v(1-v)\le\frac14$，当 $x_3<2\epsilon$、$\epsilon\le\delta(1-2\delta)$ 时它恒成立：软胶子条件 (b) 恰好去掉全部 $x_3<2\epsilon$。
+
+\emph{(4) 其余边界的误差。}$\mathcal R_3$ 由 $x_3>2\epsilon$、$a<v<1-a$ 给出，另须去掉 $\theta_{12}\le2\delta$（要求 $1-x_3\le\frac{dx_3^2}{4(1-d)}$，贡献 $\order{d}$）与
+软（反）夸克的条件 (b)（要求 $x_3\ge1-2\epsilon$ 且 $v<2\epsilon$ 或 $1-v<2\epsilon$，贡献 $\int_{1-2\epsilon}^1\dd x_3\ln\frac{2\epsilon}{d(1-x_3)}=\order{\epsilon\ln d}$）；
+$\delta(1-2\delta)<\epsilon<\delta$ 时 (3) 的论断只在 $x_3\in(2\delta(1-2\delta),2\epsilon)$ 上不完全，贡献 $\order{\delta\ln\delta}=\order{\epsilon\ln\delta}$。
+又 $\ln\frac{1-a}{a}=-\ln d-\ln(1-x_3)+\order{d}$，其 $\order{d}$ 项经 $\int\dd x_3/x_3$ 给出 $\order{d\ln\epsilon}$。用\cref{eq:jets-measure}的 $v$ 积分，
+\begin{equation}\label{eq:jets-I3-asym}
+I_{3j}=\int_{2\epsilon}^1\frac{\dd x_3}{x_3}\Big[2N_0\big(-\ln d-\ln(1-x_3)\big)-2x_3^2\Big]+\order{\epsilon\ln d,\ d\ln\epsilon}.
+\end{equation}
+
+\emph{(5) 积分与合成。}$\int_{2\epsilon}^1\frac{N_0}{x_3}\dd x_3=-2\ln2\epsilon-\frac32+\order{\epsilon}$；
+$\int_0^1\frac{N_0\ln(1-x_3)}{x_3}\dd x_3=-2\mathrm{Li}_2(1)+\int_0^1(x-2)\ln(1-x)\dd x=-\frac{\pi^2}{3}+\frac54$（下限换成 $0$ 的误差为 $\order{\epsilon\ln\epsilon}$）；$\int_0^1x_3\dd x_3=\frac12$。于是
+\begin{equation}\label{eq:jets-I3-result}
+I_{3j}=4\ln d\,\ln2\epsilon+3\ln d+\frac{2\pi^2}{3}-\frac72+\order{\epsilon\ln d,\ d\ln\epsilon}.
+\end{equation}
+以 $\ln d=2\ln\delta+\order{\delta^2}$ 代入\cref{eq:jets-sigma3}，$\sigma_{3j}=\sigma_0\frac{C_F\as}{\pi}\big[4\ln\delta\ln2\epsilon+3\ln\delta+\frac{\pi^2}{3}-\frac74\big]$，
+再由 $\sigma_{2j}=\sigma_{\rm tot}-\sigma_{3j}$ 与 $\frac34+\frac74=\frac52$ 得\cref{eq:jets-sw}。(i) 是代换 $2\epsilon=\epsilon'$；(ii) 是 $4\ln\delta(\ln2\epsilon-\ln\epsilon)=-4\ln2|\ln\delta|$；
+(iii)：$\epsilon>\delta$ 时 (3) 的论断不再成立，$2\delta\lesssim x_3<2\epsilon$ 中 $q\bar q$ 不共线度超过 $2\delta$ 的事例留在 $\mathcal R_3$，产生 $\ln(\epsilon/\delta)$ 型的对数（数值见\cref{ex:jets-sw}）。
+\end{proof}
+
+\Cref{eq:jets-sw}与 Sterman--Weinberg 的原始结果一致：$\epsilon$ 是总质心能量的份额，对数的宗量是 $2\epsilon$（见例如\cite[式~(25)、(28)]{Ali:2010tw}的转述，其三喷注截面的常数正是 $-\frac74$）。
+Becher 等人把锥外能量写成质心能量的 $\beta/2$，得
+$\frac{\sigma}{\sigma_0}=1+\frac{C_F\as}{4\pi}(-16\ln\delta\ln\beta-12\ln\delta+c_0)$，原始 Sterman--Weinberg 喷注 $c_0=10-\frac{4\pi^2}{3}$\cite[式~(1)]{Becher:2015hka}；令 $\beta=2\epsilon$ 即\cref{eq:jets-sw}，
+混用两种约定才产生 (ii) 的偏差。
+
+\begin{example}[$O(\alpha_s)$ 的 Sterman--Weinberg 截面]\label{ex:jets-sw}
+对 $\mathcal R_3$ 直接数值积分：每个 $x_3$ 处用二分法确定 $v$ 的边界（只用第 (2) 步的判据），$v$ 积分解析完成，$x_3$ 积分在折点之间用 Gauss--Legendre 求积。
+\Cref{tab:jets-sw-numerics}比较 $c_{2j}\equiv(\sigma_{2j}/\sigma_0-1)/(C_F\as/\pi)=\frac34-\frac12I_{3j}$ 与\cref{eq:jets-sw}。
+(1) 渐近式的误差与 $\epsilon|\ln d|+d|\ln\epsilon|$ 同量级。(2) 末列的偏差是 $4\ln2\,|\ln\delta|$（第二行为 $16.1$），即\cref{prop:jets-sw}(ii)；末行即 (iii)。
+(4) 锥轴取为推力轴（$+z$）、按 $p^-<\delta^2p^+$（半张角 $2\arctan\delta$）分配粒子时，同样的数值方法给出上段的 $c_0\to-2+12\ln2$，与\cite{Becher:2015hka}一致，
+而自由锥轴给出 $10-\frac{4\pi^2}{3}$：常数项依赖于定义的细节，对数项不依赖。
+\uses{prop:jets-sw}
+\end{example}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$\epsilon$ & $\delta$ & $c_{2j}$（数值积分） & \cref{eq:jets-sw}（$\ln2\epsilon$） & 二者之差 & 误用的 $\ln\epsilon$ 形式 \\
+\midrule
+$10^{-2}$ & $0.1$   & $-29.9216$  & $-29.9132$  & $-8.4\times10^{-3}$ & $-36.2973$ \\
+$10^{-6}$ & $0.003$ & $-288.2811$ & $-288.2812$ & $+1.3\times10^{-4}$ & $-304.3875$ \\
+\midrule
+$0.05$    & $0.005$ & $-50.6020$  & $-33.6942$  & $-16.9$             & $-48.3843$ \\
+\bottomrule
+\end{tabular}
+\caption{Sterman--Weinberg 两喷注系数 $c_{2j}$：三喷注区的精确数值积分（与另一独立实现的相对差小于 $10^{-9}$）与渐近式；最后一列误把总能量份额 $\epsilon$ 代入 $4\ln\delta\ln\epsilon$，最后一行 $\epsilon\gg\delta$。}
+\label{tab:jets-sw-numerics}
+\end{table}
+
+\begin{corollary}[红外安全喷注截面的有限性 \tagA]\label{cor:jets-ir-finite}
+在无质量微扰 QCD 中，$e^+e^-$ 湮灭里由\cref{def:jets-algorithms}定义的喷注截面，以及事件形状 $e$ 的累积分布与 $e>0$ 处的分布，在微扰论的每一阶都是红外有限的：维数正规化中实辐射与虚修正的红外极点逐阶相消，$\varepsilon\to0$ 的极限存在。
+（本推论只涉及部分子截面。）
+% errtype: E-S
+\uses{thm:ir-safe-finite,def:jets-algorithms,def:ir-safe}
+\end{corollary}
+
+\begin{proofsketch}
+(1) \cref{def:jets-algorithms}中的每个权函数都满足\cref{def:ir-safe}的软条件与共线条件（见定义之后的说明及所引文献）；阶跃型判据的间断只在有限能量、有限角度处。
+(2) 把\cref{thm:ir-safe-finite}的论证（对割线求和，钳夹面附近各割法的权重相等，奇异性相消）用于这些权函数；间断面附近权重不等的区域，
+其测度随软能量（或共线夹角）一同趋于零，补偿了 $\dd E/E$（或 $\dd\theta^2/\theta^2$）的奇异性\cite{Sterman:1979uw}。
+(3) 最低阶实例是\cref{prop:jets-sw}：极限有限，而 $\epsilon$ 或 $\delta$ 取零时按 $\ln\epsilon$、$\ln\delta$ 发散——排他截面不安全。种子锥算法违反第 (1) 步。
+完整论证见\cite{Sterman1978a,Sterman1978b,Sterman:1979uw,StermanWeinberg1977}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}
+本推论继承\cref{thm:ir-safe-finite}（全阶论证，[A]）的地位：最弱的一步是领头区域的分类（\cref{thm:ir-leading-regions}，[A]）与割的求和中末态奇异性的相消，
+文献中只有标度陈述（E-S 型）；Landau 方程作为钳夹面的充要条件尚无完整的已发表证明\cite[第~5.4.3~节]{Collins2011}。本推论\emph{只}处理末态奇异性：
+有入射强子时初态共线奇异性并不相消，须被吸收进部分子分布，这要求共线因子化（例如\cref{thm:dy-factorization}，全阶论证，[A]）——误解 M8、M9（\cref{sec:jets-hadronization}末的方框）。
+升级为 [R] 需要把领头区域的分类写成对所有阶成立的积分范数估计（E-N 型）。
+
+\begin{proposition}[领头阶推力分布 \tagR]\label{prop:jets-thrust-lo}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+在 $\order{\as}$，以 $a\equiv C_F\as/(2\pi)$ 为展开参数：(a) 对 $\frac23\le T<1$，
+\begin{equation}\label{eq:jets-thrust-lo}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd T}=a\Big[\frac{2(3T^2-3T+2)}{T(1-T)}\ln\frac{2T-1}{1-T}-\frac{3(3T-2)(2-T)}{1-T}\Big];
+\end{equation}
+% VF-SCET-13
+(b) 在 $\tau=1-T\to0$ 的分布意义下（此处加号分布在 $\tau=0$ 处减除），
+\begin{equation}\label{eq:jets-thrust-sing}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd\tau}=\delta(\tau)+a\Big\{\Big(\frac{\pi^2}{3}-1\Big)\delta(\tau)-3\Big[\frac1\tau\Big]_+-4\Big[\frac{\ln\tau}{\tau}\Big]_+\Big\}+(\text{可积的非奇异项}),
+\end{equation}
+等价地，累积分布 $R(\tau)\equiv\frac1{\sigma_0}\int_0^\tau\frac{\dd\sigma}{\dd\tau'}\dd\tau'=1+a\big[-2\ln^2\tau-3\ln\tau+\frac{\pi^2}{3}-1\big]+\order{\tau\ln\tau}$；
+% VF-SCET-12
+(c) 对任意无质量粒子的末态，精确地有
+\begin{equation}\label{eq:jets-hemi}
+\frac{M_{\rm L}^2+M_{\rm R}^2}{Q^2}=\tau-\frac{\tau^2}{2}+\frac{(M_{\rm R}^2-M_{\rm L}^2)^2}{2Q^4},
+\end{equation}
+% VF-SCET-15
+三部分子时 $T=\max_ix_i$，$M_{\rm L}^2+M_{\rm R}^2=\tau Q^2$。（本命题只涉及部分子截面；(c) 为运动学恒等式。）
+\uses{def:jets-algorithms,prop:ee-oneloop}
+\end{proposition}
+
+\begin{proof}
+\emph{(c)。}记 $\bm P_S=\sum_{i\in S}\bm p_i$。动量守恒 $\bm P_{S^c}=-\bm P_S$，故 $\sum_i|\bm p_i\cdot\hat{\bm n}|\ge|(\bm P_S-\bm P_{S^c})\cdot\hat{\bm n}|=2|\bm P_S\cdot\hat{\bm n}|$，
+$S=\{i:\bm p_i\cdot\hat{\bm n}>0\}$ 时取等号；于是 $\max_{\hat{\bm n}}\sum_i|\bm p_i\cdot\hat{\bm n}|=\max_S2|\bm P_S|$，推力轴平行于取得最大值的 $\bm P_S\equiv\bm P_{\rm R}=-\bm P_{\rm L}\equiv\bm P$，
+无质量时 $\sum_i|\bm p_i|=Q$，$T=2|\bm P|/Q$。记 $E_{\rm R}+E_{\rm L}=Q$，则 $M_{\rm R,L}^2=E_{\rm R,L}^2-\bm P^2$，$M_{\rm R}^2-M_{\rm L}^2=(E_{\rm R}-E_{\rm L})Q$，
+\[
+M_{\rm R}^2+M_{\rm L}^2=E_{\rm R}^2+E_{\rm L}^2-2\bm P^2=\frac{Q^2}{2}+\frac{(M_{\rm R}^2-M_{\rm L}^2)^2}{2Q^2}-\frac{T^2Q^2}{2},
+\]
+再用 $1-T^2=2\tau-\tau^2$ 得\cref{eq:jets-hemi}。三部分子时单元素子集给出 $|\bm P_{\{k\}}|=x_kQ/2$，两元素子集给出另一个部分子的动量，故 $T=\max_kx_k$；
+最大者独占一个半球，其质量为零，另一半球的 $m=M^2/Q^2$ 满足 $(m-\tau)(1-\frac{m+\tau}{2})=0$，而 $m+\tau<2$，故 $m=\tau$。
+
+\emph{(a)。}由 VF-EE-5，$\frac1{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=aM$，$M=\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$，且由 (c) $T=\max_ix_i$。$T=x_1$ 最大要求 $x_2\le T$ 与 $x_3=2-T-x_2\le T$，
+即 $x_2\in[2-2T,T]$（故 $T\ge\frac23$）；$T=x_2$ 由 $x_1\leftrightarrow x_2$ 对称给出同样贡献；$T=x_3$ 时 $x_1\in[2-2T,T]$、$x_2=2-T-x_1$，雅可比为 $1$。故
+\begin{equation}\label{eq:jets-thrust-regions}
+\frac{1}{\sigma_0}\frac{\dd\sigma}{\dd T}=a\Big[2\int_{2-2T}^{T}\dd x_2\,M(T,x_2)+\int_{2-2T}^{T}\dd x_1\,M(x_1,2-T-x_1)\Big],
+\end{equation}
+两个初等积分之和即\cref{eq:jets-thrust-lo}（符号运算核对，五个 $T$ 值上一致到 30 位）。
+
+\emph{(b)。}部分分式 $\frac{2(3T^2-3T+2)}{T(1-T)}=\frac{4}{1-T}+\frac4T-6$、$\frac{3(3T-2)(2-T)}{1-T}=\frac{3}{1-T}+9T-15$ 给出\cref{eq:jets-thrust-lo}的方括号
+\begin{equation}\label{eq:jets-F-split}
+F(1-\tau)=-\frac{4\ln\tau+3}{\tau}+r(\tau),\quad
+r(\tau)=\frac{4\ln(1-2\tau)}{\tau}+\Big(\frac{4}{1-\tau}-6\Big)\ln\frac{1-2\tau}{\tau}+6+9\tau ,
+\end{equation}
+$r$ 只有对数奇异性，可积。在 $0<\tau<\frac13$ 上累积分布等于总截面减去尾部，由\cref{prop:ee-oneloop}，$\sigma_{\rm tot}/\sigma_0=1+\frac32a$，
+$R(\tau)=1+a\big[\frac32-\int_\tau^{1/3}F(1-\tau')\dd\tau'\big]$，而
+$\int_\tau^{1/3}F(1-\tau')\dd\tau'=2\ln^2\tau+3\ln\tau-2\ln^23+3\ln3+C_r+\order{\tau\ln\tau}$，$C_r=\int_0^{1/3}r$。$C_r$ 的四部分都是初等积分：
+\[
+\begin{aligned}
+&\int_0^{1/3}\frac{4\ln(1-2\tau)}{\tau}\dd\tau=-4\,\mathrm{Li}_2\big(\tfrac23\big),\qquad \int_0^{1/3}(6+9\tau)\,\dd\tau=\tfrac52,\\
+&-\int_0^{1/3}\Big[\frac{4}{1-\tau}-6\Big]\ln\tau\,\dd\tau=-4\ln3\ln\tfrac23+4\,\mathrm{Li}_2\big(\tfrac13\big)-2\ln3-2,\\
+&\int_0^{1/3}\Big[\frac{4}{1-\tau}-6\Big]\ln(1-2\tau)\,\dd\tau=4\Big[\ln2\ln\tfrac32-\tfrac12\ln^2\tfrac23-\mathrm{Li}_2\big(\tfrac34\big)+\mathrm{Li}_2\big(\tfrac12\big)\Big]+2-\ln3 .
+\end{aligned}
+\]
+用 Euler 反射式 $\mathrm{Li}_2(x)+\mathrm{Li}_2(1-x)=\frac{\pi^2}{6}-\ln x\ln(1-x)$、Landen 恒等式 $\mathrm{Li}_2(\frac13)+\mathrm{Li}_2(-\frac12)=-\frac12\ln^2\frac23$、
+倍元公式 $\mathrm{Li}_2(\frac14)=2[\mathrm{Li}_2(\frac12)+\mathrm{Li}_2(-\frac12)]$ 与 $\mathrm{Li}_2(\frac12)=\frac{\pi^2}{12}-\frac12\ln^22$，全部双对数化为 $\mathrm{Li}_2(\frac13)$ 并恰好相消，对数项之和为 $2\ln^23$：
+\begin{equation}\label{eq:jets-Cr}
+C_r=\frac52-\frac{\pi^2}{3}+2\ln^23-3\ln3 ,\qquad
+\int_\tau^{1/3}F(1-\tau')\dd\tau'=2\ln^2\tau+3\ln\tau+\frac52-\frac{\pi^2}{3}+\order{\tau\ln\tau}.
+\end{equation}
+代入得 $R(\tau)$（$\frac32-\frac52+\frac{\pi^2}{3}=\frac{\pi^2}{3}-1$）。在 $[0,1]$ 上按分布求导，$\frac{\dd}{\dd\tau}[\Theta(\tau)\ln\tau]=[\frac1\tau]_+$，$\frac{\dd}{\dd\tau}[\Theta(\tau)\ln^2\tau]=2[\frac{\ln\tau}{\tau}]_+$，
+常数项给出 $\delta(\tau)$ 的系数，即\cref{eq:jets-thrust-sing}。（求和规则的数值核对一致到 20 位。）
+\end{proof}
+
+\Cref{eq:jets-thrust-sing}正是\cref{thm:scet-thrust}（全阶论证，[A]）在单圈要再现的奇异项：硬、喷注与软函数的单圈常数之和给出 $\frac{\pi^2}{3}-1$（\cref{ex:scet-thrust-oneloop}）。
+以推力检验 QCD 的早期分析见\cite{Farhi1977,DeRujula:1978vmq}。

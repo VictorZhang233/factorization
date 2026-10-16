@@ -1,0 +1,93 @@
+%%% BEGIN fig:appO-glauber-flow
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hadron/.style={draw=black!70,line width=1.5pt,line cap=butt,-{Stealth[length=5pt,width=5pt]}},
+  ff flow/.style={draw=violet!75!black,line width=0.9pt,-{Stealth[length=4.4pt,width=3.8pt]}},
+  ff close/.style={draw=violet!75!black,line width=0.8pt,dash pattern=on 3pt off 2pt,-{Stealth[length=4.4pt,width=3.8pt]}},
+  ff bad/.style={draw=red!70!black,line width=0.85pt,dash pattern=on 2.5pt off 1.8pt,-{Stealth[length=4.2pt,width=3.6pt]}},
+  ff lv1/.style={gluon,line width=1.05pt},
+  ff lv2/.style={gluon,draw=black!40},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff fl/.style={font=\footnotesize,inner sep=1pt,text=violet!70!black},
+  ff note/.style={font=\footnotesize,align=left,anchor=north west}]
+  % flow arrow parallel to the segment #1 -> #2 (flow direction), on side #3 (90 = left, -90 = right),
+  % label #4 anchored (#5) at 0.42 cm from the segment
+  \def\ffflow#1#2#3#4#5{%
+    \draw[ff flow] ($(#1)!0.22!(#2)!0.27cm!#3:(#2)$) -- ($(#1)!0.78!(#2)!0.27cm!#3:(#2)$);
+    \node[ff fl,anchor=#5] at ($(#1)!0.5!(#2)!0.42cm!#3:(#2)$) {#4};}
+  % common frame: H (left), J_A (top), J_B (bottom), incoming hadrons
+  \def\ffframe{%
+    \draw[quark] (1.2,2.05) -- (0.22,0.58);
+    \draw[quark] (1.2,-1.45) -- (0.22,0.02);
+    \draw[ff hadron] (6.0,2.1) -- (5.15,2.1);
+    \draw[ff hadron] (6.0,-1.5) -- (5.15,-1.5);
+    \node[ff lab,above] at (5.75,2.15) {$P_A$};
+    \node[ff lab,below] at (5.75,-1.55) {$P_B$};}
+  \def\ffblobs{%
+    \draw[jet blob] (3.0,2.1) ellipse (2.15 and 0.32);
+    \draw[jetB blob] (3.0,-1.5) ellipse (2.15 and 0.32);
+    \draw[hard blob] (0,0.3) circle[radius=0.34];
+    \node[font=\small] at (0,0.3) {$H$};
+    \node[font=\small] at (4.6,2.1) {$J_A$};
+    \node[font=\small] at (4.6,-1.5) {$J_B$};}
+  % ============================================================= (a) a Glauber flow through a soft component C
+  \begin{scope}
+    \ffframe
+    \coordinate (v1) at (3.3,1.0);  \coordinate (v2) at (3.3,-0.35);
+    \coordinate (a1) at (2.45,1.92); \coordinate (a2) at (4.15,1.92);
+    \coordinate (b1) at (2.45,-1.32); \coordinate (b2) at (4.15,-1.32);
+    \draw[gluon] (v1) -- (a1);  \draw[gluon] (v1) -- (a2);
+    \draw[gluon] (v2) -- (v1);
+    \draw[gluon] (v2) -- (b1);  \draw[gluon] (v2) -- (b2);
+    \ffblobs
+    \node[vertex] at (v1) {}; \node[vertex] at (v2) {};
+    \draw[region] (1.85,-0.85) rectangle (4.95,1.5);
+    \node[ff lab,anchor=north east,text=gray!35!black] at (4.91,1.46) {$C$};
+    % imaginary flow (violet): from J_B through C into J_A
+    \ffflow{v1}{a1}{90}{$f_1$}{east}
+    \ffflow{v1}{a2}{-90}{$f_2$}{west}
+    \ffflow{v2}{v1}{-90}{$f_l$}{west}
+    \ffflow{b1}{v2}{90}{$-f_3$}{east}
+    \ffflow{b2}{v2}{-90}{$-f_4$}{west}
+    % the loop closes through J_A -> H -> J_B
+    \draw[ff close] (1.45,1.76) to[out=235,in=55] (0.5,0.72);
+    \draw[ff close] (0.5,-0.12) to[out=-55,in=125] (1.45,-1.16);
+    \node[ff note] at (-0.45,-2.2) {%
+      $A$ 腿：$f_a\ge\kappa\psi(q_a)|\mathbf q_{Ta}|$；$B$ 腿：$-f_b\ge\kappa\psi(q_b)|\mathbf q_{Tb}|$；\\
+      顶点处守恒 $f_l=f_1+f_2=-f_3-f_4$，割线上 $f=0$；\\
+      紫色虚线：流经 $J_A\to H\to J_B$ 闭合；\\
+      形变 $l\to l+\ii t\sigma f_l\,e_G$，$e_G=n_B-n_A$，$t\in[0,1]$。};
+    \node at (2.75,-4.62) {(a)\ $\sigma$ 侧未割软分量 $C$ 上的 Glauber 流};
+  \end{scope}
+  % ============================================================= (b) a graded configuration with two levels
+  \begin{scope}[xshift=8.55cm]
+    \ffframe
+    \coordinate (v) at (3.0,0.3);
+    \coordinate (a1) at (2.2,1.92); \coordinate (a2) at (3.8,1.92); \coordinate (b1) at (3.0,-1.32);
+    \draw[ff lv1] (v) -- (a1);
+    \draw[ff lv2] (v) -- (a2);
+    \draw[ff lv1] (v) -- (b1);
+    \ffblobs
+    \node[vertex] at (v) {};
+    % allowed flows (violet) and the routing forbidden by (GC3) (red dashed, crossed)
+    \ffflow{b1}{v}{-90}{$\le3\kappa s_1$}{west}
+    \ffflow{v}{a1}{90}{$\le2\kappa s_1$}{east}
+    \ffflow{v}{a2}{-90}{$\le\kappa s_2$}{west}
+    \draw[ff bad] (2.74,-1.05) -- (2.74,0.0) to[out=90,in=240] (3.08,0.72) -- (3.42,1.42);
+    \node[font=\normalsize,text=red!70!black] at (3.2,1.0) {$\times$};
+    \node[ff note] at (-0.45,-2.2) {%
+      层 1（黑）：$\|l\|\le s_1$；层 2（灰）：$\|l\|\le s_2\le\theta s_1$；\\
+      (GC3)：腿的路径只经层号不大于自身的线，\\
+      故层 1 的流不经层 2 的线（红色虚线，$\times$）；\\
+      $|f_l|\le\kappa N_Cs_{i(l)}$，类空线 $m_l^2-l^2\ge s_{i(l)}^2/K>2f_l^2$。};
+    \node at (2.75,-4.62) {(b)\ 两层的分级构型（$N_C=3$）};
+  \end{scope}
+\end{tikzpicture}
+\caption{Glauber 流与分级构型（示意；振幅一侧 $\sigma=+1$，软动量 $q_a$ 流入 $J_A$、$q_b$ 流入 $J_B$）。
+(a)~在只含 $A$ 腿与 $B$ 腿、无局域腿的 $\sigma$ 侧未割软分量 $C$ 上，形变的虚部是一个守恒的“流”$f_l$（紫色箭头为流的实际方向）：它经 $B$ 腿从 $J_B$ 流入 $C$、在内部顶点守恒、经 $A$ 腿流入 $J_A$，并经 $J_A\to H\to J_B$ 闭合；割线上 $f=0$（\cref{def:appO-deformation-map}）。
+(b)~分级构型（\cref{def:appO-graded}）：线按尺度分层（黑：层 1，灰：层 2，$s_1\ge s_2$）；每条腿的流沿只经同层或尺度更大的层的路径输送，故层 2 的软线只携带自身的流（$\le\kappa s_2$），层 1 的流不会使层 2 的类空线奇异。
+当 $\kappa^2<1/(2KN_C^2)$ 时每条线满足非奇异条件 $(N_l)$，且每条腿 $|q_e^+||q_e^-|\ge c\,q_{Te}^2$（\cref{prop:appO-target} (ii)）；含局域腿与内部顶点的分量以及只有一种腿的分量归入\cref{asm:appO-deformation} (a)。}
+\label{fig:appO-glauber-flow}
+\end{figure}
+%%% END fig:appO-glauber-flow

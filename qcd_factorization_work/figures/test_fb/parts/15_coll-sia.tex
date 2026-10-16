@@ -1,0 +1,50 @@
+%%% BEGIN fig:coll-sia
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!75,line width=1.6pt,line cap=round}]
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[jet blob,ellipse,minimum width=3.2cm,minimum height=0.85cm,inner sep=0pt] (J1) at (0,1.65) {};
+  \node[jetB blob,ellipse,minimum width=3.2cm,minimum height=0.85cm,inner sep=0pt] (J2) at (0,-1.65) {};
+  \node[soft blob,circle,minimum size=0.8cm,inner sep=0pt] (S) at (0,0) {};
+  % observed hadron h: final-state line of J_1 crossing the cut
+  \draw[fb hadron] (-0.42,2.02) to[out=80,in=180] (0,2.62) to[out=0,in=100] (0.42,2.02);
+  % photons (gamma* from e+e- annihilation)
+  \draw[photon] (-4.3,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (4.3,0);
+  \path[mom={$q$},mom sep=0.28cm] (-4.3,0) -- (H.west);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.east) -- (4.3,0);
+  % fermion line: H -> J_1 -> H^dagger -> J_2 -> H
+  \draw[quark] (H.62) -- (J1.192);
+  \draw[quark] (J1.348) -- (Hd.118);
+  \draw[quark] (Hd.242) -- (J2.12);
+  \draw[quark] (J2.168) -- (H.298);
+  \path[mom={$k$},mom sep=0.28cm,mom length=0.45cm] (H.62) -- (J1.192);
+  % soft gluons, on both sides of the cut
+  \draw[gluon] (S.135) -- (-0.62,1.27);
+  \draw[gluon] (S.45)  -- ( 0.62,1.27);
+  \draw[gluon] (S.225) -- (-0.62,-1.27);
+  \draw[gluon] (S.315) -- ( 0.62,-1.27);
+  % cut
+  \draw[cut] (0,3.05) -- (0,-2.45);
+  % labels
+  \node[fb lab] at (-0.95,1.65) {$J_1$};
+  \node[fb lab] at (-0.95,-1.65) {$J_2$};
+  \node[fb lab] at (-0.64,0) {$S$};
+  \node[fb lab] at (H) {$H$};
+  \node[fb lab] at (Hd) {$H^\dagger$};
+  \node[fb lab,anchor=south west] at (0.08,2.66) {$h(p_h)$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south east] at (-0.05,2.95) {末态割线};
+  \draw[blue!50!black,line width=0.4pt] (-1.45,1.98) -- (-2.05,2.45);
+  \node[fb note,text=blue!50!black,anchor=south east,align=right] at (-2.0,2.4) {碎裂函数\\$d_{h/q}(z/y)$};
+  \node[fb note,anchor=west,align=left] at (1.75,-1.75) {未观测的喷注 $J_2$ 与软辐射 $S$：\\对其末态求和，幺正性相消};
+\end{tikzpicture}
+\caption{$e^+e^-\to\gamma^*\to hX$ 的领头区域（约化割图；竖直虚线为末态割线，左侧为振幅、右侧为共轭振幅）。
+硬子图 $H$、$H^\dagger$ 产生两个喷注：被观测强子 $h$（动量 $p_h$，$z=2p_h\cdot q/q^2$，粗线穿过割线）所在的喷注 $J_1$ 给出碎裂函数 $d_{h/q}(z/y)$，$y$ 为碎裂部分子（动量 $k$）的相应份额；
+未观测的喷注 $J_2$ 与软子图 $S$ 也穿过割线，它们在对末态的割线求和中由幺正性相消（\cref{lem:coll-unobserved-jet}），软因子为 $1$；全部共线线都是出射的，Glauber 区没有钳夹（\cref{lem:coll-final-poles}）。}
+\label{fig:coll-sia}
+\end{figure}
+%%% END fig:coll-sia

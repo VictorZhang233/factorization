@@ -1,0 +1,283 @@
+%%% BEGIN fig:dglap-ladder
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \def\toneX{1.3}
+  % heights: blob top 0.45, vertices 1.35, 2.5, 3.85, photon vertex 5.0; dots 2.95--3.25
+  % left chain (amplitude)
+  \draw[quark] (-\toneX,0.43) -- (-\toneX,1.35);
+  \draw[quark] (-\toneX,1.35) -- (-\toneX,2.5);
+  \draw[plain] (-\toneX,2.5) -- (-\toneX,2.82);
+  \draw[line width=0.8pt,dash pattern=on 0pt off 3pt,line cap=round] (-\toneX,2.95) -- (-\toneX,3.25);
+  \draw[quark] (-\toneX,3.38) -- (-\toneX,3.85);
+  \draw[quark] (-\toneX,3.85) -- (-\toneX,5.0);
+  % right chain (conjugate amplitude)
+  \draw[quark] (\toneX,1.35) -- (\toneX,0.43);
+  \draw[quark] (\toneX,2.5) -- (\toneX,1.35);
+  \draw[plain] (\toneX,2.82) -- (\toneX,2.5);
+  \draw[line width=0.8pt,dash pattern=on 0pt off 3pt,line cap=round] (\toneX,2.95) -- (\toneX,3.25);
+  \draw[quark] (\toneX,3.85) -- (\toneX,3.38);
+  \draw[quark] (\toneX,5.0) -- (\toneX,3.85);
+  % struck quark and photons
+  \draw[quark=0.25] (-\toneX,5.0) -- (\toneX,5.0);
+  \draw[photon] (-2.35,5.75) -- (-\toneX,5.0);
+  \draw[photon] (\toneX,5.0) -- (2.35,5.75);
+  % rungs: real partons crossing the cut
+  \foreach \y in {1.35,2.5,3.85} {
+    \draw[gluon] (-\toneX,\y) -- (\toneX,\y);
+    \node[vertex] at (-\toneX,\y) {}; \node[vertex] at (\toneX,\y) {};}
+  \node[vertex] at (-\toneX,5.0) {}; \node[vertex] at (\toneX,5.0) {};
+  % hadron blob (input PDF)
+  \draw[t1 hadron] (-3.2,0) -- (3.2,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.85,y radius=0.45];
+  \node at (-0.9,0) {$f(\xi_0;\mu_0)$};
+  \draw[cut] (0,-0.75) -- (0,5.9);
+  % labels: momentum fractions (left), splitting variables (vertices), k_T (right)
+  \node[left] at (-\toneX,0.89) {$\xi_0$};
+  \node[left] at (-\toneX,1.92) {$\xi_1=z_1\xi_0$};
+  \node[left] at (-\toneX,3.6) {$\xi_{n-1}$};
+  \node[left] at (-\toneX,4.42) {$\xi_n=z_n\xi_{n-1}\simeq x$};
+  \foreach \y/\z in {1.35/z_1,2.5/z_2,3.85/z_n}
+    \node[right,font=\footnotesize,inner sep=2pt] at (-\toneX,\y+0.31) {$\z$};
+  \node[right] at (\toneX,0.89) {$k_{\mathrm T0}\sim\mu_0$};
+  \node[right] at (\toneX,1.92) {$k_{\mathrm T1}$};
+  \node[right] at (\toneX,3.6) {$k_{\mathrm T,n-1}$};
+  \node[right] at (\toneX,4.42) {$k_{\mathrm Tn}$};
+  \node[above left,inner sep=1pt] at (-2.35,5.75) {$\gamma^*(q)$};
+  \node[left] at (-3.2,0) {$P$}; \node[right] at (3.2,0) {$P$};
+  % ordering arrow
+  \draw[lcaxis,line width=0.7pt] (3.75,0.89) -- (3.75,5.1);
+  \node[right,align=left,font=\small] at (3.9,3.0)
+    {$\mu_0^2\ll k_{\mathrm T1}^2\ll\cdots$\\[2pt]$\quad\ll k_{\mathrm T,n-1}^2\ll k_{\mathrm Tn}^2\ll Q^2$};
+\end{tikzpicture}
+\caption{DGLAP 演化在领头对数近似下的梯形图（物理规范中的非单态部分；单态部分的竖线也可以是胶子）。
+自初始尺度 $\mu_0$ 的部分子分布 $f(\xi_0;\mu_0)$ 出发，第 $i$ 个分裂顶点把动量分数由 $\xi_{i-1}$ 变为 $\xi_i=z_i\xi_{i-1}$，
+同时发射一个穿过末态割线的实部分子（带走 $(1-z_i)\xi_{i-1}$）。在横动量强序 $\mu_0^2\ll k_{\mathrm T1}^2\ll\cdots\ll k_{\mathrm Tn}^2\ll Q^2$ 的区域，
+每一级给出 $\frac{\as}{2\pi}\int\frac{\dd k_{\mathrm T}^2}{k_{\mathrm T}^2}P(z_i)$，$n$ 级梯形图贡献 $\frac{1}{n!}\big(\frac{\as}{2\pi}\ln\frac{Q^2}{\mu_0^2}\big)^n$ 乘以 $n$ 重卷积 $P\otimes\cdots\otimes P$（固定耦合）；
+连同提供加号分布的虚修正，对 $n$ 求和即得领头阶 DGLAP 方程的解。}
+\label{fig:dglap-ladder}
+\end{figure}
+%%% END fig:dglap-ladder
+
+%%% BEGIN fig:pdf-oneloop
+\begin{figure}[htbp]
+\centering
+% frame common to all graphs: cut, Wilson line (arrow at position #1), operator vertices, external labels
+\newcommand{\toneW}[1]{%
+  \draw[cut] (0,-0.22) -- (0,2.6);
+  \draw[wilson=#1] (-0.75,1.9) -- (0.75,1.9);
+  \node[opvertex] at (-0.75,1.9) {}; \node[opvertex] at (0.75,1.9) {};
+  \node[below] at (-0.75,0) {$p$}; \node[below] at (0.75,0) {$p$};}
+\begin{subfigure}[b]{0.24\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,0.9);
+  \draw[quark] (-0.75,0.9) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,0.9);
+  \draw[quark] (0.75,0.9) -- (0.75,0);
+  \draw[gluon] (-0.75,0.9) -- (0.75,0.9);
+  \toneW{0.25}
+  \node[vertex] at (-0.75,0.9) {}; \node[vertex] at (0.75,0.9) {};
+  \path[mom'={$l$},mom pos=0.76,mom length=0.42cm,mom sep=0.27cm] (-0.75,0.9) -- (0.75,0.9);
+  \path[mom={$k$},mom length=0.45cm] (-0.75,0.9) -- (-0.75,1.9);
+\end{tikzpicture}
+\caption{实胶子发射}
+\end{subfigure}\hspace{2em}
+\begin{subfigure}[b]{0.56\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,0.8);
+  \draw[quark] (-0.75,0.8) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,0);
+  \draw[gluon] (-0.75,0.8) to[out=10,in=-100] (0.4,1.9);
+  \toneW{0.25}
+  \node[vertex] at (-0.75,0.8) {}; \node[vertex] at (0.4,1.9) {};
+\end{tikzpicture}\hspace{1.5em}
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,0.8);
+  \draw[quark] (0.75,0.8) -- (0.75,0);
+  \draw[gluon] (-0.4,1.9) to[out=-80,in=170] (0.75,0.8);
+  \toneW{0.75}
+  \node[vertex] at (0.75,0.8) {}; \node[vertex] at (-0.4,1.9) {};
+\end{tikzpicture}
+\caption{夸克线与另一侧 Wilson~线间的实胶子（及镜像）}
+\end{subfigure}
+
+\bigskip
+\begin{subfigure}[b]{0.68\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,0.8);
+  \draw[quark] (-0.75,0.8) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,0);
+  \draw[gluon] (-0.75,0.8) to[out=0,in=-90] (-0.25,1.9);
+  \toneW{0.75}
+  \node[vertex] at (-0.75,0.8) {}; \node[vertex] at (-0.25,1.9) {};
+\end{tikzpicture}\hspace{0.9em}
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,0.8);
+  \draw[quark] (0.75,0.8) -- (0.75,0);
+  \draw[gluon] (0.25,1.9) to[out=-90,in=180] (0.75,0.8);
+  \toneW{0.25}
+  \node[vertex] at (0.75,0.8) {}; \node[vertex] at (0.25,1.9) {};
+\end{tikzpicture}\hspace{0.9em}
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,0.45);
+  \draw[quark] (-0.75,0.45) -- (-0.75,1.3);
+  \draw[quark] (-0.75,1.3) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,0);
+  \draw[gluon] (-0.75,0.45) arc[start angle=-90,end angle=-270,radius=0.425];
+  \toneW{0.25}
+  \node[vertex] at (-0.75,0.45) {}; \node[vertex] at (-0.75,1.3) {};
+\end{tikzpicture}\hspace{0.9em}
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,1.3);
+  \draw[quark] (0.75,1.3) -- (0.75,0.45);
+  \draw[quark] (0.75,0.45) -- (0.75,0);
+  \draw[gluon] (0.75,1.3) arc[start angle=90,end angle=-90,radius=0.425];
+  \toneW{0.25}
+  \node[vertex] at (0.75,0.45) {}; \node[vertex] at (0.75,1.3) {};
+\end{tikzpicture}
+\caption{不穿过割线的虚图（两两互为镜像）}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.28\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \draw[quark] (-0.75,0) -- (-0.75,1.9);
+  \draw[quark] (0.75,1.9) -- (0.75,0);
+  \draw[gluon] (-0.5,1.9) arc[start angle=180,end angle=0,radius=0.5];
+  \toneW{0.36}
+  \node[vertex] at (-0.5,1.9) {}; \node[vertex] at (0.5,1.9) {};
+  \node[font=\footnotesize] at (0,-0.68) {$\propto n^2=0$};
+\end{tikzpicture}
+\caption{Wilson~线之间的胶子}
+\end{subfigure}
+\caption{Feynman 规范下夸克中夸克分布 $f_{q/q}(\xi)$ 的 $\order{\as}$ 割图（靶为在壳夸克 $p$，$k^+=\xi p^+$；记号同\cref{fig:pdf-operator}）。
+(a) 实胶子发射（梯形图），给出 $P_{qq}$ 中的 $C_F(1-\xi)$；(b) 实胶子由夸克线连到割线另一侧的 Wilson 线，及其镜像；
+(c) 不穿过割线的虚图：夸克线—Wilson 线顶点修正（前两图）与外线自能（后两图）。
+(b) 与 (c) 中夸克线—Wilson 线图在 $\xi\to1$ 的端点奇异性只在实、虚之和中相消，合成 $C_F[2\xi/(1-\xi)]_+$；
+外线自能的紫外发散（夸克场重整化）贡献 $-\tfrac12C_F\delta(1-\xi)$；总和为 $P_{qq}=C_F[(1+\xi^2)/(1-\xi)]_+$。
+(d) 连接割线两侧 Wilson 线的胶子正比于 $n^2=0$，在 Feynman 规范中为零（同侧的 Wilson 线自能亦然）。}
+\label{fig:pdf-oneloop}
+\end{figure}
+%%% END fig:pdf-oneloop
+
+%%% BEGIN fig:pdf-operator
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \coordinate (ol) at (-1.9,2.4); \coordinate (or) at (1.9,2.4);
+  \coordinate (bl) at (-1.9,0);   \coordinate (br) at (1.9,0);
+  % remnant X crossing the cut (drawn first; the blobs cover the ends)
+  \foreach \y in {0.24,0,-0.24} \draw[plain] (bl) ++(0,\y) -- ++(3.8,0);
+  \draw[quark] (-1.9,0.43) -- (ol);
+  \draw[wilson=0.25] (ol) -- (or);
+  \draw[quark] (or) -- (1.9,0.43);
+  \draw[t1 hadron] (-3.65,0) -- (bl);
+  \draw[t1 hadron] (br) -- (3.65,0);
+  \draw[hadron blob] (bl) ellipse[x radius=0.82,y radius=0.45];
+  \draw[hadron blob] (br) ellipse[x radius=0.82,y radius=0.45];
+  \node[opvertex] at (ol) {}; \node[opvertex] at (or) {};
+  \draw[cut] (0,-0.85) -- (0,3.0);
+  % labels
+  \path[mom={$k$},mom pos=0.62] (-1.9,0.45) -- (ol);
+  \path[mom={$k$},mom pos=0.38] (or) -- (1.9,0.45);
+  \node[left,font=\small] at (-2.02,0.92) {$k^+=\xi P^+$};
+  \node[above left,inner sep=3pt] at (ol) {$\psi(0)$};
+  \node[above right,inner sep=3pt] at (or) {$\bar\psi(w)$};
+  \node[below,font=\footnotesize,inner sep=4pt] at (-0.95,2.4) {$W[\infty n,0]$};
+  \node[below,font=\footnotesize,inner sep=4pt] at (0.95,2.4) {$W[w,\infty n]$};
+  \path[mom={$P$},mom sep=0.3cm] (-3.65,0) -- (-2.72,0);
+  \path[mom={$P$},mom sep=0.3cm] (2.72,0) -- (3.65,0);
+  \node[font=\small] at (0.42,-0.62) {$X$};
+\end{tikzpicture}
+\caption{夸克分布函数的割图表示。在定义
+$f_{q/H}(\xi)=\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii\xi P^+w^-}\langle P|\bar\psi(w)\gamma^+W[w,0]\psi(0)|P\rangle$
+（$w=w^-n$，$n$ 为满足 $n\cdot v=v^+$ 的光锥矢量）中插入末态完备集并完成 $w^-$ 积分，得
+$f_{q/H}(\xi)=\sum_X\tfrac12\,\delta\big(\xi P^+-(P-p_X)^+\big)\,\langle P|\bar\psi(0)W[0,\infty n]|X\rangle\,\gamma^+\,\langle X|W[\infty n,0]\psi(0)|P\rangle$。
+割线左侧为振幅、右侧为共轭振幅，$X$ 为穿过割线的剩余部分。两个 $\otimes$ 为非定域算符的两端，算符顶点的 Feynman 规则为
+$\tfrac12\gamma^+\delta(k^+-\xi P^+)$（配合 $\int\dd^4k/(2\pi)^4$，Wilson 线上无胶子附着时）；
+双线为 Wilson 线 $W[w,0]=W[w,\infty n]\,W[\infty n,0]$，被末态割线分为振幅中的 $W[\infty n,0]$ 与共轭振幅中的 $W[w,\infty n]$。
+箭头表示费米子数（色）流向。}
+\label{fig:pdf-operator}
+\end{figure}
+%%% END fig:pdf-operator
+
+%%% BEGIN fig:splitting-vertices
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd]
+  % ---------- (a) q -> q g ----------
+  \begin{scope}[shift={(0,0)}]
+    \coordinate (V) at (0,0);
+    \draw[quark] (-1.6,0) -- (V);
+    \draw[quark] (V) -- (1.45,0.95);
+    \draw[gluon] (V) -- (1.45,-0.95);
+    \node[vertex] at (V) {};
+    \path[mom={$p$}] (-1.6,0) -- (V);
+    \path[mom={$zp$}] (V) -- (1.45,0.95);
+    \path[mom'={$(1-z)p$}] (V) -- (1.45,-0.95);
+    \node[left] at (-1.6,0) {$q$};
+    \node[right] at (1.45,0.95) {$q$};
+    \node[right] at (1.45,-0.95) {$g$};
+    \node[font=\small,align=center,anchor=north] at (0,-1.55)
+      {(a)\enspace$q\to qg$\\[2pt]$P_{qq}(z)=C_F\Big[\dfrac{1+z^2}{1-z}\Big]_+$};
+  \end{scope}
+  % ---------- (b) q -> g q ----------
+  \begin{scope}[shift={(7.4,0)}]
+    \coordinate (V) at (0,0);
+    \draw[quark] (-1.6,0) -- (V);
+    \draw[gluon] (V) -- (1.45,0.95);
+    \draw[quark] (V) -- (1.45,-0.95);
+    \node[vertex] at (V) {};
+    \path[mom={$p$}] (-1.6,0) -- (V);
+    \path[mom={$zp$}] (V) -- (1.45,0.95);
+    \path[mom'={$(1-z)p$}] (V) -- (1.45,-0.95);
+    \node[left] at (-1.6,0) {$q$};
+    \node[right] at (1.45,0.95) {$g$};
+    \node[right] at (1.45,-0.95) {$q$};
+    \node[font=\small,align=center,anchor=north] at (0,-1.55)
+      {(b)\enspace$q\to gq$\\[2pt]$P_{gq}(z)=C_F\,\dfrac{1+(1-z)^2}{z}$};
+  \end{scope}
+  % ---------- (c) g -> q qbar (antiquark: fermion arrow into the vertex) ----------
+  \begin{scope}[shift={(0,-4.6)}]
+    \coordinate (V) at (0,0);
+    \draw[gluon] (-1.6,0) -- (V);
+    \draw[quark] (V) -- (1.45,0.95);
+    \draw[quark] (1.45,-0.95) -- (V);
+    \node[vertex] at (V) {};
+    \path[mom={$p$}] (-1.6,0) -- (V);
+    \path[mom={$zp$}] (V) -- (1.45,0.95);
+    \path[mom'={$(1-z)p$}] (V) -- (1.45,-0.95);
+    \node[left] at (-1.6,0) {$g$};
+    \node[right] at (1.45,0.95) {$q$};
+    \node[right] at (1.45,-0.95) {$\bar q$};
+    \node[font=\small,align=center,anchor=north] at (0,-1.55)
+      {(c)\enspace$g\to q\bar q$\\[2pt]$P_{qg}(z)=T_F\big[z^2+(1-z)^2\big]$};
+  \end{scope}
+  % ---------- (d) g -> g g ----------
+  \begin{scope}[shift={(7.4,-4.6)}]
+    \coordinate (V) at (0,0);
+    \draw[gluon] (-1.6,0) -- (V);
+    \draw[gluon] (V) -- (1.45,0.95);
+    \draw[gluon] (V) -- (1.45,-0.95);
+    \node[vertex] at (V) {};
+    \path[mom={$p$}] (-1.6,0) -- (V);
+    \path[mom={$zp$}] (V) -- (1.45,0.95);
+    \path[mom'={$(1-z)p$}] (V) -- (1.45,-0.95);
+    \node[left] at (-1.6,0) {$g$};
+    \node[right] at (1.45,0.95) {$g$};
+    \node[right] at (1.45,-0.95) {$g$};
+    \node[font=\small,align=center,anchor=north] at (0,-1.55)
+      {(d)\enspace$g\to gg$\\[2pt]$\begin{aligned}P_{gg}(z)={}&2C_A\Big[\dfrac{z}{(1-z)_+}+\dfrac{1-z}{z}+z(1-z)\Big]\\[-2pt]&+\dfrac{\beta_0}{2}\,\delta(1-z)\end{aligned}$};
+  \end{scope}
+\end{tikzpicture}
+\caption{领头阶分裂函数对应的四种 $1\to2$ 分裂。动量为 $p$ 的母部分子 $j$（左）分裂为携带加号动量 $zp^+$ 的部分子 $i$（右上）
+与携带 $(1-z)p^+$ 的部分子（右下）；动量箭头旁的 $zp$、$(1-z)p$ 只标出沿共线方向的动量分数（略去横动量）。
+$P_{ij}(z)$ 是 DGLAP 方程 $\partial f_i/\partial\ln\mu^2=\frac{\as}{2\pi}\sum_jP_{ij}\otimes f_j$ 中 $j\to i$ 的领头阶核；
+$[\,\cdot\,]_+$ 为加号分布，$C_F[(1+z^2)/(1-z)]_+=C_F[(1+z^2)/(1-z)_++\tfrac32\delta(1-z)]$，$\beta_0=\tfrac{11}{3}C_A-\tfrac43T_Fn_f$。
+(c) 中 $P_{qg}$ 对每一味夸克与反夸克分别计入；反夸克线上的箭头（费米子数流向）指向顶点，其动量 $(1-z)p$ 则向外。}
+\label{fig:splitting-vertices}
+\end{figure}
+%%% END fig:splitting-vertices

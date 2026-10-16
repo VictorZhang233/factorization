@@ -1,0 +1,70 @@
+%%% BEGIN fig:appN-chain-pairing
+\begin{figure}[htbp]
+\centering
+% The nine-region poset of fig:method-hasse (same node layout; line-wise order S<C_1,C_2<H,
+% C_1^C_2=S; 12 covering edges), R_0=(C_1,C_1).  Checked with non-commuting symbols (sympy):
+% comparable with R_0: down R_0={(S,S),(C_1,S)}, up R_0={(H,C_1),(H,H)} (up R={X>R});
+% incomparable: (C_2,S),(H,S),(C_2,C_2),(H,C_2) with meets (S,S),(C_1,S),(S,S),(C_1,S);
+% every pinch set contains pi_(S,S) ((S,S) is a common lower bound), hence I'={all four}, I''=empty;
+% r = O_up(R_0)[(1-T_R0)X_R0] - sum_{R in I'} O_up(R) T_R[(1-T_R^)X_R^] holds identically;
+% O_up(R_0)=(1-T_HH)(1-T_HC1), X_R0=(1-T_C1S)(1-T_SS)Gamma, X_(C1,S)=(1-T_SS)Gamma, X_(S,S)=Gamma.
+\begin{tikzpicture}[
+  fe node/.style={draw=gray!60!black,fill=white,rounded corners=2.5pt,line width=0.6pt,inner sep=2.5pt,
+    minimum width=1.35cm,minimum height=0.55cm,font=\small},
+  fe R0/.style={fe node,draw=red!60!black,fill=red!8,line width=1.2pt},
+  fe Ip/.style={fe node,draw=blue!60!black,fill=blue!10,line width=0.8pt},
+  fe edge/.style={draw=gray!55!black,line width=0.7pt},
+  fe chain/.style={draw=red!60!black,line width=1.6pt},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= the poset =======================
+  \node[fe node] (SS) at (0,0)       {$(S,S)$};
+  \node[fe node] (AS) at (-1.45,1.15) {$(C_1,S)$};
+  \node[fe Ip]   (BS) at (1.45,1.15)  {$(C_2,S)$};
+  \node[fe R0]   (AA) at (-2.75,2.3)  {$(C_1,C_1)$};
+  \node[fe Ip]   (HS) at (0,2.3)      {$(H,S)$};
+  \node[fe Ip]   (BB) at (2.75,2.3)   {$(C_2,C_2)$};
+  \node[fe node] (HA) at (-1.45,3.45) {$(H,C_1)$};
+  \node[fe Ip]   (HB) at (1.45,3.45)  {$(H,C_2)$};
+  \node[fe node] (HH) at (0,4.6)      {$(H,H)$};
+  \begin{scope}[on background layer]
+    \foreach \u/\v in {BS/SS,HS/AS,HS/BS,BB/BS,HA/HS,HB/HS,HB/BB,HH/HB}
+      \draw[fe edge] (\u) -- (\v);
+    % the chain of regions comparable with R_0
+    \foreach \u/\v in {AS/SS,AA/AS,HA/AA,HH/HA}
+      \draw[fe chain] (\u) -- (\v);
+  \end{scope}
+  \node[fe lab,text=red!55!black,anchor=south,inner sep=2pt] at (AA.north) {$R_0$};
+  \node[fe lab,text=red!55!black] at (-1.65,0.32) {$\downarrow\!R_0$};
+  \node[fe lab,text=red!55!black] at (-1.65,4.28) {$\uparrow\!R_0$};
+  \node[fe lab,text=blue!55!black,anchor=west,inner sep=2pt] at (SS.east) {$R_\wedge$};
+  \node[fe lab,text=blue!55!black,anchor=west,inner sep=2pt] at (AS.east) {$R_\wedge$};
+  \node[fe lab,text=blue!55!black,anchor=west] at (2.15,0.55) {$\mathcal I'$（蓝框）};
+  % ======================= table of I' and the meets =======================
+  \node[anchor=north west,inner sep=0pt] at (3.95,4.75) {\small
+    \begin{tabular}{@{}l@{\quad}l@{\quad}l@{}}
+      \toprule
+      $R\in\mathcal I'$ & $R_\wedge=R\wedge R_0$ & $(1-T_{R_\wedge})X_{R_\wedge}$\\
+      \midrule
+      $(C_2,S)$   & $(S,S)$   & $(1-T_{SS})\Gamma$\\
+      $(H,S)$     & $(C_1,S)$ & $(1-T_{C_1S})(1-T_{SS})\Gamma$\\
+      $(C_2,C_2)$ & $(S,S)$   & $(1-T_{SS})\Gamma$\\
+      $(H,C_2)$   & $(C_1,S)$ & $(1-T_{C_1S})(1-T_{SS})\Gamma$\\
+      \midrule
+      \multicolumn{3}{@{}l@{}}{$\pi_R\cap\pi_{R_0}=\pi_{R_\wedge}\neq\varnothing$，故 $\mathcal I''=\varnothing$}\\
+      \bottomrule
+    \end{tabular}};
+  % ======================= the decomposition =======================
+  \node[anchor=north,align=center,font=\small] at (3.9,-0.75)
+    {$r=\mathcal O_{\uparrow R_0}\big[(1-T_{R_0})X_{R_0}\big]
+      -\sum_{R\in\mathcal I'}\mathcal O_{\uparrow R}\,T_R\big[(1-T_{R_\wedge})X_{R_\wedge}\big]
+      -{\color{gray!70!black}\sum_{R\in\mathcal I''}\mathcal O_{\uparrow R}\,T_R\Gamma}$
+     \quad（末项本例为零）\\[4pt]
+     {\color{red!55!black}红色链：}$\mathcal O_{\uparrow R_0}\big[(1-T_{R_0})X_{R_0}\big]
+      =(1-T_{HH})(1-T_{HC_1})(1-T_{R_0})(1-T_{C_1S})(1-T_{SS})\Gamma$};
+\end{tikzpicture}
+\caption{配对分解（\cref{lem:method-pairing}）在九区域偏序集（\cref{fig:method-hasse}）上的例子，取 $R_0=(C_1,C_1)$（红框；$T_{XY}\equiv T_{(X,Y)}$，$\uparrow\!R=\{X>R\}$）。
+与 $R_0$ 可比的区域构成红色的链 $(S,S)<(C_1,S)<R_0<(H,C_1)<(H,H)$，给出分解的第一项；与 $R_0$ 不可比的四个区域（蓝框）的钳夹集都与 $\pi_{R_0}$ 相交（$\pi_R\cap\pi_{R_0}=\pi_{R\wedge R_0}$，\cref{lem:method-meets}），故都属于 $\mathcal I'$，其交 $R_\wedge$ 只有 $(S,S)$ 与 $(C_1,S)$ 两种（右表）。
+由于每个钳夹集都含全软点 $\pi_{(S,S)}$，本例中 $\mathcal I''=\varnothing$；该恒等式是逐点的代数恒等式，展开 $\mathcal O_{\uparrow R}$ 会重新产生不可积的单链项，可估计的只是分组表达式。}
+\label{fig:appN-chain-pairing}
+\end{figure}
+%%% END fig:appN-chain-pairing

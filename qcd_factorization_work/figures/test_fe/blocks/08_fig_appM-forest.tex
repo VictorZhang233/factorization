@@ -1,0 +1,81 @@
+%%% BEGIN fig:appM-forest
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe reg/.style={region,line width=0.7pt},
+  fe aux/.style={draw=gray!55!black,line width=0.7pt,dash pattern=on 1pt off 1.6pt},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) a forest of a two-loop graph =======================
+  % forward Compton graph (uncut): q enters at V_A, leaves at V_B; vertex correction gamma_1 at V_A,
+  % gamma_2 = gamma_1 + the struck-quark line b->V_B (contains both current vertices; not 1PI by
+  % itself, but gamma_2 + l_x is 1PI: an AB part, omega = D - sum_E d_e = 2 - 3 = -1, subtracted
+  % only in N_a with delta_a = a - 3), self-energy gamma_3 on the incoming quark line (no common
+  % vertex with gamma_2; omega(gamma_1) = 0, omega(gamma_3) = 1).
+  \begin{scope}
+    \coordinate (VA) at (-1.25,2.3); \coordinate (VB) at (1.25,2.3);
+    \coordinate (a) at (-1.25,1.35); \coordinate (b) at (-0.05,2.3);
+    \coordinate (c) at (-1.25,-0.5); \coordinate (d) at (-1.25,0.4);
+    \coordinate (Ein) at (-1.25,-1.4); \coordinate (Eout) at (1.25,-1.4);
+    % subgraph boxes (drawn first)
+    \draw[fe reg,blue!55!black] (-1.55,1.05) rectangle (0.3,2.6);
+    \draw[fe reg] (-1.85,0.8) rectangle (1.6,2.9);
+    \draw[fe reg,orange!75!black] (-2.05,-0.78) rectangle (-0.93,0.67);
+    % lines
+    \draw[photon] (-2.45,3.45) -- (VA);
+    \draw[photon] (VB) -- (2.45,3.45);
+    \draw[quark=0.5] (Ein) -- (c);
+    \draw[quark] (c) -- (d);
+    \draw[quark=0.55] (d) -- (a);
+    \draw[quark=0.6] (a) -- (VA);
+    \draw[quark=0.6] (VA) -- (b);
+    \draw[quark] (b) -- (VB);
+    \draw[quark=0.62] (VB) -- (Eout);
+    \draw[gluon] (a) .. controls (-0.6,1.37) and (-0.1,1.75) .. (b);
+    \draw[gluon] (c) .. controls (-1.98,-0.4) and (-1.98,0.3) .. (d);
+    \foreach \p in {VA,VB,a,b,c,d} \node[vertex] at (\p) {};
+    \path[mom'={$q$},mom sep=0.24cm] (-2.45,3.45) -- (VA);
+    \path[mom'={$q$},mom sep=0.24cm] (VB) -- (2.45,3.45);
+    \path[mom'={$p$},mom pos=0.42] (Ein) -- (c);
+    \path[mom={$p$},mom pos=0.72] (VB) -- (Eout);
+    \node[fe lab,anchor=north west,inner sep=1pt] at (-1.2,2.24) {$V_A$};
+    \node[fe lab,anchor=north east,inner sep=1pt] at (1.2,2.24) {$V_B$};
+    \node[fe lab,text=blue!50!black,anchor=south east,inner sep=1.5pt] at (0.3,1.05) {$\gamma_1$};
+    \node[fe lab,anchor=west,inner sep=2pt] at (1.6,1.15) {$\gamma_2$};
+    \node[fe lab,text=orange!65!black,anchor=east,inner sep=2pt] at (-2.05,-0.05) {$\gamma_3$};
+    \node[fe lab,anchor=north] at (0.05,-1.75) {森林 $F=\{\gamma_1,\gamma_2,\gamma_3\}$：$\gamma_1\subset\gamma_2$，$\gamma_3\cap\gamma_2=\varnothing$};
+    \node[anchor=north] at (0.05,-2.3) {$R_\Gamma=\sum_F\prod^{\curvearrowleft}_{\gamma\in F}\big(-t^{\delta(\gamma)}_\gamma\big)\,I_\Gamma$};
+    \node at (0.05,-3.35) {(a)\ 森林：两两嵌套或不相交};
+  \end{scope}
+  % ======================= (b) frozen-q bilocal normal product =======================
+  \begin{scope}[xshift=7.6cm]
+    \coordinate (VA) at (-1.0,1.85); \coordinate (VB) at (1.0,1.85);
+    \coordinate (u) at (-1.0,0.65); \coordinate (w) at (1.0,0.65);
+    \draw[fe reg,line width=0.8pt] (-1.38,0.35) rectangle (1.38,2.2);
+    \draw[quark] (-1.95,-0.35) -- (u);
+    \draw[quark] (w) -- (1.95,-0.35);
+    \draw[quark] (u) -- (VA);
+    \draw[quark] (VA) -- (VB);
+    \draw[quark] (VB) -- (w);
+    \draw[gluon] (u) -- (w);
+    \node[vertex] at (u) {}; \node[vertex] at (w) {};
+    % auxiliary line l_x carrying the frozen external momentum q
+    \draw[fe aux] (VA) .. controls (-0.85,3.25) and (0.85,3.25) .. (VB);
+    \path[mom={$q$},mom sep=0.2cm] (VA) .. controls (-0.85,3.25) and (0.85,3.25) .. (VB);
+    \node[opvertex] at (VA) {}; \node[opvertex] at (VB) {};
+    \node[fe lab,anchor=east,inner sep=2pt] at (-1.38,1.85) {$A(x)$};
+    \node[fe lab,anchor=west,inner sep=2pt] at (1.38,1.85) {$B(0)$};
+    \node[fe lab,anchor=west,inner sep=1pt,text=gray!40!black] at (0.82,2.85) {$\ell_x$：$\ee^{-\ii q\cdot x}$};
+    \path[mom={$p_1$},mom pos=0.45] (-1.95,-0.35) -- (u);
+    \path[mom'={$p_2$},mom pos=0.55] (w) -- (1.95,-0.35);
+    \node[fe lab,anchor=north,inner sep=2pt] at (0,0.35) {AB 部分 $\gamma$};
+    \node[fe lab,align=center,anchor=north] at (0,-0.65) {只对外动量 $p$（不对 $q$）作 Taylor 减除：\\$t^{\delta_a(\gamma)}_p$，$\delta_a(\gamma)=a-\sum_{E(\gamma)}d_e$};
+    \node[fe lab,align=center,anchor=north,text=red!60!black] at (0,-1.75) {减除次数须对顶点可加};
+    \node at (0,-3.35) {(b)\ 冻结 $q$ 的双局域正规乘积 $N_a[A(x)B(0)]$};
+  \end{scope}
+\end{tikzpicture}
+\caption{BPHZ 森林公式与正规乘积（示意）：(a)~森林是两两嵌套或不相交的子图（重整化部分；在正规乘积中还包括 AB 部分）的集合，例如紫外发散的顶点修正 $\gamma_1$ 与自能 $\gamma_3$，以及包含 $\gamma_1$ 与两个流顶点 $V_A$、$V_B$ 的 AB 部分 $\gamma_2$（$\gamma_3$ 与 $\gamma_2$ 无公共顶点）；$R_\Gamma$ 中较小的子图先作用（$\curvearrowleft$），大动量 $q$ 自 $V_A$ 流入、自 $V_B$ 流出；
+(b)~冻结 $q$ 的双局域正规乘积中，含两个流顶点的子图（AB 部分，加上辅助线 $\ell_x$ 后为单粒子不可约）只对外动量 $p$ 作 Taylor 减除，$q$ 不展开。
+减除次数必须对顶点可加（$\delta(\gamma)=\omega(\gamma)+\sum_{v\in V(\gamma)}c_v$），否则可构造反例（\cref{ex:appM-nonadditive}）。}
+\label{fig:appM-forest}
+\end{figure}
+%%% END fig:appM-forest

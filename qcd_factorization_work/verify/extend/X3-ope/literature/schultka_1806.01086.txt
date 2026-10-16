@@ -1,0 +1,2495 @@
+                                                Toric geometry and regularization of Feynman integrals
+                                                                                      Konrad Schultka∗
+                                                                                        June 5, 2018
+
+
+
+
+arXiv:1806.01086v1 [math-ph] 4 Jun 2018
+                                                                                           Abstract
+                                                     We study multivariate Mellin transforms of Laurent polynomials by considering special toric
+                                                 compactifications which make their singular structure apparent. This gives a precise description
+                                                 of their convergence domain, refining results of Nilsson, Passare, Berkesch and Forsgård. We
+                                                 also reformulate the geometric sector decomposition approach of Kaneko and Ueda in terms of
+                                                 these compactifications.
+                                                     Specializing to the case of Feynman integrals in the parametric representation, we construct
+                                                 multiple such compactifications given by certain systems of subgraphs. As particular cases,
+                                                 we recover the sector decompositions of Hepp, Speer and Smirnov, as well as the iterated
+                                                 blow-up constructions of Brown and Bloch-Esnault-Kreimer. A fundamental role is played
+                                                 by the Newton polytope of the product of the Symanzik polynomials, which we show to be a
+                                                 generalized permutahedron for generic kinematics. As an application, we review two approaches
+                                                 to dimensional regularization of Feynman integrals, based on sector decomposition and on
+                                                 analytic continuation.
+
+
+                                          1      Introduction
+                                          The quantum theories of elementary particles are tested by comparing the results of scattering
+                                          experiments to the theoretical predictions of the corresponding quantum field theories. The latter
+                                          are organized by a sum over Feynman graphs, which encode the possible (virtual) particle histories.
+                                          These predictions then amount to the calculation of integrals, which (for D-dimensional euclidean
+                                          scalar theories) take the form
+                                                                                  Z           Y        1
+                                                                     IG (q, m) :=                                 dk,
+                                                                                   H1 (G,RD )   (ke + qe )2 + m2e
+                                                                                               e∈EG
+
+
+                                          where the integration is over a collection of internal momenta k ∈ RD , one for each independent
+                                          cycle of the graph. These integrals are in general ill-defined. UV divergences present themselves,
+                                          when some of the internal momenta become large and the integrand does not fall off sufficiently
+                                          rapidly. If some of the edges are massless (me = 0), then the integral can also develop IR-divergences
+                                          for small momenta, due to non-integrable singularities in the integrand.
+                                              Since the work of Weinberg ([39]) it is known that, at least for generic values of the external
+                                          momenta, these singularities are completely described by a simple power-counting argument for
+                                              ∗ schultka@math.hu-berlin.de
+
+
+
+
+                                                                                                1
+each subgraph γ ⊂ G. To make these singularities more apparent, it is often convenient to work in
+a parametric representation, which expresses IG as the projective integral
+                                             Z               ω
+                                                           ψG G ΩP EG
+                          IG (q, m) = Γ(ωG )                       D/2
+                                                                       .
+                                              P EG (R+ )   ΦG    ψG
+Here P EG is the projective space over the set of edges EG and ωG = |EG | − D      2 rk H1 (G). The
+polynomials ψG and ΦG are the Symanzik polynomials of the graphs. In this representation, the
+overall divergence of the graph has been absorbed in the factor Γ(ωG ). The UV and IR divergences
+due to subgraphs γ ⊂ G now appear because the vanishing loci V (ψG ) and V (ΦG ) of ψG and ΦG
+can intersect the boundary of the integration domain P EG (R+ ) ∼    = ∆EG in the coordinate linear
+space corresponding to γ.
+    For some applications, this representation is still somewhat inconvenient. Motivated by arith-
+metic questions, Bloch, Esnault and Kreimer ([6]) and later Brown ([10]) constructed new projective
+varieties by iteratively blowing-up certain coordinate linear spaces, such that the strict transforms
+of V (ψG ) and V (ΦG ) did not meet the strict transform of the integration domain. The possible
+singularities then simply manifest as poles along the exceptional divisors.
+    For a completely different purpose, Binoth and Heinrich ([4]) developed an iterative strategy to
+decompose the integration domain P EG (R+ ) into cubical sectors, such that, after an appropriate
+coordinate change, the integral over each sector takes the form
+                                        Z
+                                  Is =             xλ F (x, q, m)dx,                               (1)
+                                         [0,1]|EG |−1
+
+
+where F (x, q, m) is a rational function which is regular on [0, 1]|EG|−1 . This allowed them to
+completely automate the calculation of IG in dimensional regularization. Kaneko and Ueda ([23])
+later introduced a different, noniterative sector decomposition strategy, which is based on polyhedral
+geometry.
+    The goal of this paper is to show that both construction can be unified in the framework of
+toric geometry. A complex variety is toric if it has an action of a complex torus with a dense orbit.
+Intuitively, we can think of a toric variety as constructed from a torus by coherently adding tori
+of lower dimension at infinity. Normal toric varieties are constructed in terms of a collection of
+rational polyhedral cones Σ, called a fan. The corresponding toric variety XΣ is constructed by
+gluing affine pieces Uσ , Uσ′ corresponding to cones σ1 , σ2 ∈ Σ along the open, dense subvariety
+Uτ given by the intersection τ = σ1 ∩ σ2 . This gives a fruitful interplay between polyhedral and
+toric geometry. In particular, we can attach a toric variety XP to every lattice polytope P ⊂ Zn .
+Each toric variety XΣ also has a natural real, semi-algebraic subset XΣ (R+ ) ⊂ XΣ (R) called its
+real-positive locus, which generalizes the simplex P n (R+ ) ∼  = ∆n .
+    It will be instructive to work in greater generality. We consider general Mellin transforms of the
+form
+                                               Z           Yk
+                                                                        dt
+                                M(fi , s, c) =          ts     fi (t)−ci ,
+                                                     +
+                                                TN (R )    i=1
+                                                                        t
+
+where (s, c) ∈ Cn × Ck are analytic parameters and fi are general Laurent polynomials on the
+complex torus TN ∼  = (C∗ )n , with a suitable conditions on its coefficients such that the powers fi−ci
+are well-defined. We prove that, there is always a smooth complete toric variety XΣ , such that
+the closure V (fi ) does not meet the real-positive locus XΣ (R+ ). We will show that the later is
+
+
+                                                    2
+satisfied if and only if Σ refines the normal fans of the Newton polytope of f = f1 · · · fk . In the local
+coordinates corresponding to a maximal cone σ ∈ Σ, the integrand of M can then be factorized
+as in Equation (1). This allows us to give a precise characterization of the convergence domain
+Λ(fi ) ⊂ Cn × Ck of M, generalizing results of Nilsson, Passare, Berkesch and Forsgård ([26],[3]).
+For each cone, we can consider the cube Iσ = [0, 1]n ⊂ [0, ∞)n ∼       = Uσ (R+ ). These cubes cover
+       +
+XΣ (R ), intersect in a set of measure zero, and in local coordinates, the integrand has the sector
+form (1). Hence each such toric variety XΣ gives a sector decomposition strategy. In fact, this is
+just a reformulation of the strategy given by Kaneko and Ueda.
+    Coming back to Feynman integrals., it is then natural to promote the integral IG to the Mellin
+transform                                    Z             Y αλi −1  ψG ωG Ω EG
+                                                               i               P
+                    IG (λ, D, q, m) = Γ(ωG )                                   D/2
+                                                                                   .
+                                               P EG (R+ ) i∈E Γ(λi )  ΦG     ψ G
+                                                             G
+
+
+This corresponds to analytic regularization, i.e. raising each propagator (ki2 + qi2 + m2i )−1 to a
+power λi ∈ C. We will compute the Newton polytope PG = P (ψG ΦG ) for a Feynman graph with
+generic euclidean kinematics. In this case, a facet presentation can be easily deduced from the
+factorization formulas given by Brown ([10]). As a corollary, we obtain that the convergence of the
+Feynman integral is determined by power-counting. It is actually sufficient to check convergence
+only for those subgraphs γ ⊂ G, such that both γ and its quotient G/γ do not contain detachable
+subgraphs without kinematics. Following Smirnov ([34]), we call such graphs s-irreducible.
+    The polytope PG turns out to be a generalized permutahedron in the sense of ([30],[2]). To
+such a polytope, we can canonically attach a smooth refinement of its normal fan, using a com-
+binatorial version of the wonderful model construction introduced by Feichtner and Kozlov ([16]).
+For Feynman graphs, this is an iterated blow-up of projective space along coordinate linear spaces
+of s-irreducible subgraphs γ ( G. The corresponding sectors are the ones constructed by Smirnov
+([32],[[34]]). A further refinement then gives the motic blowup of Brown ([10]), which specializes for
+massive graphs to the original Bloch-Esnault-Kreimer construction. The toric structure of the later
+variety has already been used by Bloch and Kreimer ([7]) to interpret renormalization in terms of
+mixed Hodge structures. ([6]). We will also reinterpret Speer’s sectors [36] as given by a certain
+smooth toric variety, which is not a blowup of projective space in general.
+    In the last section, we will use our results to give a rigorous construction of dimensional reg-
+ularization. We review two approaches, one based on sector decomposition ([35], [20], [8]), and
+the other based on analytic continuation ([29], [38]). The results of this section are well-known
+in the physics literature, but we included a detailed exposition here since we found it difficult to
+find rigorous proofs. Note that this generalizes the construction given by Etingof ([15]) for massive
+graphs.
+
+Acknowledgements. I thank Dirk Kreimer for encouragement and support. I also greatly ben-
+efitted from discussions with Christian Bogner, Henry Kißler and Marko Berghoff.
+
+
+2     Toric varieties
+For the convenience of the reader, we will give a very brief review of the theory of toric varieties. Our
+presentation is based on [13], which provides a very comprehensive introduction to toric geometry.
+
+
+
+
+                                                    3
+Cones and fans. Let N be a lattice, i.e. a free abelian group of finite rank n = rk N . Its dual
+lattice is M = HomZ (N, Z). The algebraic torus associated to N is TN = N ⊗Z C∗ ∼    = Gnm (C).
+                                     m             ∗
+Elements m ∈ M define characters t ∈ HomZ (TN , C ). Under this identification, the coordinate
+ring of TN is the ring of Laurent polynomials
+
+                                          O(TN ) = C[M ].
+
+Similarly, elements u ∈ N define one-parameter subgroups
+
+                                      C∗ → T N ,        λ 7→ u ⊗ λ.
+
+Definition 2.1. A complex variety X is toric if it has an action of a torus TN with a dense torus
+orbit.
+   We will only consider normal toric varieties. They can be completely described by certain
+polyhedral data. The relevant definitions of polyhedral geometry are collected in the appendix.
+   Let σ ⊂ NR := N ⊗Z R be a strongly convex polyhedral cone. σ is a rational if there are lattice
+elements u1 , . . . , us ∈ N , such that
+
+                                        σ = pos(u1 , . . . , us ).
+
+Its dual cone
+                         σ ∨ := {m ∈ MR | hm, ui ≥ 0 for all u ∈ σ} ⊆ MR
+is again a rational polyhedral cone and the set Sσ = M ∩ σ ∨ is a finitely generated semigroup.
+The toric variety associated to σ is Uσ = Spec(C[Sσ ]). The torus action is given in terms of the
+coordinate rings by
+                           ∆ : C[Sσ ] → C[M ] ⊗ C[Sσ ], tm 7→ tm ⊗ tm .
+The inclusion TN ֒→ Xσ of the dense torus orbit is dually given by the map C[Sσ ] ֒→ C[M ].
+   We can construct all normal toric varieties by gluing such affine varieties along open subsets, as
+long as the corresponding cones intersect nicely.
+Definition 2.2. A fan Σ in N is a collection of rational, strongly convex polyhedral cones such
+that:
+  1. If σ ∈ Σ and τ ⊆ σ is a face of Σ then τ ∈ Σ.
+   2. Two cones σ1 , σ2 ∈ Σ are either disjoint or intersect in a common face τ ∈ Σ.
+                                                                  S
+The set of cones of dimension k is denoted by Σ(k). Let |Σ| = σ∈Σ σ be the support of Σ.
+    We call Σ a generalized fan if it consists of rational polyhedral cones which are not necessarily
+strongly convex.
+   If σ1 , σ2 are two rational, strongly convex cones intersecting in the common face τ = σ1 ∩ σ2 ,
+then the dual inclusions σ1∨ ⊂ τ ∨ ⊃ σ2∨ define the inclusions
+
+                                    C[Sσ1 ] ֒→ C[Sτ ] ←֓ C[Sσ2 ].
+
+One can show that C[Sτ ] is a common localization of C[Sσi ], such that Uτ ⊂ Uσi . Gluing Uσ1 and
+Uσ2 along the dense open subset Uτ gives a new toric variety. This can be done coherently for all
+cones in a fan and we obtain the following:
+
+                                                    4
+Proposition 2.3 ([13, Thm. 3.1.5]). If Σ is a fan in NR then the Uσ for σ ∈ Σ glue together to
+give a normal toric variety XΣ and every normal toric varieties is of this form up to isomorphism.
+  Properties of XΣ are reflected in properties of the fan:
+                                                  S
+Proposition 2.4.    1. XΣ is complete if |Σ| := σ∈Σ σ = NR .
+  2. XΣ is smooth if and only if every cone σ ∈ Σ can be generated by part of a Z-basis of N . In
+     this case the fan Σ and its cones σ ∈ Σ are called smooth.
+Proof. 1. is [13, Thm. 3.4.1] and 2. is [13, Thm. 3.1.19 ]
+Definition 2.5. Let XΣ1 , XΣ2 be toric varieties with fans Σi ⊆ (Ni )R . A morphism ϕ : XΣ1 → XΣ2
+is toric if ϕ|TN1 induces a group morphism TN1 → TN2 .
+   Being toric automatically implies that ϕ is TNi -equivariant. We can identify Ni with the one-
+parameter subgroups of TNi and since ϕ is a group morphism, we get a homomorphism
+
+                                           ϕ : N1 → N2
+
+of lattices. We say that such a morphism is compatible with the fans Σi if for every σ1 ∈ Σ1 there
+is σ2 ∈ Σ2 with ϕ(σ1 ) ⊆ σ2 .
+Proposition 2.6 ([13, Thm 3.3.4]). If ϕ : XΣ1 → XΣ2 is toric, then the induced map ϕ : N1 → N2
+is compatible with the fans Σ1 , Σ2 .
+    Conversely, every morphism ϕ : N1 → N2 compatible with the fans uniquely determines a toric
+morphism ϕ : XΣ1 → XΣ2 which extends
+
+                            ϕ ⊗ 1 : N 1 ⊗ C∗ = T N 1 → N 2 ⊗ C∗ = T N 2 .
+
+Remark 2.7. One can show that ϕ : XΣ1 → XΣ2 is proper if and only if ϕ−1 (|Σ2 |) = |Σ1 |. See [13,
+Thm 3.4.11].
+Example 2.8. Suppose ϕ is the identity and Σ1 is a refinement of Σ2 , i.e. |Σ1 | = |Σ2 | and every
+cone σ1 ∈ Σ1 is contained in some cone σ2 ∈ Σ2 . Then the corresponding map XΣ1 → XΣ2 is
+proper and birational.
+   For some applications, it is useful to work with the following weakened version of smoothness.
+Definition 2.9. A strongly convex polyhedral cone σ is called simplicial if its generators are
+linearly independent. A toric variety XΣ is simplicial if its fan Σ consists of simplicial cones.
+   We will see below that a simplicial variety has only abelian quotient singularities. For many
+purposes, this is as good as smoothness.
+
+The orbit-cone correspondence. A cone σ ∈ Σ defines a distinguished point γσ ∈ Uσ ⊆ XΣ :
+γσ is given by the semigroup morphism:
+                                         (
+                                          1, m ∈ σ ⊥ ∩ M
+                               m ∈ Sσ 7→
+                                          0, otherwise
+
+This is a fixed point for the TN action if and only if dim σ = dim NR .
+
+                                                 5
+Theorem 2.10 (Orbit-Cone Correspondence). There is a bijective correspondence
+
+                                   {σ ∈ Σ} ←→ {TN -orbits ⊆ Σ}
+                                         σ ←→ O(σ) := TN · γσ
+
+having the following properties:
+  1. dim σ + dim O(σ) = dim NR
+  2. The affine open set Uσ decomposes into orbits as
+                                                 [
+                                           Uσ =      O(τ )
+                                                       τ σ
+
+
+  3. τ  σ if and only if O(σ) ⊆ O(τ ), and
+                                                              [
+                                         V (τ ) := O(τ ) =           O(σ)
+                                                              τ σ
+
+
+Proof. [13, Theorem 3.2.6 and Prop. 3.2.7]
+
+Divisors and the homogeneous coordinate ring. Let XΣ be a toric variety associated to
+the fan Σ. A one-dimensional cone ρ ∈ Σ(1) gives a torus-invariant divisor Dρ = V (ρ) under the
+orbit-cone correspondence and every torus-invariant divisor is a sum of these. Denoting the latter
+group by DivT (XΣ ), we have an identification
+
+                                         ZΣ(1) ∼
+                                               = DivT (XΣ ).
+
+Since ρ is a one-dimensional rational cone, there is a unique smallest lattice generatore of ρ, i.e. an
+element uρ ∈ N such that ρ = R+ uρ .
+
+Proposition 2.11 ([13, Thm 4.1.3]). There is an exact sequence
+
+                               M         ZΣ(1)            Cl(XΣ )           0
+
+where Cl(XΣ ) denotes the class group. The first morphism maps m ∈ M to the divisor
+                                                X
+                                    div(tm ) =     hm, uρ iDρ
+                                                 ρ∈Σ(1)
+
+
+of the rational function tm . The second is the natural quotient map ZΣ(1) ∼= DivT (XΣ ) → Cl(XΣ ).
+If XΣ has no torus factors, i.e. it is not of the form XΣ ∼ = XΣ′ × T k , then there is a short exact
+sequence
+
+                          0        M          ZΣ(1)            Cl(X)            0.
+
+
+
+
+                                                   6
+    The global sections
+               P        of torus-invariant divisors are described by polyhedra as follows ([13, Prop.
+4.3.3]): If D = ρ aρ Dρ is a torus-invariant divisor on XΣ , then
+                                                        M
+                                 Γ(XΣ , OXΣ (D)) =             C · tm ,
+                                                         m∈PD ∩M
+
+where
+                                PD := {m ∈ MR | hm, uρ i ≥ −aρ }.
+   Now suppose XΣ is a simplicial toric variety without torus factors. We want to describe XΣ by a
+graded ring SΣ , generalizing the homogeneous coordinate description of projective space. Tensoring
+the exact sequence of the class group with HomZ (−, C∗ ) gives the exact sequence
+
+                           1        G         (C∗ )Σ(1)            TN   1
+
+where G = HomZ (Cl(X), C∗ ) is the character group of Cl(X). This is a reductive group isomorphic
+to the product of a torus and a finite group. We can describe G concretely as
+                                               Y
+                      G = {(tρ ) ∈ (C∗ )Σ(1) |   thm,u
+                                                  ρ
+                                                      ρi
+                                                         = 1 for all m ∈ M }.
+                                                 ρ
+
+Definition 2.12. The homogeneous coordinate ring of XΣ is
+                                SΣ = C[xρ | ρ ∈ Σ(1)] = O(CΣ(1) ).
+   The ring SΣ is graded by Cl(X):
+                                            deg(xρ ) = [Dρ ]
+This gives an action of G by duality, which is just the restriction of the natural scaling action of
+(C∗ )Σ(1) . The corresponding eigenspaces are the graded components of SΣ :
+                                                 M
+                                         SΣ =          Sβ .
+                                                 β∈Cl(X)
+
+We want to describe XΣ as a suitable quotient of Spec(SΣ ) = CΣ(1) by G. For this to work, we
+first have to throw out some badly behaved G-orbits.
+                                      Q
+Definition 2.13. For σ ∈ Σ let xσ̂ = ρ /∈σ(1) xρ ∈ SΣ . The irrelevant ideal is
+
+                                        BΣ = hxσ̂ | σ ∈ Σmax i.
+The corresponding zero set ZΣ = V (BΣ ) is the irrelevant locus.
+   The variety CΣ(1) \ZΣ is again toric. Its fan can be described as follows: For σ ∈ Σ let
+                                   σ̃ = pos(eρ | ρ ∈ σ) ⊆ RΣ(1) .
+
+The collection of all σ̃ constitute the fan Σ̃ of CΣ(1) \Z. The lattice morphism
+                                     π : ZΣ(1) → N,        eρ 7→ uρ
+is obviously compatible with the fans. Hence we get a toric morphism
+                                         π : CΣ(1) \ZΣ → XΣ .
+
+                                                     7
+Theorem 2.14 ([13, Thm. 5.1.11]). Let XΣ be a simplicial toric variety without torus factors.
+The map π describes XΣ as the geometric quotient
+                                        XΣ = CΣ(1) \ZΣ //G
+Remark 2.15. We refer to [13, Section 5.0] for background on geometric invariant theory and
+geometric quotients. Let us point out some consequences of this result:
+  1. The G-orbits on CΣ(1) \ZΣ are closed and the closed points of XΣ is the orbit space.
+  2. For an affine open subset U = Spec(R) ⊆ XΣ we have π −1 (U ) = Spec(S̃), where S̃ is a
+     localization of SΣ with an induced G-action. That π is a geometric quotient implies that
+     R = S̃ G , i.e. R is the subring of G-invariants.
+   Let us specialize the above remark to an affine open Uσ ⊆ XΣ given by a cone σ ∈ Σ. For the
+inverse image we have
+                                 π −1 (Uσ ) = Uσ̃ = Spec(C[σ̃ ∨ ∩ M ])
+where σ̃ = pos(eρ | ρ ∈ σ(1)). The coordinate ring is then
+                                       "                            #
+                                        Y
+                      C[σ̃ ∨ ∩ M ] = C    xaρρ | aρ ≥ 0 for ρ ∈ σ(1) := Sxσ̂ ,
+                                         ρ
+
+i.e. we invert every variable xρ for ρ ∈
+                                       / σ(1). Hence we get
+                                       π −1 (Uσ ) = Spec(Sxσ̂ ).
+The map on coordinate rings is given by homogenization:
+                                    π ∗ : C[σ ∨ ∩ M ] −→ Sxσ̂
+                                                          Y
+                                              π ∗ (tm ) =   xhm,u
+                                                             ρ
+                                                                 ρi
+
+                                                        ρ
+
+Its image is the space of G-invariants SxGσ̂ . This gives the isomorphism
+
+                               Uσ = Spec(C[σ ∨ ∩ M ]) ∼
+                                                      = Spec(SxGσ̂ ).
+For top-dimensional cones σ ∈ Σ(dim N ), we can describe the above isomorphism by dehomoge-
+nization, i.e. setting some of the variables xρ to 1. Let
+
+                                        ϕσ : Cσ(1) → CΣ(1)
+                                              (
+                                                aρ ,  ρ ∈ σ(1)
+                                    ϕσ (a)ρ =
+                                                1,    ρ∈/ σ(1).
+
+The diagram
+                                              ϕρ
+                                      Cσ(1)         CΣ(1) \Z(Σ)
+                                         πσ                 πΣ
+
+                                       Uσ               XΣ
+
+
+                                                   8
+commutes and the left vertical map is an isomorphism if σ is smooth. For simplicial cones, we still
+have the following:
+Proposition 2.16. The map πσ : Cσ(1) → Uσ is the geometric quotient of Cσ(1) by the finite group
+Gσ = HomZ (Cl(Uσ ), C∗ ).
+Proof. This is a special case of Theorem 2.14. We have Zσ = ∅ and the class group is the quotient
+
+                                            Cl(Uσ ) = Zσ(1) /M.
+
+This group is torsion and thus finite, since the ray generators of σ(1) furnish an isomorphism
+Rσ(1) ∼
+      = NR . The character group Gσ must then also be finite.
+Corollary 2.17. A simplicial toric variety without torus factors XΣ has a natural orbifold structure
+with abelian local groups.
+    There is a general correspondence between graded SΣ -modules and quasi-coherent sheaves on
+XΣ . We want to explain this in the case of the canonical sheaf, which is defined as follows: Let
+j : XΣsm → XΣ be the inclusion of the smooth part of XΣ . The canonical sheaf is then
+
+                                              ωΣ = j∗ ΩnXΣsm ,
+
+where ΩnX sm is the sheaf of holomorphic n-forms on XΣsm . In other words, a section of ωΣ over an
+            Σ
+open U ⊆ XΣ is given by a holomorphic n-form on U sm = U ∩ X sm .
+   Let (e1 , . . . , en ) be a basis of M and I = {ρ1 , . . . , ρn } ⊆ Σ(1) an n-element subset. Let uI =
+det(hei , uρj iij ) and set                          
+                                     X            Y
+                              ΩΣ =         uI         xρ  dxρ1 ∧ . . . ∧ dxρn .
+                                      I          ∈I
+                                                ρ/
+
+This is an element of the SΣ -module
+                                      n
+                                      ^
+                                           Ω1SΣ ∼
+                                                = Γ(CΣ(1) , ΩnCΣ(1) ),
+
+where Ω1SΣ is the module of Kähler differentials over SΣ . Note that ΩXΣ is independent of the
+above choices up to sign (i.e. up to the choice of an orientation of M or N ). The group G acts on
+V
+  Ω1ΣΣ by pullback. The action of tm ∈ G ⊆ (C∗ )Σ(1) is given by
+                                                              P
+                                          tm · ΩΣ = thm,      ρ uρ i   ΩΣ .
+
+Hence ΩΣ has degree                           "           #
+                                               X
+                                       β=              Dρ ∈ Cl(XΣ ).
+                                                  ρ
+
+If F, H ∈ SΣ are polynomials, such that deg F − deg H = −β, then the meromorphic n-form
+
+                                                      F (x)
+                                                            ΩΣ
+                                                      H(x)
+
+
+                                                         9
+is G-invariant and descends to a global meromorphic section of ωΣ . Conversely, let f, h ∈ O(TN )
+be Laurent polynomials and consider the section
+                                      f (t) dt1        dtn
+                                 α=             ∧ ...∧     ∈ Γ(TN , ωTN ),
+                                      h(t) t1          tn
+where t1 , . . . , tn are generators of O(TN ). Pulling back along the quotient map π : CΣ(1) \ZΣ → XΣ
+gives a meromorphic form π ∗ α on CΣ(1) , which we can describe as follows.
+                                                      Q
+Proposition 2.18. Let F = π ∗ f and H = π ∗ h ρ xρ . Then the pullback π ∗ α is given by
+
+                                                                F (x)
+                                                  π∗ α =              ΩΣ .
+                                                                H(x)
+                          Q  hm,uρ i
+Proof. From π ∗ (tm ) =   ρ xρ       it follows that
+                                                              X
+                                          ∗       dt1                             dxρ
+                                      π                     =        hei , uρ i       .
+                                                  t1             ρ
+                                                                                   xρ
+                                                            Q
+Taking the wedge product and multiplying by ρ xρ gives
+                                   !                     
+                              Y           dt1         dtn
+                                       ∗
+                                 xρ π         ∧ ... ∧       = ΩΣ
+                              ρ
+                                           t1          tn
+
+and the above formula follows.
+    Over the maximal cone σ = pos(ui | i ∈ I0 ), we formally set xρ = 1 for ρ ∈
+                                                                              / σ(1) and get the
+section
+                                     f˜(x)
+                          α Uσ = uσ        dxi1 ∧ . . . ∧ dxin ∈ Γ(Uσ , ωΣ ),
+                                     g̃(x)
+where uσ = uI0 and f˜(x) and h̃(x) are the dehomogenizations of F and H, i.e. the restriction of F
+and H to the set {xρ = 1 | ρ ∈
+                             / σ(1)}.
+
+Lattice polytopes. Now let P ⊆ MR be a full-dimensional lattice polytope, i.e. it is the convex
+hull of finitely many lattice points. Denote by P (k) the set of k-dimensional faces. P can be
+described by the facet presentation
+                              P = {m ∈ M |hm, uF i ≥ −aF , F ∈ P (n − 1)},
+where aF ∈ Z and uF is the minimal lattice generator of the cone ρF consisting of inward pointing
+normal vectors of F .
+   We can construct the normal fan of P as follows: Let v ∈ P be a vertex and Cv the cone
+generated by P ∩ M − v. Its dual cone σv = Cv∨ is again rational and strongly convex. In terms of
+the facet presentation above, we have
+                                  σv = pos(uF | F ∈ P (n − 1), v ∈ F ).
+More generally, we can define for any face Q ∈ P (k) the cone
+                                 σQ = pos(uF | F ∈ P (n − 1), Q ⊆ F ).
+
+                                                                10
+Proposition 2.19. The cones σQ constitute a complete fan ΣP in NR and define a complete toric
+variety XP := XΣP . A vector u ∈ NR defines the face Fu P = Q if and only if u ∈ relint(σQ ). This
+defines an inclusion reversing bijection between ΣP and the set of faces of P .
+Proof. See [13, Prop. 2.3.7 and Prop. 3.1.6].
+    If P is not full-dimensional, then the same construction will give a generalized fan.
+Remark 2.20. The Orbit-Cone correspondence takes the following form: The cones σ ∈ ΣP corre-
+spond to faces Q ⊆ P , hence every Q gives a torus orbit O(Q) ⊆ ΣP and its closure V (Q). The
+latter is a closed toric subvariety and hence again given by a complete fan, which we can describe
+as follows: By translating Q by one of its vertices we can assume that 0 ∈ Q. Let then MQ be the
+linear span of Q such that Q ⊆ MQ becomes a full-dimensional lattice polytope which has a normal
+fan ΣQ . Then we have V (Q) ∼  = XQ . See [13, Prop 3.2.9].                  P
+    Identifying rays ρ ∈ ΣP (1) with facets F of P , we get the divisor DP = F aF DF canonically
+attached to XP . One can show that DP is ample and there is a bijective correspondence
+
+                                             P ←→ (XΣ , D)
+
+between full dimensional lattice polytopes P ⊆ MR and complete toric varieties XΣ with fan Σ ⊆ NR
+together with a distinguished torus-invariant ample divisor D. See [13, Thm. 6.2.1].
+    The following proposition will be needed later.
+Proposition 2.21. Suppose P ⊂ M is a (not necessarily full-dimensional) lattice polytope. An
+n-dimensional cone σ = pos(u1 , . . . , un ) is contained in a maximal cone σ̃ ∈ ΣP (n) if and only if
+there is a unique vertex mσ ∈ P (f ), such that
+
+                                         hmσ , ui i = min hm, ui i
+                                                      m∈P
+
+for all i = 1, . . . , n.
+Proof. Let σ̃ ∈ ΣP (n), correspond to the vertex m0 P     ∈ P (0). The cone σ = pos(u1 , . . . , un ) is
+                                                           n
+contained in σ̃ if and only if every weight vector w = i=1 λi ui ∈ Int(σ) defines the face Fw P =
+{m0 }. This means that
+                               hm0 , wi < hm, wi, for all m ∈ P \{m0 }.
+Varying λi , it is easy to see that this is only possible if
+
+                                         hm0 , ui i = min hm, ui i,
+                                                     m∈A
+
+for all i = 1, . . . , n. Conversely, suppose m0 minimizes hm, ui i for all i and thus for all w ∈ σ.
+Suppose there is another m̃ ∈ P , such that hm̃, wi is minimal. Then hm̃ − m0 , wi = 0 and
+hm̃ − m0 , vi ≥ 0 for all other v ∈ σ. This means that w lies in a face of σ and thus m ∈/ Int(σ).
+    For two lattice polytopes P1 , P2 ⊂ MR , let
+
+                            Q = P1 + P2 = {m1 + m2 | m1 ∈ P1 , m2 ∈ P2 }
+
+be their Minkowski sum. This is clearly a lattice polytope again.
+Proposition 2.22 ([40, Prop. 7.12]). The normal fan ΣQ of Q is the coarsest common refinement
+of the normal fans ΣP1 , ΣP2 .
+
+                                                    11
+Real-positive locus. In the sequel, we want to integrate holomorphic forms over a compact n-
+cycle, which is naturally associated to every complete toric variety. Let σ ∈ Σ be a cone in the fan
+defining XΣ . The complex points of the corresponding affine toric variety are given by
+
+                                     Uσ (C) = Hom(σ ∨ ∩ M, C).
+
+Restricting the image to R+ gives the locus Uσ (R+ ). These glue together to give the real positive
+locus XΣ (R+ ). A toric morphism XΣ → XΣ̃ induces a map XΣ (R+ ) → XΣ̃ (R+ ).
+Example 2.23. Suppose XΣ is a projective toric variety associated to the polytope P , such that
+the divisor DP is very ample. Its sections
+
+                              tmi ∈ Γ(XΣ , OXP (DP )),      mi ∈ P ∩ M
+
+furnish a projective embedding
+
+                              XΣ → Ps ,    x 7→ [tm0 (x) : . . . : tms (x)].
+
+The (algebraic) moment is defined as
+
+                                   f : XΣ → M R
+                                            P
+                                                     |tm (x)|m
+                                     f (x) = Pm∈P ∩M m         .
+                                               m∈P ∩M |t (x)|
+
+By [13, Thm. 12.2.5], this induces a homeomorphism
+
+                                          f : XΣ (R+ ) ˜
+                                                      −→P,
+
+which identifies a facet Q ⊆ P with V (Q) ∩ XΣ (R+ ).
+
+Star subdivision of fans. There is a standard construction to refine a given fan Σ. Let ν ∈ Σ∩N
+be a primitive element, i.e. such that ν is the lattice generator of pos(ν). For σ ∈ Σ with ν ∈ σ let
+
+                             Σσ (ν) = {pos(τ, ν) | {ν} ∪ τ ⊆ σ, ν ∈
+                                                                  / τ }.
+
+The star subdivision of Σ with respect to ν is the fan
+                                                               [
+                               Σ∗ (ν) = {σ ∈ Σ | ν ∈
+                                                   / σ} ∪           Σσ (τ ).
+                                                              ν∈σ
+
+The identity map N → N is compatible with the fans (Σ∗ (ν), Σ) and induces a toric morphism
+
+                                          π : XΣ∗ (ν) → XΣ ,
+
+which is proper and birational.
+   We are interested in two special cases of this construction. First let XΣ be a smooth toric variety
+associated to the fan Σ. From Prop. 2.4 we know that every cone σ ∈ Σ is smooth, i.e. can be
+generated by part of a Z-basis of N . For a cone τ ∈ Σ, the closure V (τ ) = O(τ ) is a smooth toric
+subvariety. Let Στ be the star subdivision of Σ with respect to the vector
+                                                   X
+                                            ντ =        uρ
+                                                 ρ∈τ (1)
+
+
+                                                  12
+Proposition 2.24 ([27, Prop. 1.26]). The map π : XΣτ → XΣ is the blow-up of XΣ with center
+V (τ ).
+    Now let Σ be a not necessarily simplicial fan and νρ be the ray generator of a cone ρ. A non-
+simplicial cone σ ∈ Σ containing ρ gets subdivided in Σ∗ (νρ ). Iterating this construction gives the
+following:
+Theorem 2.25 ([13, Prop. 11.1.7]). Let Σ be non-simplicial fan. Then there is a fan Σ′ , obtained
+from Σ by a series of star subdivisions in rays ρ1 , . . . , ρs ∈ Σ(1), such that Σ′ is simplicial and
+Σ′ (1) = Σ(1).
+
+Toric wonderful models. In this section, we want to describe certain compactifications of the
+torus T n−1 given by iteratively blowing up coordinate subspaces in the projective compactification
+T n−1 ֒→ P n−1 . These are special cases of the wonderful model compactifications of [14].
+   Let E be a finite set with n elements and P EG be the projective space of dimension n − 1, where
+we label the homogeneous coordinates by elements of E. Let
+                                                        !
+                                                  X
+                                            E
+                                    NE = Z /Z        e ∼
+                                                      i
+                                                          = Zn−1
+                                                   i∈E
+
+and                                        (                           )
+                                                        X
+                                                   E
+                                   ME =         m∈Z |         mi = 0
+                                                        i∈E
+
+the dual lattice. The fan ΣE of P EG is given by the cones
+
+                                        τI := pos([ei ] | i ∈ I)
+
+for all I ( E. Every such proper subset I ( E then gives the linear subspace
+                                                                           c
+                                LI = {[αj ] | αi = 0 for i ∈ I} ∼
+                                                                = PI ,
+
+which is the orbit closure associated to the cone τI .
+   Consider a set of subsets B ⊆ 2E satisfying the following conditions.
+  1. E ∈
+       /B
+  2. {i} ∈
+         / B for all i ∈ E.
+  3. I1 , I2 ∈ B, I1 ∩ I2 6= ∅ ⇒ I1 ∪ I2 ∈ B.
+The iterated Blow-up
+                                           πB : P B → P EG
+is defined by inductively blowing up the elements of
+
+                                         LB = {LI | I ∈ B},
+
+in order of increasing dimension. More precisely, let B = {I1 < . . . < Im } be linearly ordered
+such that j ≥ k implies that Ij ⊆ Ik . We then define the sequence of blow-ups by P0 = P EG and
+
+                                                   13
+Pk = BlL̃I Pk−1 , where L̃k is the strict transform of Lk in Pk−1 . The results of the last section
+          k
+show that this is again a smooth projective toric variety. Let Σk be the fan of Pk . Then we have
+that Σk = Stτk Σk−1 is the star subdivision with respect to the cone
+
+                                       τk = pos{[ei ] | i ∈ Ik }.
+
+Blowing up in order of increasing dimension ensures that this is well-defined, i.e. that τk is indeed
+a cone of Σk−1 . The strict transform of LIk in Pk−1 is just the orbit closure V (τk ) of τk ∈ Σk−1 .
+Let P B = Pm be the last blowup and ΣB = Σm its fan.
+     To fully describe the fan, we will use the combinatorial approach to wonderful models developed
+in [16]. Note that any fan (Σ, ) with its face relation is a meet semi-lattice, i.e. every collection
+σ1 , . . . , σk ∈ Σ has the greatest lower bound
+                                             ^      \
+                                               σi =   σi ∈ Σ.
+                                           i         i
+
+The minimal element of Σ is the trivial cone {0}. For Σ = ΣE , there is an obvious poset isomorphism
+
+                                      (ΣE , ) ∼
+                                               = (2E \{E}, ⊆),
+
+identifying a subset I ( E with the cone τI .
+   Now let (L, ) be any finite meet-semilattice with least element 0̂. For a subset G ⊆ L, and
+X ∈ L, let
+                                     G X := {G ∈ G|G  X}
+and
+                                   [0̂, X] = {Y ∈ L|0  Y  X}.
+Definition 2.26. Let (L, ) be a finite meet-semilattice. A subset G ⊆ L\{0̂} is called a building
+set, if the following holds for all X ∈ L: Let
+
+                                     max G X = {G1 , . . . , Gk }
+
+be the maximal elements of G X . Then there is an order isomorphism
+                                                     k
+                                                     Y
+                                         [0̂, X] ∼
+                                                 =         [0̂, Gi ].
+                                                     i=1
+
+Example 2.27. Suppose L = 2E \{E} with the subset relation. Then a subset G ⊆ L\∅ is a
+building set if for all I ( E, the maximal elements
+
+                                      max G ⊆I = {G1 , . . . , Gk }
+                       `k
+form a partition I = i=1 Gi . It is easy to check that this is equivalent to the condition that G
+contains all singleton subsets and for all I1 , I2 ∈ G:
+
+                             I1 ∩ I2 6= ∅ ⇒ I1 ∪ I2 ∈ G or I1 ∪ I2 = E.
+
+The set G̃ = G ∪ {E} is then a building set in 2E .
+
+                                                   14
+   To describe the face structure of ΣB , we will also need the notion of nested sets.
+Definition 2.28. Let G ⊆ L\0̂ be a building set in a finite meet-semilattice. A subset N ⊆ G
+is called nested if for all pairwise non-comparable elements N1 , . . . , Nk ∈ N with k ≥ 2, the join
+W k
+  i=1 Ni ∈ L exists in L but is not in G.
+
+Example 2.29. Suppose G ⊂ 2E \{E} is a building set. Then I ⊂ G is a nested set if and only if:
+   1. For all I1 , I2 , either I1 ∩ I2 = ∅ or I1 ⊆ I2 or I2 ⊆ I1 .
+   2. If I1 , . . . , Ik ∈ I are pairwise disjoint and k ≥ 2, then
+                                                 k
+                                                 [
+                                                      Ij ∈
+                                                         / G ∪ {E}.
+                                                j=1
+
+
+It follows from [16, Prop. 2.8] that all maximal nested sets are generated by the following construc-
+                                                                                                        ⊆Jk
+tion: Let E = {i S1n< . . . < in } be a total ordering of E. Set Jk = {i1 , . . . , ik } and Ik = max G     .
+The union I = k=1 Ik is then a maximal nested set.
+   The nested sets of a building set G are partially ordered by inclusion. We denote the corre-
+sponding poset by N (G). We can now state the results of [16, Theorem 4.10].
+Theorem 2.30. Let Σ be the fan of a toric variety XΣ and G ⊆ (Σ, ) be a building set in its
+face semilattice. Suppose G = {τ1 < . . . < τk } is linearly ordered, such that τi < τj implies τj  τi .
+Let ΣG be the fan obtained by subdividing Σ along the Gi in increasing order. Then there is an
+isomorphism of semilattices
+                                        (ΣG , ) ∼
+                                                 = (N (G), ⊆).
+identifying a nested set N = {τi1 , . . . , τis } ⊂ G with the cone
+
+                                          τN = pos(ντ | τ ∈ N ),
+             P
+where ντ =     ρ∈τ (1) uρ .
+
+   To our original set B ⊂ 2E , we associate the set
+
+                                         GB = B ∪ {{i} | i ∈ E}.
+
+This is a building set by example 2.27. For I ⊆ E, we associate the vector
+                                                 X
+                                            eI =    ei .
+                                                       i∈I
+
+Applying the above theorem to GB then gives:
+Corollary 2.31. P B is a smooth, projective variety, independent of the chosen blowup-order. Its
+fan ΣB consists of the cones
+                                   σI = pos([eI ] | I ∈ I),
+where I ⊂ GB ranges over the nested sets with respect to GB .
+
+
+                                                      15
+   In particular we have ΣB (1) ∼
+                                = B ∪ E. The map P B → P EG fits into the commutative diagram
+
+                                         CΣB (1) \ZΣB                PB
+
+
+                                           CE \{0}                   PE
+
+The left vertical map is given on coordinates as
+                                                        Y
+                                             αi = xi         xI .
+                                                       I∈B
+                                                       i∈I
+
+
+Generalized permutahedra. The Feynman polytopes we consider later will turn out to be
+generalized permutahedra in the sense of ([30],[2]), which have an especially nice structure.
+   Consider first the building set Gmax = 2E \{E}. Its fan ΣGmax is spanned by cones σ =
+pos(eI1 , . . . , eIn−1 ) such that
+
+                                   I0 = ∅ ( I1 ( . . . ( In−1 ( In = E
+
+is a complete flag of subsets. On the other hand, let πE be the convex hull of all points
+                                                    n
+                                                    X
+                                             aσ =         kaσ(k) ,
+                                                    k=1
+
+where σ runs over the bijections {1, . . . , n} ∼
+                                                = E. The polytope πE is the (regular) permutahedron
+of the finite set E. The following proposition is then well-known, see e.g. [30].
+Proposition 2.32. The normal fan ΣπE of πE coincides with ΣGmax .
+   The facet structure of πE is very well understood. It is advocated in [2] to exploit this fact by
+expressing many questions in algebraic combinatorics in terms of deformations of πE :
+Definition 2.33. ([2]) A lattice polytope P ⊂ RE contained in an affine hyperplane
+
+                                     P ⊂ {m ∈ RE | hm, eE i = dP }
+
+is a a generalized permutahedron if its normal fan is a coarsening of the fan ΣπE .
+    It will be convenient to have alternative characterizations of generalized permutahedra. Suppose
+z : 2E → Z ∪ {∞} is a set function with z(∅) = 0. To z we associate the base polyhedron
+
+                      P (z) = {m ∈ RE | hm, eE i = z(E), hm, eI i ≥ z(I) for I ( E}.
+
+We will call z supermodular, if
+
+                                   z(I) + z(J) ≤ z(I ∩ J) + z(I ∪ J),
+
+for all I, J ∈ 2E .
+
+
+                                                     16
+Remark 2.34. It is more common in the literature to consider submodular functions z̃ : 2E →
+R ∪ {∞}, which satisfy the opposite inequality:
+
+                                  z̃(I) + z̃(J) ≥ z̃(I ∩ J) + z̃(I ∪ J)
+
+    It is easy to show that z̃ is submodular if and only if its dual z̃ # , defined as z̃ # (I) = z̃(E) −
+z̃(E\I), is supermodular. The translation between the two convention is usually straightforward.
+Proposition 2.35. Let P ⊂ RE be a lattice polytope. Then the following are equivalent:
+  1. P is a generalized polyhedron.
+  2. Every edge of P is parallel to an edge of the form ei − ej for i, j ∈ E.
+  3. There is a supermodular function z : 2E → R, such that P = P (z).
+Proof. See [2, Thm. 12.3] and references therein.
+Example 2.36. Let M be a matroid on the set E and B(M ) ⊂ 2E its set of bases. We refer to
+[28] for the theory of matroids. The matroid polytope of M is
+
+                                     PM = Conv(eI | I ∈ B(M )).
+
+It is proven in [19] that every edge of PM is of the form ei − ej , hence PM is a generalized permu-
+tahedron. The corresponding supermodular function is given by
+
+                                 z(I) = rM (E) − rM (E\I) = r# (I),
+
+where rM is the rank function of the matroid.
+Example 2.37. Let G ⊆ 2E \{E} be a building set and G̃ = G ∪ {E}. For I ∈ G̃, let ∆I =
+Conv(ei | i ∈ I) be the simplex on I and let PG be the Minkowski sum
+                                                X
+                                          PG =      ∆I .
+                                                   I∈G̃
+
+It is shown in [31], that its normal fan is ΣG and that PG is the base polyhedron of the supermodular
+function
+                                       zG (J) = |{I ∈ G̃ | I ⊆ J}|.
+Hence PG is a generalized permutahedron and ΣG is a coarsening of ΣπE .
+   Suppose G1 ⊂ G2 are two building sets in 2E \{E}. It follows from the above description and
+Prop. 2.22 that ΣG2 is a refinement of ΣG1 .
+   For I ( E define the restriction z|I and contraction z/I by
+
+                                 z|I (J) = z(J),   J ⊆ I,
+                                z/I (J) = z(J ∪ I) − z(I),     J ⊆ E\I
+
+    It is easy to check that if z is supermodular, then so are its restrictions and contraction. The
+face FeI P (z) can then be described as follows.
+
+                                                   17
+Proposition 2.38 ([18, Lemma 3.1]). Let P (z) be the generalized permutahedron defined by the
+                                                                  c
+supermodular function z : 2E → R. The natural isomorphism RI ⊕ RI ∼ = RE induces a bijection
+
+                                      P (z|I ) × P (z/I ) ∼
+                                                          = FeI P (z).
+
+Example 2.39. If z = r# is the dual of the rank function of a matroid M on E, then z|I and z/I
+correspond to the contraction M/I c and restriction M |I c .
+   Let
+                                I : I0 = ∅ ( I1 ( . . . ( In−1 ( In = E
+be a maximal flag of 2 . The corresponding cone σI = pos(eI | I ∈ I) is a maximal cone of ΣπE .
+                        E
+
+Since ΣπE is a refinement of ΣP (z) , any vector w ∈ Int(σ) defines a vertex mI = Fw P (z).
+Proposition 2.40. [18, Corollary 3.17] The coordinates of the vertex mI are given by
+
+                                       (mI )k = z(Ik ) − z(Ik−1 ).
+                                                                                                   `
+   Let us call a generalized permutahedron P (z) irreducible, if there is no decomposition E = I       J,
+such that z = z|I + z|J .
+Proposition 2.41.`[18, Thm. 3.38] For each generalized permutahedron P (z) there is a unique
+decomposition E = rk=1 Ik such that the P (z|Ik ) are irreducible and
+                                                   r
+                                                   X
+                                              z=         z|Ik .
+                                                   k=1
+
+The polytope P (z) is irreducible if and only if it has maximal dimension |E| − 1.
+Corollary 2.42. Suppose P (z) is irreducible. A subset I ( E defines a facet FeI P (z) of P (z) if
+and only if P (z|I ) and P (z/I ) are both irreducible.
+   Let us use the preceding results to construct a smooth refinement of P (z). Consider the subset
+system
+                           G̃z = {I ⊆ E | P (z|I ) is irreducible } ⊆ 2E
+Proposition 2.43. G̃z is a building set in 2E . If P (z) is irreducible, then the fan ΣGz associated
+to the reduced building set Gz = G\{E} is a smooth refinement of ΣP (z) .
+Proof. The building set property is immediate from the unique decomposition of Prop. 2.41.
+   To prove that ΣGz is a refinement of ΣP (z) , we must prove that for each maximal nested set
+I ⊂ Gz , there is m ∈ P (z) such that hm, eI i = z(I) for all I ∈ I. By Example 2.29 we can find a
+maximal chain
+                                 J0 = ∅ ( J1 ( . . . ( Jn−1 ( Jn = E
+                  S
+such that I =       Ik , where Ik = max Gz⊆Jk . Let m be the vertex of P (z), defined by mk =
+z(Jk ) − z(Jk−1 ). Since Ik is the decomposition of Jk into irreducible components, we have
+                              X                               X
+                                  z(I) = z(Jk ) = hm, eJk i =    hm, eI i.
+                              I∈Ik                                I∈Ik
+
+Since m ∈ P (z), this equality is only possible if hm, eI i = z(I) for all I ∈ Ik .
+
+                                                    18
+3    Multivariate Mellin transforms
+Let us apply the theory of toric varieties to the investigation of Mellin transforms of Laurent
+polynomials. It was shown in ([26], [3]), that the convergence properties of these transforms are
+controlled by the Newton polytopes of the rational functions. We supply an alternative proof of
+their results by considering certain toric compactification associated to the Newton polytopes, which
+make the possible singularities apparent. This gives a precise characterisation of the convergence
+domain.
+   For application to dimensional regularization, we will also review their construction of the
+meromorphic extension. In the last part of this section, we will show that the geometric sector
+decomposition strategy of Kaneko and Ueda ([23]) is equivalent to the construction of these com-
+pactifications.
+
+Mellin transforms. As in the previous section, let N be a lattice of finite rank, M its dual
+lattice and TN the associated complex torus. Let
+                                          X
+                                  f (z) =     am tm ∈ O(TN )
+                                                m∈A
+
+be a Laurent polynomial on TN , where A ⊂ Zn is a finite subset such that am 6= 0 for m ∈ A. Its
+Newton polytope is the convex hull
+                                      P (f ) = Conv(A) ⊂ MR .
+Note that P (f · g) = P (f ) + P (g).
+    Suppose f1 , . . . , fk are a collection of Laurent polynomials as above. Assume that all non-
+vanishing coefficients of the fi are contained in an open, strongly convex polyhedral cone U ⊂ CNi .
+Then the complex powers fi (t)ci are well-defined for every ci ∈ C, t ∈ TN (R+ ) and fixed choice
+of branch of w 7→ wci = eci log(w) . These conditions imply that each fi is totally non-vanishing on
+TN (R+ ) in the sense of [26].
+    Choose a Z-basis of N such that N ∼     = Zn and inducing isomorphisms M ∼= Zn , TN ∼
+                                                                                        = (C∗ )n . Let
+                            Log : TN → NC ,         t 7→ (log(t1 ), . . . , log(tn ))
+be the componentwise logarithm. For s ∈ MC ∼
+                                           = Cn , we define the multivalued monomial
+                                              n
+                                              Y
+                                       ts =         tsi i = ehs,Log ti ,
+                                              i=1
+
+These definitions are clearly independent of the choice of basis. Let us also denote by
+                                        dt   dt1        dtn
+                                           =     ∧ ...∧
+                                         t   t1          tn
+the holomorphic TN -invariant volume form, which is independent of the choices up to sign, i.e. up
+to the choice of an orientation of N .
+    We are interested in the analytic properties of the multivariate Mellin transform
+                                                Z                k
+                                                                 Y                 dt
+                               M(fi , s, c) =               ts         fi (t)−ci      .
+                                                 TN (R+ )        i=1
+                                                                                   t
+
+
+                                                      19
+   We will see that the convergence properties of the above integral are governed by the polytope
+
+                            P = P (f1 ) + . . . + P (fk ) = P (f1 · · · fk ).
+                                                            P
+For a weight vector u ∈ NR and Laurent polynomial h = m hm tm , let
+
+                                           du (h) = min hm, ui.
+                                                     m∈P (h)
+
+
+If u = uρ ∈ Z is the lattice generator of a rational ray ρ ⊂ NR , then we define dρ (h) = duρ (h). For
+c ∈ Ck let us also set
+                                                  Xk
+                                         du (c) =     ci du (fi )
+                                                         i=1
+
+and dρ (c) = duρ (c).
+   Let ΣP be the normal fan of the Newton polytope P = P (f1 · · · fn ). and denote by Λ(fi ) ⊆
+MC × Ck the region of pairs (s, c) ∈ MC × Ck satisfying
+
+                                             Rehs, uρ i > Re dρ (c)
+
+for all ρ ∈ ΣP (1).
+Theorem 3.1. If the polytope P is full-dimensional then Λ(fi ) is nonempty and the Mellin trans-
+form converges for (s, c) ∈ MC × Ck if and only if (s, c) ∈ Λ(fi ).
+    Conversely, if P is not full-dimensional then the Mellin transform is not absolutely convergent
+for any choice of (s, c) ∈ MC × Ck .
+Remark 3.2. For r = (r1 , . . . , rk ) ∈ (0, ∞)k , let
+
+                                     P (r) = r1 Pf1 + . . . + rk Pfn ⊂ MR
+
+be the Minkowski sum of the scaled Newton polytopes. This polytope is full-dimensional if P =
+P (1, . . . , 1) is full-dimensional. Then the interior of P (r) is non-empty and P (r) has the facet
+presentation                                  \
+                                      P (r) =      {hm, uρ i ≥ dρ (r)}.
+                                              ρ∈ΣP (1)
+
+Hence the region Λ(fi ) contains the set
+
+                      {(s, c) ∈ MC × Ck | Re(c) ∈ (0, ∞)k , Re(s) ∈ Int(P (Re(c)))}.
+
+This recovers the corresponding results of ([26],[3]).
+    The basic idea of the proof is to find a compactification XΣ of TN such that the strict transforms
+V (fi ) do not intersect the real locus XΣ (R+ ). The convergence of the integral then essentially
+reduces to the absence of poles along the divisor DΣ = XΣ \TN .
+                                    P
+Proposition 3.3. Suppose f = m∈A am tm is a Laurent polynomial on TN , such that the coef-
+ficients am are contained in a strongly convex polyhedral cone U ⊂ CA . Let XΣ be a complete,
+simplicial toric variety with torus TN . Then the following are equivalent:
+
+
+
+                                                         20
+  1. The fan Σ is a refinement of the (possibly degenerate) normal fan ΣP (f ) of the Newton polytope
+     of f .
+  2. The closure of the zero set V (f ) of f does not intersect the real positive locus XΣ (R+ ).
+Proof of Prop. 3.3. The variety XΣ is covered by the orbifold charts Uσ = Cσ(1) //Gσ , where σ =
+pos(u1 , . . . , un ) ∈ Σ(n) is a maximal cone. The Laurent monomials are expressed in the coordinates
+xi of Uσ as
+                                                Yn
+                                                     hm,u i
+                                           tm =    xi i =: xm .
+                                               i=1
+   Suppose σ is contained in a maximal cone of ΣP . By Prop. 2.21, there is mσ ∈ P (f ) with
+                                        hmσ , ui i = min hm, ui i,
+                                                     m∈P (f )
+
+for all i = 1, . . . , n. The Laurent polynomial f is then expressed in these coordinates as
+                                                                              
+                                    X                           X
+                            f (x) =    am xm = xmσ amσ +              am xmσ 
+                               m∈A                              m∈A\{mσ }
+                                 mσ
+                             =: x     fσ (x)
+The polynomial fσ (x) is regular and non-vanishing on Uσ (R+ ). It follows that
+                               V (f ) ∩ Uσ (R+ ) = V (fσ ) ∩ Uσ (R+ ) = ∅.
+Conversely, suppose V (f ) ∩ Uσ (R+ ) is empty. The Zariski closure V (fi ) ⊂ Uσ is described by a
+polynomial f˜ ∈ k[x1 , . . . , xn ] such that f (x) = xm̃ f˜(x), i.e. f˜ has the form
+                                                     X
+                                             f˜(x) =       am xm−m̃ .
+                                                  m∈A
+
+Since f˜ is regular on C , we must have hm − m̃, ui i ≥ 0 for all m ∈ A and i = 1, . . . , k. The
+                         n
+
+intersection V (f˜)∩Uσ (R+ ) can only be empty if there is at least one m ∈ A, such that hm−m̃, ui i = 0
+for all i. But this would imply that hm, ui i is minimal for all i = 1, . . . , n and Prop. 2.21 shows
+that σ is contained in a maximal cone of ΣP (f ) .
+    Since the open sets Uσ cover XΣ , we have shown that
+                                           V (f ) ∩ XΣ (R+ ) = ∅
+if and only if every maximal cone of Σ is contained in a cone of ΣP , which means that Σ is a
+refinement of ΣP .
+    By Prop. 2.22, the normal fan ΣP of P is the coarsest common refinement of the normal fans
+of the Newton polytopes P (fi ). Suppose Σ is a simplicial refinement of ΣP . The above proposition
+shows that V (fi ) ∩ XΣ (R+ ) = ∅ for all i. By (a straightforward generalization of) Prop. 2.18 we
+can express the Mellin transform as
+                                      Z         Y               k
+                                                                Y
+                       M(fi , s, c) =                xhs,u
+                                                      ρ
+                                                          ρ i−1
+                                                                  Fi (x)−ci ΩΣ ,
+                                         XΣ (R+ ) ρ∈Σ(1)           i=1
+
+where Fi (x) is the homogenization of fi .
+
+                                                     21
+Remark 3.4. The above integral should be understood in the orbifold sense. More precisely, let
+Uσ = Cn //Gσ be an orbifold chart and α a compactly supported, Gσ -invariant n-form on Cn ,
+absolutely integrable on (R+ )n . We define the integral over Uσ (R+ ) as
+                                    Z                  Z
+                                                    1
+                                               α=              α.
+                                      Uσ (R+ )    |Gσ | (R+ )n
+
+For a general analytic section α of ωΣ which is locally integrable on XΣ (R+ ), we define
+                                  Z             X Z
+                                         α=                   ρσ α,
+                                           XΣ (R+ )      σ∈Σ(n)      Uσ (R+ )
+
+
+where (ρσ ) is a smooth partition of unity subordinate to the cover (Uσ )σ∈Σ(n) . See [1, Section 2.1]
+for further details.
+Proposition 3.5. Let Σ be a simplicial refinement of ΣP . Then the above integral converges
+absolutely if and only if
+                                  Rehs, uρ i > Re dρ (c),
+for all ρ ∈ Σ(1).
+Proof. The fan Σ is complete since it is a refinement of the normal fan of a lattice polytope. Hence
+the integration domain is compact and it is enough to show that the integrand is locally integrable.
+Let
+                                   σ = pos(u1 , . . . , un ) ∈ Σ(n)
+be a maximal cone. The proof of the previous proposition shows that
+                                                        n
+                                                        Y      hmσ,i ,uj i
+                                             Fi |Uσ =         xj             fσ,i ,
+                                                        j=1
+
+where fσ,i does not vanish on Uσ (R+ ) and mσ,i satisfies
+
+                                                hmσ,i , uj i = duj (fi ).
+
+The integrand then has the local expression
+                    n Y
+                    Y k                                       n
+                                                              Y                         k
+                                                                                        Y
+                               hs,uj i−1                             hs,uj i−dρ (c)−1
+                              xj           Fi (x)−ci Uσ =           xj                        fσ,i (x)−ci .
+                    j=1 i=1                                   j=1                       i=1
+
+This is locally integrable on U (R+ ) ∼
+                                      = Rn+ //Gσ if and only if
+
+                                              Re(hs, uj i − duj (c)) > 0.
+
+for all R+ uj ∈ σ(1). Letting σ ∈ Σ(n) vary over all n-dimensional cones gives the result.
+Proof of Thm. 3.1. Suppose P is full-dimensional. From Theorem 2.25, we can construct a simpli-
+cial refinement Σ of ΣP with Σ(1) = ΣP (1). The previous proposition shows that the integral is
+convergent if (s, c) satisfy
+                                      Rehs, uρ i > Re dρ (c),
+
+                                                            22
+for all ρ ∈ Σ(1) = ΣP (1).
+    Now suppose P (r) is not full-dimensional, i.e. it is contained in a hyperplane
+
+                                           P ⊆ {m ∈ MR | hm, ui = d},
+
+This is only possible, if P (fi ) is contained in the hyperplane
+
+                                           {m ∈ MR | hm, ui = du (fi )}.
+
+Every simplicial refinement Σ of ΣP must contain the cones ρ± = R± u. The inequalities
+
+                               Rehs, ui > Re du (c)           Rehs, −ui > Re d−u (c).
+
+corresponding to ρ+ and ρ− are not both satisfiable, since
+                                                    k
+                                                    X
+                                         du (c) =          ci du (fi ) = −d−u (c).
+                                                    i=1
+
+Thus the integral does not convergence for any choice of (s, c) ∈ MC × Ck .
+                                         P
+Analytic continuations. Suppose g = m∈B bm tm is another Laurent polynomial with Newton
+polytope P (g). Theorem 3.1 implies that the integral
+                                                       Z                     k
+                                                                             Y                 dt
+                                   M(fi , g, s, c) =               ts g(t)         fi (t)−ci
+                                                       TN (R+ )              i=1
+                                                                                                t
+
+is convergent if
+                                            Rehs + m, uρ i > Re(dρ (c)),
+for all ρ ∈ ΣP (1) and m ∈ B. This is clearly equivalent to
+
+                                          Rehs, uρ i > Re(dρ (c)) − dρ (g).
+
+Let Λ(f, g) ⊂ MC × Ck be the open set of parameters (s, c) satisfying the above inequalities. The
+articles [26] and [3] construct a meromorphic continuation of M(fi , g, s, c) to MC × Ck . Let us
+briefly sketch their argument.
+    For a ray ρ ∈ ΣP (1) with lattice generator uρ ∈ N , let
+
+                                          C∗ → T N ,        λ 7→ λρ := uρ ⊗ λ
+
+be the one-parameter subgroup defined by uρ . Composing with the left action of TN and restricting
+to (0, ∞) ⊂ C∗ gives the action
+
+                                       (0, ∞) × TN → TN ,            (λ, t) 7→ λρ · t.
+                P              m
+   Let h(t) =       m∈C hm t       be an arbitrary Laurent polynomial. Set
+                                                              
+                                                   d h(λρ · t)
+                                         hρ (t) =                    .
+                                                  dλ   λdρ (h)   λ=1
+
+
+                                                              23
+For monomials m ∈ Fuρ P (h), (λρ · t)m = λdρ (h) tm , which implies that
+
+                                                 dρ (hρ ) ≥ dρ (h) + 1.
+
+The differential form dt                             +
+                       t and integration domain TN (R ) are invariant under the action of λρ . Hence
+we have
+                                 Z                                k
+                                                                  Y                  dt
+             M(fi , g, s, c) =              (λρ · t)s g(λρ · t)         fi (λρ · t)−ci
+                                 TN (R+ )                         i=1
+                                                                                     t
+                                 Z
+                                                                     g(λρ · t)     Y
+                                                                                   k
+                                                                                           fi (λρ · t)
+                                                                                                         −ci
+                                                                                                                dt
+                            =               λhs,uρ i−dρ (c)+dρ (g) ts d                                            .
+                                 TN (R+ )                                 λ
+                                                                        ρ(g)
+                                                                                   i=1
+                                                                                              λdρ,i              t
+
+Differentation with respect to λ and setting λ = 1 gives
+                                                                                         k
+                                                                                                         !
+                                               −1                                        X
+                   M(fi , s, c, g) =                                      Ig (s, c) −          ci Ii (s, c) ,
+                                     hs, ui − dρ (c) + dρ (g)                            i=1
+
+where
+
+                                        Ig (s, c) = M(fi , gρ , s, c)
+                                        Ii (s, c) = M(fi , gfρ , s, c + ei ).
+
+The integral Ig (s, c) converges for (s, c) satisfying
+
+                                       Re(hs, uρ̃ i) > Re(dρ̃ (c)) − dρ̃ (gρ ),
+
+for all ρ̃ ∈ ΣP (1). Since P (gρ ) ⊂ P (g) and dρ (gρ ) ≥ dρ (g) + δρρ̃ by construction, we have
+
+                              Re(dρ (c)) − dρ (gρ ) ≤ Re(dρ (c)) − dρ (g) − δρρ̃ .
+
+Similarly, Ii (s, c) converges iff
+
+                             Re(hs, uρ̃ i) > Re(dρ̃ (c + ei )) − dρ̃ (g) − dρ̃ (fi,ρ ).
+
+From dρ̃ (fi,ρ ) ≥ di,ρ̃ + δρρ̃ we get the inequality
+
+                      Re(dρ̃ (c + ei )) − dρ̃ (g) − dρ̃ (fi,ρ ) ≤ Re(dρ̃ (c)) − dρ̃ (g) − δρρ̃ .
+
+Hence the integrals Ig (s, c), Ii (s, c) converge if
+
+                                     hRe(s), uρ̃ i > Re(dρ̃ (c)) − dρ̃ (g) − δρρ̃
+
+for all ρ̃ ∈ ΣP (1). Thus we have found an analytic continuation which improves the convergence in
+the direction of ρ.
+    Iteratively differentiating with respect to one-parameter subgroups ϕρ (λ) as above then gives
+the following result.
+
+
+
+                                                           24
+Theorem 3.6 ([3, Theorem 2.4]). Suppose the polytope P = P (f1 )+. . .+P (fk ) is full-dimensional.
+Then for every (s0 , c0 ) ∈ MC × Ck the Mellin transform M(fi , g, s, c) can be expressed as a sum of
+the form                                      X
+                            M(fi , g, s, c) =   Lβ (s, c)M(fi , gβ , s, c + nβ ),
+                                             β
+
+for certain Laurent polynomials gβ and nβ ∈ Zk≥0 , such that the Mellin transforms on the right hand
+side are convergent in a neighbourhood of (s0 , c0 ). The functions Lβ (s, c) are rational functions of
+(s, c) with simple poles along divisors of the form
+
+                                   {hs, uρ i − dρ (c) + dρ (g) = −m}
+
+for m ∈ N. Thus the Mellin transform can be expressed as
+                                              Y
+                    M(fi , g, s, c) = Φ(s, c)    Γ(hs, uρ i − dρ (c) + dρ (g)),
+                                                 ρ∈ΣP (1)
+
+
+where Φ(s, c) is entire on MC × Ck .
+Proof Sketch. Fix (s0 , c0 ) ∈ MC × Ck and let
+
+                         aρ = − min(⌈Re(hs0 , uρ i − dρ (c0 ) + dρ (g))⌉ − 1, 0)
+
+For each ρ ∈ ΣP (1) we partially integrate (at most) aρ -times in the direction uρ . This expresses
+the Mellin transform as a sum
+                                              X
+                            M(fi , g, s, c) =   Lβ M(fi , gβ , s, c + nβ ),
+                                                  β
+
+where Lβ is the product of the rational factors (hs, uρ i − dρ (c) + dρ (g) + m)−1 introduced by the
+partial integrations. One can check that these poles are all distinct, so that Lβ is a rational function
+with simple poles as prescribed above.
+     The Mellin transforms on the right hand side are guaranteed to converge in a neighbourhood of
+(s0 , c0 ), since each partial integration in the ρ direction improves the convergence in this direction
+by at least one unit. The Gamma functions Γ(hs, uρ i − dρ (c) + dρ (g)) have simple poles along every
+hypersurface of the form
+                                      {hs, uρ i − dρ (c) + dρ (g) ∈ −Z+ }
+Hence dividing the above expression for M(fi , g, s, c) by
+                                  Y
+                                        Γ(hs, uρ i − dρ (c) + dρ (g))
+                                  ρ∈ΣP (1)
+
+cancels the simple poles and gives an entire function Φ(s, c).
+
+Sector decomposition. In applications to quantum field theory, one often wants to compute the
+analytic continuation of M(fi , s, c) along a single parameter (the dimension of spacetime), i.e. one
+wants to compute the restriction of M(fi , s, c) to a line l ⊂ MC × Ck . The corresponding function
+M (d) = M(fi , s(d), c(d)) is a meromorphic function of d ∈ C and the main goal is to compute the
+coefficients of a Laurent expansion around a fixed pole d0 ∈ C.
+
+                                                      25
+   For this purpose, Binoth and Heinrich [4] introduced a recursive strategy, which iteratively
+decomposes (a suitable compactification) of the integration domain TN (R+ ) into cubical sectors
+and performs blow-ups along coordinate subspaces until the integral in every sector is of the form
+                                           Z                      k
+                                                                  Y       c (d )
+                                    Iα =                xsσ (d)
+                                                                        f˜i i i ,
+                                               [0,1]k             i=1
+
+
+such that f˜i does not vanish along the coordinate subspaces xi = 0. The analytic continuation in
+d can then be computed by a simple Taylor expansion.
+    The original strategies of Binoth and Heinrich had the drawback, that the recursion did not
+always terminate. This fault was corrected by Bogner and Weinzierl in [8], where ideas from the
+resolution of singularities were used to devise strategies guaranteed to succeed. Unfortunately,
+these strategies often result in a large number of sectors, which greatly impacts the time needed for
+numerical computations.
+    The results of the last section suggest that one should try to find a strategy which is adapted to
+the Newton polytope of f1 · · · fk . Such a strategy has indeed been described by Kaneko and Ueda
+in [23] and it fits in nicely with our toric point of view. One of the main results of [23] can be
+rephrased as follows.
+Proposition 3.7. Let XΣ be a complete simplicial toric variety of dimension n. For σ ∈ Σ(n) let
+
+                              Iσ := [0, 1]n //Gσ ⊂ Rn+ //Gσ = Uσ (R+ ).
+
+Then                                                           [
+                                        XΣ (R+ ) =                      Iσ
+                                                              σ∈Σ(n)
+
+and the intersections Iσ ∩ Iσ′ for σ 6= σ ′ have measure zero.
+Proof. The complement of TN (R+ ) ⊂ XΣ (R+ ) has real codimension one, so it is enough to show
+that the restrictions
+                              Iσ◦ = Iσ ∩ TN (R+ ) ∼
+                                                  = (0, 1]n //Gσ
+cover TN (R+ ) and intersect in a set of measure zero. The map
+
+                               L : TN (R+ ) → NR ,             L(t) = − Log(t)
+
+is a diffeomorphism. We claim that L identifies Iσ◦ with the cone σ ⊂ Rn . Let σ have lattice
+                                                                 Qn    he ,u i
+generators u1 , . . . , un . In the coordinates of σ we have tj = i=1 xi j i and
+                                                n
+                                                X
+                                 L(t(x)) =              − log(tj (x))ej
+                                                j=1
+                                                 Xn
+                                           =             − log(xi )hej , ui iej
+                                                i,j=1
+                                                X n
+                                           =            − log(xi )ui .
+                                                i=1
+
+
+
+                                                         26
+Since Iσ◦ is defined by the inequalities 0 < xi ≤ 1, we get
+
+                                        L(Iσ◦ ) = ¸ pos(u1 , . . . , un ) = σ.
+
+But XΣ is a complete fan, so the cones σ ∈ Σ(n) cover Rn and intersect in a set of codimension
+one. The same must then be true for the Iσ◦ .
+   Combining the above proposition with proposition 3.3 gives the main result of [23]:
+Corollary 3.8 ([23]). Let XΣ be a simplicial refinement of P = P (f1 · · · fk ). Then the Mellin
+transform can be decomposed as
+
+                                               X Z                         k
+                                                                           Y
+                          M (f, s, c) =                             xsσσ       (fσ,i (xσ ))−ci dxσ ,
+                                              σ∈Σ(n)       [0,1]n          i=1
+
+
+where:
+
+  1. xσ = (xσ,1 , . . . , xσ,n ) are the coordinates associated to the maximal cone σ = pos(u1 , . . . , un ) ∈
+     Σ.
+  2. The monomial xsσσ is given by
+                                        n
+                                        Y            P                            n
+                                                                                  Y
+                                               hs−                                       hs,uj i−duj (c)−1
+                                                         i ci mσ,i ,uj i−1
+                               xsσσ =         xσ,j                           =         xσ,j
+                                        j=1                                      j=1
+
+      with mσ,i the common minimum of the functions hm, uj i on P (fi ).
+                                                     −mσ,i
+  3. The polynomials fσ,i (xσ ) = fi (xσ )xσ                  are regular and non-vanishing on [0, 1]n .
+Proof. The previous proposition shows that we can write the integral as a sum over the integration
+domains Iσ = [0, 1]n //Gσ . Over this domain the integral becomes
+           Z      Yk                  Z   Y            Yk
+                             −ci dt
+                s
+                t    (fi (t))       =        hs,uρ i−1
+                                            xρ             Fi (x)−ci ΩΣ
+             Iσ   i=1
+                                  t    Iσ              i=1              Uσ
+                                               ρ∈Σ(1)
+                                                 Z           n
+                                                             Y                    k
+                                                                                  Y
+                                        uσ                           hs,uj i−1
+                                     =                              xj                  fi (xσ )−ci dxσ
+                                       |Gσ |         [0,1]n j=1                   i=1
+                                                 Z           n
+                                                             Y             P                       k
+                                                                                                   Y
+                                          uσ                         hs−       i ci mσ,i ,uj i−1
+                                     =                              xj                                   fσ,i (xσ )−ci dxσ .
+                                         |Gσ |       [0,1]n j=1                                    i=1
+
+and it follows from the proof of proposition 3.3 that fσ,i (xσ ) is regular and non-vanishing on [0, 1]n .
+From the discussion in section 2 we can assume that uσ > 0 and we have
+
+                                 uσ = det(u1 , . . . , un ) = | Cl(Uσ )| = |Gσ |,
+               uσ
+so the factor |G σ|
+                    cancels.
+
+
+
+                                                               27
+Remark 3.9. The integral over Iσ converges for (s, c) ∈ MC × Ck satisfying
+
+                                        Rehs, uρ i > Re dρ (c)
+
+for all ρ ∈ σ(1). If r := Re(c) >   P 0, this means that Re(s) lies in the interior of the convex
+cone mσ (r) + σ ∨ , where mσ (r) = i ri mσ,i is the vertex of P (r) corresponding to σ. Hence the
+convergence region for a single sector is always nonempty, even if P is not full-dimensional. In fact,
+if r > 0 is fixed, then                \
+                                             mσ (r) + σ ∨ = P (r).
+                                     σ∈Σ(1)
+                                                                                   T
+Thus the integrals Iσ convergence simultaneously for s ∈ MC if and only if s ∈ Int( σ∈Σ(1) mσ (r) +
+σ ∨ ) = Int P (r), which recovers our earlier result.
+
+
+4    Feynman integrals
+Let us finally apply our work to the investigation of Feynman integrals. We will work will scalar
+Feynman graphs with generic euclidean kinematics. The parametric representation then expresses
+the amplitude as a Mellin transform to which our previous results apply. We will show that this
+gives two equivalent ways to rigourously construct the dimensionally regularized amplitudes.
+
+Feynman graphs.        We will consider a graph G to consist of a triple
+
+                                          G = (EG , VG , ∂)
+
+of finite sets of edges EG and vertices VG , together with a map
+
+                                 ∂ : EG → Sym2 VG = VG × VG /Z2 ,
+
+mapping an edge to its endpoints. This definition allows multiple edges and loops, but our graphs
+will not have external half-edges. An edge e ∈ EG is called a selfloop if ∂(e) = (v, v). A subgraph
+γ ⊂ G is given by subsets Eγ ⊂ EG , Vγ ⊂ VG , such that ∂(Eγ ) ⊂ Sym2 Vγ .
+    Every graph has an obvious geometric realization as a one-dimensional CW-complex, so that we
+can speak about topological notions like connectedness and simply-connectedness. In particular,
+we denote by h0 (G) and h1 (G) the first and second Betti numbers of (the geometric realization of)
+G. For a connected graph G, we call a connected subgraph T ⊂ G a spanning tree if VT = VG and
+h1 (T ) = 0. Note that these are precisely the maximal simply-connected subgraphs of G.
+    A spanning 2-tree is a simply-connected subgraph F ⊂ G, with VF = VG and exactly two
+connected components F = T1 ∪ T2 . Every spanning 2-tree is obtained from a spanning tree by
+deleting an edge.
+    Every subset I ⊂ EG gives the edge subgraph γ ⊂ G, where Eγ = I and Vγ consists of all
+vertices incident to an edge in I. We almost exclusively deal with edge subgraphs, so we will often
+identify an edge subgraph with its set of edges. Notable exceptions are spanning 2-trees, where it
+is important to allow isolated vertices.
+    A Feynman graph is a graph together with distinguished (possibly empty) sets of external ver-
+tices VGext ⊆ V and massive edges EG   M
+                                          ⊆ EG . To every external vertex v ∈ V G we associate an
+                                       D                                   M
+inflowing external momentum qv ∈ C and to every massive edge e ∈ EG          , a mass me ∈ C\{0}.
+
+
+                                                 28
+The external momenta are additionally subject to momentum conversation in each connected com-
+ponent: If G = ∪Gi is the decomposition of G into connected components, then
+                                          X
+                                                qv = 0,
+                                              ext
+                                           v∈VG
+                                                   i
+
+
+for all i.
+    Now suppose G is a connected Feynman graph. Choosing an orientation for each edge gives
+G the structure of a one-dimensional cell complex. Then a truncated part of the cellular chain
+complex gives the exact sequence
+
+                                               i                  ∂
+                         0        H1 (G, Z)              ZEG           VG0      0
+
+   Here, ∂ is the boundary map and
+                                                              X
+                                 VG0 := {(nv ) ∈ ZVG |            nv = 0}
+
+is the image of ∂, imposing overall momentum conservation. The external momentum q is then
+naturally an element of VG0 ⊗ CD . We can choose a section B : VG0 → ZEG of ∂, since the homology
+H1 (G, Z) is free. In the physics literature, it is customary to choose a spanning tree T ⊂ G and
+then defining a section by
+                                    BT : VG0 = VT0 ∼= ZET ֒→ ZEG .
+   Let p 7→ pe be the projection CE ⊗ CD → CD to the momentum flowing through the edge e.
+To each edge we associate the affine quadric
+
+                                Pe : CD → C,           Pe (k) = (p2e + m2e ),
+            P
+where p2e = D       i 2
+              i=1 (pe ) denotes the squared euclidean metric. Its inverse Pe
+                                                                            −1
+                                                                               gives the (scalar)
+propagator. As outlined in the introduction, we will work with analytically regularized integrals,
+which means raising each propagator to a complex power λe ∈ C.
+Definition 4.1. The (formal) euclidean Feynman amplitude IG (λ, p, m) is given by
+                                       Z      Y
+                    IG (λ, D, q, m) :=           (Pe (k + B(q)))−λe dµ,
+                                         H1 (G,RD ) e∈E
+                                                             G
+
+
+              Dl
+where dµ = πdDl/2
+               k
+                  is a convenient multiple of the Lebesgue measure.
+Remark 4.2. In general quantum field theories, (e.g. gauge theories) the Feynman rules also give
+polynomials of invariant scalar products in the numerator. But it is well known that these “tensor”
+integrals can be expressed as a linear combination of scalar Feynman integrals with shifted values of
+the dimension and propagator decorations, see e.g. [37]. Since this is naturally part of our approach
+anyway, we do not lose any generality if this reduction is understood.
+
+
+
+
+                                                       29
+Parametric representation. In order to apply the results of section 3, we want to express IG as
+a suitable Mellin transform. This will only work if the external momenta and masses are sufficiently
+generic.
+Definition 4.3. A Feynman Graph G has generic euclidean kinematics, if
+                                                    !2
+                                             X
+                                        Re       qi    >0
+                                                          i∈I
+                                                    !2
+                                         X
+                                    Re         qi        + Re(m2e ) > 0
+                                         i∈I
+
+for all proper subsets I ( VGext and massive edges e ∈ EG
+                                                        m
+                                                          .
+   We will assume that G has generic euclidean kinematics from now on. When none of the Pe
+vanish, we can use the identity
+                                     Z ∞ λ−1
+                                1       α
+                                 λ
+                                   =         e−αp dα, Re(p) > 0,
+                               p      0 Γ(λ)
+to write the integrand of the momentum-space amplitude as
+                         Y            Z       Y αλe −1         P
+                               −λe
+                             Pe (p) =                    dαe e− αe Pe (p) .
+                                       [0,∞]E     Γ(λe )
+                        e∈EG                         e∈EG
+
+   Formally exchanging the integration variables gives the amplitude as
+                               Z          Y αλe −1     Z              P
+             IG (λ, D, q, m) =                     dαe              e− αe Pe (k+B(q)) dµ
+                                [0,∞]EG e∈E Γ(λe )       H1 (G,RD )
+                                           G
+                                Z         Y α e
+                                              λ −1
+                             =:                     dαe AG (λ, D, q, m, α).
+                                  [0,∞]EG    Γ(λe )
+                                         e∈EG
+
+   The integrand AG can be computed by reducing it to a gaussian integral. The answer will
+involve the following graph polynomials:
+Definition 4.4. The first Symanzik polynomial of the connected graph G is
+                                            XY
+                                      ψG :=         αe ,
+                                                     T     ∈T
+                                                          e/
+
+where the sum is over all spanning trees of G. The (massless) second Symanzik polynomial of G
+with external momentum q ∈ CE ⊗ CD is
+                                             X         Y
+                                 ϕG (q, α) =     qT2 1     αe ,
+                                                T1 ∪T2           ∈T1 ∪T2
+                                                                e/
+
+where the first sum is over spanning two-forests and
+                                                  X
+                                         qT1 =       qv
+                                                     v∈V (T1 )
+
+
+                                                     30
+is the total momentum flowing through T1 . The full second Symanzik polynomial of G is defined
+as                                                             !
+                                                     X
+                                                             2
+                         ΦG (α, q, m) = ϕG (α, q) +      αi mi ψG (α)
+                                                              i∈EG
+
+Remark 4.5. By momentum conservation we have
+
+                                           qT2 1 = (−qT2 )2 = qT2 2 .
+
+Hence the above definition is unambiguous.
+   The following theorem is then well-known (See e.g. [29], [22]).
+Theorem 4.6. The integrand AG can be calculated as
+                                                                     Φ
+                                                                    − ψG
+                                                                e        G
+                                     AG (λ, D, α, q, m) =         D/2
+                                                                             .
+                                                                 ψG
+
+   Now consider the diffeomorphism
+
+                                   F : (0, ∞) × ∆EG ∼
+                                                    = RE
+                                                       + \{0}
+                                                         G
+
+
+                                               (t, α) 7→ tα
+                                                         Q
+A simple calculation shows that the standard volume form e dαe pulls back to
+                                            !
+                                     Y
+                                 ∗
+                               F        d αe = tE−1 dt ∧ Ω∆EG ,
+                                         n
+
+                                          e
+
+where
+                                   E
+                                   X
+                        Ω∆ E G =                                ci . . . ∧ daE
+                                         (−1)i−1 ai da1 ∧ . . . da                      .
+                                   i=1                                           ∆ EG
+
+and we have fixed some ordering EG ∼
+                                   = {1, . . . , E}. Now let
+                                              X             D 1
+                                   ωG =              λe −    h =: −sdG ,
+                                                            2 G
+                                              e∈EG
+
+where sdG is the superficial degree of divergence of G. Performing the integral over t gives (still
+formally)
+                                     Z        Y αλe −1
+                   IG (λ, D, q, m) =                    dαe AG (λ, D, q, m, α)
+                                      [0,∞]E e∈E Γ(λe )
+                                                 G
+                                     Z      Y αλe −1 Ω∆E Z ∞                 Φ
+                                   =                       G
+                                                         D/2
+                                                                  tωG −1 e−t ψ dt
+                                      ∆EG e∈E Γ(λe ) ψG       0
+                                               G
+                                     Z      Y αλe −1 Ω∆E                 ω
+                                                           G
+                                                                       ψG G
+                                   =                     D/2
+                                                             Γ(ω G )            .
+                                      ∆EG e∈E Γ(λe ) ψG                ΦG
+                                               G
+
+
+
+
+                                                        31
+There is a natural homeomorphism
+                                                                                              !
+                          EG    +       EG                                           αi
+                      P        (R ) → ∆      ,       [α1 : . . . : αEG ] 7→     P                 ,
+                                                                                    i∈EG αi
+
+which identifies Ω∆EG with the volume form ΩP EG of P EG constructed in section 2. We can then
+express the above result as follows.
+Corollary 4.7. The amplitude can be expressed as the (possibly still divergent) projective integral
+                                         Z            Y αλe −1  ψG ωG Ω EG
+                                                                           P
+                IG (λ, D, q, m) = Γ(ωG )                                   D/2
+                                                                               .
+                                          P E G   +
+                                                (R ) e∈E   Γ(λe ) Φ G    ψ
+                                                         G                 G
+
+   We can interpret the above representation of IG as an integral over the open simplex
+
+                                          TNEG (R+ ) ⊂ P EG (R+ ),
+
+which expresses it as Mellin transform. For generic euclidean kinematics, the coefficients of ΦG are
+contained in an open strongly convex cone. Hence we are finally in a position to apply the result
+of section 3.
+Remark 4.8. We will soon see that (under mild conditions on the graph G) we can choose the λe
+such Re(ωG ) > 0 and the above expression for IG is absolutely convergent for generic euclidean
+momenta. In this case, we get an equality of absolutely convergent integrals
+                                   Z          Y
+                 IG (λ, D, q, m) =               (Pe (k + B(p)))−λe dµ
+                                       H1 (G,RD ) e∈E
+                                                           G
+                                                 Z              Y αλe −1  ψG ωG Ω EG
+                                                                                                  P
+                                    = Γ(ωG )                                                      D/2
+                                                                                                      .
+                                                 P EG (R+ ) e∈E        Γ(λe )   ΦG            ψG
+                                                                   G
+
+
+
+The Newton polytope of a Feynman graph. The results of section 3 show that, to understand
+the convergence domain of the integral IG , we should understand the polytope P (ψG ΦG ).
+Definition 4.9. The Newton polytope P (ψG ΦG ) of a Feynman graph G is called the Feynman
+polytope of G and denoted by PG .
+    Let us first recall the factorization formulas of Brown ([10]). If G has some massless edges (and
+thus possible IR divergences) a special role is played by subgraphs, which carry all the kinematics,
+in the following sense:
+Definition 4.10. An edge subgraph γ ⊂ G containing all external vertices of G in a single connected
+component will be called momentum spanning. If γ additionally contains all massive edges, then it
+will be called mass-momentum spanning (m.m. for short).
+    For an m.m. subgraph γ, we set Vγext = VGext and EγM = EG    M
+                                                                    and the kinematics of γ are the
+same as those of G. Otherwise we consider γ to be scaleless, i.e. Vγext = EγM = ∅. If γ is a possibly
+disconnected subgraph, we define the quotient G/γ by contracting every connected component to
+a vertex. The kinematics of G/γ are inherited from G in the obvious way. This implies that G/γ
+has nontrivial kinematics if and only if γ is not mass-momentum spanning.
+
+                                                           32
+   In this way, we can associate to every subgraph γ ⊂ G the “flat deformation”
+
+                                           G|γ = γ ∪ G/γ,
+
+where exactly one of γ and G/γ has nontrivial kinematics. For a possibly disconnected Feynman
+graph Γ as above, we generalize the definitions of the Symanzik polynomials as follows: If Γ = ∪ki=1 Γi
+is the disjoint union of connected graphs Γi , then we set
+                                               k
+                                               X
+                                        ψΓ =         ψΓi
+                                               i=1
+                                               k
+                                               X           Y
+                                        ϕΓ =         ϕΓi          ψΓj
+                                               i=1         j6=i
+                                               k
+                                               X           Y
+                                        ΦΓ =         ΦΓi          ψΓj .
+                                               i=1         j6=i
+
+   It will also be convenient to define δγm to be 1 if γ is momentum-spanning and 0 otherwise.
+Similarly, we set δγmm to be 1 if γ is mass-momentum spanning and 0 otherwise. With this notation,
+we can formulate the factorization formulas as follows:
+Proposition 4.11 ([10]). Let G be a connected Feynman graph and γ ⊂ G a subgraph with con-
+nected components γ0 , . . . , γk .
+                            ψ      ϕ        Φ
+  1. There are polynomials RG|γ , RG|γ and RG|γ , such that
+
+                                                         ψ
+                                            ψG = ψG|γ + RG|γ
+                                                         ϕ
+                                            ϕG = ϕG|γ + RG|γ
+                                                         Φ
+                                            ΦG = ΦG|γ + RG|γ .
+                        ·
+      The degree degγ (RG|γ ) of the rest terms in the variables (αe )e∈γ satisfies
+
+                                         ψ
+                                  degγ (RG|γ ) > degγ (ψG|γ ) = h1γ
+                                         ϕ
+                                  degγ (RG|γ ) > degγ (ϕG|γ ) = h1γ + δγm
+                                         Φ
+                                  degγ (RG|γ ) > degγ (ΦG|γ ) = h1γ + δγmm
+
+                     ψ
+  2. The polynomial RG|γ vanishes if and only if, for any spanning tree T ⊂ G, the graphs γi ∩ T
+     are connected.
+                                                                   ϕ
+  3. Suppose γ is not momentum spanning. Then the polynomial RG|γ      vanishes if and only if the
+     intersections γi ∩ F are connected for any spanning 2-tree F = T1 ∪ T2 with (qT1 )2 6= 0.
+  4. Suppose γ is momentum spanning and all external vertices are contained in the component
+                 ϕ
+     γ0 . Then RG|γ vanishes if and only if, for any spanning 2-tree F = T1 ∪ T2 with (qT1 )2 6= 0,
+     the graphs F ∩ γi are connected for i > 0 and F ∩ γ0 has exactly two connected components.
+
+
+                                                     33
+                     Φ
+  5. The polynomial RG|γ is given by
+                                                                                         
+                             ϕ
+                                                X                    ψ 
+                                                                                X
+                      Φ
+                     RG|γ = RG|γ + ψG|γ                 m2e αe  + RG|γ               m2e αe 
+                                                M ∩E
+                                             e∈EG                                  M
+                                                                                e∈EG
+                                                     γ
+
+
+      if γ is not mass-momentum spanning and by
+                                                                         
+                                           ϕ      ψ 
+                                                              X
+                                    Φ
+                                   RG|γ = RG|γ + RG|γ                m2e αe 
+                                                                 M
+                                                              e∈EG
+
+      if γ is mass-momentum spanning.
+Proof sketch. We sketch the proof and refer to [10] for more details. For k = 1, 2, consider the
+subset Tγk of spanning k-trees of G, such that the intersections T ∪ γi are connected for all T ∈ Tγk .
+This set isP
+           always nonempty ([10, Lemma 2.1.]) and its elements are exactly those spanning k-trees,
+such that i |T ∩ γi | is maximal. The corresponding monomial αS for S = EG \T is then minimal
+in the variables (αe )e∈γ . Decomposing the sum over k-trees into a sum over Tγk and its complement
+gives the decompositions
+                                                        ψ
+                                        ψG = ψγ ψG/γ + RG|γ
+                                                        ϕ
+                                        ϕG = ψγ ϕG/γ + RG|γ ,
+       ψ            ϕ
+and RG|γ   (resp. RG|γ ) vanishes, if and only if Tγ1 (resp. Tγ2 ) consists of all spanning trees (resp.
+spanning 2-trees). If γ is not momentum spanning, then ϕG|γ = ψγ ϕG/γ and the proposition
+follows. Now suppose γ is momentum spanning, such that all external vertices are contained in the
+component γ0 . Then the polynomial ϕG/γ vanishes and we have to use a different decomposition.
+In this case, we define T̃γ2 to be those spanning 2-trees F , such that F ∩ γi are trees for i > 0 and
+F splits γ0 into two connected components. Splitting the sum over all 2-trees into a sum over T̃γ2
+and its complement as above, gives the decomposition
+                                                                 ϕ
+                                  ϕG = ϕγ0 ψγ1 · · · ψγk ψG/ψ + RG|γ .
+
+The first term is just ϕG|γ and the second term vanishes if and only if the complement of T̃γ2 is
+                                                                Φ
+empty. This establishes the first 4 points. The expression for RG|γ follows immediately from the
+decompositions of ψG and ϕG .
+Corollary 4.12. The face of PG corresponding to the weight vector eγ is
+                                         Feγ PG = Pγ × PG/γ .
+   In the above Corollary, we have identified an edge subgraph γ ⊆ G with its set of edges Eγ ⊆ EG .
+Using this convention, we define the subset function sG : 2EG → Z by
+                                       sG (γ) = 2h1 (γ) + δγmm .
+   The above proof shows in particular that
+                                      h1 (γ) = |Eγ | − |Eγ ∩ ET |,
+
+                                                  34
+where T is a spanning tree of G, such that T ∩ γ is a maximal forest, i.e. intersects every connected
+component of γ in a spanning tree. With the notation of section 2, we can write this as
+                                                                ∗ #
+                                   h1 (γ) = |S| − |Eγc ∩ S| = (rG ) (γ),
+                      ∗
+where S = EG \T and rG  is the rank function of the dual graph matroid M ∗ (G), whose bases are
+the complements of spanning trees. This shows that
+
+                                                h1 : 2 E G → Z
+
+is supermodular.
+    Let us also call a pair (T, i) of a spanning tree T ⊂ G and an edge i ∈ EG admissible if either
+      M
+i ∈ EG    or i ∈ T and both connected components of   Q T \i contain external momenta. Hence a pair
+(T, i) is admissible if and only if the monomial αi j / ∈T αj appears in ΦG . A subgraph γ ⊂ G is
+then mass-momentum spanning if, for every admissible pair (T, i), either i ∈ γ or T ∩ γ is not a
+maximal forest in γ.
+Proposition 4.13. The function sG is supermodular.
+Proof. Since we know from the above discussion that 2h1 is supermodular, we only need to show
+that
+                         sG (γ1 ) + sG (γ) ≤ sG (γ1 ∪ γ2 ) + sG (γ1 ∩ γ2 ),
+where γ1 and γ2 (and therefore γ1 ∪ γ2 ) are mass-momentum spanning. We can also assume that
+h1 (γ1 ) + h1 (γ2 ) = h1 (γ1 ∪ γ2 ) + h1 (γ1 ∩ γ2 ), since the inequality is trivial otherwise and we can
+reduce to the case γ1 ∪ γ2 = G. We will show that γ1 ∩ γ2 is also mass-momentum spanning. For
+this we must show that for every admissible pair (T, i), where T ⊂ γ1 ∪ γ2 is a spanning tree such
+that T ∩γ1 ∩γ2 is a maximal forest, we must have i ∈ γ1 ∩γ2 . From the inclusion-exclusion principle
+we have
+
+           h1G (γ1 ∪ γ2 ) + h1G (γ1 ∩ γ2 ) = |Eγ1 ∪γ2 | + |Eγ1 ∩γ2 | − |E(γ1 ∪γ2 )∩T | − |Eγ1 ∩γ2 ∩T |
+                                           = |Eγ1 | + |Eγ2 | − |Eγ1 ∩ ET | − |Eγ2 ∩ ET |
+                                          ≤ h1 (γ1 ) + h1 (γ2 )
+
+with equality only if T ∩ γ1 and T ∩ γ2 are maximal forests. Since (T, i) is an admissible pair, we
+must have i ∈ γ1 and i ∈ γ2 since both graphs are mass-momentum spanning. But this means that
+i ∈ γ1 ∩ γ2 and γ1 ∩ γ2 must also be mass-momentum spanning.
+   Our conventions on the kinematics of sub- and quotient graphs are justified by the following.
+Lemma 4.14. The restrictions and contractions of sG by a subgraph γ ( G are given by
+
+                                        s G |γ = s γ ,   sG /γ = sG/γ .
+
+Proof. The equality sG |γ = sγ for the restrictions follows immediately from the definitions. For
+η ⊂ G/γ, let η̃ be the edge subgraph corresponding to Eγ ∪ Eη . The contraction equality then
+claims that
+
+                               sG /γ (η) = 2h1 (η̃) − 2h1 (γ) + δηmm − δγmm
+                                         = 2h1 (η) + δηmm = sG/γ (η).
+
+
+                                                         35
+The equality h1 (η̃)−h1 (γ) = h1 (η) follows from Example 2.39 and the matroid equality M ∗ (G)|Eγc =
+M ∗ (G/γ).
+    We then only have to prove that η̃ is mass-momentum spanning if η is. Clearly η contains all
+massive edges of G/γ if and only if η̃ contains all masses of G. Similarly, if η̃ contains all external
+vertices in a single connected component, then so does its contraction η. On the other hand, if
+all external vertices of G/γ lie in the component η 0 ⊆ η and γ1 , . . . , γs ⊆ γ are the components
+of γ containing external vertices, then the subgraph defined by the edge set Eη0 ∪ Eγ1 . . . ∪ Eγs is
+connected and contains all external vertices.
+Theorem 4.15. The Feynman polytope PG is the generalized permutahedron associated to the
+function sG .
+Proof. It is immediate from Prop. 4.11, that PG ⊆ P (sG ). We will prove the reverse inclusion by
+induction over the number of edges. Hence we can assume that Pγ = P (sγ ) and PG/γ = P (sG/γ )
+for all nontrivial edge subgraphs γ ( G. The previous lemma then shows that
+                        Feγ PG = Pγ × PG/γ = P (sγ ) × P (sG/γ ) = Feγ P (sG ).
+Since all vertices of P (sG ) are given by intersections of the above faces, we must have P (sG )(0) ⊂ PG
+and thus PG = P (sG ).
+Remark 4.16. The above factorization formula break down for some special kinematic configura-
+tions, e.g. when some combination of momenta qF are on-shell, i.e. when qF2 = 0 but qF 6= 0. In
+these cases, P (ΦG ) is not always a generalized permutahedron. An example is the box integral with
+all external momenta on-shell, which is discussed in [29].
+    Let us recall that a graph G is called 1-vertex reducible if the removal of any vertex disconnects
+the graph and 1-vertex irreducible (1VI) otherwise. We consider graphs with a single edge to be
+1VI and disconnected graphs to be 1-vertex reducible. A graph on two vertices is 1VI if it contains
+no self-loops. Any graph then has a unique decomposition into 1VI-subgraphs. Note that these are
+exactly the connected components of the graph matroid M (G) and its dual M ∗ (G) (See e.g. [28,
+Section 2.3]). In particular we have that γ ∩ G is a union of 1V I components if and only if the
+intersection with every spanning tree T ⊂ G is a maximal forest. By Prop. 4.11, this is equivalent
+     ψ
+to RG|γ  = 0.
+    Following [34], we will call a Feynman graph with generic euclidean kinematics G s-irreducible,
+if every 1VI-component γ has nontrivial kinematics. This means that either γ contains massive
+edges, or its removal would disconnect the graphs into two components, each containing external
+vertices. This is compatible with the notion of irreducibilty defined in section 2:
+Proposition 4.17. Let G be a connected Feynman graph with generically euclidean kinematics. The
+Feynman polytope PG is an irreducible generalized permutahedron if and only if G is s-irreducible.
+Proof. Suppose first that G is s-irreducible. The generalized polyhedron PG is reducible if and only
+                                                                                ψ       Φ
+if it has dimension less than |EG | − 1. By Prop. 4.11, this is equivalent to RG|γ = RG|γ    = 0 for
+some γ ( G. Then γ must be a union of 1VI-components. If γ were mass-momentum spanning,
+then its complement would be a union of 1VI-components with no kinematics and G would not be
+s-irreducible. For γ not mass-momentum spanning, Prop. 4.11 gives
+                                                                    
+                                        ϕ
+                                                       X
+                                Φ
+                             RG|γ   = RG|γ  + ψG|γ           m2e αe  .
+                                                           M ∩E
+                                                        e∈EG    γ
+
+
+
+
+                                                   36
+                                                                                     ϕ
+Since every 1VI component of γ contains non-trivial kinematics, we must have either RG|γ 6= 0 or
+P             2                  Φ
+  e∈E M ∩Eγ m   α
+              e e 6
+                  = 0, so that RG|γ can not vanish.
+      G
+                                                                                 ψ
+   On the other hand, suppose γ ( G is a 1VI component with no kinematics. Then RG|γ =
+ ϕ                                    Φ
+RG|γ = 0 and the above formula shows RG|γ = 0. Hence PG is reducible.
+
+  Now suppose G is s-irreducible. Let FG denote the set of all edge subgraphs γ ( G, such γ and
+G/γ are both s-irreducible, when given the kinematics described in the beginning of this section.
+FG is the disjoint union of the two subsets
+
+                SG = {γ ( G | γ is s-irreducible and m.m, G/γ is irreducible}
+               HG = {γ ( G | γ is irreducible and not m.m, G/γ is s-irreducible}.
+
+By Prop. 2.42, these are exactly the facets of PG .
+Corollary 4.18. Let G be an s-irreducible Feynman graph. Then the polytope PG has the facet
+presentation
+                                              \
+               PG = {hm, eEG i = 2h1 (G) + 1}    {hm, eγ i ≥ 2h1 (γ) + δγm.m }.
+                                                 γ∈FG
+
+Remark 4.19. In the terminology of [36], s-irreducible, mass-momentum spanning subgraphs γ ⊂ G
+are called links and a subgraph γ whose quotient G/γ is s-irreducible is called saturated.
+
+Building sets and sectors. We continue to assume that G is an s-irreducible Feynman graph.
+We want to construct smooth refinements of the normal fan ΣPG . These correspond to sector
+decompositions by Corollary 3.8. Let first ΣHepp be the normal fan of the permutahedron πEG on
+the set of edges EG . By Proposition 4.15 we have the following.
+Proposition 4.20. The fan ΣHepp is a smooth refinement of ΣPG .
+    Each maximal cone σ ∈ ΣHepp is given by a complete flag {∅ = I0 ( . . . In = EG }, or equiva-
+lently by a total order EG = {i1 < . . . < in }. The coordinates of σ are then defined by
+                                                   Y
+                                              αi =    xj .
+                                                 j≤i
+
+The corresponding sectors are the classical Hepp sectors. Thus they are easy to describe but grow
+superexponentially with the number of edges.
+   Let us apply the theory of section 2 to construct more economical refinements. First consider
+the subset system
+                               Gs = {Eγ | γ ( G is s-irreducible}.
+A special case of Prop. 2.43 then gives
+Proposition 4.21. The set Gs is a building set. The corresponding fan ΣGs is a smooth refinement
+of ΣPG .
+Remark 4.22. The sectors corresponding to ΣsG are the Smirnov-Speer sectors considered in ([34],
+[32]).
+
+                                                 37
+   Another possibility was recently introduced in [10]. Let us call a subgraph γ ⊆ G motic if
+                                          sG (γ\i) < sG (γ)
+for all edges i ∈ Eγ , i.e. deleting an edge either drops the loop number, or destroys the property of
+being mass-momentum spanning. Note that for massive Feynman graphs, the motic subgraphs are
+exactly the disjoint unions of one-particle irreducible (1PI) graphs. Let Bmotic be the set of motic
+subgraphs and
+                                    Gmotic = Bmotic ∪ {{i} | i ∈ EG }.
+Proposition 4.23. The set Gmotic is a building set and the corresponding fan Σmotic is a smooth
+refinement of ΣPG .
+Proof. By [10, Thm. 3.6], the union of two motic subgraphs is again motic. Hence Gmotic is a
+building set. Since sG (γ\i) = sG (γ) implies that sγ = sG |γ is reducible, we must have Gs ⊆ Gmotic .
+Example 2.27 then shows that Σmotic refines Σs and hence ΣPG .
+Remark 4.24. The results of section 2 show that the toric variety associated to Σmotic is P Bmotic ,
+the iterated blowup constructed by Brown in [10]. Its 1PI variant was earlier introduced by Bloch-
+Esnault-Kreimer ([6]).
+   Let us also mention the original construction of Speer [36]. To describe his sectors, we identify
+the set SG of mass-momentum spanning facets with the corresponding quotient graphs:
+                                     QG = {q = G/γ | γ ∈ SG }.
+    For an irreducible Feynman graph G with generic euclidean kinematics, Speer defined a collection
+of sub- and quotient graphs I ⊆ HG ∪ QG ∪ {G} called s-families.
+    By definition, these families satisfy G ∈ I and if Γ1 , Γ2 ∈ I, then either EΓ1 ⊂ EΓ2 , EΓ2 ⊂ EΓ1
+or EΓ1 ∩ EΓ2 = ∅. We refer to [36] for the (rather involved) complete definition. The key results of
+([36]) can be summarized as follows.
+Theorem 4.25. Each s-family I has the following properties:
+  1. For each Γ ∈ I, the set                            [
+                                            EΓ \                  EΓ̃
+                                                   Γ̃∈I,EΓ̃ (EΓ
+
+     consists of precisely one element β(Γ). The map β : I → EG is a bijection.
+  2. There is an admissible pair (T, i) of G adapted do I, such that:
+        • i∈
+           / EΓ for all Γ ∈ I.
+        • T ∩ γ is a maximal forest for each γ ∈ HG ∩ I.
+        • T /T ∩ γ is a spanning tree for each q = G/γ ∈ QG ∩ I.
+   To each s-family, associate the Speer sector DI ⊂ P EG (R+ ) defined by the inequalities
+                                 max αβ(γ) ≤ αβ(Γ) ≤          min αβ(q)
+                               γ∈HG ∩I                      q∈QG ∩I
+                                Eγ ⊂EΓ                       Eq ⊂EΓ
+
+for all γ ∈ HG ∩ I and q ∈ QG ∩ I. Then the sectors D(I) for different s-families cover P EG (R+ )
+and intersect in sets of measure zero.
+
+                                                   38
+   For a quotient graph q = G/γ, we define eq = −eEq . Note that in NEG , we have the equality
+
+                                                 [eγ ] = [eq ].
+
+We can then rephrase Speer’s result in terms of toric geometric as follows:
+Proposition 4.26. For I ⊂ FG ∪ {EG }, define the cone
+
+                                      ΣI = pos([eΓ ] | Γ ∈ I\{G}).
+
+then the cones {σI | I an s-family} are the maximal cones of a smooth fan ΣSpeer , which refines
+the normal fan of PG .
+Proof. Let us first prove that the cones σI are smooth. Since G ∈ I, this is equivalent to showing
+that
+                                       σ̃I = pos(eΓ | Γ ∈ I).
+is a smooth cone of ZEG , i.e. the vectors (eΓ | Γ ∈ I) form a Z-basis.
+    We can then adapt the proof of [17, Prop. 2]: Choose a linear order
+
+                                     I = {Γ1 < . . . < ΓE−1 < ΓE },
+
+refining the natural order Γ  Γ′ ⇔ EΓ ⊂ EΓ′ by edge-inclusion and let EG = {i1 < . . . < iE } be
+the order induced by the bijection β : I → EG . By construction of β, we have
+
+                            eΓ1 ∧ . . . ∧ eΓr = ±eΓ1 ∧ . . . ∧ eΓr−1 . . . ∧ eir ,
+
+and an obvious induction gives
+
+                                   eΓ1 ∧ . . . ∧ eΓE = ±ei1 ∧ . . . ∧ eiE ,
+
+which shows that the eΓi form a Z-basis.
+   The coordinates xΓ of σI can then be described by
+                                         Y           Y
+                                 αi =          xγ                      xq ,
+                                             i∈γ∈HG ∩I      ∈q∈QG ∩I
+                                                           i/
+
+In these coordinates, the Speer sector corresponding to I is described by 0 ≤ xΓ ≤ 1 for Γ ∈ I.
+Applying the logarithm map from Prop. 3.7 then shows that the cones generate a smooth complete
+fan.
+    Let (T, i) be an admissible pair, which is adapted to the s-family I as above. Note that T /T ∩ γ
+is a spanning tree in q = G/γ if and only if γ ∩ T is a maximal forest. To (T, i) corresponds the
+point m = 2eEG \T + ei of the Feynman polytope PG and we have
+
+                          hm, eγ i = 2h1 (γ) = sG (γ),        γ ∈ HG ∩ I
+                               γ         1
+                          hm, e i = 2h (γ) + 1 = sG (γ),          G/γ ∈ QG ∩ I.
+
+Since [eG/γ ] = [eγ ], we obtain from Prop. 2.21, that ΣSpeer refines ΣPG .
+   The Speer sectors are very economical but they are quite difficult to understand. It would be
+useful to have a generalization of Speer’s construction which works for all generalized permutahedra.
+We conjecture the following:
+
+                                                      39
+Conjecture 4.27. Let GP E be the set of generalized permutahedra on a set E up to normal
+equivalence and SGP E the subset consisting of polytopes whose connected components are simple.
+Then there is a natural map
+                                  GP E → SGP E , P 7→ P s ,
+which commutes with contraction and restriction and such that ΣP (1) = ΣP s (1).
+Remark 4.28. In the language of [2], we ask for a (necessarily idempotent) morphism of Hopf
+monoids GP E → SGP E . If we drop the condition that ΣP (1) = ΣP s (1), then mapping P = P (z)
+to the polytope of its building set of irreducibility components Gz provides an example of such a
+morphism.
+
+Dimensional regularization. We can now use the results of section 3 to define the dimensional
+regularization of a Feynman integral
+                                            Z            Y αλe −1  ψG ωG Ω EG
+                                                                            P
+                   IG (λ, D, q, m) = Γ(ωG )                                  D/2
+                                                                                 .
+                                             P EG (R+ ) e∈E Γ(λe )  ΦG     ψG
+                                                           G
+
+
+Recall that
+                                              X             D 1
+                                     ωG =            λi −     h (γ).
+                                                            2
+                                              i∈EG
+
+   For γ a sub- or quotient graph of G, we define similarly
+                                              X             D 1
+                                      ωγ =           λi −     h (γ).
+                                                            2
+                                              i∈Eγ
+
+   The convergence domain of IG for a graph with generic euclidean kinematics can then be cal-
+culated as follows:
+Proposition 4.29. Suppose the graph G has generic euclidean kinematics. Then the Feynman
+Integral IG (λ, D, q, m) has convergence domain
+
+                  ΛG = {(λ, D) ∈ CEG × C | ωγ > 0, γ ∈ HG , ωG/γ < 0, γ ∈ SG }
+
+This domain is nonempty if and only if G is s-irreducible.
+Proof. Combining Theorem 3.1 with Proposition 4.17 shows that (λ, D) ∈ ΛG if and only if
+                                                 D 1
+                                    hλ, eγ i −     h (γ) > 0,          γ ∈ HG
+                                                 2
+                                           D 1
+                              hλ, eγ i −     h (γ) − ωG > 0,           γ ∈ SG .
+                                           2
+Since ωG = ωγ + ωG/γ for every subgraph γ, this is equivalent to
+
+                                          ωγ > 0,           γ ∈ HG
+                                       −ωG/γ > 0,           γ ∈ SG .
+
+This domain is nonempty if and only if PG has dimension |EG | − 1, which is equivalent to s-
+irreducibility by Proposition 4.17.
+
+                                                     40
+Remark 4.30. That ΓG is nonempty for G 1VI was originally proven by Speer [36]. The extension
+to s-irreducible graphs seems to be well-known. Another proof can found in [34].
+   The proposition shows that singularities corresponding to mass-momentum spanning subgraphs
+are more closely associated to the quotient graphs. It will then be convenient to set
+                            (
+                              −ωG/γ ,     if γ is mass-momentum spanning
+                      ω̃γ =                                                 .
+                              ωγ ,        otherwise
+
+    In dimensional regularization, one keeps the analytic parameters λ ∈ CEG fixed (usually at
+integer values) and tries to expand the above integral in a Laurent series around a point D0 ∈ N
+of the spacetime dimension. There are essentially three different procedures to achieve this in the
+literature:
+  1. In the classical approach to dimensional regularization ([12], [41]), the D-dimensional eu-
+     clidean space is embedded into an infinite-dimensional space and the Feynman integral is
+     split into a finite-dimensional subspace containing all external momenta and its orthogonal
+     complement. Formally integrating over this infinite-dimensional complement gives an expres-
+     sion which is naturally analytic in the dimension D.
+  2. In the sector decomposition approach ([35], [20], [8]), one decomposes the integration domain
+     into cubical sectors as in section 3. The ǫ-expansion is then explicitly computed in each sector
+     by a Taylor subtraction.
+  3. In the analytic continuation approach ([29], [38])), one applies the integration by parts proce-
+     dure of section 3 to analytically continue the integrals into the domain of absolute convergence.
+   To our knowledge, there is no mathematical rigorous construction of the first approach. On the
+other hand, the second and third fit very naturally into the framework we have developed so far.
+   Let us start with the sector decomposition approach. Let Σ denote one of the smooth refinements
+of ΣPG constructed in the last section. From Corollary 3.8, we have the formula
+                                             Z                              ω
+                                 Γ(ωG ) X                         ψσ,G (xσ ) G −D/2
+             IG (λ, D, q, m) = Q                           xλσσ                 ψσ,G dxσ .
+                                  e Γ(λe ) σ  [0,1]|EG |−1        Φσ,G (xσ )
+
+The sum runs over smooth, maximal cones σ = pos(eγ | γ ∈ Iσ ) ∈ Σ(|EG | − 1), where IG ⊂
+2EG \{EG } is a collection of subgraphs and xσ = (xγ | γ ∈ Iσ ) are the associated coordinates. The
+leading monomial xλ̃σ in the sector σ is given by
+                                                 Y
+                                                       γ −1
+                                          xλσσ =   xω̃
+                                                     γ      .
+                                                   γ∈Iσ
+
+The polynomials ψσ , Φσ are obtained as
+                                  1                             −h1 (γ)−δγmm
+                 ψσ,G (xσ ) = xσ−h (γ) ψG (xσ ),   Φσ,G (xσ ) = xσ             ΦG (xσ ),
+
+and are regular and non-vanishing on the sector [0, 1]EG −1 defined by σ. Fix λ0 ∈ ZEG and D0 ∈ Z
+and let ω̃γ0 = ω̃γ |λ=λ0 ,D=D0 .
+
+
+                                                    41
+   Define the multi-index ασ ∈ NIσ by ασ (γ) = max(0, −ω̃γ0 + 1). Let
+                                                      ω
+                                            ψσ,G (xσ ) G −D/2
+                               Fσ (xσ ) =                 ψσ,G
+                                            Φσ,G (xσ )
+and consider its Taylor expansion in the xσ variables up to ασ :
+                                            X ∂ β F (0)
+                               Fσ (xσ ) =               xβσ + F̃ (xσ ).
+                                             Iσ
+                                                  β!
+                                            β∈N
+                                            βασ
+
+The integral over the polynomial part can be explicitly calculated as a rational function in ǫ:
+                    Z                                               Y
+                                        1               1                  1
+                                 xλσσ xβ ∂ β Fσ (0)dxσ = ∂ β Fσ (0)             .
+                     [0,1] EG −1        β!              β!            ω̃ γ + βγ
+                                                                    γ∈Iσ
+
+
+The integral over F̃ (xσ ) is analytic around ǫ = 0 by construction and can be expanded as a power
+series in ǫ.
+    For Feynman graphs which are not s-irreducible, it is conventional to set IG = 0 in dimensional
+regularization. On the other hand, we have seen that the sector decomposition approach still
+provides an ǫ-expansion in this case. Luckily, the the two prescriptions agree.
+Proposition 4.31. If G is not s-irreducible, then regularization by sector decomposition gives
+IG (λ, D, q, m) = 0.
+Proof. Let us first show that the sector decomposition value is independent of the choice of refine-
+ment. If Σ̃ is another smooth fan, which refines Σ (and thus ΣPG ), then every maximal cone σ ∈ Σ
+is a union of cones σi ∈ Σ̃, which only overlap in common faces. Thus the sector corresponding
+to σ is the union of the sectors corresponding to σk . By analytic continuation, the sum over the
+σk -sectors must equal the contribution of the σ-sector. Thus the value of IG computed with respect
+to Σ or Σ̃ are the same.
+    If now Σ′ is any other smooth fan which refines ΣPG , then we can always find a smooth fan which
+refines both Σ and Σ′ and which gives the same value for IG . Thus the value of IG is independent
+of the choice of Σ.
+    Suppose γ ⊂ G is a 1VI component with no external kinematics. Choose smooth refinements
+Σ1 , Σ2 of the normal fans ΣPγ , ΣPG/γ . We have the exact sequence of lattices
+
+                      0        Zeγ          NEG         NEγ ⊕ NEG/γ         0
+
+which has a (non-canonical) splitting NEG ∼    = Zeγ ⊕ NEγ ⊕ NEG/γ . Let Σ0 = ΣP 1 be the fan on Zeγ
+with maximal cones σ ± = ±R+ eγ . With this splitting, the fan Σ = Σ0 × Σ1 × Σ2 is a refinement of
+PG . Every maximal cone of Σ is of the form σ ± = (±R+ ) × σ, for σ ∈ Σ1 × Σ2 (|EG | − 2). Let xγ
+be the variable corresponding to R+ eγ ∈ Σ0 . In the variables of σ ± , the integrand takes the form
+                                                 ω
+                                       ψσ,G (xσ ) G −D/2
+                      xγ±ω̃γ −1 xλσσ                 ψσ,G = xγ±ω̃γ −1 xλσσ Fσ (xσ ),
+                                       Φσ,G (xσ )
+
+where xσ denotes the variables of the cone σ ∈ Σ1 × Σ2 . Crucially, the function Fσ (xσ ) does not
+depend on xγ .
+
+                                                   42
+              R
+   Let Iσ =   [0,1]|EG |−2
+                             xλσσ Fσ (xσ ). Then we get
+                              Q                                  X         Z
+                                  e Γ(λe )
+                                             IG (λ, D, q, m) =        Iσ           x±ω̃γ −1 dxγ
+                               Γ(ωG )                                      [0,1]
+                                                                 σ±
+                                                                 X                        
+                                                                                1     1
+                                                            =         Iσ           −           = 0.
+                                                                 σ
+                                                                               ω̃γ   ω̃γ
+
+
+
+   The sector decomposition approach has the downside, that the integrals over the different sectors
+usually lead to analytic functions which are much more complicated then their sum IG . For this
+reason, the recent articles ([38], [29]) advocate calculating the ǫ-expansion by the integration by
+parts procedure described in section 3. First let us combine Theorem 3.6 with our results on the
+Feynman polytope PG .
+Theorem 4.32. If G is s-irreducible, then the amplitude IG can be expressed as
+                                                       
+                                             Y
+                     IG (λ, D, q, m) = ωG       Γ(ω̃γ ) JG (λ, D, q, m),
+                                                          γ∈FG
+
+
+where JG is analytic for all (λ, D) ∈ CEG × C and external momenta and masses (q, m) satisfying
+the inequalities of definition 4.3.
+    We can describe the analytic continuation more concretely as follows. Let again a(γ) =
+max(0, ω̃γ0 + 1). For each γ ∈ FG , we integrate by parts a(γ)-times and obtain an expression
+of the form
+                                       X                                X
+               I(λ0 , D0 + 2ǫ, q, m) =   Lβ (ǫ)I(λβ , Dβ + 2ǫ, q, m) :=   Lβ (ǫ)Iβ (ǫ)
+                                                 β                                             β
+
+
+where (λβ , Dβ ) ∈ ZEG × Z are shifted values of the analytic parameters and dimension and Lβ (ǫ)
+are rational functions in ǫ depending polynomially on the external kinematics. By construction,
+each Iβ is now analytic in a neighbourhood of ǫ.
+Remark 4.33. The authors of [38] remark that the partial integrations are easy to calculate, but
+the number of terms in the above sum can grow very rapidly. Note that the result depends on
+the order of partial integrations in general. The proof of Theorem 3.6 suggests the following naive
+algorithm: At each stage, choose the next direction such that the Newton polytopes of the Laurent
+monomials appearing in the numerator are as small as possible.
+   It is known that the space of integrals of the above form is finite-dimensional ([33]) and the
+above sum can be considerably simplified. But reducing a given integral to a basis of so-called
+“Master” integrals is quite difficult (See e.g. [25],[11] for the classical IPB technique). We refer to
+the recent article ([5]) for a D-module approach which is quite close to our toric viewpoint.
+    We can now express the ǫ-expansion of IG in terms of the homogeneous coordinates of XΣ as
+follows.
+
+
+
+
+                                                           43
+Theorem 4.34. Let G be s-irreducible and Σ a smooth refinement of ΣPG . The functions Iβ (ǫ)
+have the series expansion
+                  ∞
+                  X                           Z                         ωG
+                                                                           β                                       
+                            h1 (G)k2 k1 +k2                λβ       ψG          −Dβ /2                         ψG
+     Iβ (ǫ) =                         ǫ                    x                   ψG      logk1 (ψG ) logk2                ΩXΣ ,
+                             k1 !k2 !         XΣ (R+ )              ΦG                                         ΦG
+                k1 ,k2 =0
+
+       β
+where ωG = ωG |λ=λβ ,D=Dβ .
+Remark 4.35. Suppose the masses and momenta are generically euclidean and rational. We can
+write the logarithmic powers appearing above as
+                                                       Z        k
+                                                                Y     h(x) − 1
+                                    logk (h(x)) =                                   dti .
+                                                        [0,1]k i=1 (h(x) − 1)ti + 1
+
+
+Inserting this relation into the above expression for Iβ shows that the coefficients of the ǫ-expansion
+are then periods in the sense of Kontsevich-Zagier ([24],[21]), a fact that was first proven by Bogner
+and Weinzierl ([9]) using sector decompositions.
+
+
+A      Polyhedral geometry
+In this appendix, we recall some concepts from polyhedral geometry. We refer the reader to [40]
+for further details and proofs.
+    Let V be a finite-dimensional real vector space and V ∗ its dual. A polyhedron is subset of V ,
+given as an intersection of finitely many affine halfspaces, i.e. it is a subset of the form
+
+                                      P = {p ∈ V | hp, ui i ≥ di , i = 1, . . . , s},
+
+where ui ∈ V ∗ and di ∈ R. The affine span HP of a polyhedron P is the smallest affine subspace
+of V containing P . Any weight vector u ∈ V ∗ defines the face
+
+                                        Fu P = {p ∈ P | hp, ui = minhp̃, ui}
+                                                                               p̃∈P
+
+We denote the set of dimension k faces of P by P (k). A face F = Fu P of codimension one is called
+a facet and a face of dimension 0 is called a vertex. Any polyhedron of dimension n then has an
+irredundant presentation
+
+                                   P = {p ∈ HP | hp, uF i ≥ dF , F ∈ P (n − 1)},
+
+where uF is the weight vector defining the facet F .
+   A polyhedral cone is a polyhedron of the form
+
+                                                  σ = {p ∈ V | hp, ui i ≥ 0}.
+
+Alternatively, we can describe σ as the positive hull of finitely many vectors v1 , . . . , vr ∈ V :
+                                                                 X
+                       σ = pos(v1 , . . . , vr ) := {p ∈ V | p =   λi vi , λi ≥ 0}.
+
+
+                                                                44
+A polyhedral cone is called strongly convex, if it does not contain a subspace of positive dimension,
+i.e. if 0 ∈ σ is a vertex. Every polyhedral cone σ ⊂ V defines a dual cone
+
+                             σ ∨ = {u ∈ V ∗ | hv, ui ≥ 0 for all v ∈ σ}.
+
+A bounded polyhedron P ⊂ V is called a polytope. Every polytope can be described as the convex
+hull of its vertices v ∈ P (0), i.e.
+                                          X                X
+                         P = {p ∈ V | p =    λv v, λv ≥ 0,      λv = 1}.
+                                         v∈P (0)               v∈P (0)
+
+For two polytopes P, Q ⊂ V , their Minkowski sum is defined as
+
+                        P + Q = {p ∈ V | p = p1 + p2 for p1 ∈ P, p2 ∈ Q}.
+
+For r ∈ (0, ∞), we also define the scaled polytope
+
+                                      rP = {rp ∈ V | p ∈ P }.
+
+
+References
+ [1] A. Adem, J. Leida, and Y. Ruan. Orbifolds and Stringy Topology. Cambridge University Press,
+     2007.
+ [2] M. Aguiar and F. Ardila. Hopf monoids and generalized permutahedra. ArXiv e-prints, Sept.
+     2017, 1709.07504.
+ [3] C. Berkesch, J. Forsgard, and M. Passare. Euler-mellin integrals and a-hypergeometric func-
+     tions. The Michigan Mathematical Journal, 63(1):101–123, Mar 2014.
+ [4] T. Binoth and G. Heinrich. An automatized algorithm to compute infrared divergent multi-loop
+     integrals. Nuclear Physics B, 585(3):741–759, Oct 2000.
+ [5] T. Bitoun, C. Bogner, R. P. Klausen, and E. Panzer. Feynman integral relations from para-
+     metric annihilators. ArXiv e-prints, Dec. 2017, 1712.09215.
+ [6] S. Bloch, H. Esnault, and D. Kreimer. On motives associated to graph polynomials. Commu-
+     nications in Mathematical Physics, 267(1):181–225, May 2006.
+ [7] S. Bloch and D. Kreimer. Mixed hodge structures and renormalization in physics. Communi-
+     cations in Number Theory and Physics, 2(4):637–718, 2008.
+ [8] C. Bogner and S. Weinzierl. Resolution of singularities for multi-loop integrals. Computer
+     Physics Communications, 178(8):596–610, Apr 2008.
+ [9] C. Bogner and S. Weinzierl. Periods and feynman integrals. Journal of Mathematical Physics,
+     50(4):042302, Apr 2009.
+[10] F. Brown. Feynman amplitudes, coaction principle, and cosmic galois group. Communications
+     in Number Theory and Physics, 11(3):453–556, 2017.
+
+
+                                                   45
+[11] K. Chetyrkin and F. Tkachov. Integration by parts: The algorithm to calculate β-functions in
+     4 loops. Nuclear Physics B, 192(1):159–204, Nov 1981.
+[12] J. C. Collins. Renormalization. Cambridge University Press, 1984.
+[13] D. A. Cox, J. B. Little, and H. K. Schenck. Toric varieties, volume 124 of Graduate Studies
+     in Mathematics. American Mathematical Society, Providence, RI, 2011.
+[14] C. De Concini and C. Procesi. Wonderful models of subspace arrangements. Selecta Mathe-
+     matica, 1(3):459–494, Dec 1995.
+[15] P. Deligne, P. Etingof, D. S. Freed, L. C. Jeffrey, D. Kazhdan, J. W. Morgan, D. R. Morrison,
+     and E. Witten, editors. Quantum fields and strings: a course for mathematicians. Vol. 1, 2.
+     American Mathematical Society, Providence, RI, 1999.
+[16] E.-M. Feichtner and D. N. Kozlov. Incidence combinatorics of resolutions. Selecta Mathematica,
+     10(1):37–60, May 2004.
+[17] E. M. Feichtner and S. Yuzvinsky. Chow rings of toric varieties defined by atomic lattices.
+     Inventiones Mathematicae, 155(3):515–536, Mar 2004.
+[18] S. Fujishige. Submodular functions and optimization, volume 47 of Annals of Discrete Mathe-
+     matics. North-Holland Publishing Co., Amsterdam, 1991.
+[19] I. Gelfand, R. Goresky, R. MacPherson, and V. Serganova. Combinatorial geometries, convex
+     polyhedra, and schubert cells. Advances in Mathematics, 63(3):301–316, Mar 1987.
+[20] G. Heinrich.    Sector decomposition.        International Journal of Modern Physics A,
+     23(10):1457–1486, Apr 2008.
+[21] A. Huber and S. Müller-Stach. Periods and Nori motives, volume 65 of Ergebnisse der Math-
+     ematik und ihrer Grenzgebiete. [Results in Mathematics and Related Areas.]. Springer, 2017.
+[22] C. Itzykson and J. Zuber. Quantum Field Theory. International series in pure and applied
+     physics. McGraw-Hill, 1985.
+[23] T. Kaneko and T. Ueda. A geometric method of sector decomposition. Computer Physics
+     Communications, 181(8):1352–1361, Aug 2010.
+[24] M. Kontsevich and D. Zagier. Periods. Mathematics Unlimited — 2001 and Beyond, page
+     771–808, 2001.
+[25] S. Laporta. High precision calculation of multi-loop feynman integrals by difference equations.
+     International Journal of Modern Physics A, 15(32):5087–5159, Dec 2000.
+[26] L. Nilsson and M. Passare. Mellin transforms of multivariate rational functions. Journal of
+     Geometric Analysis, 23(1):24–46, May 2011.
+[27] T. Oda. Convex bodies and algebraic geometry, volume 15 of Ergebnisse der Mathematik und
+     ihrer Grenzgebiete (3) [Results in Mathematics and Related Areas (3)]. Springer-Verlag, Berlin,
+     1988.
+
+
+
+                                                46
+[28] J. G. Oxley. Matroid theory, volume 3. Oxford University Press, USA, 2006.
+[29] E. Panzer. Feynman integrals and hyperlogarithms. PhD thesis, Humboldt U., Berlin, Inst.
+     Math., 2015, 1506.07243.
+[30] A. Postnikov. Permutohedra, associahedra, and beyond. International Mathematics Research
+     Notices, 2009(6):1026–1106, 2009.
+[31] A. Postnikov, V. Reiner, and L. Williams. Faces of Generalized Permutohedra. ArXiv Mathe-
+     matics e-prints, Sept. 2006, math/0609184.
+[32] A. Smirnov and V. Smirnov. Hepp and speer sectors within modern strategies of sector de-
+     composition. Journal of High Energy Physics, 2009(05):004–004, May 2009.
+[33] A. V. Smirnov and A. V. Petukhov. The number of master integrals is finite. Letters in
+     Mathematical Physics, 97(1):37–44, Nov 2010.
+[34] V. A. Smirnov. Analytic tools for feynman integrals. Springer Tracts in Modern Physics, 2012.
+[35] V. A. Smirnov and K. G. Chetyrkin. Dimensional regularization and infrared divergences.
+     Theoretical and Mathematical Physics, 56(2):770–776, Aug 1983.
+[36] E. R. Speer. Ultraviolet and Infrared Singularity Structure of Generic Feynman Amplitudes.
+     Ann. Inst. H. Poincare Phys. Theor., 23:1–21, 1975.
+[37] O. V. Tarasov. Connection between feynman integrals having different values of the space-time
+     dimension. Physical Review D, 54(10):6479–6490, Nov 1996.
+[38] A. von Manteuffel, E. Panzer, and R. M. Schabinger. A quasi-finite basis for multi-loop feynman
+     integrals. Journal of High Energy Physics, 2015(2), Feb 2015.
+[39] S. Weinberg. High-energy behavior in quantum field theory. Physical Review, 118(3):838–849,
+     May 1960.
+[40] G. M. Ziegler. Lectures on polytopes. Graduate Texts in Mathematics, 1995.
+[41] G. ’t Hooft and M. Veltman. Regularization and renormalization of gauge fields. Nuclear
+     Physics B, 44(1):189–213, Jul 1972.
+
+
+
+
+                                                47
+

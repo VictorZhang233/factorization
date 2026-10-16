@@ -1,0 +1,60 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 ax/.style={lcaxis,gray!60!black},
+  t3 dim/.style={draw=gray!55!black,line width=0.5pt,{Stealth[length=3.2pt,width=2.8pt]}-{Stealth[length=3.2pt,width=2.8pt]}},
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ---------------- (a) SIDIS: future-pointing staple ----------------
+  \begin{scope}
+    \coordinate (O) at (0,0);     \coordinate (w) at (1.5,1.5);
+    \coordinate (C1) at (4.3,0);  \coordinate (C2) at (4.3,1.5);
+    \draw[t3 ax] (-0.7,0) -- (5.3,0) node[below left=2pt and -4pt] {$w^-$};
+    \draw[t3 ax] (0,-0.6) -- (0,2.4) node[left] {$w_{\mathrm T}$};
+    \draw[t3 dim] (1.5,0.05) -- node[t3 lab,right=1pt] {$b_{\mathrm T}$} (1.5,1.36);
+    \draw[wilson plain] (O) -- (C1) -- (C2) -- (w);
+    \path[t3 warrow=0.6] (O) -- (C1);
+    \path[t3 warrow=0.5] (C1) -- (C2);
+    \path[t3 warrow=0.45] (C2) -- (w);
+    \node[opvertex] at (O) {}; \node[opvertex] at (w) {};
+    \node[t3 lab,below right=1pt] at (O) {$\psi(0)$};
+    \node[t3 lab,above left=1pt and -3pt] at (w) {$\bar\psi(w)$};
+    \node[t3 note,below=3pt] at (2.95,0) {$W[\infty n,0]$};
+    \node[t3 note,above=3pt] at (3.05,1.5) {$W[w,w+\infty n]$};
+    \node[t3 note,right=3pt] at (4.3,0.75) {$W_{\mathrm T}$};
+    \node[t3 note,below=3pt] at (4.3,0) {$+\infty$};
+    \node[t3 lab] at (2.3,-1.25) {(a)\ SIDIS：未来指向};
+  \end{scope}
+  % ---------------- (b) Drell--Yan: past-pointing staple ----------------
+  \begin{scope}[xshift=10.9cm]
+    \coordinate (O) at (0,0);      \coordinate (w) at (1.5,1.5);
+    \coordinate (C1) at (-3.4,0);  \coordinate (C2) at (-3.4,1.5);
+    \draw[t3 ax] (-4.3,0) -- (2.6,0) node[below left=2pt and -4pt] {$w^-$};
+    \draw[t3 ax] (0,-0.6) -- (0,2.4) node[left] {$w_{\mathrm T}$};
+    \draw[t3 dim] (1.5,0.05) -- node[t3 lab,right=1pt] {$b_{\mathrm T}$} (1.5,1.36);
+    \draw[wilson plain] (O) -- (C1) -- (C2) -- (w);
+    \path[t3 warrow=0.6] (O) -- (C1);
+    \path[t3 warrow=0.5] (C1) -- (C2);
+    \path[t3 warrow=0.3] (C2) -- (w);
+    \node[opvertex] at (O) {}; \node[opvertex] at (w) {};
+    \node[t3 lab,below right=1pt] at (O) {$\psi(0)$};
+    \node[t3 lab,above=2pt] at (w) {$\bar\psi(w)$};
+    \node[t3 note,below=3pt] at (-1.75,0) {$W[-\infty n,0]$};
+    \node[t3 note,above=3pt] at (-1.75,1.5) {$W[w,w-\infty n]$};
+    \node[t3 note,left=3pt] at (-3.4,0.75) {$W_{\mathrm T}$};
+    \node[t3 note,below=3pt] at (-3.4,0) {$-\infty$};
+    \node[t3 lab] at (-0.9,-1.25) {(b)\ Drell--Yan：过去指向};
+  \end{scope}
+\end{tikzpicture}
+\caption{TMD 夸克分布算符中的“订书钉”形 Wilson 线，画在 $(w^-,w_{\mathrm T})$ 平面内（$w^+=0$）。未减除的 TMD 关联函数为
+$\tilde f^{\,\mathrm{unsub}}_{q/H}(x,b_{\mathrm T})=\int\frac{\dd w^-}{4\pi}\,\ee^{-\ii xP^+w^-}\langle P|\,\bar\psi(w)\gamma^+\,W_{\sqsupset}[w,0]\,\psi(0)\,|P\rangle$，
+$w=(0^+,w^-,b_{\mathrm T})$（颜色求和、自旋平均），$n$ 为满足 $n\cdot v=v^+$ 的光型矢量。
+(a)~SIDIS：$W_{\sqsupset}[w,0]=W[w,w+\infty n]\,W_{\mathrm T}\,W[\infty n,0]$，路径由 $0$ 沿 $n$ 走到 $w^-=+\infty$，
+经该处的横向连接 $W_{\mathrm T}=W[w+\infty n,\infty n]$，再沿 $-n$ 回到 $w$；它来自被击出夸克与靶残余之间的末态相互作用。
+(b)~Drell--Yan：路径改经 $w^-=-\infty$，$W_{\sqsupset}[w,0]=W[w,w-\infty n]\,W_{\mathrm T}\,W[-\infty n,0]$；它来自强子 $B$ 的入射反夸克与强子 $A$ 残余之间的初态相互作用（见\cref{fig:sidis-dy-links}）。
+双线为 Wilson 线，箭头为路径方向（$W[b,a]$ 由 $a$ 指向 $b$），与被本征化部分子的费米子数（色）流向一致：(a) 中为出射夸克，(b) 中为入射反夸克（其费米子数箭头逆着动量，指向过去）。
+在共变规范中无穷远处的横向连接可以略去，在光锥规范中则不可缺少。$b_{\mathrm T}=0$ 时两种路径都化为共线 PDF 中的直线 $W[w,0]$（往返部分相消）；对光型的 $n$，算符含快度发散（见正文）。}
+\label{fig:tmd-staple}
+\end{figure}

@@ -1,0 +1,35 @@
+=== SS1: exact residue derivation of the S-S Glauber kernel ===
+PASS  SS1a pole half-planes: A-spectator UHP, a LHP (k^- trapped); B-spectator LHP, b UHP (k^+ trapped)   [k^- poles c_A + I*epsilon/(2*p_A) | d_A - I*epsilon/(2*L_A) ; k^+ poles c_B - I*epsilon/(2*p_B) | d_B + I*epsilon/(2*L_B)]
+PASS  SS1b k^- residue: int dk^-/2pi [i e_A 2p^+][i/D_sA][i/D_a] = (i e_A) x [tree A-factor at on-shell spectator p_A'-k]   [ratio = I*e_A]
+PASS  SS1c k^+ residue: int dk^+/2pi [i e_B 2p^-][i/D_sB][i/D_b] = (i e_B) x [tree B-factor at on-shell spectator p_B'+k]   [ratio = I*e_B]
+PASS  SS1d S-S kernel V(kT) = -i e_A e_B/(kT^2+mg^2): M1 = int d^2kT/(2pi)^2 V(kT) M0(p_A'-kT, p_B'+kT)   [V = -I*e_A*e_B/(kT2 + mg2)]
+PASS  SS1e closing k^- in the LHP (active-line pole) gives the same value (integrand ~ 1/k^2)
+
+=== SS2: numerical finite-eps check of the k^- integral ===
+PASS  SS2 numerical k^- integral (eps=1e-3) = (i e_A) x i/D_a(on-shell spectator)   [num=-0.692040+0.000919i exact=-0.692040+0.000938i]
+
+=== SS3: impact-parameter space, exponentiation, cancellation after the Delta integral ===
+PASS  SS3a chi(b) = -(e_A e_B/2 pi) K0(mg b) at b=0.3   [chi=-0.3835359754]
+PASS  SS3a chi(b) = -(e_A e_B/2 pi) K0(mg b) at b=1.0   [chi=-0.1608704296]
+PASS  SS3a chi(b) = -(e_A e_B/2 pi) K0(mg b) at b=2.5   [chi=-0.0442366758]
+PASS  SS3b mg->0: chi(b) = (e_A e_B/2pi)[ln(mg b/2)+gamma_E] + O(mg^2 b^2) (IR-divergent Coulomb phase), mg=0.001
+PASS  SS3b mg->0: chi(b) = (e_A e_B/2pi)[ln(mg b/2)+gamma_E] + O(mg^2 b^2) (IR-divergent Coulomb phase), mg=1e-05
+PASS  SS3c all-orders abelian phase: int d^2Delta |M|^2 = int d^2Delta |M0|^2 (Parseval, |e^{i chi}|=1)   [rel diff 1.8e-16]
+PASS  SS3d but |M(Delta)|^2 != |M0(Delta)|^2 point by point (redistribution in Delta)   [max rel change 0.033]
+PASS  SS3e one-exchange cut graphs: int d^2Delta 2Re[M1 M0^*] = 0 (the two cuts cancel only after the Delta integral)   [|int| = 0.0e+00]
+
+=== SS4: non-abelian S-S exchange: colour-matrix phase ===
+PASS  SS4a T_A.T_B is Hermitian (so U = exp(i chi T_A.T_B) is unitary)
+PASS  SS4b colour-traced probability Tr[U rho U^+] = Tr rho for every chi(b): the S-S cancellation survives (Delta-integrated, colour-summed)
+PASS  SS4c [T_A.T_B, T_A.T_j] != 0: the Glauber phase does not commute with soft exchanges involving a third coloured line   [||[.,.]|| = 1.732]
+PASS  SS4d O(chi^2) cut identity for a Hermitian colour matrix: |i c|^2 + 2Re(-c^2/2) = 0
+PASS  SS4e a colour projection not commuting with T_A.T_B is changed by the Glauber phase (0.1324 -> 0.0942)
+
+=== SS5: active(B)-spectator(A) exchange in DY: k^+ not trapped, eikonal approximation on the deformed contour ===
+PASS  SS5a k^-=+0.1: deforming k^+ into the LHP (away from the initial-state pole of b) reproduces the real-axis value   [|diff|/|2pi Res| = 1.4e-12]
+PASS  SS5b k^-=+0.1: on the deformed contour the eikonal line 1/(-2 l_b^- k^+ + i0) (past-pointing W in f_A) is accurate   [rel err 1.7e-03]
+PASS  SS5a k^-=-0.1: deforming k^+ into the LHP (away from the initial-state pole of b) reproduces the real-axis value   [|diff|/|2pi Res| = 1.4e-12]
+PASS  SS5b k^-=-0.1: on the deformed contour the eikonal line 1/(-2 l_b^- k^+ + i0) (past-pointing W in f_A) is accurate   [rel err 5.5e-11]
+
+SUMMARY: 23/23 PASS
+python3 -I $s.py  14.28s user 0.64s system 95% cpu 15.572 total

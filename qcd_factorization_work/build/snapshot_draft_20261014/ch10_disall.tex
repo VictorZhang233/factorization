@@ -1,0 +1,903 @@
+% =====================================================================
+%  ch10_disall.tex —— DIS 的全阶动量空间证明、重夸克与核靶（作者 W12）
+%  所有不在 VERIFIED_FORMULAS_v2 中的公式与非平凡步骤均由
+%  writing/work/W12/ 下的脚本重新推导（日志见 writing/work/W12/logs/）。
+% =====================================================================
+\chapter{DIS 的全阶动量空间证明、重夸克与核靶}\label{ch:disall}
+
+深度非弹散射（deep inelastic scattering，DIS）是最简单的需要部分子分布的硬过程：初态只有一个强子，末态被完全求和。
+\cref{ch:dis}用算符乘积展开证明了结构函数\emph{矩}的因子化（\cref{thm:dis-moments}，以 OPE 为前提而严格），\cref{ch:pdf}把它翻译为 $x$ 空间中扭度 2 部分的因子化（\cref{thm:pdf-dis-xspace}，同一等级）；
+两者给出的都是矩或分布意义下的陈述，对固定 $x$ 的逐点余项不提供控制。本章用\cref{thm:method-template}（全阶论证，[A]）给出 DIS 共线因子化的动量空间证明，
+结论是固定 $0<x<1$ 处的逐点陈述（\cref{thm:disall-factorization}，\tagA）。此外推导 $\order{\as}$ 系数函数与 DIS 方案，并讨论重夸克质量与核靶；各陈述的等级与前提见下框，全阶论证的瓶颈逐一以假设的标签列出。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:disall-nlo,prop:disall-scale,prop:disall-dis-scheme}（\tagR，$R_{\mathrm{PT}}$）；\cref{cor:disall-consistency}（\tagR，$R_{\mathrm{OPE}}$）；
+\cref{prop:disall-two-routes}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-collins,asm:appN-contour,asm:appN-envelope,asm:appN-separation,asm:appN-cutsum}）；
+\cref{prop:disall-factorized-subtraction}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-ward-product,asm:appN-uv}）；
+\cref{thm:disall-renorm-compat}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-multren,asm:appN-ir-regulator,asm:appN-contour}，内容等级 [C]）。\par
+\textbf{给出全阶论证：}\cref{thm:disall-factorization}（\tagA；瓶颈\cref{asm:appN-collins,asm:appN-ward-product,asm:appN-cutsum}）；
+\cref{lem:disall-fsi,prop:disall-regions,prop:disall-h2,prop:disall-h3h4,prop:disall-h5,thm:disall-heavy,prop:disall-nuclear}（\tagA）。\par
+\textbf{没有证明：}$x\to1$ 处余项的一致性（阈值区）；非定域算符的 BRST 分类（具名缺口\cref{asm:appN-brst-nonlocal}，经由\cref{lem:method-ward-multi}进入）；
+积分范数形式的减除估计（\cref{asm:appN-collins}）；与重整化相容的部分子靶红外正规化（\cref{asm:appN-ir-regulator}）。
+\end{tcolorbox}
+
+\paragraph{本章的思路。}
+被证明因子化的首先是非物理区 $|\omega|<1$ 中的前向 Compton 振幅 $T^{\mu\nu}$（\cref{def:dis-compton}），结构函数则是它沿 $\omega\ge1$ 的不连续部分；
+余项在实线段上的估计不能延拓为不连续部分的估计，所以要区分“矩”与“$x$ 空间”两条途径（\cref{sec:disall-regions}），这是 DIS 证明的特殊之处。
+记号沿用\cref{ch:method}：区域 $R$、近似子 $T_R$、减除项 $C_R\Gamma$（\cref{def:method-subtraction}）、条件 (CS1)–(CS3)（\cref{def:method-collins-conditions}）、积分范数意义下的幂次压低 $\mathfrak S(U)$（\cref{def:method-power-suppressed}）；
+对部分子靶，$\lambda$ 是红外正规化参数与 $Q$ 之比（例如靶的离壳度 $m/Q$），$L\equiv\ln(1/\lambda)$。
+
+% ---------------------------------------------------------------------
+\section{Breit 系与领头区域；两条途径}\label{sec:disall-regions}
+
+先固定参考系与 $D$ 维投影算符（$W^{\mu\nu}$、$T^{\mu\nu}$ 见\cref{def:dis-kinematics,def:dis-compton}）。
+
+\begin{definition}[Breit 系与投影算符]\label{def:disall-breit}
+设靶强子动量 $P$（质量 $M$）沿 $+z$ 方向，光锥分量记作 $(v^+,v^-,\mathbf v_T)$。取
+\begin{equation}\label{eq:disall-breit}
+P=\Big(P^+,\frac{M^2}{2P^+},\mathbf 0_T\Big),\qquad q=\Big(-x_NP^+,\frac{Q^2}{2x_NP^+},\mathbf 0_T\Big),
+\end{equation}
+其中 $x_N\equiv2x/(1+\rho)$，$\rho\equiv\sqrt{1+4x^2M^2/Q^2}$。于是 $q^2=-Q^2$ 与 $2P\cdot q=Q^2/x$ 精确成立，$x_N=x-x^3M^2/Q^2+\order{M^4/Q^4}$（Nachtmann 变量）。$P^+$ 可任意选取（沿 $z$ 轴的推动）；$P^+=Q/(\sqrt2\,x_N)$ 时 $q=(0,\mathbf 0_T,-Q)$（笛卡儿分量），即 Breit（“砖墙”）系本义。
+在 $D=4-2\varepsilon$ 维中以同样的张量分解定义 $W^{\mu\nu}$，则对无质量靶
+\begin{equation}\label{eq:disall-proj}
+\frac{F_L}{x}=\frac{8x^2}{Q^2}\,P_\mu P_\nu W^{\mu\nu},\qquad
+\frac{F_2}{x}=\frac1{1-\varepsilon}\Big[-g_{\mu\nu}+(3-2\varepsilon)\frac{4x^2}{Q^2}P_\mu P_\nu\Big]W^{\mu\nu};   % VF-DIS-2
+\end{equation}
+对有质量靶，以 $F_L\equiv\rho^2F_2-2xF_1$ 定义纵向结构函数，
+\begin{equation}\label{eq:disall-proj-massive}
+\frac{F_L}{x}=\frac{8x^2}{Q^2\rho^2}\,P_\mu P_\nu W^{\mu\nu},\qquad
+\frac{\rho^2F_2}{x}=\frac{2(-g_{\mu\nu}W^{\mu\nu})+(D-1)F_L/x}{D-2}.   % VF-DIS-2
+\end{equation}
+对动量为 $p$ 的部分子靶，以 $p$ 代替 $P$、以 $z\equiv Q^2/(2p\cdot q)$ 代替 $x$，得到部分子结构函数 $\hat F_{2,L}$。
+\uses{def:dis-kinematics}
+\end{definition}
+
+\noindent
+投影算符来自直接缩并：记 $\tilde P=P-(P\cdot q/q^2)q$，$\tilde P^2=Q^2\rho^2/(4x^2)$，则 $-g_{\mu\nu}W^{\mu\nu}=(D-1)F_1-\tilde P^2F_2/(P\cdot q)$，
+$P_\mu P_\nu W^{\mu\nu}=\frac{Q^2\rho^2}{8x^3}(\rho^2F_2-2xF_1)$。常用的 $q^+=-xP^+$ 给出 $2P\cdot q=Q^2/x-xM^2$，只在领头幂次正确。对无质量靶，被击夸克的虚度为
+\begin{equation}\label{eq:disall-current-virtuality}
+(\xi P+q)^2=2\xi P\cdot q-Q^2=Q^2(\xi-x)/x;
+\end{equation}
+领头阶 $\xi=x$，被击夸克沿 PDF Wilson 线的方向 $n_B=(0^+,1^-,\mathbf 0_T)$ 飞出。对固定 $x<1$ 的单个割图，领头钳夹面由靶共线子图、硬子图、沿 $n_B$ 的“流喷注”与软子图组成（\cref{fig:reduced-dis}）；
+在非物理区的\emph{前向振幅}中后两者都不出现。
+
+\paragraph{非物理区中的领头区域。}
+对 $|\omega|<1$ 取参考系 $q^+=0$、$|\mathbf q_T|=Q$，于是 $2P\cdot q=2P^+q^-=\omega Q^2$，这一参数化对复 $\omega$ 也成立。
+设 $k=\xi P+\kappa$ 是从靶共线子图流入硬部分的动量，$\kappa^+=0$，$|\boldsymbol\kappa_T|\lesssim\lambda Q$，$|\kappa^-|\lesssim\lambda^2Q^2/P^+$；由 $\kappa\cdot q=-\boldsymbol\kappa_T\cdot\mathbf q_T$，任何携带 $q$ 的线满足
+\begin{equation}\label{eq:disall-unphysical-offshell}
+(k+q)^2=Q^2(\xi\omega-1)+2\kappa\cdot q+k^2=Q^2(\xi\omega-1)+\order{\lambda Q^2},\qquad |\xi\omega-1|\ge1-|\omega|\quad(|\xi|\le1).
+\end{equation}
+这里 $|\xi|\le1$，因为份额 $|\xi|>1$ 时靶共线子图的 $k^-$ 极点全在实轴同一侧，不形成钳夹（与\cref{thm:pdf-support-pt}同一论证）。所以对 $|\omega|\le\rho<1$，携带 $q$ 的线离壳至少 $Q^2(1-\rho)$，在每个区域中都是硬线，附着在它们上的软线随之进入硬子图（附着在硬子图上的软线被幂次压低，\cref{ch:ir}），
+只附着在靶共线子图上的软线属于共线子图内部。领头区域因此只由靶共线子图 $J$ 与硬子图 $H$ 组成，二者由两条物理极化的部分子外加任意多条标量（纵向）极化的 K 胶子相连；
+K 胶子对 $H$ 的附着之和经 Ward 恒等式成为 PDF 的 Wilson 线（一般情形是\cref{lem:method-ward-multi}的内容，全阶论证，[A]），其种子见\cref{fig:disall-seed}。
+
+%%% BEGIN fig:disall-seed
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb op/.style={font=\large},
+  fb hregion/.style={hard blob,fill=gray!22,draw=gray!60!black,line width=0.6pt,dash pattern=on 2.5pt off 1.5pt}]
+  % ======================= left: one K gluon attached to the hard part =======================
+  \begin{scope}
+    \coordinate (V) at (-0.4,1.55);       % photon vertex
+    \coordinate (G) at (1.0,2.3);         % attachment of the K gluon on the struck quark
+    \coordinate (E) at (2.05,2.86);       % outgoing struck quark
+    \begin{scope}[on background layer]
+      \draw[fb hregion,rotate around={28.2:(0.3,1.92)}] (0.3,1.92) ellipse[x radius=1.12,y radius=0.42];
+    \end{scope}
+    \node[jet blob,ellipse,minimum width=1.9cm,minimum height=0.7cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.45,0) {$A$};
+    \draw[photon] (-1.75,2.3) -- (V);
+    \draw[quark] (-0.4,0.34) -- (V);
+    \draw[quark] (V) -- (G);
+    \draw[quark] (G) -- (E);
+    \draw[longit] (0.6,0.33) to[out=72,in=-108] (G);
+    \fill[blue!60!black] ($(G)+(-0.06,-0.19)$) circle[radius=1.7pt];
+    \node[vertex] at (V) {}; \node[vertex] at (G) {};
+    \path[mom'={$q$},mom sep=0.24cm,mom length=0.45cm] (-1.75,2.3) -- (V);
+    \path[mom={$l$},mom sep=0.24cm,mom length=0.45cm] (-0.4,0.34) -- (V);
+    \path[mom={$p'-k$},mom sep=0.3cm,mom length=0.42cm,mom pos=0.42] (V) -- (G);
+    \path[mom={$p'$},mom sep=0.24cm,mom length=0.42cm] (G) -- (E);
+    \path[mom'={$k$},mom sep=0.26cm,mom length=0.45cm,mom pos=0.45] (0.6,0.33) to[out=72,in=-108] (G);
+    \node[fb lab,text=gray!35!black] at ($(G)+(0.42,-0.36)$) {$H$};
+    \node[fb lab,anchor=north] at (0.08,-0.42) {$k_\mu H^\mu_a=g\,t^a\,H_0$};
+    \node[font=\large,anchor=east] at (-1.75,1.2) {$\displaystyle\sum_{H\text{ 内的附着}}$};
+  \end{scope}
+  \node[fb op] at (2.75,1.4) {$=$};
+  % ======================= middle: H_0 =======================
+  \begin{scope}[xshift=4.55cm]
+    \coordinate (V) at (-0.25,1.65);
+    \draw[photon] (-1.3,2.35) -- (V);
+    \draw[quark] (-0.25,0.6) -- (V);
+    \draw[quark] (V) -- (1.15,2.4);
+    \node[vertex] at (V) {};
+    \path[mom={$l+k$},mom sep=0.24cm,mom length=0.45cm] (-0.25,0.6) -- (V);
+    \path[mom={$p'$},mom sep=0.24cm,mom length=0.42cm] (V) -- (1.15,2.4);
+    \node[fb lab] at (0.6,1.42) {$H_0$};
+  \end{scope}
+  \node[fb op] at (6.15,1.4) {$\times$};
+  % ======================= right: the Wilson-line vertex of the PDF operator =======================
+  \begin{scope}[xshift=7.75cm]
+    \coordinate (O) at (-0.35,1.65);     % operator vertex psi(0)
+    \coordinate (W) at (1.75,2.8);       % towards infinity along n_B
+    \coordinate (Y) at ($(O)!0.5!(W)$);
+    \node[jet blob,ellipse,minimum width=1.9cm,minimum height=0.7cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.45,0) {$A$};
+    \draw[quark] (-0.35,0.34) -- (O);
+    \draw[wilson=0.78] (O) -- (W);
+    \node[opvertex] at (O) {};
+    \draw[longit] (0.55,0.33) to[out=70,in=-110] (Y);
+    \node[vertex] at (Y) {};
+    \path[mom'={$k$},mom sep=0.26cm,mom length=0.45cm,mom pos=0.45] (0.55,0.33) to[out=70,in=-110] (Y);
+    \node[fb lab,anchor=east] at ($(O)+(-0.12,0.05)$) {$\psi(0)$};
+    \node[fb lab,anchor=west] at (W) {$\infty n_B$};
+    \node[fb lab,anchor=north west] at ($(Y)+(0.12,-0.06)$) {$\ii g\,t^a n_B^\alpha$};
+    \node[fb lab,anchor=south east] at ($($(O)!0.5!(Y)$)+(-0.02,0.12)$) {$\dfrac{-\ii}{n_B\cdot k-\ii0}$};
+    \node[fb lab,anchor=north] at (0.4,-0.42) {$W^{(1)}[\infty n_B,0]$：未来指向};
+  \end{scope}
+  % summary formula
+  \node[font=\footnotesize,anchor=north] at (4.4,-1.15) {$H_\mu\,\dfrac{k^\mu n_B^\alpha}{n_B\cdot k-\ii0}=\Big[\ii g\,t^an_B^\alpha\,\dfrac{-\ii}{n_B\cdot k-\ii0}\Big]H_0=W^{(1)}[\infty n_B,0]\,H_0$};
+\end{tikzpicture}
+\caption{DIS 中 PDF Wilson 线的种子（VF-WL-8，\cref{prop:method-ward-tree}）：一个来自靶共线子图 $A$ 的 K 胶子（蓝色，流入硬部分的动量为 $k$，圆点标出带标量极化 $k_\mu$ 的硬端）对硬部分 $H$ 的所有附着之和（领头阶即附着在末态被击夸克 $p'$ 上），
+经 Ward 恒等式 $k_\mu H^\mu_a=g\,t^aH_0$ 化为去掉该胶子、入射动量为 $l+k$ 的硬部分 $H_0$，乘以夸克场 $\psi(0)$ 处出发、沿 $n_B$ 的未来指向 Wilson 线 $W^{(1)}[\infty n_B,0]$ 的单胶子项（双线箭头为路径方向 $0\to\infty n_B$）。
+程函传播子中的 $-\ii0$ 继承自被替代的被击夸克传播子：$(p'-k)^2+\ii0\simeq-2p'^-k^++\ii0$ 的极点位于 $k^+$ 上半平面；Drell--Yan 中同样的附着落在入射反夸克上，给出 $+\ii0$。}
+\label{fig:disall-seed}
+\end{figure}
+%%% END fig:disall-seed
+
+\begin{proposition}[从非物理区前向振幅到矩与 $x$ 空间的两条途径 \tagR]\label{prop:disall-two-routes}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-collins}（在复圆盘 $|\omega|\le\rho<1$ 上一致）、\cref{asm:appN-contour}、\cref{asm:appN-envelope}、\cref{asm:appN-separation}、\cref{asm:appN-cutsum}（用于 (c)）。（本命题只涉及部分子态。）
+设部分子靶 $j$ 带有红外正规化（参数 $\lambda$）。在 $\as$ 的固定阶，对前向振幅 $T^{\mu\nu}(\omega)$ 的全部领头幂次图按\cref{def:method-subtraction}构造减除项 $C_RT^{\mu\nu}$，
+记余项 $r^{\mu\nu}\equiv T^{\mu\nu}-\sum_RC_RT^{\mu\nu}$，$r_a$（$a=1,2$）为其不变振幅（以\cref{def:disall-breit}的投影提取）。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 对 $|\omega|<1$，$T^{\mu\nu}$ 的领头区域只含靶共线模式与硬模式：没有末态，携带 $q$ 的线离壳 $\order{Q^2}$，只附着在靶共线子图上的软线属于共线子图。
+因此只用到硬—共线近似子，（取交封闭的）区域集合只涉及一个共线方向；并且对每个实数 $\omega\in[-\rho,\rho]$，$\rho<1$，有 $r^{\mu\nu}(\omega)=\order{\lambda^aL^K}$，
+$a>0$ 与 $K$ 不依赖于 $\lambda$，常数对 $\varepsilon\in(0,\varepsilon_0]$ 一致。
+\item 若 (a) 的界对复圆盘 $|\omega|\le\rho$ 一致成立，则每个矩都以 $\order{\rho^{-n}\lambda^aL^K}$ 的余项因子化：记 $M^{(2)}_n=\int_0^1\dd x\,x^{n-2}F_2$，
+$M^{(1)}_n=\int_0^1\dd x\,x^{n-1}F_1$（$n$ 为偶数），$[\omega^k]f$ 为 $f$ 在 $\omega=0$ 处的第 $k$ 个 Taylor 系数，则
+\begin{equation}\label{eq:disall-cauchy}
+\begin{gathered}
+\Big|M^{(2)}_n-\tfrac14[\omega^{n-1}]\textstyle\sum_RC_RT_2\Big|\le\tfrac14\rho^{1-n}\max_{|\omega|=\rho}|r_2(\omega)|,\\
+\Big|M^{(1)}_n-\tfrac14[\omega^{n}]\textstyle\sum_RC_RT_1\Big|\le\tfrac14\rho^{-n}\max_{|\omega|=\rho}|r_1(\omega)|.
+\end{gathered}
+\end{equation}
+仅在实线段上的界不给出 Taylor 系数的界：复圆盘上的一致性是额外的输入。
+\item 实线段上的界不控制不连续部分。固定 $x<1$ 处的 $x$ 空间陈述需要在\cref{asm:appN-cutsum}之下对割图求和后的被积函数作减除分析；当 $x\to1$ 时这一分析中的常数不一致（阈值区）。
+\end{enumerate}
+\uses{def:disall-breit,def:dis-compton,def:method-subtraction,def:method-collinear-approx,def:method-collins-conditions,asm:appN-collins,asm:appN-cutsum,asm:appN-contour,asm:appN-envelope,asm:appN-separation,thm:appN-subtraction,lem:appN-error-table,lem:method-local-accuracy,lem:method-meets,prop:dis-compton-analytic,prop:dis-dispersion}
+% errtype: E-N
+\end{proposition}
+
+\begin{proof}
+(a) 由\cref{eq:disall-unphysical-offshell}，携带 $q$ 的线都离壳 $\ge Q^2(1-\rho)-\order{\lambda Q^2}$，所以每个领头区域是在每条线上指派 $A$（靶共线）或 $H$，携带 $q$ 的线必为 $H$。
+区域按逐线偏序比较，交逐线取得（\cref{lem:method-meets}）：钳夹集相交时 $\pi_{R\wedge R'}=\pi_R\cap\pi_{R'}$，交属于交封闭的区域集合；不相交时（例如 $H_R\cap H_{R'}$ 中没有连接两个光子顶点、携带 $q$ 的路径）二者没有公共下界，(CS2) 直接要求 $C_R\Gamma\in\mathfrak S(U_{R'})$。
+$T_R$ 在 $H_R$ 中作 $k\to\pi_+(k)=(k^+,0,\mathbf 0_T)$ 并在界面插入 Dirac 投影 $\frac12\gamma^-\gamma^+$ 或胶子投影（\cref{def:method-collinear-approx}，只用误差表中共线近似的各行）；它不引入新分母，
+被投影的硬分母在 $U_R$ 上由\cref{asm:appN-separation}(i) 满足 $|l^2-M_l^2|\ge c\,t_R^2$，非物理区又没有末态割线，因此 $C_RT^{\mu\nu}$ 在\cref{asm:appN-contour}的围道上没有新奇点，不出现软近似分母的 $\ii0$ 相容性问题。
+极小区域的 (CS1) 由\cref{lem:method-local-accuracy}给出（前提\cref{asm:appN-envelope,asm:appN-separation}，误差各行见\cref{lem:appN-error-table}），其余的 (CS1)(CS2)(CS3) 是\cref{asm:appN-collins}的内容，
+于是\cref{thm:appN-subtraction}（前提\cref{asm:appN-contour}(a)）给出 $\int|r|\le C\lambda^aL^K$，对 $\varepsilon\in(0,\varepsilon_0]$ 一致；\cref{asm:appN-collins}在圆盘上一致，故常数对 $\omega\in[-\rho,\rho]$ 一致。
+
+(b) 在固定阶，$T_{1,2}(\omega)$ 在去掉实轴上 $|\omega|\ge1$ 两条割线的平面上解析（\cref{prop:dis-compton-analytic}）；$C_RT^{\mu\nu}$ 只通过入射动量为 $\xi p$（$|\xi|\le1$）的被投影硬因子依赖于 $\omega$，
+其阈值在 $(\xi p\pm q)^2=0$ 即 $\xi\omega=\pm1$，故 $r_a$ 在 $|\omega|<1$ 中解析，Cauchy 估计给出 $|[\omega^k]r_a|\le\rho^{-k}\max_{|\omega|=\rho}|r_a|$。由色散关系（\cref{prop:dis-dispersion}）
+$T_2=\sum_{n\ \text{偶}}4\omega^{n-1}M^{(2)}_n$，$T_1-T_1(0)=\sum_{n\ \text{偶}}4\omega^nM^{(1)}_n$，即得\cref{eq:disall-cauchy}。反之，$\lambda^a\sin(\omega/\lambda)$ 在实轴上不超过 $\lambda^a$，
+其奇数阶 Taylor 系数却为 $\pm\lambda^{a-k}/k!$，对 $k>a$ 随 $\lambda\to0$ 发散。
+
+(c) 不连续部分的逐点大小不受 $|\omega|<1$ 上取值的控制：若某余项的不连续部分为 $\sin(x/\lambda^a)$（$0\le x\le1$），分部积分给出 $|\int_0^1\dd x\,x^n\sin(x/\lambda^a)|\le2\lambda^a$（一切 $n\ge0$），
+由色散关系它在 $|\omega|\le\rho$ 上对应的前向振幅不超过 $8\rho\lambda^a/(1-\rho^2)$，而它本身逐点为 $\order{1}$（同类反例见\cref{rem:dis-nonuniform}）。所以固定 $x$ 须直接处理割图：
+在\cref{asm:appN-cutsum}之下，每个前向图 $G$ 的割图之和在公共区域 $\Omega_G$ 上有公共被积函数 $F_G$（光锥序表示），近似子与割图求和对易，(GA1)–(GA4)、(CS1)–(CS3) 对 $F_G$ 成立，
+\cref{thm:appN-subtraction}便可在固定 $x$ 处应用于 $F_G$；其中不变质量为 $Q^2(\xi-x)/x$ 的末态整体并入硬子图，内部的末态共线与软钳夹在割图求和后相消。
+当 $\xi\to x$ 时这一不变质量趋于零，流喷注成为真正的共线子图；对 $1-x\lesssim\lambda^b$（某个 $b>0$）不存在使流喷注为硬的区域，常数随 $x\to1$ 增长：这一端点正是加号分布与阈值区的来源（\cref{ch:thr}）。
+\end{proof}
+
+\noindent
+(b) 是“矩的途径”：不需要 OPE，但需要复 $\omega$ 上的一致界，只给出分布意义下的结论；(c) 是“$x$ 空间的途径”，代价是割图求和的公共表示\cref{asm:appN-cutsum}，主定理\cref{thm:disall-factorization}走这一条路。
+
+% ---------------------------------------------------------------------
+\section{末态相互作用与幺正性}\label{sec:disall-fsi}
+
+在单个割图中，被击夸克与靶残余之间可以交换任意多个胶子。它们不破坏因子化的原因是幺正性：结构函数只依赖于对全部末态求和的结果，即前向振幅的不连续部分，而前向振幅中携带光子动量的线不被钳夹。
+
+\begin{lemma}[末态喷注的非钳夹性 \tagA]\label{lem:disall-fsi}
+对末态的全部割图求和给出前向振幅的不连续部分，$\Imag T_a(\omega+\ii0)=2\pi F_a$（$\omega>1$）。在前向振幅中，携带大分量 $q^-$ 的线不被钳夹：
+在靶共线钳夹面附近，经过这些线的圈动量的负分量围道可以离开它们的极点一段 $\order{Q^2/P^+}$ 的距离，所以流喷注以及附着在它上面的软线都属于硬子图 $H$。
+由\cref{eq:disall-current-virtuality}，$(\xi P+q)^2=Q^2(\xi-x)/x$：对 $\xi-x=\order{1}$，末态系统的不变质量为 $\order{Q^2}$，流喷注并入 $H$；
+只在卷积的端点 $\xi\to x$ 处它才成为真正的共线喷注，这一端点产生系数函数中的加号分布，也是阈值区的来源。（本引理只涉及部分子态。）
+\uses{prop:method-fsi,def:disall-breit,prop:disall-two-routes,prop:dis-compton-analytic}
+% errtype: E-S
+\end{lemma}
+
+\begin{proofsketch}
+(1) 一个前向图的全部末态割线之和等于它的不连续部分；按\cref{ch:dis}的归一化，这就是 $\Imag T_a=2\pi F_a$（\cref{prop:dis-compton-analytic}）。
+(2) 携带 $q$ 的线 $k+q$ 的分母作为 $k^-$ 的函数，极点在 $k^-\simeq-q^-=-Q^2/(2x_NP^+)$ 附近，与共线钳夹面 $k^-=\order{\lambda^2Q^2/P^+}$ 相距 $\order{Q^2/P^+}$；
+非物理区中的定量形式即\cref{eq:disall-unphysical-offshell}（\cref{prop:disall-two-routes}(a)）。附着在流喷注上的软动量 $\ell$ 只通过 $\ell^+$ 耦合（$(p'+\ell)^2-p'^2\simeq2p'^-\ell^+$），
+极点都在 $\ell^+$ 平面的同一侧，围道可以移开：这是\cref{prop:method-fsi}的 DIS 情形。(3) 当 $\xi\to x$ 时流喷注的虚度趋于零，额外的末态共线区域给出加号分布（\cref{sec:disall-nlo}），
+在固定 $x<1$ 处对光滑的 PDF 可积。完整论证见\cite[第~8.7~节]{CollinsSoperSterman1989}与\cite{LibbySterman1978a}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+这是 E-S 型论证：它说明末态钳夹面不是领头的，但不给出余项的积分界。固定 $x$ 处所需的割图版本建立在\cref{asm:appN-cutsum}之上（\cref{prop:disall-two-routes}(c)）；
+一般的相消机制\cref{prop:method-fsi}（全阶论证，[A]）还依赖光锥序表示的假设\cref{asm:appO-lcopt}。文献中这一步是标度陈述：\cite[第~8.7~节]{CollinsSoperSterman1989}写道
+「“the sum over final states eliminates pinch singularities involving final state jets”」，即对末态求和消除了涉及末态喷注的钳夹奇点。以\cref{asm:appN-cutsum}为前提时，本引理的割图形式已包含在\cref{prop:disall-two-routes}(c) 的 $R_{\mathrm{cond}}$ 陈述之中；提升本引理的标签则需要对 DIS 的割图证明该假设。
+
+\begin{proposition}[DIS 的领头区域 \tagA]\label{prop:disall-regions}
+$T^{\mu\nu}$ 的领头区域（等价地，对割图求和后 $W^{\mu\nu}$ 的领头区域）由一个靶共线子图与一个硬子图组成：二者由两条部分子（两条夸克线，或两条横向极化的胶子）外加任意多条 $A^+$ 极化（K）胶子相连；
+没有软子图；对割图求和后没有末态共线子图。（本命题只涉及部分子态；强子版本即\cref{asm:intro-bridge}(Br1)。）
+\uses{thm:ir-leading-regions,lem:disall-fsi}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+(1) 对每个割图应用\cref{thm:ir-leading-regions}（全阶论证，[A]）：领头区域由靶共线子图 $J_A$、流喷注 $J_q$ 与只以胶子附着在二者上的软子图组成，没有软线附着在硬子图上（\cref{fig:reduced-dis}）。
+(2) 由\cref{lem:disall-fsi}，割图求和后 $J_q$ 与附着在其上的软线并入硬子图；附着在硬子图上的每条软胶子压低 $\lambda^2$，只连接 $J_A$ 自身的软线是共线子图内部的子区域。
+(3) 活动部分子为胶子时，横向胶子与 K 胶子组合为 $k^+A^j-k^jA^+$，即胶子 PDF 算符中 $G^{+j}$ 的 Fourier 分量。文献：\cite{LibbySterman1978a}，\cite[第~8.7~节]{CollinsSoperSterman1989}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+这是标度陈述（E-S）：嵌套区域没有 Minkowski 空间中与 Weinberg 定理相当的结果，个别 Feynman 规范图中的超领头项只在对图求和后相消。
+其积分形式是\cref{asm:appN-envelope}（幂次计数包络）与\cref{asm:appN-separation}（分离性），作为\cref{thm:disall-factorization}的前提出现；固定 $x$ 处的割图版本依赖于\cref{asm:appN-cutsum}。
+文献中的幂次计数\cite{LibbySterman1978a}与\cite[第~5~章]{Collins2011}给出的是标度论证，从未在所有阶写成积分形式；解除途径是幂次计数的积分形式（逐区域的扇形分解）加上分离性所需的 Łojasiewicz 型不等式。
+
+% ---------------------------------------------------------------------
+\section{减除项的因子化结构、重整化相容性与两级梯形图}\label{sec:disall-subtraction}
+
+减除定理（\cref{thm:method-subtraction}，全阶论证，[A]）给出 $\Gamma=\sum_RC_R\Gamma+r$，$r\in\mathfrak S(\Omega)$，但它本身不说明 $\sum_RC_R\Gamma$ 具有“硬部分 $\otimes$ PDF”的形式。
+DIS 只有一个共线方向、没有软区域，较小区域的共线子图\emph{包含}较大区域的共线子图；这使减除项具有嵌套的乘积结构，并可以与 $\MSbar$ 重整化逐阶对接。
+
+\begin{proposition}[DIS 减除项的因子化结构 \tagR]\label{prop:disall-factorized-subtraction}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-ward-product}、\cref{asm:appN-uv}（及\cref{prop:disall-regions}）。（本命题只涉及部分子态。）
+设 $\Gamma$ 遍历部分子靶 $j$ 的前向振幅在 $\as$ 某一固定阶 $n$ 的全部领头幂次图，区域如\cref{prop:disall-regions}，动量分配是适配的（每个区域的界面动量与其硬子图内部的圈动量彼此分开）。则
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 若 $R'<R$，则 $J_{R'}\supset J_R$，$H_{R'}\subset H_R$；因此 $T_{R'}$ 只改变 $H_R$ 的因子以及 $J_R$ 与 $H_R$ 之间的投影，从不改变 $J_R$ 内部的因子；
+\item $C_R\Gamma=T_R\prod_{R'<R}(1-T_{R'})\Gamma$，即“减去全部较小区域之后的硬因子在投影动量处的值”与“精确的 $J_R$”之积；
+\item 对全部图与全部区域求和，并按共线部分的阶 $n_J$ 分组，
+\begin{equation}\label{eq:disall-factorized}
+\sum_\Gamma\ \sum_{R:\ \mathrm{ord}(J_R)=n_J}C_R\Gamma=\sum_i\int\frac{\dd\xi}{\xi}\,\hat{\mathsf H}^{[n-n_J]}_i(\xi p,q)\,f^{\mathrm{bare},[n_J]}_{i/j}(\xi),
+\end{equation}
+其中 $f^{\mathrm{bare}}_{i/j}$ 是\cref{def:pdf-quark,def:pdf-gluon}的算符在部分子态 $j$ 中的 $D$ 维裸矩阵元（不作算符重整化），$\hat{\mathsf H}_i$ 只依赖于投影后的部分子动量 $\xi p$，
+与靶无关；色投影 $\Trc[HJ]\simeq\frac1{N_c}\Trc H\,\Trc J$（胶子为 $\frac1{N_c^2-1}$）。特别地，$T_{(j)}-r_{(j)}=\sum_i\hat{\mathsf H}^{\mathrm{bare}}_i\otimes f^{\mathrm{bare}}_{i/j}$。
+\end{enumerate}
+\uses{prop:method-product,def:method-subtraction,prop:disall-regions,def:pdf-quark,def:pdf-gluon,asm:appN-ward-product,asm:appN-uv,lem:appN-algebra}
+% errtype: E-W
+\end{proposition}
+
+\begin{proof}
+(i) 由\cref{prop:disall-regions}，每个领头区域由包含两个光子顶点的硬子图 $H_R$ 确定，$J_R$ 是其余部分；逐线偏序中 $A<H$，故 $R'\le R$ 当且仅当 $H_{R'}\subseteq H_R$，即 $J_{R'}\supseteq J_R$。
+$T_{R'}$ 在 $H_{R'}$ 中把界面动量换成 $\pi_+(k)$（适配的动量分配下内部圈动量不变），只改变 $H_{R'}\subset H_R$ 的因子；它在 $R'$ 的界面线上插入的投影，若该线在 $R$ 中为硬则位于 $H_R$ 内部，
+若该线属于 $J_R$ 则它也是 $R$ 的界面线，投影与 $T_R$ 的相同（$\frac12\gamma^-\gamma^+$ 或 $\mathcal P_A$），由幂等性合而为一。所以 $J_R$ 内部的因子不变。
+
+(ii) 只有一个共线方向，没有方向翻转的线；适配的动量分配下各近似子是坐标投影（动量分量置零加投影），幂等且满足 (Com)(Abs)（\cref{lem:appN-algebra}），区域集合取为交封闭的（附录~N 的约定 (GA2)），
+于是乘积公式\cref{prop:method-product}给出 $C_R\Gamma=T_R\prod_{R'<R}(1-T_{R'})\Gamma$。写 $\Gamma=H_R\otimes J_R$（对界面指标缩并、对界面动量积分），由 (i) 得 $\prod_{R'<R}(1-T_{R'})\Gamma=\tilde H_R\otimes J_R$，
+$\tilde H_R\equiv\prod_{R'<R}(1-T_{R'})H_R$，故 $C_R\Gamma=\int\frac{\dd^Dk}{(2\pi)^D}\Tr[\tilde H_R(\pi_+k)\frac14\gamma^-]\Tr[\gamma^+J_R(k)]$（胶子界面以 $\mathcal P_A$ 代替）。
+
+(iii) $\tilde H_R(\pi_+k)$ 只依赖于 $k^+=\xi p^+$，$k^-$、$\mathbf k_T$ 的积分只作用于 $J_R$ 并延伸到全部取值。以 $J_R(k)=\int\dd^Dw\,\ee^{\ii k\cdot w}\langle j|\bar\psi(0)\psi(w)|j\rangle$
+（含 K 胶子与 Wilson 线）计，由 $\int\dd k^-\dd^{D-2}\mathbf k_T\,\ee^{\ii k\cdot w}=(2\pi)^{D-1}\delta(w^+)\delta^{D-2}(\mathbf w_T)$、平移不变性与\cref{def:pdf-quark}的归一化 $\int\dd w^-/(4\pi)$，
+\begin{equation}\label{eq:disall-chain}
+\begin{aligned}
+\int\frac{\dd k^-\,\dd^{D-2}\mathbf k_T}{(2\pi)^D}\,\Tr\big[\gamma^+J_R(k)\big]
+&=\frac1{2\pi}\int\dd w^-\,\ee^{-\ii\xi p^+w^-}\langle j|\bar\psi(w)\gamma^+W[w,0]\psi(0)|j\rangle\\
+&=2f_{q/j}(\xi);
+\end{aligned}
+\end{equation}
+又 $\dd^Dk=p^+\dd\xi\,\dd k^-\dd^{D-2}\mathbf k_T$，故 $C_R\Gamma=\int\frac{\dd\xi}{\xi}\frac12\Tr[\tilde H_R(\xi p)\xi\sla p]f(\xi)$，其中 $\xi\sla p=\sum_su\bar u$，$\frac12\Tr[\cdots]$ 是对在壳部分子 $\xi p$ 自旋平均的硬振幅。
+对全部图求和时，K 胶子对 $\tilde H_R$ 的附着由\cref{asm:appN-ward-product}(WI1) 分离为沿 $n_B$ 的 Wilson 线（(WI1) 明确包括已被其他近似子改变过的被积函数），与 $J_R$ 合成\cref{def:pdf-quark,def:pdf-gluon}中算符的矩阵元，
+(WI2) 保证按共线部分的阶分组后得到\cref{eq:disall-factorized}；\cref{asm:appN-uv}(U1) 使每个图在被积函数层次上已作紫外重整化，(U2) 保证 $T_R$ 与紫外减除只差不领头的多项式。
+色平均的靶有 $\langle J_{ab}\rangle\propto\delta_{ab}$，K 胶子并入 Wilson 线后算符是色单态，故色投影对整个乘积成立。$\hat{\mathsf H}^{[n_H]}_i$ 定义为全部硬拓扑上 $\frac12\Tr[\tilde H_R(\xi p)\xi\sla p]$（胶子对 $D-2$ 个极化平均）之和，只依赖于部分子种类与投影动量，因而与靶无关。
+\end{proof}
+
+\noindent
+若较小区域使 $J_R$ 中的线变软（事件形状、Drell--Yan、TMD），$T_{R'}$ 会改变 $J_R$ 的因子，裸共线因子须换成“共线因子减去其零箱”（单圈离壳三角图中 $C_{C_1}\Gamma=T_{C_1}\Gamma-T_{C_1}T_S\Gamma$）；
+DIS 没有领头的软区域，这正是“DIS 是最简单情形”的精确含义。下面接上 $\MSbar$ 重整化。按\cref{asm:appN-multren}(Z1) 写 $f^{\mathrm{bare}}_N=Z_Nf^{\mathrm{ren}}_N$（部分子种类空间中的矩阵）；它与\cref{def:pdf-quark}中 $f_{\mathrm{ren}}=Z\otimes f_{\mathrm{bare}}$ 的 $Z$ 互为逆，
+单圈 $Z_N=1+\frac{\as}{2\pi}\frac1\varepsilon\gamma(N)+\order{\as^2}$，$\gamma_{ij}(N)=\int_0^1\dd z\,z^{N-1}P_{ij}$。
+
+\begin{theorem}[减除与 $\overline{\rm MS}$ 重整化的相容性（矩空间） \tagR]\label{thm:disall-renorm-compat}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-multren}（(Z1)、(Z3)(i)）、\cref{asm:appN-ir-regulator}、\cref{asm:appN-contour}（(b)）（及\cref{prop:disall-two-routes}、\cref{prop:disall-factorized-subtraction}的前提）。（本定理只涉及部分子态。）
+本定理的内容等级为 [C]（经由\cref{asm:appN-ir-regulator}）：它是正规子路线下的严格一致性陈述，任何全阶论证（[A]）的陈述都不以它为依赖；DIS 与其他过程的定理使用维数正规化路线\cref{asm:appN-multren}(Z3)(ii)。
+考虑非物理区前向振幅的第 $N$ 阶矩。由\cref{prop:disall-two-routes}(a)(b)与\cref{prop:disall-factorized-subtraction}，
+\begin{equation}\label{eq:disall-renorm-start}
+T_{(j),N}=\sum_i\hat{\mathsf H}^{\mathrm{bare}}_{i,N}\,f^{\mathrm{bare}}_{i/j,N}+r_{(j),N},\qquad |r_{(j),N}|\le C\lambda^aL^K .
+\end{equation}
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item （前提 (Z1)、\cref{asm:appN-ir-regulator}）$C_{i,N}\equiv\sum_k\hat{\mathsf H}^{\mathrm{bare}}_{k,N}Z_{N,ki}$ 在 $\varepsilon=0$ 处有限；
+\item $C_{i,N}$ 与靶及其红外正规化无关；（前提 (Z1)、(Z3)(i)）它等于维数正规化中部分子匹配系数的矩（\cref{prop:pdf-partonic-dr}的构造）；
+\item 逐阶地 $C^{[n]}=\lim_{\lambda\to0}\big[T^{[n]}_{(j)}-\sum_{m=0}^{n-1}C^{[m]}f^{\mathrm{ren}[n-m]}_{\cdot/j}\big]$：每一项都像 $\ln\lambda$ 一样发散，只有组合有极限；以维数正规化作红外正规化时 $\lambda\to0$ 一步可以略去。
+\end{enumerate}
+\uses{prop:disall-factorized-subtraction,lem:method-no-pole,prop:pdf-partonic-dr,def:prelim-msbar,asm:appN-multren,asm:appN-ir-regulator,asm:appN-contour,prop:disall-two-routes,cor:method-removing-eps}
+% errtype: E-N
+\end{theorem}
+
+\begin{proof}
+(a) 由 (Z1)，$\hat{\mathsf H}^{\mathrm{bare}}f^{\mathrm{bare}}_{\cdot/j}=\hat{\mathsf H}^{\mathrm{bare}}Zf^{\mathrm{ren}}_{\cdot/j}=Cf^{\mathrm{ren}}_{\cdot/j}$（矩阵记号），代入\cref{eq:disall-renorm-start}得
+$C=\hat{\mathsf H}^{\mathrm{bare}}Z=(T_{(j)}-r_{(j)})(f^{\mathrm{ren}}_{\cdot/j})^{-1}$。左边与 $\lambda$ 及靶无关（$\hat{\mathsf H}^{\mathrm{bare}}$ 只依赖于投影动量，$Z$ 是与靶无关的纯 $\MSbar$ 极点级数），
+且在 $\varepsilon=0$ 附近亚纯（每个 $\int C_R\Gamma$ 由\cref{asm:appN-contour}(b) 亚纯延拓）。右边在 $(0,\varepsilon_0]$ 上有界：$T_{(j)}$ 是守恒流关联函数的矩，紫外有限，红外由 $\lambda$ 正规化；
+$r_{(j)}=T_{(j)}-\sum_R\int C_R\Gamma$ 中后者由\cref{cor:method-removing-eps}在 $\varepsilon=0$ 处没有极点，且 $|r_{(j)}|\le C\lambda^aL^K$ 对 $\varepsilon$ 一致；
+由\cref{asm:appN-ir-regulator}，$f^{\mathrm{ren}}_{N,\cdot/j}$ 在 $\varepsilon=0$ 处有限并逐阶可逆，且该正规化保持\cref{prop:disall-factorized-subtraction}所用的 Ward 恒等式并使\cref{prop:disall-two-routes}(a)(b) 成立。
+在 $\varepsilon=0$ 附近亚纯、在 $(0,\varepsilon_0]$ 上有界的函数没有极点（\cref{lem:method-no-pole}），故 $C$ 在 $\varepsilon=0$ 处有限。
+
+(b) $C$ 由左边定义，因此与靶及 $\lambda$ 无关。对在壳无质量部分子靶、以维数正规化为唯一的红外正规化，(Z3)(i) 断言因子化恒等式以同一个 $\hat{\mathsf H}^{\mathrm{bare}}$ 成立，且 $f^{\mathrm{bare}}_{\cdot/j}=\delta$（无标度），
+于是 $T^{\mathrm{DR}}_{(j)}=\hat{\mathsf H}^{\mathrm{bare}}$，$f^{\mathrm{ren,DR}}_{\cdot/j}=Z^{-1}$，$C=T^{\mathrm{DR}}_{(j)}(f^{\mathrm{ren,DR}}_{\cdot/j})^{-1}$：维数正规化的部分子结构函数乘以 $\MSbar$ 部分子 PDF 的逆，
+即\cref{prop:pdf-partonic-dr}的构造（$\MSbar$ 的归一化见\cref{def:prelim-msbar}）。
+
+(c) 把 $f^{\mathrm{ren}}_{\cdot/j}=\delta+\sum_{k\ge1}f^{\mathrm{ren}[k]}_{\cdot/j}$、$T_{(j)}=\sum_nT^{[n]}_{(j)}$、$C=\sum_nC^{[n]}$ 代入 $T_{(j)}=Cf^{\mathrm{ren}}_{\cdot/j}+r_{(j)}$，比较 $\as^n$ 的系数：
+$C^{[n]}=T^{[n]}_{(j)}-\sum_{m<n}C^{[m]}f^{\mathrm{ren}[n-m]}_{\cdot/j}-r^{[n]}_{(j)}$。\cref{prop:disall-two-routes}(a) 的界在每一固定阶成立，$r^{[n]}_{(j)}\to0$（$\lambda\to0$），而左边不依赖于 $\lambda$，即得 (c)。
+\end{proof}
+
+\noindent
+回到 $x$ 空间要用\cref{thm:pdf-dis-xspace}与附录~K 的唯一性。内容等级 [C] 的来源是：迄今没有既保持 Ward 恒等式、又能正规化在壳胶子共线发散的红外正规化（离壳外线与 (Z1) 的在壳性矛盾，胶子质量破坏非阿贝尔 Ward 恒等式，有质量夸克只正规化夸克靶）；
+过程定理因此改用 (Z3)(ii)，它在 NNLO 与 N$^3$LO 系数函数的有限性中被逐阶验证。两级梯形图是上述结构的最小例子，也说明为什么只能对分组的表达式作估计（\cref{fig:disall-ladder-regions}）。
+
+\begin{example}[两级梯形图：三个区域与分组余项]\label{ex:disall-ladder}
+外夸克离壳（$p^2=-m^2$）、内线无质量的 DIS 两级梯形图：$\Gamma=\mathsf H_0(k_2)\,K_2(k_2,k_1)\,K_1(k_1,p)$，$\mathsf H_0$ 是含两个光子顶点的顶端夸克线，$K_2$、$K_1$ 是上、下两级横档（含脊线传播子），
+$(k_1,k_2)$ 为两级横档之后的脊线动量。领头区域有\emph{三个}，构成链 $R_2<R_1<R_H$：$R_2$ 中两级横档都与 $p$ 共线，$R_1$ 中只有下级横档共线，$R_H$ 中一切都是硬的（靶被投影为无质量在壳部分子）。
+$T_2$ 在 $\mathsf H_0$ 中作 $k_2\to\pi_+k_2$ 并插入 Dirac 投影 $\mathcal P$；$T_1$ 作 $k_1\to\pi_+k_1$ 并插入 $\mathcal P$（只改变 $K_2$）；$T_H$ 作 $p\to\hat p=\pi_+(p)$、$m\to0$（只改变 $K_1$）；它们彼此对易（\cref{prop:appN-ladder}）。
+记 $\Delta\mathsf H_0\equiv\mathsf H_0(k_2)-\mathsf H_0(\pi_+k_2)\mathcal P$，$\Delta K_2\equiv K_2(k_2,k_1)-K_2(k_2,\pi_+k_1)\mathcal P$，$\Delta K_1\equiv K_1(k_1,p)-K_1(k_1,\hat p)$。
+全序区域链的链展开（\cref{prop:method-chains}）给出 $r=(1-T_H)(1-T_1)(1-T_2)\Gamma$ 与
+\begin{equation}\label{eq:disall-ladder}
+\begin{gathered}
+C_2\Gamma=[\mathsf H_0(\pi_+k_2)\mathcal P]\,K_2K_1,\qquad C_1\Gamma=\Delta\mathsf H_0\,[K_2(k_2,\pi_+k_1)\mathcal P]\,K_1,\\
+C_H\Gamma=\Delta\mathsf H_0\,\Delta K_2\,K_1(k_1,\hat p),\qquad r=\Delta\mathsf H_0\,\Delta K_2\,\Delta K_1 .
+\end{gathered}
+\end{equation}
+$C_2\Gamma$ 是 $\mathsf H^{[0]}\otimes f^{[2]}$；$C_1\Gamma$ 对 $k_2$ 积分得到单圈硬系数 $\hat{\mathsf H}^{[1]}(k_1^+)$（入射部分子为 $\pi_+k_1$ 的未减除单圈硬部分减去树图 $\otimes$ 单圈部分子共线因子），即 $\hat{\mathsf H}^{[1]}\otimes f^{[1]}$；
+把 $\Delta\mathsf H_0\Delta K_2$ 展开为四项，依次是无质量靶的两圈梯形图 $T^{[2]}$、$\mathsf H^{[0]}\otimes f^{[2]}$、$\mathsf H^{[1],\mathrm{unsub}}\otimes f^{[1]}$ 与 $\mathsf H^{[0]}\otimes f^{[1]}\otimes f^{[1]}$，
+合起来 $\int C_H\Gamma=T^{[2]}-\hat{\mathsf H}^{[1]}\otimes f^{[1]}-\mathsf H^{[0]}\otimes f^{[2]}$，即\cref{thm:disall-renorm-compat}(c) 在 $n=2$ 时的被积函数形式。
+全硬区域 $R_H$ 携带两圈系数函数：只计入 $R_1$、$R_2$ 时，$\Gamma-C_2\Gamma-C_1\Gamma=C_H\Gamma+r$ 中的 $C_H\Gamma$ 是领头的。
+分组的必要性：单个链项 $T_H(1-T_2)\Gamma=\Delta\mathsf H_0\,K_2(k_2,k_1)\,K_1(k_1,\hat p)$ 不属于 $L^1(U_{R_2})$——$k_1\parallel\hat p$ 时无质量的 $K_1(k_1,\hat p)$ 有 $\int\dd^{2-2\varepsilon}\mathbf k_{1T}/\mathbf k_{1T}^2$ 型的共线奇点
+（只对 $\varepsilon<0$ 收敛），而 $\Delta\mathsf H_0K_2$ 在那里不为零；分组后的 $C_H\Gamma$ 多出的因子 $\Delta K_2$ 在 $k_1\to\pi_+k_1$ 时至少线性地趋于零，积分收敛。
+所以误差估计只对分组的表达式成立，“减除定理可以逐项归纳证明”是错误的。上述代数是精确的（\cref{prop:appN-ladder}）；这一费米子梯形图的积分范数条件 (CS1)–(CS3) 没有被证明，标量 $\varphi^3_6$ 模型中单梯级梯形图的积分范数界见\cref{prop:appN-phi36-dis}（只在实的 $x\ge x_0>1$ 上成立，而不是\cref{prop:disall-two-routes}(b) 所需的复圆盘上的一致界）。
+\uses{thm:method-subtraction,prop:method-chains,def:method-collins-conditions,thm:disall-renorm-compat,prop:appN-ladder}
+\end{example}
+
+%%% BEGIN fig:disall-ladder-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb kern/.style={font=\scriptsize,inner sep=1pt,text=gray!25!black},
+  fb R2/.style={region,draw=blue!60!black,line width=0.7pt},
+  fb R1/.style={region,draw=orange!75!black,line width=0.7pt},
+  fb RH/.style={region,draw=gray!55!black,line width=0.7pt}]
+  \def\fbX{1.2}
+  % ======================= the two-rung ladder (cut graph; amplitude on the left) =======================
+  % left rail (amplitude): p -> rung K_1 -> k_1 -> rung K_2 -> k_2 -> photon vertex
+  \draw[quark] (-\fbX,0) -- (-\fbX,1.1);
+  \draw[quark] (-\fbX,1.1) -- (-\fbX,2.3);
+  \draw[quark] (-\fbX,2.3) -- (-\fbX,3.5);
+  % right rail (conjugate amplitude)
+  \draw[quark] (\fbX,3.5) -- (\fbX,2.3);
+  \draw[quark] (\fbX,2.3) -- (\fbX,1.1);
+  \draw[quark] (\fbX,1.1) -- (\fbX,0);
+  % struck quark and photons (H_0)
+  \draw[quark=0.25] (-\fbX,3.5) -- (\fbX,3.5);
+  \draw[photon] (-1.62,4.72) -- (-\fbX,3.5);
+  \draw[photon] (\fbX,3.5) -- (1.62,4.72);
+  % rungs: real gluons crossing the cut
+  \foreach \y in {1.1,2.3} {
+    \draw[gluon] (-\fbX,\y) -- (\fbX,\y);
+    \node[vertex] at (-\fbX,\y) {}; \node[vertex] at (\fbX,\y) {};}
+  \node[vertex] at (-\fbX,3.5) {}; \node[vertex] at (\fbX,3.5) {};
+  \draw[cut] (0,-0.35) -- (0,4.75);
+  % momenta and kernels
+  \path[mom'={$k_1$},mom sep=0.25cm,mom length=0.45cm] (-\fbX,1.1) -- (-\fbX,2.3);
+  \path[mom'={$k_2$},mom sep=0.25cm,mom length=0.45cm,mom pos=0.42] (-\fbX,2.3) -- (-\fbX,3.5);
+  \node[fb lab,anchor=north] at (-\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north] at (\fbX,-0.02) {$p$};
+  \node[fb lab,anchor=north,text=gray!30!black] at (0,-0.42) {$p^2=-m^2$};
+  \node[fb lab,anchor=south east] at (-1.62,4.72) {$q$};
+  \node[fb kern,anchor=south] at (0.6,1.25) {$K_1$};
+  \node[fb kern,anchor=south] at (0.6,2.45) {$K_2$};
+  \node[fb kern,anchor=south] at (-0.6,3.53) {$\mathsf H_0$};
+  % nested hard subgraphs of the three regions
+  \draw[fb R2] (-1.55,3.24) rectangle (1.55,3.98);
+  \draw[fb R1] (-1.78,2.04) rectangle (1.78,4.14);
+  \draw[fb RH] (-2.01,0.84) rectangle (2.01,4.3);
+  \node[font=\scriptsize,text=blue!55!black,anchor=south,inner sep=1pt] at (0.72,3.25) {$R_2$};
+  \node[font=\scriptsize,text=orange!65!black,anchor=south east,inner sep=1pt] at (1.76,2.06) {$R_1$};
+  \node[font=\scriptsize,text=gray!35!black,anchor=south east,inner sep=1pt] at (1.99,0.86) {$R_H$};
+  % ======================= the regions and the grouped remainder =======================
+  \node[anchor=north west,align=left,font=\footnotesize] (T) at (2.65,4.3) {%
+    区域链 $R_2<R_1<R_H$（虚线框为硬子图）：\\[3pt]
+    {\color{blue!55!black}$R_2$}：两级横档都与 $p$ 共线；\\[1pt]
+    {\color{orange!65!black}$R_1$}：上级横档为硬，下级横档共线；\\[1pt]
+    {\color{gray!35!black}$R_H$}：全部为硬——给出两圈系数函数。\\[6pt]
+    分组余项：\\[2pt]
+    \quad$r=(1-T_H)(1-T_1)(1-T_2)\,\Gamma=\Delta\mathsf H_0\,\Delta K_2\,\Delta K_1$};
+  \node[anchor=north west,align=left,font=\footnotesize,text width=6.1cm,draw=red!50!black,line width=0.5pt,
+        rounded corners=2pt,fill=red!3,inner sep=4pt] at ($(T.south west)+(0.05,-0.2)$)
+    {单个链项 $T_H(1-T_2)\Gamma$ 在 $U_{R_2}$ 上不可积（在 $k_1\parallel\hat p$ 处有无质量共线奇点），因而分组是必要的。};
+\end{tikzpicture}
+\caption{DIS 两级梯形图（外夸克离壳 $p^2=-m^2$，内线无质量；竖直红色虚线为末态割线，左侧为振幅）的三个区域 $R_2<R_1<R_H$ 与分组余项。
+$\Gamma=\mathsf H_0(k_2)\,K_2(k_2,k_1)\,K_1(k_1,p)$，$\mathsf H_0$ 为含两个光子顶点的顶端夸克线，$K_2$、$K_1$ 为上、下两级横档；虚线框依次为 $R_2$、$R_1$、$R_H$ 的硬子图。
+分组余项 $r=\Delta\mathsf H_0\Delta K_2\Delta K_1$（$\Delta$ 表示相应因子减去其共线近似）；包含全硬区域 $R_H$ 才能得到两圈系数函数（\cref{ex:disall-ladder}）。}
+\label{fig:disall-ladder-regions}
+\end{figure}
+%%% END fig:disall-ladder-regions
+
+% ---------------------------------------------------------------------
+\section{模板假设的验证与主定理}\label{sec:disall-theorem}
+
+\cref{thm:method-template}（全阶论证，[A]）把因子化归结为五个假设：(H1) 领头区域，(H2) 共线近似与 K 胶子的分离，(H3) 软近似与 Glauber 区，(H4) 末态相互作用与软因子，(H5) 减除项与重整化 PDF 的等同。
+(H1) 即\cref{prop:disall-regions}（积分形式为\cref{asm:appN-envelope,asm:appN-separation}）；本节验证其余各条并组装主定理。
+
+\begin{proposition}[(H2) 的验证 \tagA]\label{prop:disall-h2}
+在 DIS 中，共线近似（\cref{def:method-collinear-approx}）加上 K 胶子的 Ward 恒等式（\cref{lem:method-ward-multi}）与共线 Wilson 线（\cref{prop:method-collinear-wilson}）给出\cref{ch:pdf}的 PDF，
+其 Wilson 线是沿 $n_B$ 的直线段：振幅中为未来指向的 $W[\infty n_B,0]$，与共轭振幅中的 $W[w,\infty n_B]$ 合成 $W[w,0]$。色单态靶的色投影为 $\Trc[HJ]\simeq\frac1{N_c}\Trc H\,\Trc J$；
+归一化由 $\int\dd^4k=P^+\!\int\dd\xi\int\dd k^-\dd^2\mathbf k_T$ 与 $\int\frac{\dd k^-\dd^2\mathbf k_T}{(2\pi)^4}\Tr[\gamma^+J]=2f$ 给出（\cref{eq:disall-chain}）。（本命题只涉及部分子态。）
+\uses{def:method-collinear-approx,lem:method-ward-multi,prop:method-collinear-wilson,prop:method-ward-tree,prop:disall-regions}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+(1) 共线近似作 $H(k)\Phi(k)\to H(\hat k)\frac14\gamma^-\Tr[\gamma^+\Phi(k)]$（对 $\Phi=\sla p$ 给出 $p^+\gamma^-$），其余 Clifford 分量被推动因子压低或对非极化靶为零。
+(2) 种子（\cref{prop:method-ward-tree}(b)，\cref{fig:disall-seed}）：$k_\mu H^\mu_a=gt^aH_0$，加上 K 投影即 $W^{(1)}[\infty n_B,0]H_0$；两个 K 胶子精确地给出 $(n_B\cdot k_1)(n_B\cdot k_2)W^{(2)}_{ab}[\infty n_B,0]H_0$，
+路径排序来自对易子项；K 胶子附着在末态线上，故 Wilson 线未来指向。(3) 一般阶由\cref{lem:method-ward-multi}与\cref{prop:method-collinear-wilson}：积出 $k^-$、$\mathbf k_T$（\cref{eq:disall-chain}）得到裸 PDF，
+$\mathbf w_T=0$ 时 $W[w,\infty n_B]W[\infty n_B,0]=W[w,0]$；色投影来自 $\langle J_{ab}\rangle\propto\delta_{ab}$（\cref{prop:disall-regions}给出的界面结构）。完整论证见\cite[第~11.3、11.9~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+最弱的一步是非阿贝尔多胶子 Ward 恒等式（含鬼场）对已被近似子改变过的被积函数成立，即\cref{asm:appN-ward-product}(WI1)，它是\cref{lem:method-ward-multi}（全阶论证，[A]）的精确形式；
+阿贝尔情形与树图层次 $n\le2$ 是严格的。该论证中被明确假定的一步是非定域算符的 BRST 分类，\cite[第~11.3.2~节，第~407--410~页]{Collins2011}明言对非定域算符没有证明而予以假定：
+即具名缺口\cref{asm:appN-brst-nonlocal}（[C]；只是点名，不是本命题的前提）。全部由纵向胶子诱导硬散射的单个 Feynman 规范图有超领头幂次，对图求和后相消，
+但靶中胶子的横动量与规范群的非阿贝尔性留下一个非零的领头项，它正是规范不变胶子 PDF 所需要的\cite{Collins:2008sg}。这一步给出标度陈述（E-S）。
+解除途径：对已被近似子改变过的被积函数完成归纳的 Ward 论证（\cref{prop:appF-induction}），并证明多定域 BRST 分类。
+
+\begin{proposition}[(H3)(H4) 平凡成立 \tagA]\label{prop:disall-h3h4}
+在 DIS 中，领头幂次没有软因子，也没有 Glauber 问题：只有一个强子，末态被求和，而非物理区的前向振幅中没有末态喷注。（本命题只涉及部分子态。）
+\uses{prop:disall-regions,lem:disall-fsi,lem:method-soft-unitarity}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+(H3)：领头区域没有软子图（\cref{prop:disall-regions}）；Glauber 钳夹需要两个反向运动、不被末态求和消去的共线子图（Drell--Yan 中两个强子的旁观者），而靶残余与流喷注之间的交换在割图求和后不被钳夹（\cref{lem:disall-fsi}）。
+(H4)：末态相互作用由\cref{lem:disall-fsi}处理；对共线单举截面，形式上保留的、对割图求和的软因子等于 1（\cref{lem:method-soft-unitarity}，[R]，$R_{\mathrm{def}}$）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+E-S 型论证，强度与\cref{lem:disall-fsi,prop:disall-regions}相同：割图版本依赖于\cref{asm:appN-cutsum}，积分形式依赖于\cref{asm:appN-envelope,asm:appN-separation}；
+文献中的根据是割图求和后的领头区域只含入射喷注及其内部的软交换\cite[第~8.7~节]{CollinsSoperSterman1989}，解除途径与\cref{lem:disall-fsi,prop:disall-regions}相同。“平凡”只是相对于 Drell--Yan 而言，那里 (H3) 需要附录~O 的 Glauber 分析（\cref{ch:dy}）。
+
+\begin{proposition}[(H5) 的验证 \tagA]\label{prop:disall-h5}
+在 DIS 中，减除项等于 $C\otimes f_{\cdot/j}$，其中 $f_{i/j}$ 为重整化的部分子 PDF；因此系数函数由部分子靶算出：$C_{2,i}=\hat F_2^{(j)}\otimes(f^{\mathrm{partonic}})^{-1}_{ji}$（对 $j$ 求和），
+在纯维数正规化中单圈为 $C^{(1)}=\hat F^{(1)}+\frac{\as}{2\pi}\frac1\varepsilon P\otimes\hat F^{(0)}$。（本命题只涉及部分子态。）
+\uses{prop:pdf-partonic-dr,thm:method-subtraction,prop:disall-factorized-subtraction,asm:appN-multren,asm:appN-collins}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+由\cref{thm:method-subtraction}（[A]，瓶颈\cref{asm:appN-collins}）与\cref{prop:disall-factorized-subtraction}，$T=\sum_i\hat{\mathsf H}^{\mathrm{bare}}_i\otimes f^{\mathrm{bare}}_{i/j}+r$；由\cref{asm:appN-multren}(Z1) 主项为 $Cf^{\mathrm{ren}}$，
+$C\equiv\hat{\mathsf H}^{\mathrm{bare}}Z$，由 (Z3)(ii) 它没有极点。对在壳无质量部分子靶，$f^{\mathrm{bare}}_{\cdot/j}=\delta$，$f^{\mathrm{ren}}_{\cdot/j}=Z^{-1}=\delta-\frac{\as}{2\pi}\frac1\varepsilon P+\order{\as^2}$（\cref{prop:pdf-partonic-dr}），
+$T^{\mathrm{DR}}_{(j)}=\hat{\mathsf H}^{\mathrm{bare}}$，故 $C=T^{\mathrm{DR}}_{(j)}(f^{\mathrm{ren}}_{\cdot/j})^{-1}$，单圈即所述公式（\cref{sec:disall-nlo}）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+等级由减除条件\cref{asm:appN-collins}与乘法重整化\cref{asm:appN-multren}决定：(Z1) 对 PDF 是定理（壳上规范不变的定域扭度 2 算符），(Z3)(ii) 是维数正规化的质量因子化（[A] 层次，在 NNLO 与 N$^3$LO 系数函数的有限性中被逐阶验证）；
+精确路线是\cref{prop:disall-factorized-subtraction}加 (Z3)(ii)。文献中减除项与重整化 PDF 的等同是标度层次的论证（E-S）\cite[第~10~章]{Collins2011}，
+而\cite[第~10.1~节]{CollinsSoperSterman1989}明言即使对 DIS 也还没有完整的 QCD 减除程序；在附录~N 的编号假设之下它是 E-N 型的条件陈述。正规子路线\cref{thm:disall-renorm-compat}（内容等级 [C]，经由\cref{asm:appN-ir-regulator}）只是参照而不是依赖：全阶论证的陈述不能以内容等级为 [C] 的前提为依据。
+
+\begin{theorem}[DIS 共线因子化（动量空间，$x$ 空间逐点） \tagA]\label{thm:disall-factorization}
+对固定的 $0<x<1$ 且 $W^2=Q^2(1-x)/x+M^2\gg\Lambda^2$，当 $Q\to\infty$ 时
+\begin{equation}\label{eq:disall-main}
+\frac{F_2(x,Q^2)}{x}=\sum_i\int_x^1\frac{\dd\xi}{\xi}\,C_{2,i}\Big(\frac x\xi,\frac{Q^2}{\mu^2},\as(\mu)\Big)f_i(\xi;\mu)+R(x,Q),
+\end{equation}
+$F_L$ 同理；其中 $i$ 遍历夸克、反夸克与胶子，$f_i$ 为\cref{def:pdf-quark,def:pdf-gluon}定义的 $\MSbar$ PDF，$C_{2,i}$ 为 $\MSbar$ 减除的部分子结构函数（\cref{prop:disall-h5}）。
+余项 $R=\order{\Lambda^2/Q^2}$，其系数依赖于 $x$：当 $x\to1$ 时不一致（启发式的展开参数为 $\Lambda^2/(Q^2(1-x))$），当 $x\to0$ 时亦不一致。
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2、MA4）。
+\uses{thm:method-template,prop:disall-regions,lem:disall-fsi,prop:disall-h2,prop:disall-h3h4,prop:disall-h5,prop:disall-two-routes,def:pdf-quark,def:pdf-gluon,asm:intro-bridge,asm:appN-collins,asm:appN-envelope,asm:appN-separation,asm:appN-cutsum,asm:appN-ward-product,asm:appN-uv,asm:appN-multren}
+% errtype: E-S
+\end{theorem}
+
+\begin{proofsketch}
+先对带红外正规化的部分子靶在每一阶证明余项为 $\order{\lambda^aL^K}$，最后过渡到强子。
+(1)--(4) 模板的五个假设依次由\cref{prop:disall-regions}（(H1)，积分形式\cref{asm:appN-envelope}与\cref{asm:appN-separation}）、\cref{prop:disall-h2}（(H2)，多胶子形式\cref{asm:appN-ward-product}）、
+\cref{prop:disall-h3h4}与\cref{lem:disall-fsi}（(H3)(H4)，割图形式\cref{asm:appN-cutsum}）、\cref{prop:disall-h5}（(H5)，用到减除定理（瓶颈\cref{asm:appN-collins}）、\cref{asm:appN-uv}与\cref{asm:appN-multren}）保证。
+(5) 于是\cref{thm:method-template}的假设全部成立，给出非物理区前向振幅的因子化 $T_a(\omega)=\sum_i\int\frac{\dd\xi}{\xi}\hat C_{a,i}(\xi\omega)f_i(\xi)+\order{\lambda^aL^K}$（$\omega\in[-\rho,\rho]$），
+即\cref{prop:disall-two-routes}(a) 与 (H2)、(H5) 的结合。
+(6) 回到物理区：主项的 $\omega$ 依赖只在 $\hat C_{a,i}(\xi\omega)$ 中，其右割线在 $\xi\omega\ge1$，故在 $\omega=1/x$ 处的不连续部分只来自 $\xi\ge x$，给出\cref{eq:disall-main}的下限
+（对 $\xi<0$，$\hat C$ 在 $\xi\omega\le-1$ 处的交叉割线给出反夸克项，$f_{\bar q}(\xi)=-f_q(-\xi)$）。余项不能这样延拓：复圆盘上的一致界只给出矩（\cref{prop:disall-two-routes}(b)），固定 $x$ 的陈述来自\cref{asm:appN-cutsum}之下对割图求和后的被积函数应用减除定理（\cref{prop:disall-two-routes}(c)），
+常数在 $x\to1$ 时增长。这给出部分子形式的\cref{eq:disall-main}。
+(7) 强子：\cref{asm:intro-bridge}的 (Br1) 断言没有新的领头区域，(Br2) 断言全部 $\Lambda$ 敏感性都在同一组算符（PDF）的强子矩阵元中，(Br3) 把余项读作 $\order{(\Lambda/Q)^p}$ 的渐近陈述；
+对 DIS，$p=2$ 与矩的扭度展开一致，高扭度系数随矩的阶增长，使余项在 $x\to1$ 处不一致，在 $x\to0$ 处则由 $\as\ln(1/x)$ 的增强与饱和效应破坏一致性。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+本定理是全阶论证（[A]）。其瓶颈为：\cref{asm:appN-collins}（一般图在积分范数下的减除条件）、\cref{asm:appN-envelope}与\cref{asm:appN-separation}（幂次计数的积分形式）、
+\cref{asm:appN-cutsum}（割图求和的公共表示）、\cref{asm:appN-ward-product}（多胶子 Ward 恒等式的乘积结构）、\cref{asm:appN-uv}（被积函数层次的紫外重整化）、
+\cref{asm:appN-multren}（共线因子的乘法重整化），以及强子层次的\cref{asm:intro-bridge}。文献给出这些步骤的标度陈述（E-S）；在附录~N 的编号假设之下余项在积分范数意义下（E-N）受控，条件形式为\cref{thm:appN-structure}。
+该论证中被明确假定的一步是非定域算符的 BRST 分类（\cite[第~11.3.2~节，第~407--410~页]{Collins2011}），即具名缺口\cref{asm:appN-brst-nonlocal}（[C]），它经由\cref{lem:method-ward-multi}与\cref{thm:method-template}进入，
+只是点名，不是本定理的前提；纵向极化胶子的单个图在对图求和后仍留下非零的领头项，它须被吸收进规范不变的胶子 PDF\cite{Collins:2008sg}。非规范理论中的完整证明见\cite[第~8.9~节]{Collins2011}；对 QCD，\cite[第~10.1~节]{CollinsSoperSterman1989}写道
+「“there is as yet in the literature no complete and systematic subtraction procedure in QCD \ldots{} even in the case of deeply inelastic scattering”」，即即使对 DIS，文献中也还没有完整而系统的 QCD 减除程序。
+早期的全阶论证\cite{EllisEtAl1979,Ellis:1978sf,AmatiPetronzioVeneziano1978a,AmatiPetronzioVeneziano1978b,Mueller1978,CurciFurmanskiPetronzio1980}多在物理规范（轴规范、光锥规范）中进行；
+物理规范的非物理奇点阻碍把围道变形出 Glauber 区，因而一般而可靠的证明应在 Feynman 规范中进行\cite[第~12.6~节]{Collins2011}。提升本定理须解除上述假设；$x\to1$ 处的一致性还需要阈值区的重新因子化（\cref{ch:thr}）。
+
+% ---------------------------------------------------------------------
+\section{与 OPE 结果的一致性}\label{sec:disall-consistency}
+
+OPE 的 Wilson 系数 $C^{(n)}_{a,i}$（\cref{ch:dis}）与动量空间证明中由部分子靶构造的系数函数（\cref{prop:disall-h5}）必须一致；一致的是作为分布的扭度 2 部分，而不是逐点的余项。
+
+\begin{corollary}[与 OPE 系数的一致性 \tagR]\label{cor:disall-consistency}
+（$R_{\mathrm{OPE}}$：以 OPE 为前提而严格。QCD 中含夸克的微扰 OPE 是全阶论证（\cref{thm:dis-ope}），严格证明只对标量理论与纯 Yang--Mills 的规范不变算符给出；对强子态还须非微扰 OPE（\cref{asm:intro-np-ope}）。）
+以\cref{prop:pdf-partonic-dr}的构造定义动量空间的系数函数 $C^{\mathrm{mom}}_{a,i}$：在纯维数正规化中对在壳无质量部分子靶 $j$，$\hat F^{(j)}_a/z=\sum_iC^{\mathrm{mom}}_{a,i}\otimes f_{i/j}$，$f_{i/j}$ 为 $\MSbar$ 部分子 PDF。
+则对 OPE 有定义的一切 $n$，$\int_0^1\dd z\,z^{n-1}C^{\mathrm{mom}}_{a,i}(z)=C^{(n)}_{a,i}$；因此 $C^{\mathrm{mom}}_{a,i}$ 就是\cref{thm:pdf-dis-xspace}中以其矩唯一确定的分布 $C_{a,i}$，
+\cref{thm:disall-factorization}与\cref{thm:pdf-dis-xspace}的扭度 2 部分作为分布相同；逐点的余项只受全阶论证\cref{thm:disall-factorization}控制。（本推论只涉及部分子态的系数函数。）
+\uses{thm:pdf-dis-xspace,prop:dis-wilson-partons,cor:appK-pdf,prop:pdf-partonic-dr,lem:prelim-mellin,thm:pdf-moments-local}
+\end{corollary}
+
+\begin{proof}
+(1) 由 Mellin 卷积定理（\cref{lem:prelim-mellin}），$\int_0^1\dd z\,z^{n-1}(C\otimes f)(z)=C_nf_n$，$X_n\equiv\int_0^1\dd z\,z^{n-1}X(z)$。对定义式取矩：
+$\int_0^1\dd z\,z^{n-2}\hat F^{(j)}_2=\sum_iC^{\mathrm{mom}}_{2,i,n}\,f_{i/j,n}$。
+(2) OPE 一侧，\cref{prop:dis-wilson-partons}（以 OPE 为前提而严格）给出 $\int_0^1\dd z\,z^{n-2}\hat F^{(j)}_2=\sum_iC^{(n)}_{2,i}\langle j|O^{(n)}_i|j\rangle$，
+其中在壳无质量部分子的算符矩阵元的全部圈修正都无标度，裸矩阵元等于 $\delta_{ij}$，重整化后等于 $\delta_{ij}$ 加纯 $\MSbar$ 极点。由\cref{thm:pdf-moments-local}，
+重整化的扭度 2 定域算符矩阵元等于重整化 PDF 的矩；对部分子靶，二者都等于“裸值 $\delta_{ij}$ 乘以同一个 $Z^{-1}$”（\cref{prop:pdf-partonic-dr}），故 $\langle j|O^{(n)}_i|j\rangle=f_{i/j,n}$。
+(3) 两式相减：$\sum_i\big(C^{\mathrm{mom}}_{2,i,n}-C^{(n)}_{2,i}\big)f_{i/j,n}=0$ 对一切部分子靶 $j$ 成立；矩阵 $(f_{i/j,n})=\mathbb 1+\order{\as}$ 逐阶可逆，故逐阶地 $C^{\mathrm{mom}}_{2,i,n}=C^{(n)}_{2,i}$。$F_L$（以及 $F_1$）同理。
+(4) $C^{\mathrm{mom}}_{2,i}$ 是 $[0,1]$ 上的有限阶分布（$\delta(1-z)$、加号分布与可积函数）；由\cref{cor:appK-pdf}的论证，偶数阶矩（$n\ge N_1$）唯一地确定这样的分布，
+所以 $C^{\mathrm{mom}}_{2,i}$ 等于\cref{thm:pdf-dis-xspace}中矩为 $C^{(n)}_{2,i}$ 的那个分布。于是两个定理中 $x$ 空间的主项逐项相同。
+(5) 反过来，矩的一致不能推出余项逐点一致：对每个固定 $n$ 矩为 $\order{1/Q^2}$ 的函数逐点可以是 $\order{1}$（例如 $\sin(Q^2x)$；同类反例见\cref{prop:disall-two-routes}证明的 (c)）。
+所以\cref{thm:pdf-dis-xspace}只控制分布意义下的余项，固定 $x$ 处的逐点余项是全阶论证\cref{thm:disall-factorization}的内容。
+\end{proof}
+
+\noindent
+在 $\order{\as}$ 这一一致性已被逐项检验：在壳部分子前向 Compton 振幅硬区的 Taylor 系数，对 $\varepsilon$ 精确地等于割图结果的 Mellin 矩（夸克靶 $N\le8$，胶子靶偶数 $N\le8$），
+重整化后给出\cref{ch:dis}的闭式（\cref{ex:dis-oneloop-ope}）；下一节 $x$ 空间系数函数的矩也与之一致。   % VF-DIS-13
+共振区 $W^2\sim\Lambda^2$ 只能在对 $x$ 平滑后与扭度展开比较（Bloom--Gilman 对偶，猜想层次）。
+
+% ---------------------------------------------------------------------
+\section{$\order{\as}$ 系数函数的推导}\label{sec:disall-nlo}
+
+本节在 $D=4-2\varepsilon$ 维的常规维数正规化中计算夸克靶与胶子靶的部分子结构函数至 $\order{\as}$（图见\cref{fig:dis-oneloop}），并由 $\MSbar$ 质量因子化得到系数函数：
+软—共线双极点与末态共线极点在实、虚修正之和中相消，剩下的初态共线极点恰好由 $\MSbar$ 部分子 PDF 吸收——这正是\cref{thm:disall-factorization}的机制在单圈的实现。
+
+\begin{proposition}[$O(\alpha_s)$ 的 $\overline{\rm MS}$ 系数函数 \tagR]\label{prop:disall-nlo}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）以下陈述在单圈（$\order{\as}$）。（本命题只涉及部分子态。）
+在常规维数正规化、入射胶子按 $D-2$ 个极化平均的 $\MSbar$ 方案中，按
+\begin{equation}\label{eq:disall-norm}
+\frac{F_2}{x}=\sum_qe_q^2\Big\{q+\bar q+\frac{\as}{2\pi}\big[C_2^q\otimes(q+\bar q)+2C_2^g\otimes g\big]\Big\},\qquad
+\frac{F_L}{x}=\sum_qe_q^2\frac{\as}{2\pi}\big[C_L^q\otimes(q+\bar q)+2C_L^g\otimes g\big]
+\end{equation}
+归一化系数函数（$\sum_q$ 只对味求和；胶子项的因子 $2$ 计入 $\gamma^*g\to q\bar q$ 中同时出现的夸克与反夸克；$(C\otimes f)(x)=\int_x^1\frac{\dd\xi}\xi C(x/\xi)f(\xi)$），在 $\mu=Q$ 处
+\begin{equation}\label{eq:disall-C}
+\begin{aligned}
+C_2^q(z)&=C_F\Big[2\mathcal D_1-\frac32\mathcal D_0-(1+z)\ln(1-z)-\frac{1+z^2}{1-z}\ln z\\
+&\hspace{4.2em}+3+2z-\Big(\frac92+\frac{\pi^2}3\Big)\delta(1-z)\Big],\\
+C_2^g(z)&=T_F\Big[\big(z^2+(1-z)^2\big)\ln\frac{1-z}{z}-8z^2+8z-1\Big],\\
+C_L^q(z)&=2C_Fz,\qquad C_L^g(z)=4T_Fz(1-z),
+\end{aligned}   % VF-DIS-7
+\end{equation}
+$\mathcal D_k\equiv[\ln^k(1-z)/(1-z)]_+$。对一般的 $\mu=\mu_F=\mu_R$，$C_2^i(z,Q^2/\mu^2)=C_2^i(z)+\ln(Q^2/\mu^2)P_{qi}(z)$（$i=q,g$），$C_L$ 在此阶与 $\mu$ 无关。
+等价地 $C_2^q=C_F\big[\frac{1+z^2}{1-z}\big(\ln\frac{1-z}z-\frac34\big)+\frac{9+5z}4\big]_+$（加号作用于整个方括号）。若入射胶子按 2 个极化平均，则 $C_2^g\to C_2^g+P_{qg}$，$C_L^g$ 不变。
+\uses{def:disall-breit,prop:sudakov-oneloop,lem:prelim-plus-expansion,prop:pdf-partonic-dr,lem:appC-phase-space,prop:dis-c-oneloop}
+\end{proposition}
+
+\begin{proof}
+部分子结构函数 $\hat F^j_a/(ze_q^2)$（$j=q,g$）用\cref{def:disall-breit}的投影提取；$g_0^2=4\pi\as\mu^{2\varepsilon}S_\varepsilon^{-1}$，$S_\varepsilon=(4\pi)^\varepsilon\ee^{-\varepsilon\gamma_E}$；初态平均为夸克自旋 $\frac12$、颜色 $\frac1{N_c}$，胶子极化 $\frac1{D-2}$、颜色 $\frac1{N_c^2-1}$。
+(1) Born：$\hat W^{\mu\nu}_{(0)}=\frac1{4\pi}2\pi\delta((p+q)^2)\frac12e_q^2\Tr[\sla p\gamma^\mu(\sla p+\sla q)\gamma^\nu]$；由 $\gamma^\mu\sla a\gamma_\mu=-(D-2)\sla a$、$\sla p\sla p=0$ 与
+$\delta((p+q)^2)=\delta(1-z)/Q^2$，对任意 $D$ 有 $\hat F^{q(0)}_2/z=e_q^2\delta(1-z)$，$\hat F^{q(0)}_L=0$。   % VF-DIS-1
+(2) 虚修正：由一圈形状因子（\cref{prop:sudakov-oneloop}），$\hat F^{q,\mathrm V}_2/(ze_q^2)=2F^{(1)}\delta(1-z)=\frac{\as}{2\pi}C_F(\frac{\mu^2}{Q^2})^\varepsilon[-\frac2{\varepsilon^2}-\frac3\varepsilon-8+\zeta_2+\order{\varepsilon}]\delta(1-z)$，极点全部是红外的（$Z_1=Z_2$，外线自能无标度），对 $F_L$ 无贡献。   % VF-DIS-3
+(3) 实辐射 $\gamma^*q\to qg$：以 $D$ 维两体相空间（\cref{lem:appC-phase-space}）积分投影后的平方矩阵元，$y$ 积分均为 Beta 函数，对 $\varepsilon$ 精确地得到（中间步骤见\cref{ex:disall-nlo}）
+\begin{equation}\label{eq:disall-Rq}
+\begin{gathered}
+\frac{\hat F^{q,\mathrm R}_a}{ze_q^2}=\frac{\as}{2\pi}C_F\Big(\frac{\mu^2}{Q^2}\Big)^\varepsilon R^q_a,\\
+R^q_2=\frac{\ee^{\varepsilon\gamma_E}\Gamma(-\varepsilon)}{2\Gamma(2-2\varepsilon)}\frac{z^\varepsilon\,[2(1+z^2)-\varepsilon(7-2z)+\varepsilon^2]}{(1-z)^{1+\varepsilon}},\qquad
+R^q_L=\frac{\ee^{\varepsilon\gamma_E}\Gamma(2-\varepsilon)}{\Gamma(2-2\varepsilon)}\,2z\Big(\frac z{1-z}\Big)^\varepsilon .   % VF-DIS-4
+\end{gathered}
+\end{equation}
+(4) 用分布展开（\cref{lem:prelim-plus-expansion}，$a=1$）$(1-z)^{-1-\varepsilon}=-\frac1\varepsilon\delta(1-z)+\sum_{k\ge0}\frac{(-\varepsilon)^k}{k!}\mathcal D_k$ 与乘积约定，记 $\delta\equiv\delta(1-z)$，
+\begin{equation}\label{eq:disall-Rq-exp}
+\begin{aligned}
+R^q_2={}&\frac{2\delta}{\varepsilon^2}+\frac1\varepsilon\Big[-2\mathcal D_0+1+z+\frac32\delta\Big]+2\mathcal D_1-\frac32\mathcal D_0\\
+&-(1+z)\ln(1-z)-\frac{1+z^2}{1-z}\ln z+3+2z+\Big(\frac72-3\zeta_2\Big)\delta+\order{\varepsilon},   % VF-DIS-4
+\end{aligned}
+\end{equation}
+而 $R^q_L=2z+\order{\varepsilon}$ 有限。(5) 实、虚相加：$1/\varepsilon^2$ 的系数 $2-2=0$；$1/\varepsilon$ 的系数 $-2\mathcal D_0+1+z+(\frac32-3)\delta=-P_{qq}/C_F$（$P_{qq}/C_F=2\mathcal D_0-(1+z)+\frac32\delta$）；
+$\delta$ 的有限系数 $\frac72-3\zeta_2-8+\zeta_2=-(\frac92+\frac{\pi^2}3)$。于是 $\hat F^q_2/(ze_q^2)=\delta+\frac{\as}{2\pi}(\frac{\mu^2}{Q^2})^\varepsilon[-\frac1\varepsilon P_{qq}+C_2^q+\order{\varepsilon}]$。   % VF-DIS-6
+(6) 质量因子化：由\cref{prop:pdf-partonic-dr}，$f_{q/q}=\delta-\frac{\as}{2\pi}\frac1\varepsilon P_{qq}+\order{\as^2}$；因子化公式用于夸克靶给出
+$\frac{\as}{2\pi}C_2^q(z,Q^2/\mu^2)=\frac{\as}{2\pi}[(\frac{\mu^2}{Q^2})^\varepsilon(-\frac{P_{qq}}\varepsilon+C_2^q)+\frac{P_{qq}}\varepsilon]+\order{\varepsilon}=\frac{\as}{2\pi}[C_2^q+\ln\frac{Q^2}{\mu^2}P_{qq}]$；
+胶子靶的极点由 $f_{q/g}+f_{\bar q/g}=-\frac{\as}{2\pi}\frac2\varepsilon P_{qg}$ 吸收（\cref{ex:disall-gluon}）。(7) 两种写法的 $C_2^q$ 在 $z<1$ 处逐点相同，且在 $[0,1]$ 上积分都为零（Adler 求和规则），故为同一分布；
+按 2 个极化平均相当于把 $R^g_2$ 乘以 $1-\varepsilon$，极点项 $-\frac2\varepsilon P_{qg}$ 产生有限移动 $+2P_{qg}$，即 $C_2^g\to C_2^g+P_{qg}$。   % VF-CONV-6
+这些结果的 Mellin 矩就是\cref{ch:dis}的单圈 Wilson 系数（\cref{prop:dis-c-oneloop}）。
+\end{proof}
+
+\noindent
+换到 $a_s=\as/4\pi$ 的归一化（$c^{(1)}_{2,\mathrm{ns}}=2C_2^q$，$c^{(1)}_{2,g}=4n_fC_2^g$，$c^{(1)}_{L,\mathrm{ns}}=2C_L^q$，$c^{(1)}_{L,g}=4n_fC_L^g$，$T_F=\frac12$），上述结果与\cite[式~(4.1)--(4.4)、(B.3)--(B.4)]{Vermaseren:2005qc}
+及\cite[式~(3)]{Moch:2004xu}逐项一致，那里归功于\cite{BardeenEtAl1978}（其式~(3.9) 去掉 $\ln4\pi-\gamma_E$ 项后恰为 $2C^q_{2,N}$）；参见\cite{FurmanskiPetronzio1982,EllisStirlingWebber1996}。
+
+\begin{example}[$O(\alpha_s)$ 系数函数的完整推导]\label{ex:disall-nlo}
+我们写出\cref{prop:disall-nlo}证明第 (3)(4) 步的中间计算。实辐射振幅（\cref{fig:dis-oneloop}）为
+$M^\mu=e_qgt^a\bar u(p')[\gamma^\rho\frac{\sla p+\sla q}{\hat s}\gamma^\mu+\gamma^\mu\frac{\sla p-\sla k}{\hat t}\gamma^\rho]u(p)\varepsilon^*_\rho(k)$，$\hat s=Q^2(1-z)/z$，$\hat t=(p-k)^2$，$\hat u=(p-p')^2$，$\hat s+\hat t+\hat u=-Q^2$。
+只有一个外胶子时 $k^\rho M_\rho=0$，极化求和可取 $-g_{\rho\sigma}$（我们也用物理极化求和验证了结果不变）。$D$ 维 Dirac 代数给出
+$(-g_{\mu\nu})\sum M^\mu M^{\nu*}|_{\mathrm{Dirac}}=8(1-\varepsilon)[(1-\varepsilon)(-\frac{\hat t}{\hat s}-\frac{\hat s}{\hat t})+\frac{2\hat uQ^2}{\hat s\hat t}+2\varepsilon]$，$(p_\mu p_\nu)\sum M^\mu M^{\nu*}|_{\mathrm{Dirac}}=-4(1-\varepsilon)\hat u$，
+再乘以 $e_q^2g_0^2$ 与色—自旋平均因子 $\frac12\cdot\frac1{N_c}\Tr(t^at^a)=\frac{C_F}2$。在 $\gamma^*$—部分子质心系中以 $y=(1-\cos\theta)/2$ 参数化（$\theta$ 为出射胶子与 $\vec p$ 的夹角），
+$\hat t=-Q^2y/z$，$\hat u=-Q^2(1-y)/z$，$\int\dd\Phi_2=\frac1{8\pi}(\frac{4\pi}{\hat s})^\varepsilon\frac1{\Gamma(1-\varepsilon)}\int_0^1\dd y\,[y(1-y)]^{-\varepsilon}$，总前因子为
+\begin{equation*}
+\frac1{4\pi}\cdot\frac{C_F}2g_0^2\cdot\frac1{8\pi}\Big(\frac{4\pi}{\hat s}\Big)^\varepsilon\frac1{\Gamma(1-\varepsilon)}=\frac{\as}{2\pi}C_F\cdot\frac18\Big(\frac{\mu^2}{Q^2}\Big)^\varepsilon\frac{z^\varepsilon(1-z)^{-\varepsilon}\ee^{\varepsilon\gamma_E}}{\Gamma(1-\varepsilon)}.
+\end{equation*}
+$F_2$ 投影后的被积函数是 $8[(1-\varepsilon)y^2-2y(z-\varepsilon(1-z))+1+z^2-\varepsilon(1-z)^2]/[y(1-z)]+16(3-2\varepsilon)z(1-y)$。
+记 $I_a=\int_0^1\dd y\,y^{a-\varepsilon}(1-y)^{-\varepsilon}$，则 $I_0=\Gamma^2(1-\varepsilon)/\Gamma(2-2\varepsilon)$，$I_1=I_0/2$，$I_{-1}=-(1-2\varepsilon)I_0/\varepsilon$；$y\to0$ 端点（胶子与入射夸克共线）的 $1/\varepsilon$ 来自 $I_{-1}$。
+逐项积分并乘以 $(1-z)/(8I_0)$ 得 $-(1+z^2)/\varepsilon+(7-2z)/2-\varepsilon/2=-\frac1{2\varepsilon}[2(1+z^2)-\varepsilon(7-2z)+\varepsilon^2]$，连同前因子与 $\Gamma(-\varepsilon)=-\Gamma(1-\varepsilon)/\varepsilon$ 即得\cref{eq:disall-Rq}。
+$F_L$ 投影后的被积函数 $32(1-\varepsilon)z(1-y)$ 在 $y\to0$ 处不奇异：$F_L$ 的投影压低了共线区域，$R^q_L$ 有限。
+
+展开时写 $R^q_2=A(\varepsilon)(1-z)^{-1-\varepsilon}G(z,\varepsilon)$，$A=\frac{\ee^{\varepsilon\gamma_E}\Gamma(-\varepsilon)}{2\Gamma(2-2\varepsilon)}$，$G=z^\varepsilon[2(1+z^2)-\varepsilon(7-2z)+\varepsilon^2]$，$G(1,\varepsilon)=4-5\varepsilon+\varepsilon^2$。
+于是 $\delta$ 的系数为 $-AG(1,\varepsilon)/\varepsilon=\frac2{\varepsilon^2}+\frac3{2\varepsilon}+\frac72-3\zeta_2+\order{\varepsilon}$，$\mathcal D_0$ 的系数为 $AG(1,\varepsilon)=-\frac2\varepsilon-\frac32+\order{\varepsilon}$，$\mathcal D_1$ 的系数为 $-\varepsilon AG(1,\varepsilon)=2+\order{\varepsilon}$，
+正规部分 $A[G(z,\varepsilon)-G(1,\varepsilon)](1-z)^{-1-\varepsilon}=\frac{1+z}\varepsilon-(1+z)\ln(1-z)-\frac{1+z^2}{1-z}\ln z+3+2z+\order{\varepsilon}$，合起来即\cref{eq:disall-Rq-exp}。
+最后，对 $N=1,\dots,8$ 以 40 位精度数值计算\cref{eq:disall-C}的 Mellin 矩，与\cref{ch:dis}的闭式一致到 $10^{-39}$；特别地 $C^q_{2,1}=0$（Adler 求和规则），   % VF-DIS-8
+$C^q_{1,1}=C^q_{2,1}-C^q_{L,1}=-C_F$（Bjorken $\nu$ 求和规则；$C_1^i\equiv C_2^i-C_L^i$ 来自 $2F_1=F_2/x-F_L/x$）。
+\uses{prop:disall-nlo}
+\end{example}
+
+\begin{example}[光子—胶子融合]\label{ex:disall-gluon}
+$\gamma^*(q)+g(p)\to q(k_1)+\bar q(k_2)$：$M^\mu=e_qgt^a\bar u(k_1)[\gamma^\mu\frac{\sla k_1-\sla q}{\hat u}\gamma^\rho+\gamma^\rho\frac{\sla k_1-\sla p}{\hat t}\gamma^\mu]v(k_2)\varepsilon_\rho(p)$，
+$\hat t=(p-k_1)^2=-Q^2y/z$，$\hat u=(p-k_2)^2=-Q^2(1-y)/z$（$\theta$ 为出射夸克与 $\vec p$ 的夹角；矩阵元在 $\hat t\leftrightarrow\hat u$ 下对称，\cref{fig:dis-oneloop}中按内线动量对两个传播子的命名不影响结果）。
+投影后的迹为 $(-g_{\mu\nu})\sum M^\mu M^{\nu*}|_{\mathrm{Dirac}}=8(1-\varepsilon)[(1-\varepsilon)(\frac{\hat u}{\hat t}+\frac{\hat t}{\hat u})-\frac{2\hat sQ^2}{\hat t\hat u}-2\varepsilon]$，$(p_\mu p_\nu)\sum M^\mu M^{\nu*}|_{\mathrm{Dirac}}=8\hat s$，
+平均因子为 $\frac1{2(1-\varepsilon)}\frac1{N_c^2-1}\Tr(t^at^a)=\frac{T_F}{2(1-\varepsilon)}$。记 $\hat F^g_a/(ze_q^2)=\frac{\as}{2\pi}T_F(\frac{\mu^2}{Q^2})^\varepsilon R^g_a$（一味夸克，$q$ 与 $\bar q$ 都计入），
+$F_2$ 投影的 $y$ 积分为 $-\frac{16}\varepsilon\frac{\Gamma^2(1-\varepsilon)}{\Gamma(2-2\varepsilon)}\frac{P-3\varepsilon+4\varepsilon^2-2\varepsilon^3}{1-\varepsilon}$，$P\equiv z^2+(1-z)^2$，于是
+\begin{equation*}
+R^g_2=\frac{2\ee^{\varepsilon\gamma_E}\Gamma(-\varepsilon)}{\Gamma(2-2\varepsilon)}\Big(\frac z{1-z}\Big)^\varepsilon\frac{P-3\varepsilon+4\varepsilon^2-2\varepsilon^3}{(1-\varepsilon)^2}
+=-\frac2\varepsilon P+2\Big\{P\ln\frac{1-z}z-8z^2+8z-1\Big\}+\order{\varepsilon},   % VF-DIS-5
+\end{equation*}
+而 $R^g_L=8z(1-z)+\order{\varepsilon}$。极点出现两次，$y\to0$ 与 $y\to1$（夸克或反夸克与胶子共线）各贡献 $-P/\varepsilon$。
+因此 $\hat F^g_2/(ze_q^2)=\frac{\as}{2\pi}(\frac{\mu^2}{Q^2})^\varepsilon[-\frac2\varepsilon P_{qg}+2C_2^g+\order{\varepsilon}]$，减去 $f_{q/g}+f_{\bar q/g}=-\frac{\as}{2\pi}\frac2\varepsilon P_{qg}$ 与 Born 系数之卷积即得 $2[C_2^g+\ln(Q^2/\mu^2)P_{qg}]$。
+按 2 个极化平均时 $R^g_2$ 乘以 $1-\varepsilon$，$C_2^g$ 移动 $+P_{qg}$：胶子平均的约定是 $\MSbar$ 方案的一部分。
+\uses{prop:disall-nlo}
+\end{example}
+
+\noindent
+Callan--Gross 关系 $F_L=0$ 只是部分子模型（领头阶）的结果，而不是 QCD 的定理：由 $C_L^q=2C_Fz$、$C_L^g=4T_Fz(1-z)$ 与领头阶的 $F_2/x=\sum e_q^2(q+\bar q)$ 立即得到
+$F_L=\frac{\as}{4\pi}x^2\int_x^1\frac{\dd\xi}{\xi^3}\big[\frac{16}3F_2(\xi)+8\sum_qe_q^2(1-\frac x\xi)\xi g(\xi)\big]$（$C_F=\frac43$，$T_F=\frac12$），即 Altarelli--Martinelli 关系\cite{AltarelliMartinelli1978}；
+$C_L^q$ 的矩最早由\cite{Zee:1974du}得到。$C_L$ 在 $\order{\as}$ 与 $\mu$ 及方案都无关，是胶子分布的直接检验之一。
+
+% ---------------------------------------------------------------------
+\section{标度无关性与 DIS 方案}\label{sec:disall-scale}
+
+$\mu$ 是把共线发散分给 PDF 时引入的人为标度。DGLAP 方程（\cref{thm:pdf-dglap}）是算符重整化的结论，逻辑上先于因子化定理；标度无关性是它与系数函数的 $\mu$ 依赖相互抵消的推论。
+
+\begin{proposition}[标度无关性 \tagR]\label{prop:disall-scale}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）以下陈述针对截断到 $\order{\as}$ 的\cref{eq:disall-norm}。（本命题只涉及部分子态的系数函数。）
+设 PDF 满足 DGLAP 方程，$a\equiv\as(\mu_R)/2\pi$ 满足 $\dd a/\dd\ln\mu_R^2=-\frac{\beta_0}2a^2+\order{a^3}$，系数函数取\cref{prop:disall-nlo}的 $C_2^i(z,Q^2/\mu_F^2)$。则
+\begin{equation}\label{eq:disall-scale}
+\frac{\partial}{\partial\ln\mu_F^2}\frac{F_2}x=\order{a^2},\qquad
+\frac{\partial}{\partial\ln\mu_R^2}\frac{F_2}x=-\frac{\beta_0}2a^2\sum_qe_q^2\big[C_2^q\otimes(q+\bar q)+2C_2^g\otimes g\big]+\order{a^3},   % VF-DIS-10 (written for F_2/x)
+\end{equation}
+式中 $C_2^i$ 即 $C_2^i(z,Q^2/\mu_F^2)$；且 $F_L$ 在 $\order{a}$ 与 $\mu_F$、$\mu_R$ 都无关。
+\uses{prop:disall-nlo,thm:pdf-dglap,prop:prelim-beta}
+\end{proposition}
+
+\begin{proof}
+在 Mellin 空间中卷积成为乘积。对一味夸克，记 $\Sigma_N$、$g_N$ 为 $q+\bar q$ 与 $g$ 的矩，$F_{2,N}$ 为 $F_2/x$ 的矩，$L_F=\ln(Q^2/\mu_F^2)$，则
+$F_{2,N}=e_q^2\{\Sigma_N(\mu_F)+a(\mu_R)[(C^q_{2,N}+L_FP_{qq,N})\Sigma_N+2(C^g_{2,N}+L_FP_{qg,N})g_N]\}$。由\cref{thm:pdf-dglap}，
+$\partial\Sigma_N/\partial\ln\mu_F^2=a(\mu_F)[P_{qq,N}\Sigma_N+2P_{qg,N}g_N]+\order{a^2}$（$q$ 与 $\bar q$ 各从胶子得到一份 $P_{qg}\otimes g$），而 $\partial L_F/\partial\ln\mu_F^2=-1$，故
+$\partial F_{2,N}/\partial\ln\mu_F^2=e_q^2[a(\mu_F)-a(\mu_R)](P_{qq,N}\Sigma_N+2P_{qg,N}g_N)+\order{a^2}=\order{a^2}$。对 $\mu_R$，只有 $a(\mu_R)$ 依赖于它，
+由\cref{prop:prelim-beta}，$\dd a/\dd\ln\mu^2=\frac1{2\pi}\dd\as/\dd\ln\mu^2=-\frac{\beta_0}{8\pi^2}\as^2=-\frac{\beta_0}2a^2$，即得第二式。
+$F_L$ 在 $\order{a}$ 只含与 $\mu$ 无关的 $C_L$ 乘以 PDF，而 PDF 的 $\mu$ 依赖是 $\order{a}$，故 $F_L$ 的变化为 $\order{a^2}$。
+（以上用符号计算在 Mellin 空间中核对过。）
+\end{proof}
+
+\noindent
+定理只保证剩余的标度依赖是高一阶的；把 $\mu$ 在 $Q/2$ 与 $2Q$ 之间变化的差别当作“理论误差”是没有定理支持的约定。
+另一种常用方案把 $F_2$ 的全部高阶修正吸收进夸克分布；方案变换的一般形式是 $f'=Z\otimes f$、$C'=C\otimes Z^{-1}$（\cref{rem:pdf-schemes}）。
+
+\begin{proposition}[DIS 方案 \tagR]\label{prop:disall-dis-scheme}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）以下陈述在 $\order{\as}$。（本命题只涉及部分子态的系数函数与方案变换。）
+DIS 方案要求在 $\mu=Q$ 处 $F_2/x=\sum_qe_q^2(q+\bar q)^{\mathrm{DIS}}$ 对各阶成立。在 $\order{\as}$（$a=\as/2\pi$，全部量取在同一 $\mu$，$C_2^i\equiv C_2^i(z)$ 为 $\mu=Q$ 处的 $\MSbar$ 系数），
+\begin{equation}\label{eq:disall-dis-scheme}
+\begin{gathered}
+q_i^{\mathrm{DIS}}=q_i+a\big[C_2^q\otimes q_i+C_2^g\otimes g\big],\qquad \bar q_i^{\mathrm{DIS}}=\bar q_i+a\big[C_2^q\otimes\bar q_i+C_2^g\otimes g\big],\\
+g^{\mathrm{DIS}}=g-a\big[C_2^q\otimes\Sigma+2n_fC_2^g\otimes g\big],   % VF-DIS-11
+\end{gathered}
+\end{equation}
+$\Sigma=\sum_i(q_i+\bar q_i)$；胶子的变换不由 $F_2$ 确定，上式是对全部矩保持动量求和规则的选择。于是 $C_2^{q,\mathrm{DIS}}=\ln(Q^2/\mu^2)P_{qq}$，$C_2^{g,\mathrm{DIS}}=\ln(Q^2/\mu^2)P_{qg}$；
+领头阶分裂函数不变，次领头阶在 $(\Sigma,g)$ 基中按
+\begin{equation}\label{eq:disall-P1}
+\begin{gathered}
+P'^{(1)}=P^{(1)}+Z\otimes P^{(0)}-P^{(0)}\otimes Z-\frac{\beta_0}2Z,\qquad Z=\begin{pmatrix}C_2^q&2n_fC_2^g\\-C_2^q&-2n_fC_2^g\end{pmatrix},\\
+P^{(1),\mathrm{DIS}}_{\mathrm{NS}}=P^{(1),\MSbar}_{\mathrm{NS}}-\frac{\beta_0}2C_2^q   % VF-DIS-11
+\end{gathered}
+\end{equation}
+变换（DGLAP 核写作 $aP^{(0)}+a^2P^{(1)}$）；$C_L$ 在 $\order{\as}$ 与方案无关。
+\uses{prop:disall-nlo,rem:pdf-schemes,thm:pdf-dglap,prop:prelim-beta}
+\end{proposition}
+
+\begin{proof}
+(1) 由\cref{eq:disall-dis-scheme}，$q_i=q_i^{\mathrm{DIS}}-a[C_2^q\otimes q_i+C_2^g\otimes g]+\order{a^2}$。代入\cref{eq:disall-norm}（取一般 $\mu$，$C_2^i(z,Q^2/\mu^2)=C_2^i(z)+\ln(Q^2/\mu^2)P_{qi}$），
+$\order{a}$ 中的 $C_2^q\otimes(q+\bar q)+2C_2^g\otimes g$ 恰好抵消，剩下
+$F_2/x=\sum_qe_q^2\{(q+\bar q)^{\mathrm{DIS}}+a\ln(Q^2/\mu^2)[P_{qq}\otimes(q+\bar q)+2P_{qg}\otimes g]\}+\order{a^2}$，即 $C_2^{i,\mathrm{DIS}}=\ln(Q^2/\mu^2)P_{qi}$，在 $\mu=Q$ 处为零。
+(2) $\Sigma^{\mathrm{DIS}}+g^{\mathrm{DIS}}=\Sigma+g+a[C_2^q\otimes\Sigma+2n_fC_2^g\otimes g]-a[C_2^q\otimes\Sigma+2n_fC_2^g\otimes g]=\Sigma+g$，对每个矩都成立，特别地 $N=2$ 的动量求和规则不变。
+(3) $F_L$ 是 $\order{a}$ 的量，PDF 的 $\order{a}$ 变化只改变 $\order{a^2}$ 项，所以 $C_L$ 不变；领头阶分裂函数也不变。
+(4) 设 $f'=(1+aZ)\otimes f$，$\dd f/\dd\ln\mu^2=(aP^{(0)}+a^2P^{(1)})\otimes f$，$\dd a/\dd\ln\mu^2=-\frac{\beta_0}2a^2$（\cref{thm:pdf-dglap,prop:prelim-beta}）。则
+$\dd f'/\dd\ln\mu^2=(1+aZ)\otimes(aP^{(0)}+a^2P^{(1)})\otimes f-\frac{\beta_0}2a^2Z\otimes f$；用 $f=(1-aZ)\otimes f'+\order{a^2}$ 消去 $f$，得
+$\dd f'/\dd\ln\mu^2=aP^{(0)}\otimes f'+a^2[P^{(1)}+Z\otimes P^{(0)}-P^{(0)}\otimes Z-\frac{\beta_0}2Z]\otimes f'+\order{a^3}$。在 $(\Sigma,g)$ 基中 $Z$ 的两行分别来自 $\Sigma^{\mathrm{DIS}}$ 与 $g^{\mathrm{DIS}}$ 的定义。
+非单态部分 $Z_{\mathrm{NS}}=C_2^q$ 在 Mellin 空间中与 $P^{(0)}_{\mathrm{NS}}$ 对易，于是 $P^{(1),\mathrm{DIS}}_{\mathrm{NS}}=P^{(1),\MSbar}_{\mathrm{NS}}-\frac{\beta_0}2C_2^q$。
+（以上步骤均以符号计算核对。）
+\end{proof}
+
+\noindent
+夸克分布的 DIS 方案可以追溯到\cite{AltarelliEllisMartinelli1979}；用动量求和规则固定胶子的约定参见\cite{DiemozEtAl1988}。其他过程（例如 Drell--Yan）的硬系数必须按同一个 $Z$ 变换，
+在那里 DIS 方案的系数并不为零；方案的选择同时改变 PDF 与系数函数，可观测量只在所截断的阶以上改变。
+
+% ---------------------------------------------------------------------
+\section{重夸克质量与变味方案}\label{sec:disall-heavy}
+
+粲与底夸克的质量 $m$ 介于 $\Lambda$ 与 $Q$ 之间：$Q\sim m$ 时重夸克只在末态成对产生，$Q\gg m$ 时 $\as\ln(Q^2/m^2)$ 变大，重夸克又应当作为部分子参与演化。
+$\MSbar$ 与质量无关，重夸克不会自动退耦，退耦要通过 $n_f$ 与 $n_f-1$ 味有效理论的匹配来实现（\cref{rem:qcd-decoupling}）。下面 $Q$ 同时表示重夸克（如\cref{fig:disall-heavy}）与 $Q^2=-q^2$，从上下文可以区分。
+
+\begin{theorem}[含重夸克质量的因子化（Collins 1998） \tagA]\label{thm:disall-heavy}
+在硬部分中保留重夸克质量 $m_h$，并按 CWZ/ACOT 框架引入重夸克分布\cite{CollinsWilczekZee1978,AivazisEtAl1994}，DIS 结构函数仍取因子化形式
+\begin{equation}\label{eq:disall-heavy}
+\frac{F_a}{x}=\sum_i f_i\otimes\hat C_{a,i}\Big(\frac{m_h}Q,\frac Q\mu,\as(\mu)\Big)+R_a,
+\end{equation}
+其中 $i$ 包括重夸克，余项 $R_a$ 被 $\Lambda/Q$ 的某个幂次一致地压低，与 $m_h/Q$ 的大小无关：\cite{Collins1998b}的摘要写道
+「“The power-suppressed corrections to the factorization formula are uniformly suppressed by a power of $\Lambda/Q$, independently of the size of heavy quark masses, $M$, relative to $Q$.”」
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{thm:disall-factorization,rem:qcd-decoupling,asm:intro-bridge}
+% errtype: E-S
+\end{theorem}
+
+\begin{proofsketch}
+论证与\cref{thm:disall-factorization}相同，只是重夸克质量保留在硬部分与相应的近似子中：$m_h\sim Q$ 时含重夸克的线是硬的；$m_h\ll Q$ 时重夸克也可以是活动部分子，其共线发散被 $m_h$ 截断为 $\ln(Q^2/m_h^2)$。
+重整化采用 CWZ 的退耦减除方案\cite{CollinsWilczekZee1978}：$\mu<m_h$ 时理论等价于 $n_f-1$ 味的有效理论，$\mu>m_h$ 时用 $n_f$ 味的 $\MSbar$（\cref{rem:qcd-decoupling}）。
+所得系数在 $Q\sim m_h$ 时趋于固定味方案（FFNS），在 $Q\gg m_h$ 时趋于零质量变味方案；一般质量变味方案（ACOT\cite{Aivazis:1993kh,AivazisEtAl1994}、S-ACOT\cite{Kramer:2000hn}、TR\cite{Thorne:1997ga}、
+BMSN\cite{Buza:1996wv}、FONLL\cite{Forte:2010ta}）减去两者的重叠，在所计算的阶上是等价的处方（\cref{ex:disall-heavy-lo}）。完整论证见\cite{Collins1998b}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+本定理继承\cref{thm:disall-factorization}的全部瓶颈（\cref{asm:appN-collins,asm:appN-ward-product,asm:appN-cutsum}等）与具名缺口\cref{asm:appN-brst-nonlocal}；质量的保留不引入新的未证假设，余项的一致性同样是标度陈述（E-S）。
+这一结论是对只有一个强子的 DIS 而言的：对强子—强子碰撞，\cite[第~14.6~节，第~569--570~页]{Collins2011}指出因子化只保证领头幂次上红外发散的相消，形如 $(m^2/Q^2)\times(1/\varepsilon)$ 的项可能残留，
+在硬散射中保留入射重夸克的质量是“a bad idea”；把 ACOT 一类的方案移植到强子—强子碰撞时须记住这一区别。
+
+\begin{example}[领头阶 $\gamma^*g\to Q\bar Q$]\label{ex:disall-heavy-lo}
+考虑 $\gamma^*(q)+g(k)\to Q(p_1)+\bar Q(p_2)$，$p_1^2=p_2^2=m^2$（\cref{fig:disall-heavy}(a)），$z\equiv Q^2/(2k\cdot q)$。记 $\epsilon_m\equiv m^2/Q^2$，$\hat s=(k+q)^2=Q^2(1-z)/z$，$\beta\equiv\sqrt{1-4m^2/\hat s}=\sqrt{1-4\epsilon_mz/(1-z)}$，阈值为 $z\le1/(1+4\epsilon_m)$。
+与无质量情形相比，旋量求和改为 $\sla p_1+m$、$\sla p_2-m$，传播子分母为 $t_1\equiv(k-p_1)^2-m^2=-\frac{\hat s+Q^2}2(1-\beta\cos\theta)$ 与 $u_1\equiv(k-p_2)^2-m^2=-\frac{\hat s+Q^2}2(1+\beta\cos\theta)$（$\gamma^*g$ 质心系，$\theta$ 为 $\vec p_1$ 与 $\vec k$ 的夹角），
+极化求和仍可取 $-g_{\rho\sigma}$（我们以物理极化求和核对过），四维两体相空间为 $\frac\beta{16\pi}\int_{-1}^1\dd\cos\theta$。用\cref{def:disall-breit}的投影（$D=4$）并对 $\cos\theta$ 积分，得到（本书的推导）
+\begin{equation}\label{eq:disall-heavy-lo}
+\begin{aligned}
+\frac{\hat F^g_2}{ze_Q^2}&=\frac{\as}{2\pi}\,2T_F\Big\{\big[z^2+(1-z)^2+4\epsilon_mz(1-3z)-8\epsilon_m^2z^2\big]\ln\frac{1+\beta}{1-\beta}\\
+&\hspace{8.2em}+\beta\big[8z(1-z)-1-4\epsilon_mz(1-z)\big]\Big\},\\
+\frac{\hat F^g_L}{ze_Q^2}&=\frac{\as}{2\pi}\,2T_F\Big\{-8\epsilon_mz^2\ln\frac{1+\beta}{1-\beta}+4\beta z(1-z)\Big\}
+\end{aligned}
+\end{equation}
+（阈值以下为零）。$F_2$ 的结果与\cite[式~(49)--(51)]{Forte:2010ta}一致（那里 $a_s=\as/2\pi$，因子 2 同样计入 $Q$ 与 $\bar Q$；无质量极限见该文式~(52)--(53)），$F_L$ 的结果以同一方法得到。对数 $\ln\frac{1+\beta}{1-\beta}$ 来自 $1/t_1$、$1/u_1$ 在 $\cos\theta\to\pm1$ 附近的增强：$m$ 正规化了重夸克与胶子共线的区域。
+当 $m\to0$ 时 $\ln\frac{1+\beta}{1-\beta}=\ln\frac{Q^2}{m^2}+\ln\frac{1-z}z+\order{\epsilon_m}$，于是
+$\hat F^g_2/(ze_Q^2)\to\frac{\as}{2\pi}2[P_{qg}\ln\frac{Q^2}{m^2}+C_2^g]$，$\hat F^g_L/(ze_Q^2)\to\frac{\as}{2\pi}2C_L^g$，修正为 $\order{\epsilon_m\ln\epsilon_m}$：
+无质量计算中的极点 $-\frac2\varepsilon P_{qg}$ 被 $2P_{qg}\ln(Q^2/m^2)$ 代替，有限部分恰为 $\MSbar$ 的 $C_2^g$（\cref{prop:disall-nlo}）。另一方面，由\cref{def:pdf-quark}在光锥规范中直接计算单圈的重夸克—胶子分布
+（$\bar Q$ 在壳、$Q$ 离壳的割图，$D$ 维横动量积分，$\MSbar$ 扣除紫外极点）得 $f_{Q/g}(z,\mu)=\frac{\as}{2\pi}P_{qg}(z)\ln\frac{\mu^2}{m^2}+\order{\as^2}$，没有附加常数。
+于是\cref{fig:disall-heavy}(b) 的减除项（Born 取无质量形式，即 S-ACOT 的选择\cite{Kramer:2000hn}；$\mu<m$ 时按 CWZ 方案 $f_{Q/g}=0$，不作减除）为 $[f_{Q/g}+f_{\bar Q/g}]\otimes\hat F^{(0)}_2/z=e_Q^2\frac{\as}{2\pi}2P_{qg}\ln(\mu^2/m^2)$，减除后的胶子系数
+$\hat C_{2,g}=\frac{\as}{2\pi}[2T_F\{\cdots\}-2P_{qg}\ln\frac{\mu^2}{m^2}]$（$\{\cdots\}$ 为\cref{eq:disall-heavy-lo}第一式的花括号）在 $\mu=Q$、$m\to0$ 时趋于 $\frac{\as}{2\pi}2C_2^g$；它与光滑函数的卷积对一切 $m/Q$ 一致有界（阈值以上未被抵消的 $\ln(Q^2/m^2)$ 只占宽度 $\order{\epsilon_m}$ 的区间）。
+数值上，$z=0.1$ 时 $\{\cdots\}$ 与其无质量渐近式 $C_2^g/T_F+(P_{qg}/T_F)\ln(Q^2/m^2)$ 之差在 $\epsilon_m=0.1,\,0.01,\,0.001$ 时依次为 $0.074,\,0.014,\,0.002$。
+在 $\order{\as}$，重夸克初态项 $e_Q^2(f_Q+f_{\bar Q})$ 加上减除后的胶子项，恰好回到固定味方案的结果：各方案在所计算的阶上等价，变味方案的好处是 $f_Q$ 的演化对 $\as\ln(\mu^2/m^2)$ 作了重求和。
+\uses{thm:disall-heavy,def:disall-breit,prop:disall-nlo,def:pdf-quark}
+\end{example}
+
+%%% BEGIN fig:disall-heavy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize,inner sep=1.5pt},
+  fb heavy/.style={draw,solid,line width=1.5pt,postaction={decorate,solid,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.6pt,line width=0.8pt]{Stealth[length=7pt,width=6pt]}}}}},
+  fb heavy/.default=0.5]
+  % ======================= (a) LO photon--gluon fusion with massive quarks =======================
+  \begin{scope}
+    \coordinate (B) at (0,0.75); \coordinate (A) at (0,-0.75);
+    \draw[photon] (-1.6,0.75) -- (B);
+    \draw[gluon] (-1.6,-0.75) -- (A);
+    \draw[fb heavy] (B) -- (1.55,0.75);
+    \draw[fb heavy] (A) -- (B);
+    \draw[fb heavy] (1.55,-0.75) -- (A);
+    \node[vertex] at (A) {}; \node[vertex] at (B) {};
+    \path[mom={$q$},mom sep=0.26cm] (-1.6,0.75) -- (B);
+    \path[mom'={$k$},mom sep=0.3cm] (-1.6,-0.75) -- (A);
+    \path[mom={$p_1$},mom sep=0.28cm] (B) -- (1.55,0.75);
+    \path[mom'={$p_2$},mom sep=0.3cm] (A) -- (1.55,-0.75);
+    \node[fb lab,anchor=east] at (-1.62,0.75) {$\gamma^*$};
+    \node[fb lab,anchor=east] at (-1.62,-0.75) {$g$};
+    \node[fb lab,anchor=west] at (1.57,0.75) {$Q$};
+    \node[fb lab,anchor=west] at (1.57,-0.75) {$\bar Q$};
+    \node[fb lab,anchor=west,align=left] at (2.3,0) {$+$\ 交叉图\\\phantom{$+$\ }（$p_1\leftrightarrow p_2$）};
+    \node[font=\small,anchor=north] at (0.85,-1.45) {(a)\ 领头阶 $\gamma^*g\to Q\bar Q$（保留 $m$）};
+  \end{scope}
+  % ======================= (b) ACOT/CWZ subtraction term =======================
+  \begin{scope}[xshift=8.15cm]
+    \coordinate (B) at (0,0.75);
+    \node[jet blob,ellipse,minimum width=1.55cm,minimum height=0.9cm,inner sep=0pt] (F) at (0,-0.75) {};
+    \draw[gluon] (-1.75,-0.75) -- (F.west);
+    \draw[photon] (-1.6,0.75) -- (B);
+    \draw[fb heavy=0.55] (F.north) -- (B);
+    \draw[fb heavy] (B) -- (1.55,0.75);
+    \draw[fb heavy=0.6] (1.6,-1.25) -- (F.-25);
+    \node[vertex] at (B) {};
+    \node[font=\footnotesize] at (F) {$f_{Q/g}$};
+    \path[mom={$q$},mom sep=0.26cm] (-1.6,0.75) -- (B);
+    \path[mom'={$k$},mom sep=0.3cm] (-1.75,-0.75) -- (F.west);
+    \node[fb lab,anchor=east] at (-1.62,0.75) {$\gamma^*$};
+    \node[fb lab,anchor=east] at (-1.77,-0.75) {$g$};
+    \node[fb lab,anchor=west] at (1.57,0.75) {$Q$};
+    \node[fb lab,anchor=west] at (1.62,-1.25) {$\bar Q$};
+    \node[fb lab,anchor=east] at (-0.06,0.02) {$Q$};
+    \node[fb lab,anchor=west,text=gray!30!black] at (0.14,0.38) {$\hat\sigma(\gamma^*Q\to Q)$};
+    \node[font=\small,anchor=north] at (0,-1.45) {(b)\ 减除项 $f_{Q/g}\otimes\hat\sigma(\gamma^*Q\to Q)$};
+  \end{scope}
+  \node[font=\Large] at (5.45,0) {$-$};
+\end{tikzpicture}
+\caption{含重夸克质量的 DIS（粗线为质量 $m$ 的重夸克 $Q$）。(a)~领头阶的光子—胶子融合，保留完整的质量依赖，两图之和的平方给出领头阶的胶子道系数；
+(b)~变味（ACOT/CWZ）方案中的减除项 ${f_{Q/g}\otimes\hat\sigma(\gamma^*Q\to Q)}$：胶子先在重夸克分布 $f_{Q/g}$（蓝色，靶共线）中分裂为 $Q\bar Q$，其中的 $Q$ 再发生领头阶散射 $\gamma^*Q\to Q$。
+二者之差在 $m\to0$ 时抵消 (a) 中的共线对数 $\ln(Q^2/m^2)P_{qg}$，给出对 $m/Q$ 一致有效的系数函数（\cref{thm:disall-heavy}，\cref{ex:disall-heavy-lo}）。}
+\label{fig:disall-heavy}
+\end{figure}
+%%% END fig:disall-heavy
+
+% ---------------------------------------------------------------------
+\section{核靶}\label{sec:disall-nuclear}
+
+原子核是色单态束缚态，DIS 的证明不用到靶的其他性质；核的特殊之处是线度随质量数 $A$ 增长，使某些幂次修正被增强，并在小 $x$ 处带来相干的多重散射。
+
+\begin{proposition}[核靶上的 DIS \tagA]\label{prop:disall-nuclear}
+设靶为质量数 $A$ 的原子核。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 在领头幂次，核靶上的 DIS 与强子靶上的 DIS 具有相同的因子化（\cref{thm:disall-factorization}）：以核 PDF 代替强子 PDF，系数函数不变。
+\item （核增强的扭度 4 修正，部分，\tagP）在高扭度的推广因子化中\cite{QiuSterman1991a}，核内的多重散射给出的扭度 4 修正被核的线度增强，
+相对大小 $\propto A^{1/3}\Lambda^2/Q^2$\cite{Luo:1993ui,Luo:1994np}；据\cite{Luo:1993ui}的摘要，由光生双喷注数据估计的扭度 4 核部分子分布约为 $0.05$--$0.1\,\mathrm{GeV}^2$ 乘以典型的扭度 2 分布。
+\item 对强子—核碰撞（例如 pA 中的 Drell--Yan），初态相互作用可能使因子化形式失效，除非束流能量大于一个随靶长度增长的尺度（据\cite{Bodwin:1988fs}的摘要；较早的讨论见\cite{BodwinBrodskyLepage1981}）；
+在只有一个强子、末态被求和的 DIS 中，这一初态机制不出现。
+\item 小 $x$ 处的核遮蔽可以在领头扭度中，借助 Gribov--Glauber 理论与衍射 DIS 的因子化来描述\cite{Frankfurt:2011cs}。
+\item （小 $x$ 的饱和区，猜想，\tagC）在足够小的 $x$ 与大核中，饱和效应可能使领头扭度的描述失效（\cref{ch:smallx}）。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+\uses{thm:disall-factorization,def:pdf-quark,def:pdf-gluon,asm:intro-bridge}
+% errtype: E-S
+\end{proposition}
+
+\begin{proofsketch}
+(a) 推导只用到靶是色单态的物理态；核 PDF 由\cref{def:pdf-quark,def:pdf-gluon}的同一组算符在核态中定义（通常按每个核子归一化），强子层次同样依赖于\cref{asm:intro-bridge}。
+(b) 推广的高扭度因子化中\cite{QiuSterman1991a,QiuSterman1991b}，领头 $1/Q^2$ 修正是硬部分与扭度 2、扭度 4 矩阵元的卷积。直观上，扭度 4 矩阵元含有一个沿光锥方向、不带振荡相因子的位置积分（两对场之间的距离）；
+两对场属于不同核子时，这一积分延伸到整个核的直径 $\propto A^{1/3}$，这就是核增强的来源；比例系数只能由数据估计\cite{Luo:1993ui}。(c) DIS 中没有入射强子旁观者的初态相互作用，末态相互作用按\cref{thm:disall-factorization}的论证被求和。
+(d) 遮蔽理论结合了 Gribov--Glauber 理论、QCD 因子化与 HERA 衍射 DIS 的分析\cite{Frankfurt:2011cs}（衍射 DIS 见\cref{ch:break}）。(e) 饱和区见\cref{ch:smallx}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+(a) 继承\cref{thm:disall-factorization}的全部瓶颈（\cref{asm:appN-collins,asm:appN-ward-product,asm:appN-cutsum}等），全局核 PDF 拟合都以领头扭度因子化为前提\cite{Eskola:2021nhw,Kovarik:2015cma,AbdulKhalek:2022fyi}。
+真正未被控制的是幂次修正对核尺寸的依赖：(b) 只是模型估计（[P]），推广的高扭度因子化在核中没有全阶证明；(e) 是猜想（[C]），它与共线因子化的衔接没有被证明。
+
+% ---------------------------------------------------------------------
+\section{本章小结：对应表与常见误解}\label{sec:disall-summary}
+
+本章的推理链是：非物理区的领头区域 $\to$ 嵌套的减除项 $\to$ 与 $\MSbar$ 对接 $\to$ 物理区（矩与固定 $x$ 两条途径）$\to$ \cref{thm:disall-factorization}（[A]）；与附录~N 的对应见\cref{tab:disall-correspondence}。
+
+\begin{table}[htbp]
+\centering
+\caption{本章的陈述与附录~N 中精确形式的对应。“误差类型”按\cref{def:intro-error-types}：E-S 为标度陈述，E-N 为积分范数界，E-N$^\varphi$ 为纤维化积分范数界。}
+\label{tab:disall-correspondence}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.2\textwidth}>{\raggedright\arraybackslash}p{0.26\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+本章陈述 & 附录~N 中的精确形式 & 差别（所用假设；误差类型） \\
+\midrule
+\cref{prop:disall-two-routes}（$R_{\mathrm{cond}}$） & \cref{sec:appN-processes}；\cref{thm:appN-subtraction}、\cref{lem:appN-error-table} &
+(a)：\cref{asm:appN-collins}、\cref{asm:appN-contour}、\cref{asm:appN-envelope}、\cref{asm:appN-separation}；(b) 另需复圆盘上的一致性；(c) 另需\cref{asm:appN-cutsum}。E-N。 \\
+\cref{prop:disall-factorized-subtraction}（$R_{\mathrm{cond}}$） & \cref{sec:appN-processes}；\cref{prop:method-product}、\cref{lem:appN-algebra} &
+\cref{asm:appN-ward-product}(WI1)(WI2)、\cref{asm:appN-uv}；被积函数层次的恒等式（不含估计）。 \\
+\cref{thm:disall-renorm-compat}（$R_{\mathrm{cond}}$） & \cref{sec:appN-processes} &
+\cref{asm:appN-multren}(Z1)(Z3)(i)、\cref{asm:appN-ir-regulator}(Z2)、\cref{asm:appN-contour}(b)；内容等级 [C]，不被任何 [A] 陈述使用。 \\
+\cref{ex:disall-ladder} & \cref{prop:appN-ladder}（\cref{sec:appN-examples}） &
+代数精确（$R_{\mathrm{PT}}$）；费米子两级梯形图的 (CS1)--(CS3) 未证明；标量 $\varphi^3_6$ 模型单梯级梯形图的积分范数界（实 $x\ge x_0>1$）见\cref{prop:appN-phi36-dis}（E-N$^\varphi$）。 \\
+\cref{lem:disall-fsi}、\cref{prop:disall-regions}（[A]） & \cref{asm:appN-cutsum}；\cref{asm:appN-envelope}、\cref{asm:appN-separation} &
+标度陈述（E-S）及其割图形式与积分形式。 \\
+\cref{thm:disall-factorization}（[A]） & \cref{thm:appN-structure}（$R_{\mathrm{cond}}$） &
+条件形式列出附录~N 的全部技术假设，包括具名缺口\cref{asm:appN-brst-nonlocal}，故其内容等级为 [C]；本章的 [A] 定理只点名该缺口。文献：E-S；条件形式：E-N。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% misconception box: M4 + critic O7; M25; M26
+\begin{tcolorbox}[enhanced,breakable,title=本章涉及的常见误解,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+\item 「矩的因子化蕴含 $x$ 空间中一致的 $\order{\Lambda^2/Q^2}$ 余项」——矩只决定分布意义下的扭度 2 部分（\cref{cor:disall-consistency}）：对每个 $n$ 矩为 $\order{1/Q^2}$ 的 $\sin(Q^2x)$ 逐点为 $\order{1}$；
+高扭度系数随 $n$ 增长，余项在 $x\to1$ 处不一致，共振区只能在平滑后比较。固定 $x$ 的逐点陈述是 [A] 定理\cref{thm:disall-factorization}，需要割图分析（\cref{prop:disall-two-routes}(c)）。
+\item 「动量空间的 [A] 定理与 OPE 的 [R] 结果一致，所以逐点余项也是严格的」——一致的只是作为分布的扭度 2 部分（$R_{\mathrm{OPE}}$）；逐点余项只由全阶论证控制。
+\item 「把 $\mu_R,\mu_F$ 变动 $2$ 倍就给出理论误差」——这是约定；定理只保证剩余的标度依赖高一阶（\cref{prop:disall-scale}）。
+\item 「Callan--Gross 关系 $F_L=0$ 是 QCD 的定理」——它是部分子模型（领头阶）的结果；$F_L=\order{\as}$，$C_L^q=2C_Fz$，$C_L^g=4T_Fz(1-z)$（\cref{prop:disall-nlo}，Altarelli--Martinelli 关系）。
+Drell--Yan 中的 Lam--Tung 关系也不是定理：它没有 $\order{\as}$ 修正\cite{Lam:1980uc}，但在 $\order{\as^2}$（$q_T\ne0$ 的次领头阶）被轻微破坏\cite{Mirkes:1992hu}。
+\end{itemize}
+\end{tcolorbox}
+
+

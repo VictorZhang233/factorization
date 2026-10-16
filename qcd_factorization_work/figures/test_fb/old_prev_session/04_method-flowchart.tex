@@ -1,0 +1,103 @@
+%%% BEGIN fig:method-flowchart
+\begin{figure}[htbp]
+\centering
+\newcommand{\fbref}[1]{\mbox{\cref{#1}}}
+\begin{tikzpicture}[fd,font=\footnotesize,
+  fb num/.style={circle,fill=gray!65!black,text=white,font=\scriptsize\bfseries,inner sep=0pt,minimum size=0.42cm},
+  fb title/.style={font=\small\bfseries,anchor=west,inner sep=1pt},
+  fb stitle/.style={font=\footnotesize\bfseries,anchor=west,inner sep=1pt},
+  fb cell/.style={rectangle,rounded corners=1.5pt,line width=0.5pt,text width=3.38cm,minimum height=1.0cm,
+                  align=left,inner sep=3pt,font=\footnotesize},
+  fb R/.style={fb cell,fill=OliveGreen!10,draw=OliveGreen!65!black},
+  fb Rc/.style={fb R,dash pattern=on 2.4pt off 1.4pt},
+  fb A/.style={fb cell,fill=RoyalBlue!8,draw=RoyalBlue!65!black},
+  fb frame/.style={draw=gray!55!black,line width=0.65pt,rounded corners=3pt,fill=white,inner sep=3pt},
+  fb sub/.style={draw=gray!45,line width=0.45pt,rounded corners=2pt,fill=gray!4,inner sep=2pt},
+  fb htext/.style={text width=6.45cm,align=left,inner sep=1pt,font=\footnotesize},
+  fb H/.style={rectangle,rounded corners=2pt,draw=orange!70!black,line width=0.55pt,dash pattern=on 2.4pt off 1.4pt,
+               fill=orange!5,inner sep=3pt},
+  fb link/.style={draw=orange!70!black,line width=0.5pt,dash pattern=on 2.4pt off 1.4pt},
+  fb flow/.style={draw=gray!55!black,line width=1.1pt,-{Stealth[length=6pt,width=5pt]}}]
+  % one step: #1 name, #2 y of its title, #3 number, #4 title, #5 R cell, #6 A cell, #7 R style
+  \newcommand{\fbstep}[7]{%
+    \node[fb num] (#1n) at (0.28,#2) {#3};
+    \node[fb title] (#1t) at ($(#1n.east)+(0.06,0)$) {#4};
+    \node[#7,anchor=north west] (#1r) at (0.12,#2-0.3) {#5};
+    \node[fb A,anchor=north west] (#1a) at ($(#1r.north east)+(0.12,0)$) {#6};
+    \begin{scope}[on background layer]\node[fb frame,fit=(#1n)(#1t)(#1r)(#1a)] (#1) {};\end{scope}}
+  % ---------------- steps 1--4 ----------------
+  \fbstep{s1}{0}{1}{区域：Landau 方程与幂次计数}
+    {幂次计数（标度陈述）\\\fbref{prop:ir-power-counting}}
+    {领头区域与约化图\\\fbref{thm:ir-leading-regions}}{fb R}
+  \fbstep{s2}{-2.1}{2}{近似：共线与软近似子（沿用原有 $\ii0$）}
+    {$\ii0$ 相容性\\\fbref{lem:method-i0-compat}}
+    {近似精度\\\fbref{lem:method-collinear-accuracy,lem:method-soft-accuracy}}{fb R}
+  \fbstep{s3}{-4.2}{3}{Grammer--Yennie 分解\enspace$g_{\mu\nu}=K_{\mu\nu}+G_{\mu\nu}$}
+    {分解恒等式\\\fbref{lem:method-gy}}
+    {G 部分幂次压低\\\fbref{prop:method-gy-suppression}}{fb R}
+  \fbstep{s4}{-6.3}{4}{Ward 恒等式 $\to$ Wilson 线}
+    {单个与树图两个 K 胶子\\\fbref{prop:method-ward-one,prop:method-ward-tree}}
+    {多胶子（含鬼场）\\\fbref{lem:method-ward-multi}}{fb R}
+  % ---------------- step 5: Glauber region, unitarity, subtraction ----------------
+  \node[fb num] (s5n) at (0.28,-8.4) {5};
+  \node[fb title] (s5t) at ($(s5n.east)+(0.06,0)$) {Glauber 区、幺正性与减除};
+  \foreach \k/\y/\ttl/\rc/\ac/\rs in {%
+      a/-8.85/{5a\enspace Glauber 区：沿 $e_G=n_B-n_A$ 同时形变}/{单胶子交换的极点结构\\\fbref{prop:method-glauber-oneloop}}/{围道形变判据\\\fbref{prop:method-glauber-deformation}}/{fb R},
+      b/-10.75/{5b\enspace 幺正性：末态相互作用与软因子}/{软因子的幺正性\\\fbref{lem:method-soft-unitarity}}/{末态相互作用相消\\\fbref{prop:method-fsi}}/{fb R},
+      c/-12.65/{5c\enspace 减除（Collins）：$\Gamma=\sum_RC_R\Gamma+r$}/{链展开与乘积公式\\\fbref{prop:method-chains,prop:method-product}}/{减除定理\\\fbref{thm:method-subtraction}}/{fb R}} {
+    \node[fb stitle] (g5\k t) at (0.22,\y) {\ttl};
+    \node[\rs,anchor=north west,text width=3.3cm] (g5\k r) at (0.22,\y-0.24) {\rc};
+    \node[fb A,anchor=north west,text width=3.3cm] (g5\k a) at ($(g5\k r.north east)+(0.12,0)$) {\ac};
+    \begin{scope}[on background layer]\node[fb sub,fit=(g5\k t)(g5\k r)(g5\k a)] (s5\k) {};\end{scope}
+  }
+  \begin{scope}[on background layer]
+    \node[fb frame,fit=(s5n)(s5t)(s5a)(s5b)(s5c)] (s5) {};
+  \end{scope}
+  % ---------------- step 6 ----------------
+  \node[fb num] (s6n) at (0.28,-15.05) {6};
+  \node[fb title] (s6t) at ($(s6n.east)+(0.06,0)$) {因子化形式};
+  \node[fb A,anchor=north west,text width=7.09cm,minimum height=0.62cm,align=center] (s6a) at (0.12,-15.35)
+    {$\sigma=\sum_{ij}H_{ij}\otimes f_{i/A}\otimes f_{j/B}\,[\otimes S]+\order{\lambda^p}$};
+  \begin{scope}[on background layer]\node[fb frame,fit=(s6n)(s6t)(s6a)] (s6) {};\end{scope}
+  % ---------------- flow arrows ----------------
+  \foreach \u/\v in {s1/s2,s2/s3,s3/s4,s4/s5,s5/s6} \draw[fb flow] (\u.south) -- (\v.north);
+  % ---------------- hypotheses (H1)--(H5) with the numbered assumptions ----------------
+  \node[fb htext,anchor=west] (h1t) at (8.2,0|-s1) {\textbf{(H1)} 领头区域；积分范数下的幂次计数\\\fbref{asm:appN-envelope,asm:appN-separation}};
+  \node[fb htext,anchor=west] (h2t) at (8.2,0|-s3) {\textbf{(H2)} $H$--$J$ 界面上共线近似成立，K 胶子退耦为 Wilson 线\\\fbref{asm:appN-ward-product}\\[1pt]
+      {\color{gray!35!black}（步骤 2--4 中的软部分属于 (H3)）}};
+  \node[fb htext,anchor=north west] (h3t) at ($(8.2,0|-s5a)+(0,0.66)$) {\textbf{(H3)} Glauber 区之后：软近似与软胶子退耦\\\fbref{asm:appO-mixing,asm:appO-deformation,asm:appO-rewritten-cs}};
+  \node[fb Rc,anchor=north west,text width=6.3cm,minimum height=0.48cm] (h3c) at ($(h3t.south west)+(0,-0.07)$) {DY 的精确形式：\fbref{thm:appO-main}（$R_{\rm cond}$）};
+  \node[fb htext,anchor=west] (h4t) at (8.2,0|-s5b) {\textbf{(H4)} 末态相互作用由幺正性相消；软因子为 $1$ 或 Wilson 线真空矩阵元\\\fbref{asm:appN-cutsum,asm:appO-lcopt}};
+  \node[fb htext,anchor=north west] (h5t) at ($(8.2,0|-s5c)+(0,0.66)$) {\textbf{(H5)} 减除项 = 重整化的算符矩阵元\\\fbref{asm:appN-collins,asm:appN-values,asm:appN-uv,asm:appN-multren}};
+  \node[fb Rc,anchor=north west,text width=6.3cm,minimum height=0.48cm] (h5c) at ($(h5t.south west)+(0,-0.07)$) {精确演绎：\fbref{thm:appN-subtraction}（$R_{\rm cond}$）};
+  \begin{scope}[on background layer]
+    \node[fb H,fit=(h1t)] (h1) {};
+    \node[fb H,fit=(h2t)] (h2) {};
+    \node[fb H,fit=(h3t)(h3c)] (h3) {};
+    \node[fb H,fit=(h4t)] (h4) {};
+    \node[fb H,fit=(h5t)(h5c)] (h5) {};
+  \end{scope}
+  \draw[fb link] (s1.east) -- (h1.west|-s1.east);
+  \draw[fb link] (s2.east) -- ++(0.25,0) |- (h2.west);
+  \draw[fb link] (s3.east) -- (h2.west|-s3.east);
+  \draw[fb link] (s4.east) -- ++(0.25,0) |- (h2.west);
+  \draw[fb link] (s5a.east) -- (h3.west|-s5a.east);
+  \draw[fb link] (s5b.east) -- (h4.west|-s5b.east);
+  \draw[fb link] (s5c.east) -- (h5.west|-s5c.east);
+  \node[font=\footnotesize,anchor=west,align=left] at (8.2,0|-s6) {$\Longleftarrow$\ (H1)--(H5) 成立时的结论：\\\fbref{thm:method-template}（模板定理），全阶论证 [A]};
+  % ---------------- legend ----------------
+  \node[fb R,text width=0.3cm,minimum height=0.3cm,inner sep=0pt,anchor=west] (l1) at (0.1,-16.55) {};
+  \node[anchor=west] (l1t) at (l1.east) {[R]（在所用层次上严格；含数学引理）};
+  \node[fb A,text width=0.3cm,minimum height=0.3cm,inner sep=0pt,anchor=west] (l2) at ($(l1t.east)+(0.35,0)$) {};
+  \node[anchor=west] (l2t) at (l2.east) {[A] 全阶论证};
+  \node[fb Rc,text width=0.3cm,minimum height=0.3cm,inner sep=0pt,anchor=west] (l3) at ($(l2t.east)+(0.35,0)$) {};
+  \node[anchor=west] (l3t) at (l3.east) {条件定理 $R_{\rm cond}$};
+  \node[fb H,minimum width=0.36cm,minimum height=0.32cm,inner sep=0pt,anchor=west] (l4) at ($(l3t.east)+(0.35,0)$) {};
+  \node[anchor=west] (l4t) at (l4.east) {编号假设};
+\end{tikzpicture}
+\caption{全阶因子化证明的六个步骤（左），它们与\cref{thm:method-template}（模板定理）的假设 (H1)--(H5) 的对应，以及精确形式中的编号假设（右；附录~N、O，对应关系即\cref{tab:method-hypotheses}）。
+每个步骤中，绿色框为在所用层次上已严格证明的陈述（[R] 或数学引理），蓝色框为全阶论证 [A]，绿色虚线框为条件定理 $R_{\rm cond}$，即附录~N 中的减除演绎（\cref{thm:appN-subtraction}）与附录~O 中单举色单态 Drell--Yan 过程的 Glauber 相消（\cref{thm:appO-main}）。
+步骤 4 中，共线 K 胶子化为沿 $n_B$ 的 Wilson 线，软胶子化为沿各喷注方向的 Wilson 线；离开 Glauber 区须沿 $e_G=n_B-n_A$ 同时形变两个光锥分量（\cref{fig:method-glauber-direction}），软因子的幺正性只在处理完 Glauber 区之后使用。}
+\label{fig:method-flowchart}
+\end{figure}
+%%% END fig:method-flowchart

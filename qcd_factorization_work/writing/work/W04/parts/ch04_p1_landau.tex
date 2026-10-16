@@ -1,0 +1,173 @@
+%% =====================================================================
+\section{Landau 方程：参数形式与动量形式}\label{sec:ir-landau}
+
+费曼积分的被积函数在传播子的质壳 $D_j\equiv q_j^2-m_j^2=0$ 上奇异，但积分本身是否奇异，取决于积分围道能否在复空间中绕开这些奇点。
+
+%%% BEGIN fig:landau-pinch
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  t2 contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  t2 contour/.default=0.5,
+  t2 move/.style={draw=gray!65!black,line width=0.6pt,dash pattern=on 2pt off 1.5pt,-{Stealth[length=4pt,width=3.4pt]}},
+  t2 ax/.style={lcaxis,gray!60!black},
+  t2 lab/.style={font=\footnotesize,text=black!80}]
+  % ---------------- (a) poles on the same side: deformable ----------------
+  \begin{scope}
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.52] (-1.85,0) -- (-1.35,0) .. controls (-0.95,0) and (-0.85,0.82) .. (0,0.82)
+         .. controls (0.85,0.82) and (0.95,0) .. (1.35,0) -- (1.85,0);
+    \pic at (-0.55,-0.40) {t2 pole};  \pic at (0.62,-0.30) {t2 pole};
+    \draw[t2 move] (-0.75,-1.05) -- (-0.59,-0.52);
+    \draw[t2 move] (0.95,-1.0) -- (0.67,-0.42);
+    \node[t2 lab,anchor=west] at (0.62,0.78) {形变后的围道};
+    \node at (0,-1.75) {(a)\ 同侧：围道可形变避开};
+  \end{scope}
+  % ---------------- (b) poles on opposite sides: pinch ----------------
+  \begin{scope}[xshift=5.25cm]
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.8] (-1.85,0) -- (1.85,0);
+    \pic at (0.16,0.2) {t2 pole};  \pic at (-0.16,-0.2) {t2 pole};
+    \draw[t2 move] (0.95,0.95) -- (0.27,0.3);
+    \draw[t2 move] (-0.95,-0.95) -- (-0.27,-0.3);
+    \node[t2 lab,anchor=north] at (0.75,-0.18) {钳夹点};
+    \node at (0,-1.75) {(b)\ 异侧相向趋近：围道被钳住};
+  \end{scope}
+  % ---------------- (c) endpoint ----------------
+  \begin{scope}[xshift=10.5cm]
+    \draw[t2 ax] (-1.95,0) -- (2.0,0) node[below,xshift=-6pt] {$\Real k^-$};
+    \draw[t2 ax] (0,-1.25) -- (0,1.35) node[left] {$\Imag k^-$};
+    \draw[t2 contour=0.6] (-1.1,0) .. controls (-0.95,0.55) and (-0.45,0.72) .. (0.25,0.72)
+         .. controls (0.95,0.72) and (1.2,0) .. (1.85,0);
+    \fill (-1.1,0) circle[radius=1.9pt];
+    \node[below left=-1pt] at (-1.1,0) {$a$};
+    \node[t2 lab,anchor=south east] at (-1.12,0.08) {固定端点};
+    \pic at (-0.9,-0.24) {t2 pole};
+    \draw[t2 move] (-0.25,-0.95) -- (-0.8,-0.33);
+    \node[t2 lab,anchor=west] at (-0.2,-0.95) {趋近端点};
+    \node at (0,-1.75) {(c)\ 端点：无法避开};
+  \end{scope}
+\end{tikzpicture}
+\caption{复 $k^-$ 平面中积分围道（蓝色）的形变与 Landau 奇异性。灰色虚箭头表示外部参数趋近奇异点（或 $\ii0\to0$）时极点的移动方向。
+(a)~两个极点位于实轴同侧（此处都在下半平面）：即使它们趋近实轴，围道也可以向另一侧（上半平面）形变而远离极点，积分保持解析；
+(b)~两个极点从实轴两侧相向趋近同一点：围道被夹在两者之间，无论向哪一侧形变都要越过一个极点，这就是 Landau 方程所刻画的钳夹（pinch）奇异性；
+(c)~极点趋近积分区间的端点 $a$：端点不能移动，围道在端点附近无法避开极点，产生端点奇异性。
+只有 (b)、(c) 两种情形可能使积分作为外部参数的函数出现奇异性。多维积分中，奇异性要求积分围道（超曲面）在所有方向上都无法形变避开奇点，由此导出 Landau 方程。}
+\label{fig:landau-pinch}
+\end{figure}
+%%% END fig:landau-pinch
+
+一维的例子（$a,b$ 实，$\epsilon>0$）：两个极点 $x=a-\ii\epsilon$、$x=-b+\ii\epsilon$ 分居实轴两侧时，在上半平面闭合得
+\begin{equation}\label{eq:ir-toy-pinch}
+\int_{-\infty}^{\infty}\frac{\dd x}{(x-a+\ii\epsilon)(x+b-\ii\epsilon)}=-\frac{2\pi\ii}{a+b-2\ii\epsilon} ,
+\end{equation}
+$a+b\to0$、$\epsilon\to0$ 时两极点从两侧相向趋近，围道被夹住，积分作为外部参数 $a+b$ 的函数出现极点（\cref{fig:landau-pinch}(b)）；两个极点同侧时在另一侧闭合得零，围道总能推离实轴（图 (a)）；端点情形 $\int_0^1\dd x/(x-a+\ii0)=\ln\frac{1-a}{a}-\ii\pi$ 在 $a\to0^+$ 时对数发散（图 (c)）。三式均已数值核对。
+
+由此得到原则：这类积分作为外部参数的函数，只有在围道被奇点从两侧夹住（钳夹，pinch）或被奇点逼到不能移动的端点时才可能奇异。圈动量积分遍及 $\mathbb R^{4L}$，没有有限端点；端点只在部分积分之后出现（Feynman 参数单形的面，光锥动量分数的 $0$ 与 $1$），“无穷远处”对应紫外行为与第二类奇异性（$\mathcal U=0$）。于是有两个不同的问题：%
+% (critic O12)
+积分作为外部不变量的函数在何处非解析——Landau 原本的问题\cite{Landau1959}（另见\cite{Nakanishi:1959jzx}），由参数形式的\cref{thm:ir-landau-alpha}回答；在固定外动量下圈动量空间中哪些点被钳住——因子化需要的问题，它决定长程敏感性来自哪些区域\cite{Sterman1978a}，由动量形式的\cref{thm:ir-landau-momentum}回答。两者由\cref{lem:ir-envelope}在方程层次上联系，但并不等价。
+
+\paragraph{Feynman 参数表示。}
+考虑 $L$ 圈、$N$ 条内线的图，第 $j$ 条线携带动量 $q_j=\sum_{l=1}^L\eta_{jl}k_l+r_j$（$\eta_{jl}\in\{0,\pm1\}$，$r_j$ 为外动量的线性组合）、质量 $m_j\ge0$ 与分母 $D_j+\ii0$。分子经 Gauss 积分后化为多项式乘以 $\mathcal U$、$\mathcal F$ 的移位幂次，不改变下面的结论，故只写标量积分。
+
+\begin{definition}[Feynman 参数表示与 Symanzik 多项式]\label{def:ir-landau-setup}
+对正幂次 $\nu_j$，记 $\nu=\sum_j\nu_j$。标量积分
+\begin{multline}\label{eq:ir-param}
+I(p)=\int\prod_{l=1}^{L}\frac{\dd^Dk_l}{\ii\pi^{D/2}}\prod_{j=1}^{N}\frac{1}{(-D_j-\ii0)^{\nu_j}}\\
+=\frac{\Gamma(\nu-LD/2)}{\prod_j\Gamma(\nu_j)}\int_{\mathbb R_+^N}\prod_j\dd\alpha_j\,\alpha_j^{\nu_j-1}\,\delta\Big(1-\sum_{j\in\sigma}\alpha_j\Big)\frac{\mathcal U^{\nu-(L+1)D/2}}{(\mathcal F-\ii0)^{\nu-LD/2}}
+\end{multline}
+% VF-REG-1
+称为它的 Feynman 参数表示，$\sigma\subset\{1,\dots,N\}$ 为任意非空子集（Cheng--Wu）。这里二次型
+\begin{equation}\label{eq:ir-quadform}
+\mathcal D(\alpha,k)\equiv\sum_j\alpha_j\big(m_j^2-q_j^2\big)=-\sum_{l,l'}A_{ll'}\,k_l\cdot k_{l'}-2\sum_lB_l\cdot k_l+C ,
+\end{equation}
+$A_{ll'}=\sum_j\alpha_j\eta_{jl}\eta_{jl'}$，$B_l=\sum_j\alpha_j\eta_{jl}r_j$，$C=\sum_j\alpha_j(m_j^2-r_j^2)$；$k_c(\alpha)$ 是 $\mathcal D$ 对 $k$ 的驻点（$Ak_c=-B$）；第一、第二 Symanzik 多项式为
+\begin{equation}\label{eq:ir-UF}
+\mathcal U(\alpha)=\det A=\sum_{T\in\mathcal T_1}\prod_{j\notin T}\alpha_j ,\qquad
+\mathcal F(\alpha,p)=\mathcal U\,\mathcal D(\alpha,k_c)=-\sum_{T\in\mathcal T_2}\Big(\prod_{j\notin T}\alpha_j\Big)s_T+\mathcal U\sum_j\alpha_jm_j^2 ,
+\end{equation}
+其中 $\mathcal T_1$、$\mathcal T_2$ 为生成树与 2-森林的集合，$s_T$ 是流入 2-森林一个连通分支的外动量之和的平方。$\mathcal U$、$\mathcal F$ 分别是 $\alpha$ 的 $L$ 次与 $L+1$ 次齐次多项式。
+\uses{def:prelim-feynman-rules,def:qcd-dimreg}
+\end{definition}
+
+其推导（Feynman 参数公式、平移到驻点 $k_c$、$L$ 圈 Gauss 积分）见\cref{sec:appD-alpha}；连同测度，被积式在 $\alpha\to t\alpha$ 下不变，这正是 $\sigma$ 可以任选的原因。
+
+\paragraph{两组 Landau 方程。}
+称实点 $k$ 与 $\alpha\in\mathbb R^N_{\ge0}\setminus\{0\}$ 满足\emph{动量空间 Landau 方程}，若
+\begin{equation}\label{eq:ir-landau-k}
+\alpha_j\,D_j(k)=0\quad(j=1,\dots,N),\qquad
+\sum_j\alpha_j\,\eta_{jl}\,q_j^\mu(k)=0\quad(l=1,\dots,L);
+\end{equation}
+第二组称为圈方程。称闭单形 $\bar\Delta=\{\alpha_j\ge0,\ \sum_j\alpha_j=1\}$ 上的点 $\alpha$ 满足\emph{参数形式的 Landau 方程}，若
+\begin{equation}\label{eq:ir-landau-alpha}
+\mathcal F(\alpha,p)=0,\qquad \alpha_j\,\frac{\partial\mathcal F}{\partial\alpha_j}(\alpha,p)=0\quad(j=1,\dots,N).
+\end{equation}
+由 Euler 关系 $\sum_j\alpha_j\partial_j\mathcal F=(L+1)\mathcal F$，\cref{eq:ir-landau-alpha}的第一式是其余各式的推论。$\alpha_j>0$ 的线必在壳；$\alpha_j=0$ 的线可以离壳，它们在约化图中收缩为点。
+
+\begin{lemma}[包络恒等式]\label{lem:ir-envelope}
+设 $\mathcal U(\alpha)\ne0$。则
+\begin{equation}\label{eq:ir-envelope}
+\frac{\partial}{\partial\alpha_j}\Big(\frac{\mathcal F}{\mathcal U}\Big)=-D_j\big(k_c(\alpha)\big),\qquad
+\frac{\mathcal F}{\mathcal U}=-\sum_j\alpha_jD_j\big(k_c(\alpha)\big),
+\end{equation}
+% VF-REG-3
+并且 $\alpha$ 满足\cref{eq:ir-landau-alpha}当且仅当存在实动量 $k$ 使 $(k,\alpha)$ 满足\cref{eq:ir-landau-k}；此时必有 $k=k_c(\alpha)$。
+\uses{def:ir-landau-setup}
+\end{lemma}
+\begin{proof}
+完整证明见\cref{sec:appD-alpha}。要点：圈方程就是 $\partial\mathcal D/\partial k_l=0$，在 $\det A=\mathcal U\ne0$ 时其唯一解是 $k_c$；$\mathcal F/\mathcal U=\mathcal D(\alpha,k_c(\alpha))$ 是驻值，对 $\alpha_j$ 求导时 $k_c$ 的变化不贡献（包络定理），得\cref{eq:ir-envelope}；在 $\mathcal F=0$ 处 $\alpha_j\partial_j\mathcal F=\mathcal U\alpha_j\partial_j(\mathcal F/\mathcal U)=-\mathcal U\alpha_jD_j(k_c)$。
+\end{proof}
+
+\cref{lem:ir-envelope}只是两组\emph{方程}的代数等价，并不意味着动量空间的围道被钳住当且仅当参数积分的围道被钳住。Collins 指出（预印本）\cite[第~IV~节、附录~D]{Collins:2020euz}，Landau 与 Coleman--Norton 默认的这一蕴涵对无质量图不成立：单圈无质量自能（两条无质量线，动量 $k$ 与 $p-k$）的 $\mathcal F=-p^2\alpha_1\alpha_2$ 是 $p^2$ 乘以一个与 $p$ 无关的函数，参数积分的被积函数没有钳夹，$p^2=0$ 处的共线奇异性全部来自前置因子 $(-p^2)^{D/2-2}$；而在动量空间中，$p^2=0$ 时整条线段 $k=xp$（$0\le x\le1$）都是钳夹点，Landau 点为 $\alpha=(1-x,x)$。含线性（非相对论或程函）分母时，参数积分甚至会在动量积分并无钳夹之处出现局域化的奇异\cite[附录~D.2]{Collins:2020euz}。因此参数形式的定理只用作外部不变量的解析性与红外有限性判据，“圈动量空间中哪些点被钳住”交给动量形式的\cref{thm:ir-landau-momentum}。
+
+\begin{theorem}[Landau 条件（参数形式）：解析性与红外有限性判据 \tagR]\label{thm:ir-landau-alpha}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设 $p_0$ 为实外部运动学，积分\cref{eq:ir-param}在 $p_0$ 附近紫外收敛或由维数正规化延拓，即闭单形上的被积函数除 $\mathcal F-\ii0$ 的零点之外没有其他不可积性。若闭单形 $\bar\Delta$ 上不存在满足\cref{eq:ir-landau-alpha}（取 $p=p_0$）的点，则 $I(p)$ 在 $p_0$ 处有限（没有红外发散），并且作为外部不变量的函数可全纯延拓到 $p_0$ 的一个复邻域。等价地，$p_0$ 处的红外发散或奇异性必伴随\cref{eq:ir-landau-alpha}的解。（本定理只涉及 Feynman 积分。）
+\uses{def:ir-landau-setup,lem:ir-envelope}
+\end{theorem}
+\begin{proof}
+完整证明见\cref{sec:appD-alpha}。思路：作保持约束 $\sum_j\alpha_j=1$ 与单形各面的形变 $z_j=\alpha_j[1-\ii\tau\eta(\partial_j\mathcal F-\sum_k\alpha_k\partial_k\mathcal F)]$（$0\le\tau\le1$，$\eta>0$ 充分小），则 $\Imag\mathcal F(z)=-\tau\eta V+O(\tau^3\eta^3)$，$V=\sum_j\alpha_j(\partial_j\mathcal F)^2-(\sum_k\alpha_k\partial_k\mathcal F)^2\ge0$；$V=\mathcal F=0$ 恰在\cref{eq:ir-landau-alpha}的解上成立，按假设不发生，由紧性与控制收敛定理即得结论。
+\end{proof}
+
+参数形式回答外部不变量的问题（数值示例见\cref{sec:appD-alpha}）；下面的动量形式回答因子化所需的问题。
+
+\begin{theorem}[动量空间的钳夹必要条件 \tagR]\label{thm:ir-landau-momentum}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）固定实外动量。对实点 $k_0\in\mathbb R^{4L}$，令 $S=\{j:D_j(k_0)=0\}\ne\varnothing$，$u_j=\partial D_j/\partial k\,(k_0)$（分量 $\partial D_j/\partial k_l^\mu=2\eta_{jl}\,q_{j\mu}(k_0)$）。若不存在 $\alpha\in\mathbb R^S_{\ge0}\setminus\{0\}$ 使 $\sum_{j\in S}\alpha_ju_j=0$，则存在实方向 $v\in\mathbb R^{4L}$、$k_0$ 的邻域 $\mathcal V$ 与 $\eta_0>0$，使得对任一光滑截断函数 $0\le\chi\le1$（在 $k_0$ 附近 $\chi=1$，支集在 $\mathcal V$ 内）及 $0<\eta\le\eta_0$，形变 $k\to k+\ii\eta\chi(k)v$ 在 $\chi>0$ 处对 $j\in S$ 给出 $\Imag D_j>0$，并且对 $j\notin S$ 在形变后的围道上 $D_j\ne0$：形变后的被积函数在 $k_0$ 附近没有奇点，$k_0$ 未被钳住。等价地，被钳住的实点必满足 $\alpha_j\ge0$ 的动量空间 Landau 方程\cref{eq:ir-landau-k}。（本定理只涉及 Feynman 积分。）
+\uses{def:ir-landau-setup,lem:appD-gordan}
+\end{theorem}
+\begin{proof}
+完整证明见\cref{sec:appD-momentum}。由 Gordan 择一定理，假设等价于存在 $v$ 使 $u_j\cdot v>0$（$j\in S$）；而 $D_j$ 是二次式，
+$D_j(k+\ii\eta\chi v)=D_j(k)-\eta^2\chi^2(v'_j)^2+2\ii\eta\chi\,q_j(k)\cdot v'_j$（$v'_j=\sum_l\eta_{jl}v_l$）严格成立，
+其虚部 $\eta\chi\,u_j(k)\cdot v$ 由连续性在 $k_0$ 附近为正；$j\notin S$ 的 $|D_j|$ 在小邻域内有正下界，形变只改变 $O(\eta)$。
+\end{proof}
+
+条件 $\alpha_j\ge0$ 来自 $+\ii0$ 规定（容许的形变须使 $\Imag D_j>0$），它把物理区的钳夹与复运动学中的一般 Landau 曲面区分开。Collins 的完整判据\cite{Collins:2020euz}中纯几何的一半恰是 Gordan 择一定理\cite{Gordan1873}，其最小范数点给出带显式余量的形变方向；这一联系见第~24~章的\cref{rem:front-gordan-collins}。
+
+\begin{remark}[Landau 条件的充分性与整体形变 \tagA]\label{rem:ir-landau-status}
+完整的钳夹理论还需要三点：(a)~充分性——若 $k_0$ 处存在 $\alpha_j\ge0$ 的 Landau 解，则任何容许形变（包括一阶位移为零的“反常”形变）都不能避开 $k_0$ 处的奇点，即围道被钳住；(b)~整体形变——在不含钳夹点的区域上，各点的局部形变可以借助单位分解拼接为一个整体的容许形变，从而把积分围道推离一切未被钳住的奇异面；(c)~以上只涉及有限圈动量处的奇异性，第二类奇异性（$\mathcal U=0$，圈动量趋于无穷）不在讨论之列。注意“被钳住”不等于“积分奇异”：Landau 条件对围道的钳夹是充要的（在下述地位之下），对积分作为外部参数的奇异性只是必要的——无质量自能对一切 $p$ 都在 $k=0$ 与 $k=p$（零动量线）处被钳住，却只在 $p^2=0$ 处奇异。
+\uses{thm:ir-landau-momentum,thm:ir-landau-alpha}
+\end{remark}
+
+\paragraph{地位与缺口}
+(a)、(b) 的完整证明只见于 Collins 的预印本\cite{Collins:2020euz}（预印本；截至 2026 年 10 月只有 arXiv 第一版，未见期刊发表），且限于至多二次的分母并附加一个符号条件——Collins 自己认为这些限制只是方法上的需要；其内容与地位在第~24~章（\cref{thm:front-collins-pinch}，\tagA）讨论。因此本书把这一注记记为 \tagA，而不是 \tagR。教科书中的推导并不完整：Collins 写道，他找不到明确而完整地证明 Landau 方程对钳夹奇异面既必要又充分的已发表文献，教科书的处理细究之下都不完整\cite[第~5.4.3~节，第~110~页]{Collins2011}；ELOP 在推导前声明只满足于似然性论证，并称严格处理需用同调论\cite[第~2.1~节，第~48、50~页]{EdenEtAl1966}；Coleman 与 Norton\cite{ColemanNorton1965}的证明默认动量空间钳夹与参数空间钳夹等价，而这对无质量图与线性分母不成立——按 Collins 的诊断，失效的是证明而不是结论\cite[第~IV~节、附录~D]{Collins:2020euz}。奇异性的拓扑（Picard--Lefschetz）理论见\cite{Pham:2011SingInt}，动量空间的同痕方法见预印本\cite{Muhlbauer:2020kut}。最弱的一步是 (a) 中对反常形变的排除；这是关于围道的定性陈述，不涉及误差类型。升级途径：Collins 证明的同行评审与独立核验，或一个去掉符号条件的证明。
+
+\begin{remark}[欧氏区的 Landau 解与红外有限性]\label{rem:ir-euclid-corners}
+“欧氏区没有 Landau 解，所以欧氏 Green 函数红外有限”的前半句是错的。%
+% (misconception M29)
+在欧氏非例外运动学中（全部外动量为欧氏矢量，其任何非空真子集之和都不为零），任意一组携带零动量的无质量线总满足\cref{eq:ir-landau-k}（$D_j=0$ 且 $\alpha_jq_j=0$）；反之，由 $\mathcal F/\mathcal U=\min_{k_E}\sum_j\alpha_j(m_j^2+q_{jE}^2)\ge0$（\cref{sec:appD-alpha}），$\mathcal U\ne0$ 的 Landau 点上每条 $\alpha_j>0$ 的线都有 $m_j=0$、$q_j=0$。所以欧氏 Landau 解恰为若干无质量线同时携带零动量的构型；全部内线有质量时，在 $\mathcal U\ne0$ 处 $\mathcal F>0$，没有解。例如两条外线离壳的三角图 $\mathcal F=m^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2$ 只在单形的三个角上有解（\cref{ex:ir-euclid-triangle}）。欧氏红外有限性来自红外幂次计数：附着于其余部分 $A$ 次（其中 $A_q$ 次为夸克端）的软子集的红外发散度 $d=A+\frac12A_q\ge2$，每个零动量构型都可积（第~6~章的\cref{thm:ee-euclid-ir}）。
+\uses{def:ir-landau-setup,thm:ir-landau-alpha}
+\end{remark}
+
+
+\begin{example}[离壳三角图的 Symanzik 多项式]\label{ex:ir-euclid-triangle}
+三条无质量内线 $q_0=k$、$q_1=k-p_1$、$q_2=k+p_2$，外线 $p_1^2=p_2^2=-m^2$，$(p_1+p_2)^2=-Q^2$（$m^2,Q^2>0$）。单圈时 $\mathcal U=\alpha_0+\alpha_1+\alpha_2$；切开 $\{1,2\}$、$\{0,1\}$、$\{0,2\}$ 的 2-森林分别隔开 $p_1+p_2$、$p_1$、$p_2$，由\cref{eq:ir-UF}
+\[
+\mathcal F=-\big[\alpha_1\alpha_2(p_1+p_2)^2+\alpha_0\alpha_1p_1^2+\alpha_0\alpha_2p_2^2\big]=m^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2\ \ge0 .
+\]
+% VF-REF-17
+Landau 条件的三项 $\alpha_1(m^2\alpha_0+Q^2\alpha_2)$、$\alpha_2(m^2\alpha_0+Q^2\alpha_1)$、$m^2\alpha_0(\alpha_1+\alpha_2)$ 都是非负项之和；第三项为零要求 $\alpha_0=0$ 或 $\alpha_1=\alpha_2=0$，前者再由第一项给出 $\alpha_1\alpha_2=0$。故解恰为三个角：由 $k_c=(\alpha_1p_1-\alpha_2p_2)/\mathcal U$，它们是 $k=0$（零动量胶子）与 $k=p_1$、$k=-p_2$（零动量夸克线）。这些角都可积：$\nu=3$、$D=4$ 时 $I=\int_{\bar\Delta}\dd\alpha\,\mathcal F^{-1}$，而在每个角附近 $\mathcal F$ 都随到该角的距离线性趋于零（例如角 $\alpha_0=1$ 附近 $\mathcal F=m^2(\alpha_1+\alpha_2)+\dots$），二维测度使积分收敛；动量空间中这就是 $k\sim\lambda$ 时 $\lambda^4\cdot\lambda^{-2}=\lambda^2$，与 $d=A=2$ 一致。对比：外线在壳且有质量、胶子无质量时 $\mathcal F=Q^2\alpha_1\alpha_2+m^2(\alpha_1+\alpha_2)^2$，Landau 解同样只在角 $\alpha_0=1$，但那里 $\mathcal F$ 二次趋于零，积分对数发散——QED 型的软发散。两种情形的 Landau 解相同，由幂次计数作出区分（细节与核对见\cref{sec:appD-alpha}）。
+\uses{rem:ir-euclid-corners}
+\end{example}

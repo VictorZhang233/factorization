@@ -1,0 +1,41 @@
+PASS  Q^2 = -q^2 = 2 p.p' = 2 P^2
+=== 1. current conservation, graph pair by graph pair ===
+PASS  q_mu (M_A + M_B)^mu = 0  (photon on the u line)
+PASS  q_mu (M_C + M_D)^mu = 0  (photon on the d line)
+PASS  individual graphs are NOT conserved (q.M_A != 0): conservation needs both attachments
+=== 2. Lorentz structure M^mu = (p+p')^mu F ===
+PASS  transverse components M^1 = M^2 = 0
+PASS  M^+/(p+p')^+ = M^-/(p+p')^-
+   T_H(x,y) =  -f**2*g**2*(N_c - 1)*(N_c + 1)*(e_d*x*y - e_d*x - e_d*y + e_d - e_u*x*y)/(8*N_c**2*P**2*x*y*(x - 1)*(y - 1))
+=== 3. the hard kernel ===
+PASS  T_H = (C_F g^2 f^2 /(2 N_c Q^2)) [ e_u/(xbar ybar) - e_d/(x y) ] = (2 pi C_F alpha_s f^2/(N_c Q^2)) [e_u/(xbar ybar) + e_dbar/(x y)]
+   graph A :  M^mu = (e_u*f**2*g**2*(N_c - 1)*(N_c + 1)/(8*N_c**2*P**2*(x - 1)*(y - 1))) p^mu + (0) p'^mu
+   graph B :  M^mu = (0) p^mu + (e_u*f**2*g**2*(N_c - 1)*(N_c + 1)/(8*N_c**2*P**2*(x - 1)*(y - 1))) p'^mu
+   graph C :  M^mu = (-e_d*f**2*g**2*(N_c - 1)*(N_c + 1)/(8*N_c**2*P**2*x*y)) p^mu + (0) p'^mu
+   graph D :  M^mu = (0) p^mu + (-e_d*f**2*g**2*(N_c - 1)*(N_c + 1)/(8*N_c**2*P**2*x*y)) p'^mu
+PASS  graph A (photon absorbed first by the incoming u) is proportional to p^mu, graph B to p'^mu, with equal coefficients; likewise C (prop. p'^mu... ) and D: only the sums are conserved and proportional to (p+p')^mu
+PASS  sign: T_H > 0 for e_u = 2/3, e_d = -1/3 (F_pi > 0 at large Q^2, same sign as F_pi(0) = 1)
+=== 4. convolution formula and asymptotic limit ===
+   Q^2 F_pi (asymptotic DA) = 8*pi*alpha_s*f**2
+PASS  Q^2 F_pi -> 8 pi alpha_s f_pi^2   (asymptotic DA, f_pi ~ 130 MeV normalization)
+PASS                  = 16 pi alpha_s F_pi^2 with F_pi = f_pi/sqrt2 ~ 93 MeV
+PASS  Q^2 F_pi = 8 pi alpha_s f_pi^2 (1 + a_2 + a_4)^2  (Gegenbauer DA, symmetric)
+PASS  equivalently (8 pi alpha_s f^2/9) [int phi/(1-x)]^2  with N_c = 3
+PASS  general N_c: Q^2 F_pi = 18 pi C_F alpha_s f^2 / N_c (asymptotic DA; = 8 pi alpha_s f^2 at N_c = 3)
+PASS  CZ DA: Q^2 F_pi = (25/9) x asymptotic
+   numbers (f_pi = 130.2 MeV, alpha_s = 0.3): Q^2F_as = 0.1278 GeV^2,  Q^2F_CZ = 0.3550 GeV^2
+=== 5. endpoint behaviour ===
+PASS  phi = (x xbar)^a/B(a+1,a+1): int phi/x = (2a+1)/a  (finite iff a > 0)
+PASS  a = 1 (asymptotic) gives 3; a -> 0 (flat DA) diverges
+   fraction of the LO u-line integral with gluon virtuality xbar*ybar*Q^2 < 1 GeV^2:
+     Q^2 =    2.0 GeV^2 :  asymptotic DA 0.983   CZ DA 0.986
+     Q^2 =    4.0 GeV^2 :  asymptotic DA 0.872   CZ DA 0.975
+     Q^2 =   10.0 GeV^2 :  asymptotic DA 0.617   CZ DA 0.900
+     Q^2 =  100.0 GeV^2 :  asymptotic DA 0.146   CZ DA 0.481
+   exact (asymptotic DA): R(c) = c*(5*c - 2*(c + 2)*log(c) - 4)    c = mu0^2/Q^2
+PASS  analytic R(c=1/4) matches the numerical fraction (asymptotic DA, Q^2 = 4 GeV^2)   [got 0.87208115626+0i, expected 0.872108854305+0i]
+PASS  exact (CZ DA): R_CZ(c) = c[456c^3 + 352c^2 - 675c - 132 - (144c^3 + 768c^2 + 450c + 36) ln c]  (R(1) = 1)
+PASS  analytic R_CZ(c=1/10) matches the numerical fraction (CZ DA, Q^2 = 10 GeV^2)   [got 0.90008183001+0i, expected 0.90009125229+0i]
+----------------------------------------------------------------------
+s4_pion_ff: 20/20 PASS
+python3 -I "$f"  5.55s user 0.08s system 99% cpu 5.627 total

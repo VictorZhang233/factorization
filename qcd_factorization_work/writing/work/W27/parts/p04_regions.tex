@@ -1,0 +1,122 @@
+% -----------------------------------------------------------------------------------------------------
+\section{区域方法：已证明的部分与隐藏区域}\label{sec:front-regions}
+
+区域方法（\cref{def:ir-regions}；方法由 Beneke 与 Smirnov 在阈值展开中提出\cite{BenekeSmirnov1998}）是 SCET 与因子化定理一切显式检验的计算骨架：在每个区域内按该区域的标度展开被积函数，把每一展开项在\emph{整个}积分域上积分，并令无标度积分为零；断言是各区域之和给出积分的全阶渐近展开。对欧氏型的大动量、大质量极限，这一断言是严格的（\cref{thm:ir-regions-euclid}，[R, $R_{\mathrm{PT}}$]\cite{Smirnov:1990rz,Smirnov2002}），但因子化所需的 Sudakov、阈值、Regge 与在壳极限不在其内（\cref{prop:ir-regions-minkowski}，[P]）。本节记录此后在一般情形下证明了什么，以及它在哪里失效。
+
+\begin{lemma}[区域展开的主恒等式（Jantzen）]\label{lem:front-jantzen}
+设积分 $\int_DI$ 的区域集合为 $R=\{x_1,\dots,x_N\}$，区域 $x$ 的展开算符为 $T^{(x)}$（作用于被积函数及作用于其他区域展开所得各项），并满足：
+(J1) 存在互不相交且覆盖 $D$ 的子域 $D_x$，在 $D_x$ 上 $T^{(x)}$ 作用于 $I$ 以及作用于任一 $T^{S}I$（$x\notin S$）时都绝对收敛到被作用的函数，这里 $T^S\equiv\prod_{x'\in S}T^{(x')}$；
+(J2) 各展开两两可交换，$T^{(x)}T^{(x')}=T^{(x')}T^{(x)}$；
+(J3) 下面出现的一切积分（原积分与各展开项的积分，限制在某个 $D_x$ 上或不限制）都已正规化；
+(J4) 各展开项在整个 $D$ 上积分时仍绝对收敛（或已正规化），且其中的无穷求和可交换次序。
+则
+\begin{equation}\label{eq:front-jantzen}
+\int_DI=\sum_{\emptyset\ne S\subseteq R}(-1)^{|S|+1}F^{S}
+=\sum_xF^{(x)}-\sum_{\{x,x'\}}F^{(x,x')}+\dots-(-1)^NF^{(x_1\cdots x_N)},\qquad F^{S}=\int_DT^{S}I .
+\end{equation}
+若每个单一展开对展开参数都是齐次的（各区域有自己的幂次），重叠项 $F^S$（$|S|\ge2$）无标度而为零；否则它们是 SCET 零箱减除（\cref{def:scet-zero-bin}）在区域方法中的对应物。
+% VF-FRO-5
+\uses{def:ir-regions}
+\end{lemma}
+
+\begin{proof}
+由 (J1) 与 (J3)，$F^S=\sum_y\int_{D_y}T^SI$。固定 $y$，把非空的 $S$ 分成不含 $y$ 的 $S'$ 与 $S'\cup\{y\}$ 两类。对 $S'\not\ni y$，由 (J1)，在 $D_y$ 上 $T^{S'}I=T^{(y)}T^{S'}I=T^{S'\cup\{y\}}I$（后一等号用 (J2) 把乘积写成 $T^{S'\cup\{y\}}$），故
+\begin{equation*}
+\sum_{\emptyset\ne S}(-1)^{|S|+1}\int_{D_y}T^SI=\sum_{\emptyset\ne S'\not\ni y}(-1)^{|S'|+1}\int_{D_y}\bigl(T^{S'}I-T^{S'\cup\{y\}}I\bigr)+\int_{D_y}T^{(y)}I=\int_{D_y}I ,
+\end{equation*}
+最后一项来自 $S'=\emptyset$，再用一次 (J1)。对 $y$ 求和得 $\int_DI$。交换对 $S$、对 $y$ 的求和与积分及其中的无穷级数，用到 (J3)(J4)。
+\end{proof}
+
+这一恒等式与证明来自\cite[第~3~节]{Jantzen2011}。Jantzen 在例子中验证了 (J1)--(J4)（单圈大动量展开；含硬、势、软、超软区域的阈值展开，收敛性见其附录~A.2；不用解析正规子的前向散射），但对一般情形写道：“I cannot provide a rigorous proof for this convergence issue in the general case”（第~3~节）；展开截断到有限阶时，(J4) 中的求和问题不存在。对多圈 Minkowski 积分验证 (J1)--(J4)，正是\cref{conj:front-mor-minkowski}的开放部分。（离壳 Sudakov 形状因子的区域分析见\cite[第~2.2~节]{BecherBroggioFerroglia2015}，有质量交换的情形见\cite[第~6~节]{Jantzen2011}。）
+
+\begin{example}[两个一维玩具模型]\label{ex:front-regions-toys}
+(a) $I(t)=\int_0^\infty\dd x\,x^{-\varepsilon}/[(x+t)(x+1)]$，$0<\varepsilon<1$，$t\to0$。软区（$x\sim t$）展开 $1/(x+1)=\sum_k(-x)^k$，硬区（$x\sim1$）展开 $1/(x+t)=\sum_k(-t)^kx^{-k-1}$；用 $\int_0^\infty\dd x\,x^{s-1}/(x+a)=a^{s-1}\pi/\sin\pi s$（解析延拓），
+\begin{equation*}
+F^{(s)}=\frac{\pi}{\sin\pi\varepsilon}\frac{t^{-\varepsilon}}{1-t},\qquad F^{(h)}=-\frac{\pi}{\sin\pi\varepsilon}\frac{1}{1-t},\qquad F^{(s,h)}=0\ \text{（无标度）},
+\end{equation*}
+而精确值 $I=\frac{1}{1-t}\int_0^\infty\dd x\,x^{-\varepsilon}\bigl[\frac1{x+t}-\frac1{x+1}\bigr]=\frac{\pi}{\sin\pi\varepsilon}\frac{t^{-\varepsilon}-1}{1-t}=F^{(s)}+F^{(h)}$，与\cref{eq:front-jantzen}逐阶一致。(b) $G(t)=\int_0^\infty\dd x\,x^{-\varepsilon}/[(x-1)^2+t]$：多项式 $x^2-2x+1+t$ 含负系数，Newton 多边形 $\mathrm{conv}\{(2,0),(1,0),(0,0),(0,1)\}$ 唯一的本质面是底边（法向 $(0,1)$），对应把 $t$ 直接 Taylor 展开，所得 $\int x^{-\varepsilon}(x-1)^{-2}$ 在 $x=1$ 处不可积——极点 $x=1\pm\ii\sqrt t$ 在 $t\to0$ 时钳住实轴，奇点位于积分域内部而非端点。在 $x=1$ 处剖分并令 $y=|x-1|$，得 $y^2+t$（系数全正），新面 $y\sim t^{1/2}$ 给出 $G(t)=\pi t^{-1/2}+\order{t^0}$。这正是\cref{prop:front-hidden-regions}中“隐藏区域”的一维缩影。
+% check: writing/work/W27/s_regions_toys.py (T1, T2): exact identity and sqrt(t) G -> pi numerically
+\uses{lem:front-jantzen}
+\end{example}
+
+\begin{definition}[Lee--Pomeransky 表示、Newton 多面体与本质面]\label{def:front-facets}
+Feynman 积分的 Lee--Pomeransky 表示（略去 $\Gamma$ 函数因子）为
+\begin{equation*}
+G(t,\varepsilon)=\int_0^\infty\prod_i\dd x_i\,x_i^{\nu_i-1}\,P(x,t)^{-\delta},\qquad\delta=\frac D2=2-\varepsilon,\qquad P=\mathcal U+\mathcal F
+\end{equation*}
+（\cref{def:ir-landau-setup}的 Symanzik 多项式），$t$ 为展开参数。写 $P=\sum_{w\in S}c_wx_1^{w_1}\cdots x_n^{w_n}t^{w_{n+1}}$，Newton 多面体 $NP=\mathrm{conv}(S)\subset\mathbb R^{n+1}$；内法向 $r^\gamma$ 满足 $r^\gamma_{n+1}>0$（归一化为 $1$）的面 $\gamma$ 称为\emph{本质面}，面算符 $\mathcal M_\gamma$ 作代换 $x_i\to t^{r^\gamma_i}x_i$ 后对 $t$ 展开（每一项以辅助的解析正规化定义）。所有 $c_w>0$ 时称为\emph{欧氏型}。区域与本质（下）面相对应。
+\uses{def:ir-landau-setup, def:ir-regions}
+\end{definition}
+
+\begin{proposition}[系数全正时的面展开（Semenova--Smirnov--Smirnov） \tagR]\label{prop:front-lp-facets}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设 $P$ 的系数全为正。(i) 积分收敛当且仅当点 $(1/\delta,\dots,1/\delta)$ 位于 $NP$ 在 $w_{n+1}=0$ 上的投影 $\pi(NP)$ 的内部；加上解析正规子 $x_i^{\lambda_i}$ 后，收敛区域非空（推广的 Speer 定理），由解析延拓定义维数正规化的积分；Feynman 参数（$\mathcal U\mathcal F$）表示与 Lee--Pomeransky 表示下的区域展开规则等价。(ii) 对每个本质面 $\gamma$，当解析正规化参数使 $((1+\lambda_i)/\delta)_i$ 位于 $\pi(\gamma)$ 内部时，该面的贡献是领头项，积分在 $t\to0^+$ 的领头渐近行为由 $\mathcal M_\gamma$ 的领头项给出。(iii) 若只有一个本质面，$\mathcal M_\gamma$ 给出完整的全阶渐近展开。（本命题只涉及 Feynman 参数积分。）
+\uses{def:front-facets}
+\end{proposition}
+
+\begin{proofsketch}
+(i) 收敛判据由幂次的凸几何给出，正规化后的积分对 $(\varepsilon,\lambda_i)$ 亚纯（扇区分解）；两种表示的等价由对 $\mathcal U$、$\mathcal F$ 齐次性的直接计算得到。(ii) 代换 $x_i=t^{r^\gamma_i}y_i$ 后 $P=t^{L(\gamma)}[\phi(y)+\sum_{w\notin\gamma}c_wy^wt^{\kappa_w}]$，$\kappa_w>0$，被积函数随 $t\to0^+$ 单调地收敛到 $\phi^{-\delta}$，而 $\int\phi^{-\delta}$ 在 (ii) 的条件下收敛，由单调收敛定理得领头项。(iii) 同样的代换对唯一的面逐阶成立。完整论证见\cite[第~4--7~节]{Semenova:2018cwy}。
+\end{proofsketch}
+
+\noindent 一般情形（多个本质面、全阶）是 SSS 的主猜想（\cref{conj:front-mor-minkowski}(a)）：把各面在各自的解析正规化区域中得到的领头项相加并令 $\lambda_i\to0$，需要展开与解析延拓可交换，SSS 相信这一点但没有证明\cite[第~6~节]{Semenova:2018cwy}。系数的正性是本质的：Minkowski 运动学中异号的 $\mathcal F$ 在定理之外。
+
+\begin{proposition}[宽角 Green 函数在壳展开：区域 $=$ Landau 解 $=$ 面 \tagR]\label{prop:front-onshell-facets}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）考虑无质量传播子、非例外动量的离壳 Green 函数及展开 $p_i^2\to0$，以及由硬子图 $H$、与 $p_i$ 共线的喷注 $J_i$、软子图 $S$ 组成且满足基本要求的配置：$H$ 连通且含全部离壳外动量，$J_i$ 连通、附着于 $H$、唯一外动量为 $p_i$，$S$ 不含外动量且每个连通分支附着于 $H\cup J$。给 $H$、$J_i$、$S$ 的边权重 $0,-1,-2$、给 $p_i^2$ 权重 $1$，所得向量 $v_R$ 是 $\mathcal U+\mathcal F$（相应地 $\mathcal U\mathcal F$）的 Newton 多面体某个下表面的法向，当且仅当另外三条图论要求成立：$H$ 的约化形式的内部传播子都离壳；收缩图 $\tilde J_i$ 的约化形式的内部传播子都恰好携带 $p_i$；$S$ 的每个连通分支至少连接两个不同的喷注\cite[第~3.3~节，附录~C]{Gardi:2022khw}。（本命题只涉及部分子 Feynman 积分。）
+\uses{def:front-facets, def:ir-landau-setup, def:ir-pinch-surface}
+\end{proposition}
+
+\begin{proofsketch}
+领头的 Lee--Pomeransky 多项式按 $H$、收缩图 $\tilde J_i$、$\tilde S$ 分解为各自的 $\mathcal U$、$\mathcal F$ 之积（生成树与生成 2-树的计数），由此证明违反任一要求的配置只给出低维的面，满足要求者给出下表面\cite[定理~2，附录~C]{Gardi:2022khw}。
+\end{proofsketch}
+
+\noindent 这些配置正是第四章的钳夹面（硬部离壳、喷注共线、软线零动量，\cref{def:ir-pinch-surface}）。反过来，“在壳展开的\emph{每个}下表面都具有这种形式”是 Gardi 等的命题~1，他们没有给出形式证明，而在一个含三点与四点顶点的标量理论中用找图算法与几何算法逐图核对（三点图至五圈、四点图至四圈）；宽角散射在壳展开与软展开、重到轻衰变的质量展开中下表面的一般全阶形式见\cite{Ma:2023hrt}（据该文摘要）。这些面是否就是\emph{全部}区域，是下面的编号假设。
+
+\begin{assumption}[区域集合的完备性 \tagC]\label{asm:front-mor-complete}
+(MR) 对所考虑的展开，所列区域（Newton 多面体的本质面，或沿奇异轨迹剖分多面体后得到的区域）各自展开并在整个积分域上积分（以解析或维数正规化定义），其和给出积分的全阶渐近展开：没有隐藏区域，也没有\cref{lem:front-jantzen}所含之外的非无标度重叠贡献。对含若干独立小参数 $y_1,\dots,y_K$ 的展开（如若干虚度 $p_\ell^2\to0$），(MR) 指该级数是对每个 $y_\ell$ 分别成立、且对其余 $y_{\ell'}$ 在零点附近一致的渐近展开。
+
+地位：猜想级（[C]）：对欧氏极限已证明（\cref{thm:ir-regions-euclid}），对只有一个本质面的情形已证明（\cref{prop:front-lp-facets}）；面方法在 Minkowski 运动学中从三圈起失效（\cref{prop:front-hidden-regions}）；没有一般论证。文献：\cite{Semenova:2018cwy}，\cite[第~6~节]{Gardi:2022khw}，\cite{Gardi:2024axt,Jantzen2011}。被使用于：\cref{prop:front-commuting}。解除途径：\cref{conj:front-mor-minkowski}；一个保证找到全部区域（剖分多面体）的算法连同完备性证明。
+\uses{def:front-facets, def:ir-regions, lem:front-jantzen}
+\end{assumption}
+
+\paragraph{地位与缺口。}[C]：没有一般的全阶论证；它是技术性假设，以它为前提的\cref{prop:front-commuting}内容等级为 [C]。
+
+\begin{proposition}[多重在壳展开的可交换性 \tagR]\label{prop:front-commuting}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:front-mor-complete}。
+设 $G$ 是宽角散射的无质量图，$I(G)\propto\int_0^\infty\prod_e\dd x_e\,x_e^{\nu_e-1}P(x;s)^{-D/2}$，$t\subseteq\{p_1^2,\dots,p_K^2\}$ 是展开的小量（$s\setminus t$ 中的不变量，包括 $(p_i+p_j)^2$，视为独立的固定量），$R=(H,J_\ell,S)$ 是\cref{prop:front-onshell-facets}中满足全部要求的一个配置（“区域”一词以下都指这类配置）；$S$ 的\emph{连通分支}指经由软顶点相连的软边的极大集合（$\tilde S$ 的 1VI 分支）。若每个连通分支恰与两个喷注相连（无软边的区域也算），称 $R$ 为\emph{成对软区域}（jet-pairing soft region）。
+(a) 若 $R$ 是成对软区域，则其全阶区域展开为
+\begin{equation}\label{eq:front-jet-pairing}
+T^{(R)}_tI(G)=\prod_{p_\ell^2\in t}(-p_\ell^2)^{\rho_{R,\ell}(\varepsilon)}\sum_{k_1,\dots,k_{|t|}\ge0}\ \prod_{p_\ell^2\in t}(-p_\ell^2)^{k_\ell}\,I^{(R)}_{\{k\}}(s\setminus t),
+\end{equation}
+$\rho_{R,\ell}$ 对 $\varepsilon$ 线性，$I^{(R)}_{\{k\}}$ 与 $t$ 无关：对每个 $p_\ell^2$ 的非解析依赖只是一个纯幂次并因子化，其余部分是正规的多元 Taylor 级数。
+(b) 若 $I(G)$ 在 $t$ 展开中的所有区域都是成对软区域，则对其中任意两个虚度先后展开（以任一次序）与同时展开逐项给出同一结果：多重在壳展开可交换。
+(c) 若至多两条外腿取在壳极限（特别地，Sudakov 形状因子的每个图），或 $G$ 是平面图（外腿都在外部面上），则所有区域都是成对软区域；反之，非成对软区域要求至少三条在壳外腿、一个软顶点与非平面图。
+（本命题只涉及部分子 Feynman 积分。）
+\uses{asm:front-mor-complete, prop:front-onshell-facets}
+\end{proposition}
+
+\begin{proof}
+\emph{记号。}按\cite{Gardi:2022khw}，只连软边的顶点属于 $S$；连有 $J_\ell$ 的边、此外只连软边的顶点属于 $J_\ell$；其余顶点属于 $H$。区域的结构（\cref{prop:front-onshell-facets}）：$H$ 连通且含全部离壳外动量（不属于 $t$ 的外腿算作离壳），$J_\ell$ 连通、附着于 $H$、唯一外动量 $p_\ell$ 附在某个 $J_\ell$ 顶点 $a_\ell$ 上，软顶点不带外动量。令 $\Gamma_\ell$ 为 $J_\ell$ 的边与连到 $J_\ell$ 的软分支的边之并，$V_\ell$ 为 $J_\ell$ 的顶点与这些软分支的软顶点之并，$\kappa_\ell=|\Gamma_\ell|-|V_\ell|$（即 $L(\tilde J_\ell)+\sum_{S_k\sim\ell}L(\tilde S_k)$）。$V_\ell$ 中每个顶点的边全在 $\Gamma_\ell$ 中。$P$ 的单项式 $m$ 对应一个生成树或生成 2-树 $T$ 的补边集，系数为 $1$ 或 $-s(T)$；区域向量给 $H$、$J$、$S$ 边权重 $0,-1,-2$、给 $p_\ell^2$ 权重 $1$，$P^{(R)}_0$ 由权重 $w(m)$ 最小的单项式组成。定义 $e_\ell(m)=\delta_\ell(m)-|m\cap\Gamma_\ell|$，系数为 $p_\ell^2$ 时 $\delta_\ell=1$，否则为 $0$。
+\emph{第一步：对一切非零单项式与一切 $\ell$，$e_\ell(m)\ge-\kappa_\ell$。}对生成树，以某个 $H$ 顶点为根，每个 $V_\ell$ 顶点的父边都在 $\Gamma_\ell$ 中且互不相同，故 $|T\cap\Gamma_\ell|\ge|V_\ell|$，即 $|m\cap\Gamma_\ell|\le\kappa_\ell$。对生成 2-树，含 $H$ 顶点的分支同样处理；不含 $H$ 顶点的分支 $C$ 若不含任何 $a_{\ell'}$，流过它的动量为零，单项式不出现，否则以某个 $a_{\ell'}$ 为根。对 $\ell\ne\ell'$ 无损失（$a_{\ell'}\notin V_\ell$）。对 $\ell=\ell'$：若 $C\subseteq V_\ell$，则 $C$ 上只可能附 $p_\ell$，系数为 $p_\ell^2$，$\delta_\ell=1$ 补偿根处缺少的父边；若 $C\not\subseteq V_\ell$，取 $C$ 中不属于 $V_\ell$ 的顶点到根的树路径上最后一个不属于 $V_\ell$ 的顶点，它的父边连到 $V_\ell$ 顶点，因而在 $\Gamma_\ell$ 中却不是 $V_\ell$ 顶点的父边，同样补偿。
+\emph{第二步：饱和。}取 $H$ 的生成树，以及收缩图 $\tilde J_\ell$、$\tilde S_k$ 的生成树（分别有 $|V(J_\ell)|$、$|V_{\rm soft}(S_k)|$ 条边），其并 $T_*$ 是 $G$ 的生成树且 $|T_*\cap\Gamma_\ell|=|V_\ell|$，其单项式对一切 $\ell$ 同时有 $e_\ell=-\kappa_\ell$。对成对软区域，每条软边恰属于两个 $\Gamma_\ell$、每条喷注边恰属于一个，故 $w(m)=\sum_\ell e_\ell(m)\ge-\sum_\ell\kappa_\ell=w(T_*)$。所以 $P^{(R)}_0$ 恰由 $e_\ell=-\kappa_\ell$（对一切 $\ell$）的单项式组成，而任一单项式有 $e_\ell(m)=-\kappa_\ell+k_\ell(m)$，$k_\ell\in\mathbb Z_{\ge0}$，$\sum_\ell k_\ell(m)=w(m)-w_{\min}$。
+\emph{第三步：重标度。}令 $y_\ell=(-p_\ell^2)/(-Q^2)$（$Q^2\in s\setminus t$），作代换 $x_e=y_\ell^{-1}x'_e$（$e\in J_\ell$）、$x_e=(y_iy_j)^{-1}x'_e$（$e$ 在连接 $J_i$、$J_j$ 的软分支中）、$x_e=x'_e$（$e\in H$）。由第二步，$P=\prod_\ell y_\ell^{-\kappa_\ell}\bigl[\hat P_0(x')+\sum_{m\notin P_0}\prod_\ell y_\ell^{k_\ell(m)}\hat m(x')\bigr]$，$\hat P_0$、$\hat m$ 与 $t$ 无关，测度给出 $\prod_\ell y_\ell^{-\sum_{e\in\Gamma_\ell}\nu_e}$。区域展开是在固定 $x'$ 下把被积函数按共同的标度参数展开再在全域积分；由于单项式 $m$ 的阶数恰为 $\sum_\ell k_\ell(m)$，第 $n$ 阶就是对 $y$ 的多元 Taylor 展开中总次数为 $n$ 的部分。于是得\cref{eq:front-jet-pairing}，$\rho_{R,\ell}=\kappa_\ell D/2-\sum_{e\in\Gamma_\ell}\nu_e$。这就是 (a)；第一步正是\cite[式~(5.20)]{Gardi:2022khw}中 $k_i(n,l)\ge0$ 的依据。
+\emph{第四步：可交换性。}若所有区域都是成对软区域，由 (a)，$T_tI=\sum_R\sum_{\{k\}}\prod_\ell(-p_\ell^2)^{\rho_{R,\ell}+k_\ell}I^{(R)}_{\{k\}}$：每一项都是各个 $p_\ell^2$ 的纯幂次之积，系数与 $t$ 无关，不出现 $p_\ell^2/p_{\ell'}^2$ 的非解析函数。按\cref{asm:front-mor-complete}，这是对每个 $p_\ell^2$ 分别成立、对其余变量一致的渐近展开；因此先对 $p_2^2\to0$ 展开（$p_1^2$ 固定），其系数函数就是该级数中 $p_2^2$ 各幂次的系数，再对 $p_1^2$ 展开得到同一双重级数，交换次序或同时展开亦然。这就是\cite[式~(5.21)]{Gardi:2022khw}意义下的 (b)。
+\emph{第五步：(c)。}两个喷注时，每个软分支至少连两个喷注（\cref{prop:front-onshell-facets}）即恰连两个。平面情形：给外腿加一个无穷远顶点 $\infty$、把连通的 $H$ 收缩为一点 $h$，图仍可平面嵌入；每个 $\tilde J_\ell$ 连同外腿含一条 $h$ 到 $\infty$ 的路径 $\pi_\ell$，这些路径内部互不相交，把球面分成若干“月牙”，每个月牙只与相邻的两条路径所属的喷注相接；软分支内部与 $H\cup J$ 不交，落在一个面、从而一个月牙内，只能连到两个喷注。最后，连接三个喷注的软分支中连接三个附着点的极小子树有一个分支点，它只连软边，是软顶点；由平面情形的论证，图必非平面。
+\end{proof}
+
+\paragraph{地位与缺口。}内容等级 [C]（前提\cref{asm:front-mor-complete}）。(a) 与 (c) 本身不依赖该假设：(a) 是关于区域展开的精确陈述，第一步补上了原文\cite[第~5.1~节]{Gardi:2022khw}未写出的逐个喷注的下界。作者的保留\cite[第~6~节]{Gardi:2022khw}：面方法只有在能从欧氏区解析延拓（$\mathcal F$ 中无相消）时才保证找到全部区域，而对无质量 $2\to2$ 散射“we have not provided a proof of this”；不满足成对条件的最简单例子（三条在壳腿的两圈非平面图）已不可交换\cite[第~5.3~节]{Gardi:2022khw}。
+% check: writing/work/W27/s_theorem4.py (per-jet bound, saturation, multi-homogeneity of P_0; non-jet-pairing counter-check)
+
+\begin{proposition}[“区域 $=$ Newton 多面体的下表面”在 Minkowski 运动学中不成立 \tagV]\label{prop:front-hidden-regions}
+在无质量 $2\to2$ 散射中，从三圈起，在特定的非平面图里，$\mathcal F$ 的异号项相消在参数积分域内部产生钳夹（不是端点奇异性），标准扇区分解与基于面的区域方法随之失效；把多面体剖分（线性化图多项式，在奇异轨迹处分割积分域）会产生新的面即新的区域，有时决定领头幂次：在壳展开中它们至少含两个连通的硬子图，Regge 极限中它们是 Glauber 模式（\cite{Gardi:2024axt}，据该文摘要）。独立地，在间隙喷注的三圈盒图与五边形图中存在一个主动—主动 Glauber 区域，“missed by the available computer codes used to search for regions”\cite{Becher:2024kmk}。由 Landau 方程、幂几何与 Gröbner 基揭示势区与 Glauber 区的较早例子见\cite{Ananthanarayan:2018tog}，实现见\cite{Heinrich:2021dbf}（均据摘要）。
+\uses{def:front-facets}
+\end{proposition}
+
+\paragraph{地位与缺口。}作为一般陈述 [V]，证据：显式的三圈反例（计算）。后果：SCET 因子化定理预设了完备的模式表（\cref{rem:scet-assumptions}），而 Glauber 模式恰是会藏在参数空间里的那类区域；区域方法不能“确认”领头区域——在 Minkowski 运动学中那是循环论证，区域的识别必须来自钳夹分析与幂次计数（第四章）。\cref{fig:front-regions-polytope}示意了这两种情形。
+
+%%FIGBLOCK fig:front-regions-polytope%%
+
+\begin{conjecture}[Minkowski 极限下区域方法的有效性 \tagC]\label{conj:front-mor-minkowski}
+(a)（SSS 主猜想\cite{Semenova:2018cwy}）系数全正时，对全部本质面求和给出全阶渐近展开。(b) 对 Minkowski 极限（阈值、Sudakov、Regge、在壳），在区域集合经剖分多面体补全、并在维数正规化不能分开区域之处（共线反常、快度发散）加上解析正规子之后，区域方法给出全阶渐近展开——即\cref{asm:front-mor-complete}对这些类成立。
+\uses{def:front-facets, prop:front-lp-facets}
+\end{conjecture}
+
+\paragraph{地位与缺口。}[C]。已证明的是：欧氏极限（\cref{thm:ir-regions-euclid}），每个面的领头阶与单面情形（\cref{prop:front-lp-facets}），以及条件恒等式（\cref{lem:front-jantzen}）。核心陈述为\cref{prop:ir-regions-minkowski}（[P]）。“区域方法是定理”是常见误解。

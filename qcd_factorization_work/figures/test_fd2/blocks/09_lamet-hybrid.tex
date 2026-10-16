@@ -1,0 +1,49 @@
+%%% BEGIN fig:lamet-hybrid
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 ratio/.style={draw=red!65!black,line width=1.1pt},
+  fd2 hyb/.style={draw=blue!60!black,line width=1.6pt},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % x(z) = 10 z  (|z| in fm);  y = 2.4 (f - 0.4),  f(z) = 1 + 0.25 ln(z/0.2) + 0.5 max(0,z-0.45)^2  (schematic)
+  % ======================= (a) the two |z| intervals =======================
+  \begin{scope}[yshift=5.1cm]
+    \fill[blue!12] (0,0) rectangle (2.5,0.62);
+    \fill[orange!14] (2.5,0) rectangle (12,0.62);
+    \draw[gray!60!black,line width=0.5pt] (0,0) rectangle (12,0.62);
+    \node[fd2 lab] at (1.25,0.31) {比值方案};
+    \node[fd2 lab] at (7.25,0.31) {Wilson 线质量减除：$\tilde h\,\ee^{-\delta m|z|}Z_{\rm hyb}$};
+    \node[fd2 note,anchor=south] at (1.25,0.7) {$\tilde h(\lambda,z^2)/\tilde h(0,z^2)$};
+    \node[fd2 note,anchor=south] at (7.25,0.7) {$Z_{\rm hyb}=\ee^{\delta m z_S}/\tilde h(0,z_S^2)$ 由 $z_S$ 处的连续性确定};
+    \draw[fd2 ax] (0,-0.02) -- (12.7,-0.02) node[right,font=\small] {$|z|$};
+    \foreach \t/\l in {0/0,12/1.2\,\mathrm{fm}} {\draw[gray!60!black,line width=0.45pt] (\t,-0.1) -- (\t,0.06); \node[fd2 note,below=2pt] at (\t,-0.06) {$\l$};}
+    \draw[gray!60!black,line width=0.45pt] (2.5,-0.1) -- (2.5,0.06);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.3) -- (3.0,-0.3);
+    \draw[gray!55!black,line width=0.45pt] (2.0,-0.36) -- (2.0,-0.24) (3.0,-0.36) -- (3.0,-0.24);
+    \node[fd2 note,anchor=west] at (3.08,-0.31) {$z_S\approx0.2$--$0.3$ fm};
+    \node[fd2 lab] at (-1.25,0.31) {(a)};
+  \end{scope}
+  % ======================= (b) conversion factor to MS-bar (schematic) =======================
+  \fill[gray!14] (4.5,0) rectangle (12,4.0);
+  \node[fd2 note,align=center,text=gray!35!black] at (9.6,0.38) {非微扰区：$\alpha_s(1/|z|)$ 不再小};
+  \draw[gray!65!black,line width=0.5pt,dash pattern=on 3pt off 2pt] (2.5,0) -- (2.5,5.1);
+  \draw[fd2 ratio] plot[domain=0.03:0.45,samples=60,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))});
+  \draw[fd2 ratio,dash pattern=on 4pt off 2pt] plot[domain=0.45:1.2,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2)+0.5*(\x-0.45)^2)});
+  \draw[fd2 hyb] plot[domain=0.03:0.25,samples=40,smooth] ({10*\x},{2.4*(0.6+0.25*ln(\x/0.2))}) -- (12,{2.4*(0.6+0.25*ln(1.25))});
+  \fill[black] (2.5,{2.4*(0.6+0.25*ln(1.25))}) circle[radius=1.8pt];
+  \draw[fd2 ax] (0,0) -- (12.7,0) node[right,font=\small] {$|z|/\mathrm{fm}$};
+  \draw[fd2 ax] (0,0) -- (0,4.25);
+  \node[fd2 note,rotate=90,anchor=south] at (-0.12,2.1) {到 $\MSbar$ 的换算因子（示意）};
+  \foreach \t/\l in {0/0,2/0.2,4/0.4,6/0.6,8/0.8,10/1.0,12/1.2} {\draw[gray!60!black,line width=0.45pt] (\t,-0.06) -- (\t,0.06); \node[font=\scriptsize,below=2pt] at (\t,-0.04) {$\l$};}
+  \node[fd2 note,text=red!55!black,anchor=south east] at (11.6,3.25) {比值方案、RI/MOM：依赖 $\ln(z^2\mu^2)$};
+  \node[fd2 note,text=blue!50!black,anchor=north west] at (4.65,1.42) {混合方案：$|z|>z_S$ 时保持在 $z_S$ 处的值（处处微扰）};
+  \node[fd2 lab] at (-1.25,2.1) {(b)};
+\end{tikzpicture}
+\caption{混合重整化方案（示意）。(a)~$|z|\le z_S$ 用比值方案，紫外发散（包括 Wilson 线的线性发散）在比值中相消；$|z|>z_S$ 只减去 Wilson 线的线性发散与对数因子（$\delta m$ 的符号约定同 \cref{prop:lattice-renormalizability}：$O^R=Z_j^{-2}\ee^{-\delta m|z|}O^B$）。
+(b)~到 $\MSbar$ 的换算因子：混合方案中它等于 $z_S$ 处的值，在所有 $|z|$ 上都是微扰的，因此动量空间匹配成立；比值方案与 RI/MOM 方案的换算因子依赖于 $\ln(z^2\mu^2)$，在大 $|z|$ 处含 $\alpha_s(1/|z|)$（灰色区），动量空间匹配没有依据（\cref{rem:lamet-ratio-large-z}）。
+单圈混合核满足 $\int\dd\xi\,C_{\rm hyb}=1$（\cref{prop:lamet-hybrid-kernel}，VF-LAM-10）。}
+\label{fig:lamet-hybrid}
+\end{figure}
+%%% END fig:lamet-hybrid

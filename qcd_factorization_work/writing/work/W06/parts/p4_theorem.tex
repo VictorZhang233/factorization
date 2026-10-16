@@ -1,0 +1,55 @@
+% ---------------------------------------------------------------------
+\section{主定理：$R(s)$ 的红外有限性}\label{sec:ee-theorem}
+
+逻辑关系如下：解析性与单标度结构给出从欧氏区到割线的延拓，欧氏红外有限性与紫外重整化给出欧氏区的有限性，重整化群给出多项式结构，合起来即\cref{thm:ee-R-finite}；$\order{\as}$ 的显式计算是独立检验，再加割图规则才得到与部分子末态求和的等同（\tagA）。
+
+\begin{center}
+\begin{tikzpicture}[
+  fbox/.style={draw=gray!60!black,rounded corners=2pt,align=center,font=\footnotesize,inner sep=3pt,line width=0.5pt},
+  fR/.style={fbox,fill=OliveGreen!8},
+  fA/.style={fbox,fill=RoyalBlue!8},
+  farr/.style={-{Stealth[length=4pt,width=3.5pt]},line width=0.55pt,gray!50!black}]
+  \node[fR,text width=3.25cm] (imp) at (0,0)     {\cref{prop:ee-R-ImPi}、\cref{prop:ee-analytic}\\$R=12\pi\Imag\Pi$；解析性};
+  \node[fR,text width=3.25cm] (ss)  at (3.85,0)  {\cref{lem:ee-single-scale}\\单标度结构};
+  \node[fR,text width=3.25cm] (eu)  at (7.7,0)   {\cref{thm:ee-euclid-ir}\\欧氏红外有限};
+  \node[fR,text width=3.25cm] (rg)  at (11.55,0) {\cref{prop:ee-adler-rg}\\对 $L$ 的多项式结构};
+  \node[fR,text width=8.2cm]  (thm) at (5.775,-1.35) {\cref{thm:ee-R-finite}：$R^{(n)}$ 有限，且是 $\ln(s/\mu^2)$ 的多项式};
+  \node[fR,text width=3.6cm] (ex)  at (0.15,-2.75)  {\cref{prop:ee-oneloop,prop:ee-twoloop,prop:ee-cutting-exact}\\$\order{\as}$ 的两种计算};
+  \node[fR,text width=3.4cm] (al)  at (5.775,-2.75) {\cref{prop:ee-contour}、\cref{cor:ee-R-alphas}\\$r_n$ 与 $d_n$};
+  \node[fA,text width=3.6cm] (cut) at (11.4,-2.75) {\cref{cor:ee-cuts}（\tagA）\\$R=$ 割图之和；\cref{rem:prelim-cutting-dr}};
+  \foreach \n in {imp,ss,eu,rg} \draw[farr] (\n.south) -- (\n.south |- thm.north);
+  \draw[farr] (thm.south) -- (al.north);
+  \draw[farr] (thm.south -| cut.north) -- (cut.north);
+  \draw[farr] (ex.east) -- (al.west);
+  \draw[farr,dashed] (ex.south) -- ++(0,-0.35) -| (cut.south);
+\end{tikzpicture}
+\end{center}
+
+\begin{theorem}[$R(s)$ 在微扰论每一阶的红外有限性 \tagR]\label{thm:ee-R-finite}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 $n_f$ 味无质量 QCD 中，以\cref{eq:ee-PiMS}定义 $\Pi_{\overline{\rm MS}}$，令 $R^{(n)}(s;\varepsilon)$ 为 $12\pi\Imag\Pi_{\overline{\rm MS}}(s+\ii0;\varepsilon)$ 中 $a^n$（$a=\as(\mu)/\pi$）的系数，圈积分取 $D$ 维，$q^2=s+\ii0$ 处的值由裸表达式在固定 $\varepsilon$ 下的解析延拓（\cref{lem:ee-single-scale}）给出。则对每个 $n$：
+(i)~$\lim_{\varepsilon\to0}R^{(n)}(s;\varepsilon)$ 存在；
+(ii)~$n\ge1$ 时该极限是 $\ln(s/\mu^2)$ 的次数不超过 $n-1$ 的实系数多项式，$R^{(0)}=R_0$；
+(iii)~该极限等于欧氏区的 $\lim_{\varepsilon\to0}\Pi^{(n)}_{\overline{\rm MS}}$（$L=\ln(-q^2/\mu^2)$ 的多项式）在 $L\to\ln(s/\mu^2)-\ii\pi$ 处的值的 $12\pi$ 倍虚部。
+非微扰地位：\cref{asm:intro-wightman}（MA0）、\cref{asm:intro-bridge}（MA1+MA2）。
+\uses{prop:ee-R-ImPi,lem:ee-single-scale,thm:ee-euclid-ir,prop:ee-adler-rg}
+\end{theorem}
+\begin{proof}
+(a)~\emph{欧氏区。}由\cref{thm:ee-euclid-ir}，对 $q^2<0$，$\Pi^{(n)}_{\overline{\rm MS}}(q^2;\varepsilon)$ 在 $\varepsilon\to0$ 时对每个实的 $L$ 有有限极限。
+
+(b)~\emph{多项式结构。}由\cref{lem:ee-single-scale}，$\hat\Pi=\mu^{2\varepsilon}S_\varepsilon^{-1}\sum_ma_0^mc_m(\varepsilon)(\mu_0^2)^{m\varepsilon}(Q^2)^{-(m+1)\varepsilon}$，$Q^2=-q^2-\ii0$；代入 $a_0^m(\mu_0^2)^{m\varepsilon}=(a\mu^{2\varepsilon}S_\varepsilon^{-1}Z_g^2)^m$ 并按 $a$ 展开，
+\begin{equation}\label{eq:ee-structure}
+\Pi^{(n)}_{\overline{\rm MS}}(q^2;\varepsilon)=\sum_{k=1}^{n+1}C_{n,k}(\varepsilon)\Big(\frac{Q^2}{\mu^2}\Big)^{-k\varepsilon}-z^{(n)}(\varepsilon),
+\end{equation}
+$C_{n,k}=c_{k-1}S_\varepsilon^{-k}[Z_g^{2(k-1)}]_{a^{n-k+1}}$ 是 $\varepsilon$ 的亚纯函数，$z^{(n)}$（$Z_\Pi$ 的 $a^n$ 系数）是 $1/\varepsilon$ 的不含常数项的多项式。代入 $(Q^2/\mu^2)^{-k\varepsilon}=\sum_j(-k\varepsilon L)^j/j!$，$\varepsilon^m$ 的系数
+$p_{n,m}(L)=\sum_k\sum_{j\ge0}C_{n,k}^{[m-j]}(-kL)^j/j!-z^{(n)}_m$
+是 $L$ 的多项式（$C^{[i]}$ 为 Laurent 系数，极点阶数有限）。由 (a)，$m<0$ 时 $p_{n,m}(L)=0$ 对一切实 $L$ 成立，故作为多项式恒为零，在复的 $L$ 处也为零。
+
+(c)~\emph{延拓与 $\varepsilon\to0$ 可交换。}固定 $\varepsilon$ 时 $\Pi^{(n)}_{\overline{\rm MS}}$ 在 $\mathbb C\setminus[0,\infty)$ 上解析（\cref{lem:ee-single-scale}），在 $q^2=s+\ii0$ 处的值由\cref{eq:ee-structure}在 $L=\ell-\ii\pi$ 处给出。对固定的复 $L$，$\ee^{-k\varepsilon L}$ 的级数绝对收敛，Laurent 系数仍是 $p_{n,m}(L)$，于是
+\[
+\Pi^{(n)}_{\overline{\rm MS}}(s+\ii0;\varepsilon)=\sum_{m\ge0}p_{n,m}(\ell-\ii\pi)\,\varepsilon^m\ \xrightarrow{\ \varepsilon\to0\ }\ p_{n,0}(\ell-\ii\pi)=\Big[\lim_{\varepsilon\to0}\Pi^{(n)}_{\overline{\rm MS}}\Big]_{L\to\ell-\ii\pi}.
+\]
+这证明了 (i) 与 (iii)。欧氏区的 $\Pi$ 为实，$p_{n,0}$ 的系数为实，故 $R^{(n)}=12\pi\Imag p_{n,0}(\ell-\ii\pi)$ 是 $\ell$ 的实系数多项式。
+
+(d)~\emph{次数。}由\cref{prop:ee-adler-rg}(c)，$p_{n,0}$ 的次数不超过 $\max(1,n)$；$(\ell-\ii\pi)^j$ 的虚部是 $\ell$ 的 $j-1$ 次多项式（首项 $-j\pi\ell^{j-1}$），故 $n\ge1$ 时 $R^{(n)}$ 的次数不超过 $n-1$。$n=0$ 时由\cref{prop:ee-adler-rg}(c) 的证明，$p_{0,0}=c_0-\frac{R_0}{12\pi^2}L$，$\Imag p_{0,0}(\ell-\ii\pi)=\frac{R_0}{12\pi}$，$R^{(0)}=R_0$（与\cref{eq:ee-ImPi0}一致）。
+\end{proof}
+强子 $R(s)$ 与这一级数的关系及其逐点意义见\cref{sec:ee-duality}。证明只用欧氏信息与解析延拓，是 Poggio--Quinn\cite{PoggioQuinn1976}的推论“物理不连续性也红外有限”在本书约定下的完整写出；$R$ 由 $12\pi\Imag\Pi$ \emph{定义}（由幺正性它就是物理截面），与 $D$ 维部分子割图之和的等同是另一陈述（\cref{cor:ee-cuts}，\tagA）。闵氏空间中独立的全阶论证见 Sterman\cite{Sterman:1976jh,Sterman1978a,Sterman1978b}；重整化 Feynman 积分（含零质量）的 $\ii0\to0$ 边值作为缓增分布存在\cite{LowensteinSpeer1976}。

@@ -1,0 +1,253 @@
+%% =====================================================================
+\section{幂次计数}\label{sec:ir-power}
+
+钳夹面只是长程敏感性的必要条件。一个钳夹面究竟给出幂次发散、对数还是可以忽略的贡献，由其邻域中的幂次计数决定\cite[第~2.3~节]{Sterman:1995fz}。在钳夹面 $\mathcal S$ 的一点附近取法坐标 $\kappa_i$，令 $\kappa_i=\lambda^{a_i}\kappa'_i$（$\lambda\to0$，$\kappa'$ 固定），每个分母只保留其最低次项 $\lambda^{A_j}f_j(\kappa')$，分子也只保留最低次项 $\lambda^{s}$；所得关于 $\kappa'$ 的积分称为\emph{齐次积分}（homogeneous integral），它正比于 $\lambda^{p}$，
+\begin{equation}\label{eq:ir-pgeneric}
+p=\sum_ia_i-\sum_jA_j+s :\qquad p>0\ \text{压低},\qquad p=0\ \text{对数},\qquad p<0\ \text{幂次发散}
+\end{equation}
+\cite[式~(60)--(62)]{Sterman:1995fz}。只有当齐次积分本身不再有新的钳夹面（即某些法坐标比其余更快趋于零的子面）时，这一估计才是完整的；否则须对这些子面重复同样的分析。嵌套区域正由此而来。
+
+%%% BEGIN fig:momentum-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=2.05cm,y=2.05cm,
+  t2 mode/.style={circle,draw=black,line width=0.6pt,inner sep=0pt,minimum size=6.6pt},
+  t2 hyp/.style={draw=black!65,line width=0.7pt},
+  t2 lab/.style={font=\footnotesize,inner sep=1.5pt},
+  t2 tick/.style={font=\footnotesize},
+  t2 grid/.style={draw=gray!45,line width=0.4pt,dash pattern=on 1pt off 2pt}]
+  % coordinates: x = ln(k^+/Q)/ln(1/lambda), y = ln(k^-/Q)/ln(1/lambda)
+  % Glauber shading for k_T ~ lambda Q:  k^+ k^- << k_T^2 ~ lambda^2 Q^2  <=>  x + y < -2
+  \fill[red!7] (-3.4,-3.4) -- (0.8,-3.4) -- (0.8,-2.8) -- (-2.8,0.8) -- (-3.4,0.8) -- cycle;
+  % axes, ticks, grid
+  \draw[lcaxis] (-3.45,-3.45) -- (1.1,-3.45) node[below left=1pt and -4pt] {$\ln k^+$};
+  \draw[lcaxis] (-3.45,-3.45) -- (-3.45,1.1) node[left] {$\ln k^-$};
+  \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+    \draw[line width=0.5pt] (\v,-3.45) -- ++(0,0.07);
+    \node[t2 tick,below] at (\v,-3.45) {$\t$};
+    \draw[line width=0.5pt] (-3.45,\v) -- ++(0.07,0);
+    \node[t2 tick,left] at (-3.45,\v) {$\t$};
+    \draw[t2 grid] (\v,-3.38) -- (\v,0.8);
+    \draw[t2 grid] (-3.38,\v) -- (0.8,\v);
+  }
+  % constant-virtuality hyperbolas  k^+ k^- = const : straight lines of slope -1
+  \draw[t2 hyp] (0.8,-0.8) -- node[pos=0.86,sloped,above=1.5pt,t2 lab] {$k^+k^-\sim Q^2$} (-0.8,0.8);
+  \draw[t2 hyp] (0.8,-2.8) -- node[pos=0.36,sloped,below=2.5pt,t2 lab] {$k^+k^-\sim\lambda^2Q^2$} (-2.8,0.8);
+  \draw[t2 hyp] (-0.8,-3.2) -- node[pos=0.25,sloped,above=1.5pt,t2 lab] {$k^+k^-\sim\lambda^4Q^2$} (-3.2,-0.8);
+  % modes
+  \node[t2 mode,fill=gray!55] (h)  at (0,0) {};
+  \node[t2 mode,fill=blue!55!black] (n) at (0,-2) {};
+  \node[t2 mode,fill=orange!85!black] (nb) at (-2,0) {};
+  \node[t2 mode,fill=green!55!black] (s) at (-1,-1) {};
+  \node[t2 mode,fill=green!25] (us) at (-2,-2) {};
+  \node[t2 lab,anchor=south west] at (h.north east) {硬 $(1,1,1)$};
+  \node[t2 lab,anchor=south west] at (n.north east) {$n$ 共线 $(1,\lambda^2,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=white] at (nb.north east) {$\bar n$ 共线 $(\lambda^2,1,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=white] at (s.north east) {软 $(\lambda,\lambda,\lambda)$};
+  \node[t2 lab,anchor=south west,fill=red!7] at ($(us.north east)+(0.06,0.03)$) {超软 $(\lambda^2,\lambda^2,\lambda^2)$};
+  \draw[red!60!black,line width=0.8pt] (-2.1,-2.1) rectangle (-1.9,-1.9);
+  \node[t2 lab,anchor=north east,align=right,text=red!55!black] at ($(us.south west)+(-0.04,-0.04)$) {Glauber\\$(\lambda^2,\lambda^2,\lambda)$};
+  \node[t2 lab,align=center,text=red!55!black,fill=red!7] at (0.17,-3.05) {Glauber 区\\$|k^+k^-|\ll k_T^2$};
+\end{tikzpicture}
+\caption{$(\ln k^+,\ln k^-)$ 平面上的动量区域（括号内为 $(k^+,k^-,k_T)/Q$ 的标度，$\lambda\ll1$；坐标轴以 $\ln(1/\lambda)$ 为单位）。$A$（$n$）共线区的大分量为 $k^+$，$B$（$\bar n$）共线区的大分量为 $k^-$。
+等虚度双曲线 $k^+k^-=$ 常数在对数坐标中是斜率为 $-1$ 的直线：共线区与软区位于同一条双曲线 $k^+k^-\sim\lambda^2Q^2$ 上，彼此只差快度 $y=\frac12\ln(k^+/k^-)$；
+超软区位于 $k^+k^-\sim\lambda^4Q^2$。Glauber 区由 $|k^+k^-|\ll k_T^2$ 定义：阴影为 $k_T\sim\lambda Q$ 时满足此条件的区域（通常所说的 Glauber 区是其中 $k^\pm\ll Q$ 的软部分），
+其典型标度 $(\lambda^2,\lambda^2,\lambda)$ 在本图中的投影与超软区重合（红框），二者只在 $k_T$ 上不同：Glauber 动量以横动量为主，$k^2\approx-k_T^2$。}
+\label{fig:momentum-regions}
+\end{figure}
+%%% END fig:momentum-regions
+
+\begin{definition}[区域标度]\label{def:ir-scalings}
+设 $Q$ 为硬标度，$\lambda\ll1$ 为幂次计数参数（例如 $\lambda=m/Q$ 或 $q_T/Q$）。以光锥分量 $(k^+,k^-,k_T)$ 表示，动量 $k$ 的区域标度为：硬 $Q(1,1,1)$；$A$ 共线 $Q(1,\lambda^2,\lambda)$；$B$ 共线 $Q(\lambda^2,1,\lambda)$；软 $Q(\lambda,\lambda,\lambda)$；超软（ultrasoft）$Q(\lambda^2,\lambda^2,\lambda^2)$；Glauber 区由 $|k^+k^-|\ll k_T^2$ 定义，典型标度为 $Q(\lambda^2,\lambda^2,\lambda)$（见\cref{sec:ir-glauber}）。前五种都满足 $k_T^2\sim|k^+k^-|\sim|k^2|$。当软、超软或 Glauber 动量 $k$ 流过一条 $A$ 共线线 $p_A$ 时，程函近似 $(p_A+k)^2-p_A^2\simeq2p_A^+k^-$ 的相对误差：对软动量为 $O(\lambda)$；对超软动量，若该线沿喷注轴（$\mathbf p_{A,T}=0$）为 $O(\lambda^2)$，对一般的喷注内线（$p_{A,T}\sim\lambda Q$）因 $2\mathbf p_{A,T}\cdot\mathbf k_T$ 一项为 $O(\lambda)$；对 Glauber 动量为 $O(1)$。
+% VF-REG-7 (the two cases of the ultrasoft error: writer-verified, w04_extra.py X13)
+\textbf{单位。}Sterman 的红外发散度 $\omega$ 以 $\lambda_S\equiv\lambda^2$ 为单位，$\lambda$ 的幂次为 $p=2\omega$；Libby--Sterman 所说的“软”区即本书的超软区，TMD 因子化（第~14~章）则使用软标度。
+\uses{def:prelim-lightfront}
+\end{definition}
+
+\cref{fig:momentum-regions,fig:ir-mode-exponents}从两个角度画出这些标度；前者沿用文献中常见的记号，图中的 $n$ 共线、$\bar n$ 共线即本书的 $A$ 共线（沿 $n_A$）与 $B$ 共线（沿 $n_B$）。Glauber 模式在 $(\ln k^+,\ln k^-)$ 平面中与超软模式重合，只有加上横动量方向（后者）才能区分：它位于在壳平面 $c=\frac12(a+b)$ 之下。
+
+\paragraph{两种单位。}本书主要用 $\lambda$（“SCET 单位”，共线动量 $Q(1,\lambda^2,\lambda)$）；Sterman 与 CSS 用 $\lambda_S=\lambda^2$，喷注的法变量 $\ell^2$、$\ell\cdot p$ 与超软动量的全部分量都按 $\lambda_S$ 标度\cite[第~2.4~节]{Sterman:1995fz}，发散度 $\omega$ 是 $\lambda_S$ 的幂次。混用两种单位是常见的错误来源；本书在 $\omega$ 处总注明“Sterman 单位”，并记住 $p=2\omega$。
+
+%%% BEGIN fig:ir-mode-exponents
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x={(1.9cm,0cm)},y={(-0.996cm,0.575cm)},z={(0cm,1.55cm)},
+  fb ax/.style={lcaxis,gray!50!black},
+  fb guide/.style={draw=gray!60,line width=0.4pt,dash pattern=on 1pt off 1.6pt},
+  fb plane/.style={fill=gray!22,fill opacity=0.62,draw=gray!55!black,line width=0.6pt},
+  fb pt/.style={circle,draw=white,line width=0.4pt,inner sep=0pt,minimum size=5.6pt},
+  fb gl/.style={circle,draw=red!60!black,fill=white,line width=0.9pt,inner sep=0pt,minimum size=6pt},
+  fb lab/.style={font=\footnotesize,inner sep=2pt},
+  fb tick/.style={font=\scriptsize,text=gray!35!black,inner sep=1.5pt}]
+  % ---------------- base grid (c = 0) and axes ----------------
+  \foreach \t in {1,2} {
+    \draw[fb guide] (\t,0,0) -- (\t,2,0);
+    \draw[fb guide] (0,\t,0) -- (2,\t,0);
+  }
+  \draw[fb ax] (0,0,0) -- (2.75,0,0) node[right,font=\small] {$a$};
+  \draw[fb ax] (0,0,0) -- (0,2.85,0) node[left,font=\small] {$b$};
+  \foreach \t in {1,2} {
+    \draw[gray!50!black,line width=0.5pt] (\t,0,0) -- ++(0,0,-0.07) node[below,fb tick] {$\t$};
+    \draw[gray!50!black,line width=0.5pt] (0,\t,0) -- ++(0,0,-0.07) node[below,fb tick] {$\t$};
+  }
+  % vertical guides down to the base plane
+  \draw[fb guide] (2,2,0) -- (2,2,0.95);
+  \draw[fb guide] (2,0,0) -- (2,0,1);
+  \draw[fb guide] (0,2,0) -- (0,2,1);
+  % Glauber point and its vertical offset: below the plane, hence drawn before the translucent plane
+  \node[fb gl] (G) at (2,2,1) {};
+  \draw[red!60!black,line width=0.85pt,dash pattern=on 2.5pt off 1.8pt,-{Stealth[length=4pt,width=3.4pt]}]
+       (2,2,1.07) -- (2,2,1.93);
+  % ---------------- on-shell plane c = (a+b)/2 ----------------
+  \draw[fb plane] (0,0,0) -- (2,0,1) -- (2,2,2) -- (0,2,1) -- cycle;
+  \node[font=\footnotesize,text=gray!30!black,rotate=22.2] at (1.35,0.3,0.825) {在壳平面};
+  % the c axis lies in front of the plane
+  \draw[fb ax] (0,0,0) -- (0,0,2.8) node[above,font=\small] {$c$};
+  \foreach \t in {1,2}
+    \draw[gray!50!black,line width=0.5pt] (0,0,\t) -- ++(-0.045,0,0) node[left,fb tick] {$\t$};
+  % ---------------- modes ----------------
+  \node[fb pt,fill=black] (H)  at (0,0,0) {};
+  \node[fb pt,fill=blue!55!black] (CA) at (0,2,1) {};
+  \node[fb pt,fill=orange!85!black] (CB) at (2,0,1) {};
+  \node[fb pt,fill=green!40!black] (US) at (2,2,2) {};
+  \node[fb pt,fill=green!60!black] (S) at (1,1,1) {};
+  \node[fb lab,anchor=north east] at (H.south west) {硬 $(0,0,0)$};
+  \node[fb lab,anchor=east] at (CA.west) {$A$ 共线 $(0,2,1)$};
+  \node[fb lab,anchor=west] at (CB.east) {$B$ 共线 $(2,0,1)$};
+  \node[fb lab,anchor=west] at (US.east) {超软 $(2,2,2)$};
+  \node[fb lab,anchor=south] at ($(S.north)+(0cm,0.02cm)$) {软 $(1,1,1)$};
+  \node[fb lab,anchor=west,text=red!55!black] (GL) at (canvas cs:x=3.15cm,y=3.25cm) {Glauber $(2,2,1)$};
+  \node[fb lab,anchor=north west,text=red!55!black,inner sep=1pt] at ($(GL.south west)+(0.1cm,0cm)$) {$k^2\approx-k_T^2$，离壳};
+  \draw[red!55!black,line width=0.4pt] ($(G.east)+(0.02cm,0.03cm)$) -- (GL.west);
+  % ---------------- legend ----------------
+  \node[font=\small,anchor=east] at (canvas cs:x=-0.45cm,y=4.3cm) {$(k^+,\,k^-,\,k_T)\sim(\lambda^a,\,\lambda^b,\,\lambda^c)\,Q$};
+  \node[font=\footnotesize,anchor=north west,align=left,inner sep=0pt] at (canvas cs:x=6.45cm,y=3.38cm)
+    {平面上 $c=\tfrac12(a+b)$：\\[1pt]$\quad k_T^2\sim k^+k^-\sim|k^2|$\\[5pt]
+     平面下 $c<\tfrac12(a+b)$：\\[1pt]$\quad k_T^2\gg|k^+k^-|$，$k^2\approx-k_T^2$};
+\end{tikzpicture}
+\caption{动量模式在指数空间 $(a,b,c)$ 中的位置，$(k^+,k^-,k_T)\sim(\lambda^a,\lambda^b,\lambda^c)\,Q$，$\lambda\ll1$（指数越大，相应分量越小）。
+硬、$A$ 共线、$B$ 共线、软与超软模式都在在壳平面 $c=\frac12(a+b)$（半透明灰色平行四边形）上，即 $k_T^2$、$k^+k^-$ 与虚度 $|k^2|$ 同阶；
+硬、两种共线与超软模式恰为平行四边形的四个顶点，软模式 $(1,1,1)$（TMD 因子化所用的标度）为其中心。
+Glauber 模式 $(2,2,1)$（红色空心圆，透过平面看到）与超软模式有相同的 $k^\pm$，只是横动量大 $\lambda^{-1}$ 倍（红色虚线），因而位于平面之下：
+$|k^+k^-|\ll k_T^2$，$k^2\approx-k_T^2$，以横动量为主且离壳；在 $(\ln k^+,\ln k^-)$ 平面（\cref{fig:momentum-regions}）上它与超软模式重合，只有加上第三个方向 $\ln k_T$ 才能区分。
+本书的“超软”即 Libby--Sterman 的“软”。}
+\label{fig:ir-mode-exponents}
+\end{figure}
+%%% END fig:ir-mode-exponents
+
+\begin{proposition}[超表观红外发散度 \tagR]\label{prop:ir-power-counting}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设 $R$ 是 Feynman 规范中的一个约化图，由硬部分 $H$（割图中另有 $H^\dagger$）、喷注 $J$ 与超软子图 $S$ 组成，区域标度如\cref{def:ir-scalings}。对每个喷注 $J$ 记：$f^g_J$（$f^b_J$）为经好（坏）旋量分量与 $H$ 相连的夸克线数；$t_J$ 为横向极化胶子数，$u_J$ 为经 $J^-$ 分量（“$-$”极化）与 $H$ 相连的胶子数，经 $J^+$ 分量相连的标量极化胶子不计入；$e_J=1$（喷注带一个外部在壳部分子的振幅）或 $e_J=2$（前向振幅中的靶喷注，或割图中的末态喷注）；$s^q_J$ 为附着于 $J$ 的软夸克数。记 $b_{S\to H}$、$f_{S\to H}$ 为附着于 $H$ 的软胶子与软夸克数。则 $R$ 的邻域的齐次积分按 $\lambda_S^{\omega(R)}$ 标度（至多差对数因子；分子中进一步的相消只会使之更压低），
+\begin{equation}\label{eq:ir-omega}
+\omega(R)=\sum_J\tfrac12\big(f^g_J+t_J+2u_J+2f^b_J-e_J\big)+\tfrac12\sum_Js^q_J+b_{S\to H}+\tfrac32f_{S\to H} .
+\end{equation}
+% VF-REG-8
+% errtype: E-S
+以 $\lambda$ 为单位，各连接的贡献见\cref{tab:ir-connection-powers}。（本命题只涉及 Feynman 积分。）
+\uses{def:ir-scalings,lem:prelim-boost,def:prelim-feynman-rules,prop:appE-degree}
+\end{proposition}
+\begin{proof}
+完整证明见\cref{sec:appE-formula}。思路：沿喷注方向以快度 $\ln\lambda$ 推动（\cref{lem:prelim-boost}），共线标度 $Q(1,\lambda^2,\lambda)$ 变为各向同性的 $\lambda Q(1,1,1)$，喷注子图成为单一尺度 $\lambda Q$ 的协变函数，按量纲标度为 $\lambda^{\dim J}$；推回原参考系时，每个与 $H$ 或 $S$ 缩并的自由指标获得推动权重（上指标 $+$：$\lambda^{-1}$，$-$：$\lambda$，横向：$1$；好、坏旋量分量：$\lambda^{\mp1/2}$）；计入 $J$--$H$ 圈的测度与软子图的量纲，对各喷注与软子图求和即得\cref{eq:ir-omega}。
+\end{proof}
+
+\begin{table}[htbp]\centering\small
+\caption{幂次计数的组成部分（以 $\lambda$ 为单位，$k_T\sim\lambda Q$；Sterman 单位的 $\omega$ 是 $\lambda$ 的幂次的一半）。左栏：每个喷注的基数与每个连接对总幂次 $p=2\omega$ 的贡献；软线一栏已计入软子图本身的量纲。右栏：由\cref{eq:ir-omega}得到的若干约化图的 $\omega$（均经逐项核对）。}
+\label{tab:ir-connection-powers}
+\begin{tabularx}{\textwidth}{@{}lc@{\quad}>{\raggedright\arraybackslash}Xc@{}}
+\toprule
+组成部分 & $\lambda$ 的幂次 & 约化图（Feynman 规范） & $\omega$ \\
+\midrule
+每个喷注的基数 & $-e_J$ & Sudakov 顶点：喷注间软胶子 & $0$ \\
+好分量夸克 $J\to H$ & $+1$ & 共线胶子以标量极化接入 $H$ & $0$ \\
+坏分量夸克 $J\to H$ & $+2$ & 共线胶子以横向极化接入 $H$（扭度 3 型） & $\tfrac12$ \\
+横向极化胶子 $J\to H$ & $+1$ & “$-$”极化胶子接入 $H$ & $1$ \\
+标量（K）极化胶子 $J\to H$ & $0$ & 额外一对共线 $q\bar q$ 接入 $H$（扭度 4 型） & $1$ \\
+“$-$”极化胶子 $J\to H$ & $+2$ & 两喷注之间交换软夸克 & $1$ \\
+软胶子 $\to$ 喷注 & $0$ & 软胶子接入 $H$ & $1$ \\
+软夸克 $\to$ 喷注 & $+1$ & 软夸克接入 $H$ & $2$ \\
+软胶子 $\to H$ & $+2$ & $e^+e^-$ 双喷注割图（任意多标量胶子与软胶子） & $0$ \\
+软夸克 $\to H$ & $+3$ & 只有标量极化胶子的胶子喷注，$e_J=1$／$e_J=2$ & $-\tfrac12$／$-1$ \\
+\midrule
+超领头，$e_J=2$，$(n_F,n_T)=(0,0)$ & $p_J=-2$ & 一个横向、其余标量极化的胶子喷注，$e_J=2$ & $-\tfrac12$ \\
+超领头，$e_J=2$，$(n_F,n_T)=(0,1)$ & $p_J=-1$ & DIS 靶喷注、DY 两入射喷注（各一物理部分子） & $0$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+由\cref{tab:ir-connection-powers}可直接读出：附着于喷注的软胶子不付代价，软夸克或附着于 $H$ 的软线都受压低；每个喷注以一个物理部分子（好分量夸克或横向胶子）接入 $H$ 时恰为领头，每多一个物理部分子多付 $\lambda$（扭度增加一），而经 $J^+$ 分量接入的标量极化胶子不付代价——这是 Feynman 规范特有的，在物理规范中标量极化不传播\cite[第~2.4~节]{Sterman:1995fz}。剩下的是表中出现负幂次的构型。
+
+\begin{proposition}[超领头构型及其相消 \tagA]\label{prop:ir-super-leading}
+以 $\lambda$ 为单位。对 $e_J=2$ 的喷注（前向振幅中的靶喷注或割图中的末态喷注），与 $H$ 之间既无好分量夸克连接、也无横向胶子连接、只有标量极化胶子的构型 $(n_F,n_T)=(0,0)$ 有 $p_J=-2$，只有一个横向胶子（其余为标量极化胶子）的构型 $(n_F,n_T)=(0,1)$ 有 $p_J=-1$：它们是\emph{超领头}（super-leading）的。在对图求和的规范不变组合中，这些贡献在各自的领头阶相消（Ward 恒等式加上色中性）；其相对 $O(\lambda)$ 与 $O(\lambda^2)$ 的余项是领头幂次的，并经 $k^+A^j-k^jA^+$ 组合成场强 $G^{+j}$。当胶子是唯一的活动部分子时，$k\cdot H=0$，而 $G$ 项 $\propto k^+A^j-k^jA^+$ 是领头的。因此在胶子道中，“$n_T$ 个横向胶子”不是规范不变的计数方式。（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{prop:ir-power-counting,thm:prelim-slavnov-taylor}
+\end{proposition}
+\begin{proofsketch}
+(1)~由\cref{prop:ir-power-counting}，$p_J=(f^g_J+t_J-e_J)+2(u_J+f^b_J)$，取 $e_J=2$、$f^g_J=u_J=f^b_J=0$ 得 $p_J=t_J-2$，即 $(0,0)$ 与 $(0,1)$ 两行（此步只给出 E-S 型陈述）。
+(2)~把共线胶子场分解为 $A^\mu=\frac{k^\mu}{k^+}A^++\big(A^\mu-\frac{k^\mu}{k^+}A^+\big)$。第一项（K 部分）的极化正比于胶子自身的动量；对它在 $H$ 上的全部附着点求和，由 Ward 恒等式（\cref{thm:prelim-slavnov-taylor}）这些附着化为作用在 $H$ 的外线上的色转动，在规范不变的图之和中相消，对 $(0,0)$ 构型这还需要靶的总色荷为零（Labastida--Sterman\cite{Labastida:1984gy}，参见\cite[第~5.8.8~节]{Collins2011}）。这就是标量极化胶子从硬散射“退耦”的机制\cite[第~2.4~节]{Sterman:1995fz}；单个 Feynman 规范图可以比其规范不变的和奇异得多\cite[第~8.6~节]{CollinsSoperSterman1989}。
+(3)~第二项（G 部分）没有 $+$ 分量，其横向分量为 $(k^+A^j-k^jA^+)/k^+$；在动量空间中阿贝尔部分的场强为 $G^{+j}=-\ii(k^+A^j-k^jA^+)$。K 部分相消之后留下的相对 $O(\lambda)$、$O(\lambda^2)$ 项来自 G 部分，它们与真正的 $(0,2)$ 构型一起组成规范不变胶子分布中的 $G^{+j}\cdots G^{+j}$ 结构（第~8~章）。(2) 中的图形论证只在严格共线极限下给出零；离开这一极限，纯 K 胶子项经由胶子的横动量留下领头幂次的余项，它正是构造规范不变胶子分布所必需的\cite{Collins:2008sg}。
+(4)~若一个胶子是唯一的活动部分子，其余外线都是物理的，则 Ward 恒等式给出 $k_\mu H^\mu=0$，K 项为零，G 项给出领头贡献。
+完整论证见\cite[第~8.6~节]{CollinsSoperSterman1989}与\cite[第~5.8.8、5.9.1~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+超领头项的相消在文献中对相关的图组合给出了论证，但只是 E-S 层次的标度陈述：它说明领头幂次的系数相消，并未给出余项的积分界。全阶、积分范数形式的相应陈述属于附录~N 的\cref{asm:appN-envelope}（幂次计数包络，\tagA）与\cref{asm:appN-ward-product}（Ward 恒等式的乘积结构，\tagA）的内容；二者都用第~9~章的对象表述，在此只是指针而非前提。最弱的一步是 (2) 对任意多个非阿贝尔 K 胶子的 Ward 恒等式（第~9~章的\cref{lem:method-ward-multi}，\tagA）。升级途径：上述两个技术性假设的证明。G 部分在一般情形下的幂次压低及其“唯一活动胶子”例外，即第~9~章的\cref{prop:method-gy-suppression}（\tagA）。
+
+\begin{remark}[标度陈述与积分界]\label{rem:ir-scaling-vs-bound}
+\cref{prop:ir-power-counting}与下面的领头区域定理都是\emph{标度陈述}（E-S 型，\cref{def:intro-error-types}）：它们给出齐次积分在单一标度族下的幂次，而不是对整个邻域上积分的界。把它们化为证明所需的、对 $\varepsilon$ 与嵌套邻域一致的积分范数界（E-N 型）是附录~N 的两个技术性假设的内容：幂次计数包络\cref{asm:appN-envelope}与虚度分离\cref{asm:appN-separation}。二者都用第~9~章的邻域与近似算子表述，所以在本章只是指针。附录~E 的\cref{rem:appE-actual-bound}说明这一步为什么只有全阶论证的地位。
+\uses{prop:ir-power-counting}
+\end{remark}
+
+\begin{theorem}[领头区域 \tagA]\label{thm:ir-leading-regions}
+在 Feynman 规范中，对 $e^+e^-\to$ 强子、DIS、SIA 与 DY，$\omega(R)=0$ 的约化图恰为满足以下条件者：(i)~每个喷注在割线每侧以\emph{恰好一个物理部分子}（一条好分量夸克线或一个横向极化胶子）加上\emph{任意多个标量极化共线胶子}与 $H$（及 $H^\dagger$）相连；(ii)~软子图只与喷注相连，且只通过胶子相连（软子图内部可以有夸克圈）；(iii)~没有软线接入 $H$。对 DY 另有旁观者之间交换的 Glauber 子区域。超领头构型（\cref{prop:ir-super-leading}）在规范不变的和中相消。（本定理只涉及部分子态。）
+% errtype: E-S
+\uses{prop:ir-pinch-classification,prop:ir-power-counting,prop:ir-super-leading,thm:prelim-slavnov-taylor}
+\end{theorem}
+\begin{proofsketch}
+(1)~由\cref{prop:ir-pinch-classification}，钳夹面的约化图具有 $H$--$J$--$S$ 的形式。
+(2)~由\cref{eq:ir-omega}，$\omega=0$ 要求各项分别为零（在超领头项相消之后各项非负）：每个喷注 $f^g_J+t_J=e_J$、$u_J=f^b_J=0$，标量极化胶子不受限制；$s^q_J=0$，即软线只以胶子附着于喷注；$b_{S\to H}=f_{S\to H}=0$，即软线不接入 $H$。对 $e_J=2$，$f^g_J+t_J=2$ 就是割线每侧（或前向振幅的两侧）一个物理部分子：夸克喷注 $f^g_J=2$，胶子喷注 $t_J=2$；由费米子数守恒，$f_J$ 为偶数，不会出现 $f^g_J=t_J=1$。
+(3)~$\omega<0$ 的构型只能是 $f^g_J+t_J<e_J$ 的胶子喷注，由\cref{prop:ir-super-leading}在规范不变的和中相消（此步只给出 E-S 型陈述）。
+(4)~对 DY，旁观者之间的 Glauber 交换按区域标度计数为 $\lambda^0$（附录~E），并且可能被钳住（\cref{sec:ir-glauber}），须单独列出。
+文献：\cite{Sterman1978a,LibbySterman1978a,LibbySterman1978b}，\cite[第~5.8--5.11~节；领头区域规则见第~5.9.2~节与式~(5.75)--(5.79)]{Collins2011}，\cite[第~8.7~节]{CollinsSoperSterman1989}，\cite[第~2.3--2.4~节，式~(60)--(69)]{Sterman:1995fz}（其式~(63)预设软子图连通，一般情形应用式~(64)）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+最弱的一步是嵌套区域：\cref{eq:ir-omega}只是超表观度，子区域（某些法坐标更快趋于零）不破坏它这一点有论证而无证明——闵氏运动学中没有 Weinberg 紫外幂次计数定理\cite{Weinberg1960,Hahn:1968HZ}的红外类比。其次，在 Feynman 规范中，带额外不连通硬散射的区域只在对图求和之后才相消\cite{Labastida:1984gy}，\cite[第~14.4.8~节]{Collins2011}。该定理是 E-S 型陈述；其积分形式是\cref{asm:appN-envelope}与\cref{asm:appN-separation}（附录~N，均为 \tagA）——它们用第~9~章的邻域与近似算子表述，所以是指针而不是前提：第~4~章的陈述不能通过附录依赖第~9~章的对象。本定理只涉及部分子态；其强子版本正是全局假设\cref{asm:intro-bridge}(Br1)（区域完备性，\tagC）。升级途径：嵌套邻域上一致的积分界（\cref{asm:appN-envelope}的证明）。
+
+\begin{example}[单圈无质量顶点]\label{ex:ir-vertex}
+取 $\gamma^*(q)\to q(p_1)\bar q(p_2)$，$p_i^2=0$，$Q^2=2p_1\cdot p_2>0$；内线为胶子 $k$（参数 $\alpha_0$）、夸克 $p_1-k$（$\alpha_1$）与反夸克 $p_2+k$（$\alpha_2$）（\cref{fig:vertex-regions}）。
+
+\emph{参数空间。}由\cref{eq:ir-UF}，$\mathcal U=\alpha_0+\alpha_1+\alpha_2$，$\mathcal F=-\alpha_1\alpha_2q^2-\alpha_0\alpha_1p_1^2-\alpha_0\alpha_2p_2^2=-Q^2\alpha_1\alpha_2$，
+% VF-REG-4
+\cref{eq:ir-landau-alpha}给出 $\alpha_1\alpha_2=0$：Landau 集是单形的两条闭棱。由\cref{lem:ir-envelope}，$k_c=\alpha_1p_1-\alpha_2p_2$：棱 $\alpha_2=0$ 上 $k=xp_1$，线 $0$、$1$ 在壳且共线于 $p_1$，反夸克线的虚度 $xQ^2$ 不小——共线钳夹面 $C_1$；棱 $\alpha_1=0$ 上 $k=-yp_2$，为 $C_2$；角 $(1,0,0)$ 是软钳夹面 $S$；另两个角是零动量的夸克线（$C_1$、$C_2$ 的幂次压低端点）。棱 $\alpha_0=0$ 与内部对 $Q^2\ne0$ 无解：两条夸克线同时在壳的 $q\bar q$ 割面存在，却未被钳住，只产生吸收部分。与之一致，单圈 Cayley 矩阵 $Y_{ij}=\frac12(m_i^2+m_j^2-(r_i-r_j)^2)$ 只有 $Y_{12}=Y_{21}=-Q^2/2$ 非零，单圈 Landau 方程等价于 $\sum_{j\in S}Y_{ij}\alpha_j=0$（$i\in S$），而 $\det Y_{\{1,2\}}=-Q^4/4\ne0$。$C_1$ 上的 Coleman--Norton 图像已在\cref{sec:ir-coleman-norton}给出。
+
+\emph{共线区的 $k^-$ 积分。}取 $p_1=(p_1^+,0,\mathbf 0_T)$，$p_2=(0,p_2^-,\mathbf 0_T)$，$x=k^+/p_1^+$：$D_0=2k^+k^--k_T^2$，$D_1=-2(p_1^+-k^+)k^--k_T^2$，$D_2=2k^+(p_2^-+k^-)-k_T^2$（各带 $+\ii0$）。$0<x<1$ 时 $D_0$、$D_2$ 的 $k^-$ 极点在实轴下方，$D_1$ 的 $k^-=-\frac{k_T^2-\ii0}{2(1-x)p_1^+}$ 在上方；$x\notin[0,1]$ 时三个极点同侧，积分为零。$k_T\to0$ 时 $D_0$ 与 $D_1$ 的极点从两侧夹向 $k^-=0$——这就是共线钳夹。在上半平面闭合（$D_1$ 的留数处 $D_0=-\frac{k_T^2}{1-x}$，$D_2=xQ^2-\frac{k_T^2}{1-x}$）：
+\begin{equation}\label{eq:ir-vertex-kminus}
+\int_{-\infty}^{\infty}\frac{\dd k^-}{(D_0+\ii0)(D_1+\ii0)(D_2+\ii0)}=\frac{2\pi\ii}{2p_1^+}\,\frac{1}{k_T^2\big(xQ^2-k_T^2/(1-x)\big)}\ \xrightarrow{\ k_T\to0\ }\ \frac{2\pi\ii}{2p_1^+xQ^2}\,\frac{1}{k_T^2} .
+\end{equation}
+% VF-REG-6
+于是 $\int\dd^2k_T/k_T^2$ 对数发散：每个壳层 $\lambda<k_T<2\lambda$ 贡献同样的 $\pi\ln4\times\frac{2\pi\ii}{2p_1^+xQ^2}$；剩下的 $\int\dd x/x$ 在 $x\to0$ 处是软端点，给出第二个对数，合为 Sudakov 双对数（第~5~章）。
+
+\emph{法坐标计数。}在 $C_1$ 附近取法坐标 $k^-=\lambda^2\kappa$、$\mathbf k_T=\lambda\boldsymbol\tau$：测度 $\lambda^4$，$D_0,D_1\sim\lambda^2$，$D_2\simeq xQ^2\sim\lambda^0$，故 $p=4-2-2=0$。在壳无质量顶点的硬、共线、软、超软与 Glauber 标度都给出 $p=0$（数值拟合 $|p|<10^{-4}$；对照标度 $(0,1,1)$、$(2,2,3)$ 给出 $p=1$、$2$）：它没有内禀的小标度，所以其低能区域在维数正规化中都无标度。以上各式均经符号与数值核对。
+\uses{lem:ir-envelope,thm:ir-landau-alpha,prop:ir-coleman-norton,prop:ir-power-counting}
+\end{example}
+
+\begin{example}[Feynman 规范下共线区域的标量极化主导]\label{ex:ir-k-dominance}
+仍取\cref{ex:ir-vertex}的顶点，$p_1\parallel n_A$，$p_2\parallel n_B$。在 $C_1$ 区域中把 Feynman 规范的分子写成 $J^\nu H_\nu$，$J^\nu=\bar u(p_1)\gamma^\nu(\sla p_1-\sla k)$ 属于喷注，$H_\nu=\gamma^\mu(-\sla p_2-\sla k)\gamma_\nu v(p_2)$ 属于硬部分（$\mu$ 为流的指标）。按光锥分解 $J\cdot H=J^+H^-+J^-H^+-\mathbf J_T\cdot\mathbf H_T$，推动权重给出 $J^+\sim\lambda^0$、$\mathbf J_T\sim\lambda$、$J^-\sim\lambda^2$（倾斜喷注轴下数值拟合指数 $0.000$、$1.000$、$2.000$）。对严格的类光方向还有精确关系：由 $\bar u(p_1)\sla p_1=p_1^+\bar u(p_1)\gamma^-=0$ 得 $J^-=0$；由 $\gamma^+v(p_2)=0$ 得 $H^+=0$；在 $D=4$ 中还有 $\mathbf J_T\cdot\mathbf H_T=0$——这用到两维横空间的 $\sum_{i=1,2}\gamma^i\gamma^j\gamma^i=0$（$D$ 维中系数为 $D-4=-2\varepsilon$）、上述两个关系、$\bar u(p_1)\gamma^\pm v(p_2)=0$，以及 $J$ 与 $H$ 中的横动量都平行于 $\mathbf k_T$（数值上逐分量核对至 $10^{-12}$）；\cref{prop:ir-power-counting}的界 $\lambda^1$ 被满足而未被饱和。于是 $J\cdot H=J^+H^-$，并且
+\begin{equation}\label{eq:ir-k-dominance}
+J\cdot H=\frac{J^+}{k^+}\,k\cdot H+O(\lambda^2):
+\end{equation}
+% VF-REG-8 (K dominance)
+差 $-\frac{J^+}{k^+}\mathbf k_T\cdot\mathbf H_T$ 的 $O(\lambda)$ 部分（取 $J^+$ 的领头项 $(1-x)p_1^+\bar u\gamma^+\gamma^-$ 与 $\mathbf H_T$ 中来自 $-p_2^-\gamma^+$、$-k^+\gamma^-$ 的部分）对横向的流指标正比于 $\bar u(p_1)\gamma^+\gamma_T^\mu\gamma_T^iv(p_2)=\bar u(p_1)\gamma_T^\mu\gamma_T^i\gamma^+v(p_2)=0$ 或含 $\gamma^-\gamma_T^\mu\gamma^-=0$，恒为零（数值拟合的相对差指数 $2.00$）。所以领头幂次只有胶子的标量（K）极化——正比于其自身动量 $k^\nu$ 的部分——存活；经 Ward 恒等式，$k\cdot H$ 对附着点的求和化为 Wilson 线（第~8、9~章）。
+\uses{prop:ir-power-counting}
+\end{example}
+
+\begin{example}[$e^+e^-\to q\bar qg$ 的共线区]\label{ex:ir-real-emission}
+记 $y_{ij}=2p_i\cdot p_j/s$，$x_i=2E_i/\sqrt s$，$1-x_1=y_{23}$，$1-x_2=y_{13}$。在 $D=4$ 中（光子与胶子的极化以 $-g_{\mu\nu}$ 求和）胶子由夸克线辐射的那个图的模方（去掉 $g^2C_FN_ce_q^2$）为 $8y_{23}/y_{13}$，分子为 $32(p_1\cdot p_3)(p_2\cdot p_3)$；两个图及其干涉之和为
+\begin{equation}\label{eq:ir-qqg}
+-g_{\mu\nu}\sum\mathcal M^\mu\mathcal M^{\nu*}=8g^2C_FN_ce_q^2\,\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)} ;
+\end{equation}
+% VF-EE-5 (D=4)
+乘以 $\dd\Phi_3=\frac{s}{128\pi^3}\dd x_1\dd x_2$，再除以 Born 的 $4sN_ce_q^2$ 与 $\Phi_2=\frac1{8\pi}$，即得 $\frac1{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=\frac{C_F\as}{2\pi}\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$。%
+% VF-EE-5
+胶子共线于夸克（$\theta_{13}\sim\lambda$）时 $y_{13}\sim\lambda^2$：模方中逐项为 $\lambda^0$ 的 $\gamma^-\cdots\gamma^-$ 结构相消，分子只有 $\lambda^2$（数值拟合指数 $2.000$），传播子平方给出 $\lambda^{-4}$，共线相空间 $\dd y_{13}\sim\lambda^2$，合计 $\lambda^0$——对数型，与末态喷注 $f^g_J=2$、$e_J=2$ 的 $\omega=0$ 一致。令 $p_1\to zP$、$p_3\to(1-z)P$，则 $x_1\to z$、$x_2\to1$、$sy_{13}=s_{13}$，\cref{eq:ir-qqg}与 Born 之比趋于 $\frac{2g^2C_F}{s_{13}}\frac{1+z^2}{1-z}$，即\cref{prop:qcd-soft-collinear-limits}的树图共线极限；$x_3\to0$ 时 $(1-x_1)(1-x_2)\to y_{13}y_{23}$ 双重消失，对应软钳夹面。
+\uses{prop:ir-power-counting,prop:qcd-soft-collinear-limits}
+\end{example}

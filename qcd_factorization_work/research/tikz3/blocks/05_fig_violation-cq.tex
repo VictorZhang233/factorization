@@ -1,0 +1,77 @@
+%%% BEGIN fig:violation-cq
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 cl/.style={draw=#1,line width=0.85pt,line cap=round,rounded corners=3pt},
+  t3 carr/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=2.4pt]{Stealth[length=4.8pt,width=4.2pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ============ (a) the graph: Glauber gluon between the h1 spectator and the parton -> H2 ============
+  \begin{scope}
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h1) at (-2.3,-1.15) {};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h2) at (-2.3,1.15) {};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H) at (0,0) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D1) at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D2) at (2.3,-1.1) {};
+    \coordinate (s1a) at (h1.335); \coordinate (s1b) at (3.5,-2.1);
+    \coordinate (qa) at (H.325);   \coordinate (qb) at (D2.155);
+    \coordinate (G1) at (intersection of s1a--s1b and 1.45,0--1.45,-3);
+    \coordinate (G2) at (intersection of qa--qb and 1.45,0--1.45,-3);
+    \draw[t3 hadron] (-3.5,-1.15) -- (h1.west);  \draw[t3 hadron] (-3.5,1.15) -- (h2.west);
+    \draw[t3 hadron] (D1.20) -- (3.5,1.4);        \draw[t3 hadron] (D2.340) -- (3.5,-1.4);
+    \draw[plain] (s1a) -- (s1b);                  \draw[plain] (h2.25) -- (3.5,2.1);
+    \draw[glauber] (G1) -- (G2);
+    \draw[quark] (h1.40) -- (H.215);  \draw[quark] (h2.320) -- (H.145);
+    \draw[quark] (H.35) -- (D1.205);  \draw[quark=0.32] (qa) -- (qb);
+    \node[vertex] at (G1) {};  \node[vertex] at (G2) {};
+    \node[t3 lab] at (h1) {$h_1$};  \node[t3 lab] at (h2) {$h_2$};  \node[t3 lab] at (H) {$H$};
+    \node[t3 lab,right] at (3.5,1.4) {$H_1$};  \node[t3 lab,right] at (3.5,-1.4) {$H_2$};
+    \node[t3 note,right] at (3.5,-2.1) {$X_1$};  \node[t3 note,right] at (3.5,2.1) {$X_2$};
+    \path[mom'={$\ell$},mom sep=0.25cm,mom length=0.45cm] (G1) -- (G2);
+    \node[t3 lab] at (0,-2.75) {(a)};
+  \end{scope}
+  % ============ (b) leading-N_c colour flow (colour-singlet hard exchange) ============
+  \begin{scope}[xshift=7.55cm]
+    \coordinate (h1c) at (-2.3,-1.15); \coordinate (h2c) at (-2.3,1.15);
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h1) at (h1c) {};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h2) at (h2c) {};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H) at (0,0) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D1) at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D2) at (2.3,-1.1) {};
+    \coordinate (s1a) at (h1.335); \coordinate (s1b) at (3.5,-2.1);
+    \coordinate (qa) at (H.325);   \coordinate (qb) at (D2.155);
+    \coordinate (L1t) at (intersection of qa--qb and 1.38,0--1.38,-3);
+    \coordinate (L1b) at (intersection of s1a--s1b and 1.38,0--1.38,-3);
+    \coordinate (L2t) at (intersection of qa--qb and 1.52,0--1.52,-3);
+    \coordinate (L2b) at (intersection of s1a--s1b and 1.52,0--1.52,-3);
+    % colour line 1 (blue): s2 -> h2 -> q2 -> H -> q2' -> gluon -> s1 -> h1 -> q1 -> H -> q1' -> H1
+    \draw[t3 cl=blue!70!black,t3 carr=0.5] (3.5,2.1) -- (h2.25);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (h2.320) -- (H.145);
+    \draw[t3 cl=blue!70!black,t3 carr=0.1,t3 carr=0.31,t3 carr=0.7] (qa) -- (L1t) -- (L1b) -- (s1a);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (h1.40) -- (H.215);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (H.35) -- (D1.205);
+    % colour line 2 (red): s1 (outgoing end) -> gluon -> q2' -> H2
+    \draw[t3 cl=red!75!black,t3 carr=0.3,t3 carr=0.65,t3 carr=0.93] (s1b) -- (L2b) -- (L2t) -- (qb);
+    % blobs on top of the colour lines
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] at (h1c) {$h_1$};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] at (h2c) {$h_2$};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] at (0,0) {$H$};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] at (2.3,-1.1) {};
+    \node[t3 lab,right=1pt] at (D1.east) {$H_1$};  \node[t3 lab,right=1pt] at (D2.east) {$H_2$};
+    \node[t3 note,right] at (3.5,-2.1) {$X_1$};  \node[t3 note,right] at (3.5,2.1) {$X_2$};
+    \node[t3 lab] at (0.3,-2.75) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{TMD 因子化破坏的 Collins--Qiu 机制：$h_1+h_2\to H_1+H_2+X$，$H_1$、$H_2$ 在横向近乎背对背，测量其横动量失衡 $\boldsymbol q_{\mathrm T}=\boldsymbol p_{H_1\mathrm T}+\boldsymbol p_{H_2\mathrm T}$。
+(a)~在硬散射 $H$ 之外，$h_1$ 的旁观者 $X_1$ 与碎裂为 $H_2$ 的出射部分子交换一个 Glauber 胶子（暗红色，动量 $\ell$）。若 TMD 因子化成立，$h_1$ 的旁观者的这类相互作用必须能被吸收进 $h_1$ 的 TMD 的 Wilson 线；
+但这个胶子的色矩阵作用在出射部分子上，即作用在 $H_2$ 的碎裂因子的色空间中。Collins 与 Qiu（2007）对横向极化 $h_1$ 的 Sivers 型单自旋不对称明确算出：
+这类末态交换，连同与 $h_2$ 入射部分子的初态交换和与碎裂为 $H_1$ 的部分子的末态交换，所给出的 Glauber 相位项既不同于 SIDIS 型（未来指向）也不同于 Drell--Yan 型（过去指向）Wilson 线所给出的，即标准 TMD 因子化不成立；
+Rogers 与 Mulders（2010）在非极化截面的双胶子交换中证明，允许过程依赖 Wilson 线的“推广 TMD 因子化”同样不成立（严格性标签 [V]）。
+(b)~同一图在大 $N_c$ 下的色流（双线记号，以色单态硬交换为例；强子为夸克加反三重态旁观者的色单态；箭头为色流方向）：胶子交换把两条色线重新连接，
+使 $h_1$ 的残余与 $H_2$ 的碎裂部分子落在同一条色线上（红），而 $H_1$ 经 $h_1$、硬散射与 $h_2$ 的残余相连（蓝）——色结构不再分解为各因子各自的色迹之积。}
+\label{fig:violation-cq}
+\end{figure}
+%%% END fig:violation-cq

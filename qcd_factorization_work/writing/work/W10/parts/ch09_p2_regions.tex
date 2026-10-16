@@ -1,0 +1,280 @@
+% ---------------------------------------------------------------------
+\section{区域、邻域与幂次压低}\label{sec:method-regions}
+
+为了写出减除法，需要把第~4~章的领头区域（\cref{thm:ir-leading-regions}；它们在 $(\ln k^+,\ln k^-)$ 平面上的位置见\cref{fig:momentum-regions}，
+图中的 $n$、$\bar n$ 即本书的 $n_A$、$n_B$）变成可以比较、可以求交的对象，并说清楚“在某一区域附近被幂次压低”的含义。
+
+\subsection{区域作为逐线的模式指派}
+
+\begin{definition}[区域：逐线模式指派与偏序]\label{def:method-regions}
+固定一张（割）图 $\Gamma$ 与一种圈动量走向。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 模式集合 $\{S,A,B,H\}$（软、$A$ 共线、$B$ 共线、硬）带偏序 $S<A<H$、$S<B<H$，$A$ 与 $B$ 不可比，且 $A\wedge B=S$、$A\vee B=H$。
+  一个\emph{区域} $R$ 是对每条内线 $j$ 指派一个模式 $R(j)$ 的映射；外线按其方向取 $A$ 或 $B$，无色外线（如光子）取 $H$；
+  顶点的模式是与之相连各线模式的上确界。模式为 $H$、$A$、$B$、$S$ 的线与顶点分别组成子图 $\mathsf H_R$、$\mathsf J_{R,A}$、$\mathsf J_{R,B}$、$\mathsf S_R$。
+\item 在无质量极限下，区域 $R$ 的\emph{钳夹集}是圈动量空间中的仿射子空间
+  \begin{equation}\label{eq:method-pinchset}
+  \pi_R=\bigl\{k:\ l_j(k)=0\ (R(j)=S),\ \ l_j(k)\in\mathbb Rn_A\ (R(j)=A),\ \ l_j(k)\in\mathbb Rn_B\ (R(j)=B)\bigr\},
+  \end{equation}
+  $l_j(k)$ 是第 $j$ 条线的动量；它是\cref{def:ir-pinch-surface}中钳夹面的线性化。区域 $R$ 对应于一个领头钳夹面，其分解即 $(\mathsf H_R,\{\mathsf J_{i,R}\},\mathsf S_R)$。
+\item 逐线偏序：$R'\le R$ 当且仅当对每条线 $R'(j)\le R(j)$；逐线交：$(R\wedge R')(j)=R(j)\wedge R'(j)$。
+\item 所用的区域集合 $\mathcal R$ 包含\cref{thm:ir-leading-regions}的全部领头区域（各标度见\cref{def:ir-scalings}），其最大元 $R_{\max}$（全硬）的钳夹集为整个空间；
+  $\mathcal R$ 选为\emph{对逐线交封闭}：若 $R,R'\in\mathcal R$ 且 $\pi_R\cap\pi_{R'}\neq\emptyset$，则 $R\wedge R'\in\mathcal R$。
+  交封闭性是对 $\mathcal R$ 的一种选择（附录~N 记作 (GA2)），不是假设；为此 $\mathcal R$ 中一般还须含有若干次领头的指派。
+\end{enumerate}
+例如单圈顶点中，胶子软时两条夸克线分别为 $A$、$B$ 共线，$\pi_S=\{k=0\}$；胶子平行于 $p_A$ 时 $\pi_A=\{k\in\mathbb Rn_A\}$；于是 $\pi_S\subset\pi_A$、$\pi_S\subset\pi_B$，
+且 $\pi_S=\pi_A\cap\pi_B$（\cref{fig:method-nesting}）。
+\uses{def:ir-pinch-surface,def:ir-scalings,thm:ir-leading-regions}
+\end{definition}
+
+\begin{lemma}[逐线交与钳夹集的交]\label{lem:method-meets}
+(a) 若 $R'\le R$，则 $\pi_{R'}\subseteq\pi_R$。(b) $\pi_{R\wedge R'}=\pi_R\cap\pi_{R'}$。(c) 若 $\pi_R\cap\pi_{R'}\neq\emptyset$ 且 $R\wedge R'\in\mathcal R$，
+则 $R\wedge R'$ 是 $R$ 与 $R'$ 在 $\mathcal R$ 中的最大下界；若 $\pi_R\cap\pi_{R'}=\emptyset$，则 $R$ 与 $R'$ 在 $\mathcal R$ 中没有公共下界。
+\uses{def:method-regions}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-setting}。）记 $\mathcal C_S=\{0\}$、$\mathcal C_A=\mathbb Rn_A$、$\mathcal C_B=\mathbb Rn_B$、$\mathcal C_H=\mathbb R^D$，则 $\pi_R=\bigcap_j\{l_j(k)\in\mathcal C_{R(j)}\}$；
+$X\le Y$ 蕴含 $\mathcal C_X\subseteq\mathcal C_Y$，且 $\mathcal C_X\cap\mathcal C_Y=\mathcal C_{X\wedge Y}$（关键是 $\mathbb Rn_A\cap\mathbb Rn_B=\{0\}$）。逐线使用这两点得 (a)(b)。
+(c) 任一公共下界 $R''\le R\wedge R'$，故 $\pi_{R''}\subseteq\pi_R\cap\pi_{R'}$；交为空时 $\pi_{R''}=\emptyset$，与 $\mathcal R$ 中钳夹集非空矛盾；交非空且 $R\wedge R'\in\mathcal R$ 时它就是最大下界。
+\end{proof}
+
+\paragraph{例：两圈平面顶点。}\Cref{fig:method-hasse}中（图中 $C_1$、$C_2$ 即 $A$、$B$ 共线）两个胶子模式的 16 种组合里恰有九种是领头钳夹；每个区域是六条内线上的逐线指派，九个区域对逐线交封闭，
+有 12 条覆盖关系。我们把每个钳夹集写成 $(k_1,k_2)\in\mathbb R^8$ 中的仿射子空间，逐对核对了\cref{lem:method-meets}(b)（81 对）以及覆盖关系与下文的邻域指数。% check: writing/work/W10/w10_poset.py
+
+%%FIG fig:method-nesting%%
+
+%%FIG fig:method-hasse%%
+
+\subsection{积分范数下的幂次压低与依赖于 $\lambda$ 的邻域}
+
+\begin{definition}[积分范数意义下的幂次压低]\label{def:method-power-suppressed}
+设 $\Gamma$ 是一个被积函数：一张图，或具有公共圈动量走向的一族图之和，其紫外子发散已在被积函数层次上减除，因而 $\Gamma$ 是圈动量空间（或其复变形 $\Omega$，测度 $\dd\mu$）上的\emph{一个}函数，
+而不是图与抵消项图的形式和。对可测集 $A$（可以依赖于 $\lambda$）与函数 $F$，称 $F$ 在 $A$ 上\emph{幂次压低}，记作 $F\in\mathfrak S(A)$，如果存在常数 $C$、$a>0$ 与 $K$，使得
+\begin{equation}\label{eq:method-EN}
+\int_A|F|\,\dd\mu\le C\lambda^aL^K\qquad\text{对一切}\ \lambda\in(0,\lambda_0],\ \varepsilon\in(0,\varepsilon_0]\ \text{一致成立},\qquad L=\ln\frac1\lambda .
+\end{equation}
+这是\cref{def:intro-error-types}中的误差类型 E-N。
+\uses{def:intro-error-types}
+\end{definition}
+
+选用积分范数，是因为测量函数（如 $\theta(\tau-\tau(X))$）的近似在薄层上误差为 $O(1)$，逐点界不可能而积分界可以成立；要求 $\Gamma$ 是单个被积函数，是因为
+$\overline{\rm MS}$ 抵消项图与原图的相消不是逐点的，分开时 $\int|\Gamma|\sim1/\varepsilon$。$\mathfrak S(A)$ 是线性空间，在有限覆盖上可以拼合（附录~N 的\cref{sec:appN-setting}）。
+
+\begin{definition}[依赖于 $\lambda$ 的邻域]\label{def:method-neighbourhoods}
+以 $Q$ 为单位，对动量 $l$（复动量取各分量的模）记 $\|l\|=|l^+|+|l^-|+|\mathbf l_T|$，以及
+\begin{equation}\label{eq:method-sigma}
+\sigma_A(l)=|l^-|+|\mathbf l_T|,\qquad \sigma_B(l)=|l^+|+|\mathbf l_T|,\qquad \sigma_S(l)=\|l\| .
+\end{equation}
+对 $R\neq R_{\max}$ 取指数 $\beta_R=3^{h(R)-h_*}$，其中 $h(R)$ 是 $\mathcal R$ 中 $R$ 以下最长链的长度，$h_*=1+\max_{R\ne R_{\max}}h(R)$。定义
+\begin{equation}\label{eq:method-NU}
+N_R=\bigl\{k:\ \sigma_{R(j)}(l_j(k))\le\lambda^{\beta_R}\ \ \forall j:\ R(j)\neq H\bigr\},\qquad N_{R_{\max}}=\Omega,\qquad U_R=N_R\setminus\bigcup_{R'<R}N_{R'} .
+\end{equation}
+$N_R$ 是钳夹集 $\pi_R$ 的一个以 $\lambda^{\beta_R}$ 为尺度的邻域，$U_R$ 是“受 $R$ 支配”的集合：它靠近 $\pi_R$ 而远离一切更小的钳夹集。
+\uses{def:method-regions}
+\end{definition}
+
+邻域必须依赖于 $\lambda$：固定尺寸的邻域在边界上给出 $O(1)$ 的相对误差，而 $\lambda^\beta$（$0<\beta<1$）的邻域使相邻两个近似在过渡带中同时准确。较小的区域有较“胖”的邻域：
+$R'<R\neq R_{\max}$ 蕴含 $\beta_R\ge3\beta_{R'}$，且 $\beta_R\le\frac13$（\cref{lem:appN-beta}）。单圈离壳三角图中 $\beta_S=\frac19$、$\beta_{C_i}=\frac13$（\cref{fig:method-neighbourhoods}）；
+两圈平面顶点的指数见\cref{fig:method-hasse}右列。
+
+%%FIG fig:method-neighbourhoods%%
+
+\begin{lemma}[邻域覆盖]\label{lem:method-covering}
+$\bigcup_{R\in\mathcal R}U_R=\Omega$。
+\uses{def:method-neighbourhoods,lem:appN-beta}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-setting}。）任取 $k\in\Omega$，令 $\mathcal A(k)=\{R\in\mathcal R:\ k\in N_R\}$。因 $N_{R_{\max}}=\Omega$，$\mathcal A(k)$ 非空；$\mathcal R$ 有限，故 $\mathcal A(k)$ 有极小元 $R_0$。
+于是 $k\in N_{R_0}$，而对每个 $R'<R_0$ 有 $k\notin N_{R'}$（否则 $R'\in\mathcal A(k)$，与极小性矛盾），即 $k\in U_{R_0}$。
+覆盖性对任何指数都成立；\cref{lem:appN-beta}的指数选择（$\beta_R\ge3\beta_{R'}$）只在下文的误差估计中用到。
+\end{proof}
+
+\subsection{近似子：幂等投影及其 $i0$}
+
+\begin{definition}[共线近似子（幂等投影形式）]\label{def:method-collinear-approx}
+设区域 $R$ 中 $A$ 共线子图 $\mathsf J_{R,A}$ 经由若干条线 $e$（动量 $k_e$ 流入 $\mathsf H_R$）连到硬子图 $\mathsf H_R$。$T_R$ 的硬—共线部分是以下操作：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \emph{动量投影：}在 $\mathsf H_R$ 的一切因子中把 $k_e$ 换成 $\pi_+(k_e)=(n_B\cdot k_e)\,n_A=(k_e^+,0,\mathbf 0_T)\equiv\hat k_e$，并在 $\mathsf H_R$ 中令红外正规子（轻夸克质量、外线离壳度）为零；
+  来自 $\mathsf J_{R,B}$ 的线用 $\pi_-(k)=(n_A\cdot k)\,n_B$。
+\item \emph{Dirac 投影：}流入 $\mathsf H_R$ 的夸克线插入 $\mathcal P_+=\frac12\gamma^-\gamma^+$（流出的插入 $\mathcal P_-=\frac12\gamma^+\gamma^-$，因为 $\overline{\mathcal P_+\psi}=\bar\psi\mathcal P_-$）；
+  对非极化的前向靶喷注 $\Phi$，这等价于 $\mathsf H(k)\Phi(k)\to\mathsf H(\hat k)\,\frac14\gamma^-\Tr[\gamma^+\Phi(k)]$。
+\item \emph{胶子投影：}胶子线插入常数矩阵
+  \begin{equation}\label{eq:method-PA}
+  \mathcal P_A{}^\mu{}_\nu=g_T{}^\mu{}_\nu+n_A^\mu n_{B\nu},\qquad\text{即}\qquad \mathsf H_\mu\mathsf J^\mu\ \to\ \mathsf H_\mu\mathcal P_A{}^\mu{}_\nu\mathsf J^\nu=\mathsf H^-\mathsf J^+-\mathbf H_T\cdot\mathbf J_T ;
+  \end{equation}
+  其中 $n_A^\mu n_{B\nu}$ 项（给出 $\mathsf H^-\mathsf J^+$）是纵向（K）项：对 $k_e^+\neq0$ 有 $n_A^\mu n_{B\nu}=\hat k_e^\mu n_{B\nu}/k_e^+$；$g_T$ 项是物理的横向项。
+\item \emph{色投影：}对色单态靶，$\Trc[\mathsf H\mathsf J]\simeq\frac1{N_c}\Trc\mathsf H\,\Trc\mathsf J$。
+\end{enumerate}
+$\mathcal P_\pm^2=\mathcal P_\pm$，$\mathcal P_A^2=\mathcal P_A$，动量投影 $\pi_\pm$ 也是幂等的，故 $T_R^2=T_R$。$T_R$ \emph{不引入新的分母}：Wilson 线的分母 $1/(n_B\cdot k\mp i0)$
+只在用 Ward 恒等式改写 K 项之后才出现；附着在末态线上时为 $-i0$（DIS，未来指向的线），附着在初态线上时为 $+i0$（Drell--Yan，过去指向的线，须在附录~O 的单侧改写之后）。
+\uses{def:method-regions,def:prelim-lightfront,lem:prelim-boost}
+\end{definition}
+
+验证：$\mathcal P_+^2=\frac14\gamma^-(2g^{+-}-\gamma^-\gamma^+)\gamma^+=\mathcal P_+$；对 $\Phi=\sla p$、$p=(p^+,0,\mathbf 0_T)$，$\frac14\gamma^-\Tr[\gamma^+\sla p]=p^+\gamma^-=\sla p$；
+$\mathcal P_A^2=g_T+n_A(n_B\cdot n_A)n_B=\mathcal P_A$。这些投影保留的正是被推动放大的分量（\cref{lem:prelim-boost}）：好分量 $\mathcal P_+\psi$ 与 $A^+=n_B\cdot A$。
+
+\begin{definition}[软近似子（幂等投影形式）]\label{def:method-soft-approx}
+设区域 $R$ 的软动量 $k$ 流入 $A$ 共线子图 $\mathsf J_{R,A}$。$T_R$ 的软部分是：在 $\mathsf J_{R,A}$ 的一切因子中把 $k$ 换成 $\pi_-(k)=(n_A\cdot k)\,n_B=(0,k^-,\mathbf 0_T)$（$A$ 喷注只“看见” $k^-$）；
+在软胶子与 $\mathsf J_{R,A}$ 的连接处插入投影 $n_A^\mu n_{B\nu}$，即 $\mathsf S_\mu\mathsf J_A^\mu\to\mathsf S^-\mathsf J_A^+$；$\mathsf S_R$ 的因子保持精确；$B$ 喷注作 $+\leftrightarrow-$ 的替换。
+于是 $\mathsf J_{R,A}$ 中携带 $l=p+k$ 的分母变为
+\begin{equation}\label{eq:method-Dtilde}
+\tilde D=(p+\pi_-(k))^2-M^2+i0=p^2-M^2+2p^+k^-+i0 ,
+\end{equation}
+它继承了原传播子的 $i0$。在 Ward 恒等式之后，软胶子改为附着在沿 $n_A$ 的 Wilson 线上，其分母为 $1/(n_A\cdot k\pm i0)$：入射的 $A$ 线为 $+i0$，出射的为 $-i0$
+（单个软胶子的情形见\cref{fig:soft-eikonal}，图中的 $n$ 是被取代的夸克动量的方向，对 $A$ 喷注即 $n_A$）。这些 $i0$ 形式是上述定义的推论，而不是另加的约定。% VF-WL-11
+\uses{def:method-regions,def:prelim-lightfront}
+\end{definition}
+% VF-WL-11
+
+保留原有的 $i0$，近似后的被积函数才能与原被积函数在\emph{同一条}围道上积分。下面的引理说明这种围道变形何时存在、能走多远。
+
+\begin{lemma}[软近似分母的 $i0$ 相容性与变形幅度 \tagR]\label{lem:method-i0-compat}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）
+设软动量 $k$ 沿 $\mathsf J_A$ 中的一串线流动，每条线携带 $l=p+k$（$p$ 为其 $A$ 共线部分），沿 $k$ 的流向这些线的 $p^+$ 有相同的符号 $\eta=\pm1$，且 $|k^+|<|p^+|$。
+作变形 $k^-\to k^-+\ii\eta\kappa$（$\kappa\ge0$，其余分量为实）。则：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 精确分母 $D=l^2-M^2+i0$、软近似分母 $\tilde D$ 及其 $M\to0$ 形式满足 $\Imag D=2\eta\kappa(p^++k^+)\ge0$、$\Imag\tilde D=2\eta\kappa p^+\ge0$，在变形过程中都不为零；
+\item 软线自身的传播子 $k^2+i0=2k^+k^--\mathbf k_T^2+i0$ 满足 $\Imag k^2=2\eta\kappa k^+$，只当 $\eta k^+\ge0$ 时非负；当 $\eta k^+<0$ 时，其极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 位于变形一侧，
+  围道必须在 $\Real k^-\approx\mathbf k_T^2/(2k^+)$ 附近回到实轴，可以达到的变形幅度是 $\kappa\sim\mathbf k_T^2/|k^+|$ 而\emph{不是} $|\mathbf k_T|$，由此只得到 $|k^+k^-|\gtrsim\mathbf k_T^2$；
+\item 若 $k$ 还流经一条 $p^+$ 符号相反的 $\mathsf J_A$ 线，则两个分母要求相反方向的变形：这就是 Glauber 钳夹。
+\end{enumerate}
+（本引理只涉及 Feynman 积分。）
+\uses{def:method-soft-approx,def:ir-glauber}
+\end{lemma}
+
+\begin{proof}
+（附录~N 的\cref{sec:appN-approximators}。）(a) $D=2(p^++k^+)(p^-+k^-)-(\mathbf p_T+\mathbf k_T)^2-M^2+i0$，只有 $k^-$ 被变形，故 $\Imag D=2(p^++k^+)\,\eta\kappa+0^+$。
+因 $|k^+|<|p^+|$，$p^++k^+$ 与 $p^+$ 同号，即与 $\eta$ 同号，所以 $\Imag D=2\kappa|p^++k^+|+0^+>0$，$D$ 在整个变形中不为零。由\cref{eq:method-Dtilde}，$\Imag\tilde D=2\eta\kappa p^++0^+=2\kappa|p^+|+0^+>0$；
+令 $M\to0$ 不改变虚部。(b) $\Imag(k^2+i0)=2k^+\eta\kappa+0^+$，当 $\eta k^+<0$ 时它在 $\kappa>0$ 处变负。此时极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 的虚部 $-0/(2k^+)$ 的符号为 $\eta$，
+即极点与变形在实轴同侧，位于 $\Real k^-=\mathbf k_T^2/(2k^+)$。均匀的变形 $k^-\to k^-+\ii\eta\kappa$ 会扫过它；容许的变形必须在该极点附近回到实轴，其高度与宽度都只能是
+$|\Real k^-|=\mathbf k_T^2/(2|k^+|)$ 的量级，于是在变形后的围道上只有 $|k^-|\gtrsim\mathbf k_T^2/|k^+|$。(c) 若某条线的 $p^+$ 符号为 $-\eta$，由 (a) 的计算，它的分母要求 $k^-\to k^-+\ii(-\eta)\kappa$；
+两个要求相反，围道被夹在两个极点之间。
+\end{proof}
+
+最简单的实例是离壳三角图：对 $k=(z,\lambda^2/z,\lambda)$（$\lambda^2\ll z\ll1$），胶子线的极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 在下半平面，夸克线 $D_1$ 的极点 $k^-\approx-(m^2+\mathbf k_T^2)/(2P)+i0$
+在上半平面，相距 $\sim\lambda^2/z$，围道只能在其间穿过实轴（\cref{fig:method-sudakov-plane}(b)）。(b) 说明把 $k^-$ 推到 $|k^-|\sim|\mathbf k_T|$ 一般做不到；能保证的只是
+$|k^+k^-|\gtrsim\mathbf k_T^2$，它恰好排除 Glauber 区（误差表第 5 行用的正是这一点）。
+
+\subsection{近似的精度与误差表}
+
+\begin{lemma}[乘积的伸缩恒等式]\label{lem:method-telescoping}
+设近似子 $T$ 逐个因子地作用于乘积，$T\bigl(\prod_{i=1}^nf_i\bigr)=\prod_{i=1}^n(Tf_i)$（投影 $\mathcal P$ 与 $1-\mathcal P$ 也计为因子，乘积保持原有次序）。则
+\begin{equation}\label{eq:method-telescoping}
+(1-T)\prod_{i=1}^nf_i=\sum_{i=1}^n\Bigl[\prod_{j<i}Tf_j\Bigr]\,(f_i-Tf_i)\,\Bigl[\prod_{j>i}f_j\Bigr].
+\end{equation}
+% uses: none
+\end{lemma}
+
+\begin{proof}
+令 $A_i=\bigl[\prod_{j\le i}Tf_j\bigr]\bigl[\prod_{j>i}f_j\bigr]$，则 $A_0=\prod_if_i$，$A_n=T\prod_if_i$，而右边第 $i$ 项恰为 $A_{i-1}-A_i$；求和得 $A_0-A_n$。
+（因子不必对易，只要保持次序。）
+\end{proof}
+
+\begin{lemma}[共线近似的精度 \tagA]\label{lem:method-collinear-accuracy}
+在钳夹集 $\pi_R$ 附近、远离一切更小区域的钳夹集处，$T_R\Gamma=\Gamma\,[1+O(\lambda)]$，其中 $T_R$ 是\cref{def:method-collinear-approx}的共线近似子。（本引理只涉及部分子态。）
+% errtype: E-S
+\uses{def:method-collinear-approx,prop:ir-power-counting}
+\end{lemma}
+
+\begin{proofsketch}
+(1) 在 $A$ 共线标度 $k_e\sim Q(1,\lambda^2,\lambda)$ 下，硬子图的分母离壳 $O(Q^2)$，把 $k_e$ 换成 $\hat k_e$ 删去的是 $2l\cdot(k_e-\hat k_e)\sim Q^2\lambda$ 量级的项（误差表第 1 行），
+质量与外线离壳度带来 $\lambda^2$（第 2 行）。(2) 共线子图的坏旋量分量与非 K 型的胶子极化相对于好分量被推动因子压低（\cref{prop:ir-power-counting}的推动论证；第 3、4 行）。
+(3) 数值上，在单圈 DIS 顶点的被积函数中，对在壳无质量的母夸克与物理（横向）光子，G 项按 $\lambda^2$ 压低；对一般的离壳母夸克按 $\lambda$ 压低（\cref{sec:appF-gy}）；
+因此一般的界是 $O(\lambda)$。（此步只给出 E-S 型陈述。）文献：Collins\cite[第~10~章（Sudakov 形状因子）与第~11.3~节]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}这是一个标度陈述（E-S）：它说明在 $\pi_R$ 的典型邻域中近似的相对误差按 $\lambda$ 标度，但没有给出在整个支配集 $U_R$ 上一致的界，
+更没有给出积分范数下的界。其积分形式是\cref{lem:method-local-accuracy}，那里需要附录~N 的\cref{asm:appN-envelope}与\cref{asm:appN-separation}（\tagA）：
+前者是 Sterman 与 Collins 幂次计数的积分形式，后者是“到更小钳夹集的距离 $\gtrsim t$ 蕴含虚度 $\gtrsim t^2$”这类 Łojasiewicz 型不等式；二者在所有阶都没有以积分形式写出
+（\cite[第~5~章]{Collins2011}给出标度陈述）。证明这两个假设即可把本引理升级为积分范数下的陈述。
+
+\begin{lemma}[软近似的精度 \tagA]\label{lem:method-soft-accuracy}
+对\cref{def:method-soft-approx}的软近似子，同样的结论成立，但只在 $|k^+k^-|\gtrsim\mathbf k_T^2$（Glauber 区之外）的地方成立：在\cref{lem:method-i0-compat}的变形围道上成立；
+在 Glauber 区的核心中，只在两分量同时变形的围道上成立（\cref{sec:method-glauber}）。（本引理只涉及部分子态。）
+% errtype: E-S
+\uses{def:method-soft-approx,lem:method-i0-compat,prop:ir-power-counting}
+\end{lemma}
+
+\begin{proofsketch}
+(1) 软近似删去的分母项为 $D-\tilde D=2p^-k^+-2\mathbf p_T\cdot\mathbf k_T+k^2$。对软动量 $k\sim Q(\lambda,\lambda,\lambda)$ 与共线的 $p\sim Q(1,\lambda^2,\lambda)$，保留项 $2p^+k^-\sim\lambda Q^2$，
+删去项 $\sim\lambda^2Q^2$，相对误差 $O(\lambda)$。(2) 极化投影删去 $\mathsf S^+\mathsf J^--\mathbf S_T\cdot\mathbf J_T$，相对于保留的 $\mathsf S^-\mathsf J^+$ 为 $O(\lambda|\mathbf k_T|/|k^-|)$。% VF-WL-11
+(3) 在 Glauber 区 $k\sim Q(\lambda^2,\lambda^2,\lambda)$，$2p^+k^-\sim\lambda^2Q^2$ 与 $2\mathbf p_T\cdot\mathbf k_T$、$\mathbf k_T^2$ 同阶，误差为 $O(1)$，(2) 中的比值也是 $O(1)$。
+因此软近似只能在围道已离开 Glauber 区（$|k^+k^-|\gtrsim\mathbf k_T^2$）的地方使用。（此步只给出 E-S 型陈述。）
+\end{proofsketch}
+
+\paragraph{地位与缺口。}标度陈述（E-S）。积分形式同样由\cref{lem:method-local-accuracy}给出，前提是\cref{asm:appN-envelope,asm:appN-separation}；其中\cref{asm:appN-separation}(iii)的第一个不等式 $|k^+k^-|\ge c\,\mathbf k_T^2$
+就是“支配集中没有 Glauber 区”的精确表述，它取代了常见的“$\kappa\sim|\mathbf k_T|$”的说法（\cref{lem:method-i0-compat}(b)）。在 Glauber 区核心的变形围道上的定量界
+由附录~O 的\cref{prop:appO-eikonal}给出（对色单态单举 Drell--Yan 中的图类 $\mathcal G_0$ 与分级构型）；一般情形是\cref{asm:appO-deformation}（\tagA）的内容。文献：\cite[第~10~章]{Collins2011}。
+
+\paragraph{误差表。}\Cref{tab:method-errors}列出近似子从单个因子中删去的项及其在 $U_R$ 上的大小（附录~N 的\cref{lem:appN-error-table}逐行给出证明）。记
+$t_R=\lambda^{\beta_<(R)}$，$\beta_<(R)=\max_{R'<R}\beta_{R'}$（无更小区域时为 $0$）——它是 $U_R$ 上到更小钳夹集距离的下界；$s_R=\lambda^{\beta_R}$——它是 $U_R$ 上小分量的上界；
+$\|V\|$ 为各光锥分量模之和，$\mathcal J_+$ 是好分量的幂次计数包络，$|\mathsf J^+|\le\mathcal J_+$。第 1 行把 $\mathsf H_R$ 中一条线的动量写成 $l=h+k_e$，
+$h$ 是其中不含共线动量 $k_e$ 的部分，于是精确的 $l^2=(h+k_e)^2$ 与保留的 $(h+\pi_+k_e)^2$ 之差为 $2(h+\pi_+k_e)\cdot(k_e-\pi_+k_e)+(k_e-\pi_+k_e)^2$。
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.75cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.6cm}@{}}
+\toprule
+& 近似 & 删去的项 & 保留的项 & 在 $U_R$ 上的大小 & 界的类型 & 所用输入\\
+\midrule
+1 & 硬—共线：$\mathsf H_R$ 中的线 $l$ & $2(h+\pi_+k_e)\cdot(k_e-\pi_+k_e)+\cdots$ & $(h+\pi_+k_e)^2$ & 相对 $s_R/t_R^2$ & E-P（相对） & (GA4)(i)\\
+2 & 硬—共线：质量 & $m^2$，外线的 $p^-$ & — & 相对 $\lambda^2/t_R^2$ & E-P（相对） & (GA4)(i)\\
+3 & 硬—共线：夸克投影 & $\mathcal P_-$（坏）部分 & $\mathcal P_+$（好）部分 & 绝对 $(s_R/t_R)\|\mathsf H\|\mathcal J_+$ & E-P（相对于包络） & (GA3)(iii)，(GA4)(ii)\\
+4 & 硬—共线：胶子投影 & $\mathsf H^+\mathsf J^-$ & $\mathsf H^-\mathsf J^+-\mathbf H_T\cdot\mathbf J_T$ & 绝对 $(s_R/t_R)\|\mathsf H\|\mathcal J_+$ & E-P（相对于包络） & (GA3)(iii)，(GA4)(ii)\\
+5 & 软：$\mathsf J_A$ 中的线 $p+k$ & $2p^-k^+-2\mathbf p_T\cdot\mathbf k_T+k^2$ & $p^2-M^2+2p^+k^-$ & 相对 $(s_R/t_R)^{1/2}$ & E-P（相对） & (GA4)(iii)\\
+6 & 软：极化投影 & $\mathsf S^+\mathsf J^--\mathbf S_T\cdot\mathbf J_T$ & $\mathsf S^-\mathsf J^+$ & 绝对 $(s_R/t_R)\|\mathsf S\|\mathcal J_+$ & E-P（相对于包络） & (GA3)(iii)\\
+7 & TMD：快度正规化 & $n_A(y_A)-n_A$、$n_B(y_B)-n_B$ 的分量 & — & 相对 $e^{-2(y_A-y_k)}+e^{-2(y_k-y_B)}$ & E-P（相对，只在快度窗口中） & (T1)\\
+8 & 遍举：价夸克对 & 同第 1 行，$k_e^+=xP^+$ & 同第 1 行 & 相对 $s_R/t_R^2$ & E-P（相对） & (GA4)(ii)，端点区\\
+9 & 事件形状：测量函数 & $\tau(X)-\tau_R(X)$ & $\tau_R=\sum_{\text{区域}}\tau_i$ & 宽度 $O(s_R\tau)$ 的薄层 & E-N & (CU3)\\
+\bottomrule
+\end{tabularx}
+\caption{近似子的误差表（证明见\cref{lem:appN-error-table}）。(GA3)、(GA4) 分别是\cref{asm:appN-envelope}与\cref{asm:appN-separation}，(T1) 是\cref{asm:appN-tmd}的一项，(CU3) 是\cref{asm:appN-cutsum}的一项；
+第 7 行中 $n_A(y_A)$、$n_B(y_B)$ 是快度为 $y_A$、$y_B$ 的类空正规子方向，$y_k$ 是软动量的快度（TMD 近似子见附录~N）；第 8 行另需端点区在 $\mathcal R$ 中（\cref{asm:appN-endpoint}）。第 1、2、5、7、8 行是相对于保留项的逐点界，第 3、4、6 行是相对于包络的逐点界（保留项可以在个别点为零），
+第 9 行只有积分意义下的界。}
+\label{tab:method-errors}
+\end{table}
+
+除第 7 行外，各行的相对误差满足 $\delta\le C(s_R/t_R^2+\lambda^2/t_R^2+s_R+(s_R/t_R)^{1/2})\le C'\lambda^{\beta_R/3}$，因为 $\beta_R\ge3\beta_<(R)$ 给出
+$s_R/t_R^2=\lambda^{\beta_R-2\beta_<}\le\lambda^{\beta_R/3}$、$(s_R/t_R)^{1/2}\le\lambda^{\beta_R/3}$、$\lambda^2/t_R^2\le\lambda^{4/3}$。以第 5 行为例：设 $|k^+k^-|\ge c\,\mathbf k_T^2$ 且
+$|\tilde D|\ge c(|p^+||k^-|+v_A(p))$，$v_A(p)=|p^+p^-|+\mathbf p_T^2$（即\cref{asm:appN-separation}(iii)）。则 $|k^2|\le C|k^+||k^-|$，$|2p^-k^+|\le2v_A(p)|k^+|/|p^+|$，取 $\alpha=(|k^+|/|p^+|)^{1/2}$ 有
+$2|\mathbf p_T||\mathbf k_T|\le\alpha\mathbf p_T^2+\mathbf k_T^2/\alpha\le\alpha v_A(p)+\alpha|p^+||k^-|/c$；相加得 $|D-\tilde D|\le C'(|k^+|/|p^+|)^{1/2}|\tilde D|$，再用 $U_R$ 上 $|k^+|\le s_R$、
+$|p^+|\ge c\,t_R$ 即得。这里既没有用 $p$ 的在壳性，也没有用 $|k^-|\sim|\mathbf k_T|$，只用了\cref{lem:method-i0-compat}(b) 能保证的 $|k^+k^-|\gtrsim\mathbf k_T^2$（我们也用随机抽样核对了这一不等式）。% check: w10_extra.py (d)
+
+\begin{lemma}[局部精度（积分范数） \tagR]\label{lem:method-local-accuracy}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:appN-envelope}、\cref{asm:appN-separation}。
+设近似子 $T_R$ 由\cref{def:method-collinear-approx,def:method-soft-approx}的操作组成（不含 TMD 快度正规化与事件形状测量函数的近似，它们分别另需附录~N 的 (T1) 与 (CU3)）。
+则对每个区域 $R_0\in\mathcal R$，
+\begin{equation}\label{eq:method-local}
+(1-T_{R_0})\Gamma\in\mathfrak S(U_{R_0}) .
+\end{equation}
+特别地，对极小区域 $R_0$（此时 $X_{R_0}=\Gamma$），\cref{sec:method-subtraction}中的精度条件 (CS1)$_{R_0}$ 成立。（本引理只涉及部分子态。）
+% errtype: E-N
+\uses{def:method-power-suppressed,def:method-neighbourhoods,lem:method-telescoping,def:method-collinear-approx,def:method-soft-approx,asm:appN-envelope,asm:appN-separation,lem:appN-error-table}
+\end{lemma}
+
+\begin{proof}
+完整证明在附录~N 的\cref{sec:appN-approximators}；其结构如下。把 $\Gamma$ 写成因子之积，由\cref{lem:method-telescoping}，$(1-T_{R_0})\Gamma$ 是有限多项之和，每一项恰含一个因子之差 $f_i-T_{R_0}f_i$，
+其左边的因子已被近似、右边的因子保持精确。在 $U_{R_0}\cap\{\|k\|\le1\}$ 上，由\cref{lem:appN-error-table}（其前提包含于所列两个假设），每个差不超过 $C\lambda^a$ 乘以保留的因子（误差表第 1、2、5 行）
+或乘以一个包络（第 3、4、6 行）；由此得到的“部分近似”的被积函数按\cref{asm:appN-envelope}(i) 被 $C\Phi_{R_0}$ 控制，其中 $\Phi_{R_0}\ge0$ 是该假设给出的包络，$\int_{U_{R_0}}\Phi_{R_0}\,\dd\mu\le CL^K$；
+于是每一项不超过 $C\lambda^a\Phi_{R_0}$，积分不超过 $C\lambda^aL^K$。
+在 $U_{R_0}\cap\{\|k\|\ge1\}$ 上，相对误差不必小，但\cref{asm:appN-envelope}(ii) 直接给出每一项的积分不超过 $C\lambda^aL^K$。对有限多项求和即得\cref{eq:method-local}，
+其中 $a=\min_{R_0}a_{R_0}>0$。对极小区域，$R<R_0$ 的区域不存在，故 $X_{R_0}=\Gamma$，(CS1)$_{R_0}$ 就是\cref{eq:method-local}。
+\end{proof}
+
+对非极小的 $R_0$，(CS1)(CS2) 还涉及较小与较大区域的减除项；在 (Com)(Abs) 之下它们化为\cref{prop:method-product}的分组表达式，其可积性需要中间的 $(1-T_{R'})$ 因子。
+要求每个单独链项 $T_c(1-T_{R_0})\Gamma$ 都被压低的“逐项稳定性”是\emph{错误的}：\cref{ex:method-naive-induction}给出两个反例——单个近似项 $T_{C_2}\Gamma$ 在另一个共线区中留下未被正规化的钳夹，
+而 $T_{C_1}$ 还必须在已近似的 $T_S\Gamma$ 上准确；两级梯形图中的情形见第~10~章的\cref{ex:disall-ladder}。
+
+\begin{remark}[吸收性质 (Abs) 何时失效]\label{rem:method-abs-failure}
+\Cref{prop:method-product}的乘积公式依赖 (Com) $T_RT_{R'}=T_{R'}T_R$ 与 (Abs) $T_RT_{R'}=T_RT_{R\wedge R'}T_{R'}$（$R$、$R'$ 不可比）。对适配走向下的动量替换，(Abs) 对逐线交成立
+（附录~N 的\cref{lem:appN-algebra}），但对极化投影可能失效：设线 $e$ 在 $R$ 中为 $A$ 共线、在 $R'$ 中为 $B$ 共线（方向翻转），则 $T_RT_{R'}$ 在 $e$ 上插入
+$\mathcal P_A\mathcal P_B=g_T+n_A(n_B\cdot n_B)n_A=g_T$，保留横向耦合，而 $T_{R\wedge R'}$ 的软投影只含纵向的 $n\otimes n$，零化 $g_T$。故 $T_RT_{R'}-T_RT_{R\wedge R'}T_{R'}$ 恰是 $e$ 的横向极化在该连接处的耦合；
+若 $e$ 是物理的最小连接（如胶子引发子过程中的活动胶子），它是领头的。此外有一个与软线约定有关的边缘情形（\cref{rem:appN-abs-edge}）；在“硬因子看到精确喷注动量的光锥投影、软动量只在喷注因子中近似”的字面约定下，
+两圈平面顶点中 (Abs) 恰有四处失效，而在“软优先”约定（携带软动量的喷注线以其软近似后的动量进入硬因子，即“硬因子不依赖于软动量”，\cite[第~10.6.6~节]{Collins2011}）下
+九对不可比区域的 (Abs) 全部精确成立（\cref{prop:appN-twoloop-algebra}）。所以一般情形的乘积公式不是定理，而是\cref{asm:appN-collins}的一部分。
+\end{remark}

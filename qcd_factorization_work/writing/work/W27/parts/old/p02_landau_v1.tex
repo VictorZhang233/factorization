@@ -1,0 +1,262 @@
+% -----------------------------------------------------------------------------------------------------
+\section{物理区钳夹判据、Gordan 二择一与 Coleman--Norton 图像}\label{sec:front-landau}
+
+第四章的一切区域分析都从“无质量理论的钳夹面”出发：用 Landau 方程定位它们，用 Coleman--Norton 图像解释它们（\cref{thm:ir-landau-momentum}、\cref{prop:ir-coleman-norton}）。然而直到 2011 年，Collins 仍然写道：若想在文献中找一个“Landau 方程对钳夹奇异面既必要又充分”的公开、显式而完整的证明，将一无所获，教科书的处理细看都不完整\cite[第~5.4.3~节，第~110~页]{Collins2011}。第四章证明了必要性的方向（\cref{thm:ir-landau-momentum}，[R, $R_{\mathrm{PT}}$]），而把充分性与局部形变的整体拼接记为全阶论证（\cref{rem:ir-landau-status}，[A]）。本节记录 Collins 2020 年的工作\cite{Collins:2020euz}（预印本）补上了什么、它的证明结构，以及其中可以化为经典凸几何的部分。
+
+\begin{definition}[围道变形、钳夹、Landau 点与好方向]\label{def:front-trap}
+考虑积分
+\begin{equation}\label{eq:front-collins-integral}
+I(z)=\lim_{\epsilon\to0^+}\int_{\Gamma_0}\dd^dw\,\frac{B(w;z)}{\prod_{j=1}^N\bigl[A_j(w;z)+\ii\epsilon\bigr]^{n_j}},\qquad n_j\notin\{0,-1,-2,\dots\},
+\end{equation}
+其中外参数 $z$ 为实数，$\Gamma_0$ 是全体实的 $w$（“物理区”；外动量不必在壳），每个 $A_j$ 解析且对实宗量取实值，$B$ 解析。（这里 $\epsilon>0$ 是 $\ii\epsilon$ 处方的参数，与维数正规化的 $\varepsilon$ 无关。）动量空间 Feynman 图是 $w=$ 全体圈动量、$A_j=k_j^2-m_j^2$（允许 $m_j=0$）的情形；此外还包括 Wilson 线给出的线性程函分母 $n\cdot k_j$ 与因子化证明中使用的近似分母。
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item \emph{围道形变}是 $w=w_R+\ii\tau v(w_R)$，$0\le\tau\le1$，其中 $v$ 是实值、连续、分段可微的向量场，在积分区域的边界上为零。
+\item 形变在 $w_S$ 附近\emph{容许}，是指存在 $\epsilon_0>0$，使得当 $w_R$ 位于 $w_S$ 的某邻域内、$0\le\tau\le1$、$0<\epsilon\le\epsilon_0$ 时，所有 $A_j+\ii\epsilon$ 都不为零；一个容许形变在 $w_S$ \emph{避开奇点}，是指上述非零条件在 $\epsilon=0$、$0<\tau\le1$ 时对 $w_S$ 邻域内的 $w_R$ 仍然成立；若没有任何容许形变避开 $w_S$ 处的奇点，就称积分在 $w_S$ \emph{被钳住}（trapped，pinched）。
+\item 设 $\{A_j\}_{j\in J}$ 是在 $w_S$ 为零的分母，记 $D_j=\partial A_j(w_S)$，把它看作对偶向量：$D_j\cdot v=v^\mu\,\partial A_j(w_S)/\partial w^\mu$。一组不全为零的实数 $\lambda_j\ge0$ 若满足 $\sum_{j\in J}\lambda_jD_j=0$，称为一个 \emph{Landau 点}。正性 $\lambda_j\ge0$ 正是物理区钳夹区别于一般复奇点之处。
+\item 若对所有 $j\in J$ 有 $D_j\cdot v>0$，称 $v$ 为\emph{好方向}。
+\item 一个容许形变若避开了 $w_S$ 处的奇点，却对某个在 $w_S$ 为零的 $A_j$ 有 $v(w_S)\cdot D_j=0$，就称为\emph{反常形变}。
+\end{enumerate}
+% VF-FRO-2
+% uses: none
+\end{definition}
+
+第四章的钳夹面（\cref{def:ir-pinch-surface}）正是 Feynman 图积分的被钳住点之集。记号上请注意：\cref{thm:ir-landau-momentum}把分母记为 $D_j$、把其梯度记为 $u_j$，本节遵循 Collins，把分母记为 $A_j$、梯度记为 $D_j$。以上定义取自\cite[第~II~节，定义~1--7、15]{Collins:2020euz}（预印本）。
+
+\begin{lemma}[Gordan 二择一的构造性形式：最小范数方向]\label{lem:front-min-norm}
+设 $D_1,\dots,D_N$ 是有限维实向量空间 $V$ 上的对偶向量；在 $V^*\simeq V$ 上取定一个内积 $\langle\cdot,\cdot\rangle$，把 $D_j$ 与向量等同，令 $K=\mathrm{conv}\{D_1,\dots,D_N\}$。则
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item 存在 Landau 点当且仅当 $0\in K$；
+\item 若 $0\notin K$，则 $K$ 中范数最小的点 $w$ 唯一，且对一切 $j$ 有 $D_j\cdot w\ge|w|^2>0$，即 $w$ 是好方向，并带有显式余量 $|w|^2$；
+\item Landau 点与好方向不能同时存在。
+\end{enumerate}
+% VF-FRO-1
+% uses: none
+\end{lemma}
+
+\begin{proof}
+(i) 若 $0\in K$，则 $0=\sum_j\mu_jD_j$，$\mu_j\ge0$，$\sum_j\mu_j=1$，这组 $\mu_j$ 就是 Landau 点。反之，若 $\lambda$ 是 Landau 点，则 $\Lambda=\sum_j\lambda_j>0$，$\mu_j=\lambda_j/\Lambda$ 给出 $0=\sum_j\mu_jD_j\in K$。
+(ii) $K$ 是非空紧凸集，而 $u\mapsto|u|^2$ 严格凸，故最小点 $w$ 存在且唯一；由 $0\notin K$ 知 $w\neq0$。对任意 $u\in K$ 与 $t\in[0,1]$，$w+t(u-w)\in K$，于是
+\begin{equation*}
+0\le|w+t(u-w)|^2-|w|^2=2t\,\langle w,u-w\rangle+t^2|u-w|^2 .
+\end{equation*}
+两边除以 $t>0$ 再令 $t\to0^+$，得 $\langle w,u-w\rangle\ge0$，即 $\langle w,u\rangle\ge|w|^2$。取 $u=D_j$ 即得 $D_j\cdot w\ge|w|^2>0$。
+(iii) 若 $\lambda$ 是 Landau 点而 $v$ 是好方向，则 $0=\sum_j\lambda_j\,D_j\cdot v$；右边每一项非负，且至少有一个 $\lambda_j>0$ 使该项严格为正，矛盾。
+\end{proof}
+
+(i)--(iii) 合起来就是 Gordan 择一定理（\cref{lem:appD-gordan}）的一个构造性证明：(ii) 与 (iii) 说明恰有一种情形成立，而且在好方向存在时直接给出一个。我们用 400 个随机实例（其中 161 个属于好方向情形、139 个属于 Landau 点情形，其余为前一组之外的补充）检验了 (i)--(iii) 与余量不等式（数值误差 $\sim10^{-15}$），所用脚本记录于本书的计算存档中。
+
+\begin{remark}[Collins 的几何定理即 Gordan 二择一]\label{rem:front-gordan-collins}
+Collins 证明中纯几何的一半——好方向存在当且仅当不存在 Landau 点\cite[定理~3]{Collins:2020euz}——在原文第~V--VII~节用约十二页（正锥、边向量、边界线段）证明；Collins 在脚注~6 中说，他在凸几何文献中没有找到所需的结果。它正是 Gordan 1873 年的择一定理\cite{Gordan1873}（\cref{lem:appD-gordan}）：对实矩阵 $D$（各行为 $D_j$），“存在 $v$ 使 $Dv>0$”与“存在非零的 $\lambda\ge0$ 使 $D^{\mathsf T}\lambda=0$”恰有一个成立。\cref{lem:front-min-norm}给出的最小范数方向是一个带显式余量的形变方向，可以直接用于数值围道形变（这类数值方法见\cite{Gong:2008ww,Becker:2012nk}，二者都为\cite{Collins:2020euz}所引用）。据我们截至 2026 年 10 月的文献检索（范围：INSPIRE 全文检索与\cite{Collins:2020euz}的全部施引文献；早于 arXiv 的文献未作全文检索），尚未见在 Landau 分析的文献中引用 Gordan 定理。这一等同是初等的，我们只把它作为一个注记；Collins 证明中分析的那一半（排除反常形变，见\cref{prop:front-anomalous}与\cref{thm:front-collins-pinch}证明概要的第 (4) 步）完全不受影响。
+\end{remark}
+
+\begin{example}[二维中的两种情形]\label{ex:front-gordan-2d}
+(a) 取 $D_1=(2,0)$、$D_2=(1,2)$。$K$ 是连接二者的线段 $u(t)=(1-t)D_1+tD_2=(2-t,\,2t)$，$|u(t)|^2=(2-t)^2+4t^2$ 的导数 $-2(2-t)+8t$ 在 $t=\frac25$ 为零，故 $w=(\frac85,\frac45)$，$|w|^2=\frac{64}{25}+\frac{16}{25}=\frac{16}5$，而 $D_1\cdot w=\frac{16}5=D_2\cdot w$：在 $w$ 所在的面上余量不等式取等号。好方向锥 $\{v:\ D_1\cdot v>0,\ D_2\cdot v>0\}$ 是方向角介于 $-26.57^\circ$（垂直于 $D_2$）与 $90^\circ$（垂直于 $D_1$）之间的开锥，$w$（方向角 $26.57^\circ$）位于其中。\cref{fig:front-gordan}(a) 中还画了 $D_3=(2.6,1.6)$：$D_3\cdot w=5.44>|w|^2$，最小范数点不变。
+(b) 改为加入 $D_3=(-1,-1)$：$1\cdot D_1+2\cdot D_2+4\cdot D_3=(2+2-4,\ 0+4-4)=0$，故 $(\lambda_1,\lambda_2,\lambda_3)=(1,2,4)$ 是 Landau 点，由\cref{lem:front-min-norm}(iii)，不存在好方向（\cref{fig:front-gordan}(b)）。
+\uses{lem:front-min-norm}
+\end{example}
+
+%%% BEGIN fig:front-gordan
+\begin{figure}[htbp]
+\centering
+% Data: (a) D1=(2,0), D2=(1,2) (ex:front-gordan-2d), D3=(2.6,1.6) on the far side of the
+% line D1D2; min-norm point of conv{D_j}: w=(8/5,4/5), |w|^2=16/5=D1.w=D2.w, D3.w=5.44;
+% good cone {v: D_j.v>0} = directions between -26.57 deg (perp. to D2) and 90 deg (perp. to D1).
+% (b) D3=(-1,-1): 1*D1+2*D2+4*D3=0 (closed polygon drawn at scale 0.4).
+\begin{tikzpicture}[fd,
+  fe vec/.style={draw,line width=0.9pt,-{Stealth[length=6pt,width=4.6pt]}},
+  fe hull/.style={draw=gray!65,fill=gray!22,line width=0.6pt,line join=round},
+  fe cone/.style={fill=green!9,draw=none},
+  fe ray/.style={draw=green!45!black,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  fe wpt/.style={circle,fill=red!65!black,draw=none,inner sep=0pt,minimum size=4.6pt},
+  fe lam/.style={draw=blue!60!black,line width=0.9pt,-{Stealth[length=6pt,width=4.6pt]}},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) good direction =======================
+  \begin{scope}
+    \fill[fe cone] (0,0) -- (-26.565:2.95) arc[start angle=-26.565,end angle=90,radius=2.95] -- cycle;
+    \draw[fe ray] (0,0) -- (90:2.95);
+    \draw[fe ray] (0,0) -- (-26.565:2.95);
+    \draw[lcaxis,gray!55] (-1.15,0) -- (3.35,0);
+    \draw[lcaxis,gray!55] (0,-1.75) -- (0,3.3);
+    % supporting line v.w = |w|^2 through D1, D2
+    \draw[gray!60!black,densely dotted,line width=0.6pt] ($(2,0)!-0.45!(1,2)$) -- ($(2,0)!1.32!(1,2)$);
+    \draw[fe hull] (2,0) -- (1,2) -- (2.6,1.6) -- cycle;
+    \draw[fe vec] (0,0) -- (2,0);
+    \draw[fe vec] (0,0) -- (1,2);
+    \draw[fe vec] (0,0) -- (2.6,1.6);
+    \draw[red!65!black,line width=0.7pt,dash pattern=on 2.5pt off 1.8pt] (0,0) -- (1.6,0.8);
+    % right-angle mark at w on the D1 side (face direction (1,-2)/sqrt5, normal (2,1)/sqrt5),
+    % away from the arrow D3 which passes just above w
+    \draw[red!65!black,line width=0.5pt] ($(1.6,0.8)+(0.0894,-0.1789)$) -- ++(-0.1789,-0.0894) -- ++(-0.0894,0.1789);
+    \node[fe wpt] at (1.6,0.8) {};
+    \node[anchor=north east,inner sep=1.5pt] at (2.02,-0.03) {$D_1$};
+    \node[anchor=east,inner sep=2pt] at (0.98,2.05) {$D_2$};
+    \node[anchor=west,inner sep=2pt] at (2.62,1.62) {$D_3$};
+    \node[inner sep=1pt,text=red!60!black] at (1.27,0.42) {$w$};
+    \node[fill=white,fill opacity=0.85,text opacity=1,inner sep=1pt] at (0,0) {};
+    \node[anchor=north east,inner sep=1.5pt] at (0,0) {$0$};
+    \node[fe lab,text=green!35!black,anchor=south,align=center] at (1.5,2.82) {好方向锥 $\{v:D_j\cdot v>0\}$};
+    \node[fe lab,text=gray!40!black,anchor=north west] at (2.38,-0.62) {$v\cdot w=|w|^2$};
+    \node at (1.05,-2.25) {(a)\ $D_j\cdot w\ge|w|^2$：好方向};
+  \end{scope}
+  % ======================= (b) Landau point =======================
+  \begin{scope}[xshift=7.1cm]
+    \draw[lcaxis,gray!55] (-1.75,0) -- (2.75,0);
+    \draw[lcaxis,gray!55] (0,-1.75) -- (0,3.3);
+    \draw[fe hull] (2,0) -- (1,2) -- (-1,-1) -- cycle;
+    \draw[fe vec] (0,0) -- (2,0);
+    \draw[fe vec] (0,0) -- (1,2);
+    \draw[fe vec] (0,0) -- (-1,-1);
+    \node[circle,fill=black,draw=none,inner sep=0pt,minimum size=3.6pt] at (0,0) {};
+    \node[anchor=north west,inner sep=1.5pt] at (1.98,-0.03) {$D_1$};
+    \node[anchor=east,inner sep=2pt] at (0.98,2.05) {$D_2$};
+    \node[anchor=north east,inner sep=1.5pt] at (-1,-1) {$D_3$};
+    \node[anchor=south east,inner sep=1.5pt] at (-0.05,0.05) {$0$};
+    % closed polygon of the weighted vectors (scale 0.4)
+    \begin{scope}[shift={(2.85,0.55)},scale=0.4]
+      \draw[fe lam] (0,0) -- (2,0);
+      \draw[fe lam] (2,0) -- (4,4);
+      \draw[fe lam] (4,4) -- (0,0);
+      \node[fe lab,anchor=north,inner sep=2pt] at (1,0) {$\lambda_1D_1$};
+      \node[fe lab,anchor=west,inner sep=2pt] at (3,2) {$\lambda_2D_2$};
+      \node[fe lab,anchor=south east,inner sep=1pt] at (2,2.05) {$\lambda_3D_3$};
+    \end{scope}
+    \node[fe lab,align=center,anchor=north] at (3.6,-0.35) {$\lambda=(1,2,4)$\\[1pt]$\sum_j\lambda_jD_j=0$};
+    \node at (1.25,-2.25) {(b)\ Landau 点：无好方向};
+  \end{scope}
+\end{tikzpicture}
+\caption{Gordan 二择一定理（1873）\cite{Gordan1873}：对有限个对偶矢量 $D_j$，要么存在好方向 $v$（$D_j\cdot v>0$，可取凸包中范数最小的点 $w$，并有 $D_j\cdot w\ge|w|^2$），要么存在 Landau 点（$\lambda_j\ge0$ 不全为零、$\sum_j\lambda_jD_j=0$），二者恰有其一。
+(a)~$D_1=(2,0)$、$D_2=(1,2)$ 与 $D_3$ 的凸包（灰）不含原点，最小范数点 $w=(\frac85,\frac45)$ 落在面 $D_1D_2$ 上（$D_1\cdot w=D_2\cdot w=|w|^2$），位于好方向锥（绿）之内；
+(b)~换成 $D_3=(-1,-1)$ 后凸包含原点，$1\cdot D_1+2\cdot D_2+4\cdot D_3=0$（蓝色闭合折线），不存在好方向。
+在 Collins\cite{Collins:2020euz}（2020，预印本）的符号条件下，积分围道在 $w_S$ 被钳住当且仅当存在 Landau 点（VF-FRO-1，VF-FRO-2）。}
+\label{fig:front-gordan}
+\end{figure}
+%%% END fig:front-gordan
+
+教科书推导中常见的一个默认前提是：一个形变若要避开分母 $A_j$ 的奇点，它在奇点处必须给出严格正的一阶虚位移 $v\cdot\partial A_j>0$。若这一前提成立，“存在 Landau 点 $\Rightarrow$ 被钳住”只是\cref{lem:front-min-norm}(iii) 的直接推论。下面的命题说明它不成立，这正是 Collins 证明的困难所在。
+
+\begin{proposition}[“规避奇点需要严格正的一阶位移”不成立 \tagV]\label{prop:front-anomalous}
+下述断言在两个或更多实积分维数中不成立：“若一个容许形变避开了 $A_j$ 在 $w_S$ 处的奇异面，则 $v(w_S)\cdot\partial A_j(w_S)>0$。”反例：对非相对论分母 $1/(E-p^2/2m+\ii\epsilon)$（在原点 $D=(1,-p/m)|_{p=0}=(1,0)$），存在依赖于位置的容许形变，它们避开奇点而一阶位移为零（反常形变）；其中一个甚至在整个奇异面上一阶位移都为零。在一维积分中，严格正的一阶位移是避开奇点的必要条件。
+\uses{def:front-trap}
+\end{proposition}
+
+\begin{proof}[反例的验证]
+取二维积分变量 $w=(E,p)$、$A=E-p^2/(2m)$、$m>0$，作形变 $(E,p)=(E_R,p_R)+\ii\tau(\eta,\xi)$。直接展开得
+\begin{equation}\label{eq:front-anom-A}
+A=E_R-\frac{p_R^2}{2m}+\frac{\tau^2\xi^2}{2m}+\ii\tau\Bigl(\eta-\frac{p_R\,\xi}{m}\Bigr).
+\end{equation}
+\emph{形变一}\cite[附录~B.1]{Collins:2020euz}：$(\eta,\xi)=(|E_R|+2|p_R|,\,m)$。此时 $\Imag A=\tau(|E_R|+2|p_R|-p_R)\ge\tau(|E_R|+|p_R|)\ge0$，等号只在原点成立，而原点处 $\Real A=\tau^2m/2>0$。所以对 $0<\tau\le1$、$\epsilon\ge0$，$A+\ii\epsilon$ 只在 $\tau=\epsilon=0$ 处为零：形变容许并且避开奇点；但在原点 $v\cdot D=\eta(0,0)=0$。
+\emph{形变二}：$(\eta,\xi)=(p_R+p_R^2/(2m)-E_R,\,m)$。此时 $\Imag A=\tau\bigl(p_R^2/(2m)-E_R\bigr)$ 可以为负；但 $\Real A=0$ 要求 $E_R=p_R^2/(2m)-\tau^2m/2$，代回得 $\Imag A=\tau^3m/2>0$。所以 $A+\ii\epsilon$ 同样只在 $\tau=\epsilon=0$ 处为零，而在整个奇异面 $E_R=p_R^2/(2m)$ 上 $v\cdot D=\eta-p_R\xi/m=0$。
+作为对照，常向量形变 $(\eta,\xi)=(0,m)$ 不容许：取 $p_R=\tau$、$E_R=\tau^2/(2m)-\tau^2m/2$，由\cref{eq:front-anom-A}得 $A=-\ii\tau^2$，于是 $A+\ii\epsilon$ 在 $\epsilon=\tau^2$ 处为零。可见反常形变必须依赖于位置。
+\emph{一维}\cite[附录~B.2]{Collins:2020euz}：设实解析的 $A$ 在 $w=0$ 为零，$A(w)=a_nw^n+O(w^{n+1})$，$a_n\ne0$，形变为 $w=x+\ii\tau v(x)$，$v_0=v(0)$。若 $v_0=0$，形变后的围道仍经过 $w=0$，奇点未被避开。若 $v_0\ne0$，沿 $x=s\,v_0$ 有 $A=a_n v_0^n(s+\ii\tau)^n+o(r^n)$，$r=|s+\ii\tau|$。令 $s+\ii\tau=r\ee^{\ii\theta}$，当 $\theta$ 从 $0$ 走到 $\pi$ 时，主项的辐角 $n\theta+\arg(a_nv_0^n)$ 扫过长度 $n\pi$ 的区间：若 $n\ge2$，它必经过 $-\pi/2$（模 $2\pi$），即 $A$ 在某个 $\tau>0$ 处取负纯虚值，于是对某个 $\epsilon>0$ 有 $A+\ii\epsilon=0$，形变不容许；若 $n=1$ 而 $a_1v_0<0$，主项 $a_1v_0(s+\ii\tau)$ 走过下半平面中的半圆，同样经过负虚轴，形变不容许。因此在一维中，避开奇点要求 $n=1$ 且 $a_1v_0=A'(0)v_0>0$，即严格正的一阶位移。高维中之所以可能出现反常形变，是因为 $D\cdot v_0=0$ 可以在 $D\ne0$、$v_0\ne0$ 时成立（$v_0$ 沿奇异面的切向）。
+\end{proof}
+
+\paragraph{地位与缺口}[V]，证据：显式的数学反例（来自预印本\cite{Collins:2020euz}附录~B，本书独立重验了上述两个形变与一维结论）。后果：教科书中假定“避开奇点必须有正的一阶位移”的 Landau 判据推导是不完整的。据 Collins 的解读\cite[第~IV~节]{Collins:2020euz}，Eden、Landshoff、Olive 与 Polkinghorne\cite[第~2.1~节]{EdenEtAl1966}把围道沿奇异面的“法向”推开（没有度规时“法向”没有意义，容许的方向构成一个开半空间），并默认一阶位移非零；其条件 (2.1.19b) 不含正性 $\lambda_j\ge0$，作为一般复奇点的必要条件是正确的，但对物理区钳夹并不充分。Collins 2011 年写道，当时找不到既必要又充分的完整公开证明\cite[第~5.4.3~节]{Collins2011}。本命题不是任何正面结论的前提；它说明\cref{thm:front-collins-pinch}的困难一半必须直接排除反常形变，而不能借助“一阶位移”的捷径。误差类型：不适用（关于单个积分的陈述）。
+
+\begin{theorem}[物理区钳夹判据（Collins 2020） \tagA]\label{thm:front-collins-pinch}
+设 $I$ 如\cref{def:front-trap}所述，$w_S$ 是一个实点，在该点一组非空的分母 $\{A_j\}_{j\in J}$ 为零。再设：
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item 每个 $A_j$ 对 $w$ 至多是二次的；
+\item （符号条件）写 $A_j(w_S+\delta w)=D_j\cdot\delta w+\frac12\,\delta w\cdot E_j\cdot\delta w$。对每个方向 $v_0$，所有“相关”的 $j$——即 $A_j(w_S)=0$、$D_j\ne0$、$D_j\cdot v_0=0$、且在 Landau 点中 $\lambda_j\neq0$ 者——所对应的非零数 $v_0\cdot E_j\cdot v_0$ 同号。
+\end{enumerate}
+则积分在 $w_S$ 被钳住，\emph{当且仅当} $\{D_j\}_{j\in J}$ 存在 Landau 点。条件 (b) 对以下分母成立：$k^2-m^2$（与 $k$ 正交的任何 $\hat v$ 都是类空的或类光的，故 $v_0\cdot E\cdot v_0=2\hat v^2\le0$）；程函分母（$E=0$）；非相对论传播子；以及只含横向动量二次项的近似分母。软线（$k=0$）有 $D=0$，不在“相关”之列。因此本定理适用于本书中的每一类图，包括含 Wilson 线的图与经 Glauber 近似的图。（本定理是关于单个积分的陈述。）
+% VF-FRO-2
+\uses{def:front-trap, lem:appD-gordan, lem:front-min-norm, thm:ir-landau-momentum}
+\end{theorem}
+
+\begin{proofsketch}
+(1)~结构：定理 $=$ 几何二择一 $\circ$ 形变定理。形变定理\cite[定理~2]{Collins:2020euz}断言：在同样的假设下，积分在 $w_S$ 不被钳住，当且仅当存在方向 $v$，使对一切在 $w_S$ 为零的 $A_j$ 有 $v\cdot\partial A_j(w_S)>0$；与几何二择一结合即得本定理。
+(2)~几何的一半就是\cref{lem:appD-gordan}；\cref{lem:front-min-norm}给出它的构造性证明，以及一个带余量 $|w|^2$ 的具体方向。
+(3)~“存在好方向 $\Rightarrow$ 不被钳住”：取 $v(w_R)=\chi(w_R)\,v$，其中 $\chi\ge0$ 是在 $w_S$ 附近等于 $1$ 的截断函数。由于 $A_j$ 实解析，在 $w_S$ 附近 $\Imag(A_j+\ii\epsilon)=\epsilon+\tau\bigl[D_j\cdot v+O(\tau)+O(\delta w)\bigr]$，其中 $\delta w=w_R-w_S$\cite[式~(2.7)、(8.1)]{Collins:2020euz}；对足够小的邻域它严格为正，所以形变容许并避开奇点，而在 $w_S$ 不为零的分母在小邻域内本来就不为零。这一半在动量空间就是\cref{thm:ir-landau-momentum}（[R, $R_{\mathrm{PT}}$]）。
+(4)~“存在 Landau 点 $\Rightarrow$ 被钳住”是困难的一半，因为必须排除反常形变（\cref{def:front-trap}(v)）。设 $v(w_R)$ 是任一容许形变，$v_0=v(w_S)$，只保留 $\lambda_j>0$ 的分母。首先，容许性给出 $D_j\cdot v_0\ge0$：否则沿 $w_R=w_S+xv_0$ 有 $A_j\approx(x+\ii\tau)\,D_j\cdot v_0$，当 $(x,\tau)$ 走过上半平面的半圆时 $A_j$ 走过下半平面，必穿过负虚轴，从而对某个小 $\epsilon>0$ 出现零点。由 $\sum_j\lambda_jD_j\cdot v_0=0$ 得 $D_j\cdot v_0=0$。在 $w_R=w_S$ 处 $A_j=-\frac{\tau^2}{2}\,v_0\cdot E_j\cdot v_0$；若它对某个 $j$ 为零，奇点未被避开。否则写 $v=v_0+\delta v$，令 $w_R=w_S+xv_0$，取 $\tau=\tau(x)\simeq|x|$ 使 $\Real A_j=0$，此时
+$A_j=\ii\tau\bigl[D_j\cdot\delta v(xv_0)+x\,v_0\cdot E_j\cdot v_0+o(x)\bigr]$，容许性要求方括号对所有小 $x$ 非负\cite[式~(8.13)--(8.14)]{Collins:2020euz}。若 $D_j=0$，取 $x$ 与 $v_0\cdot E_j\cdot v_0$ 异号即得矛盾；故 $D_j\ne0$。由符号条件 (b)，各相关 $j$ 的 $v_0\cdot E_j\cdot v_0$ 同号，于是\emph{同一个} $x$（与该符号相反）使所有 $x\,v_0\cdot E_j\cdot v_0<0$，容许性因而要求所有 $D_j\cdot\delta v(xv_0)>0$；但 $\sum_j\lambda_jD_j\cdot\delta v=0$，矛盾。故任何容许形变都不能避开奇点\cite[第~VIII.B~节]{Collins:2020euz}。若 (b) 不成立，负项对不同分母出现在 $x$ 的不同符号处，上述论证失效。
+完整论证见\cite[第~V--VIII~节]{Collins:2020euz}（预印本）。
+\end{proofsketch}
+
+\paragraph{地位与缺口}[A]（本书的约定：证明只见于预印本的定理不记为 [R]）。对所述的积分类，\cite{Collins:2020euz}给出了完整的书面证明，但截至 2026 年 10 月它只有 arXiv 第一版（2020 年 7 月 8 日，39 页），没有后续版本，也没有期刊发表（付印时须复查）。Collins 本人把条件 (a)(b) 称为证明方法的产物：“a more general proof (or counterexample) would obviously be useful”（更一般的证明或反例显然是有用的）；在没有 (b) 的情形本陈述只是猜想。证明是局部的：把各点处的局部形变拼成整体形变，Collins 只给出了一个他自认“过于简单”的论证（原文第~VIII.D~节），这一步与\cref{rem:ir-landau-status}中的整体拼接问题相同。还应注意，Landau 条件对\emph{围道被钳住}既必要又充分，但对 $I(z)$ 作为外参数函数的\emph{奇点}只是必要的（下面的\cref{prop:front-landau-not-singular}）；因子化需要的正是钳夹的位置（区域）。误差类型：不适用（关于单个积分的陈述）。升级途径：在本书中完整重推并经核验，或在期刊发表并经核验之后。
+
+\begin{proposition}[Landau 条件只是奇点的必要条件 \tagV]\label{prop:front-landau-not-singular}
+断言“被钳住的点（$\lambda_j\ge0$ 的 Landau 点）蕴含 $I(z)$ 作为外参数函数的奇点”不成立。反例：无质量单圈自能在 $k=0$ 与 $k=p$ 处（零动量线，$D_j=0$）对每个 $p$ 都被钳住，而 $\Pi(p^2)\propto(-p^2-\ii0)^{-\varepsilon}$ 只在 $p^2=0$ 处奇异\cite[附录~D.1]{Collins:2020euz}；另有一个围道被钳住而值正则的一维积分，其中显式的分子因子抵消了本应出现的幂次奇点\cite[附录~A]{Collins:2020euz}。
+\uses{def:front-trap}
+\end{proposition}
+
+\begin{proof}[反例的验证]
+$\Pi(p)=\int\frac{\dd^Dk}{(2\pi)^D}\,\frac{1}{(k^2+\ii0)\,((p-k)^2+\ii0)}$，$D=4-2\varepsilon$。在 $k=0$ 处分母 $A_1=k^2$ 为零且 $D_1=2k=0$。设 $v$ 是任一容许形变，$v_0=v(0)$。若 $v_0^2\ne0$，沿 $k_R=x\,v_0$ 有 $A_1=(x+\ii\tau)^2v_0^2+O(\tau(|x|+\tau)|\delta v|)$，取 $|x|\simeq\tau$ 使实部为零，则虚部 $\simeq2x\tau v_0^2$ 对 $x$ 的一种符号为负，于是对某个小 $\epsilon>0$ 出现 $A_1+\ii\epsilon$ 的零点，与容许性矛盾；所以 $v_0^2=0$，而在 $k_R=0$ 处 $A_1=(\ii\tau v_0)^2=-\tau^2v_0^2=0$，奇点未被避开。因此积分在 $k=0$ 被钳住，且与 $p$ 无关；$k=p$ 处同理。另一方面，由 Feynman 参数化与标准积分，
+\begin{equation*}
+\Pi(p)=\frac{\ii\,\Gamma(\varepsilon)\,\Gamma(1-\varepsilon)^2}{(4\pi)^{2-\varepsilon}\,\Gamma(2-2\varepsilon)}\,(-p^2-\ii0)^{-\varepsilon},
+\end{equation*}
+它作为 $p^2$ 的函数只在 $p^2=0$ 处不解析（参数积分 $\int_0^1\dd\alpha\,[\alpha(1-\alpha)]^{-\varepsilon}=\Gamma(1-\varepsilon)^2/\Gamma(2-2\varepsilon)$ 与 $p$ 无关）。
+\end{proof}
+
+\paragraph{地位与缺口}[V]，证据：显式反例（\cite{Collins:2020euz}附录~A 与~D.1，预印本；无质量自能的情形本书已独立验证）。物理上的含义是：作为外部不变量函数的振幅奇点（Landau、Coleman--Norton 意义下）必须与无质量理论中固定外动量下的红外发散（圈动量空间中的钳夹面，\cref{thm:ir-landau-momentum}）区分开；端点奇点与第二类奇点需要另行处理。因子化所需要的是钳夹的位置——无质量自能在 $k=0$ 处的钳夹正是软区——而不是 $I(z)$ 的奇点。误差类型：不适用。
+
+把\cref{thm:front-collins-pinch}用到动量空间 Feynman 图，就得到 Coleman--Norton 图像的一个不借助 Feynman 参数的推导，并且它自动包括无质量线与 Wilson 线。
+
+\begin{corollary}[动量空间中的 Coleman--Norton 图像（含无质量线与 Wilson 线） \tagR]\label{cor:front-coleman-norton}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{thm:front-collins-pinch}。
+考虑一个动量空间图，其内线动量为 $k_j=\sum_L\eta_{jL}\ell_L+(\text{外动量})$，$\eta_{jL}\in\{0,\pm1\}$；分母为二次型 $k_j^2-m_j^2$（允许 $m_j=0$）或程函型 $n_j\cdot k_j$，且每个分母都带 $+\ii0$（对写成 $1/(n\cdot k-\ii0)$ 的程函因子取 $n_j=-n$）。积分在实圈动量 $\{\ell_L\}$ 处被钳住，当且仅当存在不全为零的 $\lambda_j\ge0$，它们只在 $k_j^2=m_j^2$（相应地 $n_j\cdot k_j=0$）的线上不为零，并使对每个圈 $L$
+\begin{equation}\label{eq:front-cn}
+\sum_j\eta_{jL}\,\lambda_j\,\Delta_j^\mu=0,\qquad
+\Delta_j^\mu=\begin{cases}k_j^\mu&\text{（传播子）},\\[1pt] n_j^\mu&\text{（程函线）}.\end{cases}
+\end{equation}
+等价地，位移 $\Delta x_j=\lambda_j\Delta_j$ 沿每个圈闭合：钳夹是一个由在壳粒子构成的经典过程（无质量线沿类光方向运动，程函线沿 $n_j$ 运动），离壳线收缩为点（硬顶点），零动量的无质量线有 $D_j=0$，总是被钳住（软线）。（本推论是关于 Feynman 积分的陈述。）
+% VF-FRO-3
+\uses{def:front-trap, thm:front-collins-pinch, prop:ir-coleman-norton}
+\end{corollary}
+
+\begin{proof}
+对二次分母有 $\partial(k_j^2-m_j^2)/\partial\ell_L^\mu=2\eta_{jL}k_{j\mu}$，对程函分母有 $\partial(n_j\cdot k_j)/\partial\ell_L^\mu=\eta_{jL}n_{j\mu}$。于是\cref{def:front-trap}(iii) 中的 Landau 条件 $\sum_j\lambda'_jD_j=0$ 按各圈动量的分量写出，正是\cref{eq:front-cn}（对二次分母把因子 $2$ 吸收进 $\lambda_j=2\lambda'_j$）。这些分母满足\cref{thm:front-collins-pinch}的条件 (a)(b)（见该定理陈述中的列举），所以由该定理，积分被钳住当且仅当存在这样的 $\lambda_j$。最后，\cref{eq:front-cn}对每个圈成立，恰好是能给各顶点 $v$ 指定时空位置 $x_v$、使每条线两端位置之差等于 $\lambda_j\Delta_j$ 的相容条件（\cref{prop:ir-coleman-norton}）：沿任一闭圈的位移之和为零，因此从一个基点出发沿生成树就能无歧义地定出所有顶点的位置；$\lambda_j=0$ 的离壳线两端重合。整个推导没有用到 Feynman 参数。
+\end{proof}
+
+\paragraph{地位}内容等级 [A]，即其前提\cref{thm:front-collins-pinch}的等级，并继承其预印本地位。本推论没有给出的是：(i) 在为零的分母中究竟哪些真正钳住围道，以及其余分母的容许形变锥——第九章中各种近似的合理性需要它；(ii) 近似图 $t_\sigma A$ 的钳夹面——在硬、喷注、软各块之间动量不守恒，原图的 Coleman--Norton 图像不再适用，需要另作分析（Ma 对宽角振幅做了这一分析，见下面的\cref{prop:front-ir-forest}）；(iii) 钳夹面附近的幂次计数（Libby--Sterman\cite{LibbySterman1978b}；[A]，\cref{thm:ir-leading-regions}）。此外，含共轭分母（$-\ii0$）的积分，即割图，不在本推论范围之内，需要另行论证。本推论在实质上并不新：它是\cite[定理~1]{Collins:2020euz}（原文已明确包括 Wilson 线）与 Coleman--Norton 闭合条件\cite{ColemanNorton1965}的一行组合。
+
+\begin{example}[无质量自能的共线钳夹]\label{ex:front-collinear-pinch}
+线 1 携带 $k$，线 2 携带 $p-k$，二者都无质量。对唯一的圈动量 $\ell=k$ 有 $\eta_1=+1$、$\eta_2=-1$，\cref{eq:front-cn}为 $\lambda_1k-\lambda_2(p-k)=0$，即 $k=xp$，$x=\lambda_2/(\lambda_1+\lambda_2)\in[0,1]$。两条线都在壳（$x^2p^2=(1-x)^2p^2=0$）当且仅当 $p^2=0$；此时 Landau 点为 $(\lambda_1,\lambda_2)\propto(1-x,x)$，位移 $\Delta x_1=\lambda_1k=x(1-x)p=\lambda_2(p-k)=\Delta x_2$：两个部分子一起沿 $p$ 运动。在 $x=0$ 处线 1 是软线（$D_1=0$），总被钳住。作为对照，若只有一条有质量的线在壳、另一条离壳，则 $\lambda_1k=0$ 迫使 $\lambda_1=0$，没有 Landau 点；满足 $k\cdot v>0$ 的 $v$ 就是好方向，积分不被钳住。
+\uses{cor:front-coleman-norton}
+\end{example}
+
+\begin{remark}[Coleman--Norton 与 ELOP 原证明的缺口]\label{rem:front-cn-history}
+Coleman 与 Norton 的结论是（据其摘要）：Feynman 振幅在物理边界上有奇点，当且仅当相应的 Feynman 图可以解释为一个能量动量守恒的经典过程\cite{ColemanNorton1965}。按照 Collins 的诊断\cite[第~I、IV~节，附录~D]{Collins:2020euz}，他们的证明在 Feynman 参数表示中进行，并默认“动量空间被钳住 $\Leftrightarrow$ 参数空间被钳住”。对无质量自能，第二 Symanzik 多项式 $\mathcal F=-p^2\alpha_1\alpha_2$ 是 $p^2$ 乘以一个与 $p$ 无关的 $\alpha$ 函数，所以对 $p^2\ne0$，$\alpha$ 围道从不被钳住，共线奇点完全位于前置因子 $(-p^2-\ii0)^{-\varepsilon}$ 中；在 $p^2=0$ 处参数形式的 Landau 方程恒成立，参数表示退化（不能说成“$\mathcal F\equiv0$，所以没有参数钳夹”）。当分母对某个分量是线性的（非相对论传播子，或一对程函因子 $1/(l^++\ii0)\cdot1/(-l^++\ii0)$），参数积分可以独立于动量积分而被钳住\cite[附录~D.2]{Collins:2020euz}。对有质量的图，Collins 接受 Coleman--Norton 的证明，只有二次型出现零本征值的“非常例外的点”除外，这些点在物理区中的地位尚未解决。Collins 的评语是“It is important to remember that it is not the result that breaks down, but the proof”\cite[第~IV~节]{Collins:2020euz}，即失效的是证明而不是结论；这里的“结论”指钳夹判据与经典图像，而不是字面上的“奇点当且仅当经典过程”（后者在无质量理论中不成立，\cref{prop:front-landau-not-singular}）。Eden 等人的处理自称是启发式的：“A proper proof needs the use of topology; \dots\ We shall be content with plausibility arguments”\cite[第~48~页]{EdenEtAl1966}（据\cite[第~5.4.3~节]{Collins2011}的引述），即严格的证明需要拓扑方法，而他们满足于似真性论证。第四章以各自的等级陈述了这些结果（\cref{thm:ir-landau-alpha,thm:ir-landau-momentum,rem:ir-landau-status,prop:ir-coleman-norton}）；本注只记录其历史。
+\end{remark}
+
+钳夹面确定之后，下一步是把领头钳夹面上的贡献组织成因子化形式。近十年在振幅层次上有三条全阶路线。
+
+\begin{proposition}[宽角振幅的红外森林公式（Ma 2020） \tagA]\label{prop:front-ir-forest}
+对宽角运动学下的任一无质量规范理论振幅 $A$（任意多条外腿，Feynman 规范），把近似算符 $t_\sigma$（硬—共线与软—共线近似）附在领头钳夹面 $\sigma$ 上，则
+\begin{equation}\label{eq:front-forest}
+\Bigl[\,\sum_{F\in\mathcal F[A]}\ \prod_{\sigma\in F}(-t_\sigma)\,A\Bigr]_{\mathrm{div}}=0,
+\end{equation}
+其中 $\mathcal F[A]$ 是由领头钳夹面组成的全部森林（包括空森林），$[\cdot]_{\mathrm{div}}$ 表示红外发散部分：所有红外发散，包括由减除项本身产生的新发散，都相互抵消；再利用 Ward 恒等式，$A$ 可以改写成规范不变的因子化形式（软 $\times$ 喷注 $\times$ 硬）\cite[式~(1.1)、(5.28)]{Ma2020}。假设：宽角（Glauber 区不被钳住，由围道形变保证；前向与 Regge 运动学除外）、无质量部分子、振幅层次。（本命题只涉及部分子振幅。）
+% VF-FRO-16
+\uses{def:ir-pinch-surface, prop:ir-power-counting, thm:ir-leading-regions, lem:method-ward-multi}
+\end{proposition}
+
+\begin{proofsketch}
+(1)~对反复近似的振幅的钳夹面 $\rho\{\sigma_n\cdots\sigma_1\}$ 作幂次计数，证明它们至多是对数发散的（原文附录~A）；(2)~近似振幅的“被包围的”钳夹面都是 $A$ 自身的领头钳夹面（原文定理~3--4，借助一种“法空间代数”）；(3)~逐类（嵌套、交叠、“奇异”配置）证明发散两两抵消；(4)~用 Ward 恒等式把领头区域的贡献写成 Wilson 线算符的矩阵元。完整论证见\cite{Ma2020}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}[A]：一个经审稿发表的长篇全阶论证，本书没有重推；其中的幂次计数步骤给出的是 E-S 型陈述，因子化形式所用的多胶子 Ward 恒等式与\cref{lem:method-ward-multi}（[A]）处于同一地位（该引理的「地位与缺口」点名了被明确假定的一步\cref{asm:appN-brst-nonlocal}，[C]）。它把 Collins 对 Sudakov 形状因子的减除（\cref{thm:method-subtraction}，[A]）推广到宽角振幅，并细化了\cref{prop:sudakov-amplitude-factorization}（[A]）。
+
+\begin{proposition}[振幅的全阶硬—软—共线因子化：坐标空间路线与算符路线 \tagA]\label{prop:front-coordinate-space}
+(a)（Erdoğan 与 Sterman；据摘要）在固定角度振幅的坐标空间分析中，共线极限与短距离极限都表现为紫外发散；每个图的坐标空间钳夹面构成有限个区域，嵌套减除加上 Ward 恒等式给出硬 $\times$ 喷注 $\times$ 软的结构；类光 Wilson 线之积可乘法重整；web 可写成紫外有限函数在曲面上的积分\cite{Erdogan:2013bga,Erdogan:2014gha,Erdogan:2017gyf,Sterman:2025qsq}。
+(b)（Feige 与 Schwartz）在领头幂次，QCD 振幅等于共线算符与软算符之积的矩阵元（软—共线重叠处用折线 Wilson 线），与正规子和规范无关；软流与劈裂函数在所有阶都与过程无关\cite{FeigeSchwartz2014}。其适用范围原文明言只包括末态共线方向：“we will only have final state collinear directions, so we can ignore Glauber scaling”，即只考虑末态共线方向，因而可以不管 Glauber 标度。
+（本命题只涉及部分子振幅。）
+\uses{def:ir-pinch-surface, def:prelim-wilson}
+\end{proposition}
+
+\begin{proofsketch}
+(a)~据摘要，论证在坐标空间中定位钳夹面，把共线与短距离奇异性当作紫外发散，用嵌套减除与 Ward 恒等式分离硬、喷注、软三部分。(b)~在领头幂次逐阶把振幅与 SCET 型算符的矩阵元匹配，并证明匹配系数与正规子、规范无关。完整论证见所引文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口}[A]（全阶论证；(a) 只读到摘要层次）。(b) 只限于末态共线方向，这与类空劈裂中严格共线因子化的破坏（\cref{prop:break-spacelike}，[V]）相容：入射与出射粒子共线的构形恰好被排除。两条路线的幂次计数步骤都是 E-S 型陈述。
+
+\begin{proposition}[被积函数层次的局域红外因子化 \tagP]\label{prop:front-local-ir}
+在两圈、对所列电弱产生过程，可以从红外普适性（软与共线奇点在被积函数层次的因子化）出发，构造局域有限的两圈振幅被积函数（据其摘要）\cite{Anastasiou:2018rib,Anastasiou:2020sdt,Anastasiou:2022eym,Anastasiou:2024xvk}；预印本\cite{Anastasiou:2025cvy,Anastasiou:2026kpm,Anastasiou:2026jta}（据题目与摘要）把这一构造推广到夸克湮灭中的光生、局域紫外抵消项与实—虚修正。（本命题只涉及部分子振幅。）
+\uses{thm:sudakov-ir-poles}
+\end{proposition}
+
+\paragraph{地位与缺口}[P]：对这些过程在两圈给出了被积函数层次因子化的存在性证明，而不是一般定理；其中三篇是预印本。升级途径：对任意过程与任意阶的构造。
+
+\begin{remark}[代数几何的 Landau 分析与偶极子公式]\label{rem:front-landau-algebraic}
+据其摘要，Landau 判别式\cite{Mizera:2021icv}、主 Landau 行列式\cite{Fevola:2023kaw,Fevola:2023fzn}、相对 Picard--Lefschetz 层级\cite{Berghoff:2022mqu}、Whitney 分层\cite{Helmer:2024wax}以及对 S 矩阵中 $\ii\epsilon$ 的分析\cite{Hannesdottir:2022bmo}，给出了 Feynman 积分奇异轨迹（作为复化外部运动学的函数、在所有叶上）的算法与严格的代数几何描述。它们与\cref{thm:front-collins-pinch}互补：讨论的是积分值的奇异轨迹，而不是带 $\lambda_j\ge0$ 的物理区围道钳夹，而后者才是因子化中的区域所需要的。另一方面，多腿振幅红外极点的偶极子公式在两圈之内精确\cite{Becher:2009cu,Gardi:2009qi}（前者含 2013 年的勘误），从三圈起出现非偶极项\cite{Almelid:2015jia}（据摘要），从四圈起与 BFKL 动力学不相容\cite[第~4~节]{Caron-Huot:2013fea}；核心陈述是\cref{prop:sudakov-dipole-violation}（[V]）。
+\end{remark}
+

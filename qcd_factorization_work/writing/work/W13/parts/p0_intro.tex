@@ -1,0 +1,31 @@
+% =====================================================================
+%  ch11_coll.tex —— 其他共线过程：单举湮灭、SIDIS、光生、极化与横度（作者 W13）
+%  不在 VERIFIED_FORMULAS_v2 中的公式与非平凡步骤均由 writing/work/W13/ 下的脚本重新推导，
+%  日志见 writing/work/W13/logs/（s1、s3--s13）。
+% =====================================================================
+\chapter{其他共线过程：单举湮灭、SIDIS、光生、极化与横度}\label{ch:coll}
+
+第~10~章用\cref{thm:method-template}（全阶论证，[A]）证明了只含一个强子、末态被完全求和的 DIS 的共线因子化。本章把同一套方法用到其余的共线过程上，并逐一说明每个结论的等级。
+这些过程各有一个新特点：$e^+e^-\to hX$ 的被观测强子在\emph{末态}，切割被“锚定”在它所在的喷注上，因此不能简单地对全部末态求和；半单举 DIS（SIDIS）同时含一个初态强子与一个被观测的末态强子；
+光生中光子既可以点状地参与硬散射，也可以先“强子化”；极化过程则把轴矢反常与 $\gamma_5$ 的方案问题带进因子化。
+我们证明（[R]）的是：全部为末态的共线子图的 $k^-$ 极点位于同一半平面（\cref{lem:coll-final-poles}，$R_{\mathrm{PT}}$）——它是单举湮灭中 Glauber 区不被钳夹的精确根据；
+$\gamma^*g$ 盒图对 $g_1$ 第一阶矩的贡献依赖于方案（\cref{prop:coll-anomaly-scheme}，单圈，$R_{\mathrm{PT}}$）；领头阶演化保持 Soffer 不等式（\cref{prop:coll-soffer}，$R_{\mathrm{PT}}$）；横度不与胶子混合（\cref{prop:coll-transversity-evolution}，$R_{\mathrm{def}}$）；
+以及以 OPE 为前提的 $g_1$ 奇数矩与光子结构函数点状部分（\cref{thm:coll-g1-moments,prop:coll-photon-sf}，$R_{\mathrm{OPE}}$）。单举湮灭、SIDIS 与直接光生的因子化本身是全阶论证（[A]），其瓶颈逐一以编号假设列出；
+分辨光生是猜想（[C]），衍射光生的标准因子化、Ellis--Jaffe 与 Wandzura--Wilczek 关系是破坏（[V]）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:coll-final-poles}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:coll-anomaly-scheme}（\tagR，$R_{\mathrm{PT}}$，单圈）；\cref{prop:coll-soffer}（\tagR，$R_{\mathrm{PT}}$，领头阶演化的保持性）；
+\cref{lem:coll-helicity-kernels}（\tagR，$R_{\mathrm{PT}}$）；\cref{prop:coll-transversity-evolution}（\tagR，$R_{\mathrm{def}}$）；\cref{thm:coll-g1-moments,prop:coll-photon-sf}（\tagR，$R_{\mathrm{OPE}}$）；数学引理\cref{lem:coll-positivity}。\par
+\textbf{给出全阶论证：}\cref{lem:coll-unobserved-jet,prop:coll-sia-regions}（\tagA）；\cref{thm:coll-sia}（\tagA；瓶颈\cref{asm:appN-collins,asm:appN-cutsum}，另需碎裂函数的乘法可重整性\cref{asm:appN-multren}(Z1)）；
+\cref{thm:coll-sidis,thm:coll-direct-photo,prop:coll-luxqed}（\tagA）。\par
+\textbf{没有证明：}分辨光生的因子化（\cref{conj:coll-resolved-photo}，\tagC）；Burkhardt--Cottingham 求和规则（\cref{conj:coll-bc}，\tagC）；衍射光生用衍射 PDF 的标准因子化（\cref{prop:coll-diffractive-photo}，\tagV，实验证据）；
+Ellis--Jaffe 求和规则与 Wandzura--Wilczek 关系（\cref{prop:coll-ellis-jaffe,prop:coll-ww}，\tagV）；非定域算符的 BRST 分类（具名缺口\cref{asm:appN-brst-nonlocal}）。
+\end{tcolorbox}
+
+\paragraph{本章的思路与记号。}
+每个过程都按同一模式处理：先写出运动学与结构函数，再确定领头区域，然后逐条检查\cref{thm:method-template}的 (H1)--(H5)，最后给出单圈的检验。
+记号沿用前几章：光锥坐标 $v^\pm=(v^0\pm v^3)/\sqrt2$，$n_A\cdot v=v^-$，$n_B\cdot v=v^+$（\cref{def:prelim-lightfront}）；PDF 与碎裂函数的算符定义见\cref{def:pdf-quark,def:pdf-gluon,def:pdf-ff}，螺旋度与横度分布见\cref{def:pdf-polarized}；
+$\sigma_{\mu\mu}\equiv4\pi\alpha^2/(3s)$ 是 $e^+e^-\to\mu^+\mu^-$ 的点状截面，$\sigma_0=\sigma_{\mu\mu}N_c\sum_qe_q^2$ 是 Born 总截面（\cref{def:ee-R}）。% VF-EE-1
+单圈系数函数以 $\as/(2\pi)$ 为展开参数，$\MSbar$ 约定如\cref{def:prelim-msbar}。本章只考虑单光子交换（不计 $Z$ 玻色子）。

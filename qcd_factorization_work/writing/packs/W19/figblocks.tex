@@ -1,0 +1,158 @@
+%%% BEGIN fig:jets-gap
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ax/.style={lcaxis,gray!60!black},
+  fc jet/.style={fill=blue!12,draw=blue!50!black,line width=0.7pt},
+  fc gap/.style={pattern=north east lines,pattern color=gray!55},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize},
+  fc tiny/.style={font=\scriptsize}]
+  % =====================================================================
+  % rapidity-azimuth plane (y in units of 0.85 cm, phi in [0,2pi] -> [0,3.2] cm)
+  % =====================================================================
+  \begin{scope}
+    \fill[gray!4] (-4.25,0) rectangle (4.25,3.2);
+    \fill[fc gap] (-1.15,0) rectangle (1.15,3.2);
+    \draw[gray!60!black,line width=0.5pt] (-1.15,0) -- (-1.15,3.2) (1.15,0) -- (1.15,3.2);
+    \draw[line width=0.5pt,gray!60!black] (-4.25,0) rectangle (4.25,3.2);
+    \draw[fc ax] (-4.6,-0.45) -- (4.75,-0.45) node[right,fc lab,text=black] {$y$};
+    \draw[fc ax] (-4.6,-0.45) -- (-4.6,3.55) node[above,fc lab,text=black] {$\phi$};
+    \node[fc tiny,anchor=east] at (-4.65,0) {$0$};
+    \node[fc tiny,anchor=east] at (-4.65,3.2) {$2\pi$};
+    % jets
+    \draw[fc jet] (-2.55,1.0) circle[radius=0.62];
+    \draw[fc jet] (2.55,2.6) circle[radius=0.62];
+    \node[fc note,align=center] at (-2.55,1.0) {喷注\\[-2pt]1};
+    \node[fc note,align=center] at (2.55,2.6) {喷注\\[-2pt]2};
+    \draw[gray!60!black,line width=0.45pt] (-2.55,-0.38) -- (-2.55,-0.52) (2.55,-0.38) -- (2.55,-0.52);
+    \node[fc tiny,anchor=north] at (-2.55,-0.5) {$y_1$};
+    \node[fc tiny,anchor=north] at (2.55,-0.5) {$y_2$};
+    % the gap
+    \node[fc note,fill=white,inner sep=1.5pt,align=center] at (0,1.6) {间隙：\\$E_T<Q_0$};
+    \draw[gray!60!black,line width=0.5pt,{Stealth[length=3.2pt,width=3pt]}-{Stealth[length=3.2pt,width=3pt]}] (-1.15,3.42) -- (1.15,3.42);
+    \node[fc note,anchor=south] at (0,3.45) {$Y$};
+    % an out-of-gap soft gluon (the SLL needs radiation outside the gap)
+    \fill[green!45!black] (-3.55,2.45) circle[radius=2.2pt];
+    \node[fc tiny,anchor=north,text=green!35!black,align=center] at (-3.55,2.38) {间隙外\\[-2pt]软胶子};
+    % beam directions
+    \node[fc note,anchor=north west] at (-4.25,-0.95) {$\longleftarrow$束流$B$（$y\to-\infty$）};
+    \node[fc note,anchor=north east] at (4.25,-0.95) {束流$A$（$y\to+\infty$）$\longrightarrow$};
+    \node[fc lab] at (0,-1.9) {(a)\ $(y,\phi)$平面中的间隙可观测量};
+  \end{scope}
+  % =====================================================================
+  % inset: Coulomb/Glauber exchange between the incoming partons + soft emission
+  % =====================================================================
+  \begin{scope}[shift={(7.75,1.55)}]
+    \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt,font=\footnotesize] (H) at (0.35,0) {$H$};
+    \draw[quark] (-2.1,1.15) -- (H.150);
+    \draw[quark] (-2.1,-1.15) -- (H.210);
+    \draw[quark] (H.30) -- (1.65,1.15);
+    \draw[quark] (H.330) -- (1.65,-1.15);
+    \draw[glauber] (-0.95,0.58) -- (-0.95,-0.58);
+    \draw[fc soft] (-1.6,0.88) -- (-1.05,1.75);
+    \node[vertex] at (-0.95,0.58) {};  \node[vertex] at (-0.95,-0.58) {};  \node[vertex] at (-1.6,0.88) {};
+    \node[fc note,anchor=east] at (-2.1,1.15) {$1$};
+    \node[fc note,anchor=east] at (-2.1,-1.15) {$2$};
+    \node[fc note,anchor=west] at (1.65,1.15) {$3$};
+    \node[fc note,anchor=west] at (1.65,-1.15) {$4$};
+    \node[fc tiny,anchor=east,text=red!55!black,align=right] at (-1.1,0) {Glauber\\[-2pt]（$\ii\pi$）};
+    \node[fc tiny,anchor=west,text=green!35!black] at (-1.0,1.65) {软发射};
+    \node[fc lab] at (-0.2,-3.45) {(b)\ 初态 Glauber 相位与软发射};
+  \end{scope}
+\end{tikzpicture}
+\caption{强子对撞中的“喷注间隙”可观测量（示意）。(a)~两个硬喷注位于快度$y_1$、$y_2$，其间宽为$Y$的快度区间（阴影）内辐射的横能量被否决，$E_T<Q_0\ll Q$；束流沿$y\to\pm\infty$。
+(b)~初态两个有色部分子之间的 Coulomb/Glauber 交换（暗红色，虚部$\ii\pi$）与软辐射（绿色，例如间隙外的软胶子）不对易，实—虚相消失效，产生超领头对数：首项为相对 Born 的$\alpha_s^4\ln^5(Q/Q_0)$（VF-GLA-13）。
+其地位分三层：振幅层次严格共线因子化的破坏 [V]；超领头对数的固定阶与重求和结果 [P]；间隙截面的 PDF 因子化仍是猜想 [C]，并有恢复的证据（\cref{prop:jets-sll}）。}
+\label{fig:jets-gap}
+\end{figure}
+%%% END fig:jets-gap
+
+%%% BEGIN fig:jets-ngl
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc ray/.style={draw,solid,line width=0.9pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc veto/.style={fill=orange!12,draw=none},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  \def\fcR{2.3}
+  % hemispheres: R (measured, energy veto) shaded, L (unmeasured) blank
+  \fill[fc veto] (0,-\fcR) arc[start angle=-90,end angle=90,radius=\fcR] -- cycle;
+  \draw[line width=0.6pt,gray!60!black] (0,0) circle[radius=\fcR];
+  \draw[line width=0.7pt,gray!60!black] (0,-\fcR-0.25) -- (0,\fcR+0.25);
+  % thrust axis
+  \draw[gray!60!black,line width=0.45pt,dash pattern=on 3pt off 2pt] (-\fcR-0.6,0) -- (\fcR+0.6,0);
+  \node[fc note,anchor=north west,text=gray!35!black] at (\fcR+0.05,-0.08) {推力轴};
+  % primary q qbar pair
+  \draw[fc ray] (0,0) -- (2.15,0);
+  \draw[fc ray] (0,0) -- (-2.15,0);
+  \node[fc lab,anchor=north] at (1.95,-0.05) {$q$};
+  \node[fc lab,anchor=north] at (-1.95,-0.05) {$\bar q$};
+  % harder gluon k1 into L, softer gluon k2 radiated by it into R
+  \draw[gluon] (0,0) -- (-1.2,1.44);
+  \draw[fc soft] (-0.6,0.72) -- (1.05,1.42);
+  \node[vertex] at (0,0) {};  \node[vertex] at (-0.6,0.72) {};
+  \node[fc lab,anchor=east] at (-1.25,1.3) {$k_1$};
+  \node[fc lab,anchor=west,text=green!35!black] at (1.12,1.38) {$k_2$};
+  \node[fc note,anchor=north west] at (0.55,1.1) {$\omega_2\ll\omega_1$};
+  % hemisphere labels
+  \node[fc lab,align=center] at (-1.1,-1.0) {L\\[-1pt]\scriptsize（不测量）};
+  \node[fc lab,align=center] at (1.05,-1.0) {R\\[-1pt]\scriptsize（$E_R<E_{\rm cut}$）};
+  % order and colour factor
+  \node[fc note,draw=gray!60!black,rounded corners=2pt,inner sep=3pt,anchor=west] at (\fcR+0.9,1.55) {$\order{\alpha_s^2}$：$C_FC_A$};
+  \node[fc note,anchor=west,align=left] at (\fcR+0.9,0.75) {$k_1\in\mathrm L$：不受限制\\$k_2\in\mathrm R$：受否决};
+\end{tikzpicture}
+\caption{非全局对数的来源（$e^+e^-$质心系，示意）。垂直于推力轴的平面把事例分为半球 L 与 R，只对 R 中的总能量施加否决$E_R<E_{\rm cut}$（阴影）；$q$、$\bar q$沿推力轴。
+未被测量的 L 中的较硬胶子$k_1$（能量$\omega_1$）向被否决的 R 辐射较软的胶子$k_2$（$\omega_2\ll\omega_1$）：$k_2$由$k_1$参与的相干发射给出，其实辐射被否决而虚修正不受限制，二者不再相消，产生非全局对数；
+首项出现在$\order{\alpha_s^2}$，色因子为$C_FC_A$（\cref{prop:jets-ngl}）。}
+\label{fig:jets-ngl}
+\end{figure}
+%%% END fig:jets-ngl
+
+%%% BEGIN fig:jets-sw-cone
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fc cone/.style={fill=blue!8,draw=blue!45!black,line width=0.6pt},
+  fc rim/.style={fill=blue!4,draw=blue!45!black,line width=0.6pt},
+  fc ray/.style={draw,solid,line width=0.9pt},
+  fc soft/.style={gluon,draw=green!45!black},
+  fc lab/.style={font=\small},
+  fc note/.style={font=\footnotesize}]
+  \def\fcL{3.6}   % cone length
+  \def\fcH{1.05}  % half-height of the cone base  (tan(delta) = h/L, delta ~ 16 deg)
+  % cones (perspective): lateral surface + elliptic base
+  \draw[fc cone] (0,0) -- (\fcL,\fcH) -- (\fcL,-\fcH) -- cycle;
+  \draw[fc rim] (\fcL,0) ellipse[x radius=0.28,y radius=\fcH];
+  \draw[fc cone] (0,0) -- (-\fcL,\fcH) -- (-\fcL,-\fcH) -- cycle;
+  \draw[fc rim] (-\fcL,0) ellipse[x radius=0.28,y radius=\fcH];
+  % cone axis (its orientation is arbitrary)
+  \draw[gray!60!black,line width=0.45pt,dash pattern=on 3pt off 2pt] (-4.4,0) -- (4.4,0);
+  % half-angle delta
+  \draw[gray!50!black,line width=0.5pt] (2.0,0) arc[start angle=0,end angle=16.26,radius=2.0];
+  \node[fc lab] at (2.22,0.31) {$\delta$};
+  \draw[gray!50!black,line width=0.5pt] (-2.0,0) arc[start angle=180,end angle=196.26,radius=2.0];
+  \node[fc lab] at (-2.22,-0.31) {$\delta$};
+  % particles (directions of flight from the interaction point)
+  \draw[fc ray] (0,0) -- (3.45,0.5);
+  \draw[gluon] (0,0) -- (3.3,-0.62);
+  \draw[fc ray] (0,0) -- (-3.45,0.3);
+  \draw[fc soft] (0,0) -- (0.62,1.72);
+  \node[vertex] at (0,0) {};
+  \node[fc lab,anchor=west] at (3.95,0.62) {$q$};
+  \node[fc lab,anchor=west] at (3.95,-0.62) {$g$（与$q$共线）};
+  \node[fc lab,anchor=east] at (-3.95,0.42) {$\bar q$};
+  \node[fc note,anchor=south,text=green!35!black,align=center] at (0.75,1.78) {锥外的软胶子：$E<\epsilon\sqrt s$};
+  % annotations
+  \node[fc note,align=center,anchor=north] at (0,-1.35) {两喷注事例：两锥之外的总能量$<\epsilon\sqrt s$\\
+     （能量份额$\epsilon$相对于总能量$\sqrt s$，不是束流能量$\sqrt s/2$；$\epsilon<\delta\ll1$）};
+\end{tikzpicture}
+\caption{Sterman--Weinberg 两喷注定义（$e^+e^-$质心系，示意；线段为各粒子的飞行方向）：若存在一对方向相反、半张角为$\delta$的锥（锥轴可任意选取），使两锥之外的总能量小于$\epsilon\sqrt s$，则事例计为两喷注事例。
+$\epsilon$是总能量$\sqrt s$的份额；在$\epsilon<\delta\ll1$时$\order{\alpha_s}$的结果含$4\ln\delta\ln2\epsilon$（若$\epsilon'$取为束流能量的份额，则为$4\ln\delta\ln\epsilon'$；\cref{prop:jets-sw}，VF-EE-12）。}
+\label{fig:jets-sw-cone}
+\end{figure}
+%%% END fig:jets-sw-cone

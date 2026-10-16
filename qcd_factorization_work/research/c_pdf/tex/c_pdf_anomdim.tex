@@ -1,0 +1,80 @@
+% ===================================================================================
+% c_pdf_anomdim.tex  —  由局域扭度二算符直接计算单圈反常维度（含夸克–胶子混合）
+% （research/c_pdf，对应 DERIVATION.md §6；验证脚本 scripts/s5_anomalous_dims.py、s5b_gauge_independence.py）
+% ===================================================================================
+\section{由局域算符计算单圈反常维度}\label{sec:cpdf-anomdim}
+
+\paragraph{算符、顶角与重整化。}
+$O_q^{(N)}=\bar\psi\sla{n}(\ii n\cdot D)^{N-1}\psi$（单一味道），$O_g^{(N)}=-g_{\lambda\rho}G^{a,n\lambda}[(\ii n\cdot D)^{N-2}G]^{a,n\rho}$。
+算符插入顶角（不带因子 $\ii$，动量一律流入）：$O_q$ 的两点顶角 $\sla{n}(n\cdot k)^{N-1}$；
+三点顶角 $g\,t^an^\mu\sla{n}\sum_{j=0}^{N-2}(n\cdot k+n\cdot q)^j(n\cdot k)^{N-2-j}$；
+$O_g$ 的双胶子顶角 $\delta^{ab}X_1\cdot X_2\,[(n\cdot q_1)^{N-2}+(n\cdot q_2)^{N-2}]$，其中 $X_i^\lambda=n\cdot q_i\,\epsilon_i^\lambda-n\cdot\epsilon_i\,q_i^\lambda$。
+重整化写成 $O_i^R=\sum_jZ_{ij}O_j$，$Z=1-\frac{\as}{2\pi}\frac1\varepsilon\Gamma$，于是 $\frac{\dd O^R}{\dd\ln\mu^2}=\frac{\as}{2\pi}\Gamma O^R$。
+由树图 $\langle j|O_i|j\rangle^{(0)}=\delta_{ij}\cdot2(n\cdot p)^N$（$N$ 为偶数），有
+\begin{equation}\label{eq:cpdf-Gamma}
+\frac{\text{UV 极点}\big[\Gamma^{(1)}_{\mathrm{1PI}}+\delta Z_j\,\langle j|O_i|j\rangle^{(0)}\big]}{2(n\cdot p)^N}=\frac{\as}{2\pi}\frac{1}{\varepsilon}\,\Gamma_{ij},
+\qquad \delta Z_q=\delta Z_2,\ \ \delta Z_g=\delta Z_3,
+\end{equation}
+与 DGLAP 的对应为 $\Gamma_{q_kq_k}=\gamma_{qq}$，$\Gamma_{q_kg}=2\gamma_{qg}$（夸克与反夸克各贡献一份），$\Gamma_{gq_k}=\gamma_{gq}$，$\Gamma_{gg}=\gamma_{gg}$。
+取在壳横向外态，即可去掉向运动方程算符与 BRST 恰当算符的混合。
+
+\paragraph{紫外极点的提取。}
+单圈积分的紫外发散是局域的，与红外正规化无关：它等于圈动量大 $l$ 展开中关于 $l$ 为 $-4$ 次齐次部分的 $1/\varepsilon$ 极点，
+用 $\int\frac{\dd^Dl}{(2\pi)^D}\frac{1}{(l^2)^2}\big|_{\mathrm{UV}}=\frac{\ii}{16\pi^2\varepsilon}$ 及
+$\langle l^{\mu_1}\cdots l^{\mu_{2j}}\rangle=(l^2)^j\sum_{\text{配对}}g\cdots g/\big(D(D+2)\cdots(D+2j-2)\big)$ 计算。
+因此可以直接取在壳无质量运动学，尽管完整积分没有标度。
+
+\paragraph{夸克部分的手算（Feynman 规范）。}
+用 Feynman 参数并平移积分变量，保留分子中 $q$ 的二次项（三个传播子）或零次项（两个传播子），并利用
+$\langle(n\cdot q)(p\cdot q)\rangle=\frac{q^2}{4}n\cdot p$，$\langle(n\cdot q)^2\rangle=0$，$\langle(\epsilon\cdot q)^2\rangle=-\frac{q^2}{4}$。下面各量都以 $\frac{\as}{2\pi}\frac1\varepsilon\times$色因子为单位，相对于树图：
+\begin{itemize}[leftmargin=2em]
+\item 顶角图 A1：$\gamma^\mu\sla{k}\sla{n}\sla{k}\gamma_\mu=-2\sla{k}\sla{n}\sla{k}$，二次项为 $2y^{N-1}(n\cdot p)^Nq^2$（Feynman 参数权重 $2(1-y)$），故
+      $A_1=\frac14\int_0^1 2(1-y)\cdot2y^{N-1}\dd y=\frac{1}{N(N+1)}$，其中 $\frac14$ 来自 $\frac{\as}{4\pi}\to\frac{\as}{2\pi}$ 与树图 $2(n\cdot p)^N$。
+\item 算符–胶子图 A2 $=$ A3：$\sla{n}\sla{k}\sla{n}=2n\cdot k\,\sla{n}$，只剩与 $q$ 无关的项，$A_2=-\sum_{j=0}^{N-2}\int_0^1x^{N-1-j}\dd x=-(S_1(N)-1)$。
+\item B（$\langle q|O_g|q\rangle$）：
+      \[T\cdot V=8(n\cdot l)^{N-2}\big[2(n\cdot p)(n\cdot l)(p\cdot l)-(n\cdot l)^2(p\cdot l)-l^2(n\cdot p)^2\big],\]
+      二次项为 $-(4y^{N-2}+2Ny^{N-1})(n\cdot p)^Nq^2$，给出 $B=\frac{2}{N(N-1)}+\frac{1}{N+1}=\frac{N^2+N+2}{(N-1)N(N+1)}$。
+\item C1 $=$ C2（$\langle g|O_q|g\rangle$，夸克圈的两种走向）：迹为
+      \[16(n\cdot l)(\epsilon\cdot l)^2+4l^2(n\cdot l)-8(n\cdot l)(p\cdot l)+4(n\cdot p)l^2,\]
+      二次项为
+      $(2Ny^N+2y^{N-1})(n\cdot p)^Nq^2$，给出 $C_1=\frac{N^2+N+2}{N(N+1)(N+2)}$；$C_2=(-1)^NC_1$。
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\caption{各图的紫外极点（单位 $\frac{\as}{2\pi}\frac1\varepsilon\times$色因子，相对于树图；已对 $N=1,\dots,14$ 验证）}\label{tab:cpdf-diagrams}
+\renewcommand{\arraystretch}{1.25}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+图 & Feynman 规范 & 一般协变规范 $\xi_g$ 的修正\\
+\midrule
+A1 顶角（$C_F$） & $\frac{1}{N(N+1)}$ & $+\frac{\xi_g-1}{2}$\\
+A2 $=$ A3 算符–胶子（$C_F$） & $-(S_1(N)-1)$ & 无\\
+$\delta Z_2$（$C_F$） & $-\frac12$ & $-\frac{\xi_g-1}{2}$\\
+B（$C_F$） & $\frac{N^2+N+2}{(N-1)N(N+1)}$ & 无\\
+C1 $=$ C2（$T_F$，每味） & $\frac{N^2+N+2}{N(N+1)(N+2)}$ & 无（无内胶子线）\\
+D1 双胶子算符顶角（$C_A$） & $\frac{2}{N(N-1)}+\frac{2}{(N+1)(N+2)}+\frac{1}{N+1}$ & $+\frac{\xi_g-1}{2}$\\
+D2 $=$ D3 三胶子算符顶角（$C_A$） & $-(S_1(N)-1)-\frac{N+2}{2(N+1)}$ & $-\frac{\xi_g-1}{8}$\\
+$\delta Z_3$ & $\frac56C_A-\frac23T_Fn_f$ & $-\frac{\xi_g-1}{4}C_A$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{theorem}[单圈反常维度]\tagR\label{thm:cpdf-anomdim}
+由 \cref{tab:cpdf-diagrams}，$\Gamma_{qq}=A_1+A_2+A_3+\delta Z_2=\gamma_{qq}(N)$，$\Gamma_{gq}=B=\gamma_{gq}(N)$，$\Gamma_{q_kg}=C_1+C_2=2\gamma_{qg}(N)$，
+$\Gamma_{gg}=D_1+D_2+D_3+\delta Z_3=\gamma_{gg}(N)$，且与规范参数 $\xi_g$ 无关。$N=2$ 时，在 $(\Sigma=\sum_kO_{q_k},\,O_g)$ 基中
+\begin{equation}
+\Gamma^{(2)}=\begin{pmatrix}-\frac43C_F&\frac23n_fT_F\\[2pt] \frac43C_F&-\frac23n_fT_F\end{pmatrix},
+\end{equation}
+两列之和为零，所以 $T^{++}=\Sigma^{(2)}+O_g^{(2)}$ 不被重整化。对奇数 $N$，夸克圈的两种走向相消（$N=1$ 时即 Furry 定理），只有非单态 $\Gamma=\gamma_{qq}(N)$。
+\end{theorem}
+
+\begin{remark}
+\begin{itemize}[leftmargin=2em]
+\item D1 含算符的双胶子顶角与两个 QCD 三胶子顶角；D2、D3 含算符的三胶子顶角，带对称因子 $\frac12$。
+\item 消失的图：由算符中双胶子场项构成的蝌蚪图（只有一个传播子，没有对数发散）；“算符双胶子顶角$+$QCD 四胶子顶角”图（圈中没有外动量流过，不存在 $-4$ 次项）。
+\item $\gamma_{gg}$ 中的 $n_f$ 部分完全来自 $\delta Z_3$。$N=2$ 时 $D_1+D_2+D_3+\delta Z_3|_{C_A}=0$。
+\item 单个图依赖于规范，只有加上 $\delta Z_{2,3}$ 之后的总和才与规范无关。
+\item PDF 图与局域算符图逐一对应（梯形图 $\leftrightarrow$ 顶角图，Wilson 线图 $\leftrightarrow$ $D^+$ 中的胶子图，自能 $\leftrightarrow$ 自能），见 \cref{sec:cpdf-moments}。
+\end{itemize}
+\end{remark}

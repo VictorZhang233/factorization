@@ -1,0 +1,52 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,x=1cm,y=0.75cm,
+  fd2 ax/.style={lcaxis,gray!60!black},
+  fd2 tick/.style={draw=gray!60!black,line width=0.45pt},
+  fd2 pt/.style={circle,fill=black,draw=none,inner sep=0pt,minimum size=5.4pt},
+  fd2 lab/.style={font=\footnotesize,align=left,anchor=west,inner sep=1.5pt},
+  fd2 val/.style={font=\footnotesize,anchor=east,inner sep=1.5pt},
+  fd2 note/.style={font=\footnotesize}]
+  \def\Yo{3.0}
+  % ---- the strip |Im theta| <= pi and its boundary lines ----
+  \fill[blue!7] (0,-3.1416) rectangle (11.4,3.1416);
+  \draw[blue!50!black,line width=0.75pt] (0,3.1416) -- (11.4,3.1416);
+  \draw[blue!50!black,line width=0.75pt] (0,-3.1416) -- (11.4,-3.1416);
+  \node[fd2 note,text=blue!45!black,anchor=south east] at (11.4,3.1416) {$\Imag\theta=\pi$};
+  \node[fd2 note,text=blue!45!black,anchor=north east] at (11.4,-3.1416) {$\Imag\theta=-\pi$};
+  \node[fd2 note,text=blue!45!black,align=center] at (9.35,1.62) {$S(\theta)$ 在 $|\Imag\theta|<\pi$ 中全纯，\\连续到边界};
+  % ---- axes ----
+  \draw[fd2 ax] (-0.7,0) -- (11.85,0) node[right] {$\Real\theta$};
+  \draw[fd2 ax] (0,-4.05) -- (0,4.15) node[left] {$\Imag\theta$};
+  \foreach \y/\t in {3.1416/{\pi},1.5708/{\frac{\pi}{2}},-1.5708/{-\frac{\pi}{2}},-3.1416/{-\pi}} {
+    \draw[fd2 tick] (-0.07,\y) -- (0.07,\y);
+    \node[font=\scriptsize,anchor=east,inner sep=1pt] at (-0.1,\y) {$\t$};}
+  \node[font=\scriptsize,anchor=north east,inner sep=1.5pt] at (0,0) {$0$};
+  % ---- the line Re theta = Y_0 ----
+  \draw[gray!60,line width=0.5pt,dash pattern=on 3pt off 2pt] (\Yo,-3.85) -- (\Yo,3.85);
+  \draw[fd2 tick] (\Yo,-0.07) -- (\Yo,0.07);
+  \node[font=\scriptsize,anchor=north,inner sep=1.5pt] at (\Yo,-3.85) {$\Real\theta=Y_0$};
+  % ---- the six configurations (VF-YZL-4) ----
+  \foreach \y in {3.1416,1.5708,0,-1.5708,-3.1416} \node[fd2 pt] at (\Yo,\y) {};
+  \node[fd2 val] at (\Yo-0.12,3.1416+0.32) {$Y_0+\ii\pi$};
+  \node[fd2 val] at (\Yo-0.12,1.5708+0.32) {$Y_0+\frac{\ii\pi}{2}$};
+  \node[fd2 val,fill=blue!7] at (\Yo-0.12,0.36) {$Y_0$};
+  \node[fd2 val] at (\Yo-0.12,-1.5708+0.32) {$Y_0-\frac{\ii\pi}{2}$};
+  \node[fd2 val] at (\Yo-0.12,-3.1416+0.32) {$Y_0-\ii\pi$};
+  \node[fd2 lab] at (\Yo+0.15,3.1416+0.36) {类空/类空，过去/未来};
+  \node[fd2 lab] at (\Yo+0.15,1.5708+0.36) {类时/类空，过去/未来};
+  \node[fd2 lab] at (\Yo+0.15,0.62) {类空/类空，过去/过去（Collins 的 DY 软因子 $S_{\mathrm{DY}}$）};
+  \node[fd2 lab] at (\Yo+0.15,-0.42) {类时/类时，过去/未来（形状因子 $S_{\mathrm{FF}}$）};
+  \node[fd2 lab] at (\Yo+0.15,-1.5708+0.36) {类时/类空，过去/过去};
+  \node[fd2 lab] at (\Yo+0.15,-3.1416+0.36) {类时/类时，过去/过去};
+  % ---- light-cone limit ----
+  \draw[red!60!black,line width=0.8pt,-{Stealth[length=5.5pt,width=4.6pt]}] (7.3,-2.05) -- (10.9,-2.05);
+  \node[fd2 note,text=red!55!black,align=center,anchor=south] at (9.1,-2.0) {$Y\to\infty$：光锥极限};
+  \node[fd2 note,text=red!55!black,align=center,anchor=north] at (9.1,-2.12) {（假设对 $\Imag\theta$ 一致）};
+\end{tikzpicture}
+\caption{离光锥软函数对双曲角的解析性。单一时序的减除软函数只通过双曲角 $\theta(v_1,v_2)$（$\cosh\theta=v_1\cdot v_2/\sqrt{v_1^2v_2^2}$，$\pm\ii0$ 处方见正文）依赖于两个方向，是带形 $-\pi\le\Imag\theta\le\pi$（阴影，$\Real\theta\ge0$）上同一函数 $S(\theta)$ 的取值；
+在固定的 $\Real\theta=Y_0$ 上标出两个方向为类空/类时、过去/未来指向的六种组合所对应的 $\theta$（VF-YZL-4），其中 $\theta=Y_0$ 一点同时代表 Collins 的类空 DY 软因子与类时形状因子软函数，
+由此在微扰论各阶 $S_{\mathrm{DY}}=S_{\mathrm{FF}}$（\cref{thm:yzliu-analyticity}，全阶论证 [A]；前提为维数正规化微扰论中的 Wightman 结构，\cref{asm:yzliu-wightman-pt}）。
+光锥极限 $Y\to\infty$ 能否越过整个带形延拓，取决于该极限对 $\Imag\theta$ 的一致性；它只在 $\Imag\theta\in\{0,\pm\frac{\pi}{2},\pm\pi\}$ 处得到微扰验证（\cref{asm:yzliu-lightcone-uniform}，部分 [P]）。}
+\label{fig:yzliu-theta-strip}
+\end{figure}

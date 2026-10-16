@@ -1,0 +1,54 @@
+(1) X2 single T_R Gamma vs leading-power region term, line by line (X2 routing):
+   HH   : all 6 lines = leading terms
+   HC1  : all 6 lines = leading terms
+   HC2  : all 6 lines = leading terms
+   C1C1 : all 6 lines = leading terms
+   C2C2 : all 6 lines = leading terms
+   HS   : all 6 lines = leading terms
+   C1S  : all 6 lines = leading terms
+   C2S  : all 6 lines = leading terms
+   SS   : all 6 lines = leading terms
+   => PASS
+
+(2) routing change to (k, l) = (k2, k1+k2): g_0 = f_0 o B_0 with det B_0 = 1:
+   HH   : modes (k,l) = (H,H);  det B_0 = 1;  B_0 differs from l-k in nothing;  g_0 = f_0 o B_0: yes
+   HC1  : modes (k,l) = (C1,H);  det B_0 = 1;  B_0 differs from l-k in {'k1m': 'lm', 'k1x': 'lx', 'k1y': 'ly'};  g_0 = f_0 o B_0: yes
+   HC2  : modes (k,l) = (C2,H);  det B_0 = 1;  B_0 differs from l-k in {'k1p': 'lp', 'k1x': 'lx', 'k1y': 'ly'};  g_0 = f_0 o B_0: yes
+   C1C1 : modes (k,l) = (C1,C1);  det B_0 = 1;  B_0 differs from l-k in nothing;  g_0 = f_0 o B_0: yes
+   C2C2 : modes (k,l) = (C2,C2);  det B_0 = 1;  B_0 differs from l-k in nothing;  g_0 = f_0 o B_0: yes
+   HS   : modes (k,l) = (S,H);  det B_0 = 1;  B_0 differs from l-k in {'k1p': 'lp', 'k1m': 'lm', 'k1x': 'lx', 'k1y': 'ly'};  g_0 = f_0 o B_0: yes
+   C1S  : modes (k,l) = (S,C1);  det B_0 = 1;  B_0 differs from l-k in {'k1p': 'lp', 'k1x': 'lx', 'k1y': 'ly'};  g_0 = f_0 o B_0: yes
+   C2S  : modes (k,l) = (S,C2);  det B_0 = 1;  B_0 differs from l-k in {'k1m': 'lm', 'k1x': 'lx', 'k1y': 'ly'};  g_0 = f_0 o B_0: yes
+   SS   : modes (k,l) = (S,S);  det B_0 = 1;  B_0 differs from l-k in nothing;  g_0 = f_0 o B_0: yes
+   => PASS
+
+(3) SR's printed region integrands (hep-ph/9812529) vs the leading terms in the SR routing:
+   SR (h-h  ) <-> X2 HH   : all 6 factors agree
+   SR (us-us) <-> X2 SS   : all 6 factors agree
+   SR (us-h ) <-> X2 HS   : all 6 factors agree
+   SR (us-1c) <-> X2 C2S  : all 6 factors agree
+   SR (1c-1c) <-> X2 C2C2 : all 6 factors agree
+   SR (1c-h ) <-> X2 HC2  : all 6 factors agree
+   (SR eq. (8),(9) state (2c-2c) = (1c-1c), (2c-h) = (1c-h), and eq. (7) (us-2c) = (us-1c): mirror images)
+   => PASS
+
+(4) m2-exponents: X2 singles (unique scaling, r2_twoloop_regulator) vs SR:
+    True {'HH': (0, 0), 'HC2': (1, 1), 'C2C2': (2, 2), 'HS': (2, 2), 'C2S': (3, 3), 'SS': (4, 4)}
+
+(5) sum of SR's printed region values (Q^2 = 1, -m2_SR = mu^2 = e^{-L}), evaluated at small eps with 90 digits:
+   L =                  2: total(eps = 1e-8, 1e-12, 1e-16) - LP = ['1.6335e-6', '1.6335e-10', '1.6335e-14']   (LP = 35.1036027561457)
+   L =                  5: total(eps = 1e-8, 1e-12, 1e-16) - LP = ['2.6362e-5', '2.6362e-9', '2.6362e-13']   (LP = 290.984448967584)
+   L = 9.2103403719761836: total(eps = 1e-8, 1e-12, 1e-16) - LP = ['0.0003298', '3.298e-8', '3.298e-12']   (LP = 2229.03339808565)
+   => all poles cancel and the finite part is L^4/4 + pi^2 L^2/2 + 7 pi^4/60 (deviation O(eps))
+
+(6) Vandermonde: det[k^n]_{k,n=0..4} = 288 (non-zero => grouped pole coefficients of order >= 5 vanish when the sum is finite)
+
+(7) Thm E.3(iii): exact integrated remainder Phi^(2)/Q^4 - LP on the grid of m2 values (Qt = 1):
+   m2 =     0.04: int r =   -7.050661208   NLP =   -7.626647536   ratio = 0.92447713
+   m2 =     0.01: int r =   -4.596743553   NLP =   -4.689203242   ratio = 0.98028243
+   m2 =   0.0025: int r =    -2.57048925   NLP =    -2.58336228   ratio = 0.99501695
+   m2 = 0.000625: int r =   -1.281727737   NLP =   -1.283330688   ratio = 0.99875095
+   m2 =     1e-4: int r =  -0.4469172842   NLP =  -0.4470066796   ratio = 0.99980001
+   m2 =     1e-6: int r = -0.02013384352   NLP = -0.02013388379   ratio = 0.999998
+
+ALL PASS

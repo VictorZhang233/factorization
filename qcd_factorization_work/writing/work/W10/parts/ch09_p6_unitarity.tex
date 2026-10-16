@@ -1,0 +1,60 @@
+% ---------------------------------------------------------------------
+\section{幺正性：末态相互作用与软因子}\label{sec:method-unitarity}
+
+软胶子化为 Wilson 线之后，还剩软因子本身与硬散射之后的相互作用（末态相互作用）；两者都由对末态求和——幺正性——处理。本节的结论只能在 Glauber 区处理完之后使用（\cref{sec:method-glauber}）。
+
+\begin{lemma}[软因子的幺正性 \tagR]\label{lem:method-soft-unitarity}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设观测量不约束软动量。对末态切割求和后，所有 Wilson 线位于同一点的软因子为
+\begin{equation}\label{eq:method-soft-one}
+S=\frac1{N_c}\Trc\,\langle0|\bigl(W_{n_A}W_{n_B}\bigr)^\dagger(0)\,\bigl(W_{n_A}W_{n_B}\bigr)(0)|0\rangle=1 ,
+\end{equation}
+其中振幅一侧取 Feynman 规则给出的编时积、共轭一侧取反编时积，$W_{n_B}$ 取反夸克所需的表示。对过去指向的线，编时积就是相互作用绘景中的演化算符 $T[\mathcal U^{(-)}]=U_I(0,-\infty)$，它是幺正的；
+未来指向的线同理给出 $U_I(\infty,0)$。在维数正规化中，树图以外的每一张软因子图都是无标度的。（本引理只涉及算符与部分子态。）
+\uses{def:prelim-wilson,prop:prelim-wilson-covariance}
+\end{lemma}
+
+\begin{proof}
+(1) 观测量不约束软动量，故软末态 $|X\rangle$ 被完全求和，$\sum_X|X\rangle\langle X|=1$（在规范固定理论的整个态空间中；割图层次上这对应于对一切切割求和，包括 $-g$ 极化与鬼场切割），
+于是 $S=\frac1{N_c}\Trc\langle0|\bar T[\mathcal U^\dagger]\,T[\mathcal U]|0\rangle$，$\mathcal U=W_{n_A}W_{n_B}$。(2) 对过去指向的直线 $W[0,-\infty v]=P\exp\bigl(\ii g\int_{-\infty}^0\dd s\,v\cdot A(sv)\bigr)$，
+只要 $v^0>0$，就可以用时间 $t=sv^0$ 作参数：$s$ 越大越晚，路径次序（离终点近者在左）与时间次序一致。于是两条线的编时积是
+$T\exp\bigl(\ii\int_{-\infty}^0\dd t\,V(t)\bigr)$，$V(t)=g\sum_iv_i\cdot A^a(tv_i/v_i^0)\,T_i^a/v_i^0$——以厄米的 $V(t)$ 为相互作用的演化算符 $U_I(0,-\infty)$，它满足 $U_I^\dagger U_I=1$，且 $\bar T[\mathcal U^\dagger]=U_I^\dagger$。
+（这里起作用的是 $v^0>0$：每条线在时间上单调地从 $-\infty$ 走到 $0$。对类时而非类光的过去指向线，若写成路径排序的算符 $W[-\infty v,0]$，其路径次序是\emph{反}时间次序，
+而因子化与 Feynman 规则产生的是编时积；本引理只涉及后者。）因此 $S=\frac1{N_c}\Trc\langle0|U_I^\dagger U_I|0\rangle=1$。
+(3) 维数正规化：所有 Wilson 线位于同一点，图中既无外动量也无质量，而程函因子在 $n_i\to\alpha_in_i$（$\alpha_i>0$）下不变，故树图以外的每张图都是无标度积分，其值为零，与 (2) 一致。
+\end{proof}
+
+对比：TMD 因子化中两组 Wilson 线位于 $0$ 与 $\mathbf b_T$，$\tilde S(\mathbf b_T)\ne1$（第~14~章）；“软因子为 $1$”只对共线单举截面成立。
+
+末态相互作用相消的最简单形式如下。在光锥排序微扰论（LCOPT）中对内线的负分量作留数积分后，硬顶点之后的部分是能量分母 $a_f=\mathcal E-d_f$ 的链，振幅一侧为 $(a_f+\ii\epsilon)^{-1}$，
+共轭一侧为 $(a_f-\ii\epsilon)^{-1}$，被切割的态给出 $2\epsilon/(a_c^2+\epsilon^2)=\ii[(a_c+\ii\epsilon)^{-1}-(a_c-\ii\epsilon)^{-1}]$；对切割位置 $c$ 求和，相邻项伸缩相消：
+\begin{equation}\label{eq:method-cutsum}
+\begin{aligned}
+&\sum_{c=1}^{N}\Bigl[\prod_{f>c}\frac{1}{a_f-\ii\epsilon}\Bigr]\frac{2\epsilon}{a_c^2+\epsilon^2}\Bigl[\prod_{f<c}\frac{1}{a_f+\ii\epsilon}\Bigr]\\
+&\qquad=\ii\prod_{f=1}^{N}\frac{1}{a_f+\ii\epsilon}-\ii\prod_{f=1}^{N}\frac{1}{a_f-\ii\epsilon} ,
+\end{aligned}
+\end{equation}
+对每个 $\epsilon>0$ 精确成立。再以测度 $\dd\mathcal E/(2\pi)$ 对 $\mathcal E$ 积分：$N\ge2$ 时右边每项的极点都在同一侧且按 $\mathcal E^{-N}$ 衰减，积分为零；$N=1$ 时为 $1$。所以硬散射之后的相互作用在对切割求和后相消
+（我们对 $N\le5$ 作了符号核对，对 $N\le8$ 在随机有理点上作了精确核对）。% check: w10_unitarity.py, w10_cutsum_exact.py
+这是附录~O 割位置恒等式（\cref{lem:appO-cut-position}）无插入时的特例，即 Veltman 最大时间方程的光锥形式。
+
+\begin{proposition}[末态相互作用的幺正性相消 \tagA]\label{prop:method-fsi}
+不受观测量约束的末态相互作用在对切割求和后相消：要么末态喷注在前向振幅中不被钳夹（DIS：在非物理区它是硬部分的一部分），要么相互作用由幺正性相消（Drell--Yan 的旁观者）。
+（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{lem:method-soft-unitarity,thm:prelim-cutting-rules,lem:appO-cut-position,lem:appO-unitarity,asm:appN-cutsum,asm:appO-lcopt}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 切割规则（\cref{thm:prelim-cutting-rules}）把截面写成对切割求和的割图；关键是它们要有\emph{公共的}积分域与被积函数，才能逐点组合——这正是\cref{asm:appN-cutsum}的 (CU1)：
+在 LCOPT 中，未被切割的线的负分量用留数积掉，被切割的线用 $\delta$ 函数积掉，剩下正分量与横向分量作为公共的积分变量。
+(2) 在这一表示中，割位置恒等式（\cref{lem:appO-cut-position}，即\cref{eq:method-cutsum}加上软胶子插入）表明：移动切割跨过最晚的顶点只改变该顶点的权重；
+于是在闭时路径形式（\cref{lem:appO-unitarity}，\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appO-lcopt}）中，一个喷注内部、晚于一切插入的末态相互作用精确地消失，喷注因子化为
+$\langle P|\bar T\{\cdots\}\,T\{\cdots\}|P\rangle$ 的形式；对软因子，这一步与\cref{lem:method-soft-unitarity}结合。
+(3) DIS 的被击出夸克喷注：在非物理区 $|x|>1$ 的前向 Compton 振幅中它不被钳夹，可以变形离壳，成为硬部分的一部分（由此到矩与 $x$ 空间的两条途径见第~10~章）。
+(4) 单个割图与胶子质量都不能代替 (1)：当 $\lambda$ 是被测量的变量时单个割图对任何 $\varepsilon>0$ 都不绝对可积，不同切割的积分流形维数不同、被切割的线不能变形；
+胶子质量则破坏非阿贝尔 Ward 恒等式。文献：\cite{LibbySterman1978a}，\cite{CollinsSoperSterman1988}，\cite[第~14.4~节]{Collins2011}，\cite{AybatSterman2009}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}割位置恒等式本身是数学，闭时路径形式在\cref{asm:appO-lcopt}之下是完整的演绎；尚未证明的是：(i) LCOPT 在所有阶、包括紫外重整化与零模在内与协变微扰论等价（\cref{asm:appO-lcopt}，\tagA），
+(ii) 割图求和后的公共表示在被测变量存在时具有减除结构所需的性质（\cref{asm:appN-cutsum}的 (CU1)--(CU3)，\tagA；DIS 的情形见第~10~章\cref{prop:disall-two-routes}）。这两条决定了本命题的等级 [A]（误差类型：所用的近似是 E-S 型的）。
+附带指出一个常见的误解：单个割图并不是“幺正的”，相消只发生在对切割求和之后（\cref{eq:method-cutsum}）。文献中对 Drell--Yan 旁观者的这一步的系统讨论见\cite{CollinsSoperSterman1988}与\cite[第~14.4~节]{Collins2011}。

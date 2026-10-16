@@ -1,0 +1,110 @@
+% -------------------------------------------------------------------------------------
+\section{$[0,1]$ 上的分布与 Mellin 变换}\label{sec:prelim-distributions}
+
+单圈实辐射的相空间中处处出现 $(1-z)^{-1-2\varepsilon}$（$z$ 为纵向动量分数，$z\to1$ 时辐射的胶子变软）。$\varepsilon\to0$ 时它在 $z=1$ 处不可积，只有与虚修正的 $\delta(1-z)$ 项合在一起才有意义；分裂函数与系数函数也在 $z=1$ 处奇异。正确的语言是 $[0,1]$ 上的分布，即作用在检验函数（部分子分布）上的线性泛函。
+
+\begin{definition}[加号分布]\label{def:prelim-plus}
+(a) 设 $g$ 在每个 $[0,1-\delta]$ 上可积，且在 $z\to1$ 处至多有 $|\ln^k(1-z)|/(1-z)$ 型的奇异性。对在 $[0,1]$ 上连续、在 $z=1$ 处 Hölder 连续（存在 $\eta>0$ 使 $|h(z)-h(1)|\le C(1-z)^\eta$）的检验函数 $h$，定义
+\begin{equation}\label{eq:prelim-plus}
+\int_0^1\dd z\,[g(z)]_+\,h(z)=\int_0^1\dd z\,g(z)\big[h(z)-h(1)\big],\qquad \mathcal D_k(z)\equiv\Big[\frac{\ln^k(1-z)}{1-z}\Big]_+ . % VF-CONV-7
+\end{equation}
+特别地 $\int_0^1[g]_+=0$；$k=0$ 时也写 $\mathcal D_0=[1/(1-z)]_+=1/(1-z)_+$。
+\par
+(b) 乘积约定：对在 $z=1$ 处 Hölder 连续的函数 $g$，
+\begin{equation}\label{eq:prelim-product}
+g(z)\,\mathcal D_k\equiv g(1)\,\mathcal D_k+\frac{g(z)-g(1)}{1-z}\ln^k(1-z),
+\end{equation}
+即 $\langle g\mathcal D_k,h\rangle\equiv\langle\mathcal D_k,gh\rangle$；$k=0$ 时写作 $g(z)/(1-z)_+$。
+\par
+(c) 常用恒等式：
+\begin{gather}
+C_F\Big[\frac{1+z^2}{1-z}\Big]_+=C_F\Big[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\Big],\qquad
+\Big[\frac{2z}{1-z}\Big]_+=\frac{2z}{(1-z)_+}+2\delta(1-z),\notag\\
+\Big[\frac{z}{1-z}\Big]_+=z\Big[\frac1{1-z}\Big]_++\delta(1-z),\qquad
+(1+z^2)\,\mathcal D_1=\Big[\frac{(1+z^2)\ln(1-z)}{1-z}\Big]_++\frac74\,\delta(1-z). \label{eq:prelim-plus-identities} % VF-CONV-7, VF-DY-12
+\end{gather}
+% uses: none
+\end{definition}
+
+(c) 中的四个恒等式都是下面一般公式的特例：对在 $z=1$ 处 Hölder 连续的 $g$，
+\begin{equation}\label{eq:prelim-ck}
+g(z)\,\mathcal D_k=\Big[\frac{g(z)\ln^k(1-z)}{1-z}\Big]_++c_k[g]\,\delta(1-z),\qquad c_k[g]=\int_0^1\dd z\,\frac{g(z)-g(1)}{1-z}\ln^k(1-z),
+\end{equation}
+（两边作用于同一个 $h$ 后相减，差为 $h(1)c_k[g]$。）于是 $c_0[1+z^2]=-\int_0^1(1+z)=-\frac32$，$c_0[2z]=-2$，$c_0[z]=-1$，$c_1[1+z^2]=-\int_0^1(1+z)\ln(1-z)=\frac74$。最后一式是实际的陷阱：Drell--Yan 单圈系数函数中的 $4C_F(1+z^2)\mathcal D_1$ 若误作整体加号分布，$\delta(1-z)$ 的系数会差 $7C_F$。检验函数类与乘积约定的完整讨论见\cref{sec:appA-plus}；事件形状中在 $\tau=0$ 处减除的加号分布与 SCET 的星分布有各自的记号（第~15~章），从不与\cref{eq:prelim-plus}混用。
+
+\begin{lemma}[$(1-z)^{-1-a\varepsilon}$ 的分布展开]\label{lem:prelim-plus-expansion}
+设 $a>0$，检验函数 $h$ 在 $[0,1]$ 上连续，且存在 $\eta>0$ 与 $C$ 使 $|h(z)-h(1)|\le C(1-z)^\eta$。则对 $-\eta<a\varepsilon<0$，
+\begin{equation}\label{eq:prelim-plus-expansion}
+\int_0^1\dd z\,(1-z)^{-1-a\varepsilon}h(z)=-\frac{h(1)}{a\varepsilon}+\sum_{k=0}^\infty\frac{(-a\varepsilon)^k}{k!}\int_0^1\dd z\,\mathcal D_k(z)h(z),
+\end{equation}
+级数绝对收敛，截断到 $k=K$ 的余项为 $O(\varepsilon^{K+1})$。即作为分布
+\[
+(1-z)^{-1-a\varepsilon}=-\frac1{a\varepsilon}\,\delta(1-z)+\sum_{k\ge0}\frac{(-a\varepsilon)^k}{k!}\,\mathcal D_k(z).
+\]
+DIS 中用 $a=1$，Drell--Yan 与软函数中用 $a=2$。
+\uses{def:prelim-plus}
+\end{lemma}
+
+\begin{proof}
+完整证明见\cref{sec:appA-plus}。要点：令 $t=-a\varepsilon\in(0,\eta)$，$h=h(1)+[h-h(1)]$；第一部分给出 $h(1)/t$，第二部分代入 $(1-z)^{t}=\sum_kt^k\ln^k(1-z)/k!$ 逐项积分，控制函数 $C(1-z)^{\eta-|t|-1}$ 可积。
+\end{proof}
+
+右端对 $|a\varepsilon|<\eta$ 定义了只在 $\varepsilon=0$ 处有单极点的亚纯函数，即左端从红外收敛的一侧 $a\varepsilon<0$ 出发的解析延拓；软胶子的发散正以这个 $-\frac1{a\varepsilon}\delta(1-z)$ 极点出现。
+
+\begin{example}[单圈实辐射的典型积分]\label{ex:prelim-plus}
+考虑 $I(\varepsilon)=\int_0^1\dd z\,(1-z)^{-1-2\varepsilon}z^{-\varepsilon}h(z)$。对 $H(z)\equiv z^{-\varepsilon}h(z)$（$H(1)=h(1)$）用\cref{lem:prelim-plus-expansion}（$a=2$），再展开 $H=h-\varepsilon h\ln z+O(\varepsilon^2)$，并注意 $\langle\mathcal D_0,h\ln z\rangle=\int_0^1h\ln z/(1-z)$（因为 $\ln1=0$），得
+\begin{equation}\label{eq:prelim-ex-plus}
+I(\varepsilon)=-\frac{h(1)}{2\varepsilon}+\langle\mathcal D_0,h\rangle-\varepsilon\Big[2\langle\mathcal D_1,h\rangle+\int_0^1\dd z\,\frac{h(z)\ln z}{1-z}\Big]+O(\varepsilon^2),
+\end{equation}
+即作为分布 $(1-z)^{-1-2\varepsilon}z^{-\varepsilon}=-\frac{\delta(1-z)}{2\varepsilon}+\mathcal D_0-\varepsilon\big[2\mathcal D_1+\frac{\ln z}{1-z}\big]+O(\varepsilon^2)$。
+
+核对：取 $h(z)=z$，左端有闭式 $\int_0^1(1-z)^{-1-2\varepsilon}z^{1-\varepsilon}\dd z=B(2-\varepsilon,-2\varepsilon)=\Gamma(2-\varepsilon)\Gamma(-2\varepsilon)/\Gamma(2-3\varepsilon)$。右端的三个系数为 $\langle\mathcal D_0,z\rangle=\int_0^1\frac{z-1}{1-z}\dd z=-1$，$\langle\mathcal D_1,z\rangle=-\int_0^1\ln(1-z)\,\dd z=1$，$\int_0^1\frac{z\ln z}{1-z}\dd z=-\sum_{j\ge0}(2+j)^{-2}=1-\zeta_2$，于是\cref{eq:prelim-ex-plus}给出 $-\frac1{2\varepsilon}-1-(3-\zeta_2)\varepsilon=-\frac1{2\varepsilon}-1-1.3551\,\varepsilon$，与 $\Gamma$ 函数闭式的直接展开一致。这是一切单圈实辐射的结构：软极点 $-\frac{1}{2\varepsilon}\delta(1-z)$ 与虚修正中 $\delta(1-z)$ 的软极点相消，剩下的共线极点由部分子分布吸收，有限部分由 $\mathcal D_k$ 与正规函数组成（Drell--Yan 的实辐射带 $z^{+\varepsilon}$，只改变 $\ln z$ 项的符号）。
+\uses{lem:prelim-plus-expansion}
+\end{example}
+
+演化方程是 $x$ 空间的卷积，在 Mellin 空间中化为乘法；阈值区 $z\to1$ 对应大 $N$。
+
+\begin{definition}[Mellin 变换与卷积]\label{def:prelim-mellin}
+(a) $[0,1]$ 上函数（或分布）$f$ 的 Mellin 变换为 $\tilde f(N)=\int_0^1\dd z\,z^{N-1}f(z)$（对分布即 $\langle f,z^{N-1}\rangle$；例如 $\delta(1-z)$ 的 Mellin 变换为 $1$）。
+\par
+(b) 卷积 $(f\otimes g)(x)=\int_x^1\frac{\dd\xi}{\xi}\,f(\xi)\,g(x/\xi)=\int_0^1\!\dd\xi\int_0^1\!\dd y\,f(\xi)g(y)\,\delta(x-\xi y)$。
+\par
+(c) 调和和 $S_k(N)=\sum_{j=1}^Nj^{-k}$，其解析延拓 $S_1(N)=\psi(N+1)+\gamma_E$，$S_2(N)=\zeta_2-\psi'(N+1)$；$\bar N=N\ee^{\gamma_E}$。% VF-CONV-8, VF-MISC-1
+\uses{def:prelim-plus}
+\end{definition}
+
+\begin{lemma}[Mellin 卷积定理与加号分布的矩]\label{lem:prelim-mellin}
+(a) 对 $[0,1]$ 上的可积函数，以及它们与 $\delta(1-z)$、$g\,\mathcal D_k$ 的有限线性组合（卷积按 $\langle f\otimes g,h\rangle\equiv\langle f(\xi),\langle g(y),h(\xi y)\rangle\rangle$ 定义），$\widetilde{f\otimes g}(N)=\tilde f(N)\,\tilde g(N)$。
+\par
+(b) 对整数 $N\ge1$，
+\begin{equation}\label{eq:prelim-mellin-D}
+\int_0^1\dd z\,z^{N-1}\mathcal D_0(z)=-S_1(N-1),\qquad \int_0^1\dd z\,z^{N-1}\mathcal D_1(z)=\frac12\big[S_1^2(N-1)+S_2(N-1)\big], % VF-CONV-8
+\end{equation}
+并经\cref{def:prelim-mellin}(c) 延拓到 $\Real N>0$。$N\to\infty$ 时二者分别趋于 $-\ln\bar N+O(1/N)$ 与 $\frac12(\ln^2\bar N+\zeta_2)+O(\ln N/N)$。
+\uses{def:prelim-mellin,def:prelim-plus,lem:appA-mellin-table}
+\end{lemma}
+
+\begin{proof}
+完整证明见\cref{sec:appA-mellin}（\cref{lem:appA-mellin-table}）。(a) 取 $h(x)=x^{N-1}$，$h(\xi y)=\xi^{N-1}y^{N-1}$ 分解为乘积。(b) 由 $(z^{N-1}-1)/(1-z)=-\sum_{j=0}^{N-2}z^j$ 得第一式；第二式用 $\int_0^1z^j\ln(1-z)\dd z=-S_1(j+1)/(j+1)$ 与 $\sum_{m=1}^{N-1}S_1(m)/m=\frac12[S_1^2+S_2](N-1)$；大 $N$ 极限来自 $\psi(N)=\ln N+O(1/N)$、$\psi'(N)=O(1/N)$。
+\end{proof}
+
+用\cref{lem:prelim-mellin}与 $\int_0^1z^{N-1}\frac{\ln z}{1-z}\dd z=-[\zeta_2-S_2(N-1)]$，\cref{ex:prelim-plus}对一般 $N$ 给出 $B(N-\varepsilon,-2\varepsilon)=-\frac1{2\varepsilon}-S_1(N-1)-\varepsilon[S_1^2+2S_2-\zeta_2](N-1)+O(\varepsilon^2)$，与 $\Gamma$ 函数闭式逐阶一致。大 $N$ 近似收敛较慢：$N=100$ 时 $-S_1(99)=-5.1774$，$-\ln\bar N=-5.1824$；$\frac12[S_1^2+S_2](99)=14.2201$，$\frac12(\ln^2\bar N+\zeta_2)=14.2510$。阈值重求和（第~13~章）所用的正是这些对数。
+
+% -------------------------------------------------------------------------------------
+\section{矩问题、Carlson 定理与 Müntz--Szász 定理}\label{sec:prelim-moments}
+
+严格核心中的深度非弹散射定理（第~7~章）给出的是结构函数的矩，演化在 Mellin 空间中是对角的。于是要问：矩能否唯一地确定 $x$ 空间的函数？整数（甚至只是偶数）$N$ 上的值能否唯一地延拓到复 $N$ 平面？附录~K 证明了相应的引理；这里汇总结论，并说明它们\emph{不能}回答什么。
+
+\begin{remark}[矩问题工具箱]\label{rem:prelim-moment-tools}
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item \emph{Hausdorff 唯一性}~\cite{Hausdorff1923}：$[0,1]$ 上全部矩为零的有限带号 Borel 测度为零；全部矩为零的 $L^1$ 函数几乎处处为零（\cref{lem:appK-hausdorff}）。
+\item \emph{偶数矩已足够}：若 $x^{2k_0}g\in L^1(0,1)$ 且 $\int_0^1x^{2k}g\,\dd x=0$ 对一切 $k\ge k_0$ 成立，则 $g=0$ 几乎处处成立（\cref{thm:appK-even-moments}）。对部分子分布，偶数矩（$N\ge N_1$）确定 $q+\bar q$ 与 $g$，奇数矩确定 $q-\bar q$，单靠偶数矩不能把 $q$ 与 $\bar q$ 分开（\cref{cor:appK-pdf}）。
+\item \emph{延拓的唯一性}：Carlson 定理（\cref{thm:appK-carlson}；Carlson~\cite{Carlson1914}，证明见\cite[第~5.81~节]{Titchmarsh1939}）——在 $\Real z\ge0$ 上全纯、指数型、沿虚轴增长慢于 $\ee^{c|y|}$（$c<\pi$）且在全部非负整数上为零的函数恒为零（$\pi$ 不可改进，反例 $\sin\pi z$；只用偶数点时界为 $\pi/2$，反例 $\sin(\pi z/2)$）。对矩而言更简单的版本已足够：在 $\Real z>\sigma_0$ 上全纯、多项式有界且在一个算术级数上为零的函数恒为零（\cref{prop:appK-continuation}）。所以 Mellin 变换由偶数 $N$ 唯一地延拓（例如 $S_1(N)\mapsto\psi(N+1)+\gamma_E$；加上 $c\sin(\pi N/2)$ 违反增长条件），而由偶数与由奇数 $N$ 出发的延拓一般不同（分别对应 $q+\bar q$ 与 $q-\bar q$）。
+\item \emph{Müntz--Szász 定理}~\cite{Muntz1914,Szasz1916}：对 $0<\lambda_1<\lambda_2<\dots\to\infty$，$\{1,x^{\lambda_1},x^{\lambda_2},\dots\}$ 的线性组合在 $C[0,1]$ 中稠密，当且仅当 $\sum_k1/\lambda_k=\infty$（\cref{thm:appK-muntz}）。偶数幂满足此条件，但 (ii) 并不需要它。
+\item \emph{反例与不稳定性}（\cref{rem:appK-counterexamples}）：$\delta'(x)$ 的全部偶数矩为零，却不是零分布（它不是测度）；$R_Q(x)=\sin(Q^2x)$ 对每个固定的 $n$ 满足 $|Q^2\int_0^1x^nR_Q\,\dd x|\le c_n$，但 $\sup|R_Q|=1$；唯一性不等于稳定性——矩的 Gram（Hilbert）矩阵的条件数 $\approx\ee^{3.5K}$，$K=5$ 时为 $4.8\times10^5$，$K=20$ 时为 $2.5\times10^{28}$。% VF-MISC-2, VF-MISC-3
+\end{enumerate}
+结论：矩只能把 $x$ 空间的对象确定为分布（测度）；由此既得不到逐点的界，也得不到稳定的反演。
+\uses{lem:appK-hausdorff,thm:appK-even-moments,cor:appK-pdf,thm:appK-carlson,prop:appK-continuation,thm:appK-muntz,rem:appK-counterexamples}
+\end{remark}
+
+由 (i)、(ii) 与附录~A 的弱收敛引理，算符乘积展开对矩的 $O(1/Q^2)$ 控制只推出 $x$ 空间的弱收敛（\cref{cor:dis-weak-xspace}，第~7~章）；(v) 说明逐点的 $O(1/Q^2)$ 无从谈起（\cref{rem:dis-nonuniform}），逐点陈述只能来自图论的全阶论证（第~10~章）。(iii) 中偶、奇延拓的区别是非单态演化核 $P^\pm_{\mathrm{NS}}$ 从次领头阶起不同的数学根源（第~8~章）；(v) 中的条件数说明由有限个格点矩重构 $x$ 依赖为什么是病态问题（第~22~章）。

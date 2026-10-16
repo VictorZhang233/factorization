@@ -1,0 +1,88 @@
+% ---------------------------------------------------------------------
+\section{Glauber 区与围道变形}\label{sec:method-glauber}
+
+在 Glauber 区（\cref{def:ir-glauber}）中 $(p_A+k)^2\simeq2p_A^+k^--2\mathbf p_{A,T}\cdot\mathbf k_T-\mathbf k_T^2$ 里的 $\mathbf k_T^2$ 不可忽略，软近似的误差是 $O(1)$；其贡献是领头幂次的，
+必须由围道变形避开或证明相消。
+
+\begin{proposition}[两条程函线之间的单胶子交换 \tagR]\label{prop:method-glauber-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（单圈。）记 $n_A\cdot k=k^-$，$n_B\cdot k=k^+$。对两条过去指向的程函线，
+\begin{equation}\label{eq:method-glauber-oneloop}
+\int_{-\infty}^{\infty}\!\dd k^-\,\frac{1}{(k^-+i0)(-k^++i0)(2k^+k^--\mathbf k_T^2+i0)}=
+\begin{cases}0,&k^+>0,\\[2pt]-\dfrac{2\pi\ii}{\mathbf k_T^2\,k^+},&k^+<0;\end{cases}
+\end{equation}
+而过去与未来指向的 $A$ 线之差为 $\frac1{k^-+i0}-\frac1{k^--i0}=-2\pi\ii\,\delta(k^-)$。
+后者把交换的胶子固定在 $k^-=0$，即 Glauber（Coulomb）相位，$\propto\int\dd^2k_T/\mathbf k_T^2$。（本命题只涉及程函线的 Feynman 积分。）
+\uses{prop:prelim-wilson-rules,def:ir-glauber}
+\end{proposition}
+% VF-WL-12
+
+\begin{proof}
+由程函规则（\cref{prop:prelim-wilson-rules}），过去指向的 $A$ 线吸收 $k$ 给出 $\ii/(k^-+i0)$，过去指向的 $B$ 线吸收 $-k$ 给出 $\ii/(-k^++i0)$，胶子传播子为 $-\ii/(k^2+i0)$，
+$k^2=2k^+k^--\mathbf k_T^2$；于是 $k^-$ 积分的被积函数（去掉常数）即\cref{eq:method-glauber-oneloop}左边。它按 $(k^-)^{-2}$ 衰减，可在上半平面闭合。$A$ 线的极点 $k^-=-i0$ 在下半平面；
+胶子极点 $k^-=(\mathbf k_T^2-i0)/(2k^+)$ 当 $k^+>0$ 时在下半平面、当 $k^+<0$ 时在上半平面。$k^+>0$ 时上半平面无极点，积分为零；$k^+<0$ 时取胶子极点的留数：
+$2\pi\ii\cdot\frac1{2k^+}\cdot\bigl[\frac{\mathbf k_T^2}{2k^+}\cdot(-k^+)\bigr]^{-1}=-\frac{2\pi\ii}{\mathbf k_T^2k^+}$。后一式是 Sokhotski--Plemelj 公式：$\frac1{x+i0}-\frac1{x-i0}=-2\pi\ii\,\delta(x)$。
+（我们也作了数值核对。）% check: w10_glauber.py (1)
+\end{proof}
+
+\begin{example}[单胶子交换的极点图]\label{ex:method-glauber-oneloop}
+对过去—过去的线，$k^+>0$ 时两个极点同侧，Glauber 区无害；$k^+<0$ 时胶子极点越到另一侧，但位于 $|k^-|=\mathbf k_T^2/(2|k^+|)$，对 Glauber 标度的 $k^+$ 远在 Glauber 区之外。
+把 $A$ 线换成未来指向的，极点移到上半平面，两者之差 $-2\pi\ii\delta(k^-)$ 正好落在 Glauber 区的中心 $k^-=0$。这一相位在共线单举截面中由幺正性相消（\cref{lem:method-soft-unitarity}），但在 TMD 观测量中留下可观测的后果
+（Sivers 函数的符号，第~14~章），并在强子—强子碰撞产生背对背强子的 TMD 观测量中导致因子化破坏（第~18~章）。
+
+物理图的情形见\cref{fig:glauber-contour}：在那里，复 $k^-$ 平面中的极点来自 $k$ 所流经的 $A$ 共线传播子，位于 Glauber 带 $|k^-|\sim\mathbf k_T^2/Q$ 中。(a) 若这些极点都在同一侧，围道可以推出 Glauber 带；
+(b) 若旁观者线（末态）与活动部分子线（初态）的极点分居两侧，围道被钳住，这就是 Glauber 钳夹。需要补充的是：离开 Glauber 区须沿 $e_G$ 同时形变两个分量（\cref{fig:method-glauber-direction}）——
+只形变 $k^-$（即使形变到 $|k^-|\sim|\mathbf k_T|$）只能使一个喷注上的软近似成立，动量仍留在 Glauber 楔中（\cref{prop:method-glauber-deformation}(b)）。
+\uses{prop:method-glauber-oneloop}
+\end{example}
+
+%%FIG fig:glauber-contour%%
+
+\begin{proposition}[Glauber 区的围道变形判据 \tagA]\label{prop:method-glauber-deformation}
+设软动量 $k$ 连接两个共线子图 $J_A$、$J_B$，$G_\delta=\{|k^+k^-|\le\delta\,\mathbf k_T^2\}$。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 若携带 $k$ 的 $J_A$ 线的 $k^-$ 极点都在同一个半平面，则可以变形 $k^-$；软线自身的极点把变形幅度限制在 $\kappa\sim\mathbf k_T^2/|k^+|$（\cref{lem:method-i0-compat}）。
+\item 在 Glauber 区（$k^\pm\sim\lambda^2$，$k_T\sim\lambda$）中，只形变一个分量，即使形变到 $\sim|\mathbf k_T|$，也只有 $|k^+k^-|\sim\lambda^3\ll\mathbf k_T^2$：动量仍在 $G_\delta$ 中，
+  软近似只对“看见”被形变分量的那一个喷注成立，对另一个喷注仍然失效。
+\item 离开 $G_\delta$ 需要沿 $e_G=n_B-n_A=(-1^+,+1^-,\mathbf 0_T)$（$e_G^2=-2$，$n_A\cdot e_G=+1$，$n_B\cdot e_G=-1$）\emph{同时}形变 $k^+$ 与 $k^-$，符号相互协调、幅度 $\sim|\mathbf k_T|$；
+  这种形变只使分母更加类时：
+  \begin{equation}\label{eq:method-eG}
+  (l+\ii t\sigma f\,e_G)^2-m^2=(l^2-m^2+2t^2f^2)+2\ii t\sigma f\,(l^+-l^-) ;
+  \end{equation}
+  在把附着于一个喷注的插入用等光锥时刻局域化改写之后，这种形变是可能的。对色单态单举 Drell--Yan，这一步在附录~O 中完成（\cref{prop:appO-target}，\cref{thm:appO-main}，\tagR，$R_{\mathrm{cond}}$）；
+  一般情形它是模板定理 (H3) 的一部分。
+\end{enumerate}
+障碍是两侧都有极点的 Glauber 钳夹（如强子—强子碰撞中旁观者之间的相互作用）；对单举观测量，先由\cref{prop:method-fsi}去掉末态极点，此后的形变才可能。（本命题只涉及部分子态。）
+% errtype: E-S
+\uses{lem:method-i0-compat,prop:ir-glauber-trapping,prop:method-fsi,def:ir-glauber,prop:appO-target,thm:appO-main,asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}
+\end{proposition}
+% VF-REF-7, VF-GLA-4
+
+
+\begin{proofsketch}
+(1) 极点半平面规则：携带 $l+sk$、正分量大的线，$s=+1$ 时其 $k^-$ 极点在下半平面，$s=-1$ 时在上半平面；所以 $k$ 流经的线全是初态线或全是末态线时极点同侧。
+在 Drell--Yan 中每个强子的子图都既有初态（活动部分子）又有末态（旁观者）线，故 $k^-$ 被 $J_A$ 钳住、$k^+$ 被 $J_B$ 钳住；在 DIS 中靶子图钳住 $k^-$，但另一端只有末态的被击出夸克，$k^+$ 可以变形；
+在 $e^+e^-$ 中全是末态线，什么也不被钳住。单圈的判据是\cref{prop:ir-glauber-trapping}。(2) (a) 由\cref{lem:method-i0-compat}。(3) (b)：形变后 $|k^-|\lesssim|\mathbf k_T|\sim\lambda$ 而 $k^+\sim\lambda^2$ 未变，
+$J_A$ 的分母中 $2p_A^+k^-\sim\lambda$ 压过 $2\mathbf p_{A,T}\cdot\mathbf k_T,\mathbf k_T^2\sim\lambda^2$，$J_A$ 上的软近似成立；但 $J_B$ 的分母中 $2p_B^-k^+\sim\lambda^2$ 与 $\mathbf k_T^2$ 同阶，$J_B$ 上的软近似仍然失效。
+(4) (c)：令 $\tau=t\sigma f$，$(l+\ii\tau e_G)^2=l^2+2\ii\tau\,l\cdot e_G-\tau^2e_G^2$，而 $l\cdot e_G=l^+-l^-$、$e_G^2=-2$，即得\cref{eq:method-eG}。对振幅一侧（$\sigma=+1$）流入 $J_A$ 的软动量，
+$\Imag k^->0$、$\Imag k^+<0$；$J_A$ 的初态线（$l^+$ 大）获得正的虚部，$J_B$ 的初态线（携带 $-k$，$l^-$ 大）同样获得正的虚部，二者都与 Feynman 传播子的 $+i0$ 一致；实部增加 $2t^2f^2>0$。
+形变后 $|k^+||k^-|\ge|\Imag k^+||\Imag k^-|=\kappa^2\mathbf k_T^2$（幅度 $\kappa|\mathbf k_T|$），对 $\delta<\kappa^2$ 离开 $G_\delta$。(5) 这种两分量形变对一般的图类是否存在，
+附录~O 只对图类 $\mathcal G_0$ 与分级构型作了构造（\cref{prop:appO-target}），并在\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}等假设之下导出色单态单举 Drell--Yan 的 Glauber 相消（\cref{thm:appO-main}）。
+（以上关于幂次的陈述只是 E-S 型的。）
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[A]。精确形式在附录~O：\cref{prop:appO-target}（\tagR，$R_{\mathrm{PT}}$，图类 $\mathcal G_0$ 与分级构型的形变目标）与\cref{thm:appO-main}（\tagR，$R_{\mathrm{cond}}$），
+前提包括\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-envelope,asm:appO-rewritten-cs}（均 \tagA；完整的前提列表见该定理）；其中\cref{asm:appO-deformation}的 (b)(c)(d) 即使对阿贝尔的 $\mathcal G_0$ 也需要。
+Collins 在\cite[第~14.4.8~节]{Collins2011}中把这一步列为尚未解决的问题。常见的说法“把 $k^-$ 围道推到 $|k^-|\sim|\mathbf k_T|$ 就离开了 Glauber 区”是错误的：
+一个分量的形变留在 $G_\delta$ 中，两个分量都必须沿 $e_G$ 移动（\cref{rem:method-two-component}）。以混合光锥序形式表述的 Glauber 相消全阶论证纲要见 Aybat--Sterman\cite{AybatSterman2009}；
+Diehl 等人\cite{Diehl:2015bca}沿 Collins--Soper--Sterman 与 Collins 的光锥微扰论路线，澄清了单 Drell--Yan 论证中的若干问题，并把 Glauber 相消推广到双 Drell--Yan 的所有阶。
+
+%%FIG fig:method-glauber-direction%%
+
+\begin{remark}[一个分量的形变为何不够]\label{rem:method-two-component}
+\Cref{fig:method-glauber-direction}画出\cref{prop:method-glauber-deformation}(b)(c) 的几何：(a) Glauber 楔 $G_\delta$ 由双曲线 $|k^+k^-|=\delta\mathbf k_T^2$ 围成，对 $k^\pm\sim\lambda^2$ 只形变 $k^-$，
+点沿竖直方向留在楔中；(b) $k^+<0$ 时软线自身的极点在上半平面，把只形变 $k^-$ 的幅度限制在 $\kappa\sim\mathbf k_T^2/|k^+|$（\cref{lem:method-i0-compat}(b)）；(c) 振幅一侧（$\sigma=+1$）流入 $J_A$ 的软动量沿 $e_G$ 形变，
+$\Imag k^->0$、$\Imag k^+<0$，幅度 $\sim|\mathbf k_T|$，离开 $G_\delta$，并按\cref{eq:method-eG}使一切分母更加类时。数值上，$\lambda=10^{-2},10^{-3},10^{-4}$ 时，单分量形变后
+$|k^+k^-|/\mathbf k_T^2=0.008,\,0.0008,\,0.00008$（$\propto\lambda$），而沿 $e_G$、$\kappa=\frac12$ 的形变给出 $|k^+||k^-|/\mathbf k_T^2=0.25=\kappa^2$。% check: w10_glauber.py (4)
+因此不能说把 $k^-$ 围道推到 $|k^-|\sim|\mathbf k_T|$ 就离开了 Glauber 区。
+\end{remark}
+

@@ -1,0 +1,41 @@
+%%% BEGIN fig:tmd-soft-factor
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 warrow/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=3.2pt]{Stealth[length=6.4pt,width=6pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \coordinate (V) at (-3.9,0);  \coordinate (Vp) at (3.9,0);
+  \coordinate (T) at (0,1.8);   \coordinate (Bm) at (0,-1.8);
+  % gluons (drawn first, the Wilson lines and vertices on top)
+  \coordinate (g1a) at ($(V)!0.42!(T)$);  \coordinate (g1b) at ($(V)!0.42!(Bm)$);  % virtual
+  \coordinate (g2a) at ($(V)!0.76!(T)$); \coordinate (g2b) at ($(Vp)!0.76!(Bm)$); % real, crosses the cut
+  \draw[gluon] (g1a) -- (g1b);
+  \draw[gluon] (g2a) -- (g2b);
+  % Wilson lines: n_A (upper), n_B (lower); amplitude left of the cut, conjugate right
+  \draw[wilson plain] (V) -- (T) -- (Vp);
+  \draw[wilson plain] (V) -- (Bm) -- (Vp);
+  \path[t3 warrow=0.24] (V) -- (T);   \path[t3 warrow=0.5] (T) -- (Vp);
+  \path[t3 warrow=0.5] (Vp) -- (Bm);  \path[t3 warrow=0.8] (Bm) -- (V);
+  \draw[cut] (0,-2.3) -- (0,2.3);
+  \foreach \p in {V,Vp,g1a,g1b,g2a,g2b} \node[vertex] at (\p) {};
+  % labels
+  \node[t3 lab,left=2pt] at (V) {$0$};
+  \node[t3 lab,right=2pt] at (Vp) {$b_{\mathrm T}$};
+  \node[t3 lab,above left=0pt] at ($(V)!0.62!(T)$) {$n_A$};
+  \node[t3 lab,above right=0pt] at ($(Vp)!0.62!(T)$) {$n_A$};
+  \node[t3 lab,below left=0pt] at ($(V)!0.62!(Bm)$) {$n_B$};
+  \node[t3 lab,below right=0pt] at ($(Vp)!0.62!(Bm)$) {$n_B$};
+  \path[mom={$\ell$},mom pos=0.68,mom sep=0.27cm] (g2a) -- (g2b);
+  \node[t3 note] at (-2.1,-2.15) {振幅};
+  \node[t3 note] at (2.1,-2.15) {共轭振幅};
+\end{tikzpicture}
+\caption{TMD 软因子 $\tilde S(b_{\mathrm T})$ 的割图表示。两条 Wilson 线（双线）分别沿 $n_A$、$n_B$ 方向，代替两个沿相反方向运动的硬部分子：
+在振幅中自同一点 $0$ 出发，在共轭振幅中自横向位置 $b_{\mathrm T}$ 出发；两侧的 Wilson 线在割线处（无穷远）相接，构成闭合的色迹 $\frac1{N_c}\mathrm{Tr}_{\mathrm c}$。
+软胶子可在割线同一侧交换（虚修正，如图中左侧的胶子），也可穿过割线（实发射）；横向动量为 $\ell_{\mathrm T}$ 的实胶子给出相因子 $\ee^{\ii\ell_{\mathrm T}\cdot b_{\mathrm T}}$。
+箭头为路径方向，即色（费米子数）流向。图中两条线都按未来指向画出，对应两个出射部分子（$e^+e^-\to h_1h_2X$）；对 Drell--Yan 两条线都是过去指向（两个入射部分子），
+对 SIDIS 则各有一条——胶子的连接方式与图示相同。对光型的 $n_A$、$n_B$，固定 $\ell_{\mathrm T}$ 时胶子快度的积分发散（快度发散），需要快度正规化（见正文）。}
+\label{fig:tmd-soft-factor}
+\end{figure}
+%%% END fig:tmd-soft-factor

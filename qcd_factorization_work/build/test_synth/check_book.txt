@@ -1,0 +1,81 @@
+check_book report -- 7 unit file(s) in /Users/hao-cheng/Desktop/theorem proof/qcd_factorization_work/build/test_synth/chapters (+ 0 other .tex: -)
+units present: Ch01 Ch07 Ch09 Ch12 Ch25 AppN AppP
+units missing: front Ch02 Ch03 Ch04 Ch05 Ch06 Ch08 Ch10 Ch11 Ch13 Ch14 Ch15 Ch16 Ch17 Ch18 Ch19 Ch20 Ch21 Ch22 Ch23 Ch24 AppA AppB AppC AppD AppE AppF AppG AppH AppI AppJ AppK AppL AppM AppO AppQ
+findings: E 26, W 5, I 1
+
+== per check
+K1   E    1  W    0  I    0   duplicate labels
+K2   E    2  W    0  I    1   references to undefined labels
+K3   E    5  W    0  I    0   canonical labels missing / misplaced
+K4   E    3  W    1  I    0   \uses order and cycles
+K5   E    2  W    1  I    0   tags vs registry
+K6   E    1  W    0  I    0   [R] qualifier sentences
+K7   E    2  W    0  I    0   R_cond premise sentences
+K8   E    1  W    1  I    0   「地位与缺口」 paragraphs
+K9   E    1  W    0  I    0   printed planning markers
+K10  E    1  W    0  I    0   forbidden phrasing (§4.11) and phrases to justify
+K11  E    2  W    1  I    0   reference document mentioned
+K12  E    1  W    0  I    0   label lists with spaces (prints ??)
+K13  E    3  W    0  I    0   \uses format
+K14  E    0  W    1  I    0   assumption fields
+K15  E    1  W    0  I    0   citation keys not in the bibliography
+K16  E    0  W    0  I    0   figure-block delimiters
+
+== per unit
+unit   file                      lines stmts types (def/asm/thm/lem/prop/cor/conj/ex/rem) tags R/A/P/C/V          canon  miss     E     W
+Ch01   ch01_intro.tex               44     5 1/3/0/0/1/0/0/0/0                        1/0/0/0/0                   6     0     3     1
+Ch07   ch07_dis.tex                176    20 2/0/4/5/6/0/0/2/1                        9/4/1/0/1                  24     1    10     2
+Ch09   ch09_method.tex              37     4 0/0/1/2/1/0/0/0/0                        0/4/0/0/0                   4     0     0     0
+Ch12   ch12_dy.tex                 101     9 0/0/1/0/7/0/1/0/0                        1/6/1/1/0                   9     0     6     1
+Ch25   ch25_summary.tex             19     0 0/0/0/0/0/0/0/0/0                        0/0/0/0/0                   2     0     0     0
+AppN   appN_subtraction.tex         99    12 0/5/3/3/1/0/0/0/0                        4/0/0/0/0                  13     1     7     1
+AppP   appP_blueprint.tex           24     2 1/0/0/0/0/0/0/0/1                        0/0/0/0/0                   3     0     0     0
+
+== findings (by check, then unit; at most 40 per check and unit)
+-- K1 duplicate labels (1)
+  [E] ch07_dis.tex:152  fig:synth-same defined 2 times: ch07_dis.tex:152; ch12_dy.tex:98
+-- K2 references to undefined labels (3)
+  [I] ch07_dis.tex:-  1 canonical labels of units not yet written (Ch05 1)
+  [E] ch12_dy.tex:80  reference to the withdrawn slot label thm:appN-oneloop
+  [E] ch12_dy.tex:80  reference to the equation label eq:dis-foreign of another unit (equation labels are unit-internal, WRITER_SPEC_v2 §5.4)
+-- K3 canonical labels missing / misplaced (5)
+  [E] ch07_dis.tex:-  canonical prop label prop:dis-missing (未写出的命题) is missing
+  [E] ch12_dy.tex:73  prop:dy-misplaced is owned by Ch07 (registry), defined here
+  [E] ch12_dy.tex:98  fig:synth-same is owned by Ch07 (registry), defined here
+  [E] appN_subtraction.tex:-  canonical asm label asm:appN-missing (未写出的假设) is missing
+  [E] appN_subtraction.tex:-  registered assumption asm:appN-missing is missing
+-- K4 \uses order and cycles (4)
+  [E] ch07_dis.tex:38  lem:dis-forward uses thm:dy-factorization of the later unit Ch12
+  [W] ch07_dis.tex:137  hidden forward dependency: lem:dis-hidden -> lem:appN-hidden -> thm:dy-factorization (Ch12)
+  [E] appN_subtraction.tex:84  lem:appN-cyc-a uses lem:appN-cyc-b, defined later in the same unit
+  [E] appN_subtraction.tex:84  dependency cycle: lem:appN-cyc-a -> lem:appN-cyc-b
+-- K5 tags vs registry (3)
+  [W] ch07_dis.tex:115  prop:dis-weakened: [P] vs registry [A] -- weakened (allowed with a justification in the report)
+  [E] ch07_dis.tex:123  prop:dis-strengthened: [A] vs registry [P] -- strengthened (never allowed)
+  [E] appN_subtraction.tex:45  asm:appN-wrongtag: assumption tag [A], register [P]
+-- K6 [R] qualifier sentences (1)
+  [E] ch07_dis.tex:50  prop:dis-notverbatim: qualifier sentence not verbatim (WRITER_SPEC_v2 §4.3)
+-- K7 R_cond premise sentences (2)
+  [E] appN_subtraction.tex:70  thm:appN-noprem: R_cond without the premise sentence 「前提：…」
+  [E] appN_subtraction.tex:77  prop:appN-late: premise sentence not among the first two sentences
+-- K8 「地位与缺口」 paragraphs (2)
+  [E] ch12_dy.tex:24  conj:dy-coloured [C]: no 「地位与缺口」 paragraph
+  [W] ch12_dy.tex:30  prop:dy-late [A]: 「地位与缺口」 not immediately after the environment/proof
+-- K9 printed planning markers (1)
+  [E] ch01_intro.tex:3  printed planning marker 「文献待补」: 本章是集成工具测试用的合成文本。文献待补：某某 2020。
+-- K10 forbidden phrasing (§4.11) and phrases to justify (1)
+  [E] ch12_dy.tex:62  「已被证明」 next to the [A] statement prop:dy-forbidden: \paragraph{地位与缺口}本命题已被证明（措辞违规的合成测试）；瓶颈\cref{
+-- K11 reference document mentioned (3)
+  [E] ch01_intro.tex:4  mention of the reference document (factorization[_\\]*_?qcd): 本书不引用参考文档 factorization\_qcd-2.pdf。
+  [E] ch01_intro.tex:4  mention of the reference document (参考文档): 本书不引用参考文档 factorization\_qcd-2.pdf。
+  [W] ch01_intro.tex:4  mention of the reference document in a comment: % DELIBERATE K11 mention of the reference document
+-- K12 label lists with spaces (prints ??) (1)
+  [E] ch07_dis.tex:144  \cref{thm:dis-ope, thm:dis-moments}: spaces/line breaks in the label list (prints ??)
+-- K13 \uses format (3)
+  [E] ch07_dis.tex:83  lem:dis-twouses: 2 \uses lines
+  [E] ch07_dis.tex:90  thm:dis-nouses: no \uses and no "% uses: none"
+  [E] ch07_dis.tex:131  ex:dis-seclabel: non-statement labels in \uses: sec:dis-kin
+-- K14 assumption fields (1)
+  [W] appN_subtraction.tex:45  asm:appN-wrongtag: fields missing: 文献、解除途径
+-- K15 citation keys not in the bibliography (1)
+  [E] ch07_dis.tex:144  citation key NoSuchKey2099 not in the bibliography (base + .bib-additions)

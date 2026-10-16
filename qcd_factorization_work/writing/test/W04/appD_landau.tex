@@ -1,0 +1,116 @@
+% =====================================================================
+%  appD_landau.tex —— 附录 D  Landau 方程与 Coleman--Norton 定理
+%  writer W04；规格：FINAL_OUTLINE_v2 附录 D、WRITER_SPEC_v2、LEAD_DECISIONS。
+%  核对脚本与日志：writing/work/W04/（w04_landau.py、w04_extra.py 及 logs/）。
+% =====================================================================
+\chapter{Landau 方程与\ \mbox{Coleman--Norton 定理}}\label{app:appD}
+
+本附录给出\cref{sec:ir-landau}与\cref{sec:ir-coleman-norton}中各定理的完整证明：Gordan 择一定理（\cref{lem:appD-gordan}，纯数学）及由它推出的动量空间钳夹必要条件（\cref{thm:ir-landau-momentum}，\tagR，$R_{\mathrm{PT}}$）；Feynman 参数表示、包络恒等式（\cref{lem:ir-envelope}）与参数形式的 Landau 条件（\cref{thm:ir-landau-alpha}，\tagR，$R_{\mathrm{PT}}$），连同另一种参数空间证明的注意事项（\cref{rem:appD-parameter-proof}）与欧氏区 Landau 解（\cref{rem:ir-euclid-corners}）的细节；Coleman--Norton 定理的代数形式（\cref{prop:ir-coleman-norton}，\tagR，$R_{\mathrm{PT}}$）。最后一节说明哪些是本附录\emph{没有}证明的。记号同\cref{sec:ir-landau}：第 $j$ 条线的动量 $q_j=\sum_l\eta_{jl}k_l+r_j$，$D_j=q_j^2-m_j^2$，分母为 $D_j+\ii0$；$\mathcal D(\alpha,k)=\sum_j\alpha_j(m_j^2-q_j^2)=-\sum_{l,l'}A_{ll'}k_l\cdot k_{l'}-2\sum_lB_l\cdot k_l+C$，$\mathcal U$、$\mathcal F$ 与驻点 $k_c(\alpha)$ 如\cref{def:ir-landau-setup}。为便于引用，把两组 Landau 方程重述如下：动量形式（$k$ 实，$\alpha\in\mathbb R^N_{\ge0}\setminus\{0\}$）
+\begin{equation}\label{eq:appD-Lk}
+\alpha_jD_j(k)=0\quad(j=1,\dots,N),\qquad \sum_j\alpha_j\eta_{jl}q_j^\mu(k)=0\quad(l=1,\dots,L);
+\end{equation}
+参数形式（$\alpha$ 属于闭单形 $\bar\Delta$）
+\begin{equation}\label{eq:appD-La}
+\mathcal F(\alpha,p)=0,\qquad \alpha_j\,\partial_j\mathcal F(\alpha,p)=0\quad(j=1,\dots,N).
+\end{equation}
+
+%% =====================================================================
+\section{Gordan 择一定理}\label{sec:appD-gordan}
+
+\begin{lemma}[Gordan 择一定理]\label{lem:appD-gordan}
+设 $u_1,\dots,u_m\in\mathbb R^d$，$\cdot$ 为 $\mathbb R^d$ 上的一个内积。下列两条恰有一条成立：(i)~存在 $\alpha\in\mathbb R^m_{\ge0}\setminus\{0\}$ 使 $\sum_j\alpha_ju_j=0$；(ii)~存在 $v\in\mathbb R^d$ 使 $v\cdot u_j>0$（$j=1,\dots,m$）。更具体地，若 (i) 不成立，则凸包 $K=\mathrm{conv}\{u_1,\dots,u_m\}$ 中范数最小的点 $w$ 满足 $w\cdot u_j\ge|w|^2>0$（$j=1,\dots,m$）。
+% VF-FRO-1, VF-REG-3
+% uses: none
+\end{lemma}
+\begin{proof}
+两条不能同时成立：否则 $0=v\cdot\sum_j\alpha_ju_j=\sum_j\alpha_j(v\cdot u_j)>0$。若 $0\in K$，则 $0=\sum_jt_ju_j$，$t_j\ge0$，$\sum_jt_j=1$，取 $\alpha=t$ 即得 (i)。若 $0\notin K$：$K$ 是非空紧凸集，$|\cdot|^2$ 严格凸，故 $K$ 中有唯一的范数最小点 $w\ne0$。对任意 $u\in K$ 与 $t\in(0,1]$，$w+t(u-w)\in K$，于是 $|w+t(u-w)|^2\ge|w|^2$，即 $2t\,w\cdot(u-w)+t^2|u-w|^2\ge0$；除以 $t$ 并令 $t\to0$ 得 $w\cdot(u-w)\ge0$，即 $w\cdot u\ge|w|^2>0$。取 $u=u_j$ 即得 (ii)，$v=w$。
+\end{proof}
+
+最小范数点给出的是\emph{最优}余量：对任意单位矢量 $v$，$\min_ju_j\cdot v\le w\cdot v\le|w|$（第一个不等式因为 $w\in K$ 是 $u_j$ 的凸组合），而 $v=w/|w|$ 使 $\min_ju_j\cdot v\ge|w|$，故 $|w|=\max_{|v|\le1}\min_ju_j\cdot v$。因此它也是数值围道形变中一个现成的方向。该定理出自 Gordan\cite{Gordan1873}；在 400 个随机实例上，择一性与余量 $u_j\cdot w\ge|w|^2$ 都已数值核对。应用于\cref{thm:ir-landau-momentum}时，$u_j=\partial D_j/\partial k$ 是余矢量，以分量配对 $u_j\cdot v=\sum_{l,\mu}u_{j,l\mu}v_l^\mu$（对应 $\mathbb R^{4L}$ 上的欧氏内积）即可。Collins 的物理区钳夹判据中的纯几何部分即此定理，见第~24~章的\cref{rem:front-gordan-collins}与\cref{lem:front-min-norm}。
+
+%% =====================================================================
+\section{动量空间钳夹判据的证明}\label{sec:appD-momentum}
+
+\begin{proof}[\cref{thm:ir-landau-momentum}的证明]
+设 $k_0$、$S$、$u_j$ 如定理所述，且不存在 $\alpha\in\mathbb R^S_{\ge0}\setminus\{0\}$ 使 $\sum_{j\in S}\alpha_ju_j=0$。
+
+\emph{第一步：好方向。}对 $\{u_j\}_{j\in S}$ 用\cref{lem:appD-gordan}，(i) 不成立，故存在 $v\in\mathbb R^{4L}$ 使 $u_j\cdot v>0$（$j\in S$）；可取 $v=w$ 为最小范数点，余量为 $|w|^2$。
+
+\emph{第二步：精确公式。}$q_j(k)$ 是 $k$ 的仿射函数，$k\to k+\ii\eta\chi v$ 使 $q_j\to q_j(k)+\ii\eta\chi v'_j$，$v'_j=\sum_l\eta_{jl}v_l$。由于 $D_j$ 是二次式，
+\begin{equation}\label{eq:appD-exact}
+D_j(k+\ii\eta\chi v)=D_j(k)-\eta^2\chi^2(v'_j)^2+2\ii\eta\chi\,q_j(k)\cdot v'_j
+\end{equation}
+严格成立，没有更高阶项（已用计算机代数核对）；又 $u_j(k)\cdot v=\sum_l2\eta_{jl}q_j(k)\cdot v_l=2q_j(k)\cdot v'_j$，故 $\Imag D_j(k+\ii\eta\chi v)=\eta\chi\,u_j(k)\cdot v$。
+
+\emph{第三步：连续性。}$u_j(k)\cdot v$ 连续，故有 $k_0$ 的邻域 $\mathcal V_1$ 与 $c>0$，使 $u_j(k)\cdot v\ge c$（$k\in\mathcal V_1$，$j\in S$）。对 $j\notin S$，$|D_j(k_0)|>0$，故有邻域 $\mathcal V_2$ 与 $c'>0$ 使 $|D_j(k)|\ge c'$。令 $\mathcal V=\mathcal V_1\cap\mathcal V_2$，并取其闭包紧的子邻域。
+
+\emph{第四步：形变。}设 $0\le\chi\le1$ 光滑，支集在 $\mathcal V$ 内，在 $k_0$ 附近 $\chi=1$。考虑同伦 $k\to k+\ii\tau\eta\chi(k)v$，$0\le\tau\le1$。对 $j\in S$，凡 $\tau\chi(k)>0$ 处 $\Imag(D_j+\ii\varepsilon)=\tau\eta\chi\,u_j\cdot v+\varepsilon\ge\tau\eta\chi c+\varepsilon>0$；对 $j\notin S$，由\cref{eq:appD-exact}，$|D_j(k+\ii\tau\eta\chi v)|\ge c'-C\eta>0$（$\eta\le\eta_0$）。于是同伦在任何 $\varepsilon\ge0$ 时都不越过分母 $D_j+\ii\varepsilon$ 的零点；在 $\chi=0$ 处围道不动。被积函数在同伦扫过的区域中是全纯的，形变有紧支集，由 Cauchy 定理形变前后积分相同；而在 $\chi=1$ 的邻域内，形变后的全部分母对 $\varepsilon\to0$ 一致地远离零。所以 $k_0$ 未被钳住。
+
+\emph{第五步：等价表述。}$\sum_{j\in S}\alpha_ju_j=0$ 按分量即 $\sum_j\alpha_j\eta_{jl}q_j(k_0)=0$（$l=1,\dots,L$），而 $\alpha$ 支撑在 $S$ 上意味着 $\alpha_jD_j(k_0)=0$；这正是\cref{eq:appD-Lk}。因此被钳住的点必满足 $\alpha_j\ge0$ 的 Landau 方程。
+\end{proof}
+
+%% =====================================================================
+\section{参数表示、包络恒等式与参数形式的 Landau 条件}\label{sec:appD-alpha}
+
+\paragraph{参数表示（\cref{def:ir-landau-setup}）的推导。}对 $a_j=-D_j-\ii0$（都在下半平面，其凸组合不为零），Feynman 参数公式 $\prod_ja_j^{-\nu_j}=\frac{\Gamma(\nu)}{\prod_j\Gamma(\nu_j)}\int\dd\alpha\,\delta(1-\sum_{j\in\sigma}\alpha_j)\prod_j\alpha_j^{\nu_j-1}(\sum_j\alpha_ja_j)^{-\nu}$ 把分母合并为 $(\mathcal D(\alpha,k)-\ii0)^{-\nu}$。平移 $k=k_c+\ell$：$\mathcal D$ 是 $k$ 的二次式而 $k_c$ 是驻点，$\mathcal D=-\ell^{\tp}A\ell+\mathcal D(\alpha,k_c)$。对角化 $A$ 并重标度，\cref{def:qcd-dimreg}的主公式推广为
+\[
+\int\prod_{l=1}^L\frac{\dd^D\ell_l}{\ii\pi^{D/2}}\big(-\ell^{\tp}A\ell+\Delta-\ii0\big)^{-\nu}=\frac{\Gamma(\nu-LD/2)}{\Gamma(\nu)}(\det A)^{-D/2}(\Delta-\ii0)^{LD/2-\nu};
+\]
+以 $\Delta=\mathcal F/\mathcal U$ 代入，$\mathcal U^{-D/2}(\mathcal F/\mathcal U)^{LD/2-\nu}=\mathcal U^{\nu-(L+1)D/2}\mathcal F^{LD/2-\nu}$，即\cref{def:ir-landau-setup}中的参数表示。被积函数的总次数为 $(\nu-N)+L(\nu-\frac{(L+1)D}2)+(L+1)(\frac{LD}2-\nu)=-N$，连同测度在 $\alpha\to t\alpha$ 下不变；所以约束 $\delta(1-\sum_{j\in\sigma}\alpha_j)$ 中的 $\sigma$ 可以任选（Cheng--Wu），形变也不必保持任何特定的约束。两种 $\mathcal F$ 的表达式（驻值与 2-森林和）对一般单圈图、指数的换算与无质量泡图的归一化 $\Gamma(\varepsilon)\Gamma(1-\varepsilon)^2/\Gamma(2-2\varepsilon)$ 都已符号核对。
+
+\begin{proof}[\cref{lem:ir-envelope}的证明]
+矩阵 $A$（$A_{ll'}=\sum_j\alpha_j\eta_{jl}\eta_{jl'}$）半正定，$\det A=\mathcal U$。由\cref{def:ir-landau-setup}中 $\mathcal D$ 的形式，
+\[
+\frac{\partial\mathcal D}{\partial k_l^\mu}=-2\sum_j\alpha_j\eta_{jl}\,q_{j\mu}(k),
+\]
+所以圈方程恰是 $\partial\mathcal D/\partial k=0$；$\mathcal U\ne0$ 时 $A$ 可逆，唯一解为 $k_c=-A^{-1}B$。由于 $\partial\mathcal D/\partial k|_{k_c}=0$，
+\[
+\frac{\partial}{\partial\alpha_j}\mathcal D\big(\alpha,k_c(\alpha)\big)=\frac{\partial\mathcal D}{\partial\alpha_j}\Big|_{k_c}+\frac{\partial\mathcal D}{\partial k}\Big|_{k_c}\cdot\frac{\partial k_c}{\partial\alpha_j}=m_j^2-q_j(k_c)^2=-D_j(k_c),
+\]
+而 $\mathcal F/\mathcal U=\mathcal D(\alpha,k_c)=-\sum_j\alpha_jD_j(k_c)$，此即\cref{lem:ir-envelope}的两个恒等式。在 $\mathcal F=0$ 处 $\partial_j\mathcal F=(\partial_j\mathcal U)(\mathcal F/\mathcal U)+\mathcal U\partial_j(\mathcal F/\mathcal U)=-\mathcal U D_j(k_c)$。($\Rightarrow$)~若 $\alpha$ 满足\cref{eq:appD-La}，则 $\alpha_jD_j(k_c)=-\alpha_j\partial_j\mathcal F/\mathcal U=0$，而 $k_c$ 满足圈方程，故 $(k_c,\alpha)$ 满足\cref{eq:appD-Lk}。($\Leftarrow$)~若 $(k,\alpha)$ 满足\cref{eq:appD-Lk}，则 $k=k_c$，$\mathcal F/\mathcal U=-\sum_j\alpha_jD_j(k_c)=0$，且 $\alpha_j\partial_j\mathcal F=-\mathcal U\alpha_jD_j(k_c)=0$。对一个五线两圈图，以随机有理运动学精确核对了 $\partial_j(\mathcal F/\mathcal U)=-D_j(k_c)$ 与 Euler 关系 $\sum_j\alpha_j\partial_j\mathcal F=3\mathcal F$。
+\end{proof}
+
+\begin{proof}[\cref{thm:ir-landau-alpha}的证明]
+取 $\sigma=\{1,\dots,N\}$，积分区域为紧的闭单形 $\bar\Delta$。记 $c(\alpha)=\sum_k\alpha_k\partial_k\mathcal F$，$w_j=\partial_j\mathcal F-c$，作形变
+\begin{equation}\label{eq:appD-deform}
+z_j(\alpha,\tau)=\alpha_j\big[1-\ii\tau\eta\,w_j(\alpha)\big],\qquad 0\le\tau\le1,\ \ \eta>0 .
+\end{equation}
+% VF-REG-2
+(i)~\emph{约束保持}：$\sum_jz_j=1-\ii\tau\eta\sum_j\alpha_jw_j=1-\ii\tau\eta(c-c)=1$。
+(ii)~\emph{各面保持}：$\alpha_j=0$ 时 $z_j=0$，单形的每个面被映入相应的复化面；同伦扫过的“侧面” $z([0,1]\times\partial\bar\Delta)$ 落在复维数 $N-2$ 的复化面内，全纯 $(N-1,0)$ 形式限制于其上为零，所以 Stokes 公式中侧面没有贡献——参数空间的端点（$\alpha_j=0$）与内部点被同样处理。
+(iii)~\emph{虚部的符号}：对实的 $p$，$z_j-\alpha_j=-\ii\tau\eta\alpha_jw_j$ 为纯虚数，Taylor 展开的一阶项为 $-\ii\tau\eta\sum_j\alpha_jw_j\partial_j\mathcal F=-\ii\tau\eta\sum_j\alpha_jw_j(w_j+c)=-\ii\tau\eta V$，其中
+\[
+V=\sum_j\alpha_jw_j^2=\sum_j\alpha_j(\partial_j\mathcal F)^2-c^2\ \ge0
+\]
+（用到 $\sum_j\alpha_jw_j=0$）；由于 $\mathcal F$ 是多项式、$z-\alpha$ 正比于 $\tau\eta$，其 Taylor 展开在有限阶终止，第 $k$ 阶项正比于 $(-\ii\tau\eta)^k$ 乘以实系数：偶数阶项是实的，奇数阶项是纯虚的；故 $\Imag\mathcal F(z)=-\tau\eta V+O\big((\tau\eta)^3\big)$，且余项的系数对 $\bar\Delta$ 与 $p$ 一致有界。
+(iv)~\emph{形变后的围道上没有零点}：若 $V(\alpha)=\mathcal F(\alpha)=0$，则凡 $\alpha_j>0$ 处 $w_j=0$，即 $\partial_j\mathcal F=c$；由 Euler 关系 $(L+1)\mathcal F=\sum_j\alpha_j\partial_j\mathcal F=c$，得 $c=0$，于是 $\alpha_j\partial_j\mathcal F=0$ 对一切 $j$ 成立——这是\cref{eq:appD-La}的解。按假设没有这样的点，所以连续函数 $|\mathcal F|+V$ 在 $\bar\Delta\times\{p_0\}$ 上为正，由紧性在 $\bar\Delta\times\mathcal N$（$\mathcal N$ 为 $p_0$ 的实邻域）上 $\ge2\delta>0$。取 $\eta$ 足够小：在 $|\mathcal F(\alpha)|\ge\delta$ 处 $|\mathcal F(z)|\ge\delta-C\eta>0$；在 $|\mathcal F(\alpha)|<\delta$ 处 $V\ge\delta$，$\Imag\big(\mathcal F(z)-\ii\varepsilon\big)\le-\tau\eta\big(\delta-C\tau^2\eta^2\big)-\varepsilon\le-\frac12\tau\eta\delta-\varepsilon<0$（取 $C\eta^2\le\delta/2$，并且 $\tau>0$ 或 $\varepsilon>0$）。所以同伦在 $\tau>0$ 时不经过 $\mathcal F-\ii\varepsilon$（$\varepsilon\ge0$）的零点，$\tau=0$ 处则正是原来的 $-\ii0$ 规定；原积分的 $\varepsilon\to0^+$ 极限等于形变后（$\tau=1$）的积分。
+(v)~\emph{其余因子}：$\mathcal U(z)=\sum_{T}\prod_{j\notin T}\alpha_j(1-\ii\tau\eta w_j)$ 是正数乘以位于正实轴附近窄锥（半角 $\le L\theta$，$\theta=\arctan(\eta\max|w_j|)$）内的因子之和，故 $\Real\,\mathcal U(z)\ge\cos(L\theta)\,\mathcal U(\alpha)$，$\mathcal U(z)^a$ 的模被 $C\,\mathcal U(\alpha)^{\Real a}$ 控制；$z_j^{\nu_j-1}=\alpha_j^{\nu_j-1}(1-\ii\tau\eta w_j)^{\nu_j-1}$ 同理。紫外收敛的假设因而在形变后的围道上保持。
+(vi)~\emph{全纯性}：对 $p_0$ 附近的复 $p$，$|\mathcal F(z,p)-\mathcal F(z,p_0)|\le C'|p-p_0|$ 在 $\bar\Delta$ 上一致成立；把 $\mathcal N$ 换成足够小的复邻域使 $C'|p-p_0|<\eta\delta/2$，形变后的围道上 $\mathcal F(z,p)$ 仍不为零。被积函数在 $\mathcal N$ 上全纯，并被 $C\,\mathcal U(\alpha)^{\Real a}\prod_j\alpha_j^{\nu_j-1}$ 控制，由控制收敛定理，$I(p)$ 在 $p_0$ 处有限并在 $\mathcal N$ 上全纯。维数正规化的积分在收敛的 $D$ 域中如此，再按 $D$ 解析延拓。
+\end{proof}
+
+上述 (i)、(iii) 与“$V=\sum_j\alpha_jw_j^2$”对有质量顶点与一个随机三次齐次多项式都作了符号核对。数值示例：有质量顶点（夸克质量 $m=1$，胶子质量 $0.3$，外夸克在壳）在 $q^2=5m^2$（高于 $q\bar q$ 阈）时实单形上有 $\mathcal F$ 的零点，但 $\eta=0.05$ 的形变单形上 $\min|\mathcal F(z)|=1.2\times10^{-3}>0$；在正常阈 $q^2=4m^2$，零点位于 Landau 点 $\alpha=(0,\frac12,\frac12)$（两条夸克线在壳），无法避开。
+
+\begin{remark}[Landau 条件的 Feynman 参数证明及其注意事项]\label{rem:appD-parameter-proof}
+教科书中常见另一条途径：取形变 $\alpha_j\to\alpha_j-\ii\eta\,\eta_j$，$\eta_j\equiv\alpha_j\partial_j\mathcal F$。它同样保持各面（$\alpha_j=0\Rightarrow\eta_j=0$），一阶项给出 $\Imag\mathcal F=-\eta\sum_j\alpha_j(\partial_j\mathcal F)^2+O(\eta^3)$，在 $\alpha_j\partial_j\mathcal F$ 全为零之外严格为负；这个形变不保持 $\sum_j\alpha_j=1$，但被积式的齐次性（总次数 $-N$）使积分与所选的横截面无关，可沿射线把形变后的链投影回约束面。障碍集是 $\{\alpha_j\partial_j\mathcal F=0\ \forall j\}$，由 Euler 关系它蕴涵 $\mathcal F=0$，即\cref{eq:appD-La}；再由\cref{lem:ir-envelope}化为动量形式\cref{eq:appD-Lk}。这条途径有三点必须注意：(i)~它只给出奇异性的\emph{必要}条件，不给出充分性，也不给出整体形变的存在；(ii)~单形边界上的点（某些 $\alpha_j=0$）要逐面处理：在一个面上，关于消失的 $\alpha_j$ 的条件自动成立，论证须对 $\mathcal F$ 在该面上的限制重复进行；(iii)~参数空间的 Landau 点与动量空间围道的钳夹是两个不同的概念，未经论证不能等同——无质量自能在动量空间中被钳住，参数积分却没有钳夹\cite[附录~D.1]{Collins:2020euz}（预印本）。本书对\cref{thm:ir-landau-alpha}的证明（保持约束的形变\cref{eq:appD-deform}）与动量空间的判据（\cref{sec:appD-momentum}）都不依赖本注。
+\uses{def:ir-landau-setup,lem:ir-envelope}
+\end{remark}
+
+\paragraph{\cref{rem:ir-euclid-corners}的细节。}(a)~若外动量是欧氏的，把圈动量 Wick 转动后 $q_j^2=-q_{jE}^2$，$\mathcal D=\sum_j\alpha_j(m_j^2+q_{jE}^2)$ 是 $k_E$ 的半正定二次型，其驻点即极小点，故 $\mathcal F/\mathcal U=\min_{k_E}\mathcal D\ge\sum_j\alpha_jm_j^2$（单圈无质量箱图与一个两圈图的随机欧氏运动学下数值核对，偏差为零）。于是 $\mathcal U\ne0$ 时：全部 $m_j>0$ 则 $\mathcal F>0$；Landau 点上 $\mathcal F=0$，极小值为零且在 $k_c$ 处取到，每项 $\alpha_j(m_j^2+q_{jE}(k_c)^2)=0$，即 $\alpha_j>0$ 的线无质量且动量为零。(b)~离壳三角形 $\mathcal F=m^2\alpha_0(\alpha_1+\alpha_2)+Q^2\alpha_1\alpha_2$：在角 $\alpha_0=1$ 附近令 $\alpha_1=ru$、$\alpha_2=r(1-u)$，$\mathcal F=m^2r+O(r^2)$；在角 $\alpha_1=1$ 附近令 $\alpha_0=s$、$\alpha_2=t$，$\mathcal F=m^2s(1-s)+Q^2t(1-s-t)=m^2s+Q^2t+O(2)$；角 $\alpha_2=1$ 对称。三处都是线性零点，$D=4$ 时 $\int\dd\alpha\,\mathcal F^{-1}$ 收敛；在参数表示（\cref{def:ir-landau-setup}）中 $\mathcal F$ 的幂次为 $\nu-LD/2=1+\varepsilon$，所以这些角在 $\varepsilon\to0$ 时不产生极点。(c)~外线在壳且有质量（$p_i^2=m^2$，夸克线质量 $m$，胶子无质量）时 $\mathcal F=Q^2\alpha_1\alpha_2+m^2(\alpha_1+\alpha_2)^2$，唯一的 Landau 点是角 $\alpha_0=1$（在角 $\alpha_1=1$ 处 $\mathcal F=m^2\ne0$），其附近 $\mathcal F=r^2[m^2+u(1-u)Q^2]$，$\int r\,\dd r/r^2$ 对数发散，维数正规化中给出 $1/\varepsilon$ 软极点。以上展开都已符号核对，Landau 集也在网格上逐点扫描确认。
+
+%% =====================================================================
+\section{Coleman--Norton 定理的推导}\label{sec:appD-cn}
+
+\begin{proof}[\cref{prop:ir-coleman-norton}的证明]
+设 $(k_0,\alpha)$ 满足 $\alpha_j\ge0$ 的\cref{eq:appD-Lk}，各线取向使 $q_j^0\ge0$。把 $\alpha_j=0$ 的线收缩，得到约化图 $G_R$（可以有多个连通分支，逐个处理）。
+
+(i)~在 $G_R$ 中取一棵生成树 $T$，令根顶点的位置为 $x_{v_0}=0$，对其余顶点 $v$ 沿 $T$ 中从 $v_0$ 到 $v$ 的唯一路径累加位移：顺着取向经过线 $j$ 加 $\Delta x_j=\alpha_jq_j$，逆着取向减去 $\Delta x_j$。这样定义的 $x_v$ 满足 $x_{\text{终}(j)}-x_{\text{始}(j)}=\Delta x_j$ 对 $T$ 中的线成立；对 $T$ 外的一条线 $j$，它与 $T$ 中的路径构成 $G_R$ 的一个圈，该关系成立当且仅当沿此圈的位移之和为零。$G_R$ 的每个圈都是原图 $G$ 的一个圈（补上被收缩的线，它们的 $\alpha_j=0$，不贡献位移），而 $G$ 的圈方程 $\sum_j\eta_{jl}\alpha_jq_j=0$ 正是沿基本圈的位移之和为零；圈的整数组合给出一切圈。故圈方程成立当且仅当各顶点位置相容。反之，若存在相容的位置，则沿每个圈位移之和为零，即圈方程成立。
+(ii)~$\alpha_j>0$ 的线在壳；$q_j\ne0$ 时 $\Delta x_j^0=\alpha_jq_j^0\ge0$，$\Delta\vec x_j=\Delta x_j^0\,\vec q_j/q_j^0$：以动量 $q_j$、速度 $\vec q_j/q_j^0$ 向未来自由传播，无质量时 $|\vec q_j|=q_j^0$，沿光线运动。
+(iii)~$q_j=0$ 时 $\Delta x_j=0$，与 $\alpha_j$ 无关，不对顶点位置施加约束。把这条线看作动量 $\lambda q$、参数 $\alpha_j=c/\lambda$ 的线在 $\lambda\to0$ 时的极限，则 $\Delta x_j=cq$ 有限，而 $\alpha_jD_j=(c/\lambda)\lambda^2q^2=c\lambda q^2\to0$；$c$ 任意，所以这条线可以连接任意两个顶点。
+\end{proof}
+
+例：无质量顶点的共线钳夹面 $C_1$ 上（\cref{ex:ir-vertex}），反夸克线离壳而收缩，胶子与夸克线的位移分别为 $\alpha_0xp_1$ 与 $\alpha_1(1-x)p_1$，圈方程 $\alpha_0x=\alpha_1(1-x)$ 使二者相等，两粒子同时到达 $Y_1$（已符号核对）。
+
+%% =====================================================================
+\section{没有证明的部分}\label{sec:appD-caveats}
+
+本附录证明的是\emph{必要}条件：被钳住的点满足 $\alpha_j\ge0$ 的 Landau 方程（\cref{thm:ir-landau-momentum}），没有 Landau 点则积分在外部参数中解析（\cref{thm:ir-landau-alpha}）。没有证明的是：(1)~充分性——存在 $\alpha_j\ge0$ 的 Landau 解时围道确实被钳住，任何容许的（包括一阶位移为零的反常）形变都避不开；(2)~由局部形变拼成整体形变；(3)~第二类奇异性（$\mathcal U=0$）。这正是\cref{rem:ir-landau-status}（\tagA）的内容。Collins 指出，他没有找到明确而完整地证明 Landau 方程对钳夹奇异面既必要又充分的已发表文献\cite[第~5.4.3~节，第~110~页]{Collins2011}。声称给出完整证明的是两份预印本：Collins\cite{Collins:2020euz}（预印本；arXiv 第一版，2020 年 7 月 8 日，截至 2026 年 10 月未见期刊发表）对至多二次、满足一个符号条件的分母证明了“被钳住当且仅当存在 Landau 点”，并适用于含 Wilson 线的图；据其摘要，Mühlbauer\cite{Muhlbauer:2020kut}（预印本）用同痕方法推导动量空间的 Landau 方程，并推广到第二类奇异性。它们的内容、地位以及物理区判据与 Gordan 择一定理的关系在第~24~章讨论（\cref{thm:front-collins-pinch}，\tagA；\cref{rem:front-gordan-collins}）。还应注意，Landau 条件即使对围道钳夹是充要的，对积分的奇异性也只是必要的：无质量自能对一切 $p$ 在 $k=0$ 与 $k=p$ 处被钳住，却只在 $p^2=0$ 处奇异；Coleman 与 Norton\cite{ColemanNorton1965}原文的证明默认动量钳夹与参数钳夹等价，对无质量图与线性分母不成立，在有质量情形还在零本征值处留有缺口\cite[第~IV~节、附录~D]{Collins:2020euz}。经典理论的文献：\cite{Landau1959,Nakanishi:1959jzx,EdenEtAl1966}，其中 ELOP 明言只给似然性论证\cite[第~2.1~节，第~48~页]{EdenEtAl1966}；拓扑（Picard--Lefschetz）理论见\cite{Pham:2011SingInt}；复化运动学中奇异轨迹的代数几何描述（主 Landau 行列式）见\cite{Fevola:2023kaw}，它与物理区钳夹的问题互补；教科书的叙述见\cite[第~13~章]{Sterman1993}。

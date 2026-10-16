@@ -1,0 +1,194 @@
+
+% =====================================================================
+\section{光生过程、光子结构与光子分布}\label{sec:coll-photo}
+
+在 $ep$ 碰撞中，当电子只发生很小的偏转时，交换的光子近乎在壳（$Q^2\to0$），过程实际上是实光子与质子的碰撞 $\gamma p\to\text{喷注}+X$。光子以两种方式参与硬散射（\cref{fig:coll-photoproduction}）：
+\emph{直接}方式中光子作为点状粒子耦合到硬子图，只有质子一侧有部分子分布与旁观者；\emph{分辨}（resolved）方式中光子先涨落成夸克—反夸克对与胶子组成的“部分子云”，由光子的部分子分布 $f_{j/\gamma}(x_\gamma)$ 描述，
+光子一侧也留下旁观者。前者在结构上是单强子过程，与 DIS 同级；后者在结构上是末态有色的强子—强子过程。光子的部分子分布满足\emph{非齐次}的演化方程（光子本身可以点状地劈裂为 $q\bar q$），
+这使光子结构函数的领头部分完全可算——这是 Witten 的著名结果，也是本节唯一的严格陈述。最后讨论相反的问题：质子中的光子分布。
+
+%%% BEGIN fig:coll-photoproduction
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fb hb/.style={hard blob,circle,minimum size=0.84cm,inner sep=0pt}]
+  % ======================= (a) direct photoproduction =======================
+  \begin{scope}
+    \node[fb hb] (H) at (0,0) {$H$};
+    \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.66cm,inner sep=0pt] (A) at (-1.55,-1.35) {};
+    \node[font=\footnotesize] at (A) {$f_{i/p}$};
+    \draw[photon] (-2.75,1.35) -- (H.145);
+    \draw[fb hadron] (-3.05,-1.35) -- (A.west);
+    \foreach \d in {-0.09,0.09} \draw[plain] ($(A.east)+(0,\d)$) -- ++(3.1,0);
+    \draw[quark] (A.45) -- (H.235);
+    \draw[quark] (H.25) -- (1.9,0.95);
+    \draw[quark] (H.335) -- (1.9,-0.55);
+    \node[fb lab,anchor=east] at (-2.77,1.35) {$\gamma$};
+    \node[fb lab,anchor=east] at (-3.07,-1.35) {$p$};
+    \node[fb note,anchor=west] at (2.2,-1.35) {$X_p$};
+    \node[fb note,anchor=west,align=left] at (1.95,0.2) {高 $p_T$\\喷注};
+    \path[mom={$\xi P$},mom sep=0.26cm,mom length=0.45cm] (A.45) -- (H.235);
+    \node[font=\small,anchor=north,align=center] at (-0.35,-1.85) {(a)\ 直接光子：单强子过程\\{\color{RoyalBlue!80!black}全阶论证 [A]}};
+  \end{scope}
+  % ======================= (b) resolved photoproduction =======================
+  \begin{scope}[xshift=8.0cm]
+    \node[fb hb] (H) at (0,0) {$H$};
+    \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.66cm,inner sep=0pt] (A) at (-1.55,-1.35) {};
+    \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.66cm,inner sep=0pt] (G) at (-1.55,1.35) {};
+    \node[font=\footnotesize] at (A) {$f_{i/p}$};
+    \node[font=\footnotesize] at (G) {$f_{j/\gamma}$};
+    \draw[photon] (-3.05,1.35) -- (G.west);
+    \draw[fb hadron] (-3.05,-1.35) -- (A.west);
+    \foreach \d in {-0.09,0.09} {
+      \draw[plain] ($(A.east)+(0,\d)$) -- ++(3.1,0);
+      \draw[plain] ($(G.east)+(0,\d)$) -- ++(3.1,0);}
+    \draw[quark] (A.45) -- (H.235);
+    \draw[quark] (G.-45) -- (H.125);
+    \draw[quark] (H.25) -- (1.75,0.8);
+    \draw[quark] (H.335) -- (1.75,-0.8);
+    \draw[glauber] (2.0,1.24) -- (2.0,-1.24);
+    \node[fb lab,anchor=east] at (-3.07,1.35) {$\gamma$};
+    \node[fb lab,anchor=east] at (-3.07,-1.35) {$p$};
+    \node[fb note,anchor=west] at (2.2,-1.35) {$X_p$};
+    \node[fb note,anchor=west] at (2.2,1.35) {$X_\gamma$};
+    \node[fb note,anchor=west,align=left,text=red!55!black] at (2.12,0) {旁观者间的\\Glauber 交换};
+    \path[mom={$\xi P$},mom sep=0.26cm,mom length=0.45cm] (A.45) -- (H.235);
+    \path[mom'={$x_\gamma q$},mom sep=0.26cm,mom length=0.45cm] (G.-45) -- (H.125);
+    \node[font=\small,anchor=north,align=center] at (-0.35,-1.85) {(b)\ 分辨光子：类强子—强子过程\\{\color{Plum!80!black}猜想 [C]}};
+  \end{scope}
+\end{tikzpicture}
+\caption{光生过程 $\gamma p\to\text{jets}+X$（振幅示意）。(a)~直接光子：光子直接参与硬散射 $H$，只有质子一侧有部分子分布 $f_{i/p}$ 与旁观者 $X_p$，与 DIS 同为单强子过程，因子化为全阶论证 [A]（\cref{thm:coll-direct-photo}）；
+(b)~分辨光子：光子先“强子化”为由光子部分子分布 $f_{j/\gamma}$ 描述的部分子云，提供进入硬散射的部分子（动量份额 $x_\gamma$），光子一侧也有旁观者 $X_\gamma$，
+等效于末态有色的强子—强子过程，旁观者之间可交换 Glauber 胶子（暗红色），因子化为猜想 [C]（\cref{conj:coll-resolved-photo}）。}
+\label{fig:coll-photoproduction}
+\end{figure}
+%%% END fig:coll-photoproduction
+
+\begin{theorem}[直接光生与光子结构函数 \tagA]\label{thm:coll-direct-photo}
+设实（或准实）光子 $\gamma(q)$ 与强子 $p(P)$ 发生硬过程，末态含横动量 $p_T\gg\Lambda$ 的喷注（红外安全的喷注定义）或被观测强子。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 光子点状地耦合到硬子图的直接部分具有单强子过程的结构：
+\begin{equation}\label{eq:coll-direct}
+\dd\sigma^{\rm dir}=\sum_i\int_0^1\dd\xi\,f_{i/p}(\xi;\mu)\,\dd\hat\sigma_{\gamma i}(\xi P,q;\mu,\mu_\gamma)\ [\otimes d_{h/j}]+\text{幂次修正},
+\end{equation}
+其因子化与 DIS（\cref{thm:disall-factorization}）有相同的结构与相同的瓶颈；
+\item $\dd\hat\sigma_{\gamma i}$ 中 $\gamma\to q\bar q$ 的共线奇点在 $\MSbar$ 中被减除并吸收进光子的部分子分布 $f_{q/\gamma}(x_\gamma;\mu_\gamma)$，所以从次领头阶起，直接与分辨部分的划分依赖于因子化方案与标度 $\mu_\gamma$，只有二者之和与方案无关；
+\item 实光子靶上的深度非弹散射 $e\gamma\to eX$ 同样是单“强子”过程：$F_2^\gamma=\sum_iC_{2,i}\otimes f_{i/\gamma}+C_{2,\gamma}$，其中直接项 $C_{2,\gamma}=\order{\alpha}$ 是 $\gamma^*\gamma\to q\bar q$ 盒图的 $\MSbar$ 减除部分。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-bridge}（MA1、MA2）。
+% errtype: E-S
+\uses{thm:disall-factorization,thm:coll-sidis,lem:coll-final-poles,def:dis-kinematics,rem:pdf-schemes,asm:intro-bridge}
+\end{theorem}
+
+\begin{proofsketch}
+(1) 直接光子没有旁观者，所以没有光子一侧与质子一侧旁观者之间的 Glauber 交换。领头区域是质子的共线子图、若干全部为末态的硬喷注与软子图，与带被测末态的 DIS（SIDIS）相同：
+质子子图钳住软动量的 $k^-$，但每个喷注的 $k^+$ 极点由\cref{lem:coll-final-poles}都在同一侧，围道可以移出 Glauber 区，其余各步（Ward 恒等式、幺正性、减除项与 $\MSbar$ PDF 的等同）照搬\cref{thm:disall-factorization}与\cref{thm:coll-sidis}。
+Collins 在衍射 DIS 的因子化证明的结论中写道「“The proof would appear to apply also to direct photo-production \ldots{} However, the proof does not apply to resolved photoproduction processes, since these are in effect hadron-hadron processes.”」\cite{Collins1998a}，
+即该证明看来也适用于直接光生，但不适用于实际上是强子—强子过程的分辨光生；这一论断同样适用于非衍射的直接光生。
+(2) 硬散射中光子劈裂为一对与光子共线的 $q\bar q$ 的区域是一个以光子为“母粒子”的共线子图：其共线发散在 $\MSbar$ 中定义光子的夸克分布，其中可微扰计算的部分是光子分布的点状部分。
+于是 (b) 中的方案依赖与 PDF 的方案依赖（\cref{rem:pdf-schemes}）同类。(3) (c) 是把 DIS 的论证用到光子靶上；直接项来自光子自身的扭度 2 算符，其系数从 $\order{\alpha}$ 开始。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+(a)、(c) 继承\cref{thm:disall-factorization}的全部瓶颈（\cref{asm:appN-collins,asm:appN-cutsum,asm:appN-ward-product}等，以及具名缺口\cref{asm:appN-brst-nonlocal}）；喷注末态还需要喷注定义的红外安全性。
+新增的弱点是 (b)：领头阶之后“直接部分”单独不是可观测量，比较数据时必须加上分辨部分，而后者的因子化是猜想（\cref{conj:coll-resolved-photo}）；光子分布中可以完全算出的点状部分见下面的\cref{prop:coll-photon-sf}。综述见\cite{Klasen:2002xb}。
+
+\begin{proposition}[光子结构函数的点状部分 \tagR]\label{prop:coll-photon-sf}
+（$R_{\mathrm{OPE}}$：以 OPE 为前提而严格。QCD 中含夸克的微扰 OPE 是全阶论证（\cref{thm:dis-ope}），严格证明只对标量理论与纯 Yang--Mills 的规范不变算符给出；对强子态还须非微扰 OPE（\cref{asm:intro-np-ope}）。）
+设 $F_2^\gamma(x,Q^2)$ 是实光子靶（动量 $p$，$p^2=0$）的结构函数（\cref{def:dis-kinematics}中把靶换成光子），取 $\alpha$ 的一阶。对偶数 $n\ge2$，令 $A^{(n)}(\mu)$ 为光子的扭度 2 约化矩阵元的列矢量
+$\big((q_f+\bar q_f)_n\big)_{f=1}^{n_f}$、$g_n$（即光子的部分子分布的矩），$\Gamma^{(n)}$ 为\cref{prop:dis-ope-rg}中领头阶的反常维度矩阵（\cref{prop:pdf-lo-kernels}(c) 的 $\gamma_{ij}(n)$），$\hat k_n\equiv\frac{n^2+n+2}{n(n+1)(n+2)}$。则：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 光子算符在 $\order{\alpha}$ 混合进夸克算符，$A^{(n)}$ 满足非齐次重整化群方程
+\begin{equation}\label{eq:coll-inhom}
+\frac{\dd A^{(n)}}{\dd\ln\mu^2}=\frac{\as}{2\pi}\Gamma^{(n)}A^{(n)}+\frac{\alpha}{2\pi}K^{(n)}+\order{\alpha\as},\qquad K^{(n)}_{q_f}=2N_ce_f^2\hat k_n,\quad K^{(n)}_g=0 ;
+\end{equation}
+\item 其通解为 $A^{(n)}=A^{(n)}_{\rm pl}+A^{(n)}_{\rm had}$，其中
+\begin{equation}\label{eq:coll-pointlike}
+A^{(n)}_{\rm pl}(\mu)=\frac{2\alpha}{\as(\mu)}\big[\beta_0\mathbb 1-2\Gamma^{(n)}\big]^{-1}K^{(n)}\,\big(1+\order{\as}\big),
+\end{equation}
+$A^{(n)}_{\rm had}$ 是齐次方程的解，领头阶为 $A^{(n)}_{\rm had}(\mu)=[\as(\mu)/\as(\mu_0)]^{-2\Gamma^{(n)}/\beta_0}A^{(n)}_{\rm had}(\mu_0)$；
+\item 因此 $\int_0^1\dd x\,x^{n-2}F_2^\gamma(x,Q^2)=\frac{\alpha}{\as(Q^2)}\,a_n\,[1+\order{\as}]+(\text{强子部分})$，$a_n=2\sum_fe_f^2\big[(\beta_0\mathbb 1-2\Gamma^{(n)})^{-1}K^{(n)}\big]_{q_f}$ 完全可算；
+强子部分是 $\order{\alpha\,\as(Q^2)^{d_n}}$，$d_n=-2\lambda_{\max}(n)/\beta_0$，$\lambda_{\max}(n)$ 是 $\Gamma^{(n)}$ 的最大本征值：对一切偶数 $n\ge4$ 及 $n=2$ 的非单态部分 $d_n>0$，相对于点状部分压低 $\as^{1+d_n}$；
+$n=2$ 的单态有本征值 $0$（动量守恒），其强子部分为 $\order{\alpha}$，与次领头阶点状项同阶。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-np-ope}、\cref{asm:intro-af-coeff}（MA0、MA4）。
+\uses{thm:dis-ope,prop:dis-ope-rg,prop:pdf-lo-kernels,def:dis-kinematics,asm:intro-wightman,asm:intro-composite,asm:intro-np-ope,asm:intro-af-coeff}
+\end{proposition}
+
+\begin{proof}
+(a) 以 OPE（\cref{thm:dis-ope}）为前提，把它用于 $\gamma^*\gamma\to\gamma^*\gamma$ 的前向振幅：在 QCD$\times$QED 中，扭度 2 算符基除夸克与胶子算符外还含光子算符 $O_\gamma^{(n)}=F^{+\mu}(\ii\partial^+)^{n-2}F^{+}{}_\mu$，
+其在光子态中的矩阵元 $A_\gamma^{(n)}=1+\order{\alpha}$。\cref{prop:dis-ope-rg}的重整化群方程推广到 QCD$\times$QED 时多出 $O_\gamma\to O_{q_f}$ 的混合；在 $\order{\alpha}$ 它是 QED 的盒图，
+与 $g\to q$ 的混合 $\gamma_{qg}(n)=T_F\hat k_n$ 只差色因子：$T_F=\frac{1}{N_c^2-1}\Trc(t^at^a)$ 换成 $e_f^2\Trc\mathbb 1=N_ce_f^2$。对夸克与反夸克各算一次，得 $K^{(n)}_{q_f}=2N_ce_f^2\hat k_n$；光子不直接与胶子混合，$K_g=\order{\as}$。
+（等价地，光子的夸克分布满足 $\partial f_{q/\gamma}/\partial\ln\mu^2=\frac{\alpha}{2\pi}N_ce_q^2[x^2+(1-x)^2]+\frac{\as}{2\pi}(P\otimes f_\gamma)_q$；在纯 QED 中这给出 $F_2^\gamma=\frac{\alpha}\pi N_c\sum_qe_q^4\,x[x^2+(1-x)^2]\ln\frac{Q^2}{m_q^2}+\cdots$，即夸克—部分子模型的盒图结果。）% check: s7 (a)
+(b) 由 $\dd\as/\dd\ln\mu^2=-\frac{\beta_0}{4\pi}\as^2$，对 $A=\frac{2\alpha}{\as}M^{-1}K$（$M=\beta_0\mathbb 1-2\Gamma$）有 $\frac{\dd A}{\dd\ln\mu^2}=\frac{\beta_0\alpha}{2\pi}M^{-1}K$，而
+$\frac{\as}{2\pi}\Gamma A+\frac{\alpha}{2\pi}K=\frac{\alpha}{2\pi}(2\Gamma M^{-1}+\mathbb 1)K=\frac{\alpha}{2\pi}(2\Gamma+M)M^{-1}K=\frac{\beta_0\alpha}{2\pi}M^{-1}K$，二者相等；齐次方程的领头阶解是熟知的幂律。
+$M$ 可逆，因为 $\Gamma^{(n)}$ 的本征值都 $\le0$（见 (c)）而 $\beta_0>0$。(c) 由 OPE，$\int_0^1x^{n-2}F_2^\gamma=\sum_fe_f^2(1+\order{\as})(q_f+\bar q_f)_n+\order{\as}g_n+C^{(n)}_{2,\gamma}$，直接项 $C^{(n)}_{2,\gamma}=\order{\alpha}$ 没有 $1/\as$ 的增强，代入 (b) 即得 $a_n$。
+本征值：$\gamma_{qq}(n)=C_F[\frac32+\frac1{n(n+1)}-2S_1(n)]$ 在 $n=2$ 为 $-\frac43C_F$ 并随 $n$ 单调下降，故非单态本征值对一切 $n\ge2$ 为负；$n=2$ 的单态矩阵本征值为 $0$ 与 $-\frac{4C_F+2n_fT_F}3$（\cref{prop:pdf-lo-kernels}(d)）；
+对偶数 $n\ge4$，$\gamma_{qq},\gamma_{gg}$ 为负且随 $n$ 单调下降，$\gamma_{qg},\gamma_{gq}$ 为正且随 $n$ 单调下降，所以迹为负、行列式 $\gamma_{qq}\gamma_{gg}-2n_f\gamma_{qg}\gamma_{gq}$ 不小于其 $n=4$ 时的值，而后者对 $n_f\le6$ 为正，两个本征值都为负。
+（我们对 $n_f=3,4,5$、$n\le12$ 作了精确核对。）% check: s13 (a)
+强子部分按 $[\as(Q^2)]^{-2\lambda/\beta_0}$ 演化，于是得到所述的压低。
+\end{proof}
+
+点状解的物理意义在 $\Gamma\to0$ 的极限中最清楚：此时 $A_{\rm pl}=\frac{2\alpha}{\beta_0\as(\mu)}K=\frac{\alpha}{2\pi}K\ln\frac{\mu^2}{\Lambda^2}$，正是夸克—部分子模型中的对数，只是夸克质量被 $\Lambda$ 取代；
+QCD 的劈裂把这个对数“重新分配”到不同的 $x$，但不改变其 $\ln Q^2$ 的增长，所以光子结构函数的形状与大小、而不仅是 $Q^2$ 依赖，都由短距离分析决定。据 Witten 的摘要，在大 $Q^2$ 下 $F_2^\gamma$ 在 $x=0.1$ 处比自由夸克的结果大 $1.751$ 倍，在 $x=0.5$、$0.8$ 处分别被压低为 $0.964$ 与 $0.611$ 倍\cite{Witten:1977ju}；
+Bardeen 与 Buras 把这一计算推进到次领头阶，并指出除二阶矩外结果与光子态中夸克、胶子算符的未知矩阵元无关\cite{Bardeen:1978hg}——这正是 (c) 中 $n=2$ 单态本征值为零的后果。
+\emph{数值例子。}对 $n_f=5$ 与 $n=2$ 的味非单态组合，由\cref{eq:coll-pointlike}，$(u+\bar u-d-\bar d)_2^{\rm pl}=\frac{2\alpha}{\as}\cdot\frac{2N_c(e_u^2-e_d^2)\hat k_2}{\beta_0-2\gamma_{qq}(2)}=\frac{\alpha}{\as}\cdot\frac{12}{101}$；
+在 $Q=20\,\mathrm{GeV}$（$\as=0.1533$，$\alpha=1/137.036$）它等于 $0.0057$：光子中上、下型夸克的动量份额之差是可算的、随 $\ln Q^2$ 增长的量。% check: s13 (c); VF-QCD-7
+
+\begin{conjecture}[分辨光生 \tagC]\label{conj:coll-resolved-photo}
+分辨光生满足以光子的部分子分布表示的共线因子化：
+\begin{equation}\label{eq:coll-resolved}
+\dd\sigma^{\rm res}=\sum_{i,j}\int_0^1\dd x_\gamma\int_0^1\dd\xi\,f_{j/\gamma}(x_\gamma;\mu)\,f_{i/p}(\xi;\mu)\,\dd\hat\sigma_{ji}(x_\gamma q,\xi P;\mu)\ [\otimes d_{h/k}]+\text{幂次修正},
+\end{equation}
+与强子—强子碰撞中末态有色的共线因子化同型。
+\uses{thm:coll-direct-photo}
+\end{conjecture}
+
+\paragraph{地位与缺口}
+分辨光子带有旁观者 $X_\gamma$，过程在结构上是强子—强子碰撞，而且末态（高 $p_T$ 喷注）带色：两组旁观者之间以及它们与有色末态之间的 Glauber 交换（\cref{fig:coll-photoproduction}(b)）必须相消，
+这正是强子对撞中有色末态的共线因子化所面临的未解决问题（第~12~章的\cref{conj:dy-coloured-final}，[C]；它属于后面的章节，此处只作指引）。Collins 明确指出衍射 DIS 的证明不适用于分辨光生\cite{Collins1998a}；
+领头阶之后直接与分辨部分的划分不唯一\cite{Klasen:2002xb}，所以本猜想只能与\cref{thm:coll-direct-photo}(a) 一起作为总截面的陈述来检验。升级途径与强子—强子碰撞中有色末态的情形相同：控制旁观者之间及其与末态之间的 Glauber 交换。
+
+\begin{proposition}[衍射光生中的因子化破坏 \tagV]\label{prop:coll-diffractive-photo}
+分辨的衍射光生（$\gamma p\to\text{喷注}+X+p'$，质子与 $X$ 之间有大快度间隙）在结构上是强子—强子过程：用衍射 DIS 中得到的衍射 PDF 写出的标准因子化不成立。
+\uses{conj:coll-resolved-photo}
+\end{proposition}
+
+\paragraph{地位与缺口}
+证据来自实验，而不是微扰反例。H1 发现衍射 DIS 中的双喷注截面被基于衍射 PDF 的次领头阶计算很好地描述，而在光生中预言必须乘以约 $0.5$ 的因子，且对直接与分辨光子都是如此，并称之为
+「“the first clear observation of QCD hard scattering factorisation breaking at HERA”」\cite{H1:2007jtx}，即在 HERA 首次清楚地观察到 QCD 硬散射因子化的破坏；ZEUS 的数据压低较弱\cite{ZEUS:2007uvk}。
+Klasen 与 Kramer 的次领头阶重新分析给出：若直接与分辨部分被同样压低，整体压低因子为 $0.42$（H1）与 $0.71$（ZEUS），若只压低分辨部分，则约需压低 $3$ 倍，其大小与吸收模型的预言一致\cite{Klasen:2008ah}。
+直接的衍射光生原则上被 Collins 的衍射 DIS 证明覆盖（第~18~章的\cref{thm:break-ddis}，[A]；此处只作指引），所以 H1 对直接部分也观察到压低是一个尚未解决的张力（ZEUS 的结果不同），本书对它不另加标签。
+“衍射 PDF 是普适的”只对衍射 DIS 这类只有一个强子的过程成立，不能推广到强子—强子过程或分辨光生。
+
+\begin{proposition}[质子的光子分布 \tagA]\label{prop:coll-luxqed}
+定义质子中的光子分布为\cref{def:pdf-gluon}的 QED 类比（$G^{+j}_a\to F^{+j}$，没有 Wilson 线），在 $\MSbar$ 中重整化。在 QED 的领头阶（QCD 的一切阶通过质子的结构函数包含在内），它由质子的结构函数 $F_2$、$F_L$（含弹性部分）唯一确定：
+\begin{equation}\label{eq:coll-lux}
+\begin{aligned}
+xf_{\gamma/p}(x,\mu^2)=\frac1{2\pi\alpha(\mu^2)}\int_x^1\frac{\dd z}z\Big\{&\int_{\frac{x^2m_p^2}{1-z}}^{\frac{\mu^2}{1-z}}\frac{\dd Q^2}{Q^2}\alpha^2(Q^2)\Big[\Big(zp_{\gamma q}(z)+\frac{2x^2m_p^2}{Q^2}\Big)F_2\Big(\frac xz,Q^2\Big)-z^2F_L\Big(\frac xz,Q^2\Big)\Big]\\
+&-\alpha^2(\mu^2)\,z^2F_2\Big(\frac xz,\mu^2\Big)\Big\},
+\end{aligned}
+\end{equation}
+% VF-FRO-11
+$zp_{\gamma q}(z)=1+(1-z)^2$，弹性部分 $F_2^{\rm el}=\frac{G_E^2+\tau G_M^2}{1+\tau}\delta(1-x)$、$F_L^{\rm el}=\frac{G_E^2}\tau\delta(1-x)$，$\tau=Q^2/(4m_p^2)$。对点状 Dirac 费米子靶（$G_E=G_M=1$，$\alpha$ 固定），\cref{eq:coll-lux}给出
+$xf_\gamma=\frac\alpha{2\pi}[1+(1-x)^2]\big[\ln\frac{\mu^2}{m^2}-2\ln x-1\big]+\frac{\alpha m^2x^2(1-x)}{\pi\mu^2}$，即 Frixione 的 $\order{\alpha}$ $\MSbar$ 结果\cite[式~(4.189)]{Frixione:2019lga}（差一个幂次修正）。
+非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+% errtype: E-S
+\uses{def:pdf-gluon,def:dis-kinematics,asm:intro-wightman,asm:intro-composite}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 在 QED 的领头阶，质子态中的光子场由电磁流产生：$F^{+j}$ 的两个算符各通过一个光子传播子耦合到质子的电磁流，于是光子分布的矩阵元化为质子强子张量 $W^{\mu\nu}(P,k)$（\cref{def:dis-kinematics}，$k$ 为光子动量，$k^2=-Q^2<0$）与两个光子传播子之积，
+对 $k^-$ 与 $\mathbf k_T$ 的积分在固定 $k^+=xP^+$ 下化为对虚度 $Q^2$ 与对 $z=x/x_{\rm Bj}$ 的积分。(2) 把 $W^{\mu\nu}$ 分解为 $F_1,F_2$（等价地 $F_2,F_L$），投影到横向光子极化上，就得到方括号中的组合，其中 $2x^2m_p^2/Q^2$ 来自靶质量；
+$Q^2$ 的下限是运动学下限。(3) 大 $\mathbf k_T$（即大 $Q^2$）处的对数紫外发散在 $\MSbar$ 中减除：在 $D$ 维中积到 $\mu^2/(1-z)$ 并换算到 $\MSbar$，留下最后一项 $-\alpha^2(\mu^2)z^2F_2$。
+(4) 点状检验：取 $F_2=\delta(1-x')$、$F_L=\frac{4m^2}{Q^2}\delta(1-x')$ 代入即得 Frixione 的结果；若略去 $F_L$ 项，常数会差 $\frac\alpha{2\pi}4(1-x)$，若略去 $\MSbar$ 换算项，会差 $\frac\alpha{2\pi}x^2$。
+完整的推导——通过一个虚构的、在两种因子化写法下计算的超出标准模型的过程，以及由算符定义直接出发的推导——见\cite[式~(6)]{Manohar:2016nzj}与\cite{Manohar:2017eqh}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+\cref{eq:coll-lux}在 QED 的领头阶是由算符定义出发的推导，其中 QCD 的全部效应（包括非微扰效应）都包含在可测量的 $F_2$、$F_L$ 中；更高阶的 QED 与 QCD 修正（$\order{\alpha\as}$、$\order{\alpha^2}$ 的匹配）只是引用，
+其中用到辅助过程的共线因子化（[A]，\cref{thm:disall-factorization}的同类论证）。据 Manohar 等的摘要，这一方法把光子 PDF 在很宽的 $x$ 范围内确定到 $1\%$--$2\%$\cite{Manohar:2016nzj}；据后续工作的摘要，它可由算符定义推导，并给出 QED 与 QCD 的全阶精确表示\cite{Manohar:2017eqh}。
+第~24~章的\cref{thm:front-luxqed}从前沿进展的角度讨论同一结果的精度（$\alpha L(\as L)^n$ 等各项）与推广，QED 与电弱因子化的其他问题也见该章。升级途径：把高阶匹配的论证写成编号假设之下的条件定理。

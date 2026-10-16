@@ -1,0 +1,47 @@
+%%% BEGIN fig:dvcs-handbag
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 gapline/.style={draw=white,line width=5pt},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  \foreach \panel/\xs in {a/0, b/7.1} {
+  \begin{scope}[xshift=\xs cm]
+    \node[hadron blob,ellipse,minimum width=2.6cm,minimum height=0.9cm,inner sep=0pt] (F) at (0,0) {GPD};
+    \coordinate (V1) at (-0.75,2.1); \coordinate (V2) at (0.75,2.1);
+    \coordinate (Fl) at (-0.75,0.37); \coordinate (Fr) at (0.75,0.37);
+    \coordinate (Pq) at (-1.35,4.25); \coordinate (Pqp) at (1.35,4.25);
+    \draw[t3 hadron] (-2.9,0) -- (F.west);  \draw[t3 hadron] (F.east) -- (2.9,0);
+    \draw[quark] (Fl) -- (V1);  \draw[quark] (V1) -- (V2);  \draw[quark] (V2) -- (Fr);
+    \if a\panel
+      \draw[photon] (Pq) -- (V1);  \draw[photon] (V2) -- (Pqp);
+      \path[mom'={},mom sep=0.22cm,mom length=0.45cm] (Pq) -- (V1);
+      \path[mom={},mom sep=0.22cm,mom length=0.45cm] (V2) -- (Pqp);
+    \else
+      \draw[photon] (Pq) -- (V2);
+      \draw[t3 gapline] ($(V1)!0.25!(Pqp)$) -- ($(V1)!0.47!(Pqp)$);
+      \draw[photon] (V1) -- (Pqp);
+      \path[mom'={},mom sep=0.22cm,mom length=0.45cm,mom pos=0.25] (Pq) -- (V2);
+      \path[mom={},mom sep=0.22cm,mom length=0.45cm,mom pos=0.75] (V1) -- (Pqp);
+    \fi
+    \node[vertex] at (V1) {}; \node[vertex] at (V2) {};
+    \node[t3 lab,above left=-1pt] at (Pq) {$\gamma^*(q)$};
+    \node[t3 lab,above right=-1pt] at (Pqp) {$\gamma(q')$};
+    \path[mom={$(x+\xi)\bar P^+$},mom sep=0.26cm,mom length=0.5cm] (Fl) -- (V1);
+    \path[mom={$(x-\xi)\bar P^+$},mom sep=0.26cm,mom length=0.5cm] (V2) -- (Fr);
+    \path[mom'={$P$},mom sep=0.26cm,mom length=0.5cm] (-2.9,0) -- (F.west);
+    \path[mom'={$P'$},mom sep=0.26cm,mom length=0.5cm] (F.east) -- (2.9,0);
+    \node[t3 note,below=2pt] at (F.south) {$H,E,\tilde H,\tilde E\,(x,\xi,t)$};
+    \node[t3 lab] at (0,-1.3) {(\panel)};
+  \end{scope}}
+\end{tikzpicture}
+\caption{深度虚康普顿散射（DVCS）$\gamma^*(q)+p(P)\to\gamma(q')+p(P')$ 的领头阶图：(a)~手提包图；(b)~交叉图（两光子交叉，交叉处无顶点）。
+灰色团为广义部分子分布（GPD）的关联函数；$\bar P=\frac12(P+P')$，$\xi=\frac{P^+-P'^+}{P^++P'^+}$，$t=(P'-P)^2$。
+离开团的部分子带正光锥动量 $(x+\xi)\bar P^+$，回到团的部分子带 $(x-\xi)\bar P^+$，二者之差 $2\xi\bar P^+=P^+-P'^+$ 交给硬散射。
+在 Bjorken 极限下，(a) 中硬夸克传播子的分母为 $\frac{Q^2}{2\xi}(x-\xi+\ii0)$，(b) 中为 $-\frac{Q^2}{2\xi}(x+\xi-\ii0)$，
+故系数函数含 $\frac1{x-\xi+\ii0}$ 与 $\frac1{x+\xi-\ii0}$，其虚部取 GPD 在 $x=\pm\xi$ 处的值。
+图中按 DGLAP 区 $x>\xi$ 标注动量；当 $-\xi<x<\xi$（ERBL 区）时，右侧部分子的正光锥动量为负，应理解为由靶发射的夸克--反夸克对。}
+\label{fig:dvcs-handbag}
+\end{figure}
+%%% END fig:dvcs-handbag

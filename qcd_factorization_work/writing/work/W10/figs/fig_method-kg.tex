@@ -1,0 +1,95 @@
+%%% BEGIN fig:method-kg
+\begin{figure}[htbp]
+\centering
+% collinear blob A, hard blob, photon and outgoing struck quark (origin at the centre of A); #1 = name of the hard blob
+\newcommand{\fbKGframe}[1]{%
+  \node[jet blob,ellipse,minimum width=1.75cm,minimum height=0.66cm,inner sep=0pt] (A) at (0,0) {};
+  \node[font=\small] at (-0.42,0) {$A$};
+  \node[hard blob,ellipse,minimum width=1.6cm,minimum height=0.66cm,inner sep=0pt] (H) at (0,2.25) {};
+  \node[font=\small] at (H) {$#1$};
+  \draw[photon] (-1.25,3.05) -- (H.150);
+  \draw[quark] (H.20) -- (1.25,3.0);}
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\footnotesize},
+  fb idx/.style={font=\scriptsize,inner sep=1pt},
+  fb op/.style={font=\large},
+  fb box/.style={draw=gray!60!black,line width=0.5pt,rounded corners=3pt,fill=gray!4,inner sep=4pt}]
+  % ======================= row 1: g = K + G =======================
+  % full propagator numerator
+  \begin{scope}
+    \fbKGframe{H}
+    \draw[quark] (-0.45,0.3) -- (-0.45,1.96);
+    \draw[gluon] (0.42,0.33) -- (0.42,1.94);
+    \path[mom'={$k$},mom sep=0.32cm] (0.42,0.33) -- (0.42,1.94);
+    \node[fb idx,anchor=east] at (0.33,1.9) {$\mu$};
+    \node[fb idx,anchor=east] at (0.34,0.5) {$\nu$};
+    \node[fb lab] at (0,-0.75) {$g_{\mu\nu}$};
+  \end{scope}
+  \node[fb op] at (1.85,1.15) {$=$};
+  % K part: scalar polarization k_mu at the hard end (dot)
+  \begin{scope}[xshift=3.7cm]
+    \fbKGframe{H}
+    \draw[quark] (-0.45,0.3) -- (-0.45,1.96);
+    \draw[longit] (0.42,0.33) -- (0.42,1.94);
+    \fill[blue!60!black] (0.42,1.76) circle[radius=1.7pt];
+    \path[mom'={$k$},mom sep=0.32cm] (0.42,0.33) -- (0.42,1.94);
+    \node[fb idx,anchor=east] at (0.33,1.9) {$\mu$};
+    \node[fb idx,anchor=east] at (0.34,0.5) {$\nu$};
+    \node[fb lab] at (0,-0.85) {$K_{\mu\nu}=\dfrac{k_\mu\,n_{B\nu}}{n_B\cdot k-\ii0}$};
+  \end{scope}
+  \node[fb op] at (5.62,1.15) {$+$};
+  % G part
+  \begin{scope}[xshift=7.55cm]
+    \fbKGframe{H}
+    \draw[quark] (-0.45,0.3) -- (-0.45,1.96);
+    \draw[gluon] (0.42,0.33) -- (0.42,1.94);
+    \path[mom'={$k$},mom sep=0.32cm] (0.42,0.33) -- (0.42,1.94);
+    \node[fb idx,anchor=east] at (0.33,1.9) {$\mu$};
+    \node[fb idx,anchor=east] at (0.34,0.5) {$\nu$};
+    \node[fb lab] at (0,-0.75) {$G_{\mu\nu}=g_{\mu\nu}-K_{\mu\nu}$};
+    \node[fb lab] at (0,-1.28) {$H\cdot G\cdot C=H\cdot\big(C-\frac{C^+}{k^+}\,k\big)$};
+    \node[fb lab,text=red!55!black] at (0,-1.78) {$\ge\lambda$ 压低};
+  \end{scope}
+  % ======================= row 2: Ward identity for the K part; the exception =======================
+  \draw[draw=gray!50!black,line width=1.0pt,-{Stealth[length=6pt,width=5pt]}] (3.35,-1.42) -- (2.3,-2.5);
+  \node[fb lab,anchor=east,align=right] at (2.42,-1.86) {对 $H$ 内一切附着求和\\（Ward 恒等式，\cref{fig:ward-identity}）};
+  \begin{scope}[xshift=1.6cm,yshift=-5.85cm]
+    \node[jet blob,ellipse,minimum width=1.75cm,minimum height=0.66cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.42,0) {$A$};
+    \node[hard blob,ellipse,minimum width=1.6cm,minimum height=0.66cm,inner sep=0pt] (H) at (0,2.25) {};
+    \node[font=\small] at (H) {$H_0$};
+    \draw[photon] (-1.25,3.05) -- (H.150);
+    \draw[quark] (H.20) -- (1.25,3.0);
+    \draw[quark] (-0.45,0.3) -- (H.236);
+    \draw[wilson=0.8] (H.236) -- ++(-24:2.45) coordinate (W);
+    \node[fb lab,anchor=west] at (W) {沿 $n_B$ 至 $\infty$};
+    \coordinate (Y) at ($(H.236)!0.47!(W)$);
+    \draw[longit] (0.42,0.33) -- (Y);
+    \node[vertex] at (Y) {};
+    \path[mom'={$k$},mom sep=0.3cm,mom pos=0.45] (0.42,0.33) -- (Y);
+    \node[fb lab,anchor=north west,inner sep=1pt] at ($(W)+(0.05,-0.22)$) {$\dfrac{g\,t^a\,n_B^\nu}{n_B\cdot k-\ii0}$};
+  \end{scope}
+  % the exception: a single transverse gluon as the active parton (gamma* g -> q qbar)
+  \begin{scope}[xshift=8.25cm,yshift=-5.85cm]
+    \node[jet blob,ellipse,minimum width=1.75cm,minimum height=0.66cm,inner sep=0pt] (A) at (0,0) {};
+    \node[font=\small] at (-0.42,0) {$A$};
+    \node[hard blob,ellipse,minimum width=1.6cm,minimum height=0.66cm,inner sep=0pt] (H) at (0,2.25) {};
+    \node[font=\small] at (H) {$H$};
+    \draw[photon] (-1.25,3.05) -- (H.150);
+    \draw[quark] (H.30) -- (1.25,3.0);
+    \draw[quark] (1.35,1.75) -- (H.345);
+    \draw[gluon] (0.05,0.33) -- (0.05,1.92);
+    \path[mom'={$k$},mom sep=0.32cm] (0.05,0.33) -- (0.05,1.92);
+    \node[fb idx,anchor=east] at (-0.05,1.15) {$j$};
+    \node[fb idx,anchor=west] at (1.25,3.0) {$q$};
+    \node[fb idx,anchor=west] at (1.35,1.75) {$\bar q$};
+    \node[fb lab,align=center,anchor=north] (EXC) at (0,-0.45) {例外：活动部分子为单个横向胶子\\$k_\mu H^\mu=0$，G 项领头：\\$k^+A^j-k^jA^+\ \to\ G^{+j}$};
+    \begin{scope}[on background layer]\node[fb box,fit={(EXC) (A) (H) (-1.3,3.1) (1.55,3.05)}] {};\end{scope}
+  \end{scope}
+\end{tikzpicture}
+\caption{共线胶子的 Grammer--Yennie 分解（Feynman 规范；$k$ 由 $A$ 共线子图流入硬部分，$\mu$ 为硬端、$\nu$ 为共线端的指标）。
+$g_{\mu\nu}=K_{\mu\nu}+G_{\mu\nu}$：K 部分（蓝色，圆点标出带标量极化 $k_\mu$ 的硬端）的共线端只取 $A^+=n_B\cdot A$ 分量；对 $H$ 内一切附着求和后，由 Ward 恒等式，K 胶子改为附着在沿 $n_B$ 的 Wilson 线上，乘以不含该胶子的硬部分 $H_0$（左下；$-\ii0$ 对应末态附着，即 DIS 中未来指向的线，初态附着取 $+\ii0$）；
+G 部分满足 $G_{\mu\nu}k^\nu=0$，每多一条 G 胶子至少压低 $\lambda$。例外（右下）：作为活动部分子的单个横向胶子（此处为 $\gamma^*g\to q\bar q$），由 Ward 恒等式 $k_\mu H^\mu=0$，其 G 项是领头的，与 $k^+A^j-k^jA^+$ 组成场强 $G^{+j}$。}
+\label{fig:method-kg}
+\end{figure}
+%%% END fig:method-kg

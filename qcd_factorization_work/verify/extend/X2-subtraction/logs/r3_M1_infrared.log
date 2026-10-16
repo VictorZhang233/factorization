@@ -1,0 +1,29 @@
+(a) parametric corner exponent: integrand ~ r^(d/2 - nu - 1) near the soft corner; convergence iff nu < 2 - eps
+   triangle            : nu = 1; corner integrand r^(-epsilon) dr; boundary of convergence eps = [1]; convergent at eps = 0: True
+   bubble counterterm  : nu = 2; corner integrand r^(-epsilon - 1) dr; boundary of convergence eps = [0]; convergent at eps = 0: False
+   bare bubble         : nu = epsilon + 2; corner integrand r^(-2*epsilon - 1) dr; boundary of convergence eps = [0]; convergent at eps = 0: False
+   kite                : nu = 2*epsilon + 3; corner integrand r^(-3*epsilon - 2) dr; boundary of convergence eps = [-1/3]; convergent at eps = 0: False
+   kite: Gamma(nu+2-d/2) = Gamma(3+3eps) finite; only the corner pole at eps = -1/3 -> DR value finite at eps = 0
+
+(b) corner-cut integrals J(nu, delta) at eps = 0 (Q^2 = 1, m^2 = 0.01):
+   nu=1 (triangle)                         : delta = 1e-4, 1e-6, 1e-8 -> ['24.760598', '24.770491', '24.77059']
+   nu=2 (bubble counterterm)               : delta = 1e-4, 1e-6, 1e-8 -> ['56083.989', '102103.73', '148155.11']
+   nu=2 with |ln F| (renormalized bubble)  : delta = 1e-4, 1e-6, 1e-8 -> ['598560.69', '1340338.9', '2294674.2']
+   nu=3 (kite)                             : delta = 1e-4, 1e-6, 1e-8 -> ['9.7319902e+9', '9.9950652e+11', '9.9999281e+13']
+
+(c) fibered positive densities rho_n of 1/(D_g^n D1 D2), 0 < x < P (P = P' = 1/sqrt2, m^2 = 0.01):
+   n=1: int_(x > 1e-3, 1e-5, 1e-7) rho_n = ['21.83096', '22.817835', '22.834625']
+   n=2: int_(x > 1e-3, 1e-5, 1e-7) rho_n = ['20202.848', '64422.288', '110002.64']
+   n=3: int_(x > 1e-3, 1e-5, 1e-7) rho_n = ['2.460857e+8', '3.4677671e+10', '3.4999708e+12']
+
+(d) soft power counting (connected hard complement): (M1) omega = n_a - V_S ; (M2) omega = 2 n_a
+   single soft phi (triangle)                                                    : I_S=1, V_S=0, n_a=2:  omega(M1) = +2   omega(M2) = +4
+   two soft rungs (planar/crossed two-loop ladder)                               : I_S=2, V_S=0, n_a=4:  omega(M1) = +4   omega(M2) = +8
+   soft psi line + adjacent soft rung impossible (2 soft lines at a non-external vertex force the third)
+   one-loop psi-bubble on a soft phi (bubble lines soft)                         : I_S=4, V_S=2, n_a=2:  omega(M1) = +0   omega(M2) = +4
+   two-loop kite self-energy on a soft phi                                       : I_S=7, V_S=4, n_a=2:  omega(M1) = -2   omega(M2) = +4
+   one-loop psi self-energy on a soft psi line (k -> p1)                         : I_S=4, V_S=2, n_a=2:  omega(M1) = +0   omega(M2) = +4
+   soft psi triangle with three soft phi legs on the external psi lines (3 loops): I_S=6, V_S=3, n_a=3:  omega(M1) = +0   omega(M2) = +6
+   soft psi box with four soft phi legs (4 loops)                                : I_S=8, V_S=4, n_a=4:  omega(M1) = +0   omega(M2) = +8
+   (M1): omega <= 0 for every self-energy insertion on a line that can be soft and for soft vertex/box subgraphs;
+   (M2) (phi^3_6, renormalizable): omega = 2 n_a > 0 for every soft subgraph with connected complement.

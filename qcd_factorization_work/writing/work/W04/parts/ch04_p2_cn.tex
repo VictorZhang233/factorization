@@ -1,0 +1,160 @@
+%% =====================================================================
+\section{Coleman--Norton 图像}\label{sec:ir-coleman-norton}
+
+Landau 方程有一个非常直观的物理解释：钳夹点对应在壳粒子在时空中的经典传播过程。这一解释使我们无需逐图求解 Landau 方程，就能对无质量 QCD 中一切图的钳夹面作出分类（\cref{sec:ir-pinch}）。
+
+\begin{definition}[钳夹面、内禀坐标与法坐标]\label{def:ir-pinch-surface}
+固定实外动量。(i)~实点 $k$ 称为 \emph{Landau 点}，若存在不全为零的 $\alpha_j\ge0$，只在在壳线集合 $S(k)=\{j:D_j(k)=0\}$ 上非零，使\cref{eq:ir-landau-k}成立；由\cref{thm:ir-landau-momentum}，每个被钳住的点都是 Landau 点。(ii)~在壳线集合与 $\alpha$ 的支集保持不变的 Landau 点构成的光滑连通集合称为一个\emph{钳夹面}（pinch surface）$\mathcal S$；把支集之外的线（$\alpha_j=0$，可以离壳）收缩为点所得的图称为 $\mathcal S$ 的\emph{约化图}（reduced diagram）。(iii)~在 $\mathcal S$ 的一点附近，沿 $\mathcal S$ 的坐标称为\emph{内禀坐标}（intrinsic coordinates），横越 $\mathcal S$ 的坐标称为\emph{法坐标}（normal coordinates）；被积函数只在法坐标趋于零时奇异。
+\uses{thm:ir-landau-momentum}
+\end{definition}
+
+\begin{proposition}[Coleman--Norton 定理（代数形式） \tagR]\label{prop:ir-coleman-norton}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设实点 $k_0$ 与 $\alpha$ 满足 $\alpha_j\ge0$ 的动量空间 Landau 方程\cref{eq:ir-landau-k}，各线的取向选为使其能量 $q_j^0\ge0$，并给每条 $\alpha_j>0$ 的线指定时空位移 $\Delta x_j=\alpha_j\,q_j(k_0)$（由线的起点指向终点）。则：
+(i)~圈方程成立当且仅当约化图的各顶点可以赋予时空位置 $x_v$，使每条 $\alpha_j>0$ 的线满足 $x_{\text{终}(j)}-x_{\text{始}(j)}=\Delta x_j$；
+(ii)~$q_j\ne0$ 的线描述以动量 $q_j$ 向未来自由传播的经典在壳粒子（速度 $\vec q_j/q_j^0$，无质量线沿光线运动），$\alpha_j=0$ 的线长度为零，收缩进顶点；
+(iii)~零动量的无质量线对任意 $\alpha_j$ 都有 $\Delta x_j=0$，不施加约束；若把它看作动量为 $\lambda q$、参数为 $\alpha_j=c/\lambda$ 的线在 $\lambda\to0$ 时的极限，则 $\Delta x_j=cq$ 保持有限而 $\alpha_jD_j=c\lambda q^2\to0$，所以软线可以连接任意两个顶点。
+反之，满足 (i)(ii) 的经典过程给出\cref{eq:ir-landau-k}的一个 $\alpha_j\ge0$ 的解。（本命题只涉及 Feynman 积分。）
+\uses{thm:ir-landau-momentum,def:ir-pinch-surface}
+\end{proposition}
+\begin{proof}
+完整证明见\cref{sec:appD-cn}。要点：圈方程 $\sum_j\eta_{jl}\alpha_jq_j=0$ 说的正是，沿每个圈的位移之和为零，即 $\sum_j\eta_{jl}\Delta x_j=0$；沿一棵生成树从某个顶点出发累加位移即可定义各 $x_v$，圈方程保证结果与路径无关。
+\end{proof}
+
+\cref{prop:ir-coleman-norton}把钳夹面翻译成经典的时空图像\cite{ColemanNorton1965}（\cref{fig:coleman-norton}）。以无质量顶点的共线钳夹为例（\cref{fig:vertex-regions}(b)）：在 $k=xp_1$ 处胶子线 $k$ 与夸克线 $p_1-k$ 在壳且平行于 $p_1$，离壳的反夸克线收缩进光子顶点 $X$；圈方程给出 $\alpha_0x=\alpha_1(1-x)$，于是两条线的位移 $\alpha_0xp_1$ 与 $\alpha_1(1-x)p_1$ 相等\cite[式~(58)]{Sterman:1995fz}：夸克与胶子在 $X$ 处产生，沿 $p_1$ 的光线同行，在 $Y_1=X+\alpha_0xp_1$ 处同时到达并结合；$\alpha\ge0$ 要求物理区 $0\le x\le1$。
+
+%%% BEGIN fig:coleman-norton
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 cone/.style={draw=gray!60,line width=0.5pt,dash pattern=on 3pt off 2pt},
+  t2 soft/.style={draw=green!45!black,line width=0.85pt,decorate,
+      decoration={fd photon,amplitude=0.9mm,segment length=17mm}},
+  t2 lab/.style={font=\footnotesize}]
+  % axes and light cone  (x^\pm=(t\pm z)/\sqrt2)
+  \draw[lcaxis] (-3.9,0) -- (4.0,0) node[below] {$z$};
+  \draw[lcaxis] (0,-1.45) -- (0,3.85) node[left] {$t$};
+  \draw[t2 cone] (0,0) -- (3.6,3.6) node[above right=-2pt,text=gray!50!black,font=\footnotesize] {$x^-=0$};
+  \draw[t2 cone] (0,0) -- (-3.6,3.6) node[above left=-2pt,text=gray!50!black,font=\footnotesize] {$x^+=0$};
+  % incoming virtual photon at rest (world line along t)
+  \draw[photon] (0,-1.3) -- (0,-0.17);
+  \node[t2 lab,anchor=west] at (0.1,-0.95) {$\gamma^*$（静止）};
+  % jet 1: quark along x^-=0, with a collinear gluon emitted at P1
+  \draw[quark=0.22] (0.11,0.11) -- (3.15,3.15);
+  \coordinate (P1) at (1.95,1.95);
+  \draw[gluon] (P1) -- (2.78,3.22);
+  \node[vertex] at (P1) {};
+  % jet 2: antiquark along x^+=0 (fermion-number arrow towards the vertex), collinear gluon at P2
+  \draw[quark=0.8] (-3.15,3.15) -- (-0.11,0.11);
+  \coordinate (P2) at (-1.95,1.95);
+  \draw[gluon] (P2) -- (-2.78,3.22);
+  \node[vertex] at (P2) {};
+  % soft (zero-momentum, long-wavelength) gluon exchanged between the jets
+  \coordinate (S1) at (1.3,1.3); \coordinate (S2) at (-1.25,1.25);
+  \draw[t2 soft] (S2) -- (S1);
+  \node[vertex] at (S1) {}; \node[vertex] at (S2) {};
+  \node[t2 lab,text=green!35!black,anchor=south] at (-0.66,1.38) {软胶子};
+  % hard vertex
+  \filldraw[hard blob] (0,0) circle[radius=0.16];
+  \node[t2 lab,anchor=north west] at (0.15,-0.05) {$H$};
+  % jet labels
+  \node[t2 lab,anchor=west,align=left] at (2.2,1.1) {$q$ 喷注：$\Delta x^\mu=\alpha\,p_1^\mu$\\（沿光锥 $x^-=0$）};
+  \node[t2 lab,anchor=east,align=right] at (-2.2,1.1) {$\bar q$ 喷注：$\Delta x^\mu=\alpha\,p_2^\mu$\\（沿光锥 $x^+=0$）};
+\end{tikzpicture}
+\caption{Coleman--Norton 定理的时空图像（$e^+e^-$ 湮灭，$\gamma^*$ 静止系，$z$ 轴取为喷注轴，$x^\pm=(t\pm z)/\sqrt2$）。钳夹面上每条在壳内线 $i$
+对应一段经典自由传播 $\Delta x_i^\mu=\alpha_i l_i^\mu$（$\alpha_i\ge0$，与该线的 Feynman 参数成正比）；由 Landau 方程，各顶点的时空位置彼此相容。离壳（硬）线的 $\alpha_i=0$，全部收缩为原点处的硬顶点 $H$；
+有限动量的无质量共线粒子沿光锥 $x^-=0$（$q$ 喷注）或 $x^+=0$（$\bar q$ 喷注）以光速运动，并可在同一光线上任意处分裂或重新结合（图中共线胶子与夸克线的夹角是为了看清而夸大的）。
+动量为零的软线（绿色长波长线）不受此约束：它在 Landau 方程中的贡献 $\alpha_i l_i^\mu$ 恒为零，与 $\alpha_i$ 无关；物理上它是波长无限长、不能局域化的量子，可以在两个喷注的任意位置被发射或吸收。
+绿线只是示意：它连接的两点一般是类空间隔的。}
+\label{fig:coleman-norton}
+\end{figure}
+%%% END fig:coleman-norton
+
+%%% BEGIN fig:vertex-regions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 soft/.style={draw=green!45!black},
+  t2 jetA/.style={draw=blue!55!black,fill=blue!10,line width=0.5pt},
+  t2 jetB/.style={draw=orange!75!black,fill=orange!14,line width=0.5pt},
+  t2 hard/.style={draw=black!70,fill=gray!35,line width=0.6pt},
+  t2 lab/.style={font=\footnotesize}]
+  % common geometry:  V = photon vertex,  E1/E2 = ends of the q / qbar legs,  G1/G2 = gluon vertices
+  % ======================= (a) soft gluon =======================
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.62!(E1)$); \coordinate (G2) at ($(V)!0.62!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetA,rotate around={28:($(V)!0.52!(E1)$)}] ($(V)!0.52!(E1)$) ellipse[x radius=1.55cm,y radius=0.27cm];
+      \draw[t2 jetB,rotate around={-28:($(V)!0.52!(E2)$)}] ($(V)!0.52!(E2)$) ellipse[x radius=1.55cm,y radius=0.27cm];
+    \end{scope}
+    \draw[photon] (-1.15,0) -- (V);
+    \draw[quark] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon,t2 soft] (G2) -- (G1);
+    \filldraw[t2 hard] (V) circle[radius=0.15];
+    \foreach \p in {G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.15,0);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) -- (G1);
+    \node[t2 lab,text=green!40!black,anchor=east] at ($(G1)!0.5!(G2)+(-0.16,0)$) {$S$};
+    \node at (0.75,-2.05) {(a)\ 软区：$k\to0$};
+  \end{scope}
+  % ======================= (b) gluon collinear to q =======================
+  \begin{scope}[xshift=5.2cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.8!(E1)$); \coordinate (G2) at ($(V)!0.12!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetA,rotate around={31:($(V)!0.5!(E1)+(0.05,-0.12)$)}] ($(V)!0.5!(E1)+(0.05,-0.12)$) ellipse[x radius=1.6cm,y radius=0.5cm];
+      \draw[t2 jetB,rotate around={-28:($(V)!0.62!(E2)$)}] ($(V)!0.62!(E2)$) ellipse[x radius=1.15cm,y radius=0.24cm];
+    \end{scope}
+    \draw[quark=0.35] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[plain] (G2) -- (V);
+    \draw[gluon] (G2) .. controls ($(V)!0.42!(E1)+(0.22,-0.5)$) and ($(V)!0.62!(E1)+(0.12,-0.38)$) .. (G1);
+    \filldraw[t2 hard] ($(V)!0.5!(G2)$) circle[radius=0.33];
+    \draw[photon] (-1.15,0) -- ($(V)!0.5!(G2)+(-0.33,0.03)$);
+    \foreach \p in {G1} \node[vertex] at (\p) {};
+    \node[t2 lab] at ($(V)!0.5!(G2)$) {$H$};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.3,0);
+    \path[mom={$p_1$},mom pos=0.55] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \path[mom'={$k$},mom sep=0.3cm] (G2) .. controls ($(V)!0.42!(E1)+(0.22,-0.5)$) and ($(V)!0.62!(E1)+(0.12,-0.38)$) .. (G1);
+    \node[t2 lab,text=blue!50!black] at (0.95,1.25) {$J_1$};
+    \node at (0.75,-2.05) {(b)\ $k\parallel p_1$};
+  \end{scope}
+  % ======================= (c) gluon collinear to qbar =======================
+  \begin{scope}[xshift=10.4cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (28:2.75); \coordinate (E2) at (-28:2.75);
+    \coordinate (G1) at ($(V)!0.12!(E1)$); \coordinate (G2) at ($(V)!0.8!(E2)$);
+    \begin{scope}[on background layer]
+      \draw[t2 jetB,rotate around={-31:($(V)!0.5!(E2)+(0.05,0.12)$)}] ($(V)!0.5!(E2)+(0.05,0.12)$) ellipse[x radius=1.6cm,y radius=0.5cm];
+      \draw[t2 jetA,rotate around={28:($(V)!0.62!(E1)$)}] ($(V)!0.62!(E1)$) ellipse[x radius=1.15cm,y radius=0.24cm];
+    \end{scope}
+    \draw[plain] (V) -- (G1);  \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark=0.65] (G2) -- (V);
+    \draw[gluon] (G1) .. controls ($(V)!0.42!(E2)+(0.22,0.5)$) and ($(V)!0.62!(E2)+(0.12,0.38)$) .. (G2);
+    \filldraw[t2 hard] ($(V)!0.5!(G1)$) circle[radius=0.33];
+    \draw[photon] (-1.15,0) -- ($(V)!0.5!(G1)+(-0.33,-0.03)$);
+    \foreach \p in {G2} \node[vertex] at (\p) {};
+    \node[t2 lab] at ($(V)!0.5!(G1)$) {$H$};
+    \path[mom={$q$},mom sep=0.27cm] (-1.15,0) -- (-0.3,0);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G2) -- (E2);
+    \path[mom={$-k$},mom sep=0.3cm] (G1) .. controls ($(V)!0.42!(E2)+(0.22,0.5)$) and ($(V)!0.62!(E2)+(0.12,0.38)$) .. (G2);
+    \node[t2 lab,text=orange!60!black] at (0.95,-1.25) {$J_2$};
+    \node at (0.75,-2.05) {(c)\ $k\parallel p_2$};
+  \end{scope}
+\end{tikzpicture}
+\caption{单圈无质量顶点 $\gamma^*(q)\to q(p_1)\,\bar q(p_2)$ 的三个钳夹面（领头区域）。胶子动量 $k$ 由反夸克线流向夸克线，
+内夸克线携带 $p_1-k$，内反夸克线携带 $p_2+k$。
+(a)~软区 $k\to0$：两条内费米子线在壳并分别平行于 $p_1$、$p_2$（蓝、橙色区域为两个喷注），零动量胶子（绿色）构成软子图 $S$，硬部分只剩光子顶点；
+(b)~$k=\alpha p_1$（$0<\alpha<1$）：胶子与内夸克线都在壳且平行于 $p_1$，同属喷注 $J_1$，而内反夸克线的虚度 $(p_2+\alpha p_1)^2=\alpha q^2$ 不小，收缩进硬部分 $H$；
+(c)~$k=-\beta p_2$（$0<\beta<1$）：与 (b) 镜像对称，胶子携带物理动量 $-k=\beta p_2$ 沿 $p_2$ 方向运动并属于 $J_2$，内夸克线的虚度 $(p_1+\beta p_2)^2=\beta q^2$ 不小。
+费米子线上的箭头表示费米子数流向，动量箭头单独画出。}
+\label{fig:vertex-regions}
+\end{figure}
+%%% END fig:vertex-regions
+
+(iii) 中的标度极限说明了软线的地位：动量为 $\lambda q$ 的线在 $\lambda\to0$ 时变成波长无限长的量子，可以连接分处两个以光速彼此远离的喷注上的顶点——有限动量的交换线做不到这一点；这正是软胶子能在不同喷注之间、乃至初态与末态之间传递相互作用的原因（Drell--Yan 中的相应图像见第~12~章的\cref{fig:glauber-exchange}）。这一图像只刻画实动量、$\alpha_j\ge0$ 的物理区钳夹，因而只能用来\emph{定位}长程敏感性，不能用来论证别处\emph{没有}奇异性——例如 DIS 色散关系所用的 $\omega$ 的非物理区，那里的论据是谱支撑与因果性（第~7~章）。%
+% (critic C15)
+更强的陈述“被钳住当且仅当可经典实现”还需要\cref{thm:ir-landau-momentum}的逆命题（\cref{rem:ir-landau-status}），只有全阶论证的地位。包含 Wilson 线的动量空间版本是 Collins 判据加上 Coleman--Norton 闭合条件的直接推论，并非新结果，第~24~章以前者为前提把它写成\cref{cor:front-coleman-norton}。

@@ -1,0 +1,629 @@
+% =====================================================================
+%  ch07_dis.tex —— 第 7 章  严格核心 II：深度非弹散射与算符乘积展开（writer W07）
+%  公式核对脚本：writing/work/W07/s1_kinematics.py … s6_np_examples.py（日志 writing/work/W07/logs/）
+% =====================================================================
+\chapter{严格核心 II：深度非弹散射与算符乘积展开}\label{ch:dis}
+
+深度非弹性散射（deep inelastic scattering，DIS）$\ell+A\to\ell'+X$ 是第一个、也是至今最干净的“强子在初态”的硬过程。在电磁耦合的最低阶，轻子与强子之间只交换一个类空虚光子；对强子末态 $X$ 全部求和以后，截面只依赖于强子态中两个电磁流对易子的矩阵元，即强子张量 $W^{\mu\nu}$（\cref{def:dis-kinematics}）。$W^{\mu\nu}$ 是前向虚 Compton 振幅 $T^{\mu\nu}$ 在物理割线上的吸收部分（\cref{def:dis-compton}），而 $T^{\mu\nu}$ 在非物理区 $|\omega|<1$（$\omega=1/x$）中的 Taylor 系数由两个流在短距离上的乘积决定——算符乘积展开（operator product expansion，OPE）正是这样进入因子化的。本章的主结论是结构函数矩的因子化（\cref{thm:dis-moments}，\tagR，$R_{\mathrm{OPE}}$）：对每个固定的偶数 $n$，
+\[
+\int_0^1\dd x\,x^{n-2}F_2(x,Q^2)=\sum_iC^{(n)}_{2,i}\Big(\frac{Q^2}{\mu^2},\as(\mu)\Big)A^{(n)}_i(\mu)+\order{\frac{1}{Q^2}},
+\]
+其中 Wilson 系数 $C^{(n)}_{2,i}$ 与靶无关，$A^{(n)}_i$ 是扭度 2 定域算符的约化矩阵元。这是“严格核心”中第一个含强子初态的结论；它的“严格”须读作“在给定 OPE 的前提下证明完整”（$R_{\mathrm{OPE}}$），而含夸克 QCD 的微扰 OPE 本身只有全阶论证（\cref{thm:dis-ope}，\tagA）。
+
+证明沿两条彼此独立的路线进行。\emph{部分子路线}（\cref{sec:dis-compton}与\cref{sec:dis-ope}）在重整化微扰论中对红外正规化的部分子靶进行：前向振幅在割开的 $\omega$ 平面中解析（\cref{prop:dis-compton-analytic}），色散关系把它的 Taylor 系数等同于结构函数的矩（\cref{prop:dis-dispersion}；最低的几个矩还需要振幅在 $|\omega|\to\infty$ 时的一个增长条件，见\cref{rem:dis-pt-growth}），而 Taylor 系数由欧氏 OPE 给出。含夸克 QCD 的微扰 OPE 被拆成三个子陈述——非例外欧氏动量下 Green 函数的逐图渐近展开、物理矩阵元只需规范不变算符、前向在壳部分子矩阵元——它们各自带标签（\cref{prop:dis-ope-euclid,prop:dis-ope-gi,prop:dis-ope-forward}）。\emph{强子路线}（\cref{sec:dis-np}）是非微扰的条件定理：对强子靶，欧氏 OPE 只在 $\omega$ 平面虚轴上一段长度为 $\order{M/Q}$ 的线段上提供信息（\cref{lem:dis-euclid-segment}），要把它变成固定 $n$ 的矩，还需要结构函数的正性与一个由 Wightman 公理证明、增长指数与 $Q$ 无关的有限减除色散关系（\cref{prop:dis-dispersion-np,thm:dis-fixed-n}）；只有最低的几个矩（含动量求和规则）需要真正的增长假设（\cref{prop:dis-low-moments}）。流行的说法“把欧氏 OPE 代入、收缩、比较系数就得到强子结构函数的矩”因此是错的（误解 M34）。此后各节讨论重整化群与标度破坏、单圈 Wilson 系数、从矩到 $x$ 空间（只能得到弱收敛）、高扭度与靶质量修正，以及极化 DIS 的 Bjorken 求和规则；用算符定义的部分子分布写出的 $x$ 空间定理在第~8~章完成（\cref{thm:pdf-dis-xspace}）。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:dis-W-structure,lem:dis-euclid-segment,lem:dis-twist-classification,lem:dis-twist-chirality,prop:dis-low-moments}（\tagR，$R_{\mathrm{def}}$）；\cref{prop:dis-compton-analytic,prop:dis-dispersion,lem:dis-tree-ope,prop:dis-chiral-suppression,prop:dis-c-oneloop}（\tagR，$R_{\mathrm{PT}}$；\cref{prop:dis-dispersion}对低阶矩带部分子增长条件）；\cref{thm:dis-moments,prop:dis-wilson-partons,prop:dis-ope-rg,cor:dis-scaling,prop:dis-twist4,prop:dis-tmc,thm:dis-bjorken}（\tagR，$R_{\mathrm{OPE}}$）；\cref{prop:dis-dispersion-np}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:intro-wightman}）、\cref{lem:dis-ope-segment}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:intro-np-ope}）、\cref{thm:dis-fixed-n,thm:dis-moments-np,cor:dis-weak-xspace}（\tagR，$R_{\mathrm{cond}}$，前提为\cref{asm:intro-wightman}等全局假设）。\par
+\textbf{给出全阶论证：}\cref{thm:dis-ope}及其三个子陈述\cref{prop:dis-ope-euclid,prop:dis-ope-gi,prop:dis-ope-forward}（\tagA；瓶颈：所引欧氏展开定理的适用范围，\cref{asm:appM-brst-ope}，\cref{asm:appM-forward}）；\cref{prop:dis-light-cone}（\tagA）。\par
+\textbf{没有证明：}含夸克 QCD 的 OPE 的严格证明；非微扰 OPE（\cref{asm:intro-np-ope}）；低阶矩（含动量求和规则）所需的增长条件（强子：\cref{asm:intro-growth}；部分子靶在高阶：\cref{rem:dis-pt-growth}）；$x$ 空间逐点的 $\order{1/Q^2}$（\cref{rem:dis-nonuniform}）。
+\end{tcolorbox}
+
+\paragraph{证明的结构。}两条路线的依赖链如下（箭头表示“被用于”）：
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item 部分子路线：\cref{prop:dis-compton-analytic}$\to$\cref{prop:dis-dispersion}；\cref{lem:dis-tree-ope}与\cref{prop:dis-ope-euclid}$\to$\cref{prop:dis-ope-gi}$\to$\cref{prop:dis-ope-forward}（三者合称\cref{thm:dis-ope}）$\to$\cref{thm:dis-moments}(a)$\to$\cref{prop:dis-ope-rg}$\to$\cref{cor:dis-scaling}。
+\item 强子路线：\cref{prop:dis-dispersion-np}、\cref{lem:dis-euclid-segment}$\to$\cref{lem:dis-ope-segment}$\to$\cref{thm:dis-fixed-n}$\to$\cref{thm:dis-moments-np}$\to$\cref{thm:dis-moments}(b)与\cref{cor:dis-weak-xspace}。
+\end{enumerate}
+两条路线的精确形式与完整证明大多在附录~M，对应关系见本章末的\cref{tab:dis-correspondence}。
+
+\paragraph{约定。}记号见\cref{tab:front-notation}。本章的展开参数是 $\as/(2\pi)$（极化一节中的 Bjorken 求和规则按文献习惯用 $a=\as/\pi$，届时注明）；电荷 $e_q$ 以质子电荷为单位；维数正规化取 $D=4-2\varepsilon$。靶沿 $+z$ 方向运动，光锥分量 $v^\pm=(v^0\pm v^3)/\sqrt2$，$n_B\cdot v=v^+$。部分子靶 $j$ 的结构函数记作 $\hat F^{(j)}_a(z)$，$z=Q^2/(2p\cdot q)$。
+
+% ---------------------------------------------------------------------
+\section{运动学、强子张量与结构函数}\label{sec:dis-kinematics}
+
+在电磁耦合的最低阶，DIS 振幅是轻子流、光子传播子与强子流矩阵元的乘积；强相互作用的全部效应都包含在后者之中，而且这一分离在 QCD 中是精确的（只用到 $\alpha$ 的最低阶）。截面中出现的是强子流矩阵元的“平方”对末态的求和，由完备性它化为一个强子态中两个流的乘积，这就是强子张量。
+
+\begin{definition}[DIS 运动学与强子张量]\label{def:dis-kinematics}
+考虑 $\ell(\ell)+A(P)\to\ell'(\ell')+X$，单光子交换，$q=\ell-\ell'$，$P^2=M^2$。定义
+\begin{equation}\label{eq:dis-invariants}
+Q^2=-q^2>0,\qquad \nu=P\cdot q,\qquad x=\frac{Q^2}{2P\cdot q},\qquad y=\frac{P\cdot q}{P\cdot\ell},\qquad \omega=\frac1x=\frac{2P\cdot q}{Q^2},
+\end{equation}
+末态不变质量 $W^2=(P+q)^2=M^2+Q^2(1-x)/x$。电磁流 $j^\mu=\sum_qe_q\bar q\gamma^\mu q$。对靶自旋平均、态归一化为 $\langle P'|P\rangle=(2\pi)^32E\,\delta^3(\vec P'-\vec P)$ 时，强子张量与结构函数 $F_{1,2}(x,Q^2)$ 由
+\begin{equation}\label{eq:dis-W}
+W^{\mu\nu}=\frac1{4\pi}\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[j^\mu(z),j^\nu(0)]|P\rangle
+=\Big(-g^{\mu\nu}+\frac{q^\mu q^\nu}{q^2}\Big)F_1+\frac{\tilde P^\mu\tilde P^\nu}{P\cdot q}\,F_2,\qquad \tilde P=P-\frac{P\cdot q}{q^2}\,q
+\end{equation}
+定义（\cref{prop:dis-W-structure}说明这一分解是一般的）。纵向结构函数为% VF-CONV-13
+
+\begin{equation}\label{eq:dis-FL}
+F_L=\Big(1+\frac{4M^2x^2}{Q^2}\Big)F_2-2xF_1\ \xrightarrow{\ M\to0\ }\ F_2-2xF_1 .
+\end{equation}
+对非极化、无质量的轻子，截面为
+\begin{equation}\label{eq:dis-xsec}
+\frac{\dd^2\sigma}{\dd x\,\dd Q^2}=\frac{4\pi\alpha^2}{xQ^4}\Big[xy^2F_1+\Big(1-y-\frac{x^2y^2M^2}{Q^2}\Big)F_2\Big]
+\ \xrightarrow{\ M\to0\ }\ \frac{2\pi\alpha^2}{xQ^4}\Big[\big(1+(1-y)^2\big)F_2-y^2F_L\Big].
+\end{equation}
+Bjorken 极限指 $Q^2\to\infty$、$x$ 固定。
+% uses: none
+\end{definition}
+
+运动学见\cref{fig:dis-kinematics}。$W^{\mu\nu}$ 前的因子 $1/(4\pi)$ 是使部分子模型给出 $F_2=\sum_qe_q^2x(q+\bar q)$ 的归一化（\cref{ex:dis-free-quark}给出自由夸克的 $F_2=e_q^2\delta(1-x)$）。
+
+\paragraph{截面公式的推导。}这一推导只用到 QED 的最低阶，我们写出全部步骤（符号与因子由脚本 \texttt{s1\_kinematics.py} 核对）。振幅为 $\mathcal M=\frac{e^2}{q^2}\,\bar u(\ell')\gamma_\mu u(\ell)\,\langle X|j^\mu(0)|P\rangle$。轻子自旋平均给出
+\[
+L_{\mu\nu}=\tfrac12\TrD[\sla\ell'\gamma_\mu\sla\ell\gamma_\nu]=2\big(\ell_\mu\ell'_\nu+\ell'_\mu\ell_\nu-g_{\mu\nu}\,\ell\cdot\ell'\big),
+\]
+对末态求和并用\cref{prop:dis-W-structure}证明中的完备性公式 $\sum_X(2\pi)^4\delta^4(P+q-p_X)\langle P|j^\mu|X\rangle\langle X|j^\nu|P\rangle=4\pi W^{\mu\nu}$，再乘以通量因子 $1/(4P\cdot\ell)$ 与轻子相空间 $\dd^3\ell'/[(2\pi)^32E']$，得
+\[
+\dd\sigma=\frac{e^4}{4P\cdot\ell\,Q^4}\,L_{\mu\nu}\,4\pi W^{\mu\nu}\,\frac{\dd^3\ell'}{(2\pi)^32E'}=\frac{\alpha^2}{P\cdot\ell\,E'\,Q^4}\,L_{\mu\nu}W^{\mu\nu}\,\dd^3\ell' .
+\]
+由 $\ell^2=\ell'^2=0$ 有 $\ell\cdot\ell'=Q^2/2$，$\ell\cdot q=-Q^2/2$，$\ell'\cdot q=Q^2/2$，故 $L_{\mu\nu}q^\nu=0$（轻子流守恒），$L_{\mu\nu}g^{\mu\nu}=-2Q^2$，$L_{\mu\nu}P^\mu P^\nu=4(P\cdot\ell)(P\cdot\ell')-M^2Q^2$；用 $P\cdot\ell=P\cdot q/y$、$P\cdot\ell'=P\cdot q\,(1-y)/y$ 与 $P\cdot q=Q^2/(2x)$，
+\[
+L_{\mu\nu}W^{\mu\nu}=2Q^2F_1+\Big[\frac{2Q^2(1-y)}{xy^2}-2xM^2\Big]F_2 .
+\]
+在靶静止系中 $P\cdot\ell=ME$，对方位角积分后 $\dd^3\ell'=2\pi E'^2\dd E'\,\dd\cos\theta$；变量 $(E',\cos\theta)\mapsto(Q^2,\nu)$，$Q^2=2EE'(1-\cos\theta)$，$\nu=M(E-E')$ 的 Jacobi 行列式绝对值为 $2EE'M$，再在固定 $Q^2$ 下换到 $x$：$\dd\nu=\frac{Q^2}{2x^2}\dd x$。合起来 $\dd\sigma/\dd x\,\dd Q^2=\frac{\pi\alpha^2}{2M^2E^2Q^2x^2}L_{\mu\nu}W^{\mu\nu}$；代入 $M^2E^2=Q^4/(4x^2y^2)$ 即得\cref{eq:dis-xsec}的第一式。用 $2xF_1=F_2-F_L$（$M\to0$）把 $xy^2F_1$ 换成 $\frac{y^2}2(F_2-F_L)$，得第二式。
+
+%%% BEGIN fig:dis-kinematics
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  \coordinate (V) at (0,1.75);
+  \coordinate (B) at (0,0);
+  \draw[quark] (-2.4,2.6) -- (V);
+  \draw[quark] (V) -- (2.4,2.6);
+  \draw[photon] (V) -- (0,0.5);
+  \draw[t1 hadron] (-2.4,0) -- (B);
+  \foreach \a in {24,8,-8,-24} \draw[plain] (B) -- ++(\a:2.3);
+  \draw[hadron blob] (B) circle[radius=0.5];
+  \node[vertex] at (V) {};
+  % momenta
+  \path[mom={$\ell$}] (-2.4,2.6) -- (V);
+  \path[mom={$\ell'$}] (V) -- (2.4,2.6);
+  \path[mom={$q$}] (V) -- (0,0.5);
+  \path[mom={$P$},mom sep=0.3cm] (-2.4,0) -- (-0.5,0);
+  % particle labels (lepton momenta are labelled by the momentum arrows)
+  \node[left,inner sep=5pt] at (0,1.12) {$\gamma^*$};
+  \node[left] at (-2.4,0) {$A$};
+  \node[right] at (2.45,0) {$X$};
+  % invariants
+  \node[right,align=left,font=\small] at (3.4,1.2)
+    {$q=\ell-\ell',\qquad Q^2=-q^2>0$\\[3pt]
+     $x=\dfrac{Q^2}{2P\cdot q},\qquad y=\dfrac{P\cdot q}{P\cdot\ell}$\\[8pt]
+     $W^2=(P+q)^2=M^2+\dfrac{1-x}{x}\,Q^2$};
+\end{tikzpicture}
+\caption{深度非弹性散射 $\ell+A(P)\to\ell'+X$ 的运动学（单光子交换）。轻子放出类空虚光子 $\gamma^*(q)$，
+被强子 $A$ 吸收；$X$ 为不被观测的强子末态，$W$ 为其不变质量，$M$ 为强子质量。Bjorken 极限为
+$Q^2\to\infty$、$x$ 固定。}
+\label{fig:dis-kinematics}
+\end{figure}
+%%% END fig:dis-kinematics
+
+\begin{proposition}[强子张量的一般结构 \tagR]\label{prop:dis-W-structure}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）对自旋平均的靶：
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item $q_\mu W^{\mu\nu}=0=W^{\mu\nu}q_\nu$；
+\item 由 $g^{\mu\nu}$、$P$、$q$ 构成并满足 (i)、宇称不变与厄米性的最一般二阶张量就是\cref{eq:dis-W}右端的两项，$F_1$、$F_2$ 是实函数；
+\item 对任意复矢量 $a_\mu$，$a_\mu W^{\mu\nu}a^*_\nu\ge0$。取横向极化 $\epsilon_T$（$\epsilon_T\cdot P=\epsilon_T\cdot q=0$，$\epsilon_T^2=-1$）与纵向极化 $\epsilon_L=\tilde P/\sqrt{\tilde P^2}$，有
+\begin{equation}\label{eq:dis-positivity}
+\epsilon_{T\mu}W^{\mu\nu}\epsilon_{T\nu}=F_1\ge0,\qquad 2x\,\epsilon_{L\mu}W^{\mu\nu}\epsilon_{L\nu}=F_L\ge0,\qquad \Big(1+\frac{4M^2x^2}{Q^2}\Big)F_2=F_L+2xF_1\ge0 ;
+\end{equation}
+\item $x>1$ 时 $W^{\mu\nu}=0$；$x=1$ 处只有靶本身作为中间态（弹性散射）贡献。
+\end{enumerate}
+非微扰地位：\cref{asm:intro-wightman}（MA0：态的完备性、谱条件与宇称）。
+\uses{def:dis-kinematics,asm:intro-wightman}
+\end{proposition}
+
+\begin{proof}
+(i) 由流守恒 $\partial_\mu j^\mu=0$：$q_\mu\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[j^\mu(z),j^\nu(0)]|P\rangle=\ii\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|[\partial_\mu j^\mu(z),j^\nu(0)]|P\rangle=0$（对易子的矩阵元是缓增分布，分部积分无边界项）。对第二个指标，先用平移不变性 $\langle P|[j^\mu(z),j^\nu(0)]|P\rangle=\langle P|[j^\mu(0),j^\nu(-z)]|P\rangle$，再同样分部积分。
+
+(ii) 由 $g$、$P$、$q$ 构成的二阶张量（不用 $\epsilon$ 张量）是 $Ag^{\mu\nu}+BP^\mu P^\nu+Cq^\mu q^\nu+D(P^\mu q^\nu+q^\mu P^\nu)+E(P^\mu q^\nu-q^\mu P^\nu)$。$q_\mu W^{\mu\nu}=0$ 中 $P^\nu$ 与 $q^\nu$ 的系数给出 $BP\cdot q+(D-E)q^2=0$ 与 $A+Cq^2+(D+E)P\cdot q=0$；$W^{\mu\nu}q_\nu=0$ 给出把 $E$ 换成 $-E$ 的同样两式。四式联立得 $E=0$、$D=-BP\cdot q/q^2$、$A=B(P\cdot q)^2/q^2-Cq^2$，剩下的两个自由参数正好重组为\cref{eq:dis-W}的两项。唯一的另一个结构 $\epsilon^{\mu\nu\rho\sigma}P_\rho q_\sigma$ 是赝张量：电磁流是矢量流，宇称不变且靶非极化时它的系数为零（对弱流它给出 $F_3$）。流的厄米性给出 $(W^{\mu\nu})^*=W^{\nu\mu}$，故对称部分的系数为实数。
+
+(iii) 在 $P\cdot q>0$ 时插入完备态。对易子的第二项 $\int\ee^{\ii q\cdot z}\langle P|j^\nu(0)j^\mu(z)|P\rangle$ 只含 $p_X=P-q$ 的态，而 $(P-q)^2=M^2-Q^2(1+x)/x<M^2$；靶的超选择扇区中没有这样的态（\cref{asm:intro-wightman}(W2)），故它为零。剩下
+\begin{equation}\label{eq:dis-W-completeness}
+W^{\mu\nu}=\frac1{4\pi}\sum_X(2\pi)^4\delta^4(P+q-p_X)\,\langle P|j^\mu(0)|X\rangle\langle X|j^\nu(0)|P\rangle .
+\end{equation}
+记 $J^\nu_X=\langle X|j^\nu(0)|P\rangle$，由流的厄米性 $\langle P|j^\mu|X\rangle=(J^\mu_X)^*$，于是 $a_\mu W^{\mu\nu}a^*_\nu=\frac1{4\pi}\sum_X(2\pi)^4\delta^4(\cdots)\,|a^*_\nu J^\nu_X|^2\ge0$。对 $\epsilon_T$：$\epsilon_T\cdot(-g+qq/q^2)\cdot\epsilon_T=-\epsilon_T^2=1$，$\epsilon_T\cdot\tilde P=0$，得第一式。对 $\epsilon_L$：$\tilde P\cdot q=0$，$\tilde P^2=M^2+(P\cdot q)^2/Q^2>0$，故 $\epsilon_L\cdot W\cdot\epsilon_L=-F_1+\tilde P^2F_2/(P\cdot q)$；用 $P\cdot q=Q^2/(2x)$，$\tilde P^2/(P\cdot q)=\frac1{2x}\big(1+\frac{4M^2x^2}{Q^2}\big)$，于是 $2x\,\epsilon_L\cdot W\cdot\epsilon_L=(1+\frac{4M^2x^2}{Q^2})F_2-2xF_1=F_L$。第三式即\cref{eq:dis-FL}。
+
+(iv) 由\cref{eq:dis-W-completeness}，只有 $p_X=P+q$ 的态贡献；谱条件要求 $p_X^2=W^2=M^2+Q^2(1-x)/x\ge M^2$，即 $x\le1$，且 $x=1$ 时 $W^2=M^2$，只有靶本身（单粒子态）可以作为中间态。
+\end{proof}
+
+正性 (iii) 是强子路线的关键输入（\cref{thm:dis-fixed-n}）。对部分子靶，在固定阶的微扰论中结构函数一般不是正的（它们含加号分布与 $\delta(1-x)$，且有 $\overline{\rm MS}$ 减除），所以正性论证只属于非微扰层次。
+
+% ---------------------------------------------------------------------
+\section{前向 Compton 振幅：解析性、交叉与色散关系（部分子靶）}\label{sec:dis-compton}
+
+$W^{\mu\nu}$ 由对易子定义，只在物理区 $0<x\le1$ 有意义；OPE 却是关于编时乘积在欧氏动量下的陈述。连接二者的是前向虚 Compton 振幅：它的吸收部分是 $W^{\mu\nu}$，它的 Taylor 系数在非物理点 $\omega=0$ 处计算。本节对部分子靶建立这一联系；强子靶的对应陈述需要另外的工具，放在\cref{sec:dis-np}。
+
+\begin{definition}[前向 Compton 振幅]\label{def:dis-compton}
+\begin{equation}\label{eq:dis-T}
+T^{\mu\nu}(P,q)=\ii\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|T\,j^\mu(z)j^\nu(0)|P\rangle
+=-\tilde g^{\mu\nu}\,T_1(\omega,Q^2)+\frac{\tilde P^\mu\tilde P^\nu}{P\cdot q}\,T_2(\omega,Q^2),\qquad \tilde g^{\mu\nu}=g^{\mu\nu}-\frac{q^\mu q^\nu}{q^2},
+\end{equation}
+$\tilde P$ 与\cref{eq:dis-W}相同；$\omega=2P\cdot q/Q^2$。在 $\omega=0$ 附近，$T_2$ 的 Taylor 展开记作 $T_2=\sum_{n}t_n\,\omega^{n-1}$（$t_n$ 称为 $T_2$ 的 Taylor 系数），$T_1=T_1(0)+\sum_n\tau_n\,\omega^n$。% VF-CONV-14
+对强子靶，编时乘积在 $z=0$ 处的协变定义只确定到接触项（局域多项式），这一点由\cref{asm:intro-wightman}(W4) 处理；对部分子靶，$T^{\mu\nu}$ 就是截腿的前向 Feynman 图之和。
+\uses{def:dis-kinematics}
+\end{definition}
+
+领头阶的两个图（$s$ 道与 $u$ 道“手提包”图）见\cref{fig:forward-compton}。
+
+%%% BEGIN fig:forward-compton
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (vl) at (-0.95,1.9); \coordinate (vr) at (0.95,1.9);
+  \draw[quark] (-0.95,0.3) -- (vl);
+  \draw[quark] (vl) -- (vr);
+  \draw[quark] (vr) -- (0.95,0.3);
+  \draw[photon] (-2.1,3.3) -- (vl);
+  \draw[photon] (vr) -- (2.1,3.3);
+  \draw[t1 hadron] (-2.4,0) -- (0,0);
+  \draw[t1 hadron] (0,0) -- (2.4,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.25,y radius=0.45];
+  \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+  \path[mom={$k$}] (-0.95,0.42) -- (vl);
+  \path[mom={$k$}] (vr) -- (0.95,0.42);
+  \path[mom'={$k+q$}] (vl) -- (vr);
+  \path[mom'={$q$}] (-2.1,3.3) -- (vl);
+  \path[mom'={$q$}] (vr) -- (2.1,3.3);
+  \node[left] at (-2.1,3.3) {$\nu$};
+  \node[right] at (2.1,3.3) {$\mu$};
+  \node[left] at (-2.4,0) {$P$}; \node[right] at (2.4,0) {$P$};
+\end{tikzpicture}
+\caption{$s$ 道}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[fd]
+  \coordinate (vl) at (-0.95,1.9); \coordinate (vr) at (0.95,1.9);
+  \coordinate (gn) at (-1.9,3.75); \coordinate (gm) at (1.9,3.75);
+  \coordinate (gx) at (intersection of gn--vr and vl--gm);
+  \draw[quark] (-0.95,0.3) -- (vl);
+  \draw[quark] (vl) -- (vr);
+  \draw[quark] (vr) -- (0.95,0.3);
+  % the mu photon passes over the nu photon: white gap in the latter at the crossing
+  \draw[photon] (gn) -- (vr);
+  \draw[white,line width=6pt,line cap=butt] ($(gx)!0.3cm!(vl)$) -- ($(gx)!0.3cm!(gm)$);
+  \draw[photon] (vl) -- (gm);
+  \draw[t1 hadron] (-2.4,0) -- (0,0);
+  \draw[t1 hadron] (0,0) -- (2.4,0);
+  \draw[hadron blob] (0,0) ellipse[x radius=1.25,y radius=0.45];
+  \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+  \path[mom={$k$}] (-0.95,0.42) -- (vl);
+  \path[mom={$k$}] (vr) -- (0.95,0.42);
+  \path[mom'={$k-q$}] (vl) -- (vr);
+  \path[mom'={$q$},mom pos=0.2] (gn) -- (vr);
+  \path[mom'={$q$},mom pos=0.8] (vl) -- (gm);
+  \node[left] at (-1.9,3.75) {$\nu$};
+  \node[right] at (1.9,3.75) {$\mu$};
+  \node[left] at (-2.4,0) {$P$}; \node[right] at (2.4,0) {$P$};
+\end{tikzpicture}
+\caption{$u$ 道（交叉图）}
+\end{subfigure}
+\caption{前向虚 Compton 振幅 $T^{\mu\nu}=\ii\int\dd^4z\,\ee^{\ii q\cdot z}\langle P|T\,j^\mu(z)j^\nu(0)|P\rangle$ 的领头阶（手提包）图。
+(a) 夸克先在 $\nu$ 顶点吸收入射虚光子，再在 $\mu$ 顶点放出出射虚光子，中间夸克动量为 $k+q$；
+(b) 交叉图，先放出后吸收，中间夸克动量为 $k-q$。对夸克动量 $k$ 积分；领头幂次下 $k\simeq\xi P$。
+(b) 由 (a) 作 $q\to-q$、$\mu\leftrightarrow\nu$ 得到，二者之和体现交叉对称性 $T^{\mu\nu}(P,q)=T^{\nu\mu}(P,-q)$。
+与\cref{fig:handbag}不同，这里没有末态割线：$W^{\mu\nu}$ 由 $T^{\mu\nu}$ 在 $s$ 道割线上的不连续性给出。}
+\label{fig:forward-compton}
+\end{figure}
+%%% END fig:forward-compton
+
+\begin{proposition}[解析性与交叉（部分子靶） \tagR]\label{prop:dis-compton-analytic}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）设靶是夸克或胶子，其红外发散由外腿的类空离壳性 $p^2=-P^2<0$ 正规化（内线质量任意，$\ge0$）。$T^{\mu\nu}$ 为截腿的前向 Green 函数对外腿自旋（极化）的平均，$W^{\mu\nu}$ 为相应割图之和；$T_1$、$T_2$（以及 $F_1$、$F_2$）定义为 $T^{\mu\nu}$（以及 $W^{\mu\nu}$）的张量分解中 $-g^{\mu\nu}$ 的系数与 $p^\mu p^\nu/\nu$ 的系数（$T^{\mu\nu}$ 横向时即\cref{eq:dis-T}中的不变振幅）。在微扰论的每一阶、固定 $Q^2>0$，记 $\omega_{\mathrm{th}}=1+P^2/Q^2$：
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=0pt,topsep=2pt]
+\item $T_1$、$T_2$ 在 $\mathcal C_{\mathrm{th}}=\mathbb C\setminus\big((-\infty,-\omega_{\mathrm{th}}]\cup[\omega_{\mathrm{th}},\infty)\big)$ 中解析（因而在沿实轴 $|\omega|\ge1$ 割开的平面中解析），并且是实解析的：$T_i(\omega^*)=T_i(\omega)^*$；
+\item $T_1(-\omega)=T_1(\omega)$，$T_2(-\omega)=-T_2(\omega)$；
+\item 对实的 $\omega\ge1$，作为分布 $\Imag T_i(\omega+\ii0)=2\pi F_i(1/\omega)$（$1\le\omega<\omega_{\mathrm{th}}$ 时两边都为零）。
+\end{enumerate}
+（本命题只涉及部分子态。）
+\uses{def:dis-compton,def:ir-landau-setup,prop:prelim-optical}
+\end{proposition}
+
+\begin{proof}
+(b) 前向图的集合在交换两个流顶点 $(\mu,q)\leftrightarrow(\nu,-q)$ 下不变，故 $T^{\mu\nu}(p,q)=T^{\nu\mu}(p,-q)$。在 $q\to-q$ 下 $\nu=p\cdot q\to-\nu$，$\omega\to-\omega$。自旋（极化）平均且不含 $\gamma_5$ 的前向振幅关于 $\mu\nu$ 对称：反对称结构只可能是 $p^\mu q^\nu-q^\mu p^\nu$ 或 $\epsilon^{\mu\nu\rho\sigma}p_\rho q_\sigma$，后者需要 $\gamma_5$ 或自旋，前者与对称的 $g^{\mu\nu}$、$p^\mu p^\nu$ 的系数无关。于是 $g^{\mu\nu}$ 的系数是 $\omega$ 的偶函数，$p^\mu p^\nu$ 的系数也是偶函数，乘以 $\nu$ 后 $T_2$ 为奇函数。
+
+(c) 由割图规则，每一阶 $2\Imag T^{\mu\nu}$ 等于前向图在 $s$ 道（$P\cdot q>0$）的全部割之和，即 $4\pi W^{\mu\nu}$（\cref{prop:prelim-optical}(b)；对离壳外腿这是关于 Feynman 积分的恒等式，$W^{\mu\nu}$ 即按此定义）。取张量系数即得 (c)；$u$ 道的割要求 $(p-q)^2>0$，在 $\omega>0$ 时不出现。
+
+(a) 张量积分在 Feynman 参数（$\alpha$）表示中直接给出各张量结构 $g^{\mu\nu}$、$p^\mu p^\nu$、$p^\mu q^\nu$、$q^\mu p^\nu$、$q^\mu q^\nu$ 的系数：圈动量平移到 $k_c(\alpha)$（$p$、$q$ 的线性组合，系数是 $\alpha$ 的有理函数）后作 Gauss 积分，得到形如
+\begin{equation}\label{eq:dis-alpha-rep}
+\int_{\Delta}\dd\mu(\alpha)\;h(\alpha,\omega)\,\mathcal U(\alpha)^{a}\,\mathcal F(\alpha,\omega)^{-c}
+\end{equation}
+的参数积分（\cref{def:ir-landau-setup}），其中 $h$ 是 $\alpha$ 与 $\omega$ 的多项式，$a,c$ 依赖于 $D$；不出现 Gram 行列式。第二 Symanzik 多项式是对图的生成 2-森林 $T$ 的求和，$\mathcal F=\sum_T\alpha^{E\setminus T}(-s_T)+\mathcal U\sum_j\alpha_jm_j^2$，$s_T$ 是流入 $T$ 的一个连通分支的外动量之和的平方。前向运动学中流入一个分支的外动量为 $c_pp+c_qq$，$c_p,c_q\in\{0,\pm1\}$，故
+\[
+-s_T=c_p^2P^2+c_q^2Q^2-c_pc_q\,\omega Q^2,\qquad \mathcal F=A(\alpha)+\omega B(\alpha),
+\]
+$A=\sum_T\alpha^{E\setminus T}(c_p^2P^2+c_q^2Q^2)+\mathcal U\sum_j\alpha_jm_j^2\ge0$，$B=-Q^2\sum_Tc_pc_q\,\alpha^{E\setminus T}$ 为实数。因为两个流顶点不同，存在分开它们的 2-森林（$c_q\neq0$），所以在单纯形 $\Delta$ 的内部 $A>0$。对 $c_pc_q\ne0$ 的单项式，$A$ 中的系数是 $P^2+Q^2=Q^2\omega_{\mathrm{th}}$，而 $|B|$ 中的系数是 $Q^2$。由此对 $\omega=\omega_1+\ii\omega_2$：若 $|\omega_1|<\omega_{\mathrm{th}}$，则 $\Real\mathcal F=A+\omega_1B\ge(1-|\omega_1|/\omega_{\mathrm{th}})A>0$；若 $|\omega_1|\ge\omega_{\mathrm{th}}$ 而 $\omega_2\ne0$，则 $|\mathcal F|^2=(A+\omega_1B)^2+\omega_2^2B^2\ge(1-|\cos\theta|)(A^2+|\omega|^2B^2)$（$\theta=\arg\omega$），故 $|\mathcal F|\ge\sqrt{1-|\cos\theta|}\,A$。总之在 $\mathcal C_{\mathrm{th}}$ 的每个紧子集 $K$ 上 $|\mathcal F|\ge c_KA$，$c_K>0$。于是\cref{eq:dis-alpha-rep}的被积函数在 $K$ 上被 $\omega=0$ 处的被积函数乘以常数所控制；在参数积分绝对收敛的 $D$ 区域内，由控制收敛与 Morera 定理，积分在 $\mathcal C_{\mathrm{th}}$ 中解析。到 $D=4-2\varepsilon$ 附近的亚纯延拓也保持这一解析性：$B$ 的每个单项式都出现在 $A$ 中，故对 $\omega\in\mathcal C_{\mathrm{th}}$，$\mathcal F$ 与 $A$ 的 Newton 多面体相同，扇区分解在每个扇区中把二者写成同一个单项式乘以满足同样下界的非零因子；$\overline{\rm MS}$ 抵消项是外动量的多项式，因而是 $\omega$ 的多项式。$A$、$B$ 为实数给出实解析性。$T_1=-(g^{\mu\nu}$ 的系数$)$，$T_2=\nu\times(p^\mu p^\nu$ 的系数$)$ 都是这样的函数的有限和。
+\end{proof}
+
+对外腿在壳的部分子（例如在纯维数正规化中的无质量夸克与胶子），流守恒使 $T^{\mu\nu}$ 横向，上面的系数就是\cref{eq:dis-T}中的不变振幅；那里相应的结论是逐个 Laurent 系数地证明的，并且胶子靶在 $\omega=0$ 的正则性只有全阶论证（附录~M 的\cref{cor:appM-cut-plane}）。强子靶的解析性需要 Wightman 公理，见\cref{prop:dis-dispersion-np}。
+
+\cref{fig:omega-plane}画出了 $\omega$ 平面的解析结构与下面证明所用的围道。
+
+%%% BEGIN fig:omega-plane
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 bcut/.style={draw,line width=0.9pt,decorate,
+           decoration={zigzag,segment length=4.2pt,amplitude=1.6pt}},
+         t1 contour/.style={draw,blue!60!black,line width=0.9pt},
+         t1 carrow/.style={postaction={decorate,decoration={markings,
+           mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}},
+         t1 carrow/.default=0.5}
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.92]
+  \draw[lcaxis] (-3.3,0) -- (3.45,0) node[below left,inner sep=2pt]{$\Real\omega$};
+  \draw[lcaxis] (0,-2.45) -- (0,2.6) node[left,inner sep=3pt]{$\Imag\omega$};
+  \draw[t1 bcut] (1,0) -- (3.2,0);
+  \draw[t1 bcut] (-1,0) -- (-3.2,0);
+  \fill (1,0) circle[radius=1.6pt]; \fill (-1,0) circle[radius=1.6pt];
+  \node[below,inner sep=4pt] at (1,-0.05) {$1$};
+  \node[below,inner sep=4pt] at (-1,-0.05) {$-1$};
+  \draw[t1 contour,t1 carrow=0.12,t1 carrow=0.62] (0,0) circle[radius=0.55];
+  \node[blue!60!black] at (0.66,0.62) {$C_0$};
+  \node[font=\footnotesize] at (2.15,0.42) {割线};
+  \node[font=\footnotesize] at (-2.15,0.42) {割线};
+  \node[font=\small] at (0,-3.2) {$T^{(n)}=\displaystyle\oint_{C_0}\frac{\dd\omega}{2\pi\ii}\,\frac{T(\omega)}{\omega^{n+1}}$};
+\end{tikzpicture}
+\caption{原点附近的 Taylor 系数}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.92]
+  \def\toneR{2.15}\def\toned{0.17}
+  \pgfmathsetmacro\tonea{asin(\toned/\toneR)}
+  \pgfmathsetmacro\tonex{sqrt(\toneR*\toneR-\toned*\toned)}
+  \draw[lcaxis] (-3.3,0) -- (3.45,0) node[below left,inner sep=2pt]{$\Real\omega$};
+  \draw[lcaxis] (0,-2.45) -- (0,2.6) node[left,inner sep=3pt]{$\Imag\omega$};
+  \draw[t1 bcut] (1,0) -- (3.2,0);
+  \draw[t1 bcut] (-1,0) -- (-3.2,0);
+  \fill (1,0) circle[radius=1.6pt]; \fill (-1,0) circle[radius=1.6pt];
+  \draw[gray,densely dashed,line width=0.6pt] (0,0) circle[radius=0.55];
+  \node[gray!75!black,font=\footnotesize] at (-0.5,0.72) {$C_0$};
+  % deformed contour (positively oriented): big arcs + hairpins around both cuts
+  \draw[t1 contour,t1 carrow=0.3] (\tonea:\toneR) arc[start angle=\tonea,end angle=180-\tonea,radius=\toneR];
+  \draw[t1 contour,t1 carrow=0.7] (180+\tonea:\toneR) arc[start angle=180+\tonea,end angle=360-\tonea,radius=\toneR];
+  \draw[t1 contour,t1 carrow=0.55] (-\tonex,\toned) -- (-1,\toned);
+  \draw[t1 contour] (-1,\toned) arc[start angle=90,end angle=-90,radius=\toned];
+  \draw[t1 contour,t1 carrow=0.55] (-1,-\toned) -- (-\tonex,-\toned);
+  \draw[t1 contour,t1 carrow=0.55] (\tonex,-\toned) -- (1,-\toned);
+  \draw[t1 contour] (1,-\toned) arc[start angle=270,end angle=90,radius=\toned];
+  \draw[t1 contour,t1 carrow=0.55] (1,\toned) -- (\tonex,\toned);
+  \node[blue!60!black] at (48:\toneR+0.33) {$C_R$};
+  \node[below,inner sep=5pt] at (1.07,-0.1) {$1$};
+  \node[below,inner sep=5pt] at (-1.07,-0.1) {$-1$};
+  \node[font=\small] at (0,-3.2) {$T^{(n)}=\displaystyle\frac{1}{2\pi\ii}\int_{|\omega|\ge1}\frac{\dd\omega}{\omega^{n+1}}\,\Disc T(\omega)$};
+\end{tikzpicture}
+\caption{围道变形到割线上}
+\end{subfigure}
+\caption{固定 $Q^2$ 时前向 Compton 振幅的不变振幅 $T(\omega)$（$T_1$ 或 $T_2$）在复 $\omega=1/x=2P\cdot q/Q^2$ 平面上的解析结构。
+(a) $T$ 的奇点全在实轴 $|\omega|\ge1$ 上，即物理区 $0<x\le1$ 及其交叉像（对核子靶，$\omega=\pm1$ 处是弹性极点，
+非弹性割线始于 $|\omega|=1+[(M+m_\pi)^2-M^2]/Q^2$；图中把二者合画为始于 $\pm1$ 的割线），$T$ 在 $|\omega|<1$ 内解析；
+绕原点的小围道 $C_0$ 给出 Taylor 系数 $T^{(n)}$，它们在非物理区 $|\omega|<1$ 中由算符乘积展开计算。
+(b) 把 $C_0$ 放大为半径 $R\to\infty$ 的大圆 $C_R$ 并绕过两条割线。若 $|\omega|\to\infty$ 时 $T(\omega)/\omega^{n}\to0$，大圆的贡献为零，
+$T^{(n)}$ 化为不连续性 $\Disc T(\omega)=T(\omega+\ii0)-T(\omega-\ii0)=2\ii\Imag T(\omega+\ii0)$（$T$ 为实解析函数）沿割线的积分。
+由 $\Imag T_i(\omega+\ii0)=2\pi F_i$（$\omega\ge1$），右割线给出 $2\int_0^1\dd x\,x^{n-1}F_i(x)$；
+按交叉对称性，$T_1$ 是 $\omega$ 的偶函数、$T_2$ 是奇函数，左割线的贡献分别是右割线的 $(-1)^n$ 倍与 $(-1)^{n+1}$ 倍。
+于是对偶数 $n$ 有 $T_1^{(n)}=4\int_0^1\dd x\,x^{n-1}F_1(x)$，对奇数 $n$ 有 $T_2^{(n)}=4\int_0^1\dd x\,x^{n-1}F_2(x)$，其余系数为零。}
+\label{fig:omega-plane}
+\end{figure}
+%%% END fig:omega-plane
+
+\begin{proposition}[色散关系：Taylor 系数 = 矩（部分子靶） \tagR]\label{prop:dis-dispersion}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在\cref{prop:dis-compton-analytic}的设定下固定微扰论的阶。设在这一阶满足\emph{部分子增长条件}：当 $|\omega|\to\infty$ 时，在闭割平面上（含割线上的边界值）一致地有
+\begin{equation}\label{eq:dis-pt-growth}
+T_2(\omega)=o(|\omega|),\qquad T_1(\omega)=o(|\omega|^2).
+\end{equation}
+则对 $|\omega|<1$，
+\begin{equation}\label{eq:dis-dispersion}
+T_2(\omega)=\sum_{n=2,4,\dots}4\,\omega^{n-1}M^{(2)}_n,\qquad T_1(\omega)-T_1(0)=\sum_{n=2,4,\dots}4\,\omega^nM^{(1)}_n,
+\end{equation}
+\begin{equation}\label{eq:dis-moments-def}
+M^{(2)}_n=\int_0^1\dd x\,x^{n-2}F_2(x),\qquad M^{(1)}_n=\int_0^1\dd x\,x^{n-1}F_1(x)
+\end{equation}
+（含弹性峰；积分收敛）。树图阶的增长条件成立。% VF-CONV-14
+（本命题只涉及部分子态。）
+\uses{prop:dis-compton-analytic,def:dis-compton}
+\end{proposition}
+
+\begin{proof}
+设 $n$ 为偶数。由 Cauchy 公式，$t_n=\frac1{2\pi\ii}\oint_{C_0}T_2(\omega)\,\omega^{-n}\,\dd\omega$，$C_0$ 是原点附近的小圆（\cref{fig:omega-plane}(a)）。由\cref{prop:dis-compton-analytic}(a)，把 $C_0$ 变形为半径 $R$ 的大圆加上紧贴两条割线 $\pm[1,R]$ 的发夹形路径（\cref{fig:omega-plane}(b)；$R$ 取在边界值连续的点）。沿右割线的贡献为
+\[
+\frac1{2\pi\ii}\int_1^R\Big[T_2(\omega+\ii0)-T_2(\omega-\ii0)\Big]\omega^{-n}\dd\omega
+=\frac1{2\pi\ii}\int_1^R2\ii\cdot2\pi F_2(1/\omega)\,\omega^{-n}\dd\omega=2\int_{1/R}^1\dd x\,x^{n-2}F_2(x),
+\]
+这里用了实解析性 $T_2(\omega-\ii0)=T_2(\omega+\ii0)^*$、\cref{prop:dis-compton-analytic}(c) 与 $\omega=1/x$（$\omega^{-n}\dd\omega=-x^{n-2}\dd x$）。左割线上令 $\omega=-\omega'$：由奇性，$T_2(-\omega'\pm\ii0)=-T_2(\omega'\mp\ii0)$，故左割线上的跳跃等于右割线在 $\omega'$ 处的跳跃，而 $\omega^{-n}=\omega'^{-n}$（$n$ 偶），定向的反转与 $\dd\omega=-\dd\omega'$ 抵消，左割线给出同样的 $2\int_{1/R}^1x^{n-2}F_2$。大圆的贡献不超过 $R^{1-n}\sup_{|\omega|=R}|T_2|$，由\cref{eq:dis-pt-growth}当 $R\to\infty$ 时趋于零（$n\ge2$）。于是 $t_n=4M^{(2)}_n$，且 $\int_{1/R}^1x^{n-2}F_2$ 的极限存在。对奇数 $n$，$T_2$ 的奇性使 $\omega^{n-1}$ 的系数为零。对 $T_1$ 与偶数 $n\ge2$ 作同样计算：$\tau_n=\frac1{2\pi\ii}\oint T_1\omega^{-n-1}\dd\omega$，右割线给出 $2\int x^{n-1}F_1$；$T_1$ 是偶函数，左割线上的跳跃变号，而 $\omega^{-n-1}$ 也变号，两者抵消，再得 $2\int x^{n-1}F_1$；大圆贡献不超过 $R^{-n}\sup|T_1|\to0$。$n=0$ 时大圆一般不趋于零，$T_1(0)$ 因而是一个减除常数。
+
+树图阶：\cref{ex:dis-free-quark}给出 $T_2=4e_q^2\omega/(1-\omega^2)=\order{1/\omega}$，$T_1=2e_q^2\omega^2/(1-\omega^2)=\order{1}$；外腿离壳时两条传播子分母为 $(p+q)^2=Q^2(\omega-\omega_{\mathrm{th}})$、$(p-q)^2=-Q^2(\omega+\omega_{\mathrm{th}})$，同样的计算给出 $T_2=4e_q^2\omega\,\omega_{\mathrm{th}}/(\omega_{\mathrm{th}}^2-\omega^2)$ 与有界的 $T_1$：极点从 $\pm1$ 移到 $\pm\omega_{\mathrm{th}}$，$|\omega|\to\infty$ 的行为不变。
+\end{proof}
+
+\begin{remark}[部分子增长条件的地位]\label{rem:dis-pt-growth}
+(i) 固定阶的振幅在割平面上多项式有界：在参数积分收敛的区域中，上面证明里的 $|\mathcal F|\ge\sqrt{1-|\cos\theta|}\,A$ 直接给出 $|T_2(\omega)|\le C(1+|\omega|)^{A}|\Imag\omega|^{-B}$，$A,B$ 依赖于阶。这样的界只容许带有限个减除的色散关系（对强子靶的证明见\cref{prop:dis-dispersion-np}，那里还用到 $F_2\ge0$），它本身不能排除最低几个矩上的“固定极点”，即 $T_2$ 中不被割线跳跃决定的 $\omega$ 的奇多项式项；\cref{prop:dis-low-moments}对强子作了同样的分析。(ii) \cref{eq:dis-pt-growth}在树图阶成立。在单圈阶，对纯维数正规化中在壳的无质量部分子，前向振幅硬区展开的 Taylor 系数与割图结果的 Mellin 矩对 $N\le8$ 作为 $\varepsilon$ 的有理函数精确相等（\cref{ex:dis-oneloop-ope}），（硬区展开的系数就是在壳振幅的 Taylor 系数，\cref{thm:appM-forward-expansion}），即这些 $N$ 上没有固定极点；单圈的部分子结构函数 $\hat F_2=z\,C_2(z)$ 在 $z\to0$ 时为 $z\ln(1/z)$ 型（单圈系数函数在 $z\to0$ 时只有对数增长，见第~10~章的\cref{prop:disall-nlo}），也与\cref{eq:dis-pt-growth}一致。(iii) 在一般的阶，按 Regge 极限的幂次计数（$t$ 道交换的最高自旋是胶子的 $1$），预期 $T_2\sim\omega^0\ln^k\omega$、$T_1\sim\omega\ln^k\omega$，正好满足\cref{eq:dis-pt-growth}；但对每一阶、每个图（以及规范不变的图之和）的证明并不存在。附录~M 对在壳无质量部分子作了同样的判断：矩恒等式只有全阶论证（\cref{cor:appM-cut-plane}，\tagA）。强子靶的对应条件是\cref{asm:intro-growth}。
+\end{remark}
+
+\begin{example}[自由夸克的前向振幅]\label{ex:dis-free-quark}
+取在壳无质量夸克靶（电荷 $e_q$），树图阶。按\cref{def:dis-compton}，$\psi(z)$ 与 $\bar\psi(0)$ 缩并的项给出 $s$ 道图，$\psi(0)$ 与 $\bar\psi(z)$ 缩并的项给出 $u$ 道图（\cref{fig:forward-compton}）。用 $\ii\int\dd^4z\,\ee^{\ii(q+p)\cdot z}S_F(z)=\ii\cdot\frac{\ii(\sla p+\sla q)}{(p+q)^2+\ii0}$ 并对自旋与颜色平均（$\frac12\sum_s\bar u\Gamma u=\frac12\TrD[\sla p\Gamma]$），
+\[
+T^{\mu\nu}=-e_q^2\,\frac{\frac12\TrD[\sla p\gamma^\mu(\sla p+\sla q)\gamma^\nu]}{(p+q)^2+\ii0}-e_q^2\,\frac{\frac12\TrD[\sla p\gamma^\nu(\sla p-\sla q)\gamma^\mu]}{(p-q)^2+\ii0},
+\qquad \tfrac12\TrD[\sla p\gamma^\mu\sla k\gamma^\nu]=2\big(p^\mu k^\nu+p^\nu k^\mu-g^{\mu\nu}p\cdot k\big),
+\]
+在任意 $D$ 中成立。由 $p^2=0$ 与 $(p\pm q)^2=\pm2p\cdot q-Q^2=-Q^2(1\mp\omega)$，把张量写成 $g$、$pp$、$pq$、$qp$、$qq$ 的组合并与\cref{eq:dis-T}比较（$q_\mu T^{\mu\nu}=0$ 可直接验证），得
+\begin{equation}\label{eq:dis-free-T}
+T_2=\frac{4e_q^2\,\omega}{1-\omega^2}=2e_q^2\Big[\frac1{1-\omega}-\frac1{1+\omega}\Big],\qquad T_1=\frac{2e_q^2\,\omega^2}{1-\omega^2}
+\end{equation}
+（\texttt{s2\_compton.py} 精确到 $D$ 核对）。它们满足 $T_1$ 偶、$T_2$ 奇，$T_1(0)=0$，Taylor 展开 $T_2=\sum_{n=2,4,\dots}4e_q^2\omega^{n-1}$，$T_1=\sum_{n=2,4,\dots}2e_q^2\omega^n$。
+
+物理区的 $\ii0$ 来自 $s$ 道传播子：$\frac{-1}{(p+q)^2+\ii0}=\frac{-1}{Q^2(\omega-1)+\ii0}$，故 $\Imag\frac{-1}{Q^2(\omega-1)+\ii0}=\pi\delta\big(Q^2(\omega-1)\big)>0$，这对应 $\omega\to\omega+\ii0$。于是由 $\frac1{1-\omega-\ii0}=\mathrm P\frac1{1-\omega}+\ii\pi\delta(1-\omega)$，
+\[
+\Imag T_2(\omega+\ii0)=2\pi e_q^2\,\delta(\omega-1)=2\pi F_2(1/\omega),\qquad F_2(x)=e_q^2\,\delta(1-x)
+\]
+（$\delta(1-1/\omega)=\omega^2\delta(\omega-1)=\delta(\omega-1)$）；同样 $F_1=\frac12e_q^2\delta(1-x)$，满足 $F_2=2xF_1$（树图 $F_L=0$）。矩为 $M^{(2)}_n=e_q^2$，$M^{(1)}_n=\frac12e_q^2$，与 Taylor 系数 $t_n=4e_q^2$、$\tau_n=2e_q^2$ 恰好满足\cref{eq:dis-dispersion}；而 $|\omega|\to\infty$ 时 $T_2\to0$、$T_1\to-2e_q^2$：$T_1$ 的减除常数 $T_1(0)$ 是必要的。$1/(4\pi)$ 的归一化正好给出部分子模型的 $F_2=e_q^2x\,\delta(1-x)$。
+\uses{prop:dis-dispersion}
+\end{example}
+
+% ---------------------------------------------------------------------
+\section{扭度、规范不变算符与欧氏算符乘积展开}\label{sec:dis-ope}
+
+当 $q$ 为大的欧氏动量时，$\ii\int\dd^4z\,\ee^{\ii q\cdot z}T\,j^\mu(z)j^\nu(0)$ 由 $z\to0$ 的区域主导，两流之间的硬传播子收缩为一点，乘积展开为定域算符之和，系数只依赖于 $q$，矩阵元只依赖于靶。对前向矩阵元，自旋 $n$ 的算符给出 $\langle P|O^{\mu_1\cdots\mu_n}|P\rangle\propto P^{\mu_1}\cdots P^{\mu_n}$，与系数中的 $q_{\mu_1}\cdots q_{\mu_n}/(Q^2)^n$ 缩并后正是 $(P\cdot q/Q^2)^n\propto\omega^n$：OPE 的第 $n$ 项给出 Taylor 系数，量纲分析给出它的幂次 $(Q^2)^{-(d-n-2)/2}$，故领头项来自扭度 $d-n=2$ 的算符。矩只需要这一\emph{短距离}展开在单个 Taylor 系数上的形式；\cref{fig:ope-schematic}所画的\emph{光锥}展开（每一扭度包含所有自旋）是 $x$ 空间的结构，留到\cref{prop:dis-light-cone}讨论。
+
+%%% BEGIN fig:ope-schematic
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 hadron/.style={draw,solid,line width=1.5pt,line cap=butt}}
+\begin{tikzpicture}[fd]
+  % ---------- left: matrix element of T J(x) J(0) ----------
+  \begin{scope}
+    \coordinate (vl) at (-0.8,1.7); \coordinate (vr) at (0.8,1.7);
+    \draw[quark] (-0.8,0.32) -- (vl);
+    \draw[quark] (vl) -- (vr);
+    \draw[quark] (vr) -- (0.8,0.32);
+    \draw[photon] (-1.65,2.75) -- (vl);
+    \draw[photon] (vr) -- (1.65,2.75);
+    \draw[t1 hadron] (-2.0,0) -- (2.0,0);
+    \draw[hadron blob] (0,0) ellipse[x radius=1.1,y radius=0.42];
+    \node[vertex] at (vl) {}; \node[vertex] at (vr) {};
+    \node[font=\footnotesize] at (0,2.08) {$x^2\to0$};
+    \draw[region] (-1.25,1.3) rectangle (1.25,2.38);
+    \node[above left,inner sep=1pt] at (-1.65,2.75) {$J(x)$};
+    \node[above right,inner sep=1pt] at (1.65,2.75) {$J(0)$};
+    \node[left] at (-2.0,0) {$P$}; \node[right] at (2.0,0) {$P$};
+  \end{scope}
+  \node at (3.3,1.0) {$\displaystyle\simeq\;\sum_n$};
+  % ---------- right: C_n times local operator O_n(0) ----------
+  \begin{scope}[shift={(6.5,0)}]
+    \coordinate (C) at (0,2.05); \coordinate (O) at (0,1.43);
+    \draw[quark] (-0.62,0.36) -- (O);
+    \draw[quark] (O) -- (0.62,0.36);
+    \draw[photon] (-1.25,2.8) -- ($(C)+(140:0.42)$);
+    \draw[photon] ($(C)+(40:0.42)$) -- (1.25,2.8);
+    \draw[t1 hadron] (-2.0,0) -- (2.0,0);
+    \draw[hadron blob] (0,0) ellipse[x radius=1.1,y radius=0.42];
+    \draw[hard blob] (C) circle[radius=0.42];
+    \node at (C) {$C_n$};
+    \node[opvertex] at (O) {};
+    \node[right,inner sep=5pt] at (O) {$O_n(0)$};
+    \node[above left,inner sep=1pt] at (-1.25,2.8) {$J$};
+    \node[above right,inner sep=1pt] at (1.25,2.8) {$J$};
+    \node[left] at (-2.0,0) {$P$}; \node[right] at (2.0,0) {$P$};
+  \end{scope}
+  \node[font=\small] at (9.45,1.0) {$+\;\cdots$};
+  % ---------- the corresponding formula ----------
+  \node[font=\small] at (3.75,-0.95)
+    {$T\,J(x)J(0)\;\simeq\;\displaystyle\sum_n C_n(x^2,\mu^2)\,x_{\mu_1}\cdots x_{\mu_n}\,O_n^{\mu_1\cdots\mu_n}(0;\mu)\;+\;\cdots\qquad(x^2\to0)$};
+\end{tikzpicture}
+\caption{光锥算符乘积展开的图示。左：$\langle P|T\,J(x)J(0)|P\rangle$ 在 $x^2\to0$（而 $x$ 本身不趋于零）时由两流之间夸克传播子的光锥奇异性主导
+（在动量空间中，即 $Q^2\to\infty$ 时该传播子远离壳层），虚线框内为硬部分。右：硬部分收缩为 Wilson 系数 $C_n$，长程部分化为定域算符 $O_n^{\mu_1\cdots\mu_n}(0)$（$\otimes$）的强子矩阵元；
+$C_n(x^2,\mu^2)$ 在 $x^2\to0$ 时的行为为 $(x^2)^{(\tau_n-6)/2}$ 乘以对数修正（$\tau_n$ 为 $O_n$ 的扭度），故扭度越高奇异性越弱，$\cdots$ 即表示这些高扭度项。领头项为扭度 $2$ 的算符
+$O_q^{\mu_1\cdots\mu_n}=\bar\psi\gamma^{\{\mu_1}\ii D^{\mu_2}\cdots\ii D^{\mu_n\}}\psi-(\text{迹})$ 及其胶子对应物；由于协变导数，$\otimes$ 处还可连接任意多条胶子线。
+与短距离展开不同，光锥展开的每一扭度都含有对所有 $n$ 的无穷求和。}
+\label{fig:ope-schematic}
+\end{figure}
+%%% END fig:ope-schematic
+
+\begin{definition}[扭度与扭度 2 算符]\label{def:dis-twist}
+(a) 对每个味 $q$ 与 $n\ge1$，以及（胶子）$n\ge2$，令
+\begin{equation}\label{eq:dis-twist2-ops}
+O_q^{\mu_1\cdots\mu_n}=\mathcal S\,\bar\psi_q\gamma^{\mu_1}\ii D^{\mu_2}\cdots\ii D^{\mu_n}\psi_q-\text{迹},\qquad
+O_g^{\mu_1\cdots\mu_n}=\mathcal S\,G^{\mu_1\alpha}\ii D^{\mu_2}\cdots\ii D^{\mu_{n-1}}G_\alpha{}^{\mu_n}-\text{迹},
+\end{equation}
+$\mathcal S$ 为对 $\mu_1,\dots,\mu_n$ 的对称化，“$-$迹”使张量无迹，胶子算符中的协变导数取伴随表示。$O_g$ 的符号由 $O_g^{+\cdots+}=\sum_jG^{+j}(\ii D^+)^{n-2}G^{+j}$ 固定，于是对在壳、物理极化平均的胶子 $\langle g(k)|O_g^{+\cdots+}|g(k)\rangle=2(k^+)^n$。% VF-CONV-15
+\par
+(b) 约化矩阵元 $A^{(n)}_i$（$i=q,g$）由 $\langle P|O_i^{\mu_1\cdots\mu_n}|P\rangle=2A^{(n)}_i\big(P^{\mu_1}\cdots P^{\mu_n}-\text{迹}\big)$ 定义（对靶自旋平均）。自由夸克靶的树图值为 $A^{(n)}_q=1$。
+\par
+(c) $O_q^{+\cdots+}=\bar\psi\gamma^+(\ii D^+)^{n-1}\psi$ 的零胶子与单胶子顶点为
+\begin{equation}\label{eq:dis-Oq-vertex}
+\gamma^+(k^+)^{n-1},\qquad g\,t^a\,n_B^\mu\,\gamma^+\sum_{j=0}^{n-2}(k_2^+)^j(k_1^+)^{n-2-j},
+\end{equation}
+$k$ 为夸克动量，$k_1$、$k_2=k_1+\ell$ 为流入与流出的夸克动量，$\ell$ 为流入的胶子动量（$\ii D^+=\ii\partial^++gA^+$）。% VF-PDF-12
+\par
+(d) 对称无迹、秩为 $n$、典型量纲为 $d$ 的算符，其扭度为 $\tau=d-n$；\cref{eq:dis-twist2-ops}的算符 $d=n+2$，扭度为 2。场分量的\emph{共线扭度}定义为 $t=d-h$，其中推动权 $h$ 是沿 $+z$ 推动 $v^\pm\to\ee^{\pm\eta}v^\pm$ 时该分量所乘的 $\ee^{h\eta}$ 的指数：每个上指标 $+$ 记 $+1$，$-$ 记 $-1$，横向记 $0$；好分量 $\psi_+=\mathcal P_+\psi$ 记 $+\frac12$，坏分量 $\psi_-=\mathcal P_-\psi$ 记 $-\frac12$（$\mathcal P_\pm=\frac12\gamma^\mp\gamma^\pm$）。$t$ 对乘积可加，且对称无迹算符的 $+\cdots+$ 分量的共线扭度等于其扭度 $\tau$。
+\uses{def:prelim-qcd}
+\end{definition}
+
+\begin{lemma}[扭度 2 规范不变算符的分类 \tagR]\label{lem:dis-twist-classification}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）构件的共线扭度为
+\begin{equation}\label{eq:dis-twist-table}
+\begin{array}{c|cccccccc}
+ & \psi_+,\ \bar\psi_+ & \psi_- & D^+ & D^j & D^- & F^{+j} & F^{+-},\ F^{ij} & F^{-j}\\\hline
+t & 1 & 2 & 0 & 1 & 2 & 1 & 2 & 3
+\end{array}
+\end{equation}
+（$\bar\psi_+\equiv\bar\psi\mathcal P_-$）。在全导数与运动方程算符之外，具有非零的自旋平均前向矩阵元的扭度 2 对称无迹规范不变算符由 $O^{(n)}_q$（每个味一个）与 $O^{(n)}_g$（$n$ 为偶数）张成。（本引理是算符的代数陈述。）
+\uses{def:dis-twist,lem:prelim-boost}
+\end{lemma}
+
+\begin{proof}
+完整证明见附录~M（\cref{sec:appM-brst}），要点如下。(1) 由\cref{lem:prelim-boost}，$\psi_\pm$ 乘以 $\ee^{\pm\eta/2}$，矢量分量 $v^\pm$ 乘以 $\ee^{\pm\eta}$；与 $d(\psi)=\frac32$、$d(D)=1$、$d(F)=2$ 合起来即得表\cref{eq:dis-twist-table}。(2) 规范不变的色单态单项式至少含两个基本场（$\psi$、$\bar\psi$ 或 $F$），每个基本场 $t\ge1$，而导数 $t\ge0$ 且只有 $D^+$ 的 $t=0$；故总扭度为 2 时恰有两个 $t=1$ 的场（$\psi_+$、$\bar\psi_+$ 或 $F^{+j}$），导数全是 $D^+$。(3) 夸克双线性型 $\bar\psi\mathcal P_-\Gamma\mathcal P_+\psi$ 只对 $\Gamma\in\{\gamma^+,\gamma^+\gamma_5,\gamma^+\gamma^j\}$ 不为零（$\mathcal P_-\Gamma\mathcal P_+$ 张成四维空间）；$\gamma^+\gamma_5$ 给出赝张量，宇称使其自旋平均的非极化前向矩阵元为零；$\gamma^+\gamma^j$ 带一个不能被缩并的横向指标，属于混合对称表示（横度），且前向自旋平均的矩阵元中没有可用的横向矢量。味不对角的双线性型在味本征态中的前向矩阵元为零。(4) 胶子 $F^{+j}(D^+)^{n-2}F^{+k}$ 中 $\delta^{jk}$ 给出 $O_g$，$\epsilon^{jk}$ 给出赝张量，$jk$ 的对称无迹部分需要横向张量，二者的非极化前向矩阵元都为零。(5) 把 $D^+$ 从一个场移到另一个场只差全导数，前向矩阵元为零；$n$ 为奇数时胶子算符（模全导数）是反对称的，即全导数。
+\end{proof}
+
+\begin{lemma}[扭度奇偶性与手征 \tagR]\label{lem:dis-twist-chirality}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）设 $O$ 是 $\psi$、$\bar\psi$、$A$ 及其导数的玻色型、不含鬼场的规范不变定域多项式，在 $\psi\to\gamma_5\psi$、$\bar\psi\to-\bar\psi\gamma_5$ 下的本征值为 $\chi=\pm1$（手征），属于秩为 $j$ 的对称无迹表示，典型量纲为 $d$。则 $(-1)^{d-j}=\chi$：手征偶的算符扭度为偶数，扭度为奇数的算符是手征奇的。\emph{注意：}对混合对称的表示这一结论不成立——横度算符 $\bar\psi\,\ii\sigma^{+j}\psi$ 的扭度为 2，却是手征奇的。
+\uses{def:dis-twist,lem:dis-twist-classification}
+\end{lemma}
+
+\begin{proof}
+完整证明见附录~M（\cref{sec:appM-brst}）。由表\cref{eq:dis-twist-table}，玻色型构件（$D^\pm,D^j,F^{\mu\nu}$）的共线扭度与其横向指标数 $n_T$ 同奇偶：$t\equiv n_T\pmod 2$。对夸克双线性型，手征偶（$\Gamma$ 含奇数个 $\gamma$）时 $t\equiv n_T$，手征奇时 $t\equiv n_T+1$（例如 $\bar\psi\gamma^+\psi$：$t=2$，$n_T=0$；$\bar\psi\psi=\bar\psi_+\psi_-+\bar\psi_-\psi_+$：$t=3$，$n_T=0$）。在对称无迹算符的 $+\cdots+$ 分量中，自由指标都是 $+$，横向指标只能两两缩并（$\delta^{jk}$ 或 $\epsilon^{jk}$），故 $\sum n_T$ 为偶数，总扭度的奇偶等于手征奇双线性型数目的奇偶，即 $(-1)^{\tau}=\chi$，而 $\tau=d-j$。混合对称的算符有横向的自由指标，$\sum n_T$ 可以为奇数，论证失效。
+\end{proof}
+
+对称无迹算符的系数张量由协变性与流守恒确定：含 $g_{\mu_i\mu_j}$ 的项与无迹算符缩并为零；横向化以后只剩两个结构，记
+\begin{equation}\label{eq:dis-ope-tensor}
+T^{\mu\nu}\simeq\sum_{n=2,4,\dots}\sum_i\Big[\Big(-g^{\mu\nu}+\frac{q^\mu q^\nu}{q^2}\Big)\frac{2^nq_{\mu_1}\cdots q_{\mu_n}}{(Q^2)^n}\,C^{(n)}_{1,i}
++\Big(g^\mu{}_{\mu_1}-\frac{q^\mu q_{\mu_1}}{q^2}\Big)\Big(g^\nu{}_{\mu_2}-\frac{q^\nu q_{\mu_2}}{q^2}\Big)\frac{2^nq_{\mu_3}\cdots q_{\mu_n}}{(Q^2)^{n-1}}\,C^{(n)}_{2,i}\Big]O_i^{\mu_1\cdots\mu_n}.
+\end{equation}
+\emph{收缩规则：}以\cref{def:dis-twist}(b) 的矩阵元代入并略去迹项（无质量靶时迹项为零），第一项给出 $-\tilde g^{\mu\nu}(2P\cdot q/Q^2)^n\,2A^{(n)}_iC^{(n)}_{1,i}$，第二项给出 $\tilde P^\mu\tilde P^\nu\,2^n(P\cdot q)^{n-2}(Q^2)^{1-n}\,2A^{(n)}_iC^{(n)}_{2,i}$；与\cref{eq:dis-T}比较，
+\begin{equation}\label{eq:dis-contraction}
+T_1\ni2\,\omega^nC^{(n)}_{1,i}A^{(n)}_i,\qquad T_2\ni4\,\omega^{n-1}C^{(n)}_{2,i}A^{(n)}_i
+\end{equation}
+（\texttt{s2\_compton.py} 对 $n=2,4,6$ 核对）。% VF-DIS-13
+下面的引理是这一结构最简单的实例。
+
+\begin{lemma}[树图 OPE \tagR]\label{lem:dis-tree-ope}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在树图阶、无质量夸克态之间，$T^{\mu\nu}$ 由\cref{eq:dis-ope-tensor}给出（无余项），其中对偶数 $n$ 有 $C^{(n)}_{1,q}=C^{(n)}_{2,q}=e_q^2$；奇数 $n$ 的项在 $s$ 道与 $u$ 道图之间相消（交叉对称性）。（本引理只涉及部分子态。）
+\uses{def:dis-twist,def:prelim-feynman-rules,def:dis-compton,ex:dis-free-quark}
+\end{lemma}
+
+\begin{proof}
+由\cref{ex:dis-free-quark}，$T_2=4e_q^2\omega/(1-\omega^2)=\sum_{n=2,4,\dots}4e_q^2\omega^{n-1}$，$T_1=2e_q^2\omega^2/(1-\omega^2)=\sum_{n=2,4,\dots}2e_q^2\omega^n$（$|\omega|<1$）。自由夸克的树图矩阵元为 $\langle p|O^{(n)}_q|p\rangle=\bar u\gamma^{\mu_1}u\,p^{\mu_2}\cdots p^{\mu_n}$ 的对称化 $=2p^{\mu_1}\cdots p^{\mu_n}$（$p^2=0$，无迹），即 $A^{(n)}_q=1$。由\cref{eq:dis-contraction}，逐项比较 $\omega$ 的幂次得 $C^{(n)}_{1,q}=C^{(n)}_{2,q}=e_q^2$（$n$ 偶）。由于两个不变振幅完全确定横向张量，这就是张量层次的等式。$s$ 道图单独给出 $T_2^{(s)}=2e_q^2/(1-\omega)=2e_q^2\sum_{k\ge0}\omega^k$，含 $\omega$ 的一切幂次；$u$ 道图是 $T_2^{(u)}(\omega)=-T_2^{(s)}(-\omega)$，二者相加恰好消去 $\omega^{n-1}$ 中 $n$ 为奇数的项。等价地，在 $s$ 道中把传播子 $\frac{1}{(p+q)^2}=\frac{-1}{Q^2(1-\omega)}$ 按 $\omega$ 展开，第 $k$ 项正是算符 $\bar\psi\gamma^{\{\mu_1}\ii\partial^{\mu_2}\cdots\ii\partial^{\mu_{k+1}\}}\psi$ 的树图矩阵元乘以 $q_{\mu}$ 的乘积（\cref{def:dis-twist}(c) 的零胶子顶点）。
+\end{proof}
+
+树图之外，“OPE 成立”在含夸克的 QCD 中是三件不同的事：欧氏非例外动量下 Green 函数的渐近展开；物理矩阵元中只出现规范不变算符；前向在壳部分子矩阵元（例外动量）也可以这样展开。下面把它们分开陈述，各自给出证明的位置与地位。
+
+\begin{proposition}[欧氏非例外动量下 Green 函数的逐图渐近展开 \tagA]\label{prop:dis-ope-euclid}
+考虑含 $n_f$ 个无质量夸克的 QCD，协变规范，规范参数 $\xi$ 属于含 $1$ 的紧集 $\Xi$，维数正规化加 $\overline{\rm MS}$，算符基取 $D$ 维基（含规范变算符、鬼场算符与 evanescent 算符）。设 $\Phi$ 是基本场的串，$(p,q)$ 为非例外的欧氏动量（外动量的任何真部分和都不为零），$\tilde G^T_{jj;\Phi}(q;p)$ 是两个电磁流的编时乘积与 $\Phi$ 的截腿 Green 函数，$\tilde G_{[O];\Phi}(p)$ 是重整化算符 $[O]$ 的插入。在微扰论的每一阶 $r$：
+\begin{enumerate}[label=(A\arabic*),leftmargin=2.6em,itemsep=0pt,topsep=2pt]
+\item $\tilde G^T_{jj;\Phi}-\sum_{d_O\le a}C_O(q;\mu,\xi)\,\tilde G_{[O];\Phi}=\order{|q|^{1-a}\ln^k|q|}$，对 $q$ 的方向、对 $p$ 属于非例外紧集、对 $\xi\in\Xi$ 一致；
+\item $C_O=|q|^{2-d_O}\times\big(L\equiv\ln(q^2/\mu^2)$ 的至多 $r$ 次多项式$\big)$，系数是 $\xi$ 的多项式的协变张量；
+\item $C^{\overline{\rm MS}}=C^{\rm bare}Z^{-1}$ 有限，其中 $C^{\rm bare}_O$ 是含两个流的硬子图的维数正规化 Taylor 系数之和，只依赖于 $(q,g_0,\xi_0,\varepsilon)$；
+\item 在满足条件 (NE)（四维树图顶点线性无关）的每个块中系数唯一（\cref{lem:appM-uniqueness}(b)、\cref{lem:appM-ne}）；特别地，全部扭度 2 系数对一切 $n$ 唯一。
+\end{enumerate}
+（本命题只涉及部分子态的 Green 函数。）
+\uses{lem:dis-tree-ope,thm:qcd-renormalizability,thm:ee-euclid-ir,lem:appM-uniqueness,lem:appM-ne}
+% errtype: E-P
+\end{proposition}
+
+\begin{proofsketch}
+(1) (A1)、(A3)：对每个图、在每个 $\xi$ 下引用大动量极限的渐近展开定理\cite{Smirnov:1990rz,Smirnov2002}与 $\overline{\rm MS}$ 中的 OPE\cite{Chetyrkin:1982zq}，再用 $O_{\rm bare}=Z^{-1}[O]$；非例外动量下维数正规化 Green 函数的红外有限性见\cref{thm:ee-euclid-ir}（\cite[定理~1]{Breitenlohner:1976te}）。$\xi$ 的一致性来自固定阶时余项是 $\xi$ 的多项式（Lagrange 插值）。$\Phi\ne\varnothing$ 时 $\tilde G^T$ 不需要相加的重整化：唯一的零量纲定域项 $g^{\mu\nu}AA$、$g^{\mu\nu}\bar cc$ 违反中性外腿的电磁 Ward 恒等式。(2) (A2)：在固定 $\varepsilon$ 下，$k$ 圈硬部分对 $(q;g_0,\xi_0)$ 是 $2-d_O-2k\varepsilon$ 次齐次的；代入 $g_0=\mu^\varepsilon Z_gg$、$\xi_0=Z_3\xi$ 与 $Z^{-1}$ 后为 $|q|^{2-d_O}\sum_kc_k(\varepsilon,\xi)(\mu^2/q^2)^{k\varepsilon}$，极点至多 $r$ 阶，有限的极限必是 $L$ 的多项式。(3) (A4)：\cref{lem:appM-uniqueness}(b) 与\cref{lem:appM-ne}。树图层次即\cref{lem:dis-tree-ope}。完整论证（含所引定理的适用范围）见附录~M 的\cref{sec:appM-massless}。（此步给出的是 E-P 型陈述，在所引定理适用之处逐图成立。）
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+标签为 [A]：所引的定理覆盖不了 (A1)、(A3) 的完整陈述。Smirnov 的定理（\cite[第~117~页]{Smirnov:1990rz}）是一个混合陈述——在坐标变量上是分布、在非例外欧氏动量上是函数，并且用的是解析正规化；维数正规化下的函数形式只是被断言（同文第~118~页）；鬼场、规范变算符基与复合旁观者都没有处理。另一条路线——用已发表的动量空间 OPE 定理加上系数唯一性去推出\cref{asm:appM-remainder}——是循环的（\cref{rem:appM-remainder-reduction}），而维数正规化路线根本不需要这一假设。误差类型为 E-P（逐图、逐点于 $q$）。升级的途径：一个覆盖含夸克、鬼场与规范变算符的 QCD、以维数正规化函数形式陈述的渐近展开定理（第~25~章列为开放问题）。
+
+\begin{proposition}[物理矩阵元只需规范不变算符 \tagA]\label{prop:dis-ope-gi}
+(a) 在物理部分子态（在壳，且动量转移非零或外腿红外正规化）之间，$j^\mu j^\nu$ 的 OPE 只有规范不变算符贡献；在扭度 2 只有 $O^{(n)}_q$、$O^{(n)}_g$。
+\par
+(b)（蕴含关系，\tagR，$R_{\mathrm{cond}}$）（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{prop:dis-ope-euclid}、\cref{asm:appM-brst-ope}。若带一个复合旁观者 $Z=s\phi$ 的欧氏展开（含硬子图包含 $Z$ 顶点的合并项）成立，即\cref{asm:appM-brst-ope}的 (Eε)，则 (a) 成立：对每个量纲 $d$，系数和 $X_d=\sum_{d_O=d}C_O\,O$ 满足 $sX_d\in\mathcal E$（运动方程算符生成的理想），从而 $X_d$ 是规范不变算符、BRST 恰当算符与运动方程算符之和，后两类在物理态之间的矩阵元为零。
+\par
+（本命题只涉及部分子态。）
+\uses{prop:dis-ope-euclid,thm:prelim-composite-renorm,lem:dis-twist-classification,asm:appM-brst-ope,thm:appM-local-cohomology,lem:appM-alien-vanish,lem:appM-uniqueness,thm:appM-brst-reduction,lem:appM-lbc-formal}
+% errtype: E-P
+\end{proposition}
+
+\begin{proofsketch}
+(b) 的完整证明见附录~M 的\cref{sec:appM-brst}（\cref{thm:appM-brst-reduction}），步骤为：(1) 维数正规化中 $sj^\mu=0$ 的 Ward 恒等式 $\sum_k\epsilon'_k\langle\mathcal J\phi_1\cdots(s\phi_k)\cdots\phi_n\rangle=0$；(2) 代入 (Eε)，非合并部分给出 $-\sum_OC_O\langle(sO)\Phi\rangle$；(3) 由维数正规化的 Schwinger--Dyson 恒等式（$\delta^{(D)}(0)=0$），合并部分组合为 $\langle\mathbb E(q)\Phi\rangle$，$\mathbb E\in\mathcal E$；(4) 二者之和对一切 $\Phi$ 都是 $\order{|q|^{1-a}\ln^k|q|}$，按量纲比较（\cref{lem:appM-uniqueness}(c)）迫使 $\sum_{d_O=d}C_O\,sO\in\mathcal E$；(5) 逐圈的定域 BRST 上同调（\cref{lem:appM-lbc-formal}，基于\cref{thm:appM-local-cohomology}）给出 $X_d=$ 规范不变 $+$ BRST 恰当 $+$ 运动方程算符；(6) 规范不变算符只混入规范不变算符与外来算符（\cref{thm:prelim-composite-renorm}），外来算符在物理态之间的矩阵元为零（\cref{lem:appM-alien-vanish}）；(7) 扭度 2 的规范不变算符由\cref{lem:dis-twist-classification}列出。(a) 由 (b) 与 (Eε) 得到。文献：Joglekar 处理了非阿贝尔理论中两个规范不变流的 OPE，并表明可能出现的规范变算符的物理矩阵元为零或不可分离（据该文摘要）\cite{Joglekar:1976eb,Joglekar:1976pe}；纯 Yang--Mills 中 OPE 在规范不变算符上闭合\cite{Hollands:2007zg}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+[A] 即\cref{asm:appM-brst-ope}中 (Eε) 的地位：带一个复合旁观者、含合并项的逐图维数正规化欧氏展开没有被证明。上述文献的结论与 (a) 一致，但它们对\cref{prop:dis-ope-euclid}中维数正规化 $\overline{\rm MS}$ 系数的适用性没有被确立（Joglekar 的处理在 QCD 流上，Hollands 的在纯 Yang--Mills 的 Epstein--Glaser 框架中）。前向在壳的注意事项：对零动量转移的在壳无质量胶子，外来算符矩阵元为零的论证不适用——Collins--Scalise 对一个 BRST 恰当算符给出了反例\cite{Collins:1994ee}，它解释了 Hamberg--van Neerven 发现的表观非三角混合\cite{Hamberg:1991qt}；对运动方程算符，前向在壳无质量的情形只是不被标准证明覆盖。误差类型 E-P。升级的途径：证明 (Eε)。
+
+\begin{proposition}[前向在壳部分子矩阵元 \tagA]\label{prop:dis-ope-forward}
+(a) 对纯维数正规化中在壳无质量的部分子靶 $j$（物理极化平均），在微扰论的每一阶，
+\begin{equation}\label{eq:dis-forward-ope}
+T_2^{(j)}(\omega)=4\sum_{n=2,4,\dots}\omega^{n-1}\sum_iC^{(n)}_{2,i}A^{(n)}_{i/j},
+\end{equation}
+在 $|\omega|\le r<1$ 上一致收敛；$A^{(n)}_{i/j}$ 是部分子矩阵元（$\delta_{ij}$ 加纯 $\overline{\rm MS}$ 抵消项）。
+\par
+(b)（蕴含关系，\tagR，$R_{\mathrm{cond}}$）（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{prop:dis-ope-euclid}、\cref{prop:dis-ope-gi}、\cref{asm:appM-forward}。前向在壳动量是例外动量，\cref{prop:dis-ope-euclid}不能直接用；在前向在壳无质量部分子矩阵元的 OPE 余项估计（\cref{asm:appM-forward}）之下，(a) 成立。
+\par
+(c) 在每一阶，解析的一步是逐图证明了的：每个前向在壳维数正规化 Laurent 系数在割开的 $\omega$ 平面中全纯，并等于其朴素 Taylor 级数（\cref{thm:appM-forward-expansion}，\tagR，$R_{\mathrm{PT}}$）；(a) 作为\cref{cor:appM-forward-ope}(a) 成立（\tagA：与 $\overline{\rm MS}$ 系数的认同要经过\cref{prop:dis-ope-euclid}的 (A3) 与\cref{asm:appM-brst-ope}的 (Eε)）。
+\par
+（本命题只涉及部分子态。）
+\uses{prop:dis-ope-euclid,prop:dis-ope-gi,lem:prelim-scaleless,asm:appM-forward,lem:appM-uniqueness,cor:appM-forward-ope,thm:appM-forward-expansion}
+% errtype: E-P
+\end{proposition}
+
+\begin{proofsketch}
+(b)（附录~M 的\cref{sec:appM-forward}）：(1) 在壳无质量部分子的算符矩阵元中一切圈积分都无标度（\cref{lem:prelim-scaleless}），故 $\langle p|[O]|p\rangle$ 只剩树图与纯极点；它只能是 $c\,p^{\mu_1}\cdots p^{\mu_n}$（$n$ 为自旋，含 $g^{\mu_i\mu_j}$ 的项正比于 $p^2=0$），而其量纲 $d_O-2$ 必须等于 $n$，否则无标度的 $c$ 只能为零，故只有扭度 $d_O-n=2$ 贡献。(2) 沿 $2p\cdot\hat q$ 为纯虚数的欧氏方向 $q=t\hat q$，$\omega=c_0/t$，由\cref{asm:appM-forward}余项为 $\order{t^{2-N}\ln^kt}$。(3) 若 $T_2^{(j)}$ 与\cref{eq:dis-forward-ope}之差在 $\omega^{N-3}$ 以下有非零的 Taylor 系数，它将给出 $\gtrsim t^{1-n_*}$ 的项，与 (2) 矛盾；$N$ 任意，故 (a) 成立。(c)：\cref{thm:appM-forward-expansion}的证明用 Lee--Pomeransky 参数表示、Newton 多面体控制与维数正规化的可容许性；\cref{cor:appM-forward-ope}再用\cref{lem:appM-uniqueness}、(A3) 与 (Eε) 把 Taylor 系数认同为 $\overline{\rm MS}$ 系数。单圈、$N\le8$ 的精确检验见\cref{sec:dis-wilson}。完整论证见附录~M 的\cref{sec:appM-forward}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+[A] 即\cref{asm:appM-forward}的地位。\cref{cor:appM-forward-ope}把它化归为 (A3)、(Eε) 与 Joglekar--Lee 三角性——是化归，不是解除。\cref{prop:dis-ope-gi}地位一段所述的前向反例针对 BRST 恰当算符，对运动方程算符前向在壳情形只是未被覆盖。因此不能说“前向在壳部分子矩阵元直接给出 Wilson 系数，无需额外步骤”：例外动量与外来算符正是需要额外步骤的地方。误差类型 E-P。升级的途径：解除\cref{cor:appM-forward-ope}的三个输入（第~25~章列为开放问题）。
+
+\paragraph{振幅形式。}\cref{eq:dis-forward-ope}可以写成卷积：
+\begin{equation}\label{eq:dis-amplitude-form}
+T_2^{(j)}(\omega)=\sum_q\int_{-1}^1\dd\xi\,\hat H_q(\xi\omega)\,f_{q/j}(\xi)+\int_0^1\dd\xi\,\hat H_g(\xi\omega)\,f_{g/j}(\xi),\qquad \hat H_i(w)=4\sum_{n=2,4,\dots}C^{(n)}_{2,i}\,w^{n-1},
+\end{equation}
+其中 $f_{i/j}$ 是矩为 $\int_{-1}^1\xi^{n-1}f_{q/j}=A^{(n)}_{q/j}$、$\int_0^1\xi^{n-1}f_{g/j}=A^{(n)}_{g/j}$ 的分布（其算符定义见第~8~章）。夸克项按 $f_q(-\xi)=-f_{\bar q}(\xi)$ 奇延拓到 $[-1,0]$，于是 $\int_{-1}^1\xi^{n-1}f_q=\int_0^1\xi^{n-1}[q+(-1)^n\bar q]$；胶子项只取 $[0,1]$（$f_g(-\xi)=-f_g(\xi)$ 与 $\hat H_g$ 的奇性使 $[-1,1]$ 上的积分加倍）。树图 $\hat H_q(w)=4e_q^2w/(1-w^2)$，与\cref{ex:dis-free-quark}一致。式中没有 $\dd\xi/\xi$：$1/\xi$ 已被 $\tilde P^\mu\tilde P^\nu/(P\cdot q)$ 吸收。这是光锥展开在动量空间中的熟知形式（参见\cite{ChristHasslacherMueller1972,BrandtPreparata1971}）。
+
+\begin{theorem}[重整化微扰论中的欧氏 OPE \tagA]\label{thm:dis-ope}
+\cref{prop:dis-ope-euclid,prop:dis-ope-gi,prop:dis-ope-forward}同时成立。等价地：对带红外正规化部分子外动量的 $T\,j^\mu j^\nu$ 的 Green 函数，当 $Q^2\to\infty$（欧氏 $q$；对前向部分子矩阵元，则对 $\omega$ 的每个固定的 Taylor 系数），$T^{\mu\nu}$ 由\cref{eq:dis-ope-tensor}加上余项 $R$ 给出，求和遍及偶数 $n$ 与扭度 2 规范不变算符 $i$；系数 $C^{(n)}_{a,i}(Q^2/\mu^2,\as(\mu))$ 与外态及红外正规化无关；$R$ 是扭度 $\ge4$ 的贡献，对每个固定的 $n$ 为 $\order{Q^{-2}}$ 乘以对数。按\cref{def:dis-twist}归一化矩阵元时，$T_1\ni2\omega^nC^{(n)}_{1,i}A^{(n)}_i$，$T_2\ni4\omega^{n-1}C^{(n)}_{2,i}A^{(n)}_i$。% VF-DIS-13, VF-CONV-15
+（本定理只涉及部分子态。）
+\uses{prop:dis-ope-euclid,prop:dis-ope-gi,prop:dis-ope-forward}
+% errtype: E-P
+\end{theorem}
+
+\begin{proofsketch}
+由三个子命题合成：(1)\cref{prop:dis-ope-euclid}给出非例外欧氏动量下的展开与（逐块）唯一的系数；(2)\cref{prop:dis-ope-gi}把物理矩阵元中的算符限制为规范不变算符，扭度 2 为 $O_q$、$O_g$；(3)\cref{prop:dis-ope-forward}把展开推广到前向部分子矩阵元的每个固定 Taylor 系数。张量结构与收缩规则是\cref{eq:dis-ope-tensor,eq:dis-contraction}。奇扭度（手征奇）系数在无质量微扰论中为零，这一点在本节稍后单独证明，所以余项从扭度 4 开始。完整论证见附录~M 的\cref{sec:appM-massless}、\cref{sec:appM-brst}与\cref{sec:appM-forward}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+对标量场论，OPE 在重整化微扰论的每一阶被证明\cite{Zimmermann1973,Zimmermann:1972te,Zimmermann1970}（在 $\varphi^4$ 中甚至在每一固定圈数下在有限距离收敛\cite{Hollands:2011gf,Holland:2014pna}）；对纯 Yang--Mills 中的规范不变算符，OPE 在规范不变算符上闭合\cite{Hollands:2007zg}，红外的控制见\cite{Frob:2015uqy}。对含夸克的 QCD，Collins 的教科书断言这一展开 “is proved in a gauge theory the same way as in any other theory”\cite[第~12.8~节]{Collins1984}（在规范理论中与在其他理论中以同样方式被证明），IJJSZ 则写道它 “is widely assumed to hold for any renormalizable quantum field theory including QCD”\cite[第~II~节]{IzubuchiEtAl2018}（被广泛假定对包括 QCD 在内的一切可重整理论成立）；规范理论的必要成分见\cite{Joglekar:1976eb,Joglekar:1976pe}。对无质量可重整理论，Fröb--Holland 证明了 OPE 的存在，并在上同调条件 $H^{1,4}_{E(4)}(s|d)=0$ 下证明了系数的 BRST Ward 恒等式（预印本）\cite{Frob:2016mzv}；有限距离上的收敛只在 $\varphi^4_4$ 的固定圈数下被证明；Anikin--Zav'yalov 对“微扰论的任意阶”推导了短距离与光锥展开\cite{Anikin:1978tj}，其所覆盖的理论类没有被确认，不能当作 QCD 的证明引用。[A] 同时指三个子陈述：第一个因为所引定理的适用范围不足，后两个因为\cref{asm:appM-brst-ope}与\cref{asm:appM-forward}；前向部分子子陈述只被化归，没有被解除（\cref{cor:appM-forward-ope}）。在微扰论之外，本定理不能离开\cref{asm:intro-np-ope}与\cref{asm:intro-af-coeff}而成立。误差类型 E-P。
+
+本定理与第~6~章真空关联函数的欧氏 OPE（\cref{thm:ee-ope}）步骤相同，只是外态现在是夸克与胶子、算符取一切自旋；文献中关于 OPE 严格性的其他结果汇总在第~24~章（\cref{rem:front-ope-qcd-status}）。
+
+\begin{proposition}[奇扭度系数的手征压低 \tagR]\label{prop:dis-chiral-suppression}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在无质量夸克的微扰论中，两个矢量流的编时乘积在夸克态之间的一切手征奇结构，在每一阶逐图为零：每条穿过硬部分的开放夸克线携带奇数个 $\gamma$ 矩阵。因此一切手征奇（由\cref{lem:dis-twist-chirality}，即奇扭度的对称无迹）算符的 OPE 系数在无质量微扰论中为零；有夸克质量时它们是 $m_q$ 的奇函数。（本命题只涉及部分子态。）
+\uses{lem:dis-twist-chirality,def:prelim-feynman-rules}
+\end{proposition}
+
+\begin{proof}
+无质量夸克的传播子为 $\ii\sla k/k^2$，夸克与胶子、夸克与光子的顶点为 $\ii g\gamma^\mu t^a$、$\ii e_q\gamma^\mu$；胶子与鬼场顶点不含 $\gamma$ 矩阵，闭合夸克圈给出迹，只贡献数值因子。一条从外夸克场到外夸克场、经过 $n_V$ 个矢量顶点的开放夸克线有 $n_V-1$ 个内传播子，其 Dirac 结构是 $2n_V-1$ 个 $\gamma$ 矩阵（$\gamma^\mu$ 或 $\sla k$）之积。Clifford 代数由 $\{\gamma^\mu,\gamma^\nu\}=2g^{\mu\nu}$ 定义，按 $\gamma$ 的个数是 $\mathbb Z_2$ 分次的，在任意 $D$ 中都成立；奇数个 $\gamma$ 之积是奇秩反对称积 $\gamma^{[r]}$（$r$ 奇）的线性组合。手征奇结构对应偶秩的 $\gamma^{[r]}$（$1$、$\sigma^{\mu\nu}$、……），其系数恒为零。同样地，OPE 系数乘在 $\bar\psi\,\Gamma_{\rm line}\psi$ 上，$\Gamma_{\rm line}$ 只含奇秩结构，故手征奇算符的系数为零。整个论证只用 $\gamma$ 的个数的奇偶性，不涉及 $\gamma_5$，因而在维数正规化中成立。夸克质量使传播子变为 $\ii(\sla k+m_q)/(k^2-m_q^2)$，偶秩结构只能与 $m_q$ 的奇次幂同时出现。
+\end{proof}
+
+非微扰地看，奇扭度系数的压低是\cref{asm:intro-np-ope}的 (O2) 的一部分：手征对称性被自发破缺，把全部味的 $\psi\to\gamma_5\psi$ 是转角 $\pi/2$ 的 $U(1)_A$ 转动，它把 $\theta$ 移动 $n_f\pi$；瞬子效应带有 $\ee^{-2\pi/\as(|q|)}$ 的压低。
+
+\begin{proposition}[由部分子结构函数提取 Wilson 系数 \tagR]\label{prop:dis-wilson-partons}
+（$R_{\mathrm{OPE}}$：以 OPE 为前提而严格。QCD 中含夸克的微扰 OPE 是全阶论证（\cref{thm:dis-ope}），严格证明只对标量理论与纯 Yang--Mills 的规范不变算符给出；对强子态还须非微扰 OPE（\cref{asm:intro-np-ope}）。）设 $j$ 是纯维数正规化中在壳无质量的部分子（物理极化平均），并设在所考虑的阶前向振幅的 Taylor 系数等于部分子结构函数矩的四倍：对偶数 $n\ge2$，$t^{(j)}_n=4\int_0^1\dd z\,z^{n-2}\hat F^{(j)}_2(z)$，$\tau^{(j)}_n=4\int_0^1\dd z\,z^{n-1}\hat F^{(j)}_1(z)$（矩恒等式；对红外正规化的靶，这是\cref{prop:dis-dispersion}在增长条件下的结论）。则对每个偶数 $n\ge2$，
+\begin{equation}\label{eq:dis-wilson-partons}
+\int_0^1\dd z\,z^{n-2}\hat F^{(j)}_2(z)=\sum_iC^{(n)}_{2,i}\,A^{(n)}_{i/j},\qquad A^{(n)}_{i/j}=\delta_{ij}+(\text{纯 }\overline{\rm MS}\text{ 抵消项}),
+\end{equation}
+对 $\hat F_L$ 与 $C^{(n)}_{L,i}=C^{(n)}_{2,i}-C^{(n)}_{1,i}$ 有同样的关系。（本命题只涉及部分子态。）
+\uses{thm:dis-ope,prop:dis-ope-forward,lem:prelim-scaleless,prop:dis-dispersion}
+\end{proposition}
+
+\begin{proof}
+由\cref{prop:dis-ope-forward}(a)（OPE 前提），$t^{(j)}_n=4\sum_iC^{(n)}_{2,i}A^{(n)}_{i/j}$；与假设 $t^{(j)}_n=4\int z^{n-2}\hat F^{(j)}_2$ 比较即得\cref{eq:dis-wilson-partons}的第一式。矩阵元：$\langle j|[O_i]|j\rangle=\sum_kZ_{ik}\langle j|O_k^{\rm bare}|j\rangle$。在零动量转移下外态只有动量 $p$，$p^2=0$，裸矩阵元的一切圈积分没有任何标度，由\cref{lem:prelim-scaleless}为零；树图矩阵元为 $\langle j|O_k|j\rangle_{\rm tree}=2\delta_{kj}(p^{\mu_1}\cdots p^{\mu_n})$（\cref{def:dis-twist}(a)(b)）。故 $A^{(n)}_{i/j}=Z_{ij}(n)$，在 $\overline{\rm MS}$ 中是 $\delta_{ij}$ 加纯极点；这些极点原本是紫外的，在无标度积分中与红外极点抵消后，留下的是红外（共线）极点的记账。对 $T_1$，由\cref{thm:dis-ope}的收缩规则 $\tau^{(j)}_n=2\sum_iC^{(n)}_{1,i}A^{(n)}_{i/j}$ 与假设得 $2\int z^{n-1}\hat F_1=\sum_iC^{(n)}_{1,i}A^{(n)}_{i/j}$，再与 $\hat F_L/z=\hat F_2/z-2\hat F_1$ 合起来即 $C_L$ 的关系。
+\end{proof}
+
+因此 Wilson 系数可以从部分子结构函数（割图）读出：在维数正规化中，部分子的 PDF（矩阵元）是纯抵消项，结构函数矩的有限部分就是 $\overline{\rm MS}$ 系数；PDF 的对应陈述是第~8~章的\cref{prop:pdf-partonic-dr}。单圈的精确检验（$N\le8$ 时矩恒等式精确到 $\varepsilon$ 成立）见\cref{ex:dis-oneloop-ope}。
+
+\begin{proposition}[Wilson 系数与约化矩阵元的重整化群 \tagR]\label{prop:dis-ope-rg}
+（$R_{\mathrm{OPE}}$：以 OPE 为前提。）记 $\Gamma_{ij}(n,\as)$ 为扭度 2 算符的反常维度矩阵：
+\begin{equation}\label{eq:dis-rg}
+\frac{\dd A^{(n)}_i}{\dd\ln\mu^2}=\sum_j\Gamma_{ij}(n,\as)A^{(n)}_j,\qquad \frac{\dd C^{(n)}_{a,j}}{\dd\ln\mu^2}=-\sum_iC^{(n)}_{a,i}\Gamma_{ij}(n,\as),\qquad \Gamma_{ij}=\frac{\as}{2\pi}\gamma_{ij}(n)+\order{\as^2},
+\end{equation}
+其中 $A^{(n)}_q$ 按味计、包括夸克与反夸克，$\Gamma_{q_kg}=2\gamma_{qg}$、$\Gamma_{gq_k}=\gamma_{gq}$，最低阶的值为% VF-CONV-16, VF-PDF-8, VF-PDF-10
+\begin{gather}
+\gamma_{qq}(n)=C_F\Big[\frac32+\frac1{n(n+1)}-2S_1(n)\Big],\qquad \gamma_{qg}(n)=T_F\frac{n^2+n+2}{n(n+1)(n+2)},\qquad \gamma_{gq}(n)=C_F\frac{n^2+n+2}{(n-1)n(n+1)},\nonumber\\
+\gamma_{gg}(n)=2C_A\Big[\frac1{n(n-1)}+\frac1{(n+1)(n+2)}-S_1(n)\Big]+\frac{\beta_0}2,\label{eq:dis-gamma0}
+\end{gather}
+即领头阶 DGLAP 核的 Mellin 矩 $\gamma_{ij}(n)=\int_0^1z^{n-1}P_{ij}(z)\,\dd z$（第~8~章）。与其他文献的约定换算：Moch--Vermaseren--Vogt 的 $\gamma^{(0)}_{\rm MVV}(n)=-2\gamma(n)$（展开参数 $\as/(4\pi)$）；Gross--Wilczek 的 $\mu\,\dd O/\dd\mu=-\gamma_OO$ 对应 $\gamma_O=-\frac{\as}\pi\gamma_{qq}(n)=\frac{\as}{2\pi}C_F\big[1-\frac2{n(n+1)}+4\sum_{j=2}^n\frac1j\big]$。
+\par
+非微扰地位：强子矩阵元 $A^{(n)}$：\cref{asm:intro-wightman}、\cref{asm:intro-composite}（MA0）。
+\uses{prop:dis-ope-euclid,prop:dis-ope-gi,prop:dis-ope-forward,thm:dis-ope,thm:prelim-composite-renorm,prop:appJ-local-operators,prop:qcd-rge,lem:appM-uniqueness,asm:intro-wightman,asm:intro-composite}
+\end{proposition}
+
+\begin{proof}
+完整证明见附录~M 的\cref{sec:appM-brst}，它直接从\cref{prop:dis-ope-euclid}的 (A3) 推出，不需要系数的唯一性与条件 (NE)。(1) 令 $\hat{\mathcal D}=\mu\partial_\mu+\beta(\as,\varepsilon)\partial_{\as}+\beta_\xi\partial_\xi$，它是在固定 $(g_0,\xi_0)$ 下对 $\mu$ 的全导数，故 $\hat{\mathcal D}C^{\rm bare}=0$；由 $C^{\overline{\rm MS}}=C^{\rm bare}Z^{-1}$ 得 $\hat{\mathcal D}C^{\overline{\rm MS}}=C^{\overline{\rm MS}}\gamma$，$\gamma=-(\hat{\mathcal D}Z)Z^{-1}$，这在完整的 $D$ 维基（含 evanescent 算符）中成立。$\gamma$ 有限：在 $\overline{\rm MS}$ 中 $\gamma=2\as\partial_{\as}Z_1$ 加上极点，而最高阶极点若不为零将与\cref{lem:appM-uniqueness}(c) 矛盾。$\beta_\xi$ 一项是必要的：$\beta_\xi=\mu\,\dd\xi/\dd\mu=\frac{\as}{2\pi}\xi\big[(\frac{13}6-\frac\xi2)C_A-\frac43T_Fn_f\big]+\order{\as^2}$，在 $\xi=1$、SU(3) 时为 $\frac{\as}{2\pi}(5-\frac23n_f)\ne0$（\texttt{s4\_wilson\_rg.py}）。(2) 在 $\xi=1$ 把方程限制到扭度 2 规范不变算符：规范不变与外来算符之外的系数为零（\cref{prop:dis-ope-gi}），外来算符不混入规范不变算符且 $\partial_\xi\gamma_{GG}=0$（\cref{prop:appJ-local-operators}、\cref{thm:prelim-composite-renorm}），扭度 2 系数与 $\xi$ 无关（\cref{prop:dis-ope-forward}：$T^{(j)}_2$ 是在壳物理振幅，$A^{(n)}=Z_{GG}\cdot{\rm tree}$ 与 $\xi$ 无关），于是 $(\mu\partial_\mu+\beta\partial_{\as})C^{GI}_i=\sum_{j\in GI}C^{GI}_j(\gamma_{GG})_{ji}$。(3) 换成 $\ln\mu^2$：$\mu\,\dd/\dd\mu=2\,\dd/\dd\ln\mu^2$，令 $\gamma=-2\Gamma$ 即得\cref{eq:dis-rg}的第二式。裸算符乘积的矩阵元与 $\mu$ 无关，$\sum_iC_iA_i$ 不依赖于 $\mu$，故 $A$ 满足第一式；对强子矩阵元这是\cref{asm:intro-composite}(C1) 的内容，而重整化群方程本身来自\cref{prop:qcd-rge}。(4) 最低阶的 $\gamma_{ij}(n)$ 是单圈的算符反常维度；$\gamma_{qq}$、$\gamma_{qg}$ 在\cref{sec:dis-wilson}的单圈计算中作为 $1/\varepsilon$ 极点的留数重新出现。换算表直接由定义比较得到。
+\end{proof}
+
+偶数 $n$ 与奇数 $n$ 的算符分属 C 偶（$q+\bar q$）与 C 奇（$q-\bar q$）的组合；由偶数 $n$ 与由奇数 $n$ 出发的解析延拓在次领头阶以上给出不同的非单态核 $P^\pm_{\rm NS}$（\cref{rem:dis-uniqueness}，第~8~章\cref{rem:pdf-ns-plusminus}）。

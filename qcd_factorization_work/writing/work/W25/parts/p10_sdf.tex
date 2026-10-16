@@ -1,0 +1,24 @@
+\section{LaMET 与短距离因子化}\label{sec:lamet-sdf}
+
+LaMET 与短距离因子化（SDF）常被当作两种竞争的方法。下面的命题说明：在 $P^z=\infty$ 时二者是同一函数的两种表示；在有限 $P^z$ 时它们是对同一组数据的两种不同展开，各自依赖不同的假设（\cref{fig:lamet-ioffe}）。
+
+\begin{proposition}[LaMET 与短距离因子化：同一函数的两种展开 \tagR]\label{prop:lamet-sdf}
+（$R_{\mathrm{cond}}$：在所列编号假设之下证明完整；结论的地位不高于其中最弱的假设。）前提：\cref{asm:lamet-ope}（及 \cref{thm:lamet-coordinate}、\cref{thm:lamet-parton-momentum}、\cref{prop:lattice-renormalizability}）。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item 准 PDF（固定 $P^z$）与赝 PDF（固定 $z^2$）是同一函数 $\tilde h(\lambda,z^2)$ 沿不同直线的 Fourier 变换（这一部分由定义直接推出）；在领头扭度，二者的核对所有阶由\cref{thm:lamet-parton-momentum}相联系。
+\item 在有限 $P^z$ 下它们是不同的展开：LaMET 在固定 $x$ 下按 $\Lambda/(x(1-x)P^z)$ 展开，给出 $[x_{\min},1-x_{\min}]$（$x_{\min}\sim\Lambda/P^z$）上的 $f(x)$；SDF 在固定 $\lambda$ 下按 $z^2\Lambda^2$ 展开，给出 $[0,\lambda_{\max}]$ 上的领头扭度 ITD，$\lambda_{\max}=z_{\max}P^z$（$P^z=3$ GeV、$z_{\max}\approx0.2$ fm 时约为 $3$）。
+\item 若 ITD 数据只到 $\lambda_L$，则能稳定恢复的 $\mathcal P$ 的模式约为 $2\lambda_L/\pi$ 个（\cref{prop:lamet-slepian}）；由 SDF 数据对 $f(x)$ 作任何锐利的重建都包含额外的假设。
+\end{enumerate}
+（(a) 中核的关系只涉及部分子态；(b)(c) 是对强子数据分析的说明，其误差控制见本章的强子层次定理。）
+\uses{def:lattice-quasi, thm:lamet-coordinate, asm:lamet-ope, thm:lamet-parton-momentum, prop:lattice-renormalizability, prop:lamet-slepian}
+\end{proposition}
+
+\begin{proof}
+(a) 由\cref{def:lattice-quasi}，$\tilde q(x,P^z)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h(\lambda,-\lambda^2/P_z^2)$，$\mathcal P(x,-z^2)=\int\frac{\dd\lambda}{2\pi}\ee^{-\ii x\lambda}\tilde h(\lambda,z^2)$：两者都是同一个二元函数的 Fourier 变换，分别沿射线 $z^2=-\lambda^2/P_z^2$ 与水平线 $z^2=$ 常数。核之间的关系就是\cref{thm:lamet-parton-momentum}中 $C$ 与 $\mathcal C$ 的关系（在\cref{asm:lamet-ope}之下对所有阶成立）。(b) 只是对两种展开的描述，不断言超出其他陈述的内容（这里的引用是指针）：前者的误差项由\cref{thm:lamet-hadronic}在其假设之下控制，后者由\cref{thm:lamet-coordinate}与\cref{asm:lamet-uniform}(UI-a) 控制；数值 $\lambda_{\max}=0.2\,{\rm fm}\times3\,{\rm GeV}/(0.1973\,{\rm GeV\,fm})=3.04$。(c) 是\cref{prop:lamet-slepian}应用于 SDF 给出的 $\mathcal P$（支撑在 $[-1,1]$ 中，由\cref{thm:lamet-coordinate}）。
+\end{proof}
+
+内容等级：$P^z=\infty$ 处的等价为 \tagA；“LaMET 的 Fourier 变换在固定 $x$ 下自动滤去高扭度”这一说法\cite{Ji:2022ezo}，其精确形式就是\cref{thm:lamet-hadronic}（\tagR，$R_{\mathrm{cond}}$，内容 \tagC）。文献\cite{Ji:2022ezo}（正式发表的标题与 arXiv 标题不同）认为，LaMET 合理地利用了比短距离 OPE 所允许的更多的格点数据，尽管扭度展开本身在 $z\sim0.4$ fm 以外失效；二者互补：SDF 数据（矩、小 $\lambda$ 的 ITD）加上端点渐近行为约束 LaMET 不能预言的 $x\in[0,x_{\min}]\cup[x_{\max},1]$。SDF 纲领见\cite{Radyushkin2017,Radyushkin:2017lvu,Radyushkin:2018cvn,Orginos:2017kos,Karpie:2018zaz,Joo:2019jct,Joo:2020spy}，综述\cite{Radyushkin:2019mye}；二者的关系见\cite{IzubuchiEtAl2018}。
+
+\begin{remark}[逆问题之争：数学陈述与经验问题]\label{rem:lamet-inverse-problem}
+文献\cite{Dutrieux:2025jed}（据其摘要）认为，对现实的数据，逆问题带来的不确定性“若不作非常限制性的假设仍然显著”，关键在 $\lambda\sim5$--$15$ 的区域；文献\cite{Chen:2025cxr}（据其摘要）认为 LaMET 在固定 $x$ 下“在理论上解决了不适定的逆问题”，部分现有数据可以作渐近外推；文献\cite{Ji:2026vir}（预印本）给出渐近形式与误差估计；Bayes 与神经网络重建见\cite{Karpie:2019eiq}（据其摘要）。我们的评估是：\cref{lem:lamet-strip}与\cref{prop:lamet-truncation}表明，\emph{给定}一个常数已知的定理级尾部界，固定 $x$ 处的准 PDF 是适定的，截断误差指数地小——但在 QCD 中这样的界只是猜想（\cref{conj:lamet-decay-qcd}，\tagC）；\cref{prop:lamet-slepian}表明，\emph{没有}这样的信息时，数据只确定约 $2\lambda_L/\pi$ 个模式。双方的数学陈述是相容的；分歧在于对现有数据而言 $\ee^{-mz_L}$ 型效应有多大，这是一个经验问题，而不是理论问题。不能说“格点直接计算了 PDF 的 $x$ 依赖”。
+\end{remark}

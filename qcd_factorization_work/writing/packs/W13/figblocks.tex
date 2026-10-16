@@ -1,0 +1,165 @@
+%%% BEGIN fig:coll-photoproduction
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fb hb/.style={hard blob,circle,minimum size=0.84cm,inner sep=0pt}]
+  % ======================= (a) direct photoproduction =======================
+  \begin{scope}
+    \node[fb hb] (H) at (0,0) {$H$};
+    \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.66cm,inner sep=0pt] (A) at (-1.55,-1.35) {};
+    \node[font=\footnotesize] at (A) {$f_{i/p}$};
+    \draw[photon] (-2.75,1.35) -- (H.145);
+    \draw[fb hadron] (-3.05,-1.35) -- (A.west);
+    \foreach \d in {-0.09,0.09} \draw[plain] ($(A.east)+(0,\d)$) -- ++(3.1,0);
+    \draw[quark] (A.45) -- (H.235);
+    \draw[quark] (H.25) -- (1.9,0.95);
+    \draw[quark] (H.335) -- (1.9,-0.55);
+    \node[fb lab,anchor=east] at (-2.77,1.35) {$\gamma$};
+    \node[fb lab,anchor=east] at (-3.07,-1.35) {$p$};
+    \node[fb note,anchor=west] at (2.2,-1.35) {$X_p$};
+    \node[fb note,anchor=west,align=left] at (1.95,0.2) {高 $p_T$\\喷注};
+    \path[mom={$\xi P$},mom sep=0.26cm,mom length=0.45cm] (A.45) -- (H.235);
+    \node[font=\small,anchor=north,align=center] at (-0.35,-1.85) {(a)\ 直接光子：单强子过程\\{\color{RoyalBlue!80!black}全阶论证 [A]}};
+  \end{scope}
+  % ======================= (b) resolved photoproduction =======================
+  \begin{scope}[xshift=8.0cm]
+    \node[fb hb] (H) at (0,0) {$H$};
+    \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.66cm,inner sep=0pt] (A) at (-1.55,-1.35) {};
+    \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.66cm,inner sep=0pt] (G) at (-1.55,1.35) {};
+    \node[font=\footnotesize] at (A) {$f_{i/p}$};
+    \node[font=\footnotesize] at (G) {$f_{j/\gamma}$};
+    \draw[photon] (-3.05,1.35) -- (G.west);
+    \draw[fb hadron] (-3.05,-1.35) -- (A.west);
+    \foreach \d in {-0.09,0.09} {
+      \draw[plain] ($(A.east)+(0,\d)$) -- ++(3.1,0);
+      \draw[plain] ($(G.east)+(0,\d)$) -- ++(3.1,0);}
+    \draw[quark] (A.45) -- (H.235);
+    \draw[quark] (G.-45) -- (H.125);
+    \draw[quark] (H.25) -- (1.75,0.8);
+    \draw[quark] (H.335) -- (1.75,-0.8);
+    \draw[glauber] (2.0,1.24) -- (2.0,-1.24);
+    \node[fb lab,anchor=east] at (-3.07,1.35) {$\gamma$};
+    \node[fb lab,anchor=east] at (-3.07,-1.35) {$p$};
+    \node[fb note,anchor=west] at (2.2,-1.35) {$X_p$};
+    \node[fb note,anchor=west] at (2.2,1.35) {$X_\gamma$};
+    \node[fb note,anchor=west,align=left,text=red!55!black] at (2.12,0) {旁观者间的\\Glauber 交换};
+    \path[mom={$\xi P$},mom sep=0.26cm,mom length=0.45cm] (A.45) -- (H.235);
+    \path[mom'={$x_\gamma q$},mom sep=0.26cm,mom length=0.45cm] (G.-45) -- (H.125);
+    \node[font=\small,anchor=north,align=center] at (-0.35,-1.85) {(b)\ 分辨光子：类强子—强子过程\\{\color{Plum!80!black}猜想 [C]}};
+  \end{scope}
+\end{tikzpicture}
+\caption{光生过程 $\gamma p\to\text{jets}+X$（振幅示意）。(a)~直接光子：光子直接参与硬散射 $H$，只有质子一侧有部分子分布 $f_{i/p}$ 与旁观者 $X_p$，与 DIS 同为单强子过程，因子化为全阶论证 [A]（\cref{thm:coll-direct-photo}）；
+(b)~分辨光子：光子先“强子化”为由光子部分子分布 $f_{j/\gamma}$ 描述的部分子云，提供进入硬散射的部分子（动量份额 $x_\gamma$），光子一侧也有旁观者 $X_\gamma$，
+等效于末态有色的强子—强子过程，旁观者之间可交换 Glauber 胶子（暗红色），因子化为猜想 [C]（\cref{conj:coll-resolved-photo}）。}
+\label{fig:coll-photoproduction}
+\end{figure}
+%%% END fig:coll-photoproduction
+
+%%% BEGIN fig:coll-sia
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!75,line width=1.6pt,line cap=round}]
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.74cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[jet blob,ellipse,minimum width=3.2cm,minimum height=0.85cm,inner sep=0pt] (J1) at (0,1.65) {};
+  \node[jetB blob,ellipse,minimum width=3.2cm,minimum height=0.85cm,inner sep=0pt] (J2) at (0,-1.65) {};
+  \node[soft blob,circle,minimum size=0.8cm,inner sep=0pt] (S) at (0,0) {};
+  % observed hadron h: final-state line of J_1 crossing the cut
+  \draw[fb hadron] (-0.42,2.02) to[out=80,in=180] (0,2.62) to[out=0,in=100] (0.42,2.02);
+  % photons (gamma* from e+e- annihilation)
+  \draw[photon] (-4.3,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (4.3,0);
+  \path[mom={$q$},mom sep=0.28cm] (-4.3,0) -- (H.west);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.east) -- (4.3,0);
+  % fermion line: H -> J_1 -> H^dagger -> J_2 -> H
+  \draw[quark] (H.62) -- (J1.192);
+  \draw[quark] (J1.348) -- (Hd.118);
+  \draw[quark] (Hd.242) -- (J2.12);
+  \draw[quark] (J2.168) -- (H.298);
+  \path[mom={$k$},mom sep=0.28cm,mom length=0.45cm] (H.62) -- (J1.192);
+  % soft gluons, on both sides of the cut
+  \draw[gluon] (S.135) -- (-0.62,1.27);
+  \draw[gluon] (S.45)  -- ( 0.62,1.27);
+  \draw[gluon] (S.225) -- (-0.62,-1.27);
+  \draw[gluon] (S.315) -- ( 0.62,-1.27);
+  % cut
+  \draw[cut] (0,3.05) -- (0,-2.45);
+  % labels
+  \node[fb lab] at (-0.95,1.65) {$J_1$};
+  \node[fb lab] at (-0.95,-1.65) {$J_2$};
+  \node[fb lab] at (-0.64,0) {$S$};
+  \node[fb lab] at (H) {$H$};
+  \node[fb lab] at (Hd) {$H^\dagger$};
+  \node[fb lab,anchor=south west] at (0.08,2.66) {$h(p_h)$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south east] at (-0.05,2.95) {末态割线};
+  \draw[blue!50!black,line width=0.4pt] (-1.45,1.98) -- (-2.05,2.45);
+  \node[fb note,text=blue!50!black,anchor=south east,align=right] at (-2.0,2.4) {碎裂函数\\$d_{h/q}(z/y)$};
+  \node[fb note,anchor=west,align=left] at (1.75,-1.75) {未观测的喷注 $J_2$ 与软辐射 $S$：\\对其末态求和，幺正性相消};
+\end{tikzpicture}
+\caption{$e^+e^-\to\gamma^*\to hX$ 的领头区域（约化割图；竖直虚线为末态割线，左侧为振幅、右侧为共轭振幅）。
+硬子图 $H$、$H^\dagger$ 产生两个喷注：被观测强子 $h$（动量 $p_h$，$z=2p_h\cdot q/q^2$，粗线穿过割线）所在的喷注 $J_1$ 给出碎裂函数 $d_{h/q}(z/y)$，$y$ 为碎裂部分子（动量 $k$）的相应份额；
+未观测的喷注 $J_2$ 与软子图 $S$ 也穿过割线，它们在对末态的割线求和中由幺正性相消（\cref{lem:coll-unobserved-jet}），软因子为 $1$；全部共线线都是出射的，Glauber 区没有钳夹（\cref{lem:coll-final-poles}）。}
+\label{fig:coll-sia}
+\end{figure}
+%%% END fig:coll-sia
+
+%%% BEGIN fig:coll-sidis
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb lab/.style={font=\small},
+  fb note/.style={font=\footnotesize,inner sep=1.5pt},
+  fb hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  fb harc/.style={draw=black!75,line width=1.6pt,line cap=round}]
+  \coordinate (HL) at (-1.05,0); \coordinate (HR) at (1.05,0);
+  % hard radiation crossing the cut (needed for P_hT ~ Q)
+  \draw[gluon] (HL) -- (HR);
+  % parton lines: A -> H -> current jet -> H^dagger -> A
+  \draw[quark] (-1.05,-1.63) -- (HL);
+  \draw[quark] (HL) -- (-1.05,1.63);
+  \draw[quark] (1.05,1.63) -- (HR);
+  \draw[quark] (HR) -- (1.05,-1.63);
+  % photons
+  \draw[photon] (-2.45,0.75) -- (HL);
+  \draw[photon] (HR) -- (2.45,0.75);
+  % target hadron A and the PDF; current jet and the FF
+  \draw[fb hadron] (-2.6,-2.0) -- (2.6,-2.0);
+  \draw[jet blob] (0,-2.0) ellipse[x radius=1.6,y radius=0.43];
+  \draw[jetB blob] (0,2.0) ellipse[x radius=1.6,y radius=0.43];
+  \draw[fb harc] (-0.42,2.4) to[out=80,in=180] (0,2.95) to[out=0,in=100] (0.42,2.4);
+  \draw[hard blob] (HL) circle[radius=0.36];
+  \draw[hard blob] (HR) circle[radius=0.36];
+  \draw[cut] (0,-2.75) -- (0,3.3);
+  % labels
+  \node[fb lab] at (HL) {$H$}; \node[fb lab] at (HR) {$H^\dagger$};
+  \node[font=\footnotesize] at (-0.78,-2.0) {$f_{i/A}(\xi)$};
+  \node[font=\footnotesize] at (-0.78,2.0) {$d_{h/j}(\zeta)$};
+  \node[fb lab,anchor=south west] at (0.07,2.98) {$h(p_h)$};
+  \node[fb lab,anchor=east] at (-2.62,-2.0) {$A$}; \node[fb lab,anchor=west] at (2.62,-2.0) {$A$};
+  \node[fb lab,anchor=east] at (-2.47,0.75) {$\gamma^*(q)$};
+  \path[mom={$\xi P_A$},mom pos=0.42,mom sep=0.26cm,mom length=0.5cm] (-1.05,-1.63) -- (HL);
+  \path[mom={$p_h/\zeta$},mom pos=0.6,mom sep=0.26cm,mom length=0.5cm] (HL) -- (-1.05,1.63);
+  \node[fb note,anchor=north,inner sep=1.5pt] at (0.36,-0.15) {$X_H$};
+  % kinematics and the two regimes
+  \node[anchor=west,align=left,font=\footnotesize] (K) at (3.45,1.55) {%
+    $x=\dfrac{Q^2}{2P_A\cdot q}\le\xi$，\quad$z=\dfrac{P_A\cdot p_h}{P_A\cdot q}\le\zeta$\\[6pt]
+    $P_{hT}$：$h$ 相对 $\gamma^*$--靶轴的横动量};
+  \node[anchor=north west,align=left,font=\footnotesize,draw=blue!45!black,fill=blue!4,rounded corners=2pt,
+        line width=0.5pt,inner sep=4pt] (C1) at ($(K.south west)+(0.05,-0.35)$)
+    {$P_{hT}\sim Q$（共线）：\\$\dd\sigma=\sum_{ij}f_{i/A}\otimes\dd\hat\sigma_{ij}\otimes d_{h/j}$（\cref{thm:coll-sidis}）};
+  \node[anchor=north west,align=left,font=\footnotesize,draw=orange!70!black,fill=orange!6,rounded corners=2pt,
+        line width=0.5pt,inner sep=4pt] at ($(C1.south west)+(0,-0.25)$)
+    {$P_{hT}\ll Q$（TMD，\cref{ch:tmd}）：\\横动量依赖的分布与碎裂函数、软因子};
+\end{tikzpicture}
+\caption{半单举 DIS $\ell A\to\ell' hX$ 的共线因子化（割图示意；竖直虚线为末态割线，左侧为振幅）。
+靶 $A$ 的共线子图给出部分子分布 $f_{i/A}(\xi)$（蓝色，沿 $+z$），流出硬部分的部分子 $j$ 碎裂为被观测强子 $h$（粗线穿过割线），给出碎裂函数 $d_{h/j}(\zeta)$（橙色）；
+$P_{hT}\sim Q$ 时 $h$ 的横动量来自硬辐射 $X_H$，截面为 $f\otimes\dd\hat\sigma\otimes d$ 的共线因子化形式；$P_{hT}\ll Q$ 时需要 TMD 因子化，二者在中间区域由 $W+Y$ 衔接（\cref{ch:tmd}）。}
+\label{fig:coll-sidis}
+\end{figure}
+%%% END fig:coll-sidis

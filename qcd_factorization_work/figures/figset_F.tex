@@ -1,0 +1,1227 @@
+% =====================================================================
+%  figset_F.tex  --  TikZ figure set F of the QCD factorization monograph
+%  (agent figF, prefix "ff"; FIGURES_INDEX_v2 Sec. 3 App O, App P, optional
+%   refdoc-S56 figures; Sec. 4.7 App O; Sec. 4.8 Ch25; Sec. 4.9 App P template).
+%  Requirements: common/preamble_fact.tex (ctexbook, XeLaTeX) -- it loads tikz,
+%  pgfplots and the libraries decorations.pathmorphing, decorations.markings,
+%  arrows.meta, calc, positioning, shapes.geometric, patterns, backgrounds, fit,
+%  and contains the style blocks STYLES and STYLES-EXT.  All extra styles below
+%  are local to their tikzpicture and carry the prefix "ff".
+%  Each figure is delimited by  %%% BEGIN <label>  /  %%% END <label>.
+%  Statement references inside the pictures use \cref with the canonical labels
+%  of the FINAL_OUTLINE_v2 registry (they resolve in the integrated book).
+%
+%  Contents (owner unit in brackets):
+%    required  fig:appO-flowchart        [App O]  S14  structure of the App O proof, (O-1)..(O-8)
+%              fig:appO-lcopt-term       [App O]  S15  one LCOPT term of J_A
+%              fig:appO-cutsum           [App O]  S16  cut-position identity, closed-time-path form
+%              fig:appO-deformation      [App O]  N22  simultaneous deformation after the rewriting
+%              fig:appP-dependency       [App P]  S17  TEMPLATE of the generated dependency graph (Sec. 4.9)
+%    optional  fig:dis-twist-graphical   [Ch7]    S56  twist <-> extra partons
+%              fig:appE-boost            [App E]  S56  boost-and-dimension argument
+%              fig:tmd-rapidity-bars     [Ch14]   S56  rapidity coverage, square-root construction
+%              fig:appO-glauber-flow     [App O]  S56  Glauber flows and graded configurations
+%              fig:break-measurement     [Ch18]   S56  measurement-compatibility criterion
+%              fig:appO-windows          [App O]  4.7  windows and the entire carrier
+%              fig:summary-chapter-dag   [Ch25]   4.8  chapter-level dependency graph (generated)
+%  Generated blocks (re-run after the verify patch of FINAL_OUTLINE_v2):
+%    fig:appP-dependency      figures/test_ff/scripts/appP_template2.py     (slice + layout of the template)
+%    fig:summary-chapter-dag  figures/test_ff/scripts/chapter_dag_fig.py    (edges, badges, counts from \uses)
+%    both read figures/test_ff/scripts/outline.json written by outline_data.py from spec_v2/FINAL_OUTLINE_v2.md.
+% =====================================================================
+
+%%% BEGIN fig:appO-flowchart
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff box/.style={draw=black!55,line width=0.6pt,rounded corners=2pt,fill=gray!3},
+  ff title/.style={font=\footnotesize\bfseries,inner sep=0pt,anchor=north west},
+  ff err/.style={font=\scriptsize,text=black!65,inner sep=0pt,anchor=north east},
+  ff key/.style={font=\scriptsize,text=black!75,inner sep=0pt,anchor=north west},
+  ff row/.style={font=\scriptsize,text=black!60,inner sep=0pt,anchor=west},
+  ff tag/.style={draw,line width=0.45pt,rounded corners=1pt,inner xsep=1.8pt,inner ysep=0pt,minimum height=3.7mm,
+                 font=\scriptsize,anchor=west},
+  ff R/.style={ff tag,fill=OliveGreen!15,draw=OliveGreen!65!black},
+  ff Rc/.style={ff R,dash pattern=on 1.6pt off 1pt},
+  ff A/.style={ff tag,fill=RoyalBlue!15,draw=RoyalBlue!65!black},
+  ff M/.style={ff tag,fill=white,draw=black!60},
+  ff D/.style={ff tag,fill=none,draw=black!45,line width=0.35pt},
+  ff asm/.style={draw=orange!65!black,fill=orange!8,line width=0.6pt,dash pattern=on 2.4pt off 1.4pt,rounded corners=1pt,
+                 font=\scriptsize,align=left,text width=5.0cm,inner sep=2.2pt,anchor=north west},
+  ff asmN/.style={ff asm,draw=gray!60!black,fill=gray!7},
+  ff badge/.style={draw=orange!65!black,fill=orange!8,line width=0.6pt,dash pattern=on 2.4pt off 1.4pt,rounded corners=1pt,
+                   font=\scriptsize,inner sep=2.2pt,anchor=west},
+  ff appN/.style={draw=OliveGreen!65!black,fill=OliveGreen!8,line width=0.6pt,rounded corners=2pt,font=\scriptsize,
+                  align=center,inner sep=3pt},
+  ff flow/.style={draw=black!65,line width=0.75pt,-{Stealth[length=4.2pt,width=3.6pt]}},
+  ff use/.style={draw=orange!65!black,line width=0.55pt,dash pattern=on 2.4pt off 1.4pt,-{Stealth[length=3.6pt,width=3pt]}},
+  ff useN/.style={ff use,draw=gray!55!black}]
+  % ------------------------------------------------------------------ geometry
+  % step boxes: x in [0,9.9]; assumption column: x in [10.55,15.8]
+  \def\ffR{9.9}
+  % ================================================================== (O-1)
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-1)\quad 区域、积分域与窗口};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：无};
+  \node[ff D] (a1) at (0.15,-0.66) {\cref{def:appO-leading-data}};
+  \node[ff D,right=1.2mm of a1] (a2) {\cref{def:appO-windows}};
+  \node[ff D,right=1.2mm of a2] (a3) {\cref{def:appO-weak-equivalence}};
+  \node[ff key] at (0.15,-0.98) {领头区域 $R$ 与支配集 $U_R$；类 $\mathcal G_0$；窗口 $\Theta_j$ 与软角区 $K_R$；弱等价 $\doteq_R$};
+  % ================================================================== (O-2)
+  \begin{scope}[yshift=-1.83cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-2)\quad 光锥序微扰论中的领头幂次形式};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-S、E-P；其余精确};
+  \node[ff R] (b1) at (0.15,-0.66) {\cref{lem:appO-lcopt}};
+  \node[ff R,right=1.2mm of b1] (b2) {\cref{lem:appO-numerators}};
+  \node[ff R,right=1.2mm of b2] (b3) {\cref{lem:appO-orientation}};
+  \node[ff R,right=1.2mm of b3] (b4) {\cref{lem:appO-glauber-pc}};
+  \node[ff Rc,right=1.2mm of b4] (b5) {\cref{lem:appO-hard-locality}};
+  \node[ff key] at (0.15,-0.98) {$J_A$：时间 $\tau=x^+$，能量 $l^-$；$J_B$：时间 $x^-$，能量 $l^+$；$V_H$ 位于 $\tau=0$};
+  \end{scope}
+  % ================================================================== (O-3)
+  \begin{scope}[yshift=-3.66cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-2.86);
+  \node[ff title] at (0.15,-0.12) {(O-3)\quad 割图求和与单侧改写};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：精确；E-F；E-W};
+  \node[ff row] at (0.15,-0.66) {割图求和};
+  \node[ff M] (c1) at (1.75,-0.66) {\cref{lem:appO-cut-position}};
+  \node[ff Rc,right=1.2mm of c1] (c2) {\cref{lem:appO-unitarity}};
+  \node[ff row] at (0.15,-1.13) {等时局域化};
+  \node[ff M] (c3) at (1.75,-1.13) {\cref{lem:appO-equal-time}};
+  \node[ff R,right=1.2mm of c3] (c4) {\cref{lem:appO-insertion-values}};
+  \node[ff Rc,right=1.2mm of c4] (c5) {\cref{prop:appO-ss-localize}};
+  \node[ff R,right=1.2mm of c5] (c6) {\cref{lem:appO-joint-localization}};
+  \node[ff row] at (0.15,-1.60) {旁观者交换};
+  \node[ff R] (c7) at (1.75,-1.60) {\cref{lem:appO-glauber-operator}};
+  \node[ff Rc,right=1.2mm of c7] (c8) {\cref{prop:appO-ss-cancel}};
+  \node[ff row] at (0.15,-2.07) {单侧改写};
+  \node[ff M] (c9) at (1.75,-2.07) {\cref{lem:appO-carrier}};
+  \node[ff D,right=1.2mm of c9] (c10) {\cref{def:appO-rewriting}};
+  \node[ff Rc,right=1.2mm of c10] (c11) {\cref{prop:appO-one-sided}};
+  \node[ff key] at (0.15,-2.42) {$\sum_C$：最大时刻配对；插入局域于 $\tau=0$；整函数载子 $\phi(x)=2\sqrt\pi\,\ee^{-x^2}$};
+  \end{scope}
+  % ================================================================== (O-4)
+  \begin{scope}[yshift=-7.02cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-4)\quad 减除（链）项与改写相容};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-W};
+  \node[ff D] (d1) at (0.15,-0.66) {\cref{def:appO-rewriting}};
+  \node[ff Rc,right=1.2mm of d1] (d2) {\cref{prop:appO-one-sided}};
+  \node[font=\scriptsize,text=black!60,anchor=west,right=2mm of d2,inner sep=0pt] {（链项部分；需 \cref{asm:appN-separation}(ii)）};
+  \node[ff key] at (0.15,-0.98) {先 $T_c$、后改写：$C_{R'}\tilde F\equiv\mathfrak r_RC_{R'}F_\Gamma$；(ET1)(ET2) 保持，$\lambda_J$ 不增};
+  \end{scope}
+  % ================================================================== (O-5)
+  \begin{scope}[yshift=-8.85cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-5)\quad 同时形变：形变目标};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：精确（几何）};
+  \node[ff D] (e1) at (0.15,-0.66) {\cref{def:appO-deformation-map}};
+  \node[ff R,right=1.2mm of e1] (e2) {\cref{lem:appO-no-crossing}};
+  \node[ff D,right=1.2mm of e2] (e3) {\cref{def:appO-graded}};
+  \node[ff D,right=1.2mm of e3] (e4) {\cref{def:appO-target}};
+  \node[ff R,right=1.2mm of e4] (e5) {\cref{prop:appO-target}};
+  \node[ff key] at (0.15,-0.98) {$k^-\to k^-+\ii\sigma\kappa\psi|\mathbf k_T|$，$k^+\to k^+-\ii\sigma\kappa\psi|\mathbf k_T|$（直接线，沿 $e_G=n_B-n_A$）};
+  \end{scope}
+  % ================================================================== (O-6)
+  \begin{scope}[yshift=-10.68cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-6)\quad 程函近似与指向过去的 Wilson 线};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-P（于 $\Omega$ 上）};
+  \node[ff R] (f1) at (0.15,-0.66) {\cref{prop:appO-eikonal}};
+  \node[ff A,right=1.2mm of f1] (f2) {\cref{prop:appO-past-wilson}};
+  \node[font=\scriptsize,text=black!60,anchor=west,right=2mm of f2,inner sep=0pt] {（需 \cref{asm:appN-ward-product}）};
+  \node[ff key] at (0.15,-0.98) {程函分母 $n_A\cdot K+\ii\sigma0$：$W[0,-\infty n_A]$、$W[0,-\infty n_B]$（指向过去）};
+  \end{scope}
+  % ================================================================== (O-7)
+  \begin{scope}[yshift=-12.51cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-7)\quad 软因子 $=1$，共线因子 $=$ DIS 的 PDF};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：精确};
+  \node[ff R] (g1) at (0.15,-0.66) {\cref{lem:method-soft-unitarity}};
+  \node[ff key] at (0.15,-0.98) {$S^{(-)}$ 由指向过去的 Wilson 线构成，对软末态求和后 $\mathcal U^{(-)\dagger}\mathcal U^{(-)}=1$};
+  \end{scope}
+  % ================================================================== (O-8)
+  \begin{scope}[yshift=-14.34cm]
+  \draw[ff box] (0,0) rectangle (\ffR,-1.33);
+  \node[ff title] at (0.15,-0.12) {(O-8)\quad 主定理与附录 N 的接口};
+  \node[ff err] at (\ffR-0.15,-0.13) {误差：E-W};
+  \node[ff Rc] (h1) at (0.15,-0.66) {\cref{thm:appO-main}};
+  \node[ff Rc,right=1.2mm of h1] (h2) {\cref{cor:appO-interface}};
+  \node[ff Rc,right=1.2mm of h2] (h3) {\cref{prop:appO-tmd}};
+  \node[ff key] at (0.15,-0.98) {(Gla-a)--(Gla-c)：弱等价、单侧取向（$\eta=-1$）、形变目标};
+  \end{scope}
+  % ------------------------------------------------------------------ step arrows
+  \foreach \ya/\yb in {-1.33/-1.83, -3.16/-3.66, -6.52/-7.02, -8.35/-8.85, -10.18/-10.68, -12.01/-12.51, -13.84/-14.34}
+    \draw[ff flow] (4.95,\ya) -- (4.95,\yb);
+  % ------------------------------------------------------------------ App N (green) and the users
+  \node[ff appN,anchor=north] (N) at (4.95,-16.17)
+    {附录 N：\cref{prop:appN-dy}（DY 的减除定理）、\cref{prop:appN-tmd-window}（TMD 窗口）};
+  \draw[ff flow] (4.95,-15.67) -- (N.north);
+  \node[font=\scriptsize,anchor=north west,inner sep=0pt] (U0) at (0.15,-16.98) {使用者：};
+  \node[ff A,right=1mm of U0] (U1) {\cref{thm:dy-factorization}};
+  \node[ff A,right=1.2mm of U1] (U2) {\cref{lem:tmd-glauber}};
+  \node[ff A,right=1.2mm of U2] (U3) {\cref{prop:method-glauber-deformation}};
+  \node[font=\scriptsize,text=black!65,anchor=west,right=1.5mm of U3,inner sep=0pt] {（第 12、14、9 章，全阶论证 [A]）};
+  % ------------------------------------------------------------------ assumptions (orange, dashed)
+  \node[ff asm] (L) at (10.55,-2.25) {\cref{asm:appO-lcopt}\ 光锥序微扰论的适用性：\\无零模与端点贡献；瞬时圈取值，(i)(ii)};
+  \node[ff asm] (X) at (10.55,-4.30) {\cref{asm:appO-mixing}\ Glauber--软混合与重合连接：\\(a)(b) 一般软子图；(c) 完整图集相消};
+  \node[ff asm] (V) at (10.55,-5.70) {\cref{asm:appO-envelope}\ 纤维积分误差的可积包络};
+  \node[ff asmN] (NN) at (10.55,-6.75) {附录 N 的共同输入（与 DIS、$e^+e^-$\\共用）：\cref{asm:appN-envelope}、\cref{asm:appN-separation}、\\\cref{asm:appN-ward-product}};
+  \node[ff asm] (F) at (10.55,-8.75) {\cref{asm:appO-deformation}\ (a) 一般构型的形变；\\(b) 与集代数 $\mathfrak B$ 相容；(c) 软角区；\\(d) H-发射端点与重合 SA/AS 插入};
+  \node[ff asm] (C) at (10.55,-10.85) {\cref{asm:appO-rewritten-cs}\ 改写形式与族求和形式的\\(CS1)(CS2)（含处方的逐项匹配）};
+  % uses: assumption -> step (east side of the step boxes)
+  \draw[ff use] (L.west) -- (\ffR,-2.50);
+  \draw[ff use] (L.west) -- (\ffR,-3.95);
+  \draw[ff use] (X.west) -- (\ffR,-4.70);
+  \draw[ff use] (V.west) -- (\ffR,-5.85);
+  \draw[ff use] (V.west) -- (\ffR,-7.40);
+  \draw[ff useN] (NN.west) -- (\ffR,-6.20);
+  \draw[ff useN] (NN.west) -- (\ffR,-7.70);
+  \draw[ff use] (F.west) -- (\ffR,-9.50);
+  \draw[ff use] (C.west) -- (\ffR,-11.50);
+  % (O-8) uses asm:appO-deformation (b)(c) and asm:appO-rewritten-cs again: short badges
+  \node[ff badge] (F8) at (10.55,-14.72) {\cref{asm:appO-deformation}(b)(c)};
+  \node[ff badge] (C8) at (10.55,-15.22) {\cref{asm:appO-rewritten-cs}};
+  \draw[ff use] (F8.west) -- (\ffR,-14.72);
+  \draw[ff use] (C8.west) -- (\ffR,-15.22);
+  % ------------------------------------------------------------------ legend
+  \begin{scope}[yshift=-17.75cm]
+    \node[ff R] (l1) at (0,0) {\phantom{O}};   \node[font=\scriptsize,anchor=west,right=0.8mm of l1,inner sep=0pt] (m1) {无条件证明（$R_{\rm PT}$/$R_{\rm def}$）};
+    \node[ff Rc,right=3mm of m1] (l2) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l2,inner sep=0pt] (m2) {在编号假设下证明（$R_{\rm cond}$）};
+    \node[ff M,right=3mm of m2] (l3) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l3,inner sep=0pt] (m3) {数学引理};
+    \node[ff A,right=3mm of m3] (l4) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l4,inner sep=0pt] (m4) {全阶论证 [A]};
+    \node[ff D,right=3mm of m4] (l5) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l5,inner sep=0pt] (m5) {定义};
+    \node[ff tag,draw=orange!65!black,fill=orange!8,line width=0.6pt,dash pattern=on 2.4pt off 1.4pt,right=3mm of m5] (l6) {\phantom{O}}; \node[font=\scriptsize,anchor=west,right=0.8mm of l6,inner sep=0pt] {编号假设};
+  \end{scope}
+\end{tikzpicture}
+\caption{附录~O 中单举色单态 Drell--Yan 的 Glauber 区相消条件证明的结构：步骤 (O-1)--(O-8) 自上而下，每个框列出建立该步的陈述（框的样式同附录~P 的依赖图，见图例）、该步的误差类型（E-S 标度陈述、E-P 逐点界、E-F 纤维积分界、E-W 弱等价）与要点。
+橙色虚线框为附录~O 的编号假设，虚线箭头指向使用它们的步骤；灰色虚线框为与 DIS、$e^+e^-$ 共用的附录~N 输入。
+\cref{asm:appO-deformation} 的 (b)(c)(d) 即使对阿贝尔理论的类 $\mathcal G_0$ 也需要，因此在截面层次上 DY 的 Glauber 相消没有一步是无条件的。
+步骤 (O-8) 经 \cref{cor:appO-interface} 与 \cref{prop:appO-tmd} 把结果交给附录~N 的减除定理，供第~12、14、9~章的全阶论证使用。}
+\label{fig:appO-flowchart}
+\end{figure}
+%%% END fig:appO-flowchart
+
+%%% BEGIN fig:appO-lcopt-term
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  ff soft/.style={gluon,draw=green!45!black},
+  ff state/.style={draw=gray!60!black,line width=0.55pt,dash pattern=on 2.2pt off 1.6pt},
+  ff ax/.style={lcaxis,gray!60!black},
+  ff lab/.style={font=\footnotesize},
+  ff dlab/.style={font=\small,fill=white,inner sep=1.2pt},
+  ff note/.style={font=\footnotesize,text=black!70}]
+  % ---------------------------------------------------------------- light-cone times
+  \def\tA{-5.0}\def\tB{-2.4}\def\tC{2.2}\def\tD{4.3}\def\tcut{5.6}
+  % initial / final regions (light shading)
+  \fill[blue!4] (\tA,-1.2) rectangle (0,3.2);
+  \fill[orange!6] (0,-1.2) rectangle (\tcut,3.2);
+  \node[ff note,anchor=south] at ({(\tA)/2},3.2) {初态（$\tau<0$）};
+  \node[ff note,anchor=south] at ({(\tcut)/2},3.2) {末态（$\tau>0$，割线之前）};
+  % ---------------------------------------------------------------- lines of J_A (amplitude side)
+  % hadron A -> contact vertex (v1, v1') at tau_1; instantaneous quark line v1 -> v1'
+  \coordinate (v1) at (\tA,0);  \coordinate (v1p) at (\tA,1.3);
+  \coordinate (VH) at (0,1.3);
+  \coordinate (w2) at (\tB,0);  \coordinate (w3) at (\tC,0);
+  \coordinate (v4) at (\tD,2.35);
+  \draw[ff hadron] (-6.75,0) -- (v1);
+  \draw[quark=0.86] (v1) -- (v1p);
+  \draw[line width=0.9pt] ($(v1)!0.42!(v1p)+(-0.16,0)$) -- ++(0.32,0);   % bar: instantaneous part
+  \draw[quark] (v1p) -- (VH);                                          % active quark a' -> V_H
+  \draw[gluon] (v1p) to[out=22,in=185] (v4);                           % collinear gluon g
+  \draw[scalar] (v1) -- (w2) -- (w3) -- (\tcut+0.6,0);                 % scalar spectator s, s', s''
+  \draw[quark] (v4) -- (\tcut+0.6,2.85);                               % final-state splitting g -> q qbar
+  \draw[quark] (\tcut+0.6,1.85) -- (v4);
+  % soft injections k_1 (initial) and k_2 (final), oriented into J_A
+  \draw[ff soft] (\tB,-1.1) -- (w2);
+  \draw[ff soft] (\tC,-1.1) -- (w3);
+  \path[mom={$k_1$},mom sep=0.32cm] (\tB,-1.1) -- (w2);
+  \path[mom'={$k_2$},mom sep=0.32cm] (\tC,-1.1) -- (w3);
+  % vertices
+  \foreach \p in {v1,v1p,w2,w3,v4} \node[vertex] at (\p) {};
+  \filldraw[hard blob] (VH) circle[radius=0.2];
+  % labels of lines
+  \node[ff lab,anchor=north] at (-6.1,-0.12) {$P_A$};
+  \node[ff lab,anchor=east] at ($(v1)!0.42!(v1p)+(-0.22,0)$) {瞬时线};
+  \node[ff lab,anchor=north] at ($(v1p)!0.5!(VH)+(0,-0.06)$) {$a'$};
+  \node[ff lab,anchor=south] at (-4.0,2.05) {$g$};
+  \node[ff lab,anchor=south] at (-4.4,0.04) {$s$};
+  \node[ff lab,anchor=south] at (-0.6,0.04) {$s'$};
+  \node[ff lab,anchor=south] at (4.85,0.04) {$s''$};
+  \node[ff lab,anchor=west] at (\tcut+0.6,2.85) {$q$};
+  \node[ff lab,anchor=west] at (\tcut+0.6,1.85) {$\bar q$};
+  \node[ff lab,anchor=north west] at ($(VH)+(0.1,-0.14)$) {$V_H$};
+  % ---------------------------------------------------------------- intermediate states and the cut
+  \foreach \x/\d in {-3.7/1,-1.2/2,1.1/3,3.25/4} {
+    \draw[ff state] (\x,-1.15) -- (\x,2.75);
+    \node[ff dlab] at (\x,2.95) {$D_\d$};
+  }
+  \draw[cut] (\tcut,-1.15) -- (\tcut,3.2);
+  \node[font=\footnotesize,text=red!65!black,anchor=north west] at (\tcut+0.05,-0.2) {割线};
+  % ---------------------------------------------------------------- time axis
+  \draw[ff ax] (-6.75,-1.5) -- (6.7,-1.5) node[below left=1pt and -2pt,font=\footnotesize] {$\tau=x^+$};
+  \foreach \x/\t in {\tA/{\tau_1},\tB/{\tau_2},0/{0},\tC/{\tau_3},\tD/{\tau_4}} {
+    \draw[gray!60!black,line width=0.5pt] (\x,-1.5) -- ++(0,0.08);
+    \node[font=\footnotesize,below] at (\x,-1.5) {$\t$};
+  }
+  % ---------------------------------------------------------------- energy denominators
+  \node[anchor=north,font=\small,align=left] at (0,-2.1) {%
+    $\begin{array}{@{}l@{\qquad}l@{}}
+      D_1=P_A^--E_s-E_{a'}-E_g+\ii0, & D_3=\mathcal E-k_2^--E_{s'}-E_g+\ii0,\\[2pt]
+      D_2=P_A^-+k_1^--E_{s'}-E_{a'}-E_g+\ii0, & D_4=\mathcal E-E_{s''}-E_g+\ii0,\\[2pt]
+      \multicolumn{2}{@{}l@{}}{\text{割线：}2\pi\delta\big(\mathcal E-E_{s''}-E_q-E_{\bar q}\big),\qquad
+        E_l\equiv E(l)=\dfrac{\mathbf l_T^2+m_l^2-\ii0}{2l^+}.}
+    \end{array}$};
+\end{tikzpicture}
+\caption{一个光锥序微扰论项（$J_A$ 的振幅一侧，$\mathcal G_0$ 的旁观者模型：强子 $A$ 分裂为活动夸克与标量旁观者 $s$；共轭一侧镜像，未画出）。
+顶点按光锥时间 $\tau=x^+$ 排序，相邻顶点之间的每个中间态（灰色虚线）给出一个能量分母 $\ii/D_i$，$D_i$ 为注入的负分量 $l^-$ 减去该态各线的在壳能量 $E(l)$，再加 $+\ii0$（\cref{lem:appO-lcopt}）；
+带短横的竖线是 Feynman 规范中费米子传播子的瞬时部分 $\ii\gamma^+/(2l^+)$，它把两端顶点置于同一时刻（\cref{lem:appO-numerators}）；硬顶点 $V_H$（与 $H$、$J_B$ 相连，未画出）位于 $\tau=0$。
+软动量 $k_1$、$k_2$ 一律取为流入 $J_A$：$\tau<0$ 的初态分母形如 $A_D+k^-+\ii0$，零点在 ${\rm Im}\,k^-<0$；$\tau>0$ 的末态分母用末态总能量 $\mathcal E$ 写成 $A'_D-k^-+\ii0$，零点在 ${\rm Im}\,k^->0$（\cref{lem:appO-orientation}），
+故 $k_1$ 只出现在 $D_2$，$k_2$ 只出现在 $D_3$。}
+\label{fig:appO-lcopt-term}
+\end{figure}
+%%% END fig:appO-lcopt-term
+
+%%% BEGIN fig:appO-cutsum
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff chain/.style={draw=blue!55!black,fill=blue!12,line width=0.6pt},
+  ff soft/.style={gluon,draw=green!45!black},
+  ff ins/.style={circle,draw=green!40!black,fill=green!45!black,inner sep=0pt,minimum size=4.2pt},
+  ff lab/.style={font=\footnotesize},
+  ff note/.style={font=\footnotesize,text=black!70},
+  ff w/.style={font=\footnotesize,text=black!80},
+  ff ctp/.style={draw=black!70,line width=0.9pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=5pt,width=4.5pt]}}}}},
+  ff ctp/.default=0.5,
+  ff unit/.style={fill=gray!16,draw=gray!55,line width=0.4pt,rounded corners=2pt}]
+  % ================================================================ (a) cut-position identity
+  \begin{scope}
+    \node[font=\small,anchor=west] at (-0.55,2.3) {(a)\ 割位置恒等式（含插入）};
+    % closed-time-path order of the chain
+    \draw[lcaxis,gray!60!black] (0.35,1.5) -- (8.45,1.5);
+    \node[ff note,anchor=south] at (4.4,1.52) {闭时路序：振幅一侧 $\tau$ 递增，然后共轭一侧 $\tau$ 递减};
+    % chain of final states between V_H and V_H^dagger
+    \fill[ff chain] (0.3,-0.2) rectangle (8.5,0.2);
+    \filldraw[hard blob] (0,0) circle[radius=0.3];
+    \filldraw[hard blob] (8.8,0) circle[radius=0.3];
+    \node[ff lab,anchor=north] at (0,-0.33) {$V_H$};
+    \node[ff lab,anchor=north] at (8.8,-0.33) {$V_H^\dagger$};
+    \foreach \x/\v in {2.2/1,4.4/2,6.6/3} {
+      \node[vertex] at (\x,0) {};
+      \node[ff lab,anchor=south] at (\x,0.22) {$v_\v$};
+    }
+    % insertions: v_1 on the amplitude side, v_3 on the conjugate side
+    \draw[ff soft] (2.2,-1.0) -- (2.2,-0.02);
+    \draw[ff soft] (6.6,-1.0) -- (6.6,-0.02);
+    \node[ff ins] at (2.2,0) {};  \node[ff ins] at (6.6,0) {};
+    \node[ff lab,anchor=north] at (2.2,-1.03) {振幅插入 $O_a$};
+    \node[ff lab,anchor=north] at (6.6,-1.03) {共轭插入 $O_b'$};
+    \node[ff lab,anchor=north] at (4.4,-0.27) {内部顶点};
+    % weights of the vertices
+    \node[ff w,anchor=north] at (2.2,-1.48) {$\alpha_1$，$\beta_1=0$};
+    \node[ff w,anchor=north] at (4.4,-1.48) {$\alpha_2=\beta_2$};
+    \node[ff w,anchor=north] at (6.6,-1.48) {$\alpha_3=0$，$\beta_3$};
+    % cut positions through the states s_0 ... s_3
+    \foreach \x/\j in {1.1/0,3.3/1,5.5/2,7.7/3} {
+      \draw[cut] (\x,-0.55) -- (\x,0.85);
+      \node[font=\footnotesize,text=red!65!black,anchor=south] at (\x,0.86) {$j=\j$};
+      \node[ff lab,anchor=south west,inner sep=1pt] at (\x+0.04,0.2) {$s_\j$};
+    }
+    % table of weights
+    \node[anchor=west,font=\footnotesize] at (9.55,0.2) {%
+      \renewcommand{\arraystretch}{1.12}%
+      \begin{tabular}{@{}c@{\quad}l@{}}
+        \toprule
+        $j$ & 割线穿过 $s_j$ 的权重 $W_j$\\
+        \midrule
+        0 & $\beta_1\beta_2\beta_3=0$\\
+        1 & $\alpha_1\beta_2\beta_3$\\
+        2 & $\alpha_1\alpha_2\beta_3$\\
+        3 & $\alpha_1\alpha_2\alpha_3=0$\\
+        \bottomrule
+      \end{tabular}};
+    % result
+    \node[anchor=north,font=\small,align=center] at (6.6,-2.05) {%
+      $\displaystyle\sum_{j=0}^{3}\mathcal T_j=-\ii\,\alpha_1\beta_2\beta_3\!\int\!\frac{\dd\mathcal E}{2\pi}\,H_1(\mathcal E)
+       +\ii\,\alpha_1\alpha_2\beta_3\!\int\!\frac{\dd\mathcal E}{2\pi}\,H_3(\mathcal E)$，\\[3pt]
+      $\displaystyle H_m(\mathcal E)=\prod_{i<m}\frac{1}{\mathcal E-E_i+\ii0}\prod_{i\ge m}\frac{1}{\mathcal E-E_i-\ii0}$};
+  \end{scope}
+  % ================================================================ (b) closed-time-path form
+  \begin{scope}[yshift=-6.3cm]
+    \node[font=\small,anchor=west] at (-0.55,1.5) {(b)\ 闭时路形式};
+    % part later than all insertions: U^dagger U = 1
+    \fill[ff unit] (4.1,-1.8) rectangle (8.4,0.78);
+    \node[ff note,anchor=south] at (6.25,0.12) {$\tau>\tau_{\max}$：$U^\dagger U=1$};
+    % branches: amplitude (upper, T order) and conjugate (lower, anti-T order)
+    \draw[ff ctp] (0,0) -- (7.7,0);
+    \draw[ff ctp=0.72] (7.7,-1.2) -- (0,-1.2);
+    \draw[draw=black!70,line width=0.9pt] (7.7,0) arc[start angle=90,end angle=-90,radius=0.6];
+    \filldraw[hard blob] (0,0) circle[radius=0.22];
+    \filldraw[hard blob] (0,-1.2) circle[radius=0.22];
+    \node[ff lab,anchor=east] at (-0.28,0) {$V_H(0)$};
+    \node[ff lab,anchor=east] at (-0.28,-1.2) {$V_H^\dagger(0)$};
+    \node[ff note,anchor=north west] at (0.3,-0.05) {振幅（${\rm T}$ 序）};
+    \node[ff note,anchor=south west] at (0.3,-1.15) {共轭振幅（$\bar{\rm T}$ 序）};
+    % insertions
+    \draw[ff soft] (2.2,0.95) -- (2.2,0.03);   \node[ff ins] at (2.2,0) {};
+    \draw[ff soft] (4.0,-2.15) -- (4.0,-1.23); \node[ff ins] at (4.0,-1.2) {};
+    \node[ff lab,anchor=west] at (2.32,0.75) {$O_a(\tau_a)$};
+    \node[ff lab,anchor=west] at (4.12,-2.0) {$O_b'^\dagger(\tau_b')$};
+    % internal final-state interactions of J_A later than all insertions (they cancel)
+    \foreach \x in {5.2,6.6} { \node[vertex] at (\x,0) {}; \node[vertex] at (\x,-1.2) {}; }
+    \node[ff note,anchor=center] at (5.9,-0.6) {$J_A$ 内部的末态相互作用};
+    % cut = final time
+    \draw[cut] (8.3,-1.75) -- (8.3,0.9);
+    \node[font=\footnotesize,text=red!65!black,anchor=west,align=left] at (8.45,-0.6) {割线\\（最终时刻 $\tau_f$）};
+    % time axis
+    \draw[lcaxis,gray!60!black] (0,-2.6) -- (9.6,-2.6) node[below left=1pt and -2pt,font=\footnotesize] {$\tau$};
+    \foreach \x/\t in {0/0,2.2/{\tau_a},4.0/{\tau_b'=\tau_{\max}},8.3/{\tau_f}} {
+      \draw[gray!60!black,line width=0.5pt] (\x,-2.6) -- ++(0,0.08);
+      \node[font=\footnotesize,below] at (\x,-2.6) {$\t$};
+    }
+    % operator form after the sum over cuts
+    \node[anchor=north,font=\small] at (4.8,-3.25) {%
+      对割线求和：\quad$\sum_C\;\longrightarrow\;\langle P_A|\,\bar{\rm T}\big\{V_H^\dagger(0)\textstyle\prod_bO_b'^\dagger(\tau_b')\big\}\,
+      {\rm T}\big\{V_H(0)\textstyle\prod_aO_a(\tau_a)\big\}|P_A\rangle$};
+  \end{scope}
+\end{tikzpicture}
+\caption{割图求和的幺正性（\cref{lem:appO-cut-position}、\cref{lem:appO-unitarity}）。
+(a)~$J_A$ 末态部分的一条链按闭时路序排列，割线穿过态 $s_j$ 的项 $\mathcal T_j$ 带权重 $W_j=\prod_{i\le j}\alpha_i\prod_{i>j}\beta_i$：振幅插入只在振幅一侧（$\beta=0$），共轭插入只在共轭一侧（$\alpha=0$），内部顶点两侧权重相同（$\alpha=\beta$，\cref{lem:appJ-cut-hermiticity}）。
+把割线移过最晚的顶点只改变该顶点的权重，故“$v_2$ 最晚”的贡献 $\propto\alpha_2-\beta_2$ 消失，对割位置求和后只剩插入顶点给出的至多两项（$H_m$ 即“$v_m$ 最晚”）。
+(b)~闭时路形式：对割线求和后 $J_A$ 成为图下所示的矩阵元，晚于所有插入的 $J_A$ 内部相互作用在两支上合成 $U^\dagger U=1$，即同一喷注内部的末态相互作用精确相消；软线把 $\tau>0$ 的插入固定在各自一侧，它们无法在 $J_A$ 内配对，这正是 Glauber 钳夹的来源。}
+\label{fig:appO-cutsum}
+\end{figure}
+%%% END fig:appO-cutsum
+
+%%% BEGIN fig:appO-deformation
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff pole/.pic={\draw[line width=1pt,line cap=round] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  ff spole/.pic={\draw[line width=1pt,line cap=round,green!40!black] (-0.085,-0.085)--(0.085,0.085) (-0.085,0.085)--(0.085,-0.085);},
+  ff contour/.style={draw=blue!65!black,line width=1.15pt,postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=6pt,width=5pt]}}}}},
+  ff contour/.default=0.5,
+  ff ax/.style={lcaxis,gray!60!black},
+  ff win/.style={draw=red!55!black,line width=0.6pt},
+  ff lab/.style={font=\footnotesize},
+  ff note/.style={font=\footnotesize,text=black!75},
+  ff dim/.style={draw=gray!60!black,line width=0.45pt,{Stealth[length=3pt]}-{Stealth[length=3pt]}}]
+  % ================================================================ (a) complex k^- plane (J_A)
+  \begin{scope}
+    \fill[red!7] (-1.4,-1.0) rectangle (1.4,1.3);
+    \draw[ff ax] (-3.3,0) -- (3.55,0) node[above left=0pt and -2pt] {$\Real k^-$};
+    \draw[ff ax] (0,-1.05) -- (0,1.6) node[left] {$\Imag k^-$};
+    \draw[ff contour=0.5] (-3.2,0) -- (-2.35,0) .. controls (-1.9,0) and (-1.85,0.85) .. (-1.4,0.85) -- (1.4,0.85)
+         .. controls (1.85,0.85) and (1.9,0) .. (2.35,0) -- (3.2,0);
+    \pic at (-0.5,-0.17) {ff pole}; \pic at (0.12,-0.24) {ff pole}; \pic at (0.48,-0.13) {ff pole};
+    \node[ff note,anchor=north,align=center] at (0.1,-0.36) {$J_A$ 初态极点};
+    \draw[ff dim] (1.05,0.02) -- (1.05,0.83);
+    \node[ff lab,anchor=east] at (1.0,0.45) {$\kappa|\mathbf k_T|$};
+    % window edges and the soft line's own pole (here k^+ < 0: upper half-plane, outside the window)
+    \foreach \x in {-2.35,2.35} \draw[ff win] (\x,-0.1) -- (\x,0.1);
+    \node[ff note,anchor=north,text=red!55!black] at (2.35,-0.12) {窗口边缘};
+    \pic at (-2.95,0.2) {ff spole};
+    \node[ff note,anchor=south,text=green!35!black,align=center] at (-2.95,0.32) {软线极点\\（$k^+<0$）};
+    \node[ff note,anchor=south west,text=red!55!black] at (0.12,1.3) {窗口核（$\psi=1$）};
+    \node at (0,-1.95) {(a)\ $J_A$：复 $k^-$ 平面，围道上移};
+  \end{scope}
+  % ================================================================ (b) complex k^+ plane (J_B)
+  \begin{scope}[xshift=7.45cm]
+    \fill[red!7] (-1.4,-1.3) rectangle (1.4,1.0);
+    \draw[ff ax] (-3.3,0) -- (3.55,0) node[above left=0pt and -2pt] {$\Real k^+$};
+    \draw[ff ax] (0,-1.4) -- (0,1.3) node[left] {$\Imag k^+$};
+    \draw[ff contour=0.5] (-3.2,0) -- (-2.35,0) .. controls (-1.9,0) and (-1.85,-0.85) .. (-1.4,-0.85) -- (1.4,-0.85)
+         .. controls (1.85,-0.85) and (1.9,0) .. (2.35,0) -- (3.2,0);
+    \pic at (-0.45,0.15) {ff pole}; \pic at (0.15,0.25) {ff pole}; \pic at (0.5,0.12) {ff pole};
+    \node[ff note,anchor=south,align=center] at (0.05,0.35) {$J_B$ 初态极点};
+    \draw[ff dim] (1.05,-0.02) -- (1.05,-0.83);
+    \node[ff lab,anchor=east] at (1.0,-0.45) {$\kappa|\mathbf k_T|$};
+    \foreach \x in {-2.35,2.35} \draw[ff win] (\x,-0.1) -- (\x,0.1);
+    \node[ff note,anchor=south,text=red!55!black] at (-2.35,0.12) {窗口边缘};
+    \pic at (2.95,-0.2) {ff spole};
+    \node[ff note,anchor=north,text=green!35!black,align=center] at (2.95,-0.32) {软线极点\\（$k^->0$）};
+    \node[ff note,anchor=north west,text=red!55!black] at (0.12,-1.3) {窗口核（$\psi=1$）};
+    \node at (0,-1.95) {(b)\ $J_B$：复 $k^+$ 平面，围道下移};
+  \end{scope}
+  % ================================================================ (c) moduli plane at fixed |k_T| ~ lambda Q
+  \begin{scope}[yshift=-4.45cm,xshift=1.6cm,x=1.32cm,y=1.32cm]
+    % coordinates: ln|k^\pm|/ln(1/lambda);  -2 <-> lambda^2 Q, -1 <-> lambda Q, 0 <-> Q;  |k_T| = lambda Q.
+    % lines |k^+||k^-| = const have slope -1; offsets from x+y=-2 schematic, drawn for kappa=1/2, delta=1/8:
+    % c = min(kappa^2,delta/2) = delta/2 (the core boundary), kappa^2 = 1/4 between delta and 1/2.
+    \fill[red!8] (-3.15,-3.15) -- (0.65,-3.15) -- (-3.15,0.65) -- cycle;                              % G_delta
+    \draw[red!55!black,line width=0.75pt] (0.65,-3.15) -- (-3.15,0.65);                               % delta k_T^2
+    \draw[red!55!black,line width=0.55pt,dash pattern=on 2.2pt off 1.5pt] (0.4,-3.15) -- (-3.15,0.4);  % delta k_T^2/2
+    \draw[green!40!black,line width=0.75pt] (1.0,-2.85) -- (-2.85,1.0);                               % 2k^+k^- = k_T^2
+    % axes and ticks
+    \draw[ff ax] (-3.2,-3.2) -- (1.05,-3.2) node[below left=1pt and -4pt] {$\ln|k^+|$};
+    \draw[ff ax] (-3.2,-3.2) -- (-3.2,1.05) node[left] {$\ln|k^-|$};
+    \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (\v,-3.2) -- ++(0,0.06);  \node[font=\scriptsize,below] at (\v,-3.2) {$\t$};
+      \draw[line width=0.5pt] (-3.2,\v) -- ++(0.06,0);  \node[font=\scriptsize,left] at (-3.2,\v) {$\t$};
+    }
+    % image of the window core under the deformation: |k^+|,|k^-| >= kappa |k_T|
+    \fill[blue!10] (-1.09,-1.09) rectangle (0.75,0.75);
+    \draw[blue!60!black,line width=0.6pt] (0.75,-1.09) -- (-1.09,-1.09) -- (-1.09,0.75);
+    \node[circle,draw=red!60!black,line width=0.8pt,fill=white,inner sep=0pt,minimum size=6pt] (G) at (-2,-2) {};
+    \node[circle,fill=blue!60!black,inner sep=0pt,minimum size=5pt] (D) at (-1.09,-1.09) {};
+    \draw[blue!60!black,line width=0.75pt,-{Stealth[length=5pt,width=4pt]}] (G) -- (D);
+    \node[font=\scriptsize,anchor=north,text=red!55!black,inner sep=1.5pt] at (G.south) {Glauber 实点};
+    \node[font=\scriptsize,anchor=south west,text=blue!50!black,inner sep=1.5pt] at (-1.05,-1.05) {$|k^\pm|\ge\kappa|\mathbf k_T|$};
+    \node[font=\scriptsize,text=green!35!black,anchor=south west,inner sep=1pt] at (0.05,-2.0) {软线质壳};
+    \node[font=\small,text=red!55!black] at (-2.65,-2.75) {$G_\delta$};
+    \node at (-1.05,-4.0) {(c)\ $|k^\pm|$ 的对数平面，$|\mathbf k_T|\sim\lambda Q$};
+  \end{scope}
+  % ---------------------------------------------------------------- notes: constants, line styles, eikonal bound
+  \node[anchor=north west,font=\footnotesize,align=left,text width=7.1cm] at (3.55,-3.3) {%
+    形变：$k\to k+\ii\sigma\kappa\psi|\mathbf k_T|\,e_G$，$e_G=n_B-n_A$。\\[2pt]
+    (c) 中斜线（$|k^+||k^-|=$ 常数）：红实线 $\delta\mathbf k_T^2$（$G_\delta$ 的边界，形变在其外关闭），红虚线 $\frac12\delta\mathbf k_T^2$（窗口核边界），绿线为连接线的质壳 $2k^+k^-=\mathbf k_T^2$；图中取 $\kappa=\frac12$、$\delta=\frac18$，此时 $c=\delta/2$，红虚线即 $c\,\mathbf k_T^2$。\\[2pt]
+    \textbullet\ 窗口核上 $|k^+||k^-|\ge|{\rm Im}\,k^+||{\rm Im}\,k^-|=\kappa^2\mathbf k_T^2$，核外实部已满足 $|k^+k^-|>\frac12\delta\mathbf k_T^2$，故形变后处处 $|k^+||k^-|\ge c\,\mathbf k_T^2$，$c=\min(\kappa^2,\delta/2)$；\\[1pt]
+    \textbullet\ $\mathcal G_0$：$0<\kappa\le\frac12$，$0<\delta\le\frac18$；分级构型另需 $\kappa^2<1/(2KN_C^2)$；\\[1pt]
+    \textbullet\ 形变后的连接线 ${\rm Re}(k^2)\le-\frac14\mathbf k_T^2$，不触及质壳；\\[1pt]
+    \textbullet\ 实围道上程函近似以 $O(1)$ 失效；形变后的围道上 Grammer--Yennie 比值为 $O(\lambda/\kappa)$。};
+\end{tikzpicture}
+\caption{单侧改写之后的同时形变（振幅一侧 $\sigma=+1$，软动量 $k$ 流入 $J_A$；共轭一侧方向相反；示意，非比例）。
+(a)~改写后 $J_A$ 只经初态分母依赖 $k^-$，其极点全在下半平面；围道在窗口核上抬到 ${\rm Im}\,k^-=\kappa|\mathbf k_T|$，在窗口边缘之前回到实轴，因而不触及窗口外的连接线自身极点 $k^-=(\mathbf k_T^2-\ii0)/(2k^+)$（$k^+>0$ 时它在下半平面，不受影响）。
+(b)~$J_B$ 的 $k^+$ 极点全在上半平面，围道同时下移到 ${\rm Im}\,k^+=-\kappa|\mathbf k_T|$，故 ${\rm Im}\,k\propto e_G=n_B-n_A$；只形变一个分量时 $|k^+k^-|$ 仍远小于 $\mathbf k_T^2$。
+(c)~以 $\ln|k^\pm|$ 为坐标（$|\mathbf k_T|\sim\lambda Q$）：窗口核中的 Glauber 点（$|k^\pm|\sim\lambda^2Q$，位于 $G_\delta=\{|k^+k^-|\le\delta\mathbf k_T^2\}$ 深处）被移到 $|k^\pm|\ge\kappa|\mathbf k_T|$ 处，形变后的围道处处满足 $|k^+||k^-|\ge c\,\mathbf k_T^2$，从而离开 Glauber 区，程函近似在其上有定量误差界（\cref{lem:appO-no-crossing}、\cref{prop:appO-target}、\cref{prop:appO-eikonal}）。}
+\label{fig:appO-deformation}
+\end{figure}
+%%% END fig:appO-deformation
+
+%%% BEGIN fig:appP-dependency
+% TEMPLATE of the generated App P graph (FIGURES_INDEX_v2 Sec. 4.9): node and edge data below are generated by
+% test_ff/scripts/appP_template2.py from the \uses lists of FINAL_OUTLINE_v2 (a 19-statement slice); the integrator's
+% generator replaces the slice by the selections of rule 1 and keeps the styles, the legend and the caption wording.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  % node styles of FIGURES_INDEX_v2 Sec. 4.9 rule 3 (prefix ffP)
+  ffP node/.style={draw,line width=0.45pt,rounded corners=1pt,font=\tiny\ttfamily,align=center,
+                   inner xsep=1.5pt,inner ysep=1.1pt,minimum height=4mm},
+  ffP R/.style={ffP node,fill=OliveGreen!15,draw=OliveGreen!60!black},
+  ffP A/.style={ffP node,fill=RoyalBlue!15,draw=RoyalBlue!60!black},
+  ffP P/.style={ffP node,fill=BurntOrange!15,draw=BurntOrange!70!black},
+  ffP C/.style={ffP node,fill=Plum!15,draw=Plum!70!black},
+  ffP V/.style={ffP node,fill=BrickRed!15,draw=BrickRed!70!black,double,double distance=0.6pt},
+  ffP cond/.style={dash pattern=on 1.6pt off 1pt},
+  ffP math/.style={ffP node,fill=white,draw=black!60},
+  ffP def/.style={ffP node,fill=white,draw=black!45,line width=0.3pt,rounded corners=0pt},
+  ffP conj/.style={ffP node,ellipse,inner xsep=0pt,inner ysep=0pt,fill=Plum!15,draw=Plum!70!black},
+  ffP asm/.style={ffP node,fill=orange!8,draw=orange!65!black,dash pattern=on 2pt off 1.2pt},
+  ffP unit/.style={font=\footnotesize,text=black!70},
+  ffP sep/.style={draw=gray!40,line width=0.4pt,dash pattern=on 1pt off 1.5pt},
+  ffP key/.style={font=\scriptsize,anchor=west,inner sep=0pt},
+  % edge styles of rule 4
+  ffP use/.style={draw=gray!60,line width=0.5pt,-{Stealth[length=2.6pt,width=2.2pt]}},
+  ffP asmuse/.style={draw=orange!65!black,line width=0.5pt,dash pattern=on 2pt off 1.2pt,-{Stealth[length=2.6pt,width=2.2pt]}},
+  ffP neck/.style={draw=red!60!black,line width=1.1pt,-{Stealth[length=3.6pt,width=3.2pt]}},
+  ffP long/.style={opacity=0.5}]
+  % ---- generated by test_ff/scripts/appP_template2.py (template of the App P generator) ----
+  \node[ffP unit] at (0.000,2.847) {第~1~章};
+  \node[ffP unit] at (2.501,2.847) {第~12~章};
+  \node[ffP unit] at (5.747,2.847) {第~18~章};
+  \node[ffP unit] at (8.583,2.847) {附录~N};
+  \node[ffP unit] at (12.630,2.847) {附录~O};
+  \draw[ffP sep] (0.517,2.677) -- (0.517,-2.476);
+  \draw[ffP sep] (4.250,2.677) -- (4.250,-2.476);
+  \draw[ffP sep] (7.152,2.677) -- (7.152,-2.476);
+  \draw[ffP sep] (9.790,2.677) -- (9.790,-2.476);
+  \node[ffP asm] (n00) at (0.000,0.375) {intro-\\bridge};
+  \node[ffP A] (n01) at (1.593,0.425) {dy-factorization};
+  \node[ffP conj] (n02) at (3.410,1.475) {dy-\\coloured-\\final};
+  \node[ffP R,ffP cond] (n03) at (5.047,-1.675) {break-\\measurement};
+  \node[ffP V] (n04) at (6.448,-1.775) {break-tmd};
+  \node[ffP asm] (n05) at (7.949,-1.325) {appN-\\collins};
+  \node[ffP asm] (n06) at (7.949,-0.325) {appN-\\cutsum};
+  \node[ffP R,ffP cond] (n07) at (7.949,-2.125) {appN-\\subtraction};
+  \node[ffP R,ffP cond] (n08) at (9.218,-1.125) {appN-dy};
+  \node[ffP asm] (n09) at (10.531,-0.075) {appO-lcopt};
+  \node[ffP def] (n10) at (10.531,1.375) {appO-\\family};
+  \node[ffP asm] (n11) at (12.024,1.075) {appO-\\mixing};
+  \node[ffP asm] (n12) at (12.024,0.175) {appO-\\deformation};
+  \node[ffP asm] (n13) at (12.024,2.125) {appO-\\rewritten-cs};
+  \node[ffP R] (n14) at (12.024,-0.675) {appO-\\target};
+  \node[ffP R,ffP cond] (n15) at (13.461,0.075) {appO-main};
+  \node[ffP R,ffP cond] (n16) at (14.730,-1.125) {appO-\\interface};
+  \begin{scope}[on background layer]
+  \draw[ffP use] (n00) -- (n01);
+  \draw[ffP use] (n01) -- (n02);
+  \draw[ffP use] (n03) -- (n04);
+  \draw[ffP use] (n07) -- (n08);
+  \draw[ffP asmuse] (n05) -- (n08);
+  \draw[ffP asmuse] (n06) -- (n08);
+  \draw[ffP use,ffP long] (n08) -- (n01);
+  \draw[ffP asmuse,ffP long] (n09) -- (n03);
+  \draw[ffP use] (n09) -- (n11);
+  \draw[ffP use] (n09) -- (n14);
+  \draw[ffP use] (n09) -- (n12);
+  \draw[ffP use] (n09) -- (n13);
+  \draw[ffP use] (n10) -- (n11);
+  \draw[ffP use] (n10) -- (n12);
+  \draw[ffP use] (n10) -- (n13);
+  \draw[ffP asmuse] (n11) -- (n15);
+  \draw[ffP use] (n14) -- (n15);
+  \draw[ffP asmuse] (n12) -- (n15);
+  \draw[ffP asmuse] (n13) -- (n15);
+  \draw[ffP use] (n15) -- (n16);
+  \draw[ffP use,ffP long] (n16) -- (n08);
+  \draw[ffP neck] (n05) -- (n01);
+  \draw[ffP neck] (n06) -- (n01);
+  \draw[ffP neck] (n09) -- (n01);
+  \draw[ffP neck] (n11) -- (n01);
+  \draw[ffP neck] (n12) -- (n01);
+  \draw[ffP neck] (n13) -- (n01);
+  \end{scope}
+  % ---------------------------------------------------------------- legend (rule 5)
+  \begin{scope}[shift={(-0.397,-2.946)}]
+    \node[ffP R,anchor=west,minimum width=4.5mm] (k1) at (0,0) {R};
+    \node[ffP R,ffP cond,anchor=west,minimum width=4.5mm,right=0.8mm of k1] (k2) {R};
+    \node[ffP A,anchor=west,minimum width=4.5mm,right=0.8mm of k2] (k3) {A};
+    \node[ffP P,anchor=west,minimum width=4.5mm,right=0.8mm of k3] (k4) {P};
+    \node[ffP C,anchor=west,minimum width=4.5mm,right=0.8mm of k4] (k5) {C};
+    \node[ffP V,anchor=west,minimum width=4.5mm,right=0.8mm of k5] (k6) {V};
+    \node[ffP key,right=1.2mm of k6] (t1) {严格性标签（虚线框为 $R_{\rm cond}$）};
+    \node[ffP conj,anchor=west,minimum width=7mm,minimum height=3.4mm,right=3.5mm of t1] (k7) {};
+    \node[ffP key,right=1mm of k7] (t2) {猜想};
+    \node[ffP asm,anchor=west,minimum width=4.5mm,right=3.5mm of t2] (k8) {};
+    \node[ffP key,right=1mm of k8] (t3) {编号假设};
+    \node[ffP def,anchor=west,minimum width=4.5mm,right=3.5mm of t3] (k9) {};
+    \node[ffP key,right=1mm of k9] (t4) {定义};
+    \node[ffP math,anchor=west,minimum width=4.5mm,right=3.5mm of t4] (k10) {};
+    \node[ffP key,right=1mm of k10] {纯数学};
+    \draw[ffP use] (0,-0.5) -- ++(7mm,0) coordinate (e1);
+    \node[ffP key] (t5) at ($(e1)+(1.2mm,0)$) {依赖（由前提指向陈述）};
+    \draw[ffP asmuse] ($(t5.east)+(3.5mm,0)$) -- ++(7mm,0) coordinate (e2);
+    \node[ffP key] (t6) at ($(e2)+(1.2mm,0)$) {编号假设 $\to R_{\rm cond}$ 陈述};
+    \draw[ffP neck] ($(t6.east)+(3.5mm,0)$) -- ++(7mm,0) coordinate (e3);
+    \node[ffP key] (t7) at ($(e3)+(1.2mm,0)$) {瓶颈依赖（主表“瓶颈”列）};
+    \draw[ffP use,ffP long] ($(t7.east)+(3.5mm,0)$) -- ++(7mm,0) coordinate (e4);
+    \node[ffP key] at ($(e4)+(1.2mm,0)$) {跨两列以上};
+  \end{scope}
+\end{tikzpicture}
+\caption{本书规范陈述的依赖图（模板：Drell--Yan 与测量相容性部分的示意子图，17 个陈述；附录~P 的各图由各环境中的 \texttt{\string\uses} 数据按同一规则自动生成）。
+各单元按书序自左向右分层，单元内按依赖深度分列；节点只印标签中类型前缀之后的部分（完整标签见附录~P 的状态表）；边由前提指向陈述，是可达关系在所画节点上的传递约化（经由未画出陈述的依赖也画成一条边）。
+框的颜色为严格性标签，虚线框为 $R_{\rm cond}$ 条件定理，橙色虚线框为编号假设，椭圆为猜想，双线框为 [V]，方角细框为定义，白色圆角框为纯数学引理；
+橙色虚线边为编号假设到 $R_{\rm cond}$ 陈述的依赖，粗红线为决定全阶论证地位的瓶颈依赖（取自主表的“瓶颈”列，即使可由其他边推出也照画），半透明线跨越两列以上。}
+\label{fig:appP-dependency}
+\end{figure}
+%%% END fig:appP-dependency
+
+%%% BEGIN fig:dis-twist-graphical
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff tw/.style={font=\footnotesize,text=black!75,inner sep=1pt},
+  ff ttl/.style={font=\small,align=center}]
+  % one panel of the forward Compton amplitude T^{mu nu}: target blob at (0,0), hard part H at (0,2.0)
+  % #1 x shift, #2 letter, #3 twist, #4 power of lambda, #5 sum of the twists, #6 extra lines
+  \def\ffpanel#1#2#3#4#5#6{%
+  \begin{scope}[xshift=#1cm]
+    \draw[photon] (-0.5,2.95) -- (-0.5,2.2);
+    \draw[photon] (0.5,2.2) -- (0.5,2.95);
+    \node[ff lab,above] at (-0.5,2.95) {$q$};
+    \node[ff lab,above] at (0.5,2.95) {$q$};
+    \draw[ff hadron] (-1.6,0) -- (-0.9,0);
+    \draw[ff hadron] (0.9,0) -- (1.6,0);
+    \node[ff lab,above] at (-1.38,0.02) {$P$};
+    \node[ff lab,above] at (1.38,0.02) {$P$};
+    \draw[quark] (-0.68,0.15) -- (-0.68,1.85);
+    \draw[quark] (0.68,1.85) -- (0.68,0.15);
+    \node[ff lab,anchor=east] at (-0.74,1.0) {$\psi_+$};
+    \node[ff lab,anchor=west] at (0.74,1.0) {$\bar\psi_+$};
+    #6
+    \draw[hard blob] (0,2.0) ellipse (0.95 and 0.36);
+    \draw[hadron blob] (0,0) ellipse (0.95 and 0.38);
+    \node at (0,2.0) {$H$};
+    \node[ff tw] at (0,-0.66) {$t=#5$};
+    \node[ff ttl] at (0,-1.2) {(#2)\ 扭度~#3：$\lambda^{#4}$};
+  \end{scope}}
+  % (a) handbag; longitudinally polarized gluons (twist 0) may be added at no cost
+  \ffpanel{0}{a}{2}{0}{1+1+0+\cdots}{%
+    \draw[longit] (-0.05,0.2) -- (-0.05,1.8);  \longitmark{(-0.05,0.2)}{(-0.05,1.8)}
+    \node[ff lab,anchor=west,text=blue!50!black] at (0.1,0.6) {$A^+$};}
+  % (b) one transverse gluon (twist 1)
+  \ffpanel{3.75}{b}{3}{1}{1+1+1}{%
+    \draw[gluon] (-0.05,0.2) -- (-0.05,1.8);
+    \node[ff lab,anchor=west] at (0.1,0.6) {$A_T$};}
+  % (c) one extra quark pair (twist 1 + 1)
+  \ffpanel{7.5}{c}{4}{2}{1+1+1+1}{%
+    \draw[quark] (-0.24,0.2) -- (-0.24,1.8);
+    \draw[quark] (0.24,1.8) -- (0.24,0.2);}
+  % table of collinear twists t = d - h of the building blocks (lem:dis-twist-classification)
+  \node[anchor=west,font=\footnotesize] at (9.55,1.05) {%
+    \renewcommand{\arraystretch}{1.15}\setlength{\tabcolsep}{4pt}%
+    \begin{tabular}{@{}lc@{}}
+      \toprule
+      场分量 & $t=d-h$\\
+      \midrule
+      $\psi_+,\ \bar\psi_+$ & 1\\
+      $\psi_-,\ \bar\psi_-$ & 2\\
+      $A^+$（$D^+$） & 0\\
+      $A_T$（$D^j$，$F^{+j}$） & 1\\
+      $A^-$（$D^-$） & 2\\
+      \bottomrule
+    \end{tabular}};
+\end{tikzpicture}
+\caption{扭度与额外部分子（前向 Compton 振幅 $T^{\mu\nu}$，示意；下方浅灰椭圆为靶 $P$，上方为硬部分 $H$，波浪线为虚光子）。
+连接靶与 $H$ 的各场分量的共线扭度 $t=d-h$（右表，\cref{lem:dis-twist-classification}）相加即该类图的扭度，其贡献相对于手提包图按 $\lambda^{t-2}$ 压低（$\lambda\sim M/Q$，$M$ 为强子尺度）。
+(a)~扭度 2：一对好分量夸克 $\psi_+$、$\bar\psi_+$；附加任意多条纵向极化（$A^+$，蓝色带点）胶子不改变幂次，它们求和成 Wilson 线；
+(b)~每多一条横向胶子 $A_T$（即 $F^{+j}$）压低 $\lambda$（扭度 3）；(c)~每多一对夸克压低 $\lambda^2$（扭度 4），两条横向胶子同样如此。
+非极化 DIS 中奇扭度算符的系数在无质量微扰论中为零（\cref{prop:dis-chiral-suppression}），第一个幂次修正是扭度 4 的 $1/Q^2$ 项（\cref{prop:dis-twist4}；比较\cref{fig:higher-twist}）。}
+\label{fig:dis-twist-graphical}
+\end{figure}
+%%% END fig:dis-twist-graphical
+
+%%% BEGIN fig:appE-boost
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff ax/.style={lcaxis,gray!60!black},
+  ff grid/.style={draw=gray!40,line width=0.4pt,dash pattern=on 1pt off 2pt},
+  ff virt/.style={draw=black!55,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  ff diag/.style={draw=gray!70,line width=0.55pt,dash pattern=on 0.8pt off 1.6pt},
+  ff boost/.style={draw=black!75,line width=0.8pt,-{Stealth[length=5pt,width=4.2pt]}},
+  ff pt/.style={circle,draw,line width=0.7pt,inner sep=0pt,minimum size=6.4pt},
+  ff lab/.style={font=\footnotesize,inner sep=1.5pt},
+  ff tick/.style={font=\scriptsize},
+  ff note/.style={font=\footnotesize,align=left}]
+  % ================================================================ (a) boost in the logarithmic light-cone plane
+  \begin{scope}[x=1.25cm,y=1.25cm]
+    % coordinates: u = ln(k^+/Q)/ln(1/lambda), v = ln(k^-/Q)/ln(1/lambda)
+    \foreach \u in {-3,-2,-1,0} \draw[ff grid] (\u,-2.55) -- (\u,0.45);
+    \foreach \v in {-2,-1,0} \draw[ff grid] (-3.55,\v) -- (0.45,\v);
+    \draw[ff ax] (-3.6,-2.6) -- (0.65,-2.6) node[below=2pt] {$\ln k^+$};
+    \draw[ff ax] (-3.6,-2.6) -- (-3.6,0.65) node[left] {$\ln k^-$};
+    \foreach \u/\t in {-3/{\lambda^3Q},-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (\u,-2.6) -- ++(0,0.06); \node[ff tick,below] at (\u,-2.6) {$\t$};}
+    \foreach \v/\t in {-2/{\lambda^2Q},-1/{\lambda Q},0/{Q}} {
+      \draw[line width=0.5pt] (-3.6,\v) -- ++(0.06,0); \node[ff tick,left] at (-3.6,\v) {$\t$};}
+    % k^+ = k^- (dotted) and constant virtuality k^+k^- (dashed anti-diagonals)
+    \draw[ff diag] (-1.85,-1.85) -- (0.45,0.45);
+    \draw[ff virt] (0.12,-2.12) -- (-1.55,-0.45);
+    \draw[ff virt] (-1.88,-2.12) -- (-3.55,-0.45);
+    % points before (filled) and after (open) the boost
+    \node[ff pt,fill=blue!55!black,draw=blue!55!black] (CA) at (0,-2) {};
+    \node[ff pt,fill=green!50!black,draw=green!50!black] (US) at (-2,-2) {};
+    \node[ff pt,fill=white,draw=blue!55!black] (CA2) at (-1,-1) {};
+    \node[ff pt,fill=white,draw=green!50!black] (US2) at (-3,-1) {};
+    \draw[ff boost] (CA) -- (CA2);
+    \draw[ff boost] (US) -- (US2);
+    \node[ff lab,anchor=west,text=blue!45!black,align=left] at (0.08,-2.0) {$A$ 共线\\$Q(1,\lambda^2,\lambda)$};
+    \node[ff lab,anchor=west,text=blue!45!black] at (-0.8,-0.9) {$\lambda Q(1,1,1)$，静止系};
+    \node[ff lab,anchor=north,text=green!35!black] at (-2.0,-2.07) {超软\ $Q(\lambda^2,\lambda^2,\lambda^2)$};
+    \node[ff lab,anchor=west,text=green!35!black] at (-2.86,-0.86) {$Q(\lambda^3,\lambda,\lambda^2)$};
+    \node[ff lab,anchor=north west,align=left] at (-3.5,0.42) {推动：$k^\pm\to\lambda^{\pm1}k^\pm$};
+    \node at (-1.55,-3.76) {(a)\ 推动 $=$ 沿反对角线的平移};
+  \end{scope}
+  % ================================================================ (b) dimension in the rest frame, boost weights back
+  \begin{scope}[xshift=3.65cm,yshift=0.05cm]
+    % rest frame: isotropic jet, all momentum components ~ lambda Q
+    \foreach \a in {25,80,145,205,260,320}
+      \draw[plain,line width=0.7pt] (\a:0.45) -- (\a:0.85);
+    \draw[jet blob] (0,0) circle[radius=0.45];
+    \node[font=\small] at (0,0) {$J$};
+    \node[ff lab,align=center] at (0,-1.32) {静止系：各分量 $\sim\lambda Q$\\$J\sim\lambda^{\dim J}$};
+    % boost back
+    \draw[ff boost] (1.05,0) -- node[ff lab,above=1pt] {推回} node[ff lab,below=1pt] {$v^\pm\to\lambda^{\mp1}v^\pm$} (2.72,0);
+    % original frame: jet along +z, one external quark p_1, the index nu contracted with H
+    \draw[gluon] (4.55,-0.05) -- (5.55,-0.62);
+    \draw[quark] (4.6,0.08) -- (5.85,0.52);
+    \draw[jet blob] (3.75,0.0) ellipse (0.92 and 0.27);
+    \node[font=\small] at (3.6,0.0) {$J$};
+    \draw[hard blob] (5.8,-0.74) circle[radius=0.26];
+    \node[font=\footnotesize] at (5.8,-0.74) {$H$};
+    \node[ff lab,anchor=south west] at (5.8,0.5) {$p_1$};
+    \node[ff lab,anchor=north east] at (5.05,-0.42) {$\nu$};
+    \node[ff lab] at (3.9,-1.32) {原参考系（沿 $+z$）};
+    % boost weights and the example
+    \node[ff note,anchor=north west] at (-0.9,-1.88) {%
+      推回时的权重：上指标 $+$：$\lambda^{-1}$，$-$：$\lambda$，横向：$1$；\\
+      好（坏）旋量分量：$\lambda^{-1/2}$（$\lambda^{1/2}$）。\\[3pt]
+      例：$J^\nu=\bar u(p_1)\gamma^\nu(\sla p_1-\sla k)$，$\dim J=\frac32$，\\
+      $\bar u(p_1)$ 为好分量：$J^+\sim\lambda^{\frac32-1-\frac12}=1$，\\
+      $J_T\sim\lambda^{\frac32-\frac12}=\lambda$，\ $J^-\sim\lambda^{\frac32+1-\frac12}=\lambda^2$。};
+    \node at (2.75,-4.75) {(b)\ 静止系中量纲计数，推回时加权};
+  \end{scope}
+\end{tikzpicture}
+\caption{推动与量纲给出幂次（示意；$(k^+,k^-,k_T)\sim(\lambda^a,\lambda^b,\lambda^c)Q$，坐标轴以 $\ln(1/\lambda)$ 为单位）。
+(a)~快度 $y=\ln\lambda$ 的推动 $k^\pm\to\lambda^{\pm1}k^\pm$ 是沿反对角线的平移，保持虚度（虚线：$k^+k^-\sim\lambda^2Q^2$ 与 $\lambda^4Q^2$；点线：$k^+=k^-$）：$A$ 共线标度 $Q(1,\lambda^2,\lambda)$ 变为各向同性的 $\lambda Q(1,1,1)$（喷注静止系），超软动量 $Q(\lambda^2,\lambda^2,\lambda^2)$ 变为 $Q(\lambda^3,\lambda,\lambda^2)$，喷注在领头幂次只经其 $-$ 分量（$\sim\lambda Q$）感受它。
+(b)~在静止系中喷注子图是单一尺度 $\lambda Q$ 的协变函数，按量纲 $J\sim\lambda^{\dim J}$；推回原参考系时每个外指标与外旋量乘以其推动权重。
+加上 $J$--$H$ 圈的测度 $\lambda^{4(b+f-1)}$ 与软连接的权重，对各喷注与软子图求和即得\cref{prop:appE-degree} 的超表观红外发散度（VF-REG-8）；这是标度陈述（E-S），化为积分界见\cref{rem:appE-actual-bound}。}
+\label{fig:appE-boost}
+\end{figure}
+%%% END fig:appE-boost
+
+%%% BEGIN fig:tmd-rapidity-bars
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff A/.style={draw=blue!55!black,fill=blue!18,line width=0.6pt},
+  ff B/.style={draw=orange!70!black,fill=orange!22,line width=0.6pt},
+  ff S/.style={draw=green!45!black,fill=green!18,line width=0.6pt},
+  ff Sneg/.style={draw=green!45!black,line width=0.6pt,pattern=north east lines,pattern color=green!45!black},
+  ff tot/.style={draw=black!55,fill=black!10,line width=0.6pt},
+  ff row/.style={font=\footnotesize,anchor=east,inner sep=1pt},
+  ff w/.style={font=\scriptsize,anchor=west,inner sep=1pt,text=black!70},
+  ff ttl/.style={font=\small,anchor=west,inner sep=0pt},
+  ff guide/.style={draw=gray!55,line width=0.4pt,dash pattern=on 1pt off 1.8pt}]
+  % rapidity positions (schematic):  y_B < y_PB < y_n < y_PA < y_A
+  \def\yB{0.6}\def\yPB{2.9}\def\yn{5.5}\def\yPA{8.1}\def\yA{10.4}
+  \def\hf{0.30}\def\hh{0.15}
+  % ---- guides
+  \foreach \x in {\yB,\yPB,\yn,\yPA,\yA} \draw[ff guide] (\x,0.55) -- (\x,-5.95);
+  % ================================================================ (a)
+  \node[ff ttl] at (-3.55,0.82) {(a)\ 未减除关联函数之积除以软因子};
+  \fill[ff A] (\yB,-\hf/2) rectangle (\yPA,\hf/2);            \draw[ff A,fill=none] (\yB,-\hf/2) rectangle (\yPA,\hf/2);
+  \node[ff row] at (-0.15,0) {$\tilde f_A^{\,\rm unsub}(y_B)$};      \node[ff w] at (10.55,0) {$+1$};
+  \begin{scope}[yshift=-0.55cm]
+    \draw[ff B] (\yPB,-\hf/2) rectangle (\yA,\hf/2);
+    \node[ff row] at (-0.15,0) {$\tilde f_B^{\,\rm unsub}(y_A)$};    \node[ff w] at (10.55,0) {$+1$};
+  \end{scope}
+  \begin{scope}[yshift=-1.1cm]
+    \draw[ff Sneg] (\yB,-\hf/2) rectangle (\yA,\hf/2);
+    \node[ff row] at (-0.15,0) {$1/\tilde S(y_A,y_B)$};             \node[ff w] at (10.55,0) {$-1$};
+  \end{scope}
+  \draw[black!60,line width=0.5pt] (-3.4,-1.45) -- (11.2,-1.45);
+  \begin{scope}[yshift=-1.8cm]
+    \draw[ff tot] (\yPB,-\hf/2) rectangle (\yPA,\hf/2);
+    \node[font=\scriptsize,text=black!75] at ({(\yPB+\yPA)/2},0) {每个快度恰好计入一次};
+    \node[ff row] at (-0.15,0) {$\tilde f_A^{\,\rm unsub}\tilde f_B^{\,\rm unsub}/\tilde S$};
+  \end{scope}
+  % ================================================================ (b)
+  \node[ff ttl] at (-3.55,-2.55) {(b)\ 平方根构造：在 $y_n$ 处分割（$B$ 同理）};
+  \begin{scope}[yshift=-3.05cm]
+    \draw[ff A] (\yB,-\hf/2) rectangle (\yPA,\hf/2);
+    \node[ff row] at (-0.15,0) {$\tilde f_A^{\,\rm unsub}(y_B)$};    \node[ff w] at (10.55,0) {$+1$};
+  \end{scope}
+  \begin{scope}[yshift=-3.6cm]
+    \draw[ff S] (\yn,-\hh/2) rectangle (\yA,\hh/2);
+    \node[ff row] at (-0.15,0) {$\sqrt{\tilde S(y_A,y_n)}$};        \node[ff w] at (10.55,0) {$+\tfrac12$};
+  \end{scope}
+  \begin{scope}[yshift=-4.1cm]
+    \draw[ff Sneg] (\yB,-\hh/2) rectangle (\yA,\hh/2);
+    \node[ff row] at (-0.15,0) {$1/\sqrt{\tilde S(y_A,y_B)}$};      \node[ff w] at (10.55,0) {$-\tfrac12$};
+  \end{scope}
+  \begin{scope}[yshift=-4.6cm]
+    \draw[ff Sneg] (\yB,-\hh/2) rectangle (\yn,\hh/2);
+    \node[ff row] at (-0.15,0) {$1/\sqrt{\tilde S(y_n,y_B)}$};      \node[ff w] at (10.55,0) {$-\tfrac12$};
+  \end{scope}
+  \draw[black!60,line width=0.5pt] (-3.4,-4.93) -- (11.2,-4.93);
+  \begin{scope}[yshift=-5.3cm]
+    \draw[ff B] (\yPB,-\hf/2) rectangle (\yn,\hf/2);
+    \draw[ff A] (\yn,-\hf/2) rectangle (\yPA,\hf/2);
+    \node[font=\footnotesize] at ({(\yPB+\yn)/2},0) {$\tilde f_B$};
+    \node[font=\footnotesize] at ({(\yn+\yPA)/2},0) {$\tilde f_A$};
+    \node[ff row] at (-0.15,0) {Collins 定义的 $\tilde f_B$、$\tilde f_A$};
+    \draw[draw=red!60!black,line width=0.7pt,-{Stealth[length=4pt,width=3.4pt]}] (\yn,0.27) -- (\yn+0.75,0.27);
+    \node[font=\scriptsize,anchor=west,text=red!50!black,inner sep=1pt] at (\yPA+0.12,0) {$\partial\ln\tilde f_A/\partial y_n=-\tilde K$};
+  \end{scope}
+  % ================================================================ rapidity axis
+  \draw[lcaxis] (-0.2,-5.95) -- (11.25,-5.95) node[right=1pt] {$y$};
+  \foreach \x/\t in {\yB/{y_B},\yPB/{y_{P_B}},\yn/{y_n},\yPA/{y_{P_A}},\yA/{y_A}} {
+    \draw[line width=0.5pt] (\x,-5.95) -- ++(0,0.07); \node[font=\footnotesize,below] at (\x,-5.98) {$\t$};}
+\end{tikzpicture}
+\caption{快度覆盖与平方根构造（\cref{lem:tmd-sqrt-identity}；示意）。横轴为快度 $y$，$y_B<y_{P_B}<y_n<y_{P_A}<y_A$：$y_{P_A}$、$y_{P_B}$ 为两个强子的快度，$y_A$、$y_B$ 为 Wilson 线的快度正规子（最终 $y_A\to+\infty$、$y_B\to-\infty$）。
+横条表示各因子所含软辐射的快度范围，条高为它在对数中的权重（实心为正，斜线为负，半高为 $\pm\frac12$）。
+(a)~$\tilde f_A^{\,\rm unsub}(y_B)$ 覆盖 $[y_B,y_{P_A}]$，$\tilde f_B^{\,\rm unsub}(y_A)$ 覆盖 $[y_{P_B},y_A]$，除以覆盖 $[y_B,y_A]$ 的软因子后每个快度恰好计入一次。
+(b)~Collins 定义 $\tilde f_A=\tilde f_A^{\,\rm unsub}(y_B)\sqrt{\tilde S(y_A,y_n)/[\tilde S(y_A,y_B)\tilde S(y_n,y_B)]}$ 只保留 $[y_n,y_{P_A}]$，$\tilde f_B$ 保留 $[y_{P_B},y_n]$；乘积 $\tilde f_A\tilde f_B=\tilde f_A^{\,\rm unsub}\tilde f_B^{\,\rm unsub}/\tilde S(y_A,y_B)$ 与 $y_n$ 无关，这是精确的代数恒等式（VF-REF-13）。
+在渐近线性 $\ln\tilde S(y_1,y_2)\simeq a_S+(y_1-y_2)\tilde K$（\cref{asm:appN-tmd} 的 (T2)）之下每单位快度贡献 $\tilde K$，故 $\partial\ln\tilde f_A/\partial y_n=-\tilde K$，即 Collins--Soper 方程。}
+\label{fig:tmd-rapidity-bars}
+\end{figure}
+%%% END fig:tmd-rapidity-bars
+
+%%% BEGIN fig:appO-glauber-flow
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hadron/.style={draw=black!70,line width=1.5pt,line cap=butt,-{Stealth[length=5pt,width=5pt]}},
+  ff flow/.style={draw=violet!75!black,line width=0.9pt,-{Stealth[length=4.4pt,width=3.8pt]}},
+  ff close/.style={draw=violet!75!black,line width=0.8pt,dash pattern=on 3pt off 2pt,-{Stealth[length=4.4pt,width=3.8pt]}},
+  ff bad/.style={draw=red!70!black,line width=0.85pt,dash pattern=on 2.5pt off 1.8pt,-{Stealth[length=4.2pt,width=3.6pt]}},
+  ff lv1/.style={gluon,line width=1.05pt},
+  ff lv2/.style={gluon,draw=black!40},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff fl/.style={font=\footnotesize,inner sep=1pt,text=violet!70!black},
+  ff note/.style={font=\footnotesize,align=left,anchor=north west}]
+  % flow arrow parallel to the segment #1 -> #2 (flow direction), on side #3 (90 = left, -90 = right),
+  % label #4 anchored (#5) at 0.42 cm from the segment
+  \def\ffflow#1#2#3#4#5{%
+    \draw[ff flow] ($(#1)!0.22!(#2)!0.27cm!#3:(#2)$) -- ($(#1)!0.78!(#2)!0.27cm!#3:(#2)$);
+    \node[ff fl,anchor=#5] at ($(#1)!0.5!(#2)!0.42cm!#3:(#2)$) {#4};}
+  % common frame: H (left), J_A (top), J_B (bottom), incoming hadrons
+  \def\ffframe{%
+    \draw[quark] (1.2,2.05) -- (0.22,0.58);
+    \draw[quark] (1.2,-1.45) -- (0.22,0.02);
+    \draw[ff hadron] (6.0,2.1) -- (5.15,2.1);
+    \draw[ff hadron] (6.0,-1.5) -- (5.15,-1.5);
+    \node[ff lab,above] at (5.75,2.15) {$P_A$};
+    \node[ff lab,below] at (5.75,-1.55) {$P_B$};}
+  \def\ffblobs{%
+    \draw[jet blob] (3.0,2.1) ellipse (2.15 and 0.32);
+    \draw[jetB blob] (3.0,-1.5) ellipse (2.15 and 0.32);
+    \draw[hard blob] (0,0.3) circle[radius=0.34];
+    \node[font=\small] at (0,0.3) {$H$};
+    \node[font=\small] at (4.6,2.1) {$J_A$};
+    \node[font=\small] at (4.6,-1.5) {$J_B$};}
+  % ============================================================= (a) a Glauber flow through a soft component C
+  \begin{scope}
+    \ffframe
+    \coordinate (v1) at (3.3,1.0);  \coordinate (v2) at (3.3,-0.35);
+    \coordinate (a1) at (2.45,1.92); \coordinate (a2) at (4.15,1.92);
+    \coordinate (b1) at (2.45,-1.32); \coordinate (b2) at (4.15,-1.32);
+    \draw[gluon] (v1) -- (a1);  \draw[gluon] (v1) -- (a2);
+    \draw[gluon] (v2) -- (v1);
+    \draw[gluon] (v2) -- (b1);  \draw[gluon] (v2) -- (b2);
+    \ffblobs
+    \node[vertex] at (v1) {}; \node[vertex] at (v2) {};
+    \draw[region] (1.85,-0.85) rectangle (4.95,1.5);
+    \node[ff lab,anchor=north east,text=gray!35!black] at (4.91,1.46) {$C$};
+    % imaginary flow (violet): from J_B through C into J_A
+    \ffflow{v1}{a1}{90}{$f_1$}{east}
+    \ffflow{v1}{a2}{-90}{$f_2$}{west}
+    \ffflow{v2}{v1}{-90}{$f_l$}{west}
+    \ffflow{b1}{v2}{90}{$-f_3$}{east}
+    \ffflow{b2}{v2}{-90}{$-f_4$}{west}
+    % the loop closes through J_A -> H -> J_B
+    \draw[ff close] (1.45,1.76) to[out=235,in=55] (0.5,0.72);
+    \draw[ff close] (0.5,-0.12) to[out=-55,in=125] (1.45,-1.16);
+    \node[ff note] at (-0.45,-2.2) {%
+      $A$ 腿：$f_a\ge\kappa\psi(q_a)|\mathbf q_{Ta}|$；$B$ 腿：$-f_b\ge\kappa\psi(q_b)|\mathbf q_{Tb}|$；\\
+      顶点处守恒 $f_l=f_1+f_2=-f_3-f_4$，割线上 $f=0$；\\
+      紫色虚线：流经 $J_A\to H\to J_B$ 闭合；\\
+      形变 $l\to l+\ii t\sigma f_l\,e_G$，$e_G=n_B-n_A$，$t\in[0,1]$。};
+    \node at (2.75,-4.62) {(a)\ $\sigma$ 侧未割软分量 $C$ 上的 Glauber 流};
+  \end{scope}
+  % ============================================================= (b) a graded configuration with two levels
+  \begin{scope}[xshift=8.55cm]
+    \ffframe
+    \coordinate (v) at (3.0,0.3);
+    \coordinate (a1) at (2.2,1.92); \coordinate (a2) at (3.8,1.92); \coordinate (b1) at (3.0,-1.32);
+    \draw[ff lv1] (v) -- (a1);
+    \draw[ff lv2] (v) -- (a2);
+    \draw[ff lv1] (v) -- (b1);
+    \ffblobs
+    \node[vertex] at (v) {};
+    % allowed flows (violet) and the routing forbidden by (GC3) (red dashed, crossed)
+    \ffflow{b1}{v}{-90}{$\le3\kappa s_1$}{west}
+    \ffflow{v}{a1}{90}{$\le2\kappa s_1$}{east}
+    \ffflow{v}{a2}{-90}{$\le\kappa s_2$}{west}
+    \draw[ff bad] (2.74,-1.05) -- (2.74,0.0) to[out=90,in=240] (3.08,0.72) -- (3.42,1.42);
+    \node[font=\normalsize,text=red!70!black] at (3.2,1.0) {$\times$};
+    \node[ff note] at (-0.45,-2.2) {%
+      层 1（黑）：$\|l\|\le s_1$；层 2（灰）：$\|l\|\le s_2\le\theta s_1$；\\
+      (GC3)：腿的路径只经层号不大于自身的线，\\
+      故层 1 的流不经层 2 的线（红色虚线，$\times$）；\\
+      $|f_l|\le\kappa N_Cs_{i(l)}$，类空线 $m_l^2-l^2\ge s_{i(l)}^2/K>2f_l^2$。};
+    \node at (2.75,-4.62) {(b)\ 两层的分级构型（$N_C=3$）};
+  \end{scope}
+\end{tikzpicture}
+\caption{Glauber 流与分级构型（示意；振幅一侧 $\sigma=+1$，软动量 $q_a$ 流入 $J_A$、$q_b$ 流入 $J_B$）。
+(a)~在只含 $A$ 腿与 $B$ 腿、无局域腿的 $\sigma$ 侧未割软分量 $C$ 上，形变的虚部是一个守恒的“流”$f_l$（紫色箭头为流的实际方向）：它经 $B$ 腿从 $J_B$ 流入 $C$、在内部顶点守恒、经 $A$ 腿流入 $J_A$，并经 $J_A\to H\to J_B$ 闭合；割线上 $f=0$（\cref{def:appO-deformation-map}）。
+(b)~分级构型（\cref{def:appO-graded}）：线按尺度分层（黑：层 1，灰：层 2，$s_1\ge s_2$）；每条腿的流沿只经同层或尺度更大的层的路径输送，故层 2 的软线只携带自身的流（$\le\kappa s_2$），层 1 的流不会使层 2 的类空线奇异。
+当 $\kappa^2<1/(2KN_C^2)$ 时每条线满足非奇异条件 $(N_l)$，且每条腿 $|q_e^+||q_e^-|\ge c\,q_{Te}^2$（\cref{prop:appO-target} (ii)）；含局域腿与内部顶点的分量以及只有一种腿的分量归入\cref{asm:appO-deformation} (a)。}
+\label{fig:appO-glauber-flow}
+\end{figure}
+%%% END fig:appO-glauber-flow
+
+%%% BEGIN fig:break-measurement
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hv/.style={circle,draw,line width=0.7pt,fill=gray!35,minimum size=0.42cm,inner sep=0pt},
+  ff br/.style={draw=black!75,line width=0.8pt},
+  ff arr/.style={postaction={decorate,decoration={markings,mark=at position #1 with {\arrow{Stealth[length=5pt,width=4.4pt]}}}}},
+  ff pi/.style={draw=black!80,fill=yellow!20,line width=0.8pt,minimum size=0.62cm,inner sep=1pt,font=\small},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff ok/.style={draw=OliveGreen!70!black,fill=OliveGreen!7,line width=0.7pt,rounded corners=2pt,
+                text width=3.85cm,align=left,inner sep=3pt,font=\footnotesize,minimum height=1.12cm},
+  ff no/.style={ff ok,draw=BrickRed!75!black,fill=BrickRed!6},
+  ff head/.style={font=\footnotesize,inner sep=1pt}]
+  % ============================================================= (a) closed time path with the measurement at the cut
+  \begin{scope}
+    \fill[gray!14,rounded corners=2pt] (2.5,-0.55) rectangle (5.75,1.55);
+    \draw[ff br,ff arr=0.3] (0.21,1.0) -- (5.2,1.0);
+    \draw[ff br,ff arr=0.7] (5.2,0.0) -- (0.21,0.0);
+    \draw[ff br] (5.2,1.0) arc[start angle=90,end angle=-90,radius=0.5];
+    \node[ff hv] at (0,1.0) {}; \node[ff hv] at (0,0.0) {};
+    \node[ff lab,anchor=south] at (0,1.24) {$V_H(0)$};
+    \node[ff lab,anchor=north] at (0,-0.24) {$V_H^\dagger(0)$};
+    \node[ff lab,text=black!65] at (1.3,1.25) {振幅（${\rm T}$ 序）};
+    \node[ff lab,text=black!65] at (1.3,-0.25) {共轭（$\bar{\rm T}$ 序）};
+    % latest insertion
+    \draw[gluon,draw=green!45!black] (2.5,1.0) -- (2.5,1.7);
+    \node[vertex,fill=green!45!black] at (2.5,1.0) {};
+    \draw[gray!60!black,line width=0.5pt,dash pattern=on 1.2pt off 1.5pt] (2.5,-0.75) -- (2.5,1.75);
+    \node[ff lab,anchor=north,text=black!70] at (2.5,-0.75) {$\tau_{\max}$};
+    \node[ff lab,text=black!70] at (3.95,1.3) {$U(\tau_f,\tau_{\max})$};
+    \node[ff lab,text=black!70] at (3.95,-0.3) {$U^\dagger(\tau_f,\tau_{\max})$};
+    \node[vertex] at (3.45,1.0) {}; \node[vertex] at (4.35,0.0) {};
+    % the cut and the measurement operator
+    \draw[cut] (5.7,-0.75) -- (5.7,1.75);
+    \node[ff pi] at (5.7,0.5) {$\Pi$};
+    \node[ff lab,anchor=north,text=red!60!black] at (5.7,-0.75) {割线 $\tau_f$};
+    \node[font=\footnotesize,align=center] at (2.75,-1.75) {$[\Pi,U]=0\ \Rightarrow\ U^\dagger\Pi\,U=\Pi$：\\$\tau>\tau_{\max}$ 的末态相互作用在两支上相消};
+    \node at (2.75,-2.75) {(a)\ 闭时路中的测量算符};
+  \end{scope}
+  % ============================================================= (b) four measurement operators
+  \begin{scope}[xshift=6.85cm]
+    \node[ff head,text=OliveGreen!60!black] at (2.07,1.95) {与 $U$ 对易：判据成立\ $\checkmark$};
+    \node[ff head,text=BrickRed!75!black] at (6.47,1.95) {与 $U$ 不对易：判据失效\ $\times$};
+    \node[ff ok,anchor=north west] at (0,1.6) {$\Pi=1$\\单举截面：共线 DY、DIS};
+    \node[ff ok,anchor=north west] at (0,0.2) {$\Pi=\ee^{\ii\mathbf b\cdot\hat{\mathbf P}_T}$\\TMD Drell--Yan（$b$ 空间）};
+    \node[ff no,anchor=north west] at (4.4,1.6) {$\Pi_h$：鉴别末态强子\\$pp\to h_1h_2X$ 的 TMD 测量};
+    \node[ff no,anchor=north west] at (4.4,0.2) {$\Pi_{\rm gap}$：快度间隙\\强子--强子衍射，间隙存活};
+    \node at (4.27,-2.75) {(b)\ 四种测量};
+  \end{scope}
+\end{tikzpicture}
+\caption{测量相容性判据（\cref{prop:break-measurement}；示意）。
+(a)~对 $J_A$ 的割线求和之后，割态之间的测量算符 $\Pi$ 位于闭时路的转折点（割线 $\tau_f$）；若 $\Pi$ 与附录~O 的光锥演化 $U$ 以及 $\tau=0$ 的局域插入对易，则最晚插入（时刻 $\tau_{\max}$）之后的演化在两支上合成 $U^\dagger\Pi\,U=\Pi$，同一喷注内部的末态相互作用相消，即\cref{lem:appO-unitarity} 在插入 $\Pi$ 后仍成立（$R_{\rm cond}$，前提\cref{asm:appO-lcopt}）。
+(b)~$\Pi=1$（单举截面）与 $\Pi=\ee^{\ii\mathbf b\cdot\hat{\mathbf P}_T}$（$b$ 空间的 TMD Drell--Yan，因 $[\hat P^-,\hat{\mathbf P}_T]=0$，\cref{prop:appO-tmd}）满足判据；鉴别末态强子的投影 $\Pi_h$ 与快度间隙投影 $\Pi_{\rm gap}$ 不与演化对易，割线求和的配对失效（对 $pp\to h_1h_2X$ 失效于单侧改写步骤 (O-3)），与\cref{thm:break-tmd} 和\cref{prop:break-hh-diffraction} 的破坏一致。
+判据只定位失效之处（\cref{rem:break-measurement-failures}），本身不是因子化破坏的证明。}
+\label{fig:break-measurement}
+\end{figure}
+%%% END fig:break-measurement
+
+%%% BEGIN fig:appO-windows
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff ax/.style={lcaxis,gray!60!black},
+  ff th/.style={draw=blue!60!black,line width=0.9pt},
+  ff thp/.style={draw=blue!60!black,line width=0.9pt,dash pattern=on 3pt off 2pt},
+  ff J/.style={draw=black!80,line width=0.85pt},
+  ff car/.style={draw=violet!75!black,line width=0.9pt},
+  ff R/.style={draw=green!40!black,line width=0.7pt,dash pattern=on 3pt off 2pt},
+  ff dim/.style={draw=gray!60!black,line width=0.45pt,{Stealth[length=3pt]}-{Stealth[length=3pt]}},
+  ff vh/.style={draw=gray!60!black,line width=0.6pt,dash pattern=on 2pt off 1.5pt},
+  ff lab/.style={font=\footnotesize,inner sep=1pt},
+  ff tick/.style={font=\scriptsize,inner sep=1pt}]
+  % ============================================================= (a) windows in k_T^2 (u = log_2(k_T^2/X), x = 0.86 u)
+  \begin{scope}
+    \fill[red!7] (-2.24,0) rectangle (1.72,2.3);
+    \draw[ff ax] (-2.3,0) -- (4.45,0) node[above left=1pt and -2pt] {$\mathbf k_{Tj}^2$（对数）};
+    \draw[ff ax] (-2.3,0) -- (-2.3,2.55);
+    \foreach \y/\t in {0/0,2/1} \node[ff tick,left] at (-2.3,\y) {$\t$};
+    \draw[line width=0.5pt] (-2.3,2) -- ++(0.07,0);
+    \draw[ff th] (-2.24,0.02) -- (0,0.02) -- plot[domain=0:1,samples=25,variable=\t] ({0.86*\t},{0.02+1.98*(3*\t*\t-2*\t*\t*\t)}) -- (4.3,2.0);
+    \draw[ff thp] (-2.24,0.0) -- (0.86,0.0) -- plot[domain=0:1,samples=25,variable=\t] ({0.86*(1+\t)},{1.98*(3*\t*\t-2*\t*\t*\t)}) -- (4.3,1.98);
+    \node[ff lab,text=blue!50!black,anchor=east] at (0.38,1.3) {$\Theta_j$};
+    \node[ff lab,text=blue!50!black,anchor=west] at (1.42,0.72) {$\Theta'_j$};
+    \foreach \x/\t in {0/{X},0.86/{2X},1.72/{4X}} {\draw[line width=0.5pt] (\x,0) -- ++(0,0.07); \node[ff tick,below] at (\x,-0.02) {$\t$};}
+    \node[ff lab,text=red!55!black,align=center] at (-1.1,1.45) {软角区 $K_R$\\（$\prod_u\Theta'_u<1$）};
+    \node[ff lab,align=center] at (3.0,1.45) {窗口核\\（$\Theta_j=\Theta'_j=1$）};
+    \draw[line width=0.6pt,-{Stealth[length=3.5pt]}] (-1.38,-0.62) -- (-1.38,-0.08);
+    \node[ff tick,anchor=north,align=center] at (-1.38,-0.62) {软尺度 $|\mathbf k_T|\sim\lambda^2$};
+    \draw[line width=0.6pt,-{Stealth[length=3.5pt]}] (3.44,-0.62) -- (3.44,-0.08);
+    \node[ff tick,anchor=north,align=center] at (3.44,-0.62) {Glauber：$|\mathbf k_T|\sim\lambda$};
+    \node at (1.05,-1.55) {(a)\ 窗口（$X\equiv4\nu_A\mu_j/\lambda^{a_G}$）};
+  \end{scope}
+  % ============================================================= (b) the jet factor of a spectator insertion vs. the entire carrier
+  \begin{scope}[xshift=9.0cm]
+    \draw[ff ax] (-3.55,0) -- (3.75,0) node[below left=1pt and -2pt] {$k^-$};
+    \draw[line width=0.5pt] (0,0) -- (0,-0.07);
+    \draw[ff R] (-3.45,1.62) -- (3.45,1.42);
+    \node[ff lab,text=green!35!black,anchor=north west] at (-3.45,1.52) {$R(k^-)$（尺度 $\Lambda_j\gg w$）};
+    \draw[ff car] plot[domain=-3:3,samples=121,variable=\k] ({1.15*\k},{0.975*exp(-\k*\k)});
+    \draw[ff J] plot[domain=-3:3,samples=301,variable=\k] ({1.15*\k},{0.1375/(\k*\k+0.0625)});
+    \foreach \x in {-1.15,1.15} \draw[gray!60!black,line width=0.4pt,dash pattern=on 0.8pt off 1.2pt] (\x,0.36) -- (\x,-0.3);
+    \draw[ff dim] (-1.15,-0.3) -- (1.15,-0.3);
+    \node[ff tick,anchor=west] at (1.2,-0.3) {$2w$};
+    \node[ff lab,anchor=east] at (-0.25,2.1) {$J(k^-)$：极点 $\pm\ii\nu_A$，宽 $\sim\nu_A$};
+    \node[ff lab,anchor=west,text=violet!70!black] at (1.25,0.62) {$\bar{\mathcal J}\,\phi(k^-/w)/w$};
+    \node at (0.1,-1.55) {(b)\ 改写：同一 $\int\frac{\dd k^-}{2\pi}$，整函数载体};
+  \end{scope}
+  % ============================================================= (c) light-cone time: spectator vs absorbed active endpoint
+  \begin{scope}[yshift=-4.55cm,xshift=1.05cm]
+    \draw[ff ax] (-3.45,0) -- (3.55,0) node[below left=1pt and -2pt] {$\tau=x^+$};
+    \draw[ff vh] (0,-0.1) -- (0,1.75);
+    \node[ff tick,anchor=north] at (0,-0.05) {$V_H$：$\tau=0$};
+    \draw[ff J] plot[domain=-3:0,samples=60,variable=\t] ({1.1*\t},{1.35*exp(0.45*\t)});
+    \draw[ff J] plot[domain=0:3,samples=60,variable=\t] ({1.1*\t},{1.35*exp(-0.45*\t)});
+    \draw[ff car] plot[domain=-0.6:0.6,samples=81,variable=\t] ({1.1*\t},{1.35*exp(-9*\t*\t)});
+    \node[ff lab,anchor=south west] at (1.35,0.62) {$\mathcal J(\tau)$};
+    \node[ff lab,anchor=west,text=violet!70!black] at (0.42,1.42) {$\mathcal J(0)\,\ee^{-w^2\tau^2/4}$};
+    \node[font=\footnotesize,align=center] at (0.05,-0.95) {旁观者端点（S）：$\mathcal J(0^+)=\mathcal J(0^-)$\\局域化于 $\tau=0$（载体）};
+  \end{scope}
+  \begin{scope}[yshift=-4.55cm,xshift=9.0cm]
+    \draw[ff ax] (-3.45,0) -- (3.55,0) node[below left=1pt and -2pt] {$\tau=x^+$};
+    \draw[ff vh] (0,-0.1) -- (0,1.75);
+    \node[ff tick,anchor=north] at (0,-0.05) {$V_H$：$\tau=0$};
+    \draw[ff J] plot[domain=-3:0,samples=60,variable=\t] ({1.1*\t},{1.35*exp(0.45*\t)});
+    \draw[ff J] (0,0.01) -- (3.3,0.01);
+    \fill[black!80] (0,1.35) circle[radius=1.5pt];
+    \draw[black!80,fill=white,line width=0.6pt] (0,0.01) circle[radius=1.5pt];
+    \node[ff lab,anchor=south east] at (-1.35,0.62) {$\mathcal J(\tau)$};
+    \node[ff lab,anchor=west,align=left] at (0.3,1.0) {$\tau=0$ 处跳跃：局域化会产生\\依赖截断的接触项};
+    \node[font=\footnotesize,align=center] at (0.05,-0.95) {被 $V_H$ 吸收的活动线端点（A）：$\mathcal J(0^+)=0\ne\mathcal J(0^-)$\\不局域化，$k^-$ 只在初态分母中（可上移）};
+  \end{scope}
+  \node at (5.05,-6.25) {(c)\ 光锥时间图像：哪些端点被局域化};
+\end{tikzpicture}
+\caption{窗口与整函数载体（示意；\cref{def:appO-windows}、\cref{lem:appO-carrier}、\cref{def:appO-rewriting}）。
+(a)~窗口只依赖软横动量与喷注的加号、横向分量：$\Theta_j=\vartheta\big(4\nu_A\mu_j/(\lambda^{a_G}\mathbf k_{Tj}^2)\big)$，$\Theta'_j=\vartheta\big(8\nu_A\mu_j/(\lambda^{a_G}\mathbf k_{Tj}^2)\big)$，${\rm supp}\,\Theta'_j\subset\{\Theta_j=1\}$；Glauber 尺度落在窗口核中，真正的软尺度落在软角区 $K_R$，那里不作改写（\cref{asm:appO-deformation} (c)）。
+(b)~旁观者插入的喷注因子（此处取 $J=2\nu_A\mathcal J/[(k^-)^2+\nu_A^2]$ 为例）在 $|k^-|\lesssim\nu_A$ 内有分处实轴两侧的极点；改写把它换成宽度 $w=\lambda^{a_G}|\mathbf k_T|$ 的整函数载体，$\phi(x)=2\sqrt\pi\,\ee^{-x^2}$，二者的 $\int\frac{\dd k^-}{2\pi}$ 相同；外部因子 $R$ 只在 $\Lambda_j\gg w$ 的尺度上变化，故误差是纤维积分的 $O(\lambda_J/\Lambda_j)$（E-F，\cref{lem:appO-equal-time}）；载体在 $|{\rm Im}\,k^-|\le w/2$ 内以 $2\sqrt\pi\,\ee^{1/4}$ 为界，后续形变不改变其积分。
+(c)~旁观者端点的 $\mathcal J(\tau)$ 在 $\tau=0$ 连续，被局域化于 $\tau=0$；被 $V_H$ 吸收的活动线端点只出现在 $\tau<0$，不局域化而保留单侧的初态分母。故直接线一端在载体中、另一端只含初态分母（SA/AS 线）。改写不是逐点近似：单侧改写只在弱等价意义下成立（E-W，\cref{prop:appO-one-sided}）。}
+\label{fig:appO-windows}
+\end{figure}
+%%% END fig:appO-windows
+
+%%% BEGIN fig:summary-chapter-dag
+% Generated by test_ff/scripts/chapter_dag_fig.py from the \uses lists of FINAL_OUTLINE_v2 (edges, badges, counts and
+% the users of the tool appendices are data; positions are fixed in the script).  Re-run the script after the verify patch.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff ch/.style={draw=black!55,fill=gray!6,line width=0.5pt,rounded corners=1.5pt,minimum width=2.2cm,minimum height=0.42cm,inner sep=0pt},
+  ff crit/.style={draw=red!65!black,line width=1.0pt,fill=red!4},
+  ff chlab/.style={font=\scriptsize,anchor=west,inner sep=0pt},
+  ff badge/.style={circle,inner sep=0pt,minimum size=0.235cm,font=\fontsize{5}{5}\selectfont\bfseries\sffamily,text=white},
+  ff badge M/.style={ff badge,fill=OliveGreen!80!black},
+  ff badge N/.style={ff badge,fill=RoyalBlue!85!black},
+  ff badge O/.style={ff badge,fill=BurntOrange!90!black},
+  ff dep/.style={draw=black!45,line width=0.55pt,-{Stealth[length=3.2pt,width=2.8pt]}},
+  ff path/.style={draw=red!65!black,line width=0.9pt,-{Stealth[length=4pt,width=3.6pt]}},
+  ff pbox/.style={draw=red!65!black,fill=red!4,line width=0.7pt,rounded corners=1.5pt,font=\scriptsize,inner sep=2pt,minimum height=0.42cm},
+  ff txt/.style={font=\scriptsize,align=left,anchor=north west,inner sep=0pt,text width=5.0cm},
+  ff head/.style={font=\footnotesize\bfseries,anchor=north west,inner sep=0pt}]
+  % ---- generated by test_ff/scripts/chapter_dag_fig.py from the \uses data of FINAL_OUTLINE_v2 ----
+  \node[ff ch] (Ch01) at (4.20,-0.000) {};
+  \node[ff chlab] at ($(Ch01.west)+(0.07,0)$) {\textbf{1}\,引言};
+  \node[ff ch] (Ch02) at (6.60,-0.000) {};
+  \node[ff chlab] at ($(Ch02.west)+(0.07,0)$) {\textbf{2}\,QCD 基础};
+  \node[ff ch] (Ch03) at (5.40,-0.660) {};
+  \node[ff chlab] at ($(Ch03.west)+(0.07,0)$) {\textbf{3}\,工具};
+  \node[ff ch] (Ch04) at (5.40,-1.320) {};
+  \node[ff chlab] at ($(Ch04.west)+(0.07,0)$) {\textbf{4}\,红外结构};
+  \node[ff ch] (Ch05) at (5.40,-1.980) {};
+  \node[ff chlab] at ($(Ch05.west)+(0.07,0)$) {\textbf{5}\,Sudakov};
+  \node[ff ch] (Ch06) at (5.40,-2.640) {};
+  \node[ff chlab] at ($(Ch06.west)+(0.07,0)$) {\textbf{6}\,$e^+e^-$};
+  \node[ff ch] (Ch07) at (5.40,-3.300) {};
+  \node[ff chlab] at ($(Ch07.west)+(0.07,0)$) {\textbf{7}\,DIS/OPE};
+  \node[ff badge M] at ($(Ch07.east)+(-0.15,0)$) {M};
+  \node[ff ch] (Ch08) at (5.40,-3.960) {};
+  \node[ff chlab] at ($(Ch08.west)+(0.07,0)$) {\textbf{8}\,PDF/FF};
+  \node[ff badge N] at ($(Ch08.east)+(-0.15,0)$) {N};
+  \node[ff ch] (Ch09) at (5.40,-4.620) {};
+  \node[ff chlab] at ($(Ch09.west)+(0.07,0)$) {\textbf{9}\,一般方法};
+  \node[ff badge O] at ($(Ch09.east)+(-0.15,0)$) {O};
+  \node[ff badge N] at ($(Ch09.east)+(-0.40,0)$) {N};
+  \node[ff ch] (Ch10) at (5.40,-5.280) {};
+  \node[ff chlab] at ($(Ch10.west)+(0.07,0)$) {\textbf{10}\,DIS 全阶};
+  \node[ff badge N] at ($(Ch10.east)+(-0.15,0)$) {N};
+  \node[ff ch] (Ch11) at (5.40,-5.940) {};
+  \node[ff chlab] at ($(Ch11.west)+(0.07,0)$) {\textbf{11}\,共线过程};
+  \node[ff badge O] at ($(Ch11.east)+(-0.15,0)$) {O};
+  \node[ff badge N] at ($(Ch11.east)+(-0.40,0)$) {N};
+  \node[ff ch,ff crit] (Ch12) at (5.40,-6.600) {};
+  \node[ff chlab] at ($(Ch12.west)+(0.07,0)$) {\textbf{12}\,DY 过程};
+  \node[ff badge O] at ($(Ch12.east)+(-0.15,0)$) {O};
+  \node[ff badge N] at ($(Ch12.east)+(-0.40,0)$) {N};
+  \node[ff ch] (Ch13) at (4.20,-7.260) {};
+  \node[ff chlab] at ($(Ch13.west)+(0.07,0)$) {\textbf{13}\,阈值};
+  \node[ff ch,ff crit] (Ch14) at (6.70,-7.260) {};
+  \node[ff chlab] at ($(Ch14.west)+(0.07,0)$) {\textbf{14}\,TMD};
+  \node[ff badge O] at ($(Ch14.east)+(-0.15,0)$) {O};
+  \node[ff badge N] at ($(Ch14.east)+(-0.40,0)$) {N};
+  \node[ff ch] (Ch15) at (6.80,-7.920) {};
+  \node[ff chlab] at ($(Ch15.west)+(0.07,0)$) {\textbf{15}\,SCET};
+  \node[ff ch] (Ch16) at (8.85,-8.580) {};
+  \node[ff chlab] at ($(Ch16.west)+(0.07,0)$) {\textbf{16}\,喷注};
+  \node[ff ch] (Ch17) at (7.90,-4.620) {};
+  \node[ff chlab] at ($(Ch17.west)+(0.07,0)$) {\textbf{17}\,小 $x$};
+  \node[ff ch,ff crit] (Ch18) at (8.85,-9.240) {};
+  \node[ff chlab] at ($(Ch18.west)+(0.07,0)$) {\textbf{18}\,破坏};
+  \node[ff badge O] at ($(Ch18.east)+(-0.15,0)$) {O};
+  \node[ff ch] (Ch19) at (1.15,-7.920) {};
+  \node[ff chlab] at ($(Ch19.west)+(0.07,0)$) {\textbf{19}\,遍举};
+  \node[ff badge N] at ($(Ch19.east)+(-0.15,0)$) {N};
+  \node[ff ch] (Ch20) at (6.45,-8.580) {};
+  \node[ff chlab] at ($(Ch20.west)+(0.07,0)$) {\textbf{20}\,重夸克};
+  \node[ff ch] (Ch21) at (4.40,-7.920) {};
+  \node[ff chlab] at ($(Ch21.west)+(0.07,0)$) {\textbf{21}\,幂次修正};
+  \node[ff ch,ff crit] (Ch22) at (2.65,-8.580) {};
+  \node[ff chlab] at ($(Ch22.west)+(0.07,0)$) {\textbf{22}\,LaMET};
+  \node[ff ch,ff crit] (Ch23) at (2.65,-9.240) {};
+  \node[ff chlab] at ($(Ch23.west)+(0.07,0)$) {\textbf{23}\,Y.~Liu};
+  \node[ff ch,ff crit] (Ch24) at (5.80,-9.900) {};
+  \node[ff chlab] at ($(Ch24.west)+(0.07,0)$) {\textbf{24}\,其他前沿};
+  \begin{scope}[on background layer]
+  \draw[ff dep] (Ch01) -- (Ch03);
+  \draw[ff dep] (Ch02) -- (Ch03);
+  \draw[ff dep] (Ch03) -- (Ch04);
+  \draw[ff dep] (Ch04) -- (Ch05);
+  \draw[ff dep] (Ch05) -- (Ch06);
+  \draw[ff dep] (Ch06) -- (Ch07);
+  \draw[ff dep] (Ch07) -- (Ch08);
+  \draw[ff dep] (Ch08) -- (Ch09);
+  \draw[ff dep] (Ch08) -- (Ch17);
+  \draw[ff dep] (Ch09) -- (Ch10);
+  \draw[ff dep,rounded corners=3pt] (Ch09.west) -- (1.15,-4.620) -- (Ch19.north);
+  \draw[ff dep] (Ch10) -- (Ch11);
+  \draw[ff dep] (Ch11) -- (Ch12);
+  \draw[ff dep] (Ch12) -- (Ch13);
+  \draw[ff dep] (Ch12) -- (Ch14);
+  \draw[ff dep] (Ch13) -- (Ch21);
+  \draw[ff dep] (Ch14) -- (Ch15);
+  \draw[ff dep] (Ch14) -- (Ch21);
+  \draw[ff dep] (Ch15) -- (Ch16);
+  \draw[ff dep] (Ch15) -- (Ch20);
+  \draw[ff dep] (Ch16) -- (Ch18);
+  \draw[ff dep,rounded corners=3pt] (Ch17.east) -- (10.15,-4.620) -- (10.15,-9.900) -- (Ch24.east);
+  \draw[ff dep] (Ch18) -- (Ch24);
+  \draw[ff dep] (Ch19) -- (Ch20);
+  \draw[ff dep] (Ch19) -- (Ch22);
+  \draw[ff dep] (Ch20) -- (Ch24);
+  \draw[ff dep] (Ch21) -- (Ch22);
+  \draw[ff dep] (Ch21) -- (Ch24);
+  \draw[ff dep] (Ch22) -- (Ch23);
+  \end{scope}
+  % ----------------------------------------------------------------- right column: legend, appendices, critical path
+  \begin{scope}[xshift=10.42cm]
+    \node[ff head] (h1) at (0,0.3) {图例};
+    \node[ff ch,ff crit,minimum width=0.62cm,anchor=west] at (0,-0.24) {};
+    \node[font=\scriptsize,anchor=west,inner sep=0pt] at (0.75,-0.24) {关键路径上的章（见右下）};
+    \node[ff badge M] at (0.12,-0.66) {M}; \node[ff badge N] at (0.4,-0.66) {N}; \node[ff badge O] at (0.68,-0.66) {O};
+    \node[font=\scriptsize,anchor=west,inner sep=0pt] at (0.9,-0.66) {该章直接使用附录 M/N/O};
+    \draw[ff dep] (0,-1.06) -- (0.62,-1.06);
+    \node[font=\scriptsize,anchor=west,inner sep=0pt] at (0.75,-1.06) {依赖（29 条，传递约化）};
+    \node[ff head] (h2) at (0,-1.55) {证明附录的使用者};
+    \node[ff txt] (t2) at ($(h2.south west)+(0,-0.14)$) {%
+      \textbf{M}\,OPE 证明：7（14）\\
+      \textbf{N}\,Collins 减除：8（1）、9（23）、10（23）、11（1）、12（3）、14（6）、19（7）\\
+      \textbf{O}\,Glauber 相消：9（9）、11（1）、12（27）、14（6）、18（2）\\
+      附录之间：M$\to$N（1）、M$\to$O（1）、N$\to$E（1）、N$\to$O（14）、O$\to$N（6）\\
+      （括号内为 \texttt{\string\uses} 条数）};
+    \node[ff head] (h3) at ($(t2.south west)+(0,-0.3)$) {工具附录的直接使用者};
+    \node[ff txt] (t3) at ($(h3.south west)+(0,-0.14)$) {%
+      A：3、7、13、19；B：3、5、23、F、L；C：3、6、10、12；D：4、24；E：4；\\
+      F：9；I：7、11；J：3、24、N、O；K：3、7、8、10、24、L；L：8、24；G、H、Q 无依赖关系};
+    \node[ff head] (h4) at ($(t3.south west)+(0,-0.32)$) {关键路径};
+    \node[ff pbox,anchor=north west] (c1) at ($(h4.south west)+(0,-0.16)$) {附录~N};
+    \node[ff pbox,anchor=west] (c2) at ($(c1.east)+(0.3,0)$) {附录~O};
+    \node[ff pbox,anchor=west] (c3) at ($(c2.east)+(0.3,0)$) {第 12、14、18 章};
+    \node[ff pbox,anchor=north east] (c4) at ($(c3.south east)+(0,-0.42)$) {第 22--24 章};
+    \node[ff pbox,anchor=east] (c5) at ($(c4.west)+(-0.3,0)$) {第 25 章};
+    \node[ff pbox,anchor=east] (c6) at ($(c5.west)+(-0.3,0)$) {附录~P};
+    \draw[ff path] (c1) -- (c2); \draw[ff path] (c2) -- (c3);
+    \draw[ff path] (c3.south) -- (c3.south |- c4.north);
+    \draw[ff path] (c4) -- (c5); \draw[ff path] (c5) -- (c6);
+    \node[ff txt] at ($(c6.south -| h4.west)+(0,-0.22)$) {第 25 章与附录~P 汇总全书，自身不含 \texttt{\string\uses}；陈述层次的依赖图见\cref{fig:appP-dependency}。};
+  \end{scope}
+\end{tikzpicture}
+\caption{各章与附录之间的依赖（由 \texttt{\string\uses} 数据汇总）。
+左：第~1--24 章，自上而下按最长依赖链分层；箭头 $U\to V$ 表示第 $V$ 章的某个陈述直接或只经由附录陈述使用第 $U$ 章的陈述，图中只画这一关系的传递约化（可由其他箭头推出的箭头略去；第 9 章到第 19 章、第 17 章到第 24 章的两条长箭头绕行）。
+章框内的圆标表示该章直接使用证明附录 M、N、O 的陈述（右栏为条数）；附录 M、N、O 本身又使用其前各章的定义（未画出）。
+红框与右下角的链为写作与核查的关键路径：附录~N $\to$ 附录~O $\to$ 第 12、14、18 章 $\to$ 第 22--24 章 $\to$ 第 25 章 $\to$ 附录~P。}
+\label{fig:summary-chapter-dag}
+\end{figure}
+%%% END fig:summary-chapter-dag

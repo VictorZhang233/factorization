@@ -1,0 +1,168 @@
+% ---------------------------------------------------------------------
+\section{Ward 恒等式与 Wilson 线}\label{sec:method-ward}
+
+本节由逐个传播子的恒等式、阿贝尔情形、单个纵向胶子与树图层次的两个胶子（\tagR），走到任意多个非阿贝尔 K 胶子（\tagA）；\cref{fig:ward-identity}概括了要证明的图形恒等式。
+
+\begin{lemma}[基本 Ward 恒等式 \tagR]\label{lem:method-ward-elementary}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）记 $S(p)=\ii(\sla p+m)/(p^2-m^2+i0)$，$k$ 流入相应的线。则
+\begin{enumerate}[label=(W\arabic*),leftmargin=2.6em,itemsep=1pt,topsep=2pt]
+\item $S(p+k)\,(\ii g\sla kt^a)\,S(p)=g\,t^a\,[S(p+k)-S(p)]$；
+\item 在壳端点：$\bar u(p')\,\ii g\sla k\,S(p'-k)=g\,\bar u(p')$，$S(p+k)\,\ii g\sla k\,u(p)=-g\,u(p)$，$\bar v(p)\,\ii g\sla k\,S(-p-k)=+g\,\bar v(p)$，$S(-p+k)\,\ii g\sla k\,v(p)=-g\,v(p)$；
+\item 三胶子顶点（动量全部流入，$q_1+q_2+q_3=0$）：$q_{1\mu}V^{\mu\nu\rho}_{abc}=gf^{abc}\bigl[(q_3^2g^{\nu\rho}-q_3^\nu q_3^\rho)-(q_2^2g^{\nu\rho}-q_2^\nu q_2^\rho)\bigr]$；
+\item 鬼场顶点（$p'=p+k$ 为出射鬼场动量）：$k_\mu(-gf^{abc}p'^\mu)=-\frac g2f^{abc}(p'^2-p^2+k^2)$——它\emph{不是}逆传播子之差；
+\item 程函线：$\dfrac{n\cdot k}{(n\cdot\ell+i0)(n\cdot(\ell+k)+i0)}=\dfrac1{n\cdot\ell+i0}-\dfrac1{n\cdot(\ell+k)+i0}$。
+\end{enumerate}
+（本引理只涉及 Feynman 规则。）
+\uses{def:prelim-feynman-rules,prop:prelim-wilson-rules}
+\end{lemma}
+% VF-WL-6
+
+\begin{proof}
+(W1) $S(p)=\ii(\sla p-m)^{-1}$；用 $\sla k=(\sla p+\sla k-m)-(\sla p-m)$，
+$S(p+k)\,\ii g\sla k\,S(p)=-\ii g\,(\sla p+\sla k-m)^{-1}\bigl[(\sla p+\sla k-m)-(\sla p-m)\bigr](\sla p-m)^{-1}=-\ii g\bigl[(\sla p-m)^{-1}-(\sla p+\sla k-m)^{-1}\bigr]=g[S(p+k)-S(p)]$。
+(W2) 同样分解 $\sla k$，并用 $\bar u(p')(\sla p'-m)=0$、$(\sla p-m)u(p)=0$、$\bar v(p)(\sla p+m)=0$、$(\sla p+m)v(p)=0$；例如
+$\bar u(p')\ii g\sla k\,\ii(\sla p'-\sla k-m)^{-1}=-g\,\bar u(p')\bigl[(\sla p'-m)-(\sla p'-\sla k-m)\bigr](\sla p'-\sla k-m)^{-1}=g\,\bar u(p')$，其余三式完全类似。
+(W3) 由三胶子顶点 $gf^{abc}[g^{\mu\nu}(q_1-q_2)^\rho+g^{\nu\rho}(q_2-q_3)^\mu+g^{\rho\mu}(q_3-q_1)^\nu]$（\cref{def:prelim-feynman-rules}）与 $q_1=-q_2-q_3$：
+$q_1\cdot(q_2-q_3)=q_3^2-q_2^2$，$q_1^\nu(q_1-q_2)^\rho+q_1^\rho(q_3-q_1)^\nu=(q_2+q_3)^\nu(2q_2+q_3)^\rho-(q_2+2q_3)^\nu(q_2+q_3)^\rho=q_2^\nu q_2^\rho-q_3^\nu q_3^\rho$，相加即得。
+(W4) $k\cdot p'=\frac12(p'^2-p^2+k^2)$。(W5) 通分，分子为 $n\cdot(\ell+k)-n\cdot\ell=n\cdot k$；两个分母带相同的 $i0$ 是关键，这正是程函传播子 $\ii/(n\cdot\ell+i0)$ 的规则（\cref{prop:prelim-wilson-rules}）。
+以上各式我们都用显式的 Dirac 矩阵与 SU(3) 生成元数值核对过。% check: w10_ward.py
+\end{proof}
+
+(W5) 是 (W1) 在 $S(p)\to\ii/(n\cdot p)$、$\gamma^\mu\to n^\mu$ 下的像，所以 Wilson 线复现被它取代的部分子线的 Ward 恒等式；(W4) 中多出的 $k^2$ 是多胶子时额外鬼场项的根源。
+
+\begin{lemma}[阿贝尔 Ward 恒等式 \tagR]\label{lem:method-ward-abelian}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）(a) 在端点在壳的开放费米子线 $\bar u(p')V_nS\cdots SV_1u(p)$（$V_r=\ii g\gamma^{\mu_r}T_r$，动量 $q_r$ 流入）上，
+把一个标量极化的胶子（极化 $k^\mu$，色矩阵 $T_K$，动量 $k$ 流入）插入一切可能的位置并求和，结果等于 $g\sum_r[\text{该线，其中第 }r\text{ 个胶子携带 }q_r+k\text{、色矩阵换为 }[T_K,T_r]]$；
+在阿贝尔情形它为零。(b) 若费米子线的一端是硬顶点（离壳），另一端在壳，则 $m$ 个标量极化的阿贝尔胶子附着在一切位置上之和为 $\sum\prod_ik_{i\mu_i}H^{\mu_1\cdots\mu_m}=(\pm g)^mH_0$
+（$H_0$ 为不含这些胶子、动量相应平移的硬部分，在壳端点为出射夸克时取 $+$，入射夸克时取 $-$）；程函因子只在乘上 K 投影之后才出现，并由程函恒等式组成阿贝尔 Wilson 线。
+（本引理只涉及部分子态。）
+\uses{lem:method-ward-elementary,lem:prelim-eikonal-identity}
+\end{lemma}
+
+\begin{proof}
+(a) 插入在第 $r$ 与第 $r+1$ 个顶点之间时，由 (W1) 把 $S(P_r+k)\ii g\sla kT_KS(P_r)$ 换成 $gT_K[S(P_r+k)-S(P_r)]$（$P_r=p+q_1+\cdots+q_r$）；两个端点处的插入由 (W2) 化为 $\pm g$ 乘以不含该胶子的线。
+相邻插入的项两两相消（伸缩求和），剩下的项中动量 $k$ 都被某个顶点 $r$ 吸收，色因子是 $T_K$ 在 $T_r$ 之后与之前之差，即 $[T_K,T_r]$。例如 $n=1$：
+$\bar u(p')V_1S(p+k)\ii g\sla kT_Ku(p)+\bar u(p')\ii g\sla kT_KS(p'-k)V_1u(p)=g\,\bar u(p')(T_KV_1-V_1T_K)u(p)$。阿贝尔情形对易子为零。
+(b) 同样的伸缩求和，但只有在壳一端给出 (W2) 的端点项，离壳一端（硬顶点）不产生端点项，于是每个 K 胶子把动量注入硬顶点，留下因子 $\pm g$。乘上
+$K_{\mu\nu}=k_\mu n_{B\nu}/(n_B\cdot k-i0)$ 后，每条胶子贡献 $\pm g\,n_B^\nu/(n_B\cdot k-i0)$；由程函恒等式（\cref{lem:prelim-eikonal-identity}），
+$\prod_i(k_i^+-i0)^{-1}$ 等于对附着次序求和的嵌套分母之和，即阿贝尔 Wilson 线 $W[\infty n_B,0]$ 的 $m$ 阶项。
+\end{proof}
+
+\begin{proposition}[单个纵向胶子的非阿贝尔 Ward 恒等式 \tagR]\label{prop:method-ward-one}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在微扰论的任意阶，设振幅 $\mathcal M^\mu_a$ 中除一个（可以离壳的）胶子 $(k,\mu,a)$ 外，其余外部部分子都在壳且具有物理极化，
+动量非例外，则 $k_\mu\mathcal M^\mu_a=0$。（本命题只涉及部分子态。）
+\uses{thm:prelim-slavnov-taylor,def:prelim-brst}
+\end{proposition}
+
+\begin{proof}
+证明见\cref{sec:appF-one}。要点：由\cref{thm:prelim-slavnov-taylor}的 $N=1$ 情形，$\langle0|T\,\partial\cdot A^a(x)\,\Phi|0\rangle=0$；完全胶子传播子的纵向部分不被重整化，
+$k_\mu D^{\mu\nu}(k)=-\ii\xi_gk^\nu/(k^2+i0)$，于是该恒等式在截腿之后正是 $k_\mu\mathcal M^\mu_a=0$。
+\end{proof}
+
+\begin{proposition}[树图层次的非阿贝尔恒等式与 PDF Wilson 线的种子 \tagR]\label{prop:method-ward-tree}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）（树图层次。）
+(a) $\gamma^*\to q(p_1)\bar q(p_2)g(k)$：在壳时 $k_\mu\mathcal A^{\mu\nu}=0$；若反夸克腿离壳（属于一个共线子图），硬部分给出 $k_\mu H^\mu=-g\,t^aH_0$，乘上 K 投影即沿夸克方向的 Wilson 线的一阶项。
+(b) DIS：K 胶子附着在出射的被击出夸克上时 $k_\mu H^\mu_a=g\,t^aH_0$，且
+\begin{equation}\label{eq:method-seed}
+H_\mu\,\frac{k^\mu n_B^\alpha}{n_B\cdot k-i0}=W^{(1)}[\infty n_B,0]\,H_0 ;
+\end{equation}
+两个共线的 K 胶子恰好给出 $(n_B\cdot k_1)(n_B\cdot k_2)\,W^{(2)}_{ab}[\infty n_B,0]\,H_0$：路径次序来自对易子项，在这一阶没有鬼场或三胶子顶点图的贡献。
+(c) $q\bar q\to g^*(k_1,a,\mu)\,g^*(k_2,b,\nu)$，夸克在壳、胶子离壳，$Q=k_1+k_2$：
+\begin{equation}\label{eq:method-qqgg}
+k_{1\mu}\mathcal A^{\mu\nu}_{ab}=\frac{g^2f^{abc}}{Q^2}\bigl(k_2^2g^{\nu\sigma}-k_2^\nu k_2^\sigma\bigr)J_{c\sigma},\qquad J_c^\sigma=\bar v(p_2)\gamma^\sigma t^cu(p_1) ;
+\end{equation}
+对非物理极化，鬼场项是显式的。（本命题只涉及部分子态。）
+\uses{lem:method-ward-elementary,prop:method-ward-one,prop:appF-two-gluon}
+\end{proposition}
+% VF-WL-7, VF-WL-8, VF-WL-9
+
+\begin{proof}
+(a) $\mathcal A^{\mu\nu}=\bar u(p_1)\bigl[\ii g\gamma^\mu t^aS(p_1+k)\gamma^\nu+\gamma^\nu S(-p_2-k)\ii g\gamma^\mu t^a\bigr]v(p_2)$（光子指标 $\nu$，单位耦合）。由 (W2)，第一项缩并后为 $-g\,t^a\bar u(p_1)\gamma^\nu v(p_2)$，
+第二项为 $+g\,t^a\bar u(p_1)\gamma^\nu v(p_2)$，和为零。若反夸克腿离壳且与 $k$ 同属一个共线子图，第二个图属于该子图，硬部分只含第一个图，故 $k_\mu H^\mu=-g\,t^aH_0$，
+$H_0=\bar u(p_1)\gamma^\nu X$；乘上 $k^\mu n_1^\alpha/(n_1\cdot k+i0)$（$n_1\propto p_1$）得 $H_0\,[-g\,t^an_1^\alpha/(n_1\cdot k+i0)]$，正是 $W[\infty n_1,0]$ 中动量 $k$ 流出该线的一阶项（Wilson 线的动量空间规则）。
+(b) $H^\mu_a=\bar u(p')\,\ii g\gamma^\mu t^a\,S(p'-k)\,\Gamma$，由 (W2) $k_\mu H^\mu_a=g\,t^a\bar u(p')\Gamma=g\,t^aH_0$；于是 $H_\mu k^\mu n_B^\alpha/(n_B\cdot k-i0)=[\ii g\,n_B^\alpha t^a\cdot(-\ii)/(n_B\cdot k-i0)]H_0$，
+即\cref{eq:method-seed}。两个 K 胶子的情形与 (c) 的推导见\cref{prop:appF-two-gluon}。(c) 是\cref{prop:method-ward-one}在树图层次的具体形式：当胶子 2 物理（$k_2^2=0$，$\epsilon_2\cdot k_2=0$）时右边为零。
+\end{proof}
+
+%%FIG fig:ward-identity%%
+
+\begin{example}[$q\bar q\to g^*g^*$ 的两个纵向胶子]\label{ex:method-ward-tree}
+由\cref{eq:method-qqgg}：(i) 胶子 2 物理时 $k_{1\mu}\mathcal A^{\mu\nu}\epsilon_{2\nu}=0$（\cref{prop:method-ward-one}）；(ii) 两个胶子都纵向时即使离壳也有 $k_{1\mu}k_{2\nu}\mathcal A^{\mu\nu}=0$；
+(iii) 胶子 2 在壳而取非物理极化 $\bar k_2=(k_2^0,-\mathbf k_2)$ 时，由流守恒 $k_2\cdot J=-k_1\cdot J$，$k_{1\mu}\bar k_{2\nu}\mathcal A^{\mu\nu}_{ab}=(k_2\cdot\bar k_2)\mathcal A_{\rm gh}$，
+$\mathcal A_{\rm gh}=\frac{g^2}{Q^2}f^{abc}k_1\cdot J_c$ 是 $q\bar q\to c^a\bar c^b$ 的鬼场振幅；(iv) 因此对物理极化求和须减去鬼场：
+\begin{equation}\label{eq:method-ghostsum}
+\sum_{\rm phys}|\mathcal A|^2=\sum_{-g,-g}|\mathcal A|^2-2\sum|\mathcal A_{\rm gh}|^2 ,\qquad
+\frac1{36}\sum_{\rm phys}|\mathcal A|^2=g^4\Bigl[\frac{32}{27}\frac{t^2+u^2}{tu}-\frac83\frac{t^2+u^2}{s^2}\Bigr],
+\end{equation}
+因子 $2$ 计入鬼场与反鬼场，第二式是 Combridge--Kripfganz--Ranft 的结果\cite{CombridgeKripfganzRanft1977}。数值例：取 $g=1$，在质心系中每个入射夸克的能量为 $1.3$、散射角 $\theta=0.83$
+（于是 $s=6.76$，$t=-\frac s2(1-\cos\theta)\approx-1.0989$，$u=-\frac s2(1+\cos\theta)\approx-5.6611$），用显式的 Dirac 矩阵与极化矢量算出的振幅给出
+$\frac1{36}\sum_{\rm phys}|\mathcal A|^2=4.3949316148$，与右边在机器精度内一致；鬼场减除项 $2\sum|\mathcal A_{\rm gh}|^2$ 占 $-g$ 求和的 $3.97\%$（参见\cref{ex:qcd-qqbar-gg}）。
+\uses{prop:method-ward-tree,ex:qcd-qqbar-gg}
+\end{example}
+% VF-WL-9
+
+\begin{lemma}[多个 K 胶子的 Ward 恒等式与 Wilson 线 \tagA]\label{lem:method-ward-multi}
+设 $n$ 个 $A$ 共线的 K 胶子（动量 $\hat k_i$，色指标 $a_i$，极化 $\propto\hat k_i^\mu$）以一切方式附着在硬子图 $H$ 上，$H$ 的其余外线（包括动量为 $\hat k$ 的 $A$ 共线部分子）都是在壳的物理部分子。
+则其和等于 $H_0$（不含这些胶子的硬部分）乘以沿 $n_B$ 的 Wilson 线的 Feynman 规则：附着在末态线上时为未来指向的线，附着在初态线上时为过去指向的线（单侧改写之后）；
+鬼场贡献相消或被吸收进 Wilson 线算符。（本引理只涉及部分子态。）
+\uses{prop:method-ward-one,prop:method-ward-tree,prop:appF-induction}
+\end{lemma}
+
+\begin{proofsketch}
+(1) $n=1$：\cref{prop:method-ward-one}与\cref{eq:method-seed}。(2) $n=2$（树图）：\cref{prop:method-ward-tree}(b)（证明见\cref{sec:appF-two}）——两种附着次序的和中，阿贝尔部分由程函恒等式给出 $g^2H_0$，
+对易子部分恰好补成路径次序 $W^{(2)}_{ab}$。(3) 归纳步骤（\cref{prop:appF-induction}）：加入第 $n$ 个 K 胶子并用单胶子的 BRST 恒等式；它附着在其余 K 胶子上的项由 (W3) 产生对易子，
+与路径次序组合；(W4) 中不是差分的部分产生鬼场项，它们必须相消或被吸收进 BRST 恰当的算符——这一步需要多定域算符的 BRST 分类。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}阿贝尔情形 \tagR（\cref{lem:method-ward-abelian}）；$n\le2$ 的树图层次 \tagR（\cref{prop:method-ward-tree}）；含鬼场的一般非阿贝尔组合学是 \tagA。
+文献中的论证是 Collins\cite[第~11.9~节，第~416~页，图~11.6]{Collins2011}、Collins--Soper\cite{CollinsSoper1982a}与 Labastida--Sterman\cite{Labastida:1984gy}；
+据 Collins 的记述，Labastida--Sterman 证明了全部外线或除一条以外的全部外线都是 K 胶子时结果为零，但只是在严格的共线极限下；
+Collins--Rogers\cite{Collins:2008sg}指出朴素的 K 胶子恒等式有一个非零的领头余项，它是得到正确的规范不变胶子分布所必需的；在振幅层次的另一种全阶论证见 Feige--Schwartz\cite{FeigeSchwartz2014}。
+本引理是代数—组合层次的恒等式，自身不含幂次计数；与之配合的近似误差是\cref{lem:method-collinear-accuracy}的 E-S 型陈述。
+附录~N 中使用的精确形式是\cref{asm:appN-ward-product}（\tagA）。\emph{该论证中被明确假定的一步}是多定域光线算符的 BRST 分类：Collins 在\cite[第~11.3.2~节，第~407--410~页]{Collins2011}中写道，
+对非定域算符「“no proof has been given”」，并决定「“I will assume the result is true”」（第~410~页）——即：就他所知尚无证明，他假定结论成立。这一步就是登记项\cref{asm:appN-brst-nonlocal}
+（\tagC：不存在全阶论证；第~24~章的\cref{conj:front-brst-multilocal}是同一主张）。本引理以及以它为基础的一切 Feynman 规范过程定理的 [A]，是 CSS/Collins 标准论证在文献中的等级，
+而该论证本身就包含这一被明确假定的步骤；因此它在此处与\cref{thm:method-template}中被点名，却只是附录~N 的精确条件定理\cref{thm:appN-structure}的形式前提（该定理的内容等级因而为 [C]）。
+对双定域的 PDF 算符，第~24~章的\cref{prop:front-brst-bilocal}（\tagA；先行工作见\cite{Braun:2019qtp}）给出了一个全阶论证：重整化所需的分类经由矩约化归结为定域算符的 Joglekar--Lee 定理；
+多定域的情形仍然开放。完成\cref{prop:appF-induction}的归纳即可解除\cref{asm:appN-ward-product}；证明多定域光线算符的 BRST 分类则消除上述具名缺口。
+
+\begin{proposition}[共线 Wilson 线与 PDF \tagA]\label{prop:method-collinear-wilson}
+对 $A$ 共线 K 胶子的一切附着方式求和，共线近似给出 $H_0(\hat k)\otimes\Phi^W(k)$，其中 $\Phi^W$ 是附有沿 $n_B$ 的 Wilson 线的共线子图。在固定 $k^+=\xi P^+$ 下对 $k^-$、$\mathbf k_T$ 积分，
+得到\cref{def:pdf-quark,def:pdf-gluon}的裸部分子分布，其中的 Wilson 线是直的类光线段：对 $w=(0^+,w^-,\mathbf 0_T)$，
+\begin{equation}\label{eq:method-straight}
+W[w,\infty n_B]\,W[\infty n_B,0]=W[w,0]=W[w,-\infty n_B]\,W[-\infty n_B,0] .
+\end{equation}
+（本命题只涉及部分子态。）
+\uses{lem:method-ward-multi,def:method-collinear-approx,prop:prelim-wilson-covariance,def:pdf-quark,def:pdf-gluon}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 在 $T_R$ 之下硬部分只依赖于 $\hat k$，夸克线带投影 $\frac14\gamma^-\Tr[\gamma^+\cdot]$，胶子线带 $\mathcal P_A$（\cref{def:method-collinear-approx}），纵向项是 K 胶子。
+(2) 由\cref{lem:method-ward-multi}，对附着求和后 K 胶子改为附着在沿 $n_B$ 的 Wilson 线上。(3) 固定 $k^+$ 对 $k^-$、$\mathbf k_T$ 积分，把两个场放到类光线 $w=(0^+,w^-,\mathbf 0_T)$ 上，
+得到 $\bar\psi(w)\gamma^+W[w,\infty n_B]W[\infty n_B,0]\psi(0)$ 矩阵元的 Fourier 变换（按\cref{def:pdf-quark}归一化；胶子情形见\cref{def:pdf-gluon}）。(4) $0$ 与 $w$ 在同一条类光线上，
+结合律与回溯（\cref{prop:prelim-wilson-covariance}）给出\cref{eq:method-straight}：DIS 与 Drell--Yan 给出同一个共线 PDF；TMD 的两点有横向间隔，Wilson 线不能合并（第~14~章）。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}继承\cref{lem:method-ward-multi}的地位（包括其中点名的具名缺口\cref{asm:appN-brst-nonlocal}）：瓶颈是\cref{asm:appN-ward-product}，其中还包含减除后的重组（零区重叠的扣除与重整化见\cref{sec:method-subtraction}，
+即模板定理的 (H5)）。\cref{eq:method-straight}本身是 Wilson 线的恒等式；本命题的误差只来自共线近似，是\cref{lem:method-collinear-accuracy}的 E-S 型陈述。
+\cref{eq:method-straight}在第~12~章重述为\cref{prop:dy-universality}。文献：\cite{CollinsSoper1982a}，\cite[第~11.9~节]{Collins2011}。
+
+\begin{proposition}[软 Wilson 线 \tagA]\label{prop:method-soft-wilson}
+附着在 $J_A$ 上的软胶子，在\cref{def:method-soft-approx}的近似与 Ward 恒等式之后从 $J_A$ 退耦，改为附着在软因子 $S=\langle0|\prod_iW_{n_i}|0\rangle$ 中沿 $n_A$ 的 Wilson 线上
+（振幅中为编时积，共轭振幅中为反编时积）。（本命题只涉及部分子态。）
+\uses{lem:method-ward-multi,def:method-soft-approx,lem:method-soft-accuracy}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 软近似之后 $J_A$ 只依赖于 $\pi_-(k)$，且 $n_A^\mu n_{B\nu}=n_A^\mu\pi_-(k)_\nu/(n_A\cdot k)$：相对于 $J_A$，软胶子是标量极化 $\pi_-(k)$ 的 K 胶子。(2) 把\cref{lem:method-ward-multi}用于 $J_A$，
+软胶子改为附着在沿 $n_A$ 的程函线上，分母 $1/(n_A\cdot k\pm i0)$（\cref{def:method-soft-approx}）。(3) 对所有喷注重复，得到 Wilson 线的真空矩阵元。前提是软近似有效（\cref{lem:method-soft-accuracy}）。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}继承\cref{lem:method-ward-multi}（\cref{asm:appN-ward-product}）与\cref{lem:method-soft-accuracy}；后者只在 Glauber 区之外成立（E-S 型陈述），因而本命题依赖模板定理的 (H3)：
+对 Drell--Yan 型过程，其精确形式是\cref{asm:appO-deformation,asm:appO-mixing,asm:appO-rewritten-cs}（附录~O）。文献：\cite[第~10.8~节]{Collins2011}（Sudakov 形状因子），\cite[第~9.2~节]{CollinsSoperSterman1989}（单粒子单举截面与软近似：软近似之后用 Ward 恒等式把软胶子从喷注移到程函线上）。
+
+\begin{remark}[纯规范论证的地位]\label{rem:method-pure-gauge}
+“纯规范论证”说：共线近似后耦合到硬部分的 K 胶子场是纯规范的，$F[\mathcal A_{\rm eff}]=0$，故 $\mathcal A_{\rm eff}=-\frac\ii g(\partial U)U^\dagger$，硬部分看到 $\psi\to U^\dagger\psi$，$U$ 是一条 Wilson 线。
+这是结构性的启发：其第二步（硬部分对纯规范场的依赖就是这个规范转动，含鬼场贡献）正是\cref{lem:method-ward-multi}的 BRST 内容（\tagA）；它不能确定 Wilson 线的方向（方向由被取代传播子的 $i0$ 决定，
+\cref{def:method-collinear-approx}）；$U(+\infty)$ 是依赖于场的算符，不是整体规范变换。因此它不是非阿贝尔 Wilson 线结构的证明。SCET 中的共线规范不变性见第~15~章。
+\end{remark}

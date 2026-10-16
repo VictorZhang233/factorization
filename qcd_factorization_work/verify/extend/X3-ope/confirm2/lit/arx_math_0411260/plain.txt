@@ -1,0 +1,1332 @@
+arXiv:math/0411260v1 [math.CO] 11 Nov 2004
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+EVA MARIA FEICHTNER AND BERND STURMFELS
+Abstract. The tropical variety defined by linear equations with constant coefficients
+is the Bergman fan of the corresponding matroid. Building on a self-contained introduction to matroid polytopes, we present a geometric construction of the Bergman
+fan, and we discuss its relationship with the simplicial complex of nested sets in the
+lattice of flats. The Bergman complex is triangulated by the nested set complex, and
+the two complexes coincide if and only if every connected flat remains connected after
+contracting along any subflat. This sharpens a result of Ardila-Klivans who showed
+that the Bergman complex is triangulated by the order complex of the lattice of flats.
+The nested sets specify the De Concini-Procesi compactification of the complement of a
+hyperplane arrangement, while the Bergman fan specifies the tropical compactification.
+These two compactifications are almost equal, and we highlight the subtle differences.
+
+1. Introduction
+Let V be an r-dimensional vector subspace of the n-dimensional vector space Cn over
+the field C of complex numbers. The amoeba of V is the set of all vectors of the form
+
+log|v1 |, log|v2 |, . . . , log|vn | ∈ Rn ,
+
+where (v1 , . . . , vn ) runs over all vectors in V whose coordinates are non-zero. The asymptotic behavior of the amoeba is given by an r-dimensional polyhedral fan in Rn . This
+fan was called the logarithmic limit set of V in George Bergman’s seminal paper [3]. We
+use the term Bergman fan for this object. The study of such polyhedral spaces is now
+an active area of research, known as tropical geometry [14, 18, 19, 21]. This paper is
+concerned with the tropical variety defined by a system of linear equations with constant
+coefficients. The case of linear equations with coefficients in a power series field is treated
+in [18]. Bergman fans are the local building blocks of Speyer’s tropical linear spaces.
+Our starting point is the observation of [20, §9.3] that the Bergman fan of a linear
+space V depends only on the associated matroid. One way to specify this matroid is by
+its collection of circuits C. These are the minimal sets arising as supports of linear forms
+P
+i∈C ai xi which vanish on V . Introductory references on matroids include [5, 16, 24].
+Let M be any matroid of rank r on the ground set [n] = {1, 2, . . . , n}. The Bergman
+e ) is the set of all vectors w = (w1 , . . . , wn ) ∈ Rn such that, for every circuit C
+fan B(M
+
+of M , the minimum of the set wi | i ∈ C } is attained at least twice. Note that e
+B(M )
+n
+is invariant under translation along the line R(1, . . . , 1) in R and under positive scaling.
+Hence we lose no information restricting our attention to the intersection of the fan e
+B(M )
+Date: October 22, 2018.
+2000 Mathematics Subject Classification. Primary 52B20; Secondary 05B35, 14D99, 52B40, 52C35.
+1
+
+2
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+with the unit sphere in the hyperplane orthogonal to the line R(1, . . . , 1) in Rn :
+(1.1) B(M ) := e
+B(M ) ∩ S
+
+with S =
+
+
+
+w ∈ Rn |
+
+n
+X
+i=1
+
+wi = 0 and
+
+n
+X
+
+wi2 = 1 .
+
+i=1
+
+The spherical set B(M ) is called the Bergman complex of the matroid M . The terms
+“fan” and “complex” are justified by our discussion of matroid polytopes in Section 2. In
+e ) has a canonical decomposition as a subfan of the normal fan of the matroid
+fact, B(M
+polytope, and, accordingly, B(M ) is a complex of spherical polytopes. Example 2.8
+reveals that the faces of the Bergman complex are not always simplices.
+In Section 3 we introduce the nested set complexes of an arbitrary lattice. If the lattice
+is the Boolean lattice 2[r] of all subsets of [r] = {1, 2, . . . , r} then each nested set complex
+arises as the boundary of a simplicial (r − 1)-polytope. The simple polytope dual to that
+simplicial polytope is constructed as the Minkowski sum of faces of the (r − 1)-simplex;
+we use this to develop a polyhedral theory of local Bergman complexes.
+In Section 4 we apply the local theory of Section 3 to the lattice of flats LM of a
+rank r matroid M , and we derive the theorem that every nested set complex of LM is a
+unimodular triangulation of the Bergman complex B(M ). We examine the local structure
+of this triangulation in matroid-theoretic terms, thus refining the results in [1].
+Among all nested set complexes of a matroid M , there is always a minimal one, whose
+vertices are indexed by the connected flats of M . Section 5 is concerned with this minimal
+nested set complex. It is generally quite close to the Bergman complex B(M ), and we
+show that they are equal if and only if every contraction of a connected flat remains
+connected. We also discuss algorithmic tools for computing the Bergman complex along
+with its triangulation by minimal nested sets, and we discuss some non-trivial examples.
+In Section 6 we relate our combinatorial results to algebraic geometry. The space
+X = V ∩(C∗ )n is the complement of an arrangement of n hyperplanes in complex affine
+r-space. The nested set complex specifies the wonderful compactification of X, due to
+De Concini and Procesi [7], while the Bergman complex specifies the tropical compactification of X, due to Tevelev [21]. The subdivision of Section 4 induces a canonical
+morphism from the former onto the latter. We describe this morphism geometrically.
+We close the introduction with two examples where our complexes are one-dimensional.
+Example 1.1. (n = 6, r = 3) Let M be the graphical matroid of the complete graph K4
+on four vertices. Here the nested set complex coincides with the Bergman complex, and
+it equals the Petersen graph, as depicted in Figure 2 below. When passing to the order
+complex of LM , three of the edges are subdivided into two, so the order complex is a
+graph with 13 vertices and 18 edges. For connections to phylogenetics see [1, §3].
+Example 1.2. (n = 5, r = 3) Consider the graph gotten from K4 by removing one edge,
+and let M ′ be the corresponding graphic matroid. The Bergman complex B(M ′ ) is the
+complete bipartite graph K3,3 . Its six vertices are the two 3-cycles and the four edges
+adjacent to the missing edge. One of the nine edges connects the two vertices indexed by
+the two 3-cycles. In the nested set complex of M ′ that edge is further subdivided by one
+vertex, corresponding to the edge of K4 which is disjoint from the missing edge. This
+example appeared in [20, Example 9.14] and we shall return to it in Example 3.3.
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+3
+
+2. The matroid polytope and the Bergman complex
+We start with a brief introduction to matroid theory with an emphasis on polyhedral
+aspects. Let M be a family of r-element subsets of the ground set [n] = {1, 2, . . . , n}.
+We represent each subset σ = {σ1 , . . . , σr } by the corresponding sum of r unit vectors
+r
+X
+eσi
+∈ Rn .
+eσ =
+i=1
+
+The set family M is represented by the convex hull of these points
+
+PM := conv eσ : σ ∈ M
+⊂ Rn
+
+This is a convex polytope of dimension ≤ n−1. It is a subset of the (n−1)-simplex
+
+∆ =
+(x1 , x2 , . . . , xn ) ∈ Rn : x1 ≥ 0, . . . , xn ≥ 0, x1 + x2 + · · · + xn = r .
+
+Definition 2.1. A matroid of rank r is a family M of r-element subsets of [n] such that
+every edge of the polytope PM is parallel to an edge of the simplex ∆.
+Experts in matroid theory may be surprised to see this unusual definition, but it
+is in fact equivalent to the many other definitions familiar to combinatorialists. This
+equivalence was first proved by Gel’fand, Goresky, MacPherson and Serganova [13]. It
+forms the point of departure for the theory of Coxeter matroids in [5]. This suggests that
+it would be worthwhile to extend the results in this paper to root systems other than An .
+The basic idea behind Definition 2.1 is as follows. Every edge of the simplex ∆ has
+the form conv(rei , rej ), so it is parallel to a difference ei − ej of two unit vectors. The
+elements σ ∈ M are the bases of the matroid, and two bases σ, τ are connected by an
+edge conv(eσ , eτ ) if and only if eσ − eτ = ei − ej . The latter condition is equivalent to
+σ\τ = {i} and τ \σ = {j}, so the edges of PM represent the basis exchange axiom.
+Here is a brief summary of matroid terminology. Fix a matroid M on [n]. A subset
+I ⊆ [n] is independent in M if I ⊂ σ for some basis σ. Otherwise I is dependent. The
+rank of a subset F ⊆ [n] is the cardinality of the largest independent subset of F . A
+circuit is a dependent set which is minimal with respect to inclusion. A subset F ⊆ [n]
+is a flat of M if there is no circuit C such that C\F consists of exactly one element. The
+intersection of two flats is again a flat. The span of G ⊆ [n] is the smallest flat F with
+G ⊆ F . The collection of all flats is partially ordered by inclusion. The resulting poset
+LM is a geometric lattice, where G1 ∧ G2 = G1 ∩ G2 and G1 ∨ G2 = the span of G1 ∪ G2 .
+The polytope PM is called the matroid polytope of M . What we are interested in here is
+the following natural question concerning the inclusion PM ⊂ ∆: How does the boundary
+∂PM of the matroid polytope intersect the boundary ∂∆ of the ambient simplex ? The
+objects of study in this paper are polyhedral complexes which represent the topological
+space ∂PM \∂∆. As we shall see, their combinatorial structure is truly “wonderful” [7].
+Example
+2.2. Let r = 2 and n = 4 and consider the uniform matroid M =
+
+{1, 2}, {1, 3}, {1, 4}, {2, 3}, {2, 4}, {3, 4} . Its matroid polytope is the regular octahedron
+
+PM = conv (1, 1, 0, 0), (1, 0, 1, 0), (1, 0, 0, 1), (0, 1, 1, 0), (0, 1, 0, 1), (0, 0, 1, 1) ⊂ R4 .
+
+Here ∂PM \∂∆ consists of the relative interiors of four of the eight triangles in ∂PM . Here
+the Bergman complex consists of four points, which is the homotopy type of ∂PM \∂∆.
+
+4
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+In order to understand the combinatorics of ∂PM \∂∆ for general matroids M , we
+need to represent the matroid polytope PM by a system of linear inequalities.
+Proposition 2.3. The matroid polytope equals the following subset of the simplex ∆:
+X
+
+PM =
+(x1 , . . . , xn ) ∈ ∆ :
+xi ≤ rank(F ) for all flats F ⊆ [n] .
+i∈F
+
+Pn
+Proof. Consider any facet of the polytope PM and let
+i=1 ai xi ≤ b be an inequality
+defining this facet. The normal vector (a1 , a2 , . . . , an ) is perpendicular to the edges of
+that facet. But each edge of that facet is parallel to some difference of unit vectors
+ei − ej . Hence the only constraints
+Pnon the coordinates of the normal vector are of the
+form ai = aj . Using the equation
+i=1 xi = r and scaling the right hand side b, we can
+n
+therefore assume that (a1 , a2 , . . . , an ) is a vector
+P in {0, 1} . Hence the polytope PM is
+characterized by the inequalities of the form
+i∈G xi ≤ bG for some G ⊆ [n]. The right
+hand side bG equals
+
+= rank(G).
+bG = max |σ| ∩ G : σ basis of M
+
+The second equality holds because every independent subset of G can be completed to
+a basis σ. Let F be the
+= rank(F ), and
+P flat spanned by G. Then G ⊆ F and rank(G)
+P
+hence the inequality
+i∈F xi ≤ rank(F ) implies the inequality
+i∈G xi ≤ rank(G). 
+
+The circuit exchange axiom gives rise to the following equivalence relation on the
+ground set [n] of the matroid M : i and j are equivalent if there exists a circuit C with
+{i, j} ⊆ C. The equivalence classes are the connected components of M . Let c(M ) denote
+the number of connected components of M . We say that M is connected if c(M ) = 1.
+Proposition 2.4. The dimension of the matroid polytope PM equals n − c(M ).
+
+Proof. Two elements i and j are equivalent if and only if there exist bases σ and τ
+with i ∈ σ and τ = (σ\{i}) ∪ {j}. The linear space parallel to the affine span of PM
+is spanned by the vectors ei − ej arising in this manner. The dimension of this space
+equals n − c(M ).
+
+Definition 2.1 implies that every face of a matroid P
+polytope is a matroid polytope.
+n
+Consider the face PMw of PM at which the linear form
+i=1 wi xi attains its maximum.
+P
+The bases of the matroid Mw are precisely the bases σ of M of maximal w-cost
+i∈σ wi .
+Two vectors w, w′ ∈ Rn are considered equivalent for the matroid M if Mw = Mw′ .
+The equivalence classes are relatively open convex polyhedral cones. These cones form a
+complete fan in Rn . This fan is the normal fan of PM . If Γ is a cone in the normal fan
+of PM and w ∈ Γ then we write MΓ = Mw . The following proposition shows that the
+Bergman fan e
+B(M ) is a subfan of the normal fan of the matroid polytope PM .
+Proposition 2.5. The following are equivalent for a vector w ∈ Rn :
+(1) The vector w lies in the Bergman fan e
+B(M ).
+(2) The matroid Mw has no loops.
+(3) Every element i ∈ [n] lies in some basis of Mw .
+(4) The face PMw has non-empty
+intersection with the interior of the simplex ∆.
+Pn
+(5) The linear functional
+w
+i=1 i xi attains its maximum over PM in ∂PM \∂∆.
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+5
+
+Proof. The equivalence of (2) and (3) is the definition of loops in matroids namely, i ∈ [n]
+is a loop of Mw if it lies in no basis of Mw . To see that (3) and (4) are equivalent, we note
+that the polytope PMw is the convex hull of the vectors eσ where σ runs over all bases
+of Mw . This convex hull contains a point with full support (i.e. intersects the interior
+of
+Pn∆) if and only if condition (3) holds. Conditions (4) and (5) are equivalent because
+i=1 wi xi attains its maximum over PM in PMw . Finally, condition (1) fails if and only if
+there exists a circuit C of M and an element i ∈ C such that wi < min{wj : j ∈ C\{i} .
+This shows that if i appears in any basis σ of M then we can replace σ by another basis
+(σ\{i}) ∪ {j} of higher w-weight, i.e., i is a loop in Mw . Conversely, if (2) fails for i
+then M has a circuit C with i ∈ C and wi < min{wj : j ∈ C\{i} , i.e., (1) fails.
+
+A question left open in Proposition 2.3 is to identify the facet-defining inequalities for
+the matroid polytope PM other than the facets given by the ambient simplex ∆. Let us
+assume that M is connected, so that PM is (n − 1)-dimensional. We identify a P
+flat F with
+its 0/1-incidence vector. Then PMF is the face of PM at which the inequality
+i∈F xi ≤
+rank(F ) is attained with equality. A flat F of M is called a flacet if dim(PMF ) = n − 2.
+Thus we can replace the word “flat” by the word “flacet” in Proposition 2.3.
+In order to characterize the flacets of a matroid M combinatorially, we note that every
+flat F of rank s defines two new matroids. The restriction to F is the rank s matroid
+
+M [∅, F ] =
+σ ∩ F : σ ∈ M and |σ ∩ F | = s .
+
+The contraction of M at F is the rank r − s matroid
+
+M [F, [n]] =
+σ\F : σ ∈ M .
+
+Proposition 2.6. A flat F of a connected matroid M is a flacet (i.e. it defines a facet of
+the polytope PM ) if and only if both of the matroids M [∅, F ] and M [F, [n]] are connected.
+Proof. Let s = rank(F ). The matroid indexed by the incidence vector of the flat F equals
+(2.1)
+
+MF
+
+=
+
+M [∅, F ] ⊕ M [F, [n]]
+
+=
+
+
+
+σ ∈ M : |σ ∩ F | = s .
+
+The corresponding face of PM is the direct product of matroid polytopes
+PMF
+
+=
+
+PM [∅,F ] × PM [F,[n]].
+
+By Proposition 2.4, the dimension of this polytope equals
+n − c(MF ) = |F | − c(M [∅, F ]) + n − |F | − c(M [F, [n]]).
+This number is at most n − 2. It equals n − 2 if and only if F is a flacet. This happens
+if and only if both positive integers c(M [∅, F ]) and c(M [F, [n]]) are equal to one.
+
+Assuming that M is connected, the normal fan of PM defines a subdivision of the
+∗ of
+(n − 2)-sphere S defined in (1.1). This subdivision is isomorphic to the polar dual PM
+the matroid polytope. (If M is not connected then we replace S by an appropriate sphere
+of dimension n − c(M ) − 1.) Each cone Γ in the normal fan of PM is identified with a
+∗ . Hence every face Γ of P ∗ has an associated rank r
+face of the dual matroid polytope PM
+M
+matroid MΓ . We can now recast the definition of the Bergman complex as follows:
+
+6
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+Theorem 2.7. The Bergman complex B(M ) of a matroid M is the subcomplex in the
+∗ of the dual matroid polytope P ∗ which consists of all faces Γ such that
+boundary ∂PM
+M
+MΓ has no loop. The vertices of B(M ) are indexed by the flacets of M , provided M is
+connected. The Bergman complex B(M ) is homotopy equivalent to the space ∂PM \∂∆.
+∗ lies in a face of the Bergman
+Proof. Proposition (2.5) implies that a vector w ∈ ∂PM
+complex B(M ) if and only if MΓ has no loop. This proves the first assertion. The second
+assertion follows from (the discussion prior to) Proposition 2.6. The third assertion
+follows from the general fact that a subcomplex in the boundary of a polytope is homotopy
+equivalent to the corresponding co-complex in the boundary of the dual polytope. This
+version of Alexander duality is proved using barycentric subdivisions.
+
+∗ is a regular 3-cube, and
+For instance, in Example 2.2, the dual matroid polytope PM
+∗ . Here
+the Bergman complex B(M ) consists of four of the eight vertices of the cube PM
+is an example which shows that the Bergman complex B(M ) is generally not simplicial.
+
+Example 2.8. Let M be the rank 4 matroid on [6] = {1, 2, . . . , 6} whose non-bases are
+A = 1234, B = 1356 and C = 2456. This matroid is realized by the six vertices of a
+triangular prism, or by the six vertices of an octahedron, or by the six facet planes of
+a regular 3-cube. Figure 1 shows a picture of this affine hyperplane arrangement. The
+three non-bases correspond to the three special points A, B, C on the “plane at infinity”.
+A = 1234
+
+6
+
+4
+
+2
+
+3
+
+1
+B = 1356
+
+C = 2456
+
+5
+
+Figure 1. The cube realization of M
+The matroid M has six flacets of rank one, namely 1, 2, 3, 4, 5, 6, and three flacets of
+rank two, namely A, B, C. The Bergman complex B(M ) is two-dimensional. It has 9
+vertices (the flacets), 24 edges, and 23 two-dimensional faces. Twenty faces are triangles:
+125
+
+126
+
+145
+
+146
+
+235
+
+236
+
+345
+
+346
+
+12A 14A 23A 34A 15B 16B 35B 36B 25C 26C 45C 46C
+The remaining three two-dimensional faces are squares:
+1A3B
+
+2A4C
+
+5B6C
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+7
+
+The nested set complex, to be introduced in the next section, will subdivide these squares
+by adding the diagonals 13, 24 and 56. We invite the reader to compute the fivedimensional matroid polytope PM and to visualize the cocomplex ∂PM \∂∆. Here B(M )
+and ∂PM \∂∆ have the homotopy type of a bouquet of seven two-dimensional spheres.
+3. Complexes of nested sets
+Let L be a finite lattice. We review the construction of a family of simplicial complexes
+associated with L due to Feichtner and Kozlov [10], who generalized earlier work by
+De Concini and Procesi [7] on the special case (of interest here) when L = LM is the
+geometric lattice of a (realizable) matroid M . Intervals in L are denoted [X, Y ] = {Z ∈ L :
+X ≤ Z ≤ Y }. If S ⊆ L and X ∈ L , then we write S≤X := {Y ∈ S : Y ≤ X}, and similarly
+for S<X , S≥X , and S>X The set of maximal elements in S is denoted max S.
+Definition 3.1. Let L be a finite lattice. A subset G in L>0̂ is a building set if for any
+X ∈ L>0̂ and max G≤X = {G1 , . . . , Gk } there is an isomorphism of partially ordered sets
+(3.1)
+
+ϕX :
+
+k
+Y
+
+∼
+=
+
+[0̂, Gj ] −→ [0̂, X] ,
+
+j=1
+
+where the j-th component of the map ϕX is the inclusion of intervals [0̂, Gj ] ⊂ [0̂, X]
+in L.
+The full lattice L>0̂ is the simplest example of a building set for L. Besides this
+maximal building set (which we denote by L for simplicity), there is always a minimal
+building set Gmin consisting of all elements X in L>0̂ which do not allow for a product
+decomposition of the lower interval [0̂, X]. We call these elements the connected elements
+of L. They have been termed irreducible elements at other places; we here borrow the
+term connected from matroid terminology (see the beginning of Section 5)
+Definition 3.2. Let L be a finite lattice and G a building set in L containing the maximal
+element 1̂ of L. A subset S in G is called nested if for any set of incomparable elements
+X1 , . . . , Xt in S of cardinality at least two, the join X1 ∨ · · · ∨ Xt does not belong to G.
+e (L, G). Topologically, N
+e (L, G) is
+The nested sets form an abstract simplicial complex N
+a cone with apex 1̂, its link N (L, G) is the nested set complex of L with respect to G.
+If a building set G does not contain the maximal element 1̂, it can always be extended
+to a building set Gb = G ∪ {1̂}. We can define nested sets with respect to G as above, and
+e (L, b
+we then find the resulting abstract simplicial complex being equal to the base of N
+G).
+For the maximal building set L, the nested set complex N (L, L) coincides with the
+order complex ∆(L) of L, i.e., the abstract simplicial complex of totally ordered subsets
+in the proper part of the lattice, L \ {0̂, 1̂}. As we pointed out above, there is always the
+unique minimal building set Gmin of connected elements in L, hence a simplicial complex
+N (L, Gmin ) with the least number of vertices among the nested set complexes of L.
+Example 3.3. Let M be the matroid of the complete graph K4 as in Example 1.1 and
+consider its lattice of flats LM . We depict its nested set complex with respect to the
+minimal building set Gmin in Figure 2. The minimal building set is given by the atoms,
+
+8
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+the 3-point lines and the top element 1̂ in LM . Larger building sets are obtained by adding
+some of the three 2-point lines. This results in a subdivision of edges in N (LM , Gmin ).
+1
+
+2
+
+3
+
+146
+
+6
+1
+
+6
+
+3
+1
+
+5
+
+2
+
+3
+
+4
+
+5
+
+5
+
+6
+345
+
+4
+
+236
+2
+
+4
+
+LM
+
+K4
+
+125
+
+N (LM , Gmin )
+
+Figure 2. The lattice of flats LM and its minimal nested set complex N (LM , Gmin ).
+Example 3.4. Remove one edge from the graph K4 to get the graphic matroid M ′ of
+Example 1.2. We depict its lattice of flats LM ′ in Figure 3. Again, the minimal building
+set Gmin is given by the atoms, the two 3-point lines and the top element. Any other
+building set is obtained by adding some of the four 2-point lines. We depict the nested
+set complex with respect to Gmin : it is a K3,3 which is subdivided in one edge. Nested set
+complexes for larger building sets are obtained by subdividing up to four further edges.
+2
+1
+
+125
+
+1
+4
+
+4
+
+1
+
+2
+
+5
+
+3
+5
+
+3
+
+K4 \ {6}
+
+2
+
+5
+
+3
+
+L′M
+
+4
+
+345
+
+N (LM ′ , Gmin )
+
+Figure 3. The lattice of flats LM ′ and its nested set complex N (LM ′ , Gmin ).
+
+A lattice L is atomic if every element is a join of atoms. The lattice of flats LM of a
+matroid is an atomic lattice. For arbitrary atomic lattices L, Feichtner and Yuzvinsky [12]
+proposed the following polyhedral realization of the nested set complexes N (L, G).
+Definition 3.5. Let L be an atomic lattice and A = {A1 , . . . , An } its set of atoms; G a
+building set in L containing 1̂. For any G ∈ G, let ⌊G⌋ := {A ∈ A | A ≤ G}, the subset of
+atoms below G. We define the characteristic vector vG in Rn by
+
+1 if Ai ∈ ⌊G⌋
+(vG )i :=
+for i = 1, . . . , n .
+0 otherwise
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+9
+
+e (L, G), the set of vectors {vG | G ∈ S} is linearly independent,
+For any nested set S ∈ N
+and it hence spans a simplicial cone VS = R≥0 {vG | G ∈ S}. These cones intersect along
+e
+G) in Rn .
+faces, namely VS ∩ VS ′ = VS ∩ S ′ , and hence they form a simplicial fan Σ(L,
+As we did before with the facet normals to the matroid polytope PM , we can replace the vectors
+vectors which lie on the (n−2)-dimensional sphere
+P vG by equivalent
+P
+S = { w ∈ Rn | ni=1 wi = 0, ni=1 wi2 = 1}. This is accomplished by translating vG along
+the line R(1, . . . , 1) and then scaling it to have unit length. We lose no information
+e
+by replacing Σ(L,
+G) with its restriction to the (n−2)-sphere S. The resulting complex
+Σ(L, G) is a geometric realization of the abstract simplicial complex N (L, G).
+We recall some results concerning the geometry and topology of nested set complexes:
+Proposition 3.6. ([12, Prop. 2], [11, Thm. 4.2, Cor. 4.3])
+(1) For any atomic lattice L and any building set G in L, the fan e
+Σ(L, G) is unimodular.
+e
+(2) For building sets H ⊆ G in L, the simplicial fan Σ(L, G) can be obtained from
+e
+Σ(L, H) by a sequence of stellar subdivisions. In particular, the support sets of the
+e
+fans Σ(L,
+G) coincide for all building sets G in L.
+(3) For an atomic lattice L and any building set G in L, the nested set complex N (L, G)
+is homeomorphic to the order complex ∆(L).
+We shall see in Theorem 4.1 that, for any matroid M and any building set G in LM ,
+e M , G) is a refinement of the Bergman fan B(M
+e ) . In particular, the fans have
+the fan Σ(L
+n
+the same support sets in R . Also, the nested set complex N (LM , G) is a triangulation
+of the Bergman complex B(M ) for any building set G in LM . The special case of this
+result when G = LM and the nested set complex equals the order complex of LM is due
+to Ardila and Klivans [1, Sect. 2, Thm. 1]. It is possible to derive Theorem 4.1 from
+their result using the techniques of combinatorial blow-ups developed in [10]. However,
+we have chosen a different route which will keep this paper self-contained.
+In what follows we take L to be the Boolean lattice 2[r] whose elements are the subsets
+of [r] = {1, 2, . . . , r}. Clearly, 2[r] is an atomic lattice, in fact, it is the lattice of flats of
+the free rank r matroid M = {1, 2, . . . , r} . We will show (in Theorem 3.14) that, for
+any building set G in 2[r] , the fan e
+Σ(2[r] , G), when regarded modulo the line R(1, . . . , 1)
+as always, is the normal fan to a simple (r − 1)-polytope ∆G . Equivalently, N (2[r] , G) is
+the boundary of a simplicial (r − 1)-polytope ∆∗G . This dual pair of polytopes should be
+of independent interest for further study of the toric manifolds introduced in [12].
+Remark 3.7. The minimal building set in the Boolean lattice 2[r] is the set of atoms, and,
+following our convention when defining
+nested set complexes, we include the maximal
+
+e [r] , Gmin ) is the
+lattice element [r]; hence Gmin = {1}, {2}, . . . , {r}, [r] . The fan Σ(2
+normal fan to the (r − 1)-simplex ∆Gmin , and N (2[r] , Gmin ) is the boundary complex
+of the dual simplex ∆∗Gmin . On the other extreme, the maximal nested set complex
+N (2[r] , Gmax ), Gmax = 2[r] , is the barycentric subdivision of the boundary of the (r − 1)simplex. The corresponding fan e
+Σ(2[r] , Gmax ) is the braid arrangement {xi = xj }, and
+the simple polytope ∆Gmax is the permutohedron. Hence the polytopes ∆G for G building
+sets in 2[r] interpolate between the (r − 1)-simplex ∆Gmin and the (r − 1)-dimensional
+
+10
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+permutohedron ∆Gmax . This class of polytopes includes many interesting polytopes, such
+as the associahedron, where G is the set of all segments {i, i + 1, . . . , j − 1, j} for 1 ≤
+i < j ≤ r, and the cyclohedron, where G is the set of all cyclic segments. Both of these
+polytopes are special cases of the graph-associahedra of Carr and Devadoss [6].
+Remark 3.8. After completion of this paper, we learned that most of the results in the
+remainder of Section 3 had been obtained independently by A. Postnikov [17]. The main
+focus of Postnikov’s work is the study of the Ehrhart polynomials of the polytopes ∆G .
+The following lemma characterizes arbitrary building sets in a Boolean lattice.
+Lemma 3.9. A family F of subsets of [r] is a building set in the Boolean lattice 2[r] if
+and only if F contains all singletons {i}, i ∈ [r], and the following condition holds: if
+F, F ′ ∈ F and F ∩ F ′ 6= ∅ then F ∪ F ′ ∈ F.
+Proof. If F is a subset of 2[r] and X ∈ 2[r] then F≤X consists of all subsets of X that are
+in the family F. The poset map in (3.1) is an isomorphism if the factors G1 , . . . , Gk are
+pairwise disjoint and their union is X. We conclude that F is a building set for 2[r] if
+and only if all singletons are in F and, for every X ∈ 2[r] , the maximal elements in F≤X
+are pairwise disjoint. This condition is equivalent to the one stated in the lemma.
+
+Lemma 3.10. Any family F of subsets of [r] can be enlarged to a unique minimal family
+Fb such that Fb is a building set in 2[r] . We call Fb the building closure of F.
+
+Proof. Fix a subset X of [r]. We regard the set family max F≤X as (the set of facets
+of) a simplicial complex of [r]. Let Fb be the set of all subsets X of [r] such that X is a
+singleton or the simplicial complex max F≤X is connected. It follows from Lemma 3.9
+that Fb is a building set, and every other building set containing F also contains Fb. 
+We consider the standard simplex of dimension r − 1. It is here denoted
+
+∆[r] =
+(x1 , . . . , xr ) ∈ Rr : all xi ≥ 0 and x1 + x2 + · · · + xr = 1 .
+
+Every subset F of [r] defines a face of ∆[r] which is a simplex of dimension |F | − 1:
+
+∆F =
+(x1 , . . . , xr ) ∈ ∆[r] : xi = 0 for i 6∈ F .
+
+With a family F of subsets of [r] we associate the following Minkowski sum of simplices
+X
+∆F =
+∆F .
+F ∈F
+
+The dimension of the convex polytope ∆F is given by the following formula:
+Remark 3.11. The dimension of the polytope ∆F equals r − c, where c is the number
+of connected components of the simplicial complex with facets max F.
+Each edge of the polytope ∆F is parallel to the difference of unit vectors ei − ej in Rr .
+This means that ∆F is a Minkowski summand of the (r − 1)-dimensional permutohedron.
+In fact, ∆F is a permutohedron whenever F contains all the two-element subset of [r].
+This observation implies the following facet description of ∆F .
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+11
+
+Proposition 3.12. The polytope ∆F consists of all non-negative vectors (x1 , . . . , xr )
+such that x1 + · · · + xr = |F| and the following inequality holds for all subsets G of [r]:
+X
+(3.2)
+xi ≥ |{ F ∈ F : F ⊆ G |.
+i∈G
+
+Here it suffices to take those subsets G which lie in the building closure Fb of F.
+
+Proof. Since ∆F isPa Minkowski summand of the permutohedron, it is defined by inequalities of the form
+i∈G xi ≥ δG for some parameters δG . The minimum value of the
+P
+linear form i∈G xi on the simplex equals one if F ⊆ G, and it equals zero otherwise.
+This shows that
+P δG = |{ F ∈ F : F ⊆ G | as desired. The face of ∆F at which the
+linear form
+i∈G xi attains its minimum can be expressed as follows:
+(3.3)
+
+∆{ F ∈F : F ⊆G }
+
++
+
+∆{F \G : F ∈F , F \G6=∅} .
+
+In order for this face to have codimension one in ∆F , it is necessary, by Remark 3.11,
+that the set family {F ∈ F : F ⊆ G} represents a connected simplicial complex. This
+condition is equivalent to the set G being in the building closure Fb.
+
+
+Corollary 3.13. If [r] ∈ F then ∆F is (r − 1)-dimensional and its facets are indexed by
+b i.e., the inequality presentation in Proposition 3.12 is irredundant.
+the building closure F,
+
+Proof. We have dim(∆F ) = r − 1 by Remark 3.11. Let G ∈ Fb. The left polytope in (3.3)
+has dimension |G| − 1 as argued above. The right polytope in (3.3) contains ∆[r]\G as a
+Minkowski summand, so it has dimension r − |G| − 1. Hence the dimension of the face
+(3.3) is (|G| − 1) + (r − |G| − 1) = r − 2, which means it is a facet.
+
+We are interested in conditions under which the polytope ∆F is simple, or equivalently,
+the normal fan of ∆F is simplicial. The next theorem says that this happens if F = Fb.
+
+Theorem 3.14. Let F be a building set in the Boolean lattice 2[r] such that [r] ∈ F.
+Then ∆F is an (r − 1)-dimensional simple polytope, and its normal fan is a unimodular
+simplicial fan which is combinatorially isomorphic to the nested set complex N (2[r] , F).
+Proof. Our assumptions say that Fb = F and [r] ∈ F. By Corollary 3.13, the polytope ∆F
+has dimension r − 1. The facets of ∆F are indexed by the elements G of F\{[r]}. The
+facet-defining inequality indexed by G is given in (3.2). We need to show that precisely
+r − 1 of these inequalities are attained with equality at any vertex of ∆F .
+PickP
+a generic vector w = (w1 , . . . , wr ) and let v = (v1 , . . . , vr ) be the vertex of ∆F at
+which ri=1 wi xi attains its minimum. After relabeling, we may assume that w1 < w2 <
+. . . < wr . Then the i-th coordinate of the vertex v equals
+vi
+
+=
+
+| { F ∈ F : min(F ) = i } |.
+
+The inequality (3.2) indexed by G ∈ F holds with equality at v if and only if
+| { F ∈ F : min(F ) ∈ G } |
+
+=
+
+|{ F ∈ F : F ⊆ G |
+
+Given that F is a building set, a necessary and sufficient condition for this equality to
+hold is that the set G has the following specific form for some index i ∈ [r]:
+[
+Gi :=
+{F ∈ F : min(F ) = i }.
+
+12
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+Here we are using the fact that F is a building set, which ensures that Gi is in F. Since
+[r] ∈ F, we have G1 = [r], which is excluded from the sets in (3.2). Hence the facets
+incident to v are precisely the facets defined by G2 , G3 , . . . , Gr . In particular, v is a simple
+vertex, and, by the relabeling argument we conclude that ∆F is a simple polytope.
+The family {G2 , . . . , Gr } is a simplex in the nested set complex N (2[r] , F). It remains to
+be seen that this simplex is maximal and that all maximal simplices arise in this manner,
+after some permutation of [r]. Indeed, suppose that S ⊂ F is a facet of N (2[r] , F).
+The maximal elements of S are pairwise disjoint, and since [r] ∈ F, their union has
+cardinality less than r. After relabeling we may assume that the element 1 is not in the
+union. Since S was assumed to be maximal, its union equals {2, . . . , r}. After relabeling
+again, we can write the maximal sets as G2 , G3 , . . . , Gk with min(Gi ) = i. Since the
+Gi are pairwise disjoint, we can now apply this construction recursively by restricting S
+and F to each of the subsets Gi . This construction shows that S has cardinality r − 1,
+and it arises precisely in the manner indicated above. (See also Proposition 3.17 below).
+It remains to note that the simple polytope ∆F is “smooth” in the sense of toric
+geometry. The r − 1 edges emanating from the vertex v have directions ei − ej , and since
+the configuration of all vectors ei − ej is unimodular, it follows that these r − 1 edges form
+a basis for the ambient lattice. It follows that the normal fan of ∆F is unimodular. 
+Consider now an arbitrary family F of subsets of [r] and let Fb be its building closure
+b the polytope ∆F is a Minkowski summand of the simple
+as before. Since F ⊆ F,
+polytope ∆Fb . The Minkowski summand relation of convex polytopes corresponds to
+refinement at the level of normal fans. Hence Theorem 3.14 implies
+Corollary 3.15. The normal fan of ∆Fb is a triangulation of the normal fan of ∆F .
+
+Example 3.16. Let r = 4 and F = {1, 2}, {2, 3}, {3, 4}, {1, 4} . Then
+
+Fb = F ∪ {1}, {2}, {3}, {4}, {1, 2, 3}, {1, 2, 4}, {1, 3, 4}, {2, 3, 4}, {1, 2, 3, 4} ,
+
+b
+We consider orbits with respect to the action of the dihedral group D4 on F and on F.
+The polytope ∆F is a three-dimensional zonotope with four zones, known as the rhombic
+dodecahedron. It has 14 vertices, namely eight simple vertices like (0, 1, 1, 2), four fourvalent vertices like (0, 1, 2, 1), and two four-valent vertices like (0, 2, 0, 2). The normal fan
+of ∆F is the subdivision of three-space by four general planes through the origin. Corollary 3.15 describes a triangulation where each of the square-based cones are subdivided
+into two triangular cones. For instance, the normal cone of ∆F at the vertex (0, 1, 2, 1) is
+subdivided into the normal cones of ∆Fb at the vertices (1, 2, 7, 3) and (1, 3, 7, 2). Likewise,
+the normal cone of ∆F at (0, 2, 0, 2) is subdivided into normal cones of ∆Fb at the vertices
+(1, 4, 1, 7) and (1, 7, 1, 4). The normal cone of ∆F at (0, 1, 1, 2) remains unsubdivided. It
+
+equals the normal cone of ∆Fb at (1, 2, 3, 7).
+We close this section by describing a convenient representation of nested sets in terms
+of labeled trees. This representation appeared implicitly in the proof of Theorem 3.14,
+and in a modified version for partition lattices it was used previously in [9]. Let T be a
+rooted tree whose nodes ν are labeled by non-empty pairwise disjoint subsets Tν of [r].
+For each node ν we write T≤ν (resp. T<ν ) for the union of all sets Tµ where µ is any
+node in the subtree of T below the node ν and including ν (resp. excluding ν). We write
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+13
+
+sets(T ) for the set family {T≤ν }ν where ν is a non-root node of T . Since T has at most r
+nodes, including the root, the cardinality of sets(T ) is at most r − 1,
+We now fix a building set F in 2[r] with [r] ∈ F. A tree T whose nodes are labeled by
+non-empty pairwise disjoint subsets as above is called an F-tree if sets(T ) ⊆ F.
+Proposition 3.17. For any nested set S of F there exists a unique F-tree T such that
+sets(T ) = S. The nested set complex equals N (2[r] , F) = sets(T ) : T is an F-tree .
+
+Proof. If T is an F-tree then sets(T ) is nested because Tν = T≤ν \T<ν is non-empty.
+Conversely, suppose that S is nested with k elements and contains G1 = [r]. We build
+the tree T inductively, starting with the root. Let G2 , . . . , Gk be the maximal elements
+of S\{[r]}. We label the root by the non-empty set ρ = [r]\(G2 ∪ · · · ∪ Gk ). If S = {[r]},
+then ρ = [r] and we are done. Otherwise note that the restriction of F to Gi is a building
+set in 2Gi , and the restriction of the nested set S to Gi is a nested set. By induction,
+it is represented by a labeled tree Ti whose root is labeled by Gi . Attaching the labeled
+trees T2 , . . . , Tk to the root ρ, we obtain the unique F-tree T with sets(T ) = S.
+
+4. Triangulations of the Bergman complex
+In this section we prove the following theorem relating nested sets and Bergman fans.
+Theorem 4.1. For any matroid M and any building set G in its lattice of flats LM , the
+e M , G) refines the Bergman fan B(M
+e ). The geometric realization Σ(LM , G) of the
+fan Σ(L
+nested set complex N (LM , G) is a triangulation of the Bergman complex B(M ).
+We will first prove a local version of Theorem 4.1. The Bergman complex B(M ) of
+a matroid M of rank r is an (r − 2)-dimensional subcomplex in the boundary of the
+∗ . We fix a basis σ of M . The local Bergman complex B (M )
+dual matroid polytope PM
+σ
+∗ dual to the vertex e of
+is defined as the intersection of B(M ) with the facet of PM
+σ
+e
+the matroid polytope PM . Equivalently, we can consider the local Bergman fan Bσ (M ),
+e ) to the maximal cone of the normal fan
+which is the restriction of the Bergman fan B(M
+of PM indexed by σ. Consider the sublattice LM (σ) of the geometric lattice consisting
+of all flats of M that are spanned by subsets of the basis σ. Clearly, LM (σ) is a Boolean
+lattice of rank r, i.e., it is isomorphic to the lattice of subsets of {1, 2, . . . , r}.
+Let G be any building set in LM . We write Gσ for the set of all flats in G which are
+spanned by subsets of the basis σ. ThenGσ is a building set in the Boolean lattice LM (σ).
+The nested set complex N LM (σ), Gσ is called the localization of the big nested set
+complex N (L, G) at the basis σ. We assume here that the matroid M is connected.
+
+Theorem 4.2. The localization N LM (σ), Gσ is a triangulation of the local Bergman
+complex Bσ (M ). Both complexes are homeomorphic to the (r − 2)-sphere. Each of them
+is naturally realized as the boundary complex of an (r − 1)-dimensional polytope.
+Proof. After relabeling we may assume that the basis σ of the matroid M equals σ =
+{1, 2, . . . , r}. Every element i ∈ {r + 1, r + 2, . . . , n} lies in the span of a unique subset
+Fi of the basis σ. This specifies the following family of subsets of [r]:
+
+F =
+Fr+1 , Fr+2 , . . . , Fn .
+
+14
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+Let w = (w1 , . . . , wr , wr+1 , . . . , wn ) be a vector in the local Bergman fan Beσ (M ). Using
+the fact that σ = {1, . . . , r} is a basis of the matroid Mw , and applying the “minimum
+attained twice condition” to the basic circuit C = Fi ∪ {i} of M , we find that
+wi = min{wj : j ∈ Fi }
+
+for i = r + 1, r + 2, . . . , n.
+
+This defines a piecewise-linear map from Rr onto the support of the local Bergman fan:
+(4.1)
+
+ψ : Rr 7→ |B̃σ (M )| , (w1 , . . . , wr ) 7→ (w1 , . . . , wr , wr+1 , . . . , wn ).
+
+This map is obviously a bijection. The domains of linearity of the i-th coordinate (for
+i > r) of the map ψ is the normal fan of the simplex ∆Fi . The common refinement of these
+normal fans is the normal fan of the polytope ∆F . Hence the domains of linearity of the
+map ψ are the cones in the normal fan of ∆F . We conclude that ψ induces a combinatorial
+isomorphism between the normal fan of ∆F and the local Bergman complex Bσ (M ).
+The map 2[n] → 2[r] = LM (σ), F 7→ [r] ∩ F defines a bijection between flats spanned
+by subsets of σ = [r] and subsets of [r]. Under this bijection, the flats in Gσ are identified
+with subsets of [r], and we have
+F ⊆ Fb ⊆ Gσ ⊂ 2[r] .
+
+By Theorem 3.14, N (2[r] , Gσ ) is the normal fan of the simple polytope ∆Gσ .
+We have shown
+that both the local Bergman complex Bσ (M ) and the localization
+
+N LM (σ), Gσ arise as boundary complexes of (r − 1)-dimensional polytopes, namely,
+the polytopes dual to ∆F and ∆Gσ , respectively.
+ Since the polytope ∆F is a Minkowski
+
+summand of ∆Gσ , it follows that N LM (σ), Gσ is a triangulation of Bσ (M ).
+We are now prepared to prove the theorem stated at the beginning of this section.
+
+Proof of Theorem 4.1.
+Both the nested set complex N (LM , G) and the Bergman
+complex B(M ) are regarded as polyhedral complexes in the sphere S, so it suffices to
+prove the second assertion. Using the map ψ in (4.1), it is easy to see that these spherical
+complexes have the same support. Indeed, if w ∈ S and σ is any basis of Mw , then
+w ∈ |N (LM , G)| ⇐⇒ w ∈ |N (LM (σ), Gσ )| ⇐⇒ w ∈ |Bσ (M )| ⇐⇒ w ∈ |B(M )|.
+Since N (LM (σ), Gσ ) triangulates Bσ (G) by Theorem 4.2, taking the union over all bases
+σ of M , it follows that N (LM , G) triangulates B(M ) .
+
+Corollary 4.3. (Ardila-Klivans [1, Sect. 2, Thm. 1]) The Bergman complex B(M ) of
+a matroid M is homeomorphic to the order complex ∆(LM ) of the lattice of flats LM .
+In particular, B(M ) is homotopy equivalent to a wedge of spheres of dimension r−2; the
+number of spheres is given by the absolute value of the Möbius function on LM .
+Proof. The first assertion is Theorem 4.1 applied to the largest building set G = L. That
+the second assertion holds for the order complex ∆(LM ) is a well-known result in topological combinatorics (see e.g. [4]). Hence the first assertion implies the second.
+
+Theorem 4.1 raises the following combinatorial question: What is the matroid MS
+corresponding to a particular nested set S of G ? Here MS = Mw , where w is any point
+on the sphere S that lies in the relative interior of the simplex corresponding to S. To
+answer this question, we represent the nested set S by a labeled tree TS as follows. Fix
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+15
+
+any basis σ such that S ∈ N (LM (σ), Gσ ). By Proposition 3.17, there exists a Gσ -tree T
+with S = sets(T ). Consider the flats F≤ν = span(T≤ν ) and F<ν = span(T<ν ) of the
+matroid M . Then [F<ν , F≤ν ] is an interval in the geometric lattice LM . We now replace
+the label Tν of the node ν in the tree T by this interval. The resulting labeled tree TS
+is independent of the choice of the basis σ. It only depends on the nested set S. In the
+following description of the matroid MS we will denote the matroid defined by an interval
+[F, G] in the geometric lattice LM by M [F, G], extending our notation for restrictions
+and contractions of matroids introduced prior to Proposition 2.6.
+Theorem 4.4. The matroid MS is the direct sum of the matroids which are defined by
+the geometric lattices that appear as labels of the nodes in the tree TS . In symbols,
+M
+(4.2)
+MS =
+M [F<ν , F≤ν ].
+ν node of TS
+
+Remark 4.5. The special case of the formula (4.2) where S = {F, [r]} represents a
+vertex of N (LM , G) appears in equation (2.1) in the proof of Proposition 2.6.
+Remark 4.6. The case of Theorem 4.4 where G = LM is the maximal building set was
+proved by Ardila and Klivans [1, Section 2]. In their work, the tree TS is always a chain.
+Proof of Theorem 4.4. A basis σ of M is a basis of MS if and only if S ∈ N (LM (σ), Gσ ).
+We can use that basis to construct the tree TS . The subset Tν of σ is a basis of the
+matroid M [F<ν , F≤ν ] and hence σ is a basis of the matroid on the right hand side of
+(4.2). Conversely, suppose that σ is a basis of the matroid on the right hand side of (4.2).
+Then the set Teν = (σ ∩ F≤ν )\F<ν is a basis of the matroid M [F<ν , F≤ν ]. If we take Te
+to be the same tree as T but with each node labeled by Teν , then Te is a Gσ -tree, and we
+conclude that S ∈ N (LM (σ), Gσ ), i.e., σ is a basis of MS .
+
+
+Of special interest is the case when S is a facet of the nested set complex N (LM , G).
+In that case, MS is a transversal matroid, which means that MS is a direct sum of
+matroids of rank 1. Indeed, if |S| = r then TS is a binary tree, and the total number of
+nodes ν is r. For each node ν, the set Tν is a singleton, and the matroid M [F<ν , F≤ν ]
+has rank 1. Since M [F<ν , F≤ν ] has no loops, by construction, this rank one matroid is
+uniquely specified by the subset F≤ν \F<ν of [n]. The collection of sets F≤ν \F<ν , as ν
+runs over the nodes of TS , is a partition of the set [n] in r parts. The transversal matroid
+MS is uniquely specified by this set partition.
+Corollary 4.7. The facets of the nested set complex N (LM , G) are indexed by partitions
+of the ground set [n] into r parts.
+5. Computing nested sets and the Bergman complex
+
+In this section we consider a connected matroid M of rank r on n elements, and we
+fix G = Gmin to be the minimal building set in its lattice of flats LM . We denote the
+corresponding nested set complex by
+N (M )
+
+=
+
+N (LM , Gmin ) ,
+
+and, for the purpose of this section, we call N (M ) simply the nested set complex of M .
+
+16
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+The minimal building set Gmin consists of all connected flats F of M . Observe that
+this description coincides with the set of connected elements in LM that we identified as
+the minimal building set for arbitrary lattices in the beginning of Section 3.
+By our results in Section 4, the various nested set complexes triangulate the Bergman
+complex, and by Proposition 3.6, the minimal nested set complex N (M ) is the coarsest
+among these triangulations. The vertices of the Bergman complex B(M ) are the flacets
+of the matroid (by Theorem 2.7), and the vertices of the nested set complex N (M ) are
+the connected flats of M (by definition). These notions do not coincide in general:
+Remark 5.1. Every flacet is a connected flat but not conversely. The matroid M ′ in
+Examples 1.2 and 3.4 has a connected flat of rank one (i.e., a single element) which is
+not a flacet: the edge which is complementary to the edge that was removed from K4 .
+This distinction between flacets and connected flats amounts to the fact that in general
+new vertices are added when passing from the Bergman to the nested set complex:
+Corollary 5.2. The Bergman complex B(M ) is triangulated by the nested set complex
+N (M ) without additional vertices if and only if every connected flat of M is a flacet.
+We shall now generalize this corollary to give a criterion for when N (M ) equals B(M ).
+Theorem 5.3. The nested set complex N (M ) equals the Bergman complex B(M ) if and
+only if the matroid M [F, G] is connected for every pair of flats F ⊂ G with G connected.
+Proof. Consider any simplex S of the nested set complex N (M ) and let ΓS be the smallest face of the Bergman complex B(M ) which contains S. A necessary and sufficient
+condition for N (M ) = B(M ) to hold is that dim(S) = dim(ΓS ) for all such pairs S ⊆ ΓS .
+Now, dim(S) is simply |S| − 1, and dim(ΓS ) equals c(MS ) − 1. From this we conclude
+N (M ) = B(M ) if and only if
+
+c(MS ) = |S| for all S ∈ N (M ).
+
+The matroid MS was characterized in Theorem 4.4. We have c(MS ) = |S| if and
+only if all the matroids M [F<ν , F≤ν ] in the decomposition (4.2) are connected. Note
+that here F≤ν is always a connected flat and F<ν is a subflat of F≤ν . This establishes
+the if-direction of Theorem 5.3. For the only-if direction, we consider any pair of flats
+F ⊂ G such that G is connected. Let S denote the nested set which consists of G and the
+connected components of F . If ν is the root of the tree TS then we have F<ν = F and
+F≤ν = G. This shows that N (M ) = B(M ) implies the connectedness of M [F, G].
+
+Remark 5.4. Consider the graphic matroid M = M (Kn ) whose bases are the spanning
+trees in the complete graph Kn . Here the criterion of Theorem 5.3 is satisfied, and
+the nested set complex coincides with the Bergman complex. This was seen for n = 4 in
+Examples 1.1 and 3.3, and in [9, Rem. 3.4.(2)] for general n. Ardila and Klivans [1, Sect. 3,
+e (M ) = e
+Prop.] showed that N
+B(M ) equals the space of phylogenetic trees. Theorem 4.4
+states that every nested set complex can be interpreted as a certain complex of trees.
+The hyperplane arrangement corresponding to M is the braid arrangement {xi = xj }.
+What we are discussing here is its wonderful model (in the sense of De Concini and
+Procesi [7], see Section 6). Ardila, Reiner and Williams [2] recently showed that
+nested set complexes and Bergman complexes coincide for any finite reflection arrangement. It might be interesting to classify all subarrangements of reflection arrangements
+(e.g., graphic matroids) for which the Bergman complex equals the nested set complex.
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+17
+
+We next present an algorithm for computing both the Bergman complex B(M ) and
+its triangulation by the nested set complex N (M ). We prepared a test implementation
+of this algorithm in maple. This code is available from Bernd Sturmfels upon request.
+Algorithm 5.5. (Computing the Bergman complex and the nested set complex).
+Input: A rank r matroid M on [n], given by its bases.
+Output: All maximal faces of the Bergman complex B(M ), represented by unordered
+partitions {B1 , . . . , Br } of [n] into r non-empty blocks, as described in Corollary 4.7.
+1. Initialize Ω = ∅.
+(This will later be the set of all unordered partitions).
+2. Precompute all connected flats of M .
+3. For every basis σ of M do the following:
+(a) For each i ∈ [n]\σ find the unique set Fi ⊆ σ such that F
+i ∪ {i} is a circuit.
+(The local building set equals Gσ = Fi : i ∈ [n]\σ ).
+(b) For each permutation π of [r] do
+(i) for each j ∈ [r] set ωj := {j} ∪ { i ∈ [n]\σ : min(Fi ) = πj }.
+(ii) Set Ω := Ω ∪ {ω1 , ω2 , . . . , ωr } .
+4. For each ω ∈ Ω do:
+(a) Output: “The partition ω represents a facet of B(M )”.
+(b) Set Π := ∅.
+(This will be the nested set triangulation of the facet ω).
+(c) For each connected flat F of M do
+• Set s = rank(F ).
+• If F is the union of s blocks ωi1 , . . . , ωis then Π := Π ∪ {F }.
+(d) If the cardinality of Π is r then output
+“The simplex ω is not subdivided; it equals the simplex Π in N (M ).”
+(e) Otherwise compute and output the set of all maximal nested sets on Π.
+Discussion and Correctness.
+The loop in Step 3 computes the local Bergman complex Bσ (M ) for every basis σ of M , and it saves all set partitions representing facets
+of B(M ) (as in Corollary 4.7) in one big set Ω. Step (b) takes advantage of the many-toone correspondence between permutations π of [r] and vertices of ∆Gσ , coming from the
+fact that ∆Gσ is a Minkowski summand of the permutohedron. In Step 4 we output each
+facet ω of B(M ) along with the list of maximal simplices in its nested set triangulation.
+The crucial step is the second bullet • in Step 4 (c), which tests, for each connected flat F
+of M , whether or not the corresponding vertex of N (M ) lies on the facet ω of B(M ). 
+Remark 5.6. We believe that an improved version of Algorithm 5.5 should be able to
+list the facets of both B(M ) and N (M ) in a shelling order, so as to reveal the topology
+of these spaces and to offer a practical tool for the computation of residues using the
+methods of [8]. The constructing of such shellings is the goal of a subsequent project.
+We ran Algorithm 5.5 on a range of matroids of various ranks, including the following
+two examples which can serve as test cases for future tropical algebraic geometry software.
+Example 5.7. We consider the famous self-dual unimodular matroid R10 of rank r = 5 on
+n = 10 elements. This matroid plays a special role in Seymour’s decomposition theory for
+regular matroids (see [22]). The ground set for R10 is the set of the edges of the complete
+
+18
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+graph K5 , and its circuits are the four-cycles and their complements. Its geometric lattice
+has 45 lines, 75 planes and 30 three-dimensional subspaces. There are 40 connected flats:
+◦ the ten points in the ground set,
+◦ the 15 four-cycles (these are planes),
+◦ the 5 copies of the complete graph K4 (these are three-spaces),
+◦ the 10 copies of the complete bipartite K2,3 (also three-spaces).
+Topologically, the Bergman complex of R10 is a bouquet of nine 3-dimensional spheres.
+It is constructed as follows. We first note that the nested set complex of R10 consists of
+405 tetrahedra, which come in eight families:
+Each of the five copies of K4 contributes 27=1+18+4+4 tetrahedra:
+(a) the four edges not in K4 ,
+(b) the K4 , a four-cycle in K4 and any two of its edges,
+(c) the K4 , and three of its edges that form a K3 ,
+(d) the K4 , and three of its edges that form a K1,3 .
+Each of the ten copies of K2,3 contributes 27=1+18+2+6 tetrahedra:
+(e) the four edges not in K2,3
+(f) the K2,3 , a four-cycle in K4 and any two of its edges
+(g) the K2,3 , and three of its edges that form a K1,3
+(h) the K2,3 , and three edges that touch all six vertices.
+The Bergman complex of R10 has 360 facets, namely 315 tetrahedra and 45 bipyramids.
+The are 15 bipyramids formed by pairs of tetrahedra of type (b), namely, two disjoint
+edges in a K4 and the two four-cycles of K4 containing them. The other 30 bipyramids
+are formed by pairs of tetrahedra of type (f), namely, two edges in K2,3 complementary
+to a four-cycle and the two other four-cycles of in K2,3 which contain them.
+Example 5.8. Let M be the cographic matroid M (K5 )∗ . Here r = 6 and n = 10. The
+bases of M are the six-tuples of edges in the complete graph K5 which are complementary
+to the spanning trees. The nested set complex N (M ) is a four-dimensional simplicial
+complex with f -vector (25, 185, 615, 955, 552). The Bergman complex B(M ) has 447
+facets, of which 105 are subdivided into pairs of 4-simplices when passing to N (M ).
+Example 5.9. The equality B(M ) = N (M ) holds when M is the rank r = 4 matroid
+specified by the n = 8 vertices of the three-dimensional unit cube. The simplicial complex
+B(M ) = N (M ) has 20 vertices, 76 edges and 80 triangles. On the other hand, for the
+four-dimensional unit cube (r = 5, n = 16), the Bergman complex B(M ) is not simplicial
+(it has 2600 facets). It is properly subdivided by the nested set complex N (M ) which
+consists of 176 vertices, 1280 edges, 3360 triangles and 2720 tetrahedra.
+6. Tropical compactification of arrangement complements
+In this section we interpret our combinatorial results in terms of algebraic geometry.
+We consider a connected rank r matroid M on [n], so its matroid polytope PM ⊂ Rn has
+dimension n−1, and we assume that M is realized by an r-dimensional linear subspace V
+of the vector space Cn , or equivalently, by a (r−1)-dimensional projective linear subspace
+X in the complex projective space Pn−1 . A subset P
+D of [n] is dependent in the matroid M
+if and only if there exists a non-zero linear form
+i∈D ci xi that vanishes on X.
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+19
+
+We identify the algebraic torus (C∗ )n−1 with the projective space Pn−1 minus its n
+coordinate hyperplane {xi = 0}. We are interested in the non-compact variety X =
+X ∩ (C∗ )n−1 . This is the complement of an arrangement of n hyperplanes in X ≃ Pr−1 .
+A standard problem in algebraic geometry is to construct a smooth compactification of
+the arrangement complement X which has better properties than the ambient projective
+space X. Ideally, one wants the complement of X in that compactification to be a normal
+crossing divisor. A solution to this problem was given by De Concini and Procesi [7].
+We briefly describe the construction of their wonderful compactification Xwond . The
+geometric lattice LM of the matroid M is the intersection lattice of the hyperplane arrangement. Each flat F ⊂ [n] of rank s in M corresponds to a subspace {xi = 0 : i ∈ F }
+of codimension s in the arrangement. Let PF = P(CF ) denote the coordinate subspace
+of Pn−1 with coordinates xi , i ∈ F , and consider the projection ψF : Pn−1 → PF . The
+restriction of ψF to X is a regular map. Let G = Gmin be the minimal building set which
+consists of the connected flats, and consider the product of all of these regular maps
+Y
+
+(6.1)
+ψG : X →
+PG , u 7→ ψG (u) : G ∈ G .
+G∈G
+
+Q
+The wonderful model Xwond is the closure of ψG (X) in the compact variety G∈G PG .
+More recently, Tevelev [21] introduced an alternative compactification, called the tropical compactification Xtrop . The advantage of this new construction is that X can now
+be an arbitrary subvariety of the algebraic torus (C∗ )n−1 . Let X be the closure of X
+in Pn−1 and let HilbX (Pn−1 ) be the Hilbert scheme of all subschemes of Pn which have
+the same Hilbert polynomial as X. Without loss of generality, we may assume that X is
+not fixed by any non-unit element t ∈ (C∗ )n−1 . Then the following map is an embedding:
+(6.2)
+
+φ : X → HilbX (Pn−1 ), t 7→ t−1 · X.
+
+The tropical compactification Xtrop is the closure of φ(X) in the compact scheme
+HilbX (Pn−1 ). The combinatorial structure of Xtrop is governed by the tropical variety of X. This is a subfan of the Gröbner fan of the ideal IX of X. This subfan consists
+of all cones such that the corresponding initial ideal contains no monomials. These cones
+correspond to the strata in the boundary Xtrop \X. For nice varieties X, the divisor
+Xtrop \X is much better behaved than X\X, and it is expected that Xtrop is smooth and
+its boundary Xtrop \X can be made normal crossing using only toric blow-ups [14, 21].
+Here we consider the nicest case, when X ⊂ Pn−1 is a linear space (with matroid M )
+and X is the complement of the arrangement of the n hyperplanes {xi = 0} in X.
+The subspaces of Pn−1 that can be gotten by intersecting a subset of the n hyperplanes
+correspond to the proper flats F of the matroid M . Note that a flat F of M is connected
+if and only if it corresponds to a divisor in the wonderful compactification Xwond .
+Theorem 6.1. For any hyperplane arrangement complement X, there is a canonical
+morphism from the wonderful compactification Xwond onto the tropical compactification
+Xtrop . This morphism is an isomorphism whenever the following combinatorial condition
+holds: If G ∈ LM corresponds to a divisor in Xwond then G also corresponds to a divisor
+in (X ∩ F )wond where F is any intersection of hyperplanes which contains G.
+
+20
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+The combinatorial condition above is a translation of the condition in Theorem 5.3.
+However, as Remark 6.3 shows, we must apply the condition in Theorem 6.1 to the cone
+over the arrangement, because G might be the full set [n] in Theorem 5.3
+Example 6.2. Consider an arrangement of five planes in P3 which intersect in one
+point G and which represent the matroid M ′ in Examples 1.2 and 3.4. Let F be the
+plane indexed by the edge 5 in Figure 3. Then G does not correspond to a divisor
+in (X ∩ F )wond because the restriction of the arrangement to F consists of two lines
+through G. Hence Xwond → Xtrop is not an isomorphism. On the other hand, the recent
+work of Ardila, Reiner and Williams [2] implies that, for any finite reflection arrangement,
+the tropical compactification coincides with the wonderful compactification.
+Remark 6.3. The case when X is a two-dimensional plane in Pn−1 is completely described in the work of Keel and Tevelev [15, Lemma 8.11, p. 43]. Here we are considering
+an arrangement of n lines in P2 . The wonderful compactification is equal to the tropical
+compactification except when there is a line L in the arrangement and two points a, b ∈ L
+such that each remaining line passes through a or b. In that case, Xtrop is obtained by
+blowing up the points a, b ∈ P2 , then contracting the strict transform of the line L. The
+tropical compactification is therefore isomorphic to P1 × P1 , and the strict transforms of
+the lines through a and b become fibers of the first and second projections, respectively.
+In what follows we shall give a more concrete description of the tropical compactification Xtrop and we shall explain how the morphism Xwond → Xtrop works. Since V
+is a linear space, the Hilbert scheme HilbX (Pn−1 ) is simply the Grassmannian Grr,n of
+r-dimensional linear subspaces in Cn . Let IX denote the ideal in C[x0 , x1 , . . . , xn ] generated by all linear forms that vanish on X. For t = (t1 : · · · : tn ) ∈ (C∗ )n−1 , we write
+t · IX for the image of IX under replacing xi by ti xi for all i. Clearly, It−1 ·X = t · IX for
+any t ∈ (C∗ )n−1 , i.e., the variety of the ideal t · IX is the translated subspace t−1 · X.
+The map t 7→ t ·IX defines an embedding of the torus (C∗ )n−1 into the Grassmannian
+Grr,n . The closure of its image is a projective toric variety TM . As an abstract toric
+variety TM depends only on the matroid M , namely, it is the toric variety associated with
+the matroid polytope PM . However, the specific embedding of TM into Grr,n depends on
+the specific realization X of M . The coordinate ring of TM is the basis monomial ring [23]
+of
+Q the matroid M , which is the subalgebra of C[t1 , . . . , tn ] generated by the monomials
+i∈σ ti where σ runs over all bases of M . A result of Neil White [23] states that the basis
+monomial ring is a normal domain, hence the toric variety TM is arithmetically normal.
+The (C∗ )n−1 -action on the Grassmannian Grr,n restricts to the action of the dense
+torus on the toric variety TM . (Note that dim(TM ) = n − 1 because M is connected).
+The (C∗ )n−1 -orbits on TM correspond to the distinct initial ideals of the ideal IX , i.e.,
+(6.3)
+
+inw (IX ) = h inw (f ) : f ∈ IX i.
+
+Two vectors w, w′ ∈ Rn lie in the same cone of the fan of the toric variety TM if and only
+if inw (IX ) = inw′ (IX ). This fan is the normal fan of the matroid polytope PM .
+We now restrict the map t 7→ t · IX from (C∗ )n−1 to its subvariety X. The result is
+precisely the map φ defined in (6.2) above. We can now rewrite this map as follows:
+(6.4)
+
+φ : X → TM , t 7→ t · IX .
+
+MATROID POLYTOPES, NESTED SETS AND BERGMAN FANS
+
+21
+
+Remark 6.4. The map φ defines an embedding of the hyperplane arrangement complement X into the projective toric variety TM associated with the matroid polytope PM .
+The tropical compactification Xtrop is the closure of the image of this embedding.
+The following lemma characterizes the location of Xtrop inside TM combinatorially.
+Lemma 6.5. Let C be a cone in the normal fan of the matroid polytope PM , and let w
+be any vector in the relative interior of C. Then the following are equivalent:
+e ).
+(1) C is a cone in the Bergman fan B(M
+(2) The initial ideal inw (IX ) in (6.3) contains no monomial.
+(3) The initial ideal inw (IX ) in (6.3) contains no variable xi .
+(4) Xtrop does not intersect the (C∗ )n−1 -orbit of TM corresponding to C.
+Proof. Statements (2) and (3) are equivalent because IX is generated by linear forms. The
+matroid associated with the linear ideal inw (IX ) is the matroid Mw , and (3) means that
+the element i is not a loop of Mw . Thus (3) is equivalent to (1). The equivalence of (2)
+and (4) holds in general for tropical compactifications of arbitrary varieties X ⊂ (C∗ )n .
+It is seen by considering the universal family over the Hilbert scheme in (6.2).
+
+Proof of Theorem 6.1. Every projective space PG in (6.1) corresponds to a face ∆G of
+the (n − 1)-dimensional simplex ∆. Let G be the collection of all connected flats and let
+∆G denote the Minkowski sum of the simplices ∆G , where G ∈ G. Let TG denote the
+projective toric variety associated with the polytope ∆G . The toric variety TG is gotten
+from projective space Pn−1 by the sequence of blow-ups along the linear coordinate
+subspaces indexed by G. The map ψG in (6.1) can therefore be replaced by the inclusion
+X ⊂ (C∗ )n−1 ⊂ TG , i.e., the wonderful compactification Xwond coincides with the closure
+of the arrangement complement X in the projective toric variety TG . Note that TG is
+generally not smooth, but Xwond only meets smooth strata of TG , which explains all the
+wonderful properties of this compactification.
+Our key observation in this proof is that the matroid polytope PM is a Minkowski
+summand of the polytope ∆G constructed in the previous paragraph. Indeed, PM is
+given by the inequalities in Proposition 2.3, where F runs over G, and ∆G is defined the
+inequalities in Proposition 3.12 where G runs over G. A careful examination of these
+inequality representations reveals that PM is a Minkowski summand of ∆G .
+The relation “is Minkowski summand of” among lattice polytopes correspond to projective morphisms in toric geometry. Since PM is a Minkowski summand of ∆G , we get a
+projective morphism from the toric variety TG onto the toric variety TM . The inclusion
+of X in TM given in (6.4) coincides with the composed map X ⊂ (C∗ )n−1 ⊂ TG → TM .
+Hence the closure of the image of X in TG is mapped by a projective morphism onto the
+closure of the image of X in TM . This is the desired morphism Xwond → Xtrop .
+Consider the collection of cones C in the normal fan of ∆G such that Xwond intersects
+the orbit indexed by C. This subfan of the normal fan is precisely the geometric realization of the nested set complex N (M ). Likewise, the collection of cones C in the normal
+fan of PM such that Xtrop intersects the orbit indexed by C is precisely the Bergman
+fan B(M ). If these fans are equal then the projective morphism Xwond → Xtrop is an
+isomorphism. Hence the second assertion of Theorem 6.1 follows from Theorem 5.3. 
+
+22
+
+EVA MARIA FEICHTNER AND BERND STURMFELS
+
+Acknowledgements: We are grateful to Paul Hacking for his helpful comments on a
+draft of this paper, and to Lauren Williams and Alex Postnikov for pointing us to the references [2, 6, 17]. The IAS/Park City Mathematics Institute (PCMI, July 2004) and the
+Mathematical Sciences Institute in Berkeley (MSRI) provided the setting for us to work
+on this project. We are grateful to both institutions for their support. Bernd Sturmfels
+was supported in part by the U.S. National Science Foundation (DMS-0200729).
+References
+[1] F. Ardila, C. Klivans: The Bergman complex of a matroid and phylogenetic trees; preprint,
+math.CO/0311370.
+[2] F. Ardila, V. Reiner, L. Williams: Bergman complexes, Coxeter arrangements, and graph associahedra; preprint in preparation, November 2004.
+[3] G. Bergman: The logarithmic limit set of an algebraic variety; Trans. Amer. Math. Soc. 157
+(1971) 459–469.
+[4] A. Björner: The homology and shellability of matroids and geometric lattices; in: Matroid applications, Encyclopedia Math. Appl. 40, Cambridge Univ. Press, 1992, pp. 226–283.
+[5] A. Borovik, I.M. Gel’fand, N. White: Coxeter Matroids; Progress in Mathematics 216,
+Birkhäuser Boston, 2003.
+[6] M. Carr and S. Devadoss: Coxeter complexes and graph associahedra, math.QA/0407229.
+[7] C. De Concini, C. Procesi: Wonderful models of subspace arrangements; Selecta Math. (N.S.) 1
+(1995) 459–494.
+[8] C. De Concini, C. Procesi: Nested sets and Jeffrey-Kirwan cycles; preprint, math.AG/0406290.
+[9] E.M. Feichtner: Complexes of trees and nested set complexes; preprint, math.CO/0409235.
+[10] E.M. Feichtner, D.N. Kozlov: Incidence combinatorics of resolutions; Selecta Math. (N.S.) 10
+(2004) 37–60.
+[11] E.M. Feichtner, I. Müller: On the topology of nested set complexes; math.CO/0311430, Proc.
+Amer. Math. Soc. to appear.
+[12] E.M. Feichtner, S. Yuzvinsky: Chow rings of toric varieties defined by atomic lattices; Invent.
+Math. 155 (2004) 515–536.
+[13] I.M. Gel’fand, M. Goresky, R. MacPherson, V. Serganova: Combinatorial geometries, convex
+polyhedra, and Schubert cells; Advances in Mathematics 63 (1987) 301–316.
+[14] P. Hacking: The moduli space of n points on a tropical line, Manuscript, September 2004.
+[15] S. Keel and E. Tevelev: Chow Quotients of Grassmannians II, preprint, math.AG/0401159.
+[16] J. Oxley: Matroid Theory; Oxford University Press, New York, 1992.
+[17] A. Postnikov: Permutohedra, associahedra, and beyond, lecture at the Stanley Conference, June
+2004, MIT, slides posted at http://www-math.mit.edu/∼apost/talks.html.
+[18] D. Speyer: Tropical linear spaces, preprint, math.CO/0410455.
+[19] D. Speyer, B. Sturmfels: The tropical Grassmannian; Advances in Geometry 4 (2004) 389–411.
+[20] B. Sturmfels: Solving Systems of Polynomial Equations; CBMS Regional Conference Series in
+Mathematics 97, American Mathematical Society, Providence, 2002.
+[21] E. Tevelev: Tropical compactifications, Manuscript, July 2004.
+[22] K. Trümper: Matroid Decomposition. Academic Press, Boston, MA, 1992
+[23] N. White: The basis monomial ring of a matroid ; Advances in Mathematics 24 (1977) 292–297.
+[24] N. White: Theory of Matroids, Encyclopedia of Mathematics and its Applications, 26. Cambridge
+University Press, Cambridge, 1986.
+Department of Mathematics, ETH Zürich, 8092 Zürich, Switzerland
+E-mail address: feichtne@math.ethz.ch
+Department of Mathematics, UC Berkeley, Berkeley CA 94720, USA
+E-mail address: bernd@math.berkeley.edu
+
+

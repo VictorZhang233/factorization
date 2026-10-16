@@ -1,0 +1,64 @@
+\begin{figure}[htbp]
+\centering
+\tikzset{t1 bcut/.style={draw,line width=0.9pt,decorate,
+           decoration={zigzag,segment length=4.2pt,amplitude=1.6pt}},
+         t1 contour/.style={draw,blue!60!black,line width=0.9pt},
+         t1 carrow/.style={postaction={decorate,decoration={markings,
+           mark=at position #1 with {\arrow{Stealth[length=5.5pt,width=4.5pt]}}}}},
+         t1 carrow/.default=0.5}
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.92]
+  \draw[lcaxis] (-3.3,0) -- (3.45,0) node[below left,inner sep=2pt]{$\Real\omega$};
+  \draw[lcaxis] (0,-2.45) -- (0,2.6) node[left,inner sep=3pt]{$\Imag\omega$};
+  \draw[t1 bcut] (1,0) -- (3.2,0);
+  \draw[t1 bcut] (-1,0) -- (-3.2,0);
+  \fill (1,0) circle[radius=1.6pt]; \fill (-1,0) circle[radius=1.6pt];
+  \node[below,inner sep=4pt] at (1,-0.05) {$1$};
+  \node[below,inner sep=4pt] at (-1,-0.05) {$-1$};
+  \draw[t1 contour,t1 carrow=0.12,t1 carrow=0.62] (0,0) circle[radius=0.55];
+  \node[blue!60!black] at (0.66,0.62) {$C_0$};
+  \node[font=\footnotesize] at (2.15,0.42) {割线};
+  \node[font=\footnotesize] at (-2.15,0.42) {割线};
+  \node[font=\small] at (0,-3.2) {$T^{(n)}=\displaystyle\oint_{C_0}\frac{\dd\omega}{2\pi\ii}\,\frac{T(\omega)}{\omega^{n+1}}$};
+\end{tikzpicture}
+\caption{原点附近的 Taylor 系数}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[fd,scale=0.92]
+  \def\toneR{2.15}\def\toned{0.17}
+  \pgfmathsetmacro\tonea{asin(\toned/\toneR)}
+  \pgfmathsetmacro\tonex{sqrt(\toneR*\toneR-\toned*\toned)}
+  \draw[lcaxis] (-3.3,0) -- (3.45,0) node[below left,inner sep=2pt]{$\Real\omega$};
+  \draw[lcaxis] (0,-2.45) -- (0,2.6) node[left,inner sep=3pt]{$\Imag\omega$};
+  \draw[t1 bcut] (1,0) -- (3.2,0);
+  \draw[t1 bcut] (-1,0) -- (-3.2,0);
+  \fill (1,0) circle[radius=1.6pt]; \fill (-1,0) circle[radius=1.6pt];
+  \draw[gray,densely dashed,line width=0.6pt] (0,0) circle[radius=0.55];
+  \node[gray!75!black,font=\footnotesize] at (-0.5,0.72) {$C_0$};
+  % deformed contour (positively oriented): big arcs + hairpins around both cuts
+  \draw[t1 contour,t1 carrow=0.3] (\tonea:\toneR) arc[start angle=\tonea,end angle=180-\tonea,radius=\toneR];
+  \draw[t1 contour,t1 carrow=0.7] (180+\tonea:\toneR) arc[start angle=180+\tonea,end angle=360-\tonea,radius=\toneR];
+  \draw[t1 contour,t1 carrow=0.55] (-\tonex,\toned) -- (-1,\toned);
+  \draw[t1 contour] (-1,\toned) arc[start angle=90,end angle=-90,radius=\toned];
+  \draw[t1 contour,t1 carrow=0.55] (-1,-\toned) -- (-\tonex,-\toned);
+  \draw[t1 contour,t1 carrow=0.55] (\tonex,-\toned) -- (1,-\toned);
+  \draw[t1 contour] (1,-\toned) arc[start angle=270,end angle=90,radius=\toned];
+  \draw[t1 contour,t1 carrow=0.55] (1,\toned) -- (\tonex,\toned);
+  \node[blue!60!black] at (48:\toneR+0.33) {$C_R$};
+  \node[below,inner sep=5pt] at (1.07,-0.1) {$1$};
+  \node[below,inner sep=5pt] at (-1.07,-0.1) {$-1$};
+  \node[font=\small] at (0,-3.2) {$T^{(n)}=\displaystyle\frac{1}{2\pi\ii}\int_{|\omega|\ge1}\frac{\dd\omega}{\omega^{n+1}}\,\Disc T(\omega)$};
+\end{tikzpicture}
+\caption{围道变形到割线上}
+\end{subfigure}
+\caption{固定 $Q^2$ 时前向 Compton 振幅的不变振幅 $T(\omega)$（$T_1$ 或 $T_2$）在复 $\omega=1/x=2P\cdot q/Q^2$ 平面上的解析结构。
+(a) $T$ 的奇点全在实轴 $|\omega|\ge1$ 上，即物理区 $0<x\le1$ 及其交叉像（对核子靶，$\omega=\pm1$ 处是弹性极点，
+非弹性割线始于 $|\omega|=1+[(M+m_\pi)^2-M^2]/Q^2$；图中把二者合画为始于 $\pm1$ 的割线），$T$ 在 $|\omega|<1$ 内解析；
+绕原点的小围道 $C_0$ 给出 Taylor 系数 $T^{(n)}$，它们在非物理区 $|\omega|<1$ 中由算符乘积展开计算。
+(b) 把 $C_0$ 放大为半径 $R\to\infty$ 的大圆 $C_R$ 并绕过两条割线。若 $|\omega|\to\infty$ 时 $T(\omega)/\omega^{n}\to0$，大圆的贡献为零，
+$T^{(n)}$ 化为不连续性 $\Disc T(\omega)=T(\omega+\ii0)-T(\omega-\ii0)=2\ii\Imag T(\omega+\ii0)$（$T$ 为实解析函数）沿割线的积分。
+由 $\Imag T_i(\omega+\ii0)=2\pi F_i$（$\omega\ge1$），右割线给出 $2\int_0^1\dd x\,x^{n-1}F_i(x)$；
+按交叉对称性，$T_1$ 是 $\omega$ 的偶函数、$T_2$ 是奇函数，左割线的贡献分别是右割线的 $(-1)^n$ 倍与 $(-1)^{n+1}$ 倍。
+于是对偶数 $n$ 有 $T_1^{(n)}=4\int_0^1\dd x\,x^{n-1}F_1(x)$，对奇数 $n$ 有 $T_2^{(n)}=4\int_0^1\dd x\,x^{n-1}F_2(x)$，其余系数为零。}
+\label{fig:omega-plane}
+\end{figure}

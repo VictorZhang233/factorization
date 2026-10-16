@@ -1,0 +1,258 @@
+% =====================================================================================
+% c_wilson_eikonal_ward.tex —— 程函近似、树图 Ward 恒等式、PDF 中 Wilson 线的起源、非阿贝尔 Ward 恒等式
+% （research/c_wilson，对应 DERIVATION.md §4–§5；验证脚本 scripts/s3_eikonal_approx.py、
+%   scripts/s4_ward_tree.py、scripts/s6_i0_poles.py）
+% =====================================================================================
+\section{程函近似：软胶子与 Wilson 线}\label{sec:cw-eikonal}
+
+取 $p^2=M^2$ 的高能在壳外线，软胶子动量 $k=\order{\lambda Q}$ \emph{流入}外线。利用在壳关系
+$(\sla p+M)\gamma^\mu u(p)=2p^\mu u(p)$、$\bar u(p)\gamma^\mu(\sla p+M)=2p^\mu\bar u(p)$、
+$(-\sla p+M)\gamma^\mu v(p)=-2p^\mu v(p)$、$\bar v(p)\gamma^\mu(-\sla p+M)=-2p^\mu\bar v(p)$，
+并略去分母中的 $k^2$ 与分子中的 $\sla k$（相对 $\order{\lambda}$），得\cref{tab:cw-eikonal}。
+
+\begin{table}[htbp]
+\centering
+\caption{单个软胶子的程函近似（$k$ 流入外线）及其对应的 Wilson 线规则（\cref{prop:cw-rules}）。}\label{tab:cw-eikonal}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}llll@{}}
+\toprule
+外线 & 精确表达式 & 程函极限 & Wilson 线 \\
+\midrule
+入射夸克 & $S(p+k)\,\ii g\gamma^\mu t^a\,u(p)$ & $-g\,t^a\dfrac{p^\mu}{p\cdot k+\ii0}\,u(p)$ & $W[0,-\infty p]$ \\
+出射夸克 & $\bar u(p)\,\ii g\gamma^\mu t^a\,S(p-k)$ & $+g\,t^a\dfrac{p^\mu}{p\cdot k-\ii0}\,\bar u(p)$ & $W[\infty p,0]$ \\
+入射反夸克 & $\bar v(p)\,\ii g\gamma^\mu t^a\,S(-p-k)$ & $+g\,t^a\dfrac{p^\mu}{p\cdot k+\ii0}\,\bar v(p)$ & $W[-\infty p,0]$ \\
+出射反夸克 & $S(-p+k)\,\ii g\gamma^\mu t^a\,v(p)$ & $-g\,t^a\dfrac{p^\mu}{p\cdot k-\ii0}\,v(p)$ & $W[0,\infty p]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+每一项恰为 \cref{prop:cw-rules} 的“顶角 $\ii g\,t^av^\mu$ 乘程函传播子 $\ii/(v\cdot\ell+\ii0)$”（$v=\pm p$）；$\ii0$ 来自被替代的
+传播子 $(p\pm k)^2-M^2+\ii0$：作为 $a=p\cdot k$ 的函数，入射线的极点在 $a=-k^2/2-\ii0$，出射线在 $a=k^2/2+\ii0$。
+胶子被\emph{发射}（动量流出）时作替换 $k\to-k$；例如出射反夸克发射胶子给出 $+g\,t^ap^\mu/(p\cdot k+\ii0)$。
+普遍的内容是：大小为 $g\,t^ap^\mu/p\cdot k$，整体符号由“夸克/反夸克”与“吸收/发射”决定，$\ii0$ 由所替代传播子的极点决定。
+
+\begin{proposition}[$m$ 个软胶子与 Wilson 线]\tagR\label{prop:cw-eikonal}
+入射夸克依时间次序吸收 $k_1,\dots,k_m$（$K_j=k_1+\dots+k_j$，极化 $\epsilon_j$）时
+\begin{equation}\label{eq:cw-eik-m}
+S(p+K_m)\,\ii g\sla\epsilon_mt^{a_m}\cdots S(p+K_1)\,\ii g\sla\epsilon_1t^{a_1}\,u(p)
+=\Big[\prod_{j=1}^m\frac{-g\,p\cdot\epsilon_j}{p\cdot K_j+\ii0}\Big]\,t^{a_m}\cdots t^{a_1}\,u(p)\,\big[1+\order{\lambda}\big],
+\end{equation}
+右边是 $W[0,-\infty p]$ 的 $m$ 阶项（$\tilde A^a_\mu\to\epsilon_\mu$）。同理，出射夸克 $\to W[\infty p,0]$
+（因子 $+g\,p\cdot\epsilon_j/(p\cdot K'_j-\ii0)$，$K'_j=k_j+\dots+k_m$，颜色 $t^{a_m}\cdots t^{a_1}$），入射反夸克 $\to W[-\infty p,0]$
+（$+g\,p\cdot\epsilon_j/(p\cdot K_j+\ii0)$，颜色 $t^{a_1}\cdots t^{a_m}$），出射反夸克 $\to W[0,\infty p]$
+（$-g\,p\cdot\epsilon_j/(p\cdot K'_j-\ii0)$，颜色 $t^{a_1}\cdots t^{a_m}$）。对 $m!$ 种连接次序求和即得路径排序指数的完整 $m$ 阶项。
+算符形式：高能部分子与软胶子的相互作用由 $\psi(0)\to W[0,-\infty v]\psi_{\mathrm{in}}$、$\bar\psi(0)\to\bar\psi_{\mathrm{out}}W[\infty v,0]$ 等再现。
+\end{proposition}
+
+\begin{proof}
+略去 $K_j^2$ 与 $\sla K_j$ 后用在壳恒等式 $(\sla p+M)\gamma^\mu(\sla p+M)=2p^\mu(\sla p+M)+(M^2-p^2)\gamma^\mu=2p^\mu(\sla p+M)$，
+每一步消去一个传播子分子；对 $m$ 归纳。
+\end{proof}
+
+\begin{remark}[有效范围与检验]\label{rem:cw-eik-valid}
+误差的系数正比于 $1/\min_j|p\cdot K_j|$：当某个 $p\cdot K_j\to0$ 而 $K_j^2\neq0$（如 Glauber 区，\cref{sec:cw-gy}）时程函近似失效。
+数值检验：四种外线、$M=0$ 与 $M=0.4$、$m\le3$，相对误差严格 $\propto\lambda^{1.00}$；程函因子与 \cref{prop:cw-rules} 精确相等；
+$m=3$ 时颜色$\times$Dirac 矩阵对 $3!$ 种次序求和与 $W^{(3)}$ 相符。文献对照：Peskin–Schroeder~\cite{PeskinSchroeder1995} \S6.1 的软轫致辐射
+$\ii\mathcal M=\bar u(p')\mathcal M_0u(p)\,e\big(\frac{p'\cdot\epsilon^*}{p'\cdot k}-\frac{p\cdot\epsilon^*}{p\cdot k}\big)$（QED 顶角 $-\ii e\gamma^\mu$）经 $g\,t^a\to-e$ 与
+\cref{tab:cw-eikonal} 一致；完整的 $\gamma^*\to q(p_1)\bar q(p_2)g(k)$ 振幅在软极限下趋于
+$g\big(\frac{p_2\cdot\epsilon^*}{p_2\cdot k}-\frac{p_1\cdot\epsilon^*}{p_1\cdot k}\big)t^a\mathcal A_0$。阿贝尔多光子情形见 Weinberg~\cite{Weinberg1965}。
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd]
+  \draw[hard blob] (0,0) circle (0.4);
+  \draw[quark=0.25] (0.4,0) -- (4.2,0);
+  \draw[gluon] (1.6,1.2) -- (1.6,0); \node[vertex] at (1.6,0) {};
+  \draw[gluon] (2.9,1.2) -- (2.9,0); \node[vertex] at (2.9,0) {};
+  \node[above] at (1.6,1.2) {$k_1$}; \node[above] at (2.9,1.2) {$k_2$};
+  \node[right] at (4.2,0) {$p$};
+  \node at (5.0,0.25) {$\simeq$};
+  \begin{scope}[xshift=6.0cm]
+    \draw[hard blob] (0,0) circle (0.4);
+    \draw[quark] (0.4,0) -- (0.9,0);
+    \node[opvertex] at (1.05,0) {};
+    \draw[wilson=0.85] (1.2,0) -- (4.6,0);
+    \draw[gluon] (2.1,1.2) -- (2.1,0); \node[vertex] at (2.1,0) {};
+    \draw[gluon] (3.4,1.2) -- (3.4,0); \node[vertex] at (3.4,0) {};
+    \node[above] at (2.1,1.2) {$k_1$}; \node[above] at (3.4,1.2) {$k_2$};
+    \node[right] at (4.6,0) {$+\infty p$};
+  \end{scope}
+\end{tikzpicture}
+\caption{程函近似（\cref{prop:cw-eikonal}）：软胶子在出射高能夸克线上的全部连接，在领头幂次上等于它们在指向未来的
+Wilson 线 $W[\infty p,0]$ 上的连接，颜色矩阵保持路径次序，夸克本身以 $\bar u(p)$ 自由传播。}\label{fig:cw-eikonal}
+\end{figure}
+
+\section{树图 Ward 恒等式与 PDF 中 Wilson 线的起源}\label{sec:cw-ward}
+
+\begin{lemma}[基本 Ward 恒等式]\tagR\label{lem:cw-ward-elem}
+记 $S(p)=\ii/(\sla p-M)$。对任意 $p,k$：
+\begin{equation}\label{eq:cw-ward-elem}
+S(p+k)\,(\ii g\sla k\,t^a)\,S(p)=g\,t^a\big[S(p+k)-S(p)\big];
+\end{equation}
+外线在壳时 $\bar u(p')\,\ii g\sla k\,S(p'-k)=g\,\bar u(p')$，$S(p+k)\,\ii g\sla k\,u(p)=-g\,u(p)$，
+$\bar v(p)\,\ii g\sla k\,S(-p-k)=g\,\bar v(p)$，$S(-p+k)\,\ii g\sla k\,v(p)=-g\,v(p)$。三胶子顶角（动量全部流入，$q_1+q_2+q_3=0$）满足
+\begin{equation}\label{eq:cw-ward-3g}
+q_{1\mu}V^{\mu\nu\rho}_{abc}(q_1,q_2,q_3)=gf^{abc}\big[(q_3^2g^{\nu\rho}-q_3^\nu q_3^\rho)-(q_2^2g^{\nu\rho}-q_2^\nu q_2^\rho)\big],
+\end{equation}
+即横向逆传播子之差；鬼–胶子顶角则给出 $k_\mu(-gf^{abc}p'^\mu)=-\frac g2f^{abc}(p'^2-p^2+k^2)$（$p'=p+k$），多出的 $k^2$ 项是多个纵向胶子时出现额外鬼项的根源。
+\end{lemma}
+
+\begin{proof}
+$\sla k=(\sla p+\sla k-M)-(\sla p-M)$；外线情形再用 Dirac 方程。\cref{eq:cw-ward-3g} 由三胶子顶角的显式形式直接验证。
+\end{proof}
+
+\begin{proposition}[费米子线的 Ward 恒等式]\tagR\label{prop:cw-ward-line}
+对外线在壳的开放夸克线 $\bar u(p')V_nS\cdots SV_1u(p)$（$V_r=\ii g\sla\epsilon_rT_r$，动量 $q_r$ 流入），把一个极化为 $k^\mu$、
+颜色为 $T_K$ 的胶子插入全部 $n+1$ 个位置并求和，得
+\begin{equation}\label{eq:cw-ward-line}
+\sum_{\text{插入}}=g\sum_{r=1}^n\Big[\text{第 }r\text{ 个胶子携带 }q_r+k\text{、颜色为 }[T_K,T_r]\text{ 的同一条线}\Big];
+\end{equation}
+阿贝尔情形和为零。
+\end{proposition}
+
+\begin{proof}
+内部插入用 \cref{eq:cw-ward-elem} 逐段相消，两端用外线恒等式，按部分求和即得
+$\sum=g\sum_{r=1}^nZ_r(C_r-C_{r-1})$，$C_r$ 为 $T_K$ 位于第 $r$ 个顶角之后的颜色乘积。
+\end{proof}
+
+\begin{example}[$\gamma^*\to q\bar qg$，$\epsilon\to k$]\label{ex:cw-qqg}
+$\mathcal A^{\mu\nu}=\bar u(p_1)\big[\ii g\gamma^\mu t^aS(p_1+k)\gamma^\nu+\gamma^\nu S(-p_2-k)\,\ii g\gamma^\mu t^a\big]v(p_2)$（光子指标 $\nu$）。
+在壳时两项分别为 $-g\,t^a\bar u\gamma^\nu v$ 与 $+g\,t^a\bar u\gamma^\nu v$，故 $k_\mu\mathcal A^{\mu\nu}=0$。若反夸克线离壳（与某强子或喷注共线，
+Dirac 指标 $X$ 敞开），则胶子连在在壳夸克上的那一项单独给出严格结果 $-g\,t^a\bar u(p_1)\gamma^\nu X$，两项之和为
+$-g\,t^a\bar u(p_1)\gamma^\nu S(-p_2-k)S(-p_2)^{-1}X$（$X=S(-p_2)J$ 时为 $-g\,t^a\bar u(p_1)\gamma^\nu S(-p_2-k)J$：胶子消失，其动量并入共线线）。
+当 $p_2$ 与 $k$ 属于同一共线子图时只有第一项属于硬部分 $H$，于是 $k_\mu H^\mu=-g\,t^aH_0$；配以 K 投影
+$k^\mu n_1^\alpha/(n_1\cdot k+\ii0)$（$n_1\parallel p_1$）即得 $H_0\times[-g\,t^an_1^\alpha/(n_1\cdot k+\ii0)]$，正是 $W[\infty n_1,0]$
+（胶子动量流出）的一阶项：反夸克喷注函数伴随一条沿夸克方向的 Wilson 线。代码同时验证了
+$\sum|\mathcal M|^2=8N_cC_Fg^2\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$（单位光子耦合）\cite{EllisStirlingWebber1996}。
+\end{example}
+
+\begin{proposition}[DIS：PDF 中 Wilson 线的起源]\tagR\label{prop:cw-dis-seed}
+设来自靶共线子图的胶子 $k$（流入硬部分）连在末态被击夸克 $p'$ 上，入射夸克腿离壳、指标敞开：
+\begin{equation}\label{eq:cw-dis1}
+\begin{gathered}
+H^\mu_a=\bar u(p')\,\ii g\gamma^\mu t^a\,S(p'-k)\,\Gamma,\qquad k_\mu H^\mu_a=g\,t^a\,\bar u(p')\Gamma\equiv g\,t^aH_0,\\
+H_\mu\,\frac{k^\mu n_B^\alpha}{n_B\cdot k-\ii0}=\Big[\ii g\,n_B^\alpha t^a\,\frac{-\ii}{n_B\cdot k-\ii0}\Big]H_0 ,
+\end{gathered}
+\end{equation}
+右端方括号为 $W[\infty n_B,0]$ 的一阶项。$-\ii0$ 即被替代传播子的极点：$(p'-k)^2+\ii0=-2p'^-k^++\dots+\ii0$ 在 $k^+$ 平面的极点位于上半平面
+——DIS 中为\emph{指向未来}的 Wilson 线；Drell–Yan 中同样的胶子连在来自强子 $B$ 的入射反夸克上，
+$(\bar p_B+k)^2+\ii0=2\bar p_B^-k^++\dots+\ii0$，极点在下半平面，得\emph{指向过去}的线（$+\ii0$）\cite{Collins2002}。
+两个 K 胶子（颜色 $a,b$，被击夸克上两种次序）时严格有
+\begin{equation}\label{eq:cw-dis2}
+k_{1\mu}k_{2\nu}H^{\mu\nu}_{ab}=g^2\,t^bt^a\,H_0+\ii g^2\,[t^a,t^b]\;\bar u(p')\sla k_2\,S(p'-k_1-k_2)\,\Gamma ;
+\end{equation}
+对严格共线的 $\hat k_i=(k_i^+,0,\bm 0_{\mathrm T})$，由 $\sla{\hat k}_2\sla{\hat K}=0$ 得 $\ii\bar u(p')\sla{\hat k}_2S(p'-\hat K)\Gamma=\frac{n_B\cdot k_2}{n_B\cdot K}H_0$，从而
+\begin{equation}\label{eq:cw-dis2c}
+\begin{aligned}
+k_{1\mu}k_{2\nu}H^{\mu\nu}_{ab}&=(n_B\cdot k_1)(n_B\cdot k_2)\,g^2\Big[\frac{t^bt^a}{n_B\cdot K\;n_B\cdot k_2}+\frac{t^at^b}{n_B\cdot K\;n_B\cdot k_1}\Big]H_0\\
+&=(n_B\cdot k_1)(n_B\cdot k_2)\,W^{(2)}_{ab}[\infty n_B,0]\,H_0,
+\end{aligned}
+\end{equation}
+$K=k_1+k_2$。Wilson 线的路径排序来自对易子项；阿贝尔部分单独给出 $g^2H_0$（程函恒等式）。
+\end{proposition}
+
+\begin{proof}
+\cref{eq:cw-dis1} 由外线恒等式 $\bar u(p')\,\ii g\sla k\,S(p'-k)=g\,\bar u(p')$ 得到。\cref{eq:cw-dis2}：次序 $(a\text{ 靠近 }\bar u)$ 的图收缩后为
+$\ii g^2t^at^b\bar u\sla k_2S(p'-K)\Gamma$，另一次序为 $\ii g^2t^bt^a\bar u\sla k_1S(p'-K)\Gamma$；写
+$t^at^b\sla k_2+t^bt^a\sla k_1=t^bt^a\sla K+[t^a,t^b]\sla k_2$ 并用 $\ii\bar u\sla KS(p'-K)=\bar u$。两 K 胶子在三胶子顶角处合并的图含共线内线，属于 PDF 一侧，不在 $H$ 中。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,scale=0.95]
+  \draw[jet blob] (0,0) ellipse (1.0 and 0.45); \node at (0,0) {$C$};
+  \draw[photon] (-1.5,2.75) -- (-0.05,1.95);
+  \draw[quark] (-0.35,0.42) -- (0.05,1.45);
+  \draw[hard blob] (0.2,1.75) circle (0.36); \node at (0.2,1.75) {$H$};
+  \draw[quark] (0.48,1.98) -- (2.3,3.05);
+  \draw[longit] (0.55,0.4) to[out=50,in=-80] (1.39,2.515);
+  \node[vertex] at (1.39,2.515) {};
+  \longitmark{(1.39,2.515)}{(1.39,2.515)}
+  \node[right] at (1.5,1.25) {$k$};
+  \node at (3.1,1.5) {$=$};
+  \begin{scope}[xshift=4.6cm]
+    \draw[photon] (-1.0,2.75) -- (0.25,1.95);
+    \draw[hard blob] (0.5,1.75) circle (0.36); \node at (0.5,1.75) {$H_0$};
+    \draw[quark] (0.78,1.98) -- (2.0,2.7);
+    \draw[quark] (0.5,0.95) -- (0.5,1.39);
+    \node at (2.1,1.5) {$\times$};
+  \end{scope}
+  \begin{scope}[xshift=7.6cm]
+    \draw[jet blob] (0,0) ellipse (1.0 and 0.45); \node at (0,0) {$C$};
+    \draw[quark] (-0.35,0.42) -- (-0.1,1.35);
+    \node[opvertex] at (-0.05,1.5) {};
+    \draw[wilson=0.8] (0.08,1.6) -- (2.4,2.8);
+    \draw[gluon] (0.55,0.4) to[out=50,in=-80] (1.32,2.25);
+    \node[vertex] at (1.32,2.25) {};
+    \node[right] at (1.45,1.2) {$k$};
+    \node[right] at (2.4,2.8) {$\infty n_B$};
+  \end{scope}
+\end{tikzpicture}
+\caption{DIS 中 PDF 的 Wilson 线的起源（\cref{prop:cw-dis-seed}）：来自靶共线子图 $C$ 的 K 胶子（蓝色，圆点标出与硬部分相连、
+带标量极化 $k^\mu$ 的一端）在硬部分各处的连接，经 Ward 恒等式等于去掉该胶子的硬部分 $H_0$ 乘以它在指向未来、沿 $n_B$ 的
+Wilson 线上的连接：$g\,t^an_B^\alpha/(n_B\cdot k-\ii0)$。}\label{fig:cw-dis-seed}
+\end{figure}
+
+\begin{proposition}[非阿贝尔树图 Ward 恒等式]\tagR\label{prop:cw-ward-nonab}
+以下两例包含三胶子顶角，并显示鬼项的来源。
+(i) 对过程 $q(p_1)\bar q(p_2)\to g^*(k_1,a,\mu)\,g^*(k_2,b,\nu)$（夸克在壳、胶子可离壳，$t$、$u$、$s$ 三道），$Q=k_1+k_2$，
+\begin{equation}\label{eq:cw-qqgg}
+k_{1\mu}\mathcal A^{\mu\nu}_{ab}=\frac{g^2f^{abc}}{Q^2}\big(k_2^2g^{\nu\sigma}-k_2^\nu k_2^\sigma\big)J_{c\sigma},
+\end{equation}
+其中 $J_c^\sigma=\bar v(p_2)\gamma^\sigma t^cu(p_1)$。
+于是：胶子 2 为物理胶子（$k_2^2=0$，$\epsilon_2\cdot k_2=0$）时为零；$k_{1\mu}k_{2\nu}\mathcal A^{\mu\nu}=0$（即使离壳）；胶子 2 在壳但取非物理极化
+$\bar k_2=(k_2^0,-\bm k_2)$ 时 $k_{1\mu}\bar k_{2\nu}\mathcal A^{\mu\nu}_{ab}=(k_2\cdot\bar k_2)\,\mathcal A_{\mathrm{gh}}$，
+$\mathcal A_{\mathrm{gh}}=\frac{g^2}{Q^2}f^{abd}\,k_1\cdot J_d$ 为 $q\bar q\to c^a(k_1)\bar c^b(k_2)$ 的振幅（其整体相位依赖约定）；极化求和满足（后一式见
+\cite{CombridgeKripfganzRanft1977,EllisStirlingWebber1996}）
+\begin{equation}\label{eq:cw-ghost-sum}
+\sum_{\text{物理}}|\mathcal A|^2=\sum_{-g,-g}|\mathcal A|^2-2\sum|\mathcal A_{\mathrm{gh}}|^2,\qquad
+\frac1{36}\sum_{\text{物理}}|\mathcal A|^2=g^4\Big[\frac{32}{27}\frac{t^2+u^2}{tu}-\frac83\frac{t^2+u^2}{s^2}\Big]
+\end{equation}
+(ii) 对 $\gamma^*\to q\bar q\,g^*(k_1,a)\,g^*(k_2,b)$ 的全部 8 个树图，
+\begin{equation}\label{eq:cw-qqgg2}
+k_{1\mu}\mathcal A^{\mu\nu}_{ab}=\frac{\ii gf^{abc}}{Q^2}\big(k_2^\nu k_2^\sigma-k_2^2g^{\nu\sigma}\big)\,\mathcal A^c_\sigma(Q),
+\end{equation}
+$\mathcal A^c_\sigma(Q)$ 为截腿的单胶子振幅 $\gamma^*\to q\bar qg^*(Q,c,\sigma)$；(i) 是 $\mathcal A^c_\sigma=\ii gJ_{c\sigma}$ 的特例。故两个离壳纵向胶子
+$k_{1\mu}k_{2\nu}\mathcal A^{\mu\nu}=0$。
+\end{proposition}
+
+\begin{proof}
+由 \cref{prop:cw-ward-line}，胶子 1 在夸克线上的全部插入给出对易子项，即胶子 2 换成动量 $Q$、颜色 $[t^a,t^b]=\ii f^{abc}t^c$ 的单胶子振幅；
+三胶子顶角图中用 \cref{eq:cw-ward-3g}：其 $-Q^2g^{\sigma\nu}$ 部分恰抵消上述对易子项，$Q^\sigma Q^\nu$ 部分因单胶子振幅的阿贝尔 Ward 恒等式
+（$Q^\sigma\mathcal A^c_\sigma=0$）为零，剩下 $k_2$ 的逆传播子部分。
+\end{proof}
+
+\begin{theorem}[图形 Ward 恒等式（BRST 形式）]\label{thm:cw-graphical-ward}
+在协变规范 $\mathcal L_{\mathrm{gf}}=-\frac{1}{2\xi}(\partial\cdot A^a)^2$、鬼项 $\bar c^a(-\partial^\mu D^{ac}_\mu)c^c$ 的重整化微扰论中
+（采用保持 BRST 对称性的维数正规化），BRST 变换
+$\delta\psi=\ii g\varepsilon c^at^a\psi$，$\delta A^a_\mu=\varepsilon D^{ac}_\mu c^c$，$\delta c^a=-\frac g2\varepsilon f^{abc}c^bc^c$，$\delta\bar c^a=-\frac{1}{\xi}\varepsilon\,\partial\cdot A^a$
+（PS~\cite{PeskinSchroeder1995} \S16.4，符号请写作者再核）给出 $\partial\cdot A^a=-\xi\,s\bar c^a$。设 $\Phi$ 为物理外粒子（夸克、横向极化胶子）
+场之积，经 LSZ 截腿并置于壳上。则在非例外动量处 \tagR
+\begin{equation}\label{eq:cw-st1}
+\langle0|T\,\partial\cdot A^{a_1}(x_1)\cdots\partial\cdot A^{a_N}(x_N)\,\Phi|0\rangle=0\qquad(N\ge1,\ \Phi\ne1),
+\end{equation}
+而一个纵向胶子与若干任意胶子时
+\begin{equation}\label{eq:cw-st2}
+\langle0|T\,\partial\cdot A^{a}(x)\prod_{j=1}^rA^{\nu_j}_{b_j}(y_j)\,\Phi|0\rangle
+=\xi\sum_{j=1}^r\pm\,\langle0|T\,\bar c^{a}(x)\,(D^{\nu_j}c)_{b_j}(y_j)\prod_{l\neq j}A^{\nu_l}_{b_l}(y_l)\,\Phi|0\rangle ,
+\end{equation}
+$(D^\nu c)_b=\partial^\nu c_b+gf_{bcd}A^\nu_cc_d$（各项符号由把 Grassmann 奇的 $s$ 移过 $\bar c$ 决定）。$\partial^\nu c$ 项给出末端为纵向极化
+（$\propto k_j^{\nu_j}$）的鬼传播子，$gfAc$ 项为无单胶子极点的复合插入：当胶子 $j$ 为在壳物理胶子时两者都为零。因此其余外粒子都物理时，
+单个纵向胶子退耦；其余胶子离壳或非物理时出现鬼项（例如 \cref{prop:cw-ward-nonab}(i) 中的 $\mathcal A_{\mathrm{gh}}$）。
+\end{theorem}
+
+\begin{proofsketch}
+BRST 不变的真空给出 $\langle s(\bar c^a\mathcal O)\rangle=0$；$s\Phi$ 没有单粒子极点，LSZ 后为零；$sA=Dc$。取 $\mathcal O=\prod\partial\cdot A$ 时，鬼项经鬼场运动方程
+（$\partial^\mu D_\mu c$ 与 $\bar c$ 相邻时给出接触项）化为 $\propto\delta(x_1-x_j)$ 的接触项，在非例外动量处为零；对 $N$ 归纳。
+原始的图形 Ward 恒等式见 't~Hooft~\cite{tHooft1971}，并见 Taylor~\cite{Taylor1971}、Slavnov~\cite{Slavnov1972}；
+BRST 对称性见 \cite{BecchiRouetStora1975,BecchiRouetStora1976,Tyutin1975}，物理态空间见 Kugo 与 Ojima~\cite{KugoOjima1979}。
+\end{proofsketch}
+
+\begin{remark}[在因子化证明中的用法与严格性]\label{rem:cw-ward-status}
+因子化中的 K 胶子是内线（连到共线或软子图上），故须在胶子腿离壳的情形使用 \cref{eq:cw-st2}；由此产生的鬼项必须被证明相消或被吸收进
+Wilson 线算符的定义。这一步在文献中只有概要：Collins~\cite{Collins2011} \S11.9“Ward identities to convert K gluons to Wilson line”
+（BRST 与因子化中的算符见该书第 407–411 页），Collins 与 Soper~\cite{CollinsSoper1982a}，Labastida 与 Sterman~\cite{LabastidaSterman1985}；
+振幅层次的全阶论证见 Feige 与 Schwartz~\cite{FeigeSchwartz2014}。因此：\cref{thm:cw-graphical-ward} 本身为 \tagR；用它把任意多个非阿贝尔 K 胶子
+化为 Wilson 线的全阶论证为 \tagA；阿贝尔情形（\cref{prop:cw-ward-line} 加 \cref{lem:cw-eikonal}）为 \tagR。
+\end{remark}

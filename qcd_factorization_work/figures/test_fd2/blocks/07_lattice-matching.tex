@@ -1,0 +1,40 @@
+%%% BEGIN fig:lattice-matching
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fd2 qty/.style={draw=black!70,fill=white,rounded corners=2pt,line width=0.6pt,
+      minimum width=4.3cm,minimum height=0.95cm,align=center,font=\small},
+  fd2 frame/.style={draw=#1!60!black,fill=#1!4,rounded corners=4pt,line width=0.6pt},
+  fd2 match/.style={draw=black!80,line width=1.0pt,{Stealth[length=7pt,width=6pt]}-{Stealth[length=7pt,width=6pt]}},
+  fd2 ft/.style={draw=gray!55!black,line width=0.6pt,{Stealth[length=4.5pt,width=3.8pt]}-{Stealth[length=4.5pt,width=3.8pt]}},
+  fd2 note/.style={font=\footnotesize},
+  fd2 lab/.style={font=\small}]
+  % column frames
+  \draw[fd2 frame=gray] (-7.45,-2.85) rectangle (-1.85,2.45);
+  \draw[fd2 frame=blue] (1.85,-2.85) rectangle (7.45,2.45);
+  \node[fd2 lab,font=\small\bfseries] at (-4.6,2.12) {格点：等时（欧氏）矩阵元};
+  \node[fd2 lab,font=\small\bfseries] at (4.6,2.12) {光锥分布（$\MSbar$）};
+  % quantities
+  \node[fd2 qty] (q)  at (-4.6,1.05)  {准 PDF $\tilde q_\Gamma(x,P^z)$\\[-1pt]{\footnotesize 固定 $P^z$}};
+  \node[fd2 qty] (h)  at (-4.6,-1.05) {准 ITD $\tilde h(\lambda,z^2)$\\[-1pt]{\footnotesize $\propto\langle P|\bar\psi(z\hat e_z)\Gamma W[z\hat e_z,0]\psi(0)|P\rangle_R$}};
+  \node[fd2 qty] (f)  at (4.6,1.05)   {光锥 PDF $f(y,\mu)$\\[-1pt]{\footnotesize 支集 $[-1,1]$}};
+  \node[fd2 qty] (I)  at (4.6,-1.05)  {光锥 ITD $I(\lambda,\mu)$\\[-1pt]{\footnotesize $\int_{-1}^1\dd x\,\ee^{\ii x\lambda}f(x,\mu)$}};
+  \draw[fd2 ft] (q) -- node[fd2 note,right=2pt,align=left] {Fourier：沿射线\\$z=-\lambda/P^z$} (h);
+  \draw[fd2 ft] (f) -- node[fd2 note,left=2pt] {Fourier} (I);
+  \node[fd2 note,align=center,text=gray!30!black] at (-4.65,-2.2) {非微扰重整化（除去线性发散 $\ee^{-\delta m|z|}$）\\[-1pt]与方案选择，见\cref{fig:lamet-hybrid}};
+  % matching arrows
+  \draw[fd2 match] (q.east) -- node[fd2 lab,above=2pt] {LaMET 匹配} node[fd2 lab,below=1pt] {$C\big(\frac xy,\frac{\mu}{|y|P^z}\big)$} (f.west);
+  \draw[fd2 match] (h.east) -- node[fd2 lab,above=2pt] {SDF 匹配} node[fd2 lab,below=1pt] {$\mathcal C(\alpha,-z^2\mu^2)$} (I.west);
+  % formulas
+  \node[fd2 lab] at (0,-3.55) {LaMET：$\tilde q(x,P^z)=\displaystyle\int_{-1}^{1}\frac{\dd y}{|y|}\,C\Big(\frac xy,\frac{\mu}{|y|P^z}\Big)f(y,\mu)+\order{\frac{\Lambda^2}{x^2P_z^2},\frac{\Lambda^2}{(1-x)^{2-\delta}P_z^2}}$};
+  \node[fd2 lab] at (0,-4.65) {SDF：$\tilde h(\lambda,z^2)=\displaystyle\int_{-1}^{1}\!\dd\alpha\,\mathcal C(\alpha,-z^2\mu^2)\,I(\alpha\lambda,\mu)+\order{z^2\Lambda^2}$\quad（$|z|\lesssim0.2$--$0.3$ fm）};
+  % status footer
+  \node[draw=gray!60,fill=gray!5,rounded corners=2pt,inner sep=4pt,font=\small] at (0,-5.6)
+    {微扰匹配：全阶论证\hspace{0.25em}{\color{RoyalBlue!80!black}\textbf{[A]}}；强子层次：依赖编号假设\hspace{0.25em}{\color{Plum!80!black}\textbf{[C]}}};
+\end{tikzpicture}
+\caption{LaMET 与短距离因子化（SDF）的结构。格点可计算的等时关联函数（左）经微扰匹配与光锥 PDF（右）相联系：准 PDF 与准 ITD 是同一矩阵元的两种 Fourier 表示，LaMET 在固定 $P^z$ 下作动量空间匹配，匹配核的宗量是部分子动量 $|y|P^z$（而非强子动量 $P^z$）；
+SDF 在固定 $z^2$ 的短距离处作坐标空间匹配（VF-LAM-6）。误差为幂次修正：动量空间中在两端点分别按 $\Lambda^2/(x^2P_z^2)$ 与 $\Lambda^2/((1-x)^{2-\delta}P_z^2)$ 增大（$\delta$ 由扭度 4 分布的端点行为决定）。
+部分子态的匹配定理是全阶论证（\cref{thm:lattice-lamet}），强子层次的陈述依赖于编号假设 \cref{asm:lamet-uniform,asm:lamet-twist4,asm:lamet-large-z}（\cref{thm:lamet-hadronic}）。}
+\label{fig:lattice-matching}
+\end{figure}
+%%% END fig:lattice-matching

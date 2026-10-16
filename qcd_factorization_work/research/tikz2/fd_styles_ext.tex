@@ -1,0 +1,44 @@
+%%% BEGIN STYLES-EXT
+% =====================================================================
+%  Extension of the plain-TikZ Feynman-diagram library (fd_styles.tex)
+%  for the factorization monograph.  Requires fd_styles.tex loaded first.
+%  Extra libraries: shapes.geometric, patterns, backgrounds, fit.
+%  New user-level styles:
+%    wilson[=pos]   Wilson (eikonal) line: double line with centred arrow
+%    wilson plain   Wilson line without arrow
+%    cut            final-state cut: dashed red vertical line
+%    hard blob      hard subgraph (grey);   jet blob (A side, blue);
+%    jetB blob      collinear subgraph of hadron B (orange);
+%    soft blob      soft subgraph (green);  hadron blob (target, light grey)
+%    glauber        Glauber gluon (dark-red coil)
+%    opvertex       operator insertion vertex (circled cross), node style
+%    scalar         dashed line (e.g. scalar/longitudinal polarization)
+%    longit         gluon carrying k^mu (scalar) polarization: blue coil;
+%                   optionally mark it with \longitmark{(A)}{(B)} (dot at midpoint)
+%    lcaxis         thin arrow for light-cone / spacetime axes
+%    region         dashed rounded rectangle marking a momentum region
+% Colours are kept light so that the figures print well in greyscale.
+% =====================================================================
+\tikzset{
+  wilson/.style={draw,solid,double,double distance=1.6pt,line width=0.55pt,fd arrow=#1},
+  wilson/.default=0.5,
+  wilson plain/.style={draw,solid,double,double distance=1.6pt,line width=0.55pt},
+  cut/.style={draw,dashed,red!70!black,line width=0.9pt,dash pattern=on 4pt off 2.5pt},
+  hard blob/.style={draw,solid,fill=gray!35,line width=0.8pt},
+  jet blob/.style={draw,solid,fill=blue!12,line width=0.8pt},
+  jetB blob/.style={draw,solid,fill=orange!18,line width=0.8pt},
+  soft blob/.style={draw,solid,fill=green!15,line width=0.8pt},
+  hadron blob/.style={draw,solid,fill=gray!15,line width=0.8pt},
+  glauber/.style={draw,solid,line width=0.75pt,color=red!60!black,decorate,
+      decoration={fd gluon,amplitude=3.2pt,segment length=4.6pt,aspect=0.7}},
+  opvertex/.style={circle,draw,solid,fill=white,line width=0.8pt,inner sep=0pt,minimum size=7pt,
+      path picture={\draw[line width=0.6pt] (path picture bounding box.north west)--(path picture bounding box.south east)
+                    (path picture bounding box.south west)--(path picture bounding box.north east);}},
+  scalar/.style={draw,solid,line width=0.8pt,dash pattern=on 3pt off 2pt},
+  longit/.style={draw,solid,line width=0.75pt,color=blue!60!black,decorate,
+      decoration={fd gluon,amplitude=3.2pt,segment length=4.6pt,aspect=0.7}},
+  lcaxis/.style={draw,solid,line width=0.5pt,-{Stealth[length=4pt,width=3.4pt]}},
+  region/.style={draw,dashed,rounded corners=3pt,line width=0.6pt,gray!70!black},
+}
+\newcommand{\longitmark}[2]{\fill[blue!60!black] ($#1!0.5!#2$) circle[radius=1.7pt];}
+%%% END STYLES-EXT

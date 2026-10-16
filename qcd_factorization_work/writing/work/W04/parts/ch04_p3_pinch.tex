@@ -1,0 +1,191 @@
+%% =====================================================================
+\section{无质量 QCD 中的钳夹面与约化图}\label{sec:ir-pinch}
+
+现在把 Coleman--Norton 图像用于硬过程。单圈无质量顶点 $\gamma^*(q)\to q(p_1)\bar q(p_2)$（$p_i^2=0$，$Q^2=2p_1\cdot p_2>0$）恰有三个钳夹面（\cref{fig:vertex-regions}）：胶子动量 $k\to0$ 的软钳夹面 $S$，$k=xp_1$（$0<x<1$）时胶子与内夸克线都平行于 $p_1$ 的共线钳夹面 $C_1$，以及镜像的 $C_2$（$k=-yp_2$）。全部内线离壳的构型（参数单形的内部）不是 Landau 解——“硬区”不是钳夹面，而是钳夹的缺席；详细分析见\cref{ex:ir-vertex}。单圈无质量箱图（$q_j=k+r_j$，$r_0=0$，$r_1=p_1$，$r_2=p_1+p_2$，$r_3=-p_4$）有 $\mathcal F=-s\alpha_0\alpha_2-t\alpha_1\alpha_3$，其 Landau 集是 3-单形的四条棱 $(01),(12),(23),(30)$（相邻两线共线于其间流入的外动量）与四个顶点（相邻外线之间的软交换）；棱 $(02)$、$(13)$ 只在 $s=0$ 或 $t=0$ 时是解。%
+% VF-REG-5
+每个顶点与每条棱都是对数型的，这就是熟知的 $1/\varepsilon^2$ 红外极点的来源。
+
+%%% BEGIN fig:reduced-ee
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small}]
+  \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (H)  at (-2.75,0) {};
+  \node[hard blob,circle,minimum size=0.6cm,inner sep=0pt] (Hd) at ( 2.75,0) {};
+  \node[jet blob,ellipse,minimum width=3.3cm,minimum height=0.86cm] (J1) at (0, 1.6) {};
+  \node[jetB blob,ellipse,minimum width=3.3cm,minimum height=0.86cm] (J2) at (0,-1.6) {};
+  \node[soft blob,circle,minimum size=0.8cm,inner sep=0pt] (S) at (0,0) {};
+  % photons
+  \draw[photon] (-4.25,0) -- (H.west);
+  \draw[photon] (Hd.east) -- (4.25,0);
+  \path[mom={$q$},mom sep=0.28cm] (-4.25,0) -- (H.west);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.east) -- (4.25,0);
+  % fermion lines: H -> J1 -> H^dagger -> J2 -> H
+  \draw[quark] (H.65) -- (J1.188);
+  \draw[quark] (J1.352) -- (Hd.115);
+  \draw[quark] (Hd.245) -- (J2.8);
+  \draw[quark] (J2.172) -- (H.295);
+  % soft gluons (to both jets, on both sides of the cut)
+  \draw[gluon] (S.152) -- (-0.92,1.2);
+  \draw[gluon] (S.28) -- (0.92,1.2);
+  \draw[gluon] (S.208) -- (-0.92,-1.2);
+  \draw[gluon] (S.332) -- (0.92,-1.2);
+  % cut
+  \draw[cut] (0,2.45) -- (0,-2.45);
+  % labels
+  \node[t2 lab] at (-0.85,1.6) {$J_1$};
+  \node[t2 lab] at (-0.85,-1.6) {$J_2$};
+  \node[t2 lab,anchor=east] at ($(S.west)+(-0.04,0)$) {$S$};
+  \node[t2 lab,anchor=north east] at (H.south west) {$H$};
+  \node[t2 lab,anchor=north west] at (Hd.south east) {$H^\dagger$};
+  \node[font=\footnotesize,anchor=west] at (1.75,1.95) {沿 $p_1$};
+  \node[font=\footnotesize,anchor=west] at (1.75,-1.95) {沿 $p_2$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south] at (0,2.45) {末态切割};
+\end{tikzpicture}
+\caption{$e^+e^-\to$ 两喷注的约化割图（领头钳夹面）。$H$（振幅）与 $H^\dagger$（共轭振幅）是全部离壳线收缩成的硬点；$J_1$、$J_2$
+是分别沿类光方向 $p_1$、$p_2$ 运动的共线子图（喷注），各以一条物理极化的夸克线与 $H$、$H^\dagger$ 相连，并穿过末态切割（红色虚线）；
+软子图 $S$ 只通过胶子与两个喷注相连，不与硬部分相连，其末态粒子同样穿过切割。在 Feynman 规范下喷注与硬部分之间还可以有任意多条标量（纵向）极化的共线胶子，
+图中未画出（参见\cref{fig:reduced-dis}）。}
+\label{fig:reduced-ee}
+\end{figure}
+%%% END fig:reduced-ee
+
+%%% BEGIN fig:reduced-dis
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  t2 lab/.style={font=\small}]
+  \node[hard blob,ellipse,minimum width=1.15cm,minimum height=0.78cm,inner sep=0pt] (H)  at (-2.6,0.8) {};
+  \node[hard blob,ellipse,minimum width=1.15cm,minimum height=0.78cm,inner sep=0pt] (Hd) at ( 2.6,0.8) {};
+  \node[jetB blob,ellipse,minimum width=3.0cm,minimum height=0.8cm] (J) at (0,2.3) {};
+  \node[jet blob,ellipse,minimum width=5.0cm,minimum height=1.2cm] (A) at (0,-1.55) {};
+  \node[soft blob,circle,minimum size=0.76cm,inner sep=0pt] (S) at (0,0.42) {};
+  % photons
+  \draw[photon] (-4.0,2.05) -- (H.135);
+  \draw[photon] (Hd.45) -- (4.0,2.05);
+  \path[mom={$q$},mom sep=0.28cm] (-4.0,2.05) -- (H.135);
+  \path[mom={$q$},mom sep=0.28cm] (Hd.45) -- (4.0,2.05);
+  % hadron lines
+  \draw[t2 hadron] (-4.6,-1.55) -- (A.west);
+  \draw[t2 hadron] (A.east) -- (4.6,-1.55);
+  % fermion line: A -> H -> J -> H^dagger -> A
+  \draw[quark] (A.165) -- (H.205);
+  \draw[quark] (H.62) -- (J.195);
+  \draw[quark] (J.345) -- (Hd.118);
+  \draw[quark] (Hd.335) -- (A.15);
+  % longitudinally polarized collinear gluons (blue): A -> H, A -> H^dagger
+  \draw[longit] (A.154) -- (H.262);  \longitmark{(A.154)}{(H.262)}
+  \draw[longit] (A.143) -- (H.312);  \longitmark{(A.143)}{(H.312)}
+  \draw[longit] (A.30) -- (Hd.270);  \longitmark{(A.30)}{(Hd.270)}
+  % soft gluons: S -> J and S -> A, on both sides of the cut
+  \draw[gluon] (S.140) -- (-0.72,1.95);
+  \draw[gluon] (S.40)  -- ( 0.72,1.95);
+  \draw[gluon] (S.235) -- (-0.5,-0.97);
+  \draw[gluon] (S.305) -- ( 0.5,-0.97);
+  % cut
+  \draw[cut] (0,3.0) -- (0,-2.45);
+  % labels
+  \node[t2 lab] at (-0.8,2.3) {$J$};
+  \node[t2 lab] at (-1.15,-1.62) {$A$};
+  \node[t2 lab] at (-0.62,0.42) {$S$};
+  \node[t2 lab] at (H) {$H$};
+  \node[t2 lab] at (Hd) {$H^\dagger$};
+  \node[t2 lab,anchor=south] at (-4.35,-1.5) {$P$};
+  \node[t2 lab,anchor=south] at ( 4.35,-1.5) {$P$};
+  \node[font=\footnotesize,text=red!65!black,anchor=south] at (0,3.0) {末态切割};
+  \node[font=\footnotesize,text=blue!55!black,align=center] at (1.2,0.4) {纵向极化\\共线胶子};
+\end{tikzpicture}
+\caption{深度非弹散射（DIS）的约化割图。靶强子 $P$ 的共线子图 $A$（蓝色）跨越末态切割，其中的旁观者（靶残余）穿过切割；
+$H$、$H^\dagger$ 分别是振幅与共轭振幅中的硬子图，与虚光子 $q$ 相连；被击出的夸克形成末态喷注 $J$（沿 $n_B$ 方向）并穿过切割；
+软子图 $S$ 以胶子与 $A$、$J$ 相连。$A$ 与 $H$（以及 $H^\dagger$）之间除一条物理极化的夸克线外，还可以有任意多条标量（纵向）极化、
+即 $\epsilon^\mu\propto k^\mu$ 的共线胶子（蓝色，以圆点标记），它们在幂次计数中不受压低，经 Ward 恒等式后成为 PDF 定义中的 Wilson 线（\cref{fig:ward-identity}）。}
+\label{fig:reduced-dis}
+\end{figure}
+%%% END fig:reduced-dis
+
+%%% BEGIN fig:reduced-dy
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  t2 lab/.style={font=\small}]
+  % collinear subgraph A: amplitude part, conjugate part, spectators crossing the cut
+  \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Aa) at (-2.75,-1.05) {};
+  \node[jet blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Ac) at (-2.75, 1.05) {};
+  \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Ba) at ( 2.75,-1.05) {};
+  \node[jetB blob,ellipse,minimum width=1.25cm,minimum height=0.85cm,inner sep=0pt] (Bc) at ( 2.75, 1.05) {};
+  \node[hard blob,circle,minimum size=0.66cm,inner sep=0pt] (H)  at (0,-1.3) {};
+  \node[hard blob,circle,minimum size=0.66cm,inner sep=0pt] (Hd) at (0, 1.3) {};
+  \node[soft blob,circle,minimum size=0.84cm,inner sep=0pt] (S) at (0,0) {};
+  % spectators of A and B crossing the cut (fermion number flows from amplitude to conjugate)
+  \draw[quark=0.78] ($(Aa.north)+(-0.3,-0.04)$) -- ($(Ac.south)+(-0.3,0.04)$);
+  \draw[gluon] ($(Aa.north)+(0,0.02)$) -- ($(Ac.south)+(0,-0.02)$);
+  \draw[quark=0.78] ($(Aa.north)+(0.3,-0.04)$) -- ($(Ac.south)+(0.3,0.04)$);
+  \draw[quark=0.78] ($(Ba.north)+(-0.3,-0.04)$) -- ($(Bc.south)+(-0.3,0.04)$);
+  \draw[gluon] ($(Ba.north)+(0,0.02)$) -- ($(Bc.south)+(0,-0.02)$);
+  \draw[quark=0.78] ($(Ba.north)+(0.3,-0.04)$) -- ($(Bc.south)+(0.3,0.04)$);
+  % hadron lines
+  \draw[t2 hadron] (-4.55,-1.65) -- (Aa.200);
+  \draw[t2 hadron] (Ac.160) -- (-4.55,1.65);
+  \draw[t2 hadron] (4.55,-1.65) -- (Ba.340);
+  \draw[t2 hadron] (Bc.20) -- (4.55,1.65);
+  % active partons:  A -> H (quark),  H -> B (antiquark: fermion arrow away from H),  conjugate side mirrored
+  \draw[quark] (Aa.345) -- (H.185);
+  \draw[quark] (H.355) -- (Ba.195);
+  \draw[quark] (Bc.165) -- (Hd.5);
+  \draw[quark] (Hd.175) -- (Ac.15);
+  % virtual photon (current insertions)
+  \draw[photon] (H.south) -- (0,-2.55);
+  \draw[photon] (Hd.north) -- (0,2.55);
+  \node[t2 lab,anchor=west] at (0.12,-2.35) {$\gamma^*(q)$};
+  \node[t2 lab,anchor=west] at (0.12, 2.35) {$\gamma^*(q)$};
+  % soft gluons S -> A, S -> B on both sides of the cut
+  \draw[gluon] (S.200) -- (Aa.40);
+  \draw[gluon] (S.160) -- (Ac.320);
+  \draw[gluon] (S.340) -- (Ba.140);
+  \draw[gluon] (S.20)  -- (Bc.220);
+  % cut (horizontal: amplitude below, complex-conjugate amplitude above)
+  \draw[cut] (-4.75,0) -- (4.75,0);
+  % labels
+  \node[t2 lab] at (Aa) {$A$}; \node[t2 lab] at (Ac) {$A$};
+  \node[t2 lab] at (Ba) {$B$}; \node[t2 lab] at (Bc) {$B$};
+  \node[t2 lab] at (H) {$H$};  \node[t2 lab] at (Hd) {$H^\dagger$};
+  \node[t2 lab,anchor=south] at (0,0.44) {$S$};
+  \node[t2 lab,anchor=north] at (-4.4,-1.75) {$P_A$};
+  \node[t2 lab,anchor=south] at (-4.4, 1.75) {$P_A$};
+  \node[t2 lab,anchor=north] at ( 4.4,-1.75) {$P_B$};
+  \node[t2 lab,anchor=south] at ( 4.4, 1.75) {$P_B$};
+  \node[font=\footnotesize,text=red!65!black,anchor=west] at (4.8,0) {末态切割};
+  \node[font=\footnotesize,anchor=west] at (4.8,-0.75) {振幅};
+  \node[font=\footnotesize,anchor=west] at (4.8, 0.75) {共轭振幅};
+\end{tikzpicture}
+\caption{Drell--Yan 过程 $A+B\to\gamma^*+X$ 的约化割图（强子张量）。为使两个强子分列左右，切割（红色虚线）画成水平的：下半部为振幅，上半部为共轭振幅。
+强子 $A$、$B$ 的共线子图（蓝、橙色）各分为振幅与共轭振幅两部分，二者之间的旁观者（强子残余）线穿过切割；硬子图 $H$、$H^\dagger$ 各由一条来自 $A$ 的夸克线与一条来自 $B$ 的反夸克线相连，
+并通过电流插入与 $\gamma^*$ 相连；软子图 $S$ 以胶子与 $A$、$B$ 相连，在切割两侧均可附着。共线子图与 $H$ 之间的纵向极化胶子未画出（参见\cref{fig:reduced-dis}）；
+旁观者之间的 Glauber 交换见\cref{fig:glauber-exchange}。}
+\label{fig:reduced-dy}
+\end{figure}
+%%% END fig:reduced-dy
+
+对一般的图，Coleman--Norton 图像给出同样简单的结构。
+
+\begin{proposition}[钳夹面与约化图 \tagA]\label{prop:ir-pinch-classification}
+在无质量 QCD 中，$e^+e^-\to$ 强子的割图（割开的真空极化图）的每个钳夹面都对应如下形式的约化图：割线两侧各一个硬顶点 $H$、$H^\dagger$（全部离壳线收缩成的点）；若干喷注，每个喷注由沿同一类光方向运动的在壳共线线组成，并与 $H$、$H^\dagger$ 相连；一个由零动量线组成的软子图 $S$，与喷注（及硬顶点）相连。对 DIS 另有一个由入射靶部分子构成的入射喷注，对 Drell--Yan 有分别沿 $\pm z$ 方向入射的两个喷注 $A$、$B$，它们都进入硬顶点；单举湮灭（SIA）的约化图与 $e^+e^-$ 相同，只是被观测强子所在的喷注不对其末态完全求和。（本命题只涉及部分子态的 Feynman 图。）
+% errtype: E-S
+\uses{prop:ir-coleman-norton,def:ir-pinch-surface}
+\end{proposition}
+\begin{proofsketch}
+(1)~由\cref{prop:ir-coleman-norton}，钳夹面对应在壳粒子的经典过程。在 $e^+e^-$ 割图中全部外动量 $q$ 由光子顶点注入，一切有限能量的粒子都从这一点（取为原点）出发；与光子顶点相连的离壳线收缩之后，这一点就是硬顶点 $H$（割线另一侧同理为 $H^\dagger$）。
+(2)~从原点出发、沿不同类光方向 $n_1\ne n_2$ 运动的两个无质量粒子的世界线 $tn_1$、$t'n_2$ 在 $t,t'>0$ 时不相交；因此原点之外的顶点只能连接沿同一光线运动的粒子，在那里产生的有限动量粒子的动量是平行动量之和，仍沿该光线——它们构成一个喷注。
+(3)~不同喷注之间只能交换零动量线：有限动量的交换线必须在壳并沿某条光线运动，而它要连接分处两条不同光线上的两个顶点，这不可能；零动量线则由\cref{prop:ir-coleman-norton}(iii) 可以连接任意两点。
+(4)~入射粒子（DIS 的靶、DY 的两个强子中的部分子）来自 $t=-\infty$，沿各自的光线到达硬顶点，同理构成入射喷注。
+完整的论证还需列举一般图的全部钳夹面并说明没有遗漏，见\cite{Sterman1978a,Sterman1978b,LibbySterman1978a}、\cite[第~13~章]{Sterman1993}与\cite[第~5~章]{Collins2011}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}
+上述分类用到两件只有论证而无完整证明的事：一是 Landau 判据的逆命题（充分性，\cref{rem:ir-landau-status}，\tagA），它保证每个这样的约化图确实对应被钳住的区域，从而必须计入；二是对一般图（喷注内部结构任意、多个硬顶点、软线与共线线的嵌套交叠）的钳夹面列举的完备性。两者都只达到标度陈述（E-S，\cref{def:intro-error-types}）层次的论证\cite{Sterman1978a,LibbySterman1978a}，\cite[第~5~章]{Collins2011}。升级途径：Collins 判据的完整核验加上钳夹面层级结构（嵌套与交叠）的系统处理；对无质量宽角振幅，这一方向的系统化见第~24~章所述的红外森林公式。
+
+\cref{fig:reduced-ee,fig:reduced-dis,fig:reduced-dy}画出三类过程的典型约化图。它们只是钳夹面的骨架；哪些连接方式给出领头贡献，由下一节的幂次计数决定——特别地，在 Feynman 规范中喷注与硬部分之间可以有任意多条标量（纵向）极化（scalar polarization）的共线胶子（\cref{fig:reduced-dis}中的蓝色卷线），它们不受压低，经 Ward 恒等式成为算符定义中的 Wilson 线。第~10、12~章分别回到 DIS 与 DY 的约化图。

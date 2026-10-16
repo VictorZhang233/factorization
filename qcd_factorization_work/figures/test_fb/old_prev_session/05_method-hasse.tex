@@ -1,0 +1,74 @@
+%%% BEGIN fig:method-hasse
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fb J1/.style={draw=blue!60!black},
+  fb J2/.style={draw=orange!80!black},
+  fb S/.style={draw=green!45!black},
+  fb Hl/.style={draw=black,line width=1.6pt},
+  fb m/.style={font=\scriptsize,inner sep=2.6pt,sloped},
+  fb node/.style={draw=gray!60!black,fill=white,rounded corners=2.5pt,line width=0.6pt,inner sep=2.5pt,
+                  minimum width=1.5cm,minimum height=0.55cm,font=\small},
+  fb edge/.style={draw=gray!50!black,line width=0.7pt},
+  fb hl/.style={draw=red!60!black,line width=1.3pt}]
+  \newcommand{\fbH}{\mathrm{H}}
+  \newcommand{\fbA}{{\color{blue!60!black}C_1}}
+  \newcommand{\fbB}{{\color{orange!80!black}C_2}}
+  \newcommand{\fbS}{{\color{green!45!black}S}}
+  % ======================= left: two-loop planar vertex, coloured for the region (C1,S) =======================
+  \begin{scope}
+    \coordinate (V) at (0,0);
+    \coordinate (Q1) at (28:1.9); \coordinate (Q2) at (28:3.4); \coordinate (E1) at (28:4.55);
+    \coordinate (A1) at (-28:1.9); \coordinate (A2) at (-28:3.4); \coordinate (E2) at (-28:4.55);
+    \draw[photon] (-1.3,0) -- (V);
+    \draw[quark=0.82,fb Hl] (A1) -- node[fb m,below,pos=0.4,text=black] {$p_2+k_1+k_2$} (V);
+    \draw[quark=0.2,fb J1] (V) -- node[fb m,above,pos=0.6,text=blue!50!black] {$p_1-k_1-k_2$} (Q1);
+    \draw[quark=0.22,fb J1] (Q1) -- node[fb m,above,pos=0.62,text=blue!50!black] {$p_1-k_2$} (Q2);
+    \draw[quark] (Q2) -- (E1);
+    \draw[quark=0.8,fb J2] (A2) -- node[fb m,below,pos=0.38,text=orange!60!black] {$p_2+k_2$} (A1);
+    \draw[quark] (E2) -- (A2);
+    \draw[gluon,fb J1] (A1) -- (Q1);
+    \draw[gluon,fb S] (A2) -- (Q2);
+    \foreach \p in {V,Q1,Q2,A1,A2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.3,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.6,mom length=0.45cm] (Q2) -- (E1);
+    \path[mom={$p_2$},mom pos=0.6,mom length=0.45cm] (A2) -- (E2);
+    \path[mom'={\scriptsize$k_1$},mom length=0.42cm,mom sep=0.3cm] (A1) -- (Q1);
+    \path[mom'={\scriptsize$k_2$},mom length=0.42cm,mom sep=0.3cm] (A2) -- (Q2);
+    \node[font=\footnotesize,align=center] at (1.75,-2.75) {例：区域 $(R(k_1),R(k_2))=(\fbA,\fbS)$\\[1pt]
+      {\color{blue!60!black}$J_1$}\quad{\color{orange!80!black}$J_2$}\quad{\color{green!45!black}$S$}\quad 粗线：$H$};
+  \end{scope}
+  % ======================= right: Hasse diagram of the nine leading regions =======================
+  \begin{scope}[xshift=8.6cm,yshift=-2.35cm]
+    \node[fb node] (SS) at (0,0) {$(\fbS,\fbS)$};
+    \node[fb node] (AS) at (-1.45,1.15) {$(\fbA,\fbS)$};
+    \node[fb node] (BS) at (1.45,1.15) {$(\fbB,\fbS)$};
+    \node[fb node] (AA) at (-2.75,2.3) {$(\fbA,\fbA)$};
+    \node[fb node] (HS) at (0,2.3) {$(\fbH,\fbS)$};
+    \node[fb node] (BB) at (2.75,2.3) {$(\fbB,\fbB)$};
+    \node[fb node] (HA) at (-1.45,3.45) {$(\fbH,\fbA)$};
+    \node[fb node] (HB) at (1.45,3.45) {$(\fbH,\fbB)$};
+    \node[fb node] (HH) at (0,4.6) {$(\fbH,\fbH)$};
+    \foreach \u/\v in {SS/AS,SS/BS,AS/AA,AS/HS,BS/BB,BS/HS,HS/HA,HS/HB,BB/HB,HA/HH,HB/HH}
+      \draw[fb edge] (\u) -- (\v);
+    \draw[fb hl] (AA) -- (HA);
+    \node[font=\scriptsize,text=red!55!black,align=right,anchor=east] at (-2.35,3.5) {逐线比较：\\$C_1\le\mathrm H$，$C_1\le C_1$};
+    % beta_R column
+    \node[font=\footnotesize,text=gray!30!black] at (4.25,5.35) {$\beta_R$};
+    \foreach \y/\b in {0/{1/81},1.15/{1/27},2.3/{1/9},3.45/{1/3}}
+      \node[font=\footnotesize,text=gray!30!black] at (4.25,\y) {$\b$};
+    \node[font=\scriptsize,text=gray!30!black] at (4.25,4.6) {$N=\Omega$};
+    % pinch sets grow upwards
+    \draw[lcaxis,gray!50!black,line width=0.7pt] (5.05,-0.2) -- (5.05,4.8);
+    \node[font=\footnotesize,text=gray!30!black,rotate=90,anchor=north] at (5.12,2.3) {钳夹集增大};
+    \node[font=\footnotesize,anchor=south] at (0,5.1) {$(R(k_1),R(k_2))$：内胶子与外胶子的模式};
+  \end{scope}
+\end{tikzpicture}
+\caption{两圈平面顶点九个领头区域的 Hasse 图。左：内胶子 $k_1$、外胶子 $k_2$ 的动量走向（胶子动量由反夸克线流向夸克线），线的颜色给出区域 $(C_1,S)$ 的逐线模式：
+$J_1=\{k_1,\,p_1-k_2,\,p_1-k_1-k_2\}$、$J_2=\{p_2+k_2\}$、$S=\{k_2\}$，硬线 $p_2+k_1+k_2$ 与光子顶点组成 $H$。
+右：16 种模式组合中恰有 9 个领头钳夹，按逐线偏序（$S<C_i<\mathrm H$，$C_1\wedge C_2=S$）排成 Hasse 图（12 条覆盖关系，自下而上钳夹集增大），其中 $(C_1,C_1)<(\mathrm H,C_1)$（红线）不易一眼看出；
+这一集合对逐线交运算封闭，例如 $(C_1,C_1)\wedge(\mathrm H,S)=(C_1,S)$、$(\mathrm H,C_1)\wedge(\mathrm H,C_2)=(\mathrm H,S)$、$(C_1,C_1)\wedge(C_2,C_2)=(S,S)$。
+右列为各层的邻域指数 $\beta_R=3^{h(R)-h_*}$（$h_*=4$；最大区域的邻域为整个积分域 $\Omega$，\cref{def:method-neighbourhoods}）。}
+\label{fig:method-hasse}
+\end{figure}
+%%% END fig:method-hasse

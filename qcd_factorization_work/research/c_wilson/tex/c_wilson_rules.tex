@@ -1,0 +1,243 @@
+% =====================================================================================
+% c_wilson_rules.tex —— Wilson 线的动量空间 Feynman 规则与程函恒等式
+% （research/c_wilson，对应 DERIVATION.md §1–§3；验证脚本 scripts/s1_wilson_rules.py、
+%   scripts/s2_eikonal_identity.py、scripts/s6_i0_poles.py）
+% =====================================================================================
+\section{Wilson 线的动量空间 Feynman 规则}\label{sec:cw-rules}
+
+\paragraph{约定。}
+沿路径 $z(s)$（$s\in[0,1]$，$z(0)=a$，$z(1)=b$）的 Wilson 线
+\begin{equation}\label{eq:cw-W}
+\begin{aligned}
+W[b,a]&=P\exp\Big(\ii g\int_a^b\dd z^\mu A^a_\mu(z)t^a\Big)\\
+&=\sum_{m=0}^\infty(\ii g)^m\int\limits_{0<s_1<\dots<s_m<1}\dd s_1\cdots\dd s_m\;
+\dot z\cdot A(z(s_m))\cdots\dot z\cdot A(z(s_1)),
+\end{aligned}
+\end{equation}
+其中 $A\equiv A^at^a$，离 $b$ 较近的点排在左边；等价地，$W(s)\equiv W[z(s),a]$ 是
+\[
+\frac{\dd}{\dd s}W(s)=\ii g\,\dot z\cdot A(z(s))\,W(s),\qquad W(0)=1
+\]
+的唯一解，由此在 $D_\mu=\partial_\mu-\ii gA_\mu$ 的规范变换下 $W[b,a]\to U(b)\,W[b,a]\,U^\dagger(a)$。
+本节另取以下约定（建议列为全书约定）：
+\begin{enumerate}[label=(C\arabic*),leftmargin=3.2em]
+\item 胶子场的 Fourier 展开 $A^a_\mu(x)=\int\frac{\dd^4k}{(2\pi)^4}\ee^{-\ii k\cdot x}\tilde A^a_\mu(k)$：
+      $k$ 是在连接点\emph{流入} Wilson 线的动量；对厄米场 $\tilde A(k)^\dagger=\tilde A(-k)$。
+\item $n$ 指向未来（$n^0>0$，类光或类时）；半无穷直线记作
+      $W[\infty n,y]=\lim_{L\to\infty}W[y+Ln,y]$、$W[y,-\infty n]$、$W[-\infty n,y]$、$W[y,\infty n]$；
+      端点 $y\neq0$ 时以下各式再乘 $\ee^{-\ii y\cdot K_{\mathrm{tot}}}$（$K_{\mathrm{tot}}$ 为流入的总动量）。
+\item 绝热因子：半无穷线上的场乘以 $\ee^{-\epsilon s}$，$s\geq0$ 为到有限端点的仿射距离，最后取 $\epsilon\to0^+$。
+\item 光锥矢量 $n_A=(1^+,0^-,\bm 0_{\mathrm T})$，$n_A\cdot v=v^-$；$n_B=(0^+,1^-,\bm 0_{\mathrm T})$，$n_B\cdot v=v^+$
+      （即 Collins 的 $w_2$）。沿 $+z$ 运动的强子 $A$ 的 PDF 中 $W[w,0]$（$w=(0^+,w^-,\bm 0_{\mathrm T})$）沿 $n_B$，
+      含 $n_B\cdot A=A^+$。
+\end{enumerate}
+
+\begin{proposition}[半无穷直 Wilson 线的 Feynman 规则]\tagR\label{prop:cw-rules}
+设直路径由 $a$ 指向 $b$，切矢量 $v=\dd z/\dd\lambda$，一端在无穷远。按 (C1) 展开后，连接 $m$ 个胶子
+（指标 $\mu_j$、颜色 $a_j$、流入动量 $k_j$）的项等于：
+\begin{enumerate}[label=(\roman*)]
+\item 每个连接点一个顶角因子 $\ii g\,t^{a}v^{\mu}$；
+\item 除伸向无穷远的那一段外，每段一个程函传播子 $\dfrac{\ii}{v\cdot\ell+\ii0}$，其中 $\ell$ 是沿路径\emph{取向}
+      （$a\to b$）流动的动量，由各顶角的动量守恒及“伸向无穷远的一段 $\ell=0$”确定；
+\item 颜色矩阵按路径顺序排列，离 $b$ 最近者在最左；
+\item 在有限 $\epsilon$（C3）下，某段的 $\ii0$ 等于 $\ii\epsilon$ 乘以该段与无穷远端之间的连接点数。
+\end{enumerate}
+用指向未来的 $n$ 及“该段与无穷远端之间流入的动量之和” $K$ 表示：伸向 $-\infty$ 的线（指向过去）的传播子为
+$\ii/(n\cdot K+\ii0)$，伸向 $+\infty$ 的线（指向未来）为 $-\ii/(n\cdot K-\ii0)$；取向为 $+n$ 的
+$W[0,-\infty n]$、$W[\infty n,0]$ 顶角为 $+\ii g\,t^an^\mu$，取向为 $-n$ 的 $W[-\infty n,0]$、$W[0,\infty n]$ 顶角为
+$-\ii g\,t^an^\mu$。具体地，胶子按路径顺序编号，\cref{eq:cw-past} 中 $k_1$ 最靠近 $-\infty$，\cref{eq:cw-future,eq:cw-pastc} 中 $k_1$
+最靠近 $0$，\cref{eq:cw-futc} 中 $k_1$ 最靠近 $+\infty$；记 $\int[\dd k]_m\equiv\int\prod_{j=1}^m\frac{\dd^4k_j}{(2\pi)^4}$：
+\begin{align}
+W^{(m)}[0,-\infty n]&=\int[\dd k]_m\,
+(\ii g)^m\,n\cdot\tilde A(k_m)\cdots n\cdot\tilde A(k_1)
+\prod_{j=1}^m\frac{\ii}{n\cdot(k_1+\dots+k_j)+\ii0},\label{eq:cw-past}\\
+W^{(m)}[\infty n,0]&=\int[\dd k]_m\,
+(\ii g)^m\,n\cdot\tilde A(k_m)\cdots n\cdot\tilde A(k_1)
+\prod_{j=1}^m\frac{-\ii}{n\cdot(k_j+\dots+k_m)-\ii0},\label{eq:cw-future}\\
+W^{(m)}[-\infty n,0]&=\int[\dd k]_m\,
+(-\ii g)^m\,n\cdot\tilde A(k_m)\cdots n\cdot\tilde A(k_1)
+\prod_{j=1}^m\frac{\ii}{n\cdot(k_j+\dots+k_m)+\ii0},\label{eq:cw-pastc}\\
+W^{(m)}[0,\infty n]&=\int[\dd k]_m\,
+(-\ii g)^m\,n\cdot\tilde A(k_m)\cdots n\cdot\tilde A(k_1)
+\prod_{j=1}^m\frac{-\ii}{n\cdot(k_1+\dots+k_j)-\ii0}.\label{eq:cw-futc}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+以 $W[0,-\infty n]=P\exp\big(\ii g\int_{-\infty}^0\dd\lambda\,n\cdot A(\lambda n)\big)$ 为例。代入 (C1)，
+$m$ 阶项中的参数积分为（含绝热因子 $\ee^{\epsilon\lambda_j}$）
+\[
+\int\limits_{-\infty<\lambda_1<\dots<\lambda_m<0}\prod_{j=1}^m\dd\lambda_j\,\ee^{-\ii\lambda_j(n\cdot k_j+\ii\epsilon)} .
+\]
+先积 $\lambda_1$：
+\[
+\int_{-\infty}^{\lambda_2}\dd\lambda_1\,\ee^{-\ii\lambda_1(n\cdot k_1+\ii\epsilon)}=\frac{\ii}{n\cdot k_1+\ii\epsilon}\,\ee^{-\ii\lambda_2(n\cdot k_1+\ii\epsilon)},
+\]
+它与第二个场的相因子合并为 $\ee^{-\ii\lambda_2(n\cdot(k_1+k_2)+2\ii\epsilon)}$；归纳可得
+$\prod_{j=1}^m\ii/[n\cdot(k_1+\dots+k_j)+\ii j\epsilon]$，即 \cref{eq:cw-past}；颜色矩阵 $t^{a_m}\cdots t^{a_1}$ 的次序就是 \cref{eq:cw-W}
+的路径次序。$W[\infty n,0]$ 的积分区域为 $0<\lambda_1<\dots<\lambda_m<\infty$，阻尼为 $\ee^{-\epsilon\lambda_j}$，先积 $\lambda_m$，
+得 \cref{eq:cw-future}。$W[-\infty n,0]$ 与 $W[0,\infty n]$ 的路径取向为 $-n$（$\dd z=-n\,\dd s$），每个顶角多一个负号，
+动量仍从无穷远端累加，得 \cref{eq:cw-pastc,eq:cw-futc}。四式都可以读成 (i)–(iv)：例如对 $W[\infty n,0]$，
+沿取向（$0\to+\infty$）流动、在第 $j$ 个胶子之前那一段的动量为 $\ell=-(k_j+\dots+k_m)$，
+$\ii/(n\cdot\ell+\ii0)=-\ii/(n\cdot(k_j+\dots+k_m)-\ii0)$。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd]
+  \draw[wilson] (0,0) -- (2.2,0);
+  \draw[gluon] (1.1,1.15) -- (1.1,0);
+  \node[vertex] at (1.1,0) {};
+  \node[above] at (1.1,1.15) {$\mu,\,a$};
+  \node at (1.1,-0.62) {$\ii g\,t^a v^\mu$};
+  \node at (1.1,-1.3) {(a) 顶角};
+  \begin{scope}[xshift=3.6cm]
+    \draw[wilson] (0,0) -- (2.2,0);
+    \path[mom={$\ell$}] (0.35,0) -- (1.85,0);
+    \node at (1.1,-0.66) {$\dfrac{\ii}{v\cdot\ell+\ii0}$};
+    \node at (1.1,-1.3) {(b) 程函传播子};
+  \end{scope}
+\end{tikzpicture}
+
+\vspace{3mm}
+\begin{tikzpicture}[fd]
+  \draw[wilson] (0,0) -- (6.6,0);
+  \node[left] at (0,0) {$-\infty n$};
+  \node[opvertex] at (6.6,0) {};
+  \node[right] at (6.75,0) {$0$};
+  \draw[gluon] (2.0,1.25) -- (2.0,0); \node[vertex] at (2.0,0) {};
+  \draw[gluon] (4.3,1.25) -- (4.3,0); \node[vertex] at (4.3,0) {};
+  \path[mom={$k_1$}] (2.0,1.25) -- (2.0,0.2);
+  \path[mom={$k_2$}] (4.3,1.25) -- (4.3,0.2);
+  \node[below] at (3.15,-0.12) {\small$\dfrac{\ii}{n\cdot k_1+\ii0}$};
+  \node[below] at (5.45,-0.12) {\small$\dfrac{\ii}{n\cdot(k_1+k_2)+\ii0}$};
+  \node[below] at (1.0,-0.2) {\small$\ell=0$};
+  \node at (3.3,-1.45) {(c) 指向过去的 $W[0,-\infty n]$，颜色因子 $t^{a_2}t^{a_1}$};
+\end{tikzpicture}
+
+\vspace{3mm}
+\begin{tikzpicture}[fd]
+  \draw[wilson] (0,0) -- (6.6,0);
+  \node[opvertex] at (0,0) {};
+  \node[left] at (-0.15,0) {$0$};
+  \node[right] at (6.6,0) {$+\infty n$};
+  \draw[gluon] (2.3,1.25) -- (2.3,0); \node[vertex] at (2.3,0) {};
+  \draw[gluon] (4.6,1.25) -- (4.6,0); \node[vertex] at (4.6,0) {};
+  \path[mom={$k_1$}] (2.3,1.25) -- (2.3,0.2);
+  \path[mom={$k_2$}] (4.6,1.25) -- (4.6,0.2);
+  \node[below] at (1.15,-0.12) {\small$\dfrac{-\ii}{n\cdot(k_1+k_2)-\ii0}$};
+  \node[below] at (3.45,-0.12) {\small$\dfrac{-\ii}{n\cdot k_2-\ii0}$};
+  \node[below] at (5.6,-0.2) {\small$\ell=0$};
+  \node at (3.3,-1.45) {(d) 指向未来的 $W[\infty n,0]$，颜色因子 $t^{a_2}t^{a_1}$};
+\end{tikzpicture}
+\caption{Wilson 线的动量空间 Feynman 规则（\cref{prop:cw-rules}）。双线为 Wilson 线，箭头为路径取向，
+$\otimes$ 为有限端点；胶子动量 $k_j$ 流入 Wilson 线。(c)(d) 为二阶展开：指向过去的线从 $-\infty$ 累加动量，
+传播子带 $+\ii0$；指向未来的线从 $+\infty$ 累加动量，传播子带 $-\ii0$。}\label{fig:cw-rules}
+\end{figure}
+
+\begin{remark}[二阶验证与数值检验]\label{rem:cw-second}
+二阶项为（\cref{fig:cw-rules}）
+\[
+\begin{aligned}
+W^{(2)}[0,-\infty n]&=(\ii g)^2\,n\cdot\tilde A(k_2)\,n\cdot\tilde A(k_1)\,\frac{\ii}{n\cdot k_1+\ii0}\,\frac{\ii}{n\cdot(k_1+k_2)+\ii0},\\
+W^{(2)}[\infty n,0]&=(\ii g)^2\,n\cdot\tilde A(k_2)\,n\cdot\tilde A(k_1)\,\frac{-\ii}{n\cdot(k_1+k_2)-\ii0}\,\frac{-\ii}{n\cdot k_2-\ii0}:
+\end{aligned}
+\]
+指向过去的线从 $-\infty$ 出发时不带动量，吸收 $k_1$ 后带 $k_1$，再吸收 $k_2$ 后把 $k_1+k_2$ 交给端点 $0$。
+四种线的迭代积分对 $m\le3$ 及一般 $m$ 的归纳步用 sympy 精确验证；把 \cref{eq:cw-W} 作为常微分方程在由三个复平面波
+组成的 SU(3) 背景场中数值求解，$g^1$ 至 $g^4$ 的系数与 \cref{eq:cw-past,eq:cw-future,eq:cw-pastc,eq:cw-futc}
+相符至 $10^{-11}$；换用相反的 $\ii0$ 或颠倒颜色次序则偏差为 $\order{1}$。
+\end{remark}
+
+\begin{remark}[外线部分子、割图与文献对照]\label{rem:cw-cut}
+(1) \cref{sec:cw-eikonal} 将证明：入射夸克 $\leftrightarrow W[0,-\infty v]$，出射夸克 $\leftrightarrow W[\infty v,0]$，
+入射反夸克 $\leftrightarrow W[-\infty v,0]$，出射反夸克 $\leftrightarrow W[0,\infty v]$（$v$ 平行于部分子动量）；
+“$+\ii0$ 配沿取向流动的动量”正是 Feynman 传播子的程函极限。规则在 $n\to\alpha n$（$\alpha>0$）下不变，
+$\alpha<0$ 时 $\ii0$ 反号，故 $n$ 必须沿部分子的物理方向。
+(2) 割图中割线右侧为复共轭振幅。对 PDF 写 $W[w,0]=W[w,\infty n_B]\,W[\infty n_B,0]$，$W[\infty n_B,0]$ 在振幅一侧
+（顶角 $+\ii g\,t^an_B^\mu$），$W[w,\infty n_B]$ 在共轭一侧（顶角 $-\ii g\,t^an_B^\mu$）；动量为 $l$ 的实胶子
+在左侧给出 $-g\,t^a\frac{n^\mu}{n\cdot l+\ii0}$，在右侧给出 $-g\,t^a\frac{n^\mu}{n\cdot l-\ii0}$，互为复共轭。由于 $0$ 与 $w$
+在同一条类光直线上，$W[w,0]=W[w,\infty n_B]W[\infty n_B,0]=W[w,-\infty n_B]W[-\infty n_B,0]$：
+对共线 PDF 而言伸向未来还是过去无关紧要。
+(3) Collins~\cite{Collins2011} 图 7.10（按其勘误表更正）给出 PDF 中 Wilson 线顶角：割线左侧 $-\ii g_0n^\mu t_\alpha$，
+右侧 $+\ii g_0n^\mu t_\alpha$，并说明其符号与他的拉氏量中耦合常数的符号一致。我们的约定下左侧为 $+\ii g\,n^\mu t^a$
+（与夸克–胶子顶角 $+\ii g\gamma^\mu t^a$ 同号）、右侧反号——相对符号一致；Collins 的 $g$ 与本书（Peskin–Schroeder
+约定）差一个符号（\emph{待核对其图 3.1}）。他的式 (11.6) 中 K 项分母 $k\cdot w_2-\ii0$（$k$ 流入硬部分）
+对应沿 $n_B=w_2$、动量流入的指向未来的线，与 \cref{eq:cw-future} 一致。
+\end{remark}
+
+\section{程函恒等式}\label{sec:cw-eikid}
+
+\begin{lemma}[阿贝尔程函恒等式]\tagR\label{lem:cw-eikonal}
+设实数 $a_1,\dots,a_m$ 的任何部分和不为零，则
+\begin{equation}\label{eq:cw-eik}
+\sum_{\pi\in S_m}\prod_{j=1}^m\frac{1}{a_{\pi(1)}+\dots+a_{\pi(j)}}=\prod_{j=1}^m\frac{1}{a_j}.
+\end{equation}
+在绝热正规化下它在有限 $\epsilon$ 时\emph{严格}成立：
+\begin{gather}
+\sum_{\pi\in S_m}\prod_{j=1}^m\frac{\ii}{n\cdot(k_{\pi(1)}+\dots+k_{\pi(j)})+\ii j\epsilon}=\prod_{j=1}^m\frac{\ii}{n\cdot k_j+\ii\epsilon},\label{eq:cw-eik-eps}\\
+\sum_{\pi\in S_m}\prod_{j=1}^m\frac{-\ii}{n\cdot(k_{\pi(j)}+\dots+k_{\pi(m)})-\ii(m-j+1)\epsilon}=\prod_{j=1}^m\frac{-\ii}{n\cdot k_j-\ii\epsilon}.\label{eq:cw-eik-eps2}
+\end{gather}
+特别地，$m=2$ 时
+\begin{equation}\label{eq:cw-eik2}
+\frac{1}{n\cdot k_1\,n\cdot(k_1+k_2)}+\frac{1}{n\cdot k_2\,n\cdot(k_1+k_2)}=\frac{n\cdot k_1+n\cdot k_2}{n\cdot k_1\,n\cdot k_2\,n\cdot(k_1+k_2)}=\frac{1}{n\cdot k_1\,n\cdot k_2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+（积分表示）$\prod_j\frac{\ii}{a_j+\ii\epsilon}=\prod_j\int_{-\infty}^0\dd\lambda_j\,\ee^{-\ii\lambda_j(a_j+\ii\epsilon)}$；去掉零测集后，
+$(-\infty,0]^m$ 是 $m!$ 个单形 $\lambda_{\pi(1)}<\dots<\lambda_{\pi(m)}$ 的不交并，每个单形按 \cref{prop:cw-rules} 的证明给出
+$\prod_j\ii/(a_{\pi(1)}+\dots+a_{\pi(j)}+\ii j\epsilon)$，这就是 \cref{eq:cw-eik-eps}；\cref{eq:cw-eik-eps2} 同理。物理上，阿贝尔 Wilson 线是普通指数，
+$W^{(m)}=(W^{(1)})^m/m!$。
+（代数归纳）按最后一个元素 $\pi(m)=l$ 对置换分组：末因子 $1/(a_1+\dots+a_m)$ 公共，其余由归纳假设求和为
+$\prod_{j\neq l}1/a_j$；故总和为 $\frac{1}{\sum_ja_j}\sum_l\prod_{j\neq l}\frac{1}{a_j}=\frac{\sum_la_l}{\sum_ja_j}\prod_j\frac1{a_j}$。
+\end{proof}
+
+\begin{remark}
+若在每个分母上都加\emph{同一个} $+\ii\epsilon$，\cref{eq:cw-eik-eps} 在有限 $\epsilon$ 时不再严格成立（$m=2$ 时差为
+$-\ii\epsilon/[(a_1+\ii\epsilon)(a_2+\ii\epsilon)(a_1+a_2+\ii\epsilon)]$），只在分布意义下 $\epsilon\to0$ 时成立；全书应采用 (C3) 的绝热正规化。
+同一证明给出“洗牌恒等式”：对两组保持内部次序的连接，$\sum_{\sigma\in{\rm Sh}(p,q)}E(\sigma)=E(k_1,\dots,k_p)E(l_1,\dots,l_q)$，
+$E(q_1,\dots,q_r)=\prod_j1/n\cdot(q_1+\dots+q_j)$（对 $p,q\le3$ 已验证），用于两组颜色因子彼此对易的情形。
+\end{remark}
+
+\begin{remark}[非阿贝尔情形：路径排序]\label{rem:cw-nonabelian}
+非阿贝尔 Wilson 线中颜色矩阵按路径排序，对连接点求和不再因子化。两胶子时（$T_j\equiv\ii g\,n\cdot\tilde A^{a_j}t^{a_j}$，
+$E_{12}=\frac{\ii}{n\cdot k_1+\ii0}\frac{\ii}{n\cdot(k_1+k_2)+\ii0}$）
+\begin{equation}\label{eq:cw-nonab2}
+T_bT_aE_{12}+T_aT_bE_{21}=\tfrac12\{T_a,T_b\}\frac{\ii}{n\cdot k_1+\ii0}\frac{\ii}{n\cdot k_2+\ii0}
++\tfrac12[T_b,T_a]\,(E_{12}-E_{21}),
+\end{equation}
+对称部分满足阿贝尔恒等式，反对称部分 $[t^b,t^a]=\ii f^{bac}t^c$ 是携带 $k_1+k_2$ 的单个伴随“网”。等价地，在有限 $\epsilon$ 下严格有
+$W^{(2)}-\frac12(W^{(1)})^2=\frac14\sum_{r,s}[T_s,T_r]\big(E(r,s)-E(s,r)\big)$：$\ln W$ 从 $\order{g^2}$ 起只含对易子
+（以“网”表述的非阿贝尔指数化见 Gatheral~\cite{Gatheral1983}，Frenkel 与 Taylor~\cite{FrenkelTaylor1984}）；阿贝尔情形 $\ln W=W^{(1)}$。
+\end{remark}
+
+\begin{lemma}[程函 Ward 恒等式]\tagR\label{lem:cw-eikward}
+对同一 $\ii0$，
+\begin{equation}\label{eq:cw-eikward}
+\begin{gathered}
+\frac{n\cdot k}{(n\cdot\ell+\ii0)\,(n\cdot(\ell+k)+\ii0)}=\frac{1}{n\cdot\ell+\ii0}-\frac{1}{n\cdot(\ell+k)+\ii0}\\
+\Longleftrightarrow\qquad
+\frac{\ii}{n\cdot(\ell+k)}\,(\ii g\,n\cdot k\,t^a)\,\frac{\ii}{n\cdot\ell}=g\,t^a\Big[\frac{\ii}{n\cdot(\ell+k)}-\frac{\ii}{n\cdot\ell}\Big].
+\end{gathered}
+\end{equation}
+它与夸克线的 Ward 恒等式（\cref{lem:cw-ward-elem}）形式完全相同（$S(p)\to\ii/n\cdot p$，$\gamma^\mu\to n^\mu$）：
+Wilson 线重现了它所替代的部分子线的 Ward 恒等式。
+\end{lemma}
+
+\begin{proposition}[半无穷 Wilson 线的 Ward 恒等式]\tagR\label{prop:cw-wilson-ward}
+在 $W[0,-\infty n]$ 的 $m$ 胶子项（颜色矩阵 $T_1,\dots,T_m$，$T_1$ 最靠近 $-\infty$，极化因子取 $n\cdot\epsilon_j=1$）上，
+把一个标量极化胶子（$\epsilon^\mu=q^\mu$，颜色 $T_q$）插入全部 $m+1$ 个位置并求和，得
+\begin{equation}\label{eq:cw-wilson-ward}
+\sum_{p=0}^{m}(\text{插在第 }p\text{ 个胶子之后})=-g\,T_q\,Y+g\sum_{p=0}^{m-1}Z_p\;T_m\cdots T_{p+2}\,[T_q,T_{p+1}]\,T_p\cdots T_1 ,
+\end{equation}
+其中 $Y$ 为原来的 $m$ 胶子项，$Z_p$ 为第 $p+1$ 个胶子携带 $k_{p+1}+q$ 时的程函传播子之积。指向未来的线上为
+$+g\,Y\,T_q$ 加相应的对易子项。阿贝尔情形对易子为零，和分别为 $-gY$（过去）与 $+gY$（未来）。
+\end{proposition}
+
+\begin{proof}
+内部插入用 \cref{eq:cw-eikward} 逐段相消；插在最靠近 $-\infty$ 处时 $(\ii g\,n\cdot q)\frac{\ii}{n\cdot q}=-g$；按部分求和整理即得。
+端点项是有限端点处的无穷小规范转动（$W[0,-\infty n]\to U(0)W[0,-\infty n]$；无穷远处的转动被绝热因子关掉），
+对易子项则与该标量胶子经三胶子顶角连到其他胶子线上的图相消（\cref{sec:cw-ward}）。若标量胶子的极化与其动量带
+同样的绝热移动，则 \cref{eq:cw-wilson-ward} 在有限 $\epsilon$ 下严格成立（数值验证至 $m=4$）。
+\end{proof}

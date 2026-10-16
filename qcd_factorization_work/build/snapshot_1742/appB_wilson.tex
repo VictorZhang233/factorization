@@ -1,0 +1,193 @@
+% =====================================================================================================
+% appB_wilson.tex —— 附录 B  Wilson 线：Feynman 规则、程函恒等式与尖点（writer W05）
+% 源：FINAL_OUTLINE_v2 App B；research/c_wilson（DERIVATION.md §2--§3）；VF-WL-1/3/4/13，VF-CONV-23，VF-SCET-16；
+%     验证脚本 writing/work/W05/s4_wilson.py、s5_cusp.py（日志 logs/）。
+% =====================================================================================================
+\chapter{Wilson 线：Feynman 规则、程函恒等式与尖点}\label{app:appB}
+
+本附录证明第~3~章的\cref{prop:prelim-wilson-covariance}、\cref{prop:prelim-wilson-rules}（由\cref{prop:appB-rules}给出）与\cref{lem:prelim-eikonal-identity}（由\cref{lem:appB-shuffle}给出），
+给出半无限 Wilson 线的 Ward 恒等式（供附录~F 使用）、非阿贝尔指数化的全阶论证（\cref{prop:appB-webs}）与第~5~章所用的单圈 cusp 反常维度（\cref{prop:appB-cusp-oneloop}）。
+
+% -----------------------------------------------------------------------------------------------------
+\section{定义与约定}\label{sec:appB-definition}
+
+沿路径 $z(s)$（$s\in[0,1]$，$z(0)=a$，$z(1)=b$）的 Wilson 线（\cref{def:prelim-wilson}）为
+\begin{equation}\label{eq:appB-W}
+W[b,a]=P\exp\Big(\ii g\int_a^b\dd z\cdot A\Big)=\sum_{m=0}^\infty(\ii g)^m\!\!\int\limits_{0<s_1<\dots<s_m<1}\!\!\dd s_1\cdots\dd s_m\;
+\dot z\cdot A(z(s_m))\cdots\dot z\cdot A(z(s_1)),
+\end{equation}
+$A\equiv A^at^a$，离 $b$ 近的点在左；$W(s)\equiv W[z(s),a]$ 是 $\frac{\dd}{\dd s}W=\ii g\,\dot z\cdot A(z(s))\,W$、$W(0)=1$ 的唯一解。
+
+\emph{\cref{prop:prelim-wilson-covariance}的证明。}由于 $W[c,b]W[b,a]$ 与 $W[c,a]$ 满足同一方程与同一初值，二者相等；取 $c=a$ 得 $W[a,b]W[b,a]=1$，对厄米的 $A$ 有 $W[b,a]^\dagger=W[a,b]$。
+在 $D=\partial-\ii gA$ 的规范变换 $A'=UAU^{-1}-\frac{\ii}g(\partial U)U^{-1}$ 下，$V(s)=U(z(s))W(s)U^{-1}(a)$ 满足
+\[
+\frac{\dd V}{\dd s}=\Big[\frac{\dd U}{\dd s}U^{-1}+\ii g\,U\dot z\cdot AU^{-1}\Big]V=\ii g\,\dot z\cdot A'\,V,\qquad V(0)=1,
+\]
+故 $W[b,a]\to U(b)W[b,a]U^{-1}(a)$（非齐次项反号则不成立；SU(3) 中数值核对）。% check: s4_wilson.py (d)
+伴随线 $W^{(A)}_{ab}=2\Tr[t^aW[b,a]t^bW[a,b]]$ 即 $W t^bW^{-1}=t^aW^{(A)}_{ab}$。
+
+\emph{约定。}(C1) $A(x)=\int\frac{\dd^4k}{(2\pi)^4}\ee^{-\ii k\cdot x}\tilde A(k)$，$k$ 流入 Wilson 线；(C2) $n^0>0$，$W[\infty n,y]=\lim_{L\to\infty}W[y+Ln,y]$ 等，端点 $y\ne0$ 时乘 $\ee^{-\ii y\cdot K_{\rm tot}}$；
+(C3) 绝热正规子：半无限线上的场乘以 $\ee^{-\epsilon s}$（$s$ 为到有限端点的仿射距离），最后 $\epsilon\to0^+$。Collins 用 $D=\partial+\ii g_0tA$\cite[式~(2.2)]{Collins2011}，故 $g_{\rm Collins}=-g$，
+其 Wilson 线 $P\exp(-\ii g_0\int n\cdot A)$\cite[式~(13.40)]{Collins2011}作为算符与我们的相同；他的图~7.10 与式~(11.4)--(11.6) 须按作者勘误使用（附录~Q 第~19~条）。
+
+% -----------------------------------------------------------------------------------------------------
+\section{动量空间 Feynman 规则}\label{sec:appB-rules}
+
+本节给出第~3~章\cref{prop:prelim-wilson-rules}的证明。
+
+\begin{proposition}[Wilson 线的 Feynman 规则 \tagR]\label{prop:appB-rules}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）按 (C1)--(C3)，直半无限 Wilson 线中连接 $m$ 个胶子（动量 $k_j$ 流入、指标 $\mu_j$、色 $a_j$；记 $n\cdot\tilde A_j\equiv n^{\mu_j}\tilde A^{a_j}_{\mu_j}(k_j)t^{a_j}$，按所写次序相乘）的项为
+\begin{align}
+W^{(m)}[0,-\infty n]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{\ii}{n\cdot(k_1+\dots+k_j)+\ii j\epsilon},\label{eq:appB-past}\\
+W^{(m)}[\infty n,0]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{-\ii}{n\cdot(k_j+\dots+k_m)-\ii(m-j+1)\epsilon},\label{eq:appB-future}\\
+W^{(m)}[-\infty n,0]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(-\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{\ii}{n\cdot(k_j+\dots+k_m)+\ii(m-j+1)\epsilon},\label{eq:appB-pastc}\\
+W^{(m)}[0,\infty n]&=\int\!\prod_j\frac{\dd^4k_j}{(2\pi)^4}\,(-\ii g)^m\,n\cdot\tilde A_m\cdots n\cdot\tilde A_1\prod_{j=1}^m\frac{-\ii}{n\cdot(k_1+\dots+k_j)-\ii j\epsilon},\label{eq:appB-futc}
+\end{align}
+% VF-WL-1
+其中胶子按路径次序编号：式~\eqref{eq:appB-past} 中 $k_1$ 最靠近 $-\infty$，式~\eqref{eq:appB-future} 与 \eqref{eq:appB-pastc} 中 $k_1$ 最靠近 $0$，式~\eqref{eq:appB-futc} 中 $k_1$ 最靠近 $+\infty$。
+等价地（普适规则）：每个连接点一个顶点 $\ii g\,t^av^\mu$（$v$ 为沿取向的切矢量），除伸向无穷远的一段外每段一个 $\ii/(v\cdot\ell+\ii0)$（$\ell$ 沿取向流动，伸向无穷远的一段 $\ell=0$），
+色矩阵按路径次序，有限 $\epsilon$ 下某段的 $\ii0$ 为 $\ii\epsilon$ 乘以该段与无穷远端之间的连接点数。单胶子项与“未来减过去”为
+\begin{equation}\label{eq:appB-onegluon}
+W[\infty n,0]\ni\frac{g\,t^an\cdot\tilde A^a(k)}{n\cdot k-\ii0},\qquad W[-\infty n,0]\ni\frac{g\,t^an\cdot\tilde A^a(k)}{n\cdot k+\ii0},\qquad
+\text{差}=2\pi\ii\,g\,t^an\cdot\tilde A^a(k)\,\delta(n\cdot k).
+\end{equation}
+\uses{def:prelim-wilson}
+\end{proposition}
+
+\begin{proof}
+以 $W[0,-\infty n]=P\exp(\ii g\int_{-\infty}^0\dd\lambda\,n\cdot A(\lambda n))$ 为例：代入 (C1) 并乘绝热因子，$m$ 阶项的参数积分为
+$\int_{-\infty<\lambda_1<\dots<\lambda_m<0}\prod_j\dd\lambda_j\,\ee^{-\ii\lambda_j(n\cdot k_j+\ii\epsilon)}$。先积 $\lambda_1$ 得 $\frac{\ii}{n\cdot k_1+\ii\epsilon}\ee^{-\ii\lambda_2(n\cdot k_1+\ii\epsilon)}$，
+它与下一个相因子合并为 $\ee^{-\ii\lambda_2(n\cdot(k_1+k_2)+2\ii\epsilon)}$；归纳地第 $j$ 次积分给出 $\ii/[n\cdot(k_1+\dots+k_j)+\ii j\epsilon]$，$\lambda_m$ 积到 $0$。色矩阵的次序即式~\eqref{eq:appB-W} 的路径次序。
+$W[\infty n,0]$ 的区域为 $0<\lambda_1<\dots<\lambda_m<\infty$、阻尼 $\ee^{-\epsilon\lambda_j}$，先积 $\lambda_m$，得式~\eqref{eq:appB-future}；$W[-\infty n,0]$、$W[0,\infty n]$ 的取向为 $-n$，
+每个顶点多一个负号，动量仍从无穷远端累加。普适规则是这四式的改写（例如 $W[\infty n,0]$ 第 $j$ 个胶子前一段沿取向的动量为 $-(k_j+\dots+k_m)$）。
+式~\eqref{eq:appB-onegluon} 是 $m=1$ 的情形，差由 $\frac1{x-\ii0}-\frac1{x+\ii0}=2\pi\ii\delta(x)$ 给出（即 $\ii g\int_{-\infty}^\infty\dd\lambda\,n\cdot A(\lambda n)$ 的 Fourier 变换）。
+四种线的 $m\le3$ 项经符号计算验证；把式~\eqref{eq:appB-W} 在 SU(3) 背景场中数值求解，$g^1$ 至 $g^4$ 的系数与规则相符（残差按 $g^5$ 标度）。% check: s4_wilson.py (a)(b)
+\end{proof}
+% -----------------------------------------------------------------------------------------------------
+\section{程函恒等式与 Wilson 线的 Ward 恒等式}\label{sec:appB-eikonal}
+
+本节给出第~3~章\cref{lem:prelim-eikonal-identity}的证明。
+
+\begin{lemma}[程函恒等式（洗牌积）]\label{lem:appB-shuffle}
+(i) 设复数 $y_1,\dots,y_m$ 的任意部分和都不为零，则
+\begin{equation}\label{eq:appB-shuffle}
+\sum_{\sigma\in S_m}\prod_{j=1}^m\frac{1}{y_{\sigma(1)}+\dots+y_{\sigma(j)}}=\prod_{j=1}^m\frac1{y_j}.
+% VF-WL-4
+\end{equation}
+更一般地，对两个保持内部次序的序列 $(q_1,\dots,q_p)$ 与 $(r_1,\dots,r_q)$，记 $E(x_1,\dots,x_l)=\prod_{j=1}^l(x_1+\dots+x_j)^{-1}$，则对全部 $\binom{p+q}{p}$ 个洗牌 $\sigma$ 求和有
+$\sum_\sigma E(\sigma)=E(q_1,\dots,q_p)\,E(r_1,\dots,r_q)$。
+(ii) 取 $y_j=n\cdot k_j+\ii\epsilon$（$\epsilon>0$），则左边第 $j$ 个分母为 $n\cdot(k_{\sigma(1)}+\dots+k_{\sigma(j)})+\ii j\epsilon$，正是绝热正规子 (C3) 的累积形式：
+程函恒等式 $\sum_\sigma\prod_j\frac{\ii}{n\cdot(k_{\sigma(1)}+\dots+k_{\sigma(j)})+\ii j\epsilon}=\prod_j\frac{\ii}{n\cdot k_j+\ii\epsilon}$ 在\emph{有限} $\epsilon$ 下严格成立（指向未来的线同理）。
+(iii) 若每个程函分母都加\emph{同一个} $+\ii\epsilon$，恒等式只在 $\epsilon\to0$ 时按分布意义成立：$m=2$ 时（$a_j=n\cdot k_j$）
+\[
+\prod_j\frac{1}{a_j+\ii\epsilon}-\sum_\sigma\prod_j\frac{1}{a_{\sigma(1)}+\dots+a_{\sigma(j)}+\ii\epsilon}=\frac{-\ii\epsilon}{(a_1+\ii\epsilon)(a_2+\ii\epsilon)(a_1+a_2+\ii\epsilon)},
+\]
+它与 $\frac1{(1+a_1^2)(1+a_2^2)}$ 的配对为 $\frac{\pi^2\epsilon}{(1+\epsilon)^2(2+\epsilon)}$，只在 $\epsilon\to0$ 时为零。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+(i) 对 $m$ 归纳。按最后一个元素 $\sigma(m)=l$ 分组：末因子 $1/(y_1+\dots+y_m)$ 公共，其余由归纳假设等于 $\prod_{j\ne l}1/y_j$，故左边
+$=\frac{1}{\sum_jy_j}\sum_l\prod_{j\ne l}\frac1{y_j}=\prod_j\frac1{y_j}$。洗牌积同样对 $p+q$ 归纳（最后一个元素是 $q_p$ 或 $r_q$）。等价地，$\prod_j\frac{\ii}{y_j}=\prod_j\int_{-\infty}^0\dd\lambda_j\ee^{-\ii\lambda_jy_j}$
+（$\Imag y_j>0$），而 $(-\infty,0]^m$ 是 $m!$ 个单形的不交并，每个单形给出左边一项：阿贝尔 Wilson 线是普通指数，$W^{(m)}=(W^{(1)})^m/m!$。
+(ii) 由 (i)：$y_{\sigma(1)}+\dots+y_{\sigma(j)}$ 的虚部为 $j\epsilon$。(iii) 通分即得；配对用留数：对 $a_1$ 闭合于上半平面只有 $a_1=\ii$，给出 $\frac{-\ii\pi}{(1+\epsilon)(a_2+\ii(1+\epsilon))}$，
+再对 $a_2$ 同样得 $\frac{-\pi}{(2+\epsilon)(1+\epsilon)}$，乘以 $-\ii\epsilon$ 即得（亦经数值核对）。% check: writing/work/W05/s4_wilson.py (e)
+\end{proof}
+
+即：有限正规子下恒等式成立当且仅当每个累积分母的正规子是已吸收胶子正规子之和——场的绝热阻尼满足这一点，朴素的统一 $+\ii\epsilon$（$\delta$ 正规化）不满足
+（参见\cite[式~(5)--(6)]{Echevarria:2015byo}；阿贝尔恒等式本身是经典的）。
+
+\begin{remark}[半无限 Wilson 线的 Ward 恒等式]\label{rem:appB-ward}
+在 $W[0,-\infty n]$ 的 $m$ 胶子项中（色矩阵 $T_1,\dots,T_m$ 已含顶点因子，$T_1$ 最靠近 $-\infty$；记该项为 $Y$），把一个动量为 $q$、极化为 $q^\mu$、色为 $T_q$ 的标量极化胶子插入全部 $m+1$ 个位置并求和，得
+\begin{equation}\label{eq:appB-ward}
+\sum_{p=0}^{m}(\text{插在第 }p\text{ 个胶子之后})=-g\,T_q\,Y+g\sum_{p=0}^{m-1}Z_p\;T_m\cdots T_{p+2}\,[T_q,T_{p+1}]\,T_p\cdots T_1 ,
+% VF-WL-13
+\end{equation}
+其中 $Z_p$ 是第 $p+1$ 个胶子携带 $k_{p+1}+q$ 时的程函传播子之积。证明：内部插入用程函 Ward 恒等式
+$\frac{\ii}{n\cdot(\ell+q)}(\ii g\,n\cdot q)\frac{\ii}{n\cdot\ell}=g[\frac{\ii}{n\cdot(\ell+q)}-\frac{\ii}{n\cdot\ell}]$ 拆开，最靠近 $-\infty$ 的插入给出 $-g$，相邻位置的项逐对相消，只剩相邻色序之差与端点项；
+阿贝尔情形和为 $-gY$。对易子项与该胶子经三胶子顶点的图相消（附录~F）。若标量极化也带同样的绝热移动，式~\eqref{eq:appB-ward} 在有限 $\epsilon$ 下严格成立（以 SU(3) 生成元数值核对至 $m=4$）。% check: s4_wilson.py (f)
+\uses{prop:appB-rules}
+\end{remark}
+
+\begin{proposition}[非阿贝尔指数化 \tagA]\label{prop:appB-webs}
+在一点相遇的 Wilson 线的真空关联函数（及其在背景场中的期望值）可以写成 web 之和的指数：$\langle W\rangle=\exp\big[\sum_w\tilde C(w)\,\mathcal F(w)\big]$，其中 $\mathcal F(w)$ 是 web 的运动学积分，
+$\tilde C(w)$ 是修正的色因子；对两条线，web 是交换胶子在两条线上的连接不能被分成两个独立子集的图，其修正色因子是“最大非阿贝尔”部分\cite{Gatheral1983,FrenkelTaylor1984}。
+\uses{prop:appB-rules,lem:appB-shuffle}
+\end{proposition}
+
+\begin{proofsketch}
+阿贝尔情形：由\cref{prop:appB-rules}与洗牌积（\cref{lem:appB-shuffle}），独立的连接组之间因子化，$\langle W\rangle$ 是连通光子子图之和的指数。非阿贝尔情形：把每个图的色因子按交换次序写成对称部分与对易子之和，
+对称部分用洗牌积重组进指数，对易子部分留下修正色因子 $\tilde C(w)$（两条线时为“最大非阿贝尔”部分）；$O(g^2)$ 时即\cref{prop:sudakov-webs}(b) 的严格恒等式（指针），两圈交叉梯形图的修正色因子为 $-\frac12C_FC_A$。
+完整论证见\cite{Gatheral1983,FrenkelTaylor1984}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}全阶的组合学论证（[A]），对两条线在文献中给出\cite{Gatheral1983,FrenkelTaylor1984}；在 $O(g^2)$ 是严格的代数恒等式（\cref{prop:sudakov-webs}(b)，[R, $R_{\mathrm{def}}$]）。
+多条线的 web 及其重整化本书不需要。所需的有限正规子必须是绝热型的（\cref{lem:appB-shuffle}(iii)）。
+% -----------------------------------------------------------------------------------------------------
+\section{单圈尖点反常维度}\label{sec:appB-cusp}
+
+\begin{proposition}[单圈尖点反常维度 \tagR]\label{prop:appB-cusp-oneloop}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在 $O(\alpha_s)$，对散射组态的折线
+$W_\beta=\frac1{N_c}\langle0|\Tr\,T\{W[\infty v_1,0]\,W[0,-\infty v_2]\}|0\rangle$（$v_i^2=1$，$v_i^0>0$，$\cosh\beta=v_1\cdot v_2$；Feynman 规范，$D=4-2\varepsilon$，红外由绝热阻尼 $\ee^{-\delta|\lambda|}$ 正规化），
+\begin{equation}\label{eq:appB-cusp-pole}
+W_\beta=1-\frac{\alpha_sC_F}{2\pi\varepsilon}\,(\beta\coth\beta-1)+(\varepsilon\text{ 的正则项})+O(\alpha_s^2),\qquad
+\Gamma_{\rm cusp}(\beta)=\frac{\alpha_sC_F}{\pi}\,(\beta\coth\beta-1)+O(\alpha_s^2),
+% VF-CONV-23
+\end{equation}
+其中 $\Gamma_{\rm cusp}$ 按\cref{def:sudakov-cusp}定义（$\MSbar$）。$\beta\coth\beta$ 来自两线之间的交换，$-1$ 来自两条线的自能；$\Gamma(0)=0$；
+$\beta\to\infty$ 时 $\Gamma=\frac{\alpha_sC_F}\pi(\beta-1)+O(\beta\ee^{-2\beta})$，线性项的系数 $\frac{\alpha_sC_F}\pi=\frac{\alpha_s}{4\pi}\Gamma_0$ 即单圈的类光 cusp 反常维度，
+而 $v_i=(\cosh y_i,0,0,\sinh y_i)$ 时 $\beta=|y_1-y_2|$。
+\uses{prop:appB-rules,def:prelim-dr-conventions,def:prelim-msbar,def:prelim-feynman-rules,def:sudakov-cusp}
+\end{proposition}
+
+\begin{proof}
+\emph{第一步：图。}$O(g^2)$ 有三个图：两条线之间的单胶子交换，与每条线自身的 $O(g^2)$ 项（自能）。由\cref{prop:appB-rules}的单胶子项与 Schwinger 表示
+$\frac{-\ii}{v\cdot k-\ii\delta}=\int_0^\infty\dd l\,\ee^{-\ii l(v\cdot k-\ii\delta)}$、$\frac{\ii}{v\cdot k+\ii\delta}=\int_{-\infty}^0\dd\lambda\,\ee^{-\ii\lambda(v\cdot k+\ii\delta)}$，
+$W^{(1)}[\infty v_1,0]=\ii g\int_0^\infty\dd l\,\ee^{-\delta l}\,v_1\cdot A(lv_1)$，$W^{(1)}[0,-\infty v_2]=\ii g\int_{-\infty}^0\dd\lambda\,\ee^{\delta\lambda}\,v_2\cdot A(\lambda v_2)$。
+Feynman 规范中 $\langle0|TA^a_\mu(x)A^b_\nu(y)|0\rangle=-g_{\mu\nu}\delta^{ab}D_F(x-y)$（\cref{def:prelim-feynman-rules}），
+$D_F(x)=\int\frac{\dd^Dk}{(2\pi)^D}\frac{\ii\,\ee^{-\ii k\cdot x}}{k^2+\ii0}=\frac{\Gamma(1-\varepsilon)}{4\pi^{2-\varepsilon}}(-x^2+\ii0)^{-1+\varepsilon}$（Wick 转动后的欧氏 Fourier 变换，\cref{def:prelim-dr-conventions}）。
+色因子 $\frac1{N_c}\Tr(t^at^a)=C_F$。令 $s=-\lambda$，
+\[
+\begin{aligned}
+E&=g^2C_F\cosh\beta\int_0^\infty\!\dd l\int_0^\infty\!\dd s\,\ee^{-\delta(l+s)}D_F(lv_1+sv_2),\\
+\Sigma_i&=g^2C_F\!\!\int\limits_{0<l_1<l_2}\!\!\dd l_1\dd l_2\,\ee^{-\delta(l_1+l_2)}D_F\big((l_2-l_1)v_i\big)=\frac{g^2C_F}{2\delta}\int_0^\infty\!\dd\tau\,\ee^{-\delta\tau}D_F(\tau v_i)
+\end{aligned}
+\]
+（$E$ 的符号：$(\ii g)^2\cdot(-v_1\cdot v_2)=g^2\cosh\beta$；$\Sigma_i$ 中 $(\ii g)^2\cdot(-v_i^2)=g^2$，令 $\tau=l_2-l_1$ 后对 $l_1$ 积分得 $1/(2\delta)$）。
+
+\emph{第二步：交换图。}令 $l=\rho u$、$s=\rho(1-u)$（$\dd l\,\dd s=\rho\,\dd\rho\,\dd u$），$(lv_1+sv_2)^2=\rho^2N(u)$，$N(u)=u^2+(1-u)^2+2u(1-u)\cosh\beta=1+2u(1-u)(\cosh\beta-1)\ge1$。
+间隔是类时的，$(-\rho^2N+\ii0)^{-1+\varepsilon}=-\ee^{\ii\pi\varepsilon}(\rho^2N)^{-1+\varepsilon}$，于是
+\[
+\begin{aligned}
+E&=-g^2C_F\cosh\beta\,\frac{\ee^{\ii\pi\varepsilon}\Gamma(1-\varepsilon)}{4\pi^{2-\varepsilon}}\int_0^\infty\!\dd\rho\,\rho^{-1+2\varepsilon}\ee^{-\delta\rho}\int_0^1\!\dd u\,N(u)^{-1+\varepsilon}\\
+&=-g^2C_F\cosh\beta\,\frac{\ee^{\ii\pi\varepsilon}\Gamma(1-\varepsilon)\Gamma(2\varepsilon)}{4\pi^{2-\varepsilon}\,\delta^{2\varepsilon}}\int_0^1\!\dd u\,N(u)^{-1+\varepsilon}.
+\end{aligned}
+\]
+$\rho\to0$ 处的发散（尖点处的紫外发散）给出极点 $\Gamma(2\varepsilon)=\frac1{2\varepsilon}+O(1)$。令 $w=2u-1$，$N=\frac12(a^2-b^2w^2)$，$a^2=\cosh\beta+1$，$b^2=\cosh\beta-1$，$ab=\sinh\beta$，
+\[
+\int_0^1\frac{\dd u}{N(u)}=\int_{-1}^{1}\frac{\dd w}{a^2-b^2w^2}=\frac{1}{ab}\ln\frac{a+b}{a-b}=\frac{\beta}{\sinh\beta}\qquad\Big(\frac{a+b}{a-b}=\frac{\cosh\frac\beta2+\sinh\frac\beta2}{\cosh\frac\beta2-\sinh\frac\beta2}=\ee^\beta\Big).
+\]
+故 $E$ 的极点为 $-\frac{g^2C_F}{8\pi^2\varepsilon}\beta\coth\beta=-\frac{\alpha_sC_F}{2\pi\varepsilon}\beta\coth\beta$。
+
+\emph{第三步：自能。}$D_F(\tau v)=-\ee^{\ii\pi\varepsilon}\frac{\Gamma(1-\varepsilon)}{4\pi^{2-\varepsilon}}\tau^{-2+2\varepsilon}$，而
+$\int_0^\infty\dd\tau\,\tau^{-2+2\varepsilon}\ee^{-\delta\tau}=\Gamma(-1+2\varepsilon)\,\delta^{1-2\varepsilon}$
+（在 $\Real\varepsilon>\frac12$ 收敛，再解析延拓：线性紫外发散在维数正规化中不留痕迹），故
+\[
+\Sigma_i=-g^2C_F\,\frac{\ee^{\ii\pi\varepsilon}\Gamma(1-\varepsilon)\Gamma(-1+2\varepsilon)}{8\pi^{2-\varepsilon}\,\delta^{2\varepsilon}} .
+\]
+由 $\Gamma(-1+2\varepsilon)=-\Gamma(2\varepsilon)/(1-2\varepsilon)=-\frac1{2\varepsilon}+O(1)$，
+每条线的自能极点为 $+\frac{g^2C_F}{16\pi^2\varepsilon}=+\frac{\alpha_sC_F}{4\pi\varepsilon}$；它是半无限线在有限端点（尖点）处的对数紫外发散。
+
+\emph{第四步：反常维度。}代入 $g_0^2=4\pi\alpha_s\mu^{2\varepsilon}\ee^{\varepsilon\gamma_E}(4\pi)^{-\varepsilon}$（\cref{def:prelim-msbar}），$\mu^{2\varepsilon}\delta^{-2\varepsilon}=(\mu^2/\delta^2)^\varepsilon$，
+三图之和的极点为 $-\frac{\alpha_sC_F}{2\pi\varepsilon}(\beta\coth\beta-1)$，即式~\eqref{eq:appB-cusp-pole} 的第一式；故 $Z_{\rm cusp}=1-\frac{\alpha_sC_F}{2\pi\varepsilon}(\beta\coth\beta-1)$，
+由 $\frac{\dd\alpha_s}{\dd\ln\mu}=-2\varepsilon\alpha_s+O(\alpha_s^2)$，$\Gamma_{\rm cusp}=\frac{\dd\ln Z_{\rm cusp}}{\dd\ln\mu}=\frac{\alpha_sC_F}\pi(\beta\coth\beta-1)$。
+等价地，$W^{\rm ren}_\beta=1-\frac{\alpha_sC_F}{2\pi}(\beta\coth\beta-1)\ln\frac{\mu^2}{\delta^2}+\text{常数}$，$-\frac{\dd\ln W^{\rm ren}_\beta}{\dd\ln\mu}=\Gamma_{\rm cusp}$。
+
+\emph{第五步：极限。}$\beta\coth\beta-1=\frac{\beta^2}3+O(\beta^4)$，$\Gamma(0)=0$：直线没有尖点发散，交换图的 $\int\dd u/N=1$ 恰好抵消两段在连接点的端点发散；
+$\beta\to\infty$ 时 $\coth\beta=1+2\ee^{-2\beta}+\cdots$；$v_1\cdot v_2=\cosh(y_1-y_2)$。各积分与常数因子都经符号与数值计算核对。% check: s5_cusp.py
+\end{proof}
+
+\paragraph{两圈系数与文献注记。}在 $\Gamma_{\rm cusp}=\sum_n(\frac{\alpha_s}{4\pi})^{n+1}\Gamma_n$ 的归一化下，类光两圈系数为
+$\Gamma_1=4C_F[(\frac{67}9-\frac{\pi^2}3)C_A-\frac{20}9T_Fn_f]$\cite{KorchemskyRadyushkin1987}，$n_f=5$ 时 $\Gamma_1=36.8436$；\cite[式~(A.10)]{BecherSchwartz2008}（JHEP 版与 arXiv v1、v2）在 $T_Fn_f$ 前多印了一个 $C_F$，按字面得到 $26.97$（附录~Q 第~1~条）。% VF-CONV-23, VF-SCET-16
+式~\eqref{eq:appB-cusp-pole} 包含两条线的自能；Becher 与 Neubert 的有质量部分子形式\cite{Becher:2009kw}只把 $\beta\coth\beta$ 记入尖点项、把 $-1$ 归入 $\gamma^Q$。
+单圈结果见\cite{Polyakov1980,BrandtNeriSato1981}；产生组态（$\beta\to\beta-\ii\pi$）见第~5~章\cref{prop:sudakov-coulomb}。

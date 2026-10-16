@@ -1,0 +1,19 @@
+% =====================================================================================================
+%  Chapter 24 (key `front`) -- 其他前沿严格结果
+%  Writer W27.  Binding inputs: writing/LEAD_DECISIONS.md, spec_v2/WRITER_SPEC_v2.md (v2.3.1),
+%  spec_v2/FINAL_OUTLINE_v2.md (Ch24 section and Part VII annexes), spec_v2/VERIFIED_FORMULAS_v2.md (VF-FRO-*).
+%  Re-derivation scripts and logs: writing/work/W27/s_*.py, s_*.log.
+%  Key clash: this chapter never defines tab:front-notation* (owned by the front matter).
+% =====================================================================================================
+\chapter{其他前沿严格结果}\label{ch:front}
+
+本章逐条记录约 2010 年以来，在本书前六部分所依赖的基础之上，除前两章讨论的 LaMET 与 Yizhuang Liu 的研究纲领以外，所取得的严格结果、全阶论证、显式验证与反例，并给出每一条的精确适用范围与分级。涉及的主题依次是：物理区钳夹判据与 Coleman--Norton 图像；算符乘积展开（OPE）的严格结果；区域方法及其“隐藏区域”；Glauber 有效理论、旁观者相消与因子化破坏；超领头对数与“因子化恢复”；次领头幂次与端点因子化；超出领头幂次的 TMD 因子化；$\MSbar$ 部分子分布的正定性；算符 BRST 分类的非定域缺口；小 $x$；双部分子散射；非全局对数与喷注；重夸克偶素产生；QED 修正与电弱因子化。本章自己给出完整证明的只有以下几项：Gordan 二择一的构造性形式（\cref{lem:front-min-norm}）与区域方法的主恒等式（\cref{lem:front-jantzen}）两条数学引理；动量空间的 Coleman--Norton 图像（\cref{cor:front-coleman-norton}，\tagR，$R_{\mathrm{cond}}$，内容等级为其前提的 [A]）；jet-pairing 软区域贡献的解析结构及由此得到的在壳展开可交换性（\cref{prop:front-commuting}，\tagR，$R_{\mathrm{cond}}$，内容等级 [C]）；Yukawa 模型中单圈 $\MSbar$ 分布可以为负的计算（\cref{prop:front-msbar-negative}(a)，\tagR，$R_{\mathrm{PT}}$）；以及若干反例与级数恒等式的逐步验证。其余条目是按文献所能支持的程度给出的精确转述与分级：二十七条全阶论证 [A]、十一条部分结果 [P]、六条猜想 [C]、七条已知不成立的陈述 [V]。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{lem:front-min-norm,lem:front-jantzen}（数学；后者在其局部假设 (J1)--(J4) 之下）；\cref{prop:front-lp-facets,prop:front-onshell-facets}（\tagR，$R_{\mathrm{PT}}$，证明见所引文献）；\cref{cor:front-coleman-norton}（\tagR，$R_{\mathrm{cond}}$，前提\cref{thm:front-collins-pinch}）；\cref{prop:front-commuting}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:front-mor-complete}）；\cref{prop:front-msbar-negative}(a)（单圈 Yukawa 模型，\tagR，$R_{\mathrm{PT}}$）。已知不成立（\tagV）：\cref{prop:front-anomalous,prop:front-landau-not-singular,prop:front-hidden-regions,prop:front-jettiness-cvl,prop:front-msbar-negative,prop:front-regge-pole,prop:front-ew-violation}。\par
+\textbf{给出全阶论证：}\cref{thm:front-collins-pinch}（\tagA，证明仅见于预印本）；\cref{prop:front-ir-forest,prop:front-coordinate-space,prop:front-glauber-bfkl,prop:front-syz,prop:front-heavy-fsi,prop:front-sll-all-orders,prop:front-sll-closed-form,thm:front-hgg,prop:front-ggh,prop:front-nlp-ll,prop:front-nlp-dis,prop:front-tmd-nlp-operator,prop:front-sidis-nlp,prop:front-brst-bilocal,prop:front-nlo-bk,prop:front-regge,prop:front-smallx-tmd,prop:front-smallx-helicity,prop:front-dps-scheme,prop:front-rapidity-renorm,prop:front-ngl,prop:front-jet-substructure,prop:front-lightray-ope,thm:front-luxqed,prop:front-lepton-pdf,prop:front-ew-pdf}（\tagA；\cref{prop:front-nlp-dis}的论证仅见于预印本；\cref{thm:front-hgg,prop:front-ggh,prop:front-nlp-ll,prop:front-nlp-dis,prop:front-sidis-nlp}的瓶颈为\cref{asm:front-scet-modes}）。部分结果（\tagP，有限阶、模型或子类）：\cref{prop:front-local-ir,prop:front-ope-scalar,prop:front-ope-ym,prop:front-flow-renorm,prop:front-restoration,prop:front-nlp-threshold,prop:front-nlp-tmd-oneloop,prop:front-positivity-large-scale,prop:front-bk-collinear,prop:front-dpd-evolution,prop:front-nrqcd-ir}。\par
+\textbf{没有证明：}\cref{conj:front-ope-convergence,conj:front-mor-minkowski,conj:front-mpi-violation,conj:front-nlp-beyond-ll,conj:front-glauber-nlp,conj:front-brst-multilocal}（\tagC）；区域集合的完备性\cref{asm:front-mor-complete}（\tagC，\cref{conj:front-mor-minkowski}的前提形式）；本章没有任何一条陈述控制 QCD 中因子化的非微扰有效性。
+\end{tcolorbox}
+

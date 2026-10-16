@@ -1,0 +1,255 @@
+% =====================================================================
+\section{强子—强子碰撞中 TMD 因子化的破坏}\label{sec:break-tmd}
+% =====================================================================
+
+在 SIDIS 中，横向极化强子的 Sivers 函数来自被击中夸克与旁观者之间的末态相互作用，由指向未来的 Wilson 线描述；在 Drell--Yan 中来自初态相互作用，由指向过去的 Wilson 线描述；二者的 T 奇部分符号相反（\cref{thm:tmd-sivers-sign}，\tagR，$R_{\mathrm{def}}$）。在 $h_1h_2\to H_1H_2X$ 中，$h_1$ 的活动部分子 $a$ 同时有初态伙伴（来自 $h_2$ 的部分子 $b$）与末态伙伴（碎裂为 $H_1$、$H_2$ 的出射部分子 $c$、$d$），而这些伙伴的颜色与 $h_2$ 的部分子相关联。问题是：$h_1$ 的旁观者与它们的相互作用，能否仍被吸收进只属于 $h_1$ 的关联函数？\cref{fig:violation-cq}(a) 画出关键的一类图：$h_1$ 的旁观者与碎裂为 $H_2$ 的出射部分子交换一个 Glauber 胶子；它的色矩阵作用在 $H_2$ 那一侧的色空间中。本节先在单胶子层次上精确地算出所有这类附着的色因子，再说明在两胶子层次上为什么任何形式的“每个强子一套 Wilson 线”都不能再现它们。
+
+%%% BEGIN fig:violation-cq
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t3 hadron/.style={draw=black!70,line width=1.5pt,line cap=butt},
+  t3 cl/.style={draw=#1,line width=0.85pt,line cap=round,rounded corners=3pt},
+  t3 carr/.style={postaction={decorate,decoration={markings,
+      mark=at position #1 with {\arrow[xshift=2.4pt]{Stealth[length=4.8pt,width=4.2pt]}}}}},
+  t3 lab/.style={font=\small},
+  t3 note/.style={font=\footnotesize}]
+  % ============ (a) the graph: Glauber gluon between the h1 spectator and the parton -> H2 ============
+  \begin{scope}
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h1) at (-2.3,-1.15) {};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h2) at (-2.3,1.15) {};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H) at (0,0) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D1) at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D2) at (2.3,-1.1) {};
+    \coordinate (s1a) at (h1.335); \coordinate (s1b) at (3.5,-2.1);
+    \coordinate (qa) at (H.325);   \coordinate (qb) at (D2.155);
+    \coordinate (G1) at (intersection of s1a--s1b and 1.45,0--1.45,-3);
+    \coordinate (G2) at (intersection of qa--qb and 1.45,0--1.45,-3);
+    \draw[t3 hadron] (-3.5,-1.15) -- (h1.west);  \draw[t3 hadron] (-3.5,1.15) -- (h2.west);
+    \draw[t3 hadron] (D1.20) -- (3.5,1.4);        \draw[t3 hadron] (D2.340) -- (3.5,-1.4);
+    \draw[plain] (s1a) -- (s1b);                  \draw[plain] (h2.25) -- (3.5,2.1);
+    \draw[glauber] (G1) -- (G2);
+    \draw[quark] (h1.40) -- (H.215);  \draw[quark] (h2.320) -- (H.145);
+    \draw[quark] (H.35) -- (D1.205);  \draw[quark=0.32] (qa) -- (qb);
+    \node[vertex] at (G1) {};  \node[vertex] at (G2) {};
+    \node[t3 lab] at (h1) {$h_1$};  \node[t3 lab] at (h2) {$h_2$};  \node[t3 lab] at (H) {$H$};
+    \node[t3 lab,right] at (3.5,1.4) {$H_1$};  \node[t3 lab,right] at (3.5,-1.4) {$H_2$};
+    \node[t3 note,right] at (3.5,-2.1) {$X_1$};  \node[t3 note,right] at (3.5,2.1) {$X_2$};
+    \path[mom'={$\ell$},mom sep=0.25cm,mom length=0.45cm] (G1) -- (G2);
+    \node[t3 lab] at (0,-2.75) {(a)};
+  \end{scope}
+  % ============ (b) leading-N_c colour flow (colour-singlet hard exchange) ============
+  \begin{scope}[xshift=7.55cm]
+    \coordinate (h1c) at (-2.3,-1.15); \coordinate (h2c) at (-2.3,1.15);
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h1) at (h1c) {};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] (h2) at (h2c) {};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] (H) at (0,0) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D1) at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] (D2) at (2.3,-1.1) {};
+    \coordinate (s1a) at (h1.335); \coordinate (s1b) at (3.5,-2.1);
+    \coordinate (qa) at (H.325);   \coordinate (qb) at (D2.155);
+    \coordinate (L1t) at (intersection of qa--qb and 1.38,0--1.38,-3);
+    \coordinate (L1b) at (intersection of s1a--s1b and 1.38,0--1.38,-3);
+    \coordinate (L2t) at (intersection of qa--qb and 1.52,0--1.52,-3);
+    \coordinate (L2b) at (intersection of s1a--s1b and 1.52,0--1.52,-3);
+    % colour line 1 (blue): s2 -> h2 -> q2 -> H -> q2' -> gluon -> s1 -> h1 -> q1 -> H -> q1' -> H1
+    \draw[t3 cl=blue!70!black,t3 carr=0.5] (3.5,2.1) -- (h2.25);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (h2.320) -- (H.145);
+    \draw[t3 cl=blue!70!black,t3 carr=0.1,t3 carr=0.31,t3 carr=0.7] (qa) -- (L1t) -- (L1b) -- (s1a);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (h1.40) -- (H.215);
+    \draw[t3 cl=blue!70!black,t3 carr=0.55] (H.35) -- (D1.205);
+    % colour line 2 (red): s1 (outgoing end) -> gluon -> q2' -> H2
+    \draw[t3 cl=red!75!black,t3 carr=0.3,t3 carr=0.65,t3 carr=0.93] (s1b) -- (L2b) -- (L2t) -- (qb);
+    % blobs on top of the colour lines
+    \node[jet blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] at (h1c) {$h_1$};
+    \node[jetB blob,ellipse,minimum width=1.15cm,minimum height=0.75cm,inner sep=0pt] at (h2c) {$h_2$};
+    \node[hard blob,circle,minimum size=0.8cm,inner sep=0pt] at (0,0) {$H$};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] at (2.3,1.1) {};
+    \node[hadron blob,circle,minimum size=0.56cm,inner sep=0pt] at (2.3,-1.1) {};
+    \node[t3 lab,right=1pt] at (D1.east) {$H_1$};  \node[t3 lab,right=1pt] at (D2.east) {$H_2$};
+    \node[t3 note,right] at (3.5,-2.1) {$X_1$};  \node[t3 note,right] at (3.5,2.1) {$X_2$};
+    \node[t3 lab] at (0.3,-2.75) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{TMD 因子化破坏的 Collins--Qiu 机制：$h_1+h_2\to H_1+H_2+X$，$H_1$、$H_2$ 在横向近乎背对背，测量其横动量失衡 $\boldsymbol q_{\mathrm T}=\boldsymbol p_{H_1\mathrm T}+\boldsymbol p_{H_2\mathrm T}$。
+(a)~在硬散射 $H$ 之外，$h_1$ 的旁观者 $X_1$ 与碎裂为 $H_2$ 的出射部分子交换一个 Glauber 胶子（暗红色，动量 $\ell$）。若 TMD 因子化成立，$h_1$ 的旁观者的这类相互作用必须能被吸收进 $h_1$ 的 TMD 的 Wilson 线；
+但这个胶子的色矩阵作用在出射部分子上，即作用在 $H_2$ 的碎裂因子的色空间中。Collins 与 Qiu（2007）对横向极化 $h_1$ 的 Sivers 型单自旋不对称明确算出：
+这类末态交换，连同与 $h_2$ 入射部分子的初态交换和与碎裂为 $H_1$ 的部分子的末态交换，所给出的 Glauber 相位项既不同于 SIDIS 型（未来指向）也不同于 Drell--Yan 型（过去指向）Wilson 线所给出的，即标准 TMD 因子化不成立；
+Rogers 与 Mulders（2010）在非极化截面的双胶子交换中证明，允许过程依赖 Wilson 线的“推广 TMD 因子化”同样不成立（严格性标签 [V]）。
+(b)~同一图在大 $N_c$ 下的色流（双线记号，以色单态硬交换为例；强子为夸克加反三重态旁观者的色单态；箭头为色流方向）：胶子交换把两条色线重新连接，
+使 $h_1$ 的残余与 $H_2$ 的碎裂部分子落在同一条色线上（红），而 $H_1$ 经 $h_1$、硬散射与 $h_2$ 的残余相连（蓝）——色结构不再分解为各因子各自的色迹之积。}
+\label{fig:violation-cq}
+\end{figure}
+%%% END fig:violation-cq
+
+我们用 Catani--Seymour 的色空间记号\cite{CataniSeymour1997}：振幅是色空间中的矢量 $|\mathcal M\rangle$，每个外部部分子 $j$ 带色荷算符 $\mathbf T_j^e$，一切部分子按出射计——出射夸克 $\mathbf T=t^e$，出射反夸克 $\mathbf T=-(t^e)^{\tp}$，出射胶子 $(\mathbf T^e)_{bc}=-\ii f^{ebc}$，入射部分子按出射的反部分子处理；色守恒为 $\sum_j\mathbf T_j|\mathcal M\rangle=0$，$\mathbf T_j\cdot\mathbf T_k\equiv\sum_e\mathbf T_j^e\mathbf T_k^e$，$\mathbf T_j^2=C_j$。
+
+\begin{proposition}[单个额外胶子的色因子（胶子极强度） \tagR]\label{prop:break-colour}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）本命题是单个额外胶子阶上的陈述：考虑硬过程 $a+b\to c_1+\dots+c_m$ 的 Born 振幅与多交换一个胶子的振幅之间的干涉（相对 Born 截面为 $\order{g^2}$），额外胶子与外线的耦合取领头幂次的程函形式——胶子由沿 $+z$ 运动的色单态强子 $h_1$ 的旁观者发出，以其大分量 $A^+$ 耦合，其动量 $l$（流入被附着的线）在硬部分与被附着的线中只保留 $l^+$。（本命题只涉及部分子态。）设 $a$ 是 $h_1$ 的活动部分子，$b$ 是另一个入射部分子，胶子附着在 $a$ 以外的任一带色外线 $j$ 上。则：
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item 出射线 $j$ 贡献 $g\,\mathbf T_j^e\,A^+/(l^+-\ii0)$，入射线 $j$ 贡献 $g\,\mathbf T_j^e\,A^+/(l^++\ii0)$；它们分别是指向未来的 $W[\infty n_B,\cdot\,]$ 与指向过去的 $W[\,\cdot\,,-\infty n_B]$ 在 $j$ 的表示中的单胶子项。
+\item 极点部分之和为 $\ii\pi g\,\delta(l^+)A^+P^e$，
+\begin{equation}\label{eq:break-P}
+P=\sum_{j\ \text{出射}}\mathbf T_j-\sum_{j\ \text{入射},\,j\neq a}\mathbf T_j=-\mathbf T_a-2\,\mathbf T_b ;
+\end{equation}
+% VF-REF-16
+主值部分之和为 $-g\,\mathrm{PV}\frac{1}{l^+}A^+\mathbf T_a^e$，与过程无关。
+\item 以 SIDIS 归一（$C_G^{\rm SIDIS}=1$），极点项的相对色因子——胶子极强度——为
+\begin{equation}\label{eq:break-CG}
+C_G\equiv\frac{\langle\mathcal M|(-\mathbf T_a)\cdot P|\mathcal M'\rangle}{C_F\,\langle\mathcal M|\mathcal M'\rangle}=1+\frac{2\,\langle\mathbf T_a\cdot\mathbf T_b\rangle}{C_F},\qquad
+\langle\mathbf T_a\cdot\mathbf T_b\rangle\equiv\frac{\langle\mathcal M|\mathbf T_a\cdot\mathbf T_b|\mathcal M'\rangle}{\langle\mathcal M|\mathcal M'\rangle},
+\end{equation}
+% VF-GLA-6
+其中 $|\mathcal M'\rangle$（$|\mathcal M\rangle$）是额外胶子所在一侧（另一侧）振幅的色结构；Drell--Yan 给出 $C_G=-1$。
+\item 对 $2\to2$ 夸克道，精确到 $N$（括号内为 SU(3) 值）：$qq'\to qq'$，$t$ 道平方（$tt^*$）与 $uu^*$：$\frac{N^2-5}{N^2-1}$（$\frac12$）；$qq\to qq$ 的 $tu^*$ 干涉：$-\frac{N^2+3}{N^2-1}$（$-\frac32$）；$q\bar q'\to q\bar q'$，$tt^*$：$-\frac{N^2-3}{N^2-1}$（$-\frac34$）；$q\bar q\to q'\bar q'$，$ss^*$，以及 $q\bar q\to q\bar q$ 的 $st^*$ 干涉：$\frac{N^2+1}{N^2-1}$（$\frac54$）。
+\item 逐图分解（$qq'\to qq'$ 的 $t$ 道，$a\to c$、$b\to d$）：与 $b$ 的初态附着、与 $c$ 的末态附着、与 $d$ 的末态附着对 $C_G$ 的贡献分别为 $-\frac{2}{N^2-1}$、$-\frac{1}{N^2-1}$、$\frac{N^2-2}{N^2-1}$（SU(3)：$-\frac14$、$-\frac18$、$\frac78$），之和即 (d) 中的值。
+\end{enumerate}
+\uses{prop:prelim-wilson-rules,lem:qcd-colour-identities}
+\end{proposition}
+
+\begin{proof}
+(a) 设 $j$ 是动量为 $p_j$、质量为 $m$ 的出射夸克，$p_j^-=\order{Q}$（$j$ 不与 $h_1$ 共线）。在程函近似中 $\gamma\cdot A\simeq\gamma^-A^+$，$(p_j-l)^2-m^2\simeq-2p_j\cdot l\simeq-2p_j^-l^+$，于是
+\[
+\bar u(p_j)\,(\ii g\,t^e\gamma^-A^+)\,\frac{\ii(\sla p_j-\sla l+m)}{(p_j-l)^2-m^2+\ii0}\simeq
+\bar u(p_j)\,\ii g\,t^e\,\frac{\ii\,2p_j^-A^+}{-2p_j^-l^++\ii0}=\frac{g\,t^e A^+}{l^+-\ii0}\,\bar u(p_j),
+\]
+这里用了 $\bar u(p_j)\gamma^-(\sla p_j+m)=\bar u(p_j)(2p_j^--\sla p_j\gamma^-+m\gamma^-)=2p_j^-\bar u(p_j)$。对动量 $p_j$ 流入硬部分的入射夸克，同样有
+\[
+\frac{\ii(\sla p_j+\sla l+m)}{(p_j+l)^2-m^2+\ii0}\,(\ii g\,t^e\gamma^-A^+)\,u(p_j)\simeq\frac{\ii\,2p_j^-}{2p_j^-l^++\ii0}\,\ii g\,t^eA^+\,u(p_j)=-\frac{g\,t^eA^+}{l^++\ii0}\,u(p_j).
+\]
+按\cref{prop:prelim-wilson-rules}（顶点 $\ii gt^en_B^\mu$，$n_B\cdot A=A^+$，$n_B\cdot l=l^+$），二者正是指向未来的线 $W[\infty n_B,\cdot\,]$ 的 $\ii gt^e\cdot(-\ii)/(l^+-\ii0)$ 与指向过去的线 $W[\,\cdot\,,-\infty n_B]$ 的 $\ii gt^e\cdot\ii/(l^++\ii0)$。换成色荷：出射夸克 $\mathbf T_j=t^e$；入射夸克的 $\mathbf T_j=-(t^e)^{\tp}$，而把物理生成元 $t^e$ 插在入射色指标上等于在振幅上作用 $-\mathbf T_j^e$（$(\mathcal Mt^e)_i=\sum_k\mathcal M_kt^e_{ki}=-(\mathbf T_j^e\mathcal M)_i$），所以入射夸克贡献 $-g(-\mathbf T_j^e)A^+/(l^++\ii0)=g\mathbf T_j^eA^+/(l^++\ii0)$。对反夸克与胶子线，同样的计算（反夸克线的费米子流反向，胶子线用三胶子顶点）给出同一形式，只是 $\mathbf T_j$ 取相应表示——这正是色荷算符的定义所保证的程函流的普适形式\cite{CataniSeymour1997}，也就是任意表示中 Wilson 线的单胶子规则；以 Wilson 线写出的这一附着规则见\cite{Buffing:2011mj}。
+
+(b) 由 $\frac{1}{l^+\mp\ii0}=\mathrm{PV}\frac1{l^+}\pm\ii\pi\delta(l^+)$，对一切 $j\neq a$ 求和（省去公共的 $gA^+$）：
+\[
+\sum_{\text{出射}}\mathbf T_j\Big[\mathrm{PV}\tfrac1{l^+}+\ii\pi\delta(l^+)\Big]+\sum_{\text{入射},j\neq a}\mathbf T_j\Big[\mathrm{PV}\tfrac1{l^+}-\ii\pi\delta(l^+)\Big]
+=\mathrm{PV}\tfrac1{l^+}\sum_{j\neq a}\mathbf T_j+\ii\pi\delta(l^+)\,P .
+\]
+由色守恒 $\sum_{j\neq a}\mathbf T_j=-\mathbf T_a$；入射部分子恰为 $a$、$b$ 时 $\sum_{\text{出射}}\mathbf T_j=-\mathbf T_a-\mathbf T_b$，故 $P=-\mathbf T_a-\mathbf T_b-\mathbf T_b=-\mathbf T_a-2\mathbf T_b$。主值部分 $-\mathrm{PV}\frac1{l^+}\mathbf T_a$ 与单根 $a$ 表示中 Wilson 线的主值部分相同，与过程无关。
+
+(c) $h_1$ 是色单态，旁观者与 $a$ 组成单态：对夸克加反三重态旁观者，旁观者顶点 $-(t^e)^{\tp}$ 与单态波函数 $\delta_{is}/\sqrt N$ 缩并后等于在 $a$ 的色指标上插入 $-t^e$。因此旁观者顶点在振幅上的作用等于 $\mathbf T_a^e$ 乘以一个与过程无关的符号（对其他表示同理），极点项的色因子正比于 $\langle\mathcal M|\mathbf T_a\cdot P|\mathcal M'\rangle$，比例常数与过程无关。在 SIDIS 中只有 $a$ 与出射夸克 $c$ 带色，$P=\mathbf T_c=-\mathbf T_a$，该色因子为 $-C_F\langle\mathcal M|\mathcal M'\rangle$。取比值即得\cref{eq:break-CG}的第一式；代入\cref{eq:break-P}，$\langle\mathcal M|(-\mathbf T_a)\cdot(-\mathbf T_a-2\mathbf T_b)|\mathcal M'\rangle=C_F\langle\mathcal M|\mathcal M'\rangle+2\langle\mathcal M|\mathbf T_a\cdot\mathbf T_b|\mathcal M'\rangle$，得第二式。在 Drell--Yan（$q\bar q\to\gamma^*$）中 $\mathbf T_a+\mathbf T_b=0$，$\langle\mathbf T_a\cdot\mathbf T_b\rangle=-C_F$，$C_G=-1$：这是 Sivers 函数的变号。
+
+(d) 把入射的一对 $(a,b)$ 的色态按不可约表示分解。对两个夸克，$N\otimes N=S\oplus A$（维数 $d_S=\frac{N(N+1)}2$，$d_A=\frac{N(N-1)}2$），$\mathbf T_a\cdot\mathbf T_b=\frac12(C_R-2C_F)$ 在其上取值 $x_S=\frac{N-1}{2N}$、$x_A=-\frac{N+1}{2N}$（$C_S=\frac{(N-1)(N+2)}N$，$C_A^{(R)}=\frac{(N+1)(N-2)}N$）；对夸克—反夸克，$N\otimes\bar N=\mathbf 1\oplus\mathbf 8$，$x_1=-C_F$、$x_8=\frac1{2N}$，$d_1=1$、$d_8=N^2-1$。把振幅的色张量写成 $s$ 道投影 $P_R$ 的组合 $|\mathcal M\rangle=\sum_Rm_RP_R$，由\cref{lem:qcd-colour-identities}的 Fierz 恒等式，记 $I=\delta_{ca}\delta_{db}$、$E=\delta_{cb}\delta_{da}$（$P_{S,A}=\frac12(I\pm E)$）：
+\[
+t^e_{ca}t^e_{db}=\tfrac12\big(E-\tfrac IN\big)=\tfrac12\Big[\big(1-\tfrac1N\big)P_S-\big(1+\tfrac1N\big)P_A\Big],\qquad
+t^e_{da}t^e_{cb}=\tfrac12\Big[\big(1-\tfrac1N\big)P_S+\big(1+\tfrac1N\big)P_A\Big];
+\]
+对夸克—反夸克（$a$ 为入射夸克，$b$ 为入射反夸克，$c$、$d$ 为出射的夸克与反夸克），记 $I'=\delta_{ca}\delta_{bd}$、$K=\delta_{ba}\delta_{cd}$，$s$ 道投影为 $P_1=K/N$、$P_8=I'-K/N$，则 $q\bar q'\to q\bar q'$ 的 $t$ 道与 $q\bar q\to q'\bar q'$ 的 $s$ 道分别为 $t^e_{ca}t^e_{bd}=\frac12(K-\frac{I'}N)=\frac12\big[(N-\frac1N)P_1-\frac1NP_8\big]$、$t^e_{ba}t^e_{cd}=\frac12(I'-\frac KN)=\frac12P_8$。投影正交且 $\Tr P_R=d_R$，所以
+$\langle\mathbf T_a\cdot\mathbf T_b\rangle=\sum_Rm_Rm'_Rd_Rx_R\big/\sum_Rm_Rm'_Rd_R$。逐项计算：$tt^*$ 与 $uu^*$ 为 $-\frac1N$；$tu^*$ 为 $\frac{(N^2-1)(N^2+1)/(8N^2)}{-(N^2-1)/(4N)}=-\frac{N^2+1}{2N}$；$q\bar q'$ 的 $tt^*$ 为 $\frac{-(N^2-1)(N^2-2)/(8N)}{(N^2-1)/4}=-\frac{N^2-2}{2N}$；$ss^*$ 与 $st^*$ 只含八重态，为 $\frac1{2N}$。代入\cref{eq:break-CG}（$C_F=\frac{N^2-1}{2N}$）得 (d) 的四个值。
+
+(e) 在 $t$ 道振幅中 $(a,c)$ 之间交换的是八重态，$(\mathbf T_a+\mathbf T_c)$ 作用为伴随表示的生成元，$(\mathbf T_a+\mathbf T_c)^2=C_A$，即 $\mathbf T_a\cdot\mathbf T_c=\frac12(C_A-2C_F)=\frac1{2N}$（作为算符在 $t$ 道振幅上成立）。三种附着的极点系数分别为 $-\mathbf T_b$、$+\mathbf T_c$、$+\mathbf T_d$，其贡献为 $\langle\mathbf T_a\cdot\mathbf T_b\rangle/C_F=-\frac{2}{N^2-1}$，$-\langle\mathbf T_a\cdot\mathbf T_c\rangle/C_F=-\frac1{N^2-1}$，以及（用 $\mathbf T_d=-\mathbf T_a-\mathbf T_b-\mathbf T_c$）$\langle\mathbf T_a\cdot(\mathbf T_a+\mathbf T_b+\mathbf T_c)\rangle/C_F=(C_F-\frac1N+\frac1{2N})/C_F=\frac{N^2-2}{N^2-1}$。
+\end{proof}
+
+全部数值（$N=2,\dots,6$ 的显式色张量与精确到 $N$ 的投影代数）都由脚本 \texttt{s1\_colour.py} 复核。各道的值与 Bacchetta、Bomhof、Mulders、Pijlman 的表~I 与式~(B5)(B6)\cite{BacchettaBomhofMuldersPijlman2005}以及 Qiu、Vogelsang、Yuan 的式~(25)--(28) 与表~I\cite{QiuVogelsangYuan2007}逐项一致；闭合公式 $C_G=1+2\langle\mathbf T_a\cdot\mathbf T_b\rangle/C_F$ 是本书对这些已知值的一个紧凑推导。
+
+\begin{example}[由投影算符得到 $C_G$ 表；阿贝尔极限；纠缠检验]\label{ex:break-colour}
+(1) \emph{表与极限。}把\cref{prop:break-colour}(d) 的结果列成\cref{tab:break-CG}。大 $N$ 时 $C_G\to+1$（$tt^*$、$uu^*$、$ss^*$、$st^*$）或 $-1$（$tu^*$、$q\bar q'$ 的 $tt^*$）：这时只有一条色线与 $a$ 相连，色结构退化为 SIDIS 型或 DY 型；有限 $N$ 时 $C_G-1=2\langle\mathbf T_a\cdot\mathbf T_b\rangle/C_F$ 正是 $h_1$ 的部分子与 $h_2$ 的部分子之间的色关联，任何只附着于 $h_1$ 的、与过程无关的 Wilson 线都只能给出 $\pm1$。
+
+\begin{table}[htbp]
+\centering
+\caption{$2\to2$ 夸克道的胶子极强度（\cref{prop:break-colour}；与\cite{BacchettaBomhofMuldersPijlman2005}表~I、\cite{QiuVogelsangYuan2007}表~I 逐项一致）。}
+\label{tab:break-CG}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+道 & $s$ 道分解 & $\langle\mathbf T_a\cdot\mathbf T_b\rangle$ & $C_G$ & SU(3) & 大 $N$ \\
+\midrule
+$qq'\to qq'$，$tt^*$ 与 $uu^*$ & $\frac12[(1-\frac1N)P_S\mp(1+\frac1N)P_A]$ & $-\frac1N$ & $\frac{N^2-5}{N^2-1}$ & $\frac12$ & $1$ \\
+$qq\to qq$，$tu^*$ & （同上两式） & $-\frac{N^2+1}{2N}$ & $-\frac{N^2+3}{N^2-1}$ & $-\frac32$ & $-1$ \\
+$q\bar q'\to q\bar q'$，$tt^*$ & $\frac12[(N-\frac1N)P_1-\frac1NP_8]$ & $-\frac{N^2-2}{2N}$ & $-\frac{N^2-3}{N^2-1}$ & $-\frac34$ & $-1$ \\
+$q\bar q\to q'\bar q'$，$ss^*$；$st^*$ & $\frac12P_8$ & $\frac1{2N}$ & $\frac{N^2+1}{N^2-1}$ & $\frac54$ & $1$ \\
+\midrule
+SIDIS；Drell--Yan & — & —；$-C_F$ & $1$；$-1$ & $1$；$-1$ & $1$；$-1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+(2) \emph{逐图的绝对归一。}Qiu、Vogelsang、Yuan 把 $t$ 道 Born 的色因子（含 $1/N^2$ 的颜色平均）记为 $C_u=\frac1{N^2}\langle\mathcal M_t|\mathcal M_t\rangle=\frac{N^2-1}{4N^2}$；乘以\cref{prop:break-colour}(e) 的三个比值，得 $C_I=-\frac{1}{2N^2}$、$C_{F1}=-\frac1{4N^2}$、$C_{F2}=\frac{N^2-2}{4N^2}$，三者之和 $\frac{N^2-5}{4N^2}$，与他们的式~(25)--(28) 相同。物理上最大的一项来自 $h_1$ 的旁观者与\emph{另一个}出射部分子 $d$ 之间的末态交换（SU(3) 中为 $\frac78$）——\cref{fig:violation-cq}(a) 画的正是这一类。
+
+(3) \emph{阿贝尔极限。}把色荷换成 U(1) 荷 $e_j$（全出射约定，$\sum_je_j=0$），\cref{eq:break-CG}变为 $C_G=(-e_a)(-e_a-2e_b)/e_a^2=1+2e_b/e_a$。在 Collins--Qiu 的阿贝尔模型中，$h_i$ 的旁观者带荷 $g_i$，活动部分子带相反的荷；按全出射约定 $e_a=g_1$、$e_b=g_2$，于是 $C_G=(g_1+2g_2)/g_1$：这正是\cref{thm:break-tmd}中 T 奇项系数 $g_1+2g_2$ 与 SIDIS 值 $g_1$ 之比。
+
+(4) \emph{与广义 Wilson 线结构的核对。}\cref{eq:break-bbmp-link}中各项的单胶子极点强度为：$U^{[+]}$ 为 $+1$；$U^{[\square]}U^{[+]}$ 为 $3$（闭合圈的两段各贡献 $+1$）；$\frac1N\Trc U^{[\square]}\,U^{[+]}$ 为 $1$（色迹的单胶子项 $\propto\Tr t^e=0$）。于是 $U^{[tt^*]}_{qq}$ 的强度为 $[(N^2+1)\cdot1-2\cdot3]/(N^2-1)=\frac{N^2-5}{N^2-1}$，与\cref{tab:break-CG}第一行相同：在单胶子层次上，广义 Wilson 线可以把 $C_G$ 吸收进一个依赖于道的结构。
+
+(5) \emph{一个常见的记账错误（练习）。}若对一切附着使用同一个程函处方（例如把入射线也写成 $1/(l^+-\ii0)$，即“入射 = 出射”），极点部分之和就成为 $\sum_{j\neq a}\mathbf T_j=-\mathbf T_a$，于是对每个道都有 $C_G=+1$，Drell--Yan 也不例外：这既与 Sivers 函数的变号（\cref{thm:tmd-sivers-sign}）矛盾，也与 Collins--Qiu 显式算出的 $g_1+2g_2$ 矛盾。正确的规则是：以色荷表示时，入射线与出射线的 $\delta$ 部分符号相反（以物理生成元表示时符号相同），这由物理传播子的 $\ii0$ 决定。
+
+(6) \emph{纠缠检验。}取 Rogers--Mulders 的双 Sivers 构型\cite{RogersMulders2010}：两个强子各是夸克与反三重态旁观者的色单态，硬过程是色中性的交换（夸克线 $1\to3$ 属于 $h_1$，$2\to4$ 属于 $h_2$）。$h_1$ 的旁观者发出的胶子附着在 $X\in\{3,4,2\}$ 上，$h_2$ 的旁观者发出的胶子附着在 $Y\in\{4,3,1\}$ 上；由\cref{prop:break-colour}(a)，夸克线（入射或出射）的极点系数相同，所以双极点系数正比于色权重 $C(X,Y)$ 之和。以树图归一，单胶子权重为 $C_1(3)=C_2(4)=-C_F$，而 $C_1(4)=C_1(2)=C_2(3)=C_2(1)=0$（色中性的硬交换把每个强子的色线封闭成一个圈，附着在另一个强子的线上只留下 $\Tr t^e=0$）。双胶子权重为
+\begin{equation}\label{eq:break-entangle-weights}
+C(3,4)=C_F^2,\qquad C(X,Y)=\frac{\Tr(t^et^f)\Tr(t^ft^e)}{N^2}=\frac{T_F^2(N^2-1)}{N^2}\quad(X\in\{4,2\},\ Y\in\{3,1\}),
+\end{equation}
+其余（两个胶子都附着在同一强子的线上的“混合”附着）为零，因为另一个强子的圈中只剩一个生成元。于是
+\begin{equation}\label{eq:break-entangle}
+\sum_{X,Y}C(X,Y)=C_F^2+\frac{4T_F^2(N^2-1)}{N^2}=C_F^2\Big[1+\frac{4}{N^2-1}\Big]\ \neq\ \Big(\sum_XC_1(X)\Big)\Big(\sum_YC_2(Y)\Big)=C_F^2 ,
+\end{equation}
+% VF-GLA-10
+两胶子在割线同侧或两侧时结果相同。SU(3) 中为 $\frac{24}9$ 对 $\frac{16}9$。任何每个强子各有一套 Wilson 线结构的公式都把双极点系数写成两个单胶子系数之积，即右边；多出的 $\frac{4T_F^2(N^2-1)}{N^2}$ 来自两个强子的色线被两个胶子交叉连接起来的图，是“色纠缠”。对 U(1) 荷，每个双胶子权重都是两个单胶子权重之积，左右两边恒等。
+\uses{prop:break-colour}
+\end{example}
+
+\cref{eq:break-entangle}是 Rogers--Mulders 论证（他们的式~(34)：交叉类的色因子 $\Tr[t^at^b]\Tr[t^bt^a]=T_F^2(N_c^2-1)$，而广义因子化的预言为零）的附着求和形式，是本书对一个已知结果的推导；交叉附着与非交叉附着之比 $4/(N_c^2-1)$ 也见于最近的一篇预印本\cite{Zhou:2026ids}（据该文摘要）。
+
+\begin{theorem}[强子—强子末态强子的 TMD 因子化不成立 \tagV]\label{thm:break-tmd}
+（本定理的证据只涉及模型与部分子态。）对 $h_1h_2\to H_1H_2X$ 中 TMD 敏感的观测量（测量 $\boldsymbol q_{\mathrm T}$，$|\boldsymbol q_{\mathrm T}|\ll|\boldsymbol p_{H_i\mathrm T}|$）：
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+\item \emph{标准 TMD 因子化不成立。}在 Collins--Qiu 的阿贝尔模型中（$h_i$ 的旁观者带荷 $g_i$，活动部分子带相反的荷），多一个胶子的阶上横向极化 $h_1$ 的单自旋不对称由程函因子之和
+\begin{equation}\label{eq:break-El}
+E(l)=\frac{g_2}{l^++\ii0}+\frac{g_2}{-l^++\ii0}+\frac{g_1}{-l^++\ii0}=-\pi\ii\,(2g_2+g_1)\,\delta(l^+)-g_1\,\mathrm{PV}\frac1{l^+}
+\end{equation}
+% VF-GLA-7
+决定：T 奇项的系数是 $g_1+2g_2$ 而不是 $g_1$，没有任何连接 $h_1$ 的两个部分子场、荷为 $g_1$ 的 Wilson 线能再现它\cite{CollinsQiu2007}。在同一模型中多两个胶子的阶上（非极化截面），两胶子位于割线两侧时，T 偶部分比标准 Wilson 线多出反常项
+\begin{equation}\label{eq:break-anomaly}
+E(l_1)E(l_2)^*\big|_{\rm anom}=4\pi^2g_2(g_2+g_1)\,\delta(l_1^+)\,\delta(l_2^+),
+\end{equation}
+% VF-GLA-7
+它只在 $g_2=0$ 或 $g_2=-g_1$ 时为零\cite{Collins2007}（预印本）。
+\item \emph{广义 TMD 因子化在非阿贝尔理论中不成立}（Rogers--Mulders：SU($N_c$) 旁观者模型，色中性的硬交换，双横向自旋不对称\cite{RogersMulders2010}）。等价地，双极点系数的色权重满足纠缠检验\cref{eq:break-entangle}：$\sum_{X,Y}C(X,Y)=C_F^2+4T_F^2(N^2-1)/N^2\neq C_F^2$；在阿贝尔情形中二者恒等。
+\item 在所考察的阶上，对 $\kT$ 积分后的共线因子化不受影响\cite{Collins2007}。
+\item 在附录~O 的框架中，论证失效于单侧改写一步 (O-3)：测量投影不与光锥演化对易，相关的钳夹区是相对于 $(n_A,w_1)$ 的 Glauber 区（\cref{rem:break-measurement-failures}）。
+\end{enumerate}
+\uses{def:break-generalized-tmd,prop:break-colour,ex:break-colour,rem:break-measurement-failures}
+\end{theorem}
+
+\begin{proofsketch}
+(1) \emph{单胶子（Collins--Qiu）。}在\cref{prop:break-colour}(a) 中把色荷换成 U(1) 荷：$a=\phi_1$（入射，全出射约定下荷 $g_1$），$b=\phi_2$（入射，$g_2$），出射的 $c=\phi_1$（$-g_1$）、$d=\phi_2$（$-g_2$）。$h_1$ 旁观者的胶子附着在 $b$、$d$、$c$ 上，分别给出 $g_2/(l^++\ii0)$、$-g_2/(l^+-\ii0)=g_2/(-l^++\ii0)$、$g_1/(-l^++\ii0)$，即\cref{eq:break-El}的第一式；用 $\frac1{\pm x+\ii0}=\pm\mathrm{PV}\frac1x-\ii\pi\delta(x)$ 得第二式。$b$、$d$ 的主值部分相消，T 偶部分正是只附着在 $c$ 上的、荷为 $g_1$ 的指向未来的线的值 $-g_1\mathrm{PV}\frac1{l^+}$；T 奇部分 $-\pi\ii(2g_2+g_1)\delta(l^+)$ 却与 SIDIS 型的 $-\pi\ii g_1\delta(l^+)$ 或 DY 型的 $+\pi\ii g_1\delta(l^+)$ 都不同（二者之比 $\pm(g_1+2g_2)/g_1$ 只在 $g_2=0$ 或 $g_2=-g_1$ 时为 $\pm1$）。$h_1$ 的关联函数中的 Wilson 线只能带 $h_1$ 的部分子的荷 $g_1$，所以 $g_2$ 部分不能写成 $h_1$ 的 Wilson 线\cite{CollinsQiu2007}。
+(2) \emph{双胶子（Collins 2007）。}两胶子在割线两侧时，乘积 $E(l_1)E(l_2)^*$ 的 $\delta(l_1^+)\delta(l_2^+)$ 系数为 $\pi^2(2g_2+g_1)^2$，而标准 Wilson 线给出 $\pi^2g_1^2$，差为\cref{eq:break-anomaly}；两胶子在同侧时，$g_2^2$ 项与 $g_1g_2$ 项正好组成 $E(l_1)E(l_2)$ 的相应项（反常项为\cref{eq:break-anomaly}的相反数），即以 $E(l)$ 为单胶子项的 Wilson 线算符的指数化\cite[式~(7)(8)]{Collins2007}：在阿贝尔理论的这一阶，广义因子化与之相容，而标准因子化不成立。下面的例子给出 $h_1$ 的 TMD 中反常贡献的显式函数形式。
+(3) \emph{非阿贝尔（Rogers--Mulders）。}同一强子的两个胶子的图要求 $h_1$ 的广义 Wilson 线结构含有一个求色迹的闭合圈，其单胶子项为零\cite[式~(30)(33)]{RogersMulders2010}；于是广义公式对“两个强子各发一个胶子、附着在对方部分子线上”的图类预言为零。而这一类图的色因子 $\Tr[t^at^b]\Tr[t^bt^a]=T_F^2(N_c^2-1)\neq0$，程函因子在割线同侧与两侧时都是 $+4\pi^2\delta(l_1^+)\delta(l_2^-)$\cite[式~(34)--(36)]{RogersMulders2010}，剩下的积分一般不为零：矛盾。以附着求和表示即\cref{ex:break-colour}(6) 的\cref{eq:break-entangle}。
+(4) 共线因子化在这一阶的保持是\cite{Collins2007}的结论，下面的例子在标量模型中显式验证它；(O-3) 的失效见\cref{rem:break-measurement-failures}(2)。
+完整论证见\cite[第~IV~节]{CollinsQiu2007}、\cite{Collins2007}与\cite[第~V、VI~节]{RogersMulders2010}；本节的程函代数由脚本 \texttt{s2\_abelian.py} 复核。
+\end{proofsketch}
+
+\paragraph{地位与缺口}\tagV，证据类型：模型反例。这些反例针对的是一般的证明方法——若方法在模型中失效，它在 QCD 中也会失效\cite{Collins2007}（预印本）——因而足以说明标准与广义 TMD 因子化在 QCD 中没有一般的证明；它们没有给出 QCD 中破坏效应的大小，其唯象大小至今没有确定。Collins 与 Qiu 指出，在部分子截面的语言中这一机制可能首先在 N$^3$LO 的非极化截面中造成不相消的发散\cite{CollinsQiu2007}；Rogers 指出因子化的破坏甚至能产生按广义因子化本应被压低的领头幂次自旋不对称\cite{Rogers:2013zha}（据其摘要）；Vogelsang 与 Yuan 的结论是双喷注失衡“at best”满足一种非标准的、广义的 TMD 因子化\cite{Vogelsang:2007jk}（据其摘要）。在\cref{prop:break-measurement}的语言中，失效的位置是 (O-3)（\cref{rem:break-measurement-failures}），这只是定位，不是新的破坏证明。不受影响的过程是 SIDIS、Drell--Yan 与 $e^+e^-\to h_1h_2X$：在那里一个强子的旁观者与其余带色部分子之间的相互作用要么全是末态的（SIDIS 的指向未来的 U 形线；$e^+e^-$），要么全是初态的且末态为色单态（DY 的指向过去的 U 形线，旁观者之间的交换在固定 $\boldsymbol q_{\mathrm T}$ 时相消），TMD 因子化保持全阶论证的地位（\cref{thm:tmd-factorization}，\tagA）。仍然开放的是：是否存在某种含 $\langle h_1h_2|\cdots|h_1h_2\rangle$ 型双强子关联函数的推广形式，以及对 $\kT$ 积分的观测量在高阶是否保持共线因子化（\cref{conj:dy-coloured-final}，\tagC）。
+
+\begin{example}[Collins 2007 的双胶子反常（阿贝尔标量模型）]\label{ex:break-c07}
+在 Collins 的全标量模型中（部分子与胶子的质量为 $m_q$、$m_g$，强子质量取零），\cref{eq:break-anomaly}给 $h_1$ 的 TMD 带来两类反常贡献：两个胶子分处割线两侧时，振幅与共轭振幅各有一个横动量圈；两个胶子在同侧时，一侧有一个两圈的横动量积分、另一侧是树图的横向传播子。以 $\kT=|\boldsymbol k_{\mathrm T}|$ 表示部分子的横动量，二者为\cite[式~(10)(11)]{Collins2007}
+\begin{equation}\label{eq:break-I12}
+I_1(\kT)=\mathcal N\,F(\kT)^2,\qquad I_2(\kT)=-\mathcal N\,\frac{G(\kT)}{\kT^2+m_q^2},\qquad \mathcal N=\frac{\lambda^2g_1^2\,g_2(g_2+g_1)\,x(1-x)}{256\pi^7},
+\end{equation}
+% VF-GLA-8
+其中 $\lambda$ 是强子—部分子耦合（标量三线耦合，量纲为质量），
+\begin{equation}\label{eq:break-FG}
+F(k)=\int\frac{\dd^2l}{(l^2+m_g^2)\,((\boldsymbol k-\boldsymbol l)^2+m_q^2)},\qquad
+G(k)=\int\frac{\dd^2l_1\,\dd^2l_2}{(l_1^2+m_g^2)(l_2^2+m_g^2)\,((\boldsymbol k-\boldsymbol l_1-\boldsymbol l_2)^2+m_q^2)}
+\end{equation}
+是二维欧氏积分。\emph{闭合形式。}用 Feynman 参数 $\frac1{AB}=\int_0^1\frac{\dd y}{[yA+(1-y)B]^2}$，平移 $\boldsymbol l\to\boldsymbol l+(1-y)\boldsymbol k$ 并用 $\int\frac{\dd^2l}{(l^2+\Delta)^2}=\frac\pi\Delta$，
+\begin{equation}\label{eq:break-F-closed}
+F(k)=\pi\int_0^1\frac{\dd y}{y(1-y)k^2+ym_g^2+(1-y)m_q^2}=\frac{\pi}{\sqrt\Lambda}\ln\frac{s+\sqrt\Lambda}{s-\sqrt\Lambda}=\frac{2\pi}{\sqrt\Lambda}\ln\frac{s+\sqrt\Lambda}{2m_gm_q},
+\end{equation}
+% VF-GLA-8
+$s=k^2+m_g^2+m_q^2$，$\Lambda=s^2-4m_g^2m_q^2$；分母的判别式正是 $\Lambda$，最后一步用了 $s^2-\Lambda=4m_g^2m_q^2$（第三种写法在大 $k$ 处没有数值相消，在 $\Lambda\to0$ 时趋于 $2\pi/s$）。对 $G$ 先作 $\boldsymbol l_2$ 积分得 $F(|\boldsymbol k-\boldsymbol l_1|)$ 的 Feynman 参数式，再作 $\boldsymbol l_1$ 积分，得
+$G(k)=\pi^2\int_0^1\dd x\int_0^1\dd y\,\big\{x(1-x)[y(1-y)k^2+(1-y)m_g^2]+y[xm_q^2+(1-x)m_g^2]\big\}^{-1}$。
+\emph{冲击参数空间。}以 $\tilde f(\boldsymbol b)=\int\dd^2k\,\ee^{-\ii\boldsymbol k\cdot\boldsymbol b}f(\boldsymbol k)$ 与 $\int\dd^2l\,\frac{\ee^{-\ii\boldsymbol l\cdot\boldsymbol b}}{l^2+m^2}=2\pi K_0(mb)$，卷积变为乘积：
+\begin{equation}\label{eq:break-FG-b}
+\tilde F(b)=(2\pi)^2K_0(m_gb)K_0(m_qb),\qquad \tilde G(b)=(2\pi)^3K_0(m_gb)^2K_0(m_qb).
+\end{equation}
+\emph{积分相消。}由 Parseval 等式 $\int\dd^2k\,f\,g^*=\int\frac{\dd^2b}{(2\pi)^2}\tilde f\,\tilde g^*$，
+\[
+\int\dd^2k\,F^2=\int\frac{\dd^2b}{(2\pi)^2}\,(2\pi)^4K_0(m_gb)^2K_0(m_qb)^2=\int\dd^2k\,\frac{G(k)}{k^2+m_q^2},
+\]
+后者取 $f=G$、$g=(k^2+m_q^2)^{-1}$，$\tilde g=2\pi K_0(m_qb)$。两者都等于 $(2\pi)^3\int_0^\infty\dd b\,b\,K_0(m_gb)^2K_0(m_qb)^2$，所以 $\int\dd^2\kT\,(I_1+I_2)=0$：对 $\kT$ 积分后反常相消，共线因子化在这一阶保持。
+\emph{$\kT=0$ 处的符号。}Collins 指出可以解析地证明 $I_1(0)+I_2(0)<0$，但文中没有给出证明\cite{Collins2007}。下面给出一个证明（本书给出的证明）。取正测度 $\dd\mu(\boldsymbol b)=\frac{\dd^2b}{(2\pi)^2}\,2\pi K_0(m_qb)$，则 $\int\dd\mu=\int_0^\infty\dd b\,b\,K_0(m_qb)=1/m_q^2$，并由\cref{eq:break-FG-b}与 $f(0)=\int\frac{\dd^2b}{(2\pi)^2}\tilde f(\boldsymbol b)$，
+\[
+F(0)=\int\dd\mu\;2\pi K_0(m_gb),\qquad G(0)=\int\dd\mu\;\big[2\pi K_0(m_gb)\big]^2 .
+\]
+由 Cauchy--Schwarz 不等式，$F(0)^2\le\int\dd\mu\cdot G(0)=G(0)/m_q^2$，且因 $K_0(m_gb)$ 不是常数而严格成立。于是 $I_1(0)+I_2(0)=\mathcal N[F(0)^2-G(0)/m_q^2]$ 与 $-\mathcal N$ 同号，在 $g_2(g_2+g_1)>0$ 时为负。
+\emph{数值。}取 $(m_g,m_q)=(0.5,1)$（任意单位），$(I_1+I_2)/\mathcal N$ 在 $\kT=0,0.3,0.8,1.5,3,6$ 处为 $-21.0$、$-17.7$、$-7.19$、$-0.70$、$+0.38$、$+0.089$：逐点不为零且变号，只有积分为零。（$F$ 的闭合形式与 Feynman 参数式、两种 $b$ 空间形式、Parseval 等式与 Cauchy--Schwarz 不等式均由 \texttt{s2\_abelian.py} 在三组质量下复核。）
+\emph{原文的印刷错误。}\cite{Collins2007}式~(10) 第二行（arXiv 第~1~版）多出一个分子因子 $\prod_{j=1,2}(\kT^2+m_q^2)$；与同一式的第一行、式~(11)、量纲分析（TMD 密度的量纲为质量$^{-2}$，$[\mathcal N]=$质量$^2$）以及文中所述的积分相消都相容的是\cref{eq:break-I12}（附录~Q 第~4~条）。
+\uses{thm:break-tmd}
+\end{example}

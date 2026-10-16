@@ -1,0 +1,70 @@
+% -----------------------------------------------------------------------------------------------------
+\section{程函恒等式与 Wilson 线的 Ward 恒等式}\label{sec:appB-eikonal}
+
+本节给出第~3~章\cref{lem:prelim-eikonal-identity}的证明。
+
+\begin{lemma}[程函恒等式（洗牌积）]\label{lem:appB-shuffle}
+(i) 设复数 $y_1,\dots,y_m$ 的任意部分和都不为零，则
+\begin{equation}\label{eq:appB-shuffle}
+\sum_{\sigma\in S_m}\prod_{j=1}^m\frac{1}{y_{\sigma(1)}+\dots+y_{\sigma(j)}}=\prod_{j=1}^m\frac1{y_j}.
+% VF-WL-4
+\end{equation}
+更一般地，对两个保持内部次序的序列 $(q_1,\dots,q_p)$ 与 $(r_1,\dots,r_q)$，记 $E(x_1,\dots,x_l)=\prod_{j=1}^l(x_1+\dots+x_j)^{-1}$，则对全部 $\binom{p+q}{p}$ 个洗牌 $\sigma$ 求和有
+$\sum_\sigma E(\sigma)=E(q_1,\dots,q_p)\,E(r_1,\dots,r_q)$。
+(ii) 取 $y_j=n\cdot k_j+\ii\epsilon$（$\epsilon>0$），则左边第 $j$ 个分母为 $n\cdot(k_{\sigma(1)}+\dots+k_{\sigma(j)})+\ii j\epsilon$，正是绝热正规子 (C3) 的累积形式：
+程函恒等式 $\sum_\sigma\prod_j\frac{\ii}{n\cdot(k_{\sigma(1)}+\dots+k_{\sigma(j)})+\ii j\epsilon}=\prod_j\frac{\ii}{n\cdot k_j+\ii\epsilon}$ 在\emph{有限} $\epsilon$ 下严格成立（指向未来的线同理）。
+(iii) 若每个程函分母都加\emph{同一个} $+\ii\epsilon$，恒等式只在 $\epsilon\to0$ 时按分布意义成立：$m=2$ 时（$a_j=n\cdot k_j$）
+\[
+\prod_j\frac{1}{a_j+\ii\epsilon}-\sum_\sigma\prod_j\frac{1}{a_{\sigma(1)}+\dots+a_{\sigma(j)}+\ii\epsilon}=\frac{-\ii\epsilon}{(a_1+\ii\epsilon)(a_2+\ii\epsilon)(a_1+a_2+\ii\epsilon)},
+\]
+它与 $\frac1{(1+a_1^2)(1+a_2^2)}$ 的配对为 $\frac{\pi^2\epsilon}{(1+\epsilon)^2(2+\epsilon)}$，只在 $\epsilon\to0$ 时为零。
+% uses: none
+\end{lemma}
+
+\begin{proof}
+(i) 对 $m$ 归纳（$m=1$ 平凡）。按最后一个元素 $\sigma(m)=l$ 把置换分组：末因子 $1/(y_1+\dots+y_m)$ 对所有置换相同，其余因子正是对 $\{1,\dots,m\}\setminus\{l\}$ 的置换求和，
+由归纳假设等于 $\prod_{j\ne l}1/y_j$。故左边 $=\frac{1}{\sum_jy_j}\sum_l\prod_{j\ne l}\frac1{y_j}=\frac{\sum_ly_l}{\sum_jy_j}\prod_j\frac1{y_j}=\prod_j\frac1{y_j}$。
+洗牌积按同样方式对 $p+q$ 归纳：最后一个元素是 $q_p$ 或 $r_q$，末因子 $1/(\sum q+\sum r)$ 公共，由归纳假设两组之和为
+$\frac{E(q)E(r)}{\sum q+\sum r}\big[(q_1+\dots+q_p)+(r_1+\dots+r_q)\big]=E(q)E(r)$。也可用积分表示：$\prod_j\frac{\ii}{y_j}=\prod_j\int_{-\infty}^0\dd\lambda_j\,\ee^{-\ii\lambda_jy_j}$（$\Imag y_j>0$），
+$(-\infty,0]^m$ 去掉零测集后是 $m!$ 个单形 $\lambda_{\sigma(1)}<\dots<\lambda_{\sigma(m)}$ 的不交并，每个单形按\cref{prop:appB-rules}的证明给出左边的一项——
+物理上，阿贝尔 Wilson 线是普通指数，$W^{(m)}=(W^{(1)})^m/m!$。
+(ii) 由 (i) 直接得到：$y_{\sigma(1)}+\dots+y_{\sigma(j)}$ 的虚部恰为 $j\epsilon$。
+(iii) 直接通分：左边 $=\frac{(a_1+a_2+\ii\epsilon)-(a_1+a_2+2\ii\epsilon)}{(a_1+\ii\epsilon)(a_2+\ii\epsilon)(a_1+a_2+\ii\epsilon)}$。配对用留数计算：
+$\int\dd a_1\frac{1}{(a_1+\ii\epsilon)(a_1+a_2+\ii\epsilon)(1+a_1^2)}$ 在上半平面只有极点 $a_1=\ii$，值为 $\frac{-\ii\pi}{(1+\epsilon)(a_2+\ii(1+\epsilon))}$；再对 $a_2$ 同样闭合于上半平面，
+得 $\int\dd a_2\frac{1}{(a_2+\ii(1+\epsilon))(a_2+\ii\epsilon)(1+a_2^2)}=\frac{-\pi}{(2+\epsilon)(1+\epsilon)}$，乘以 $-\ii\epsilon\cdot\frac{-\ii\pi}{1+\epsilon}$ 即得所述值（脚本 \texttt{s4\_wilson.py} 亦作数值检验）。
+\end{proof}
+
+\cref{lem:appB-shuffle}(ii)(iii) 的要点是：程函恒等式在有限正规子下成立，当且仅当每个累积分母的正规子是已吸收胶子的正规子之和；场的绝热阻尼 $\ee^{-\epsilon|s|}$ 恰好实现这一点，
+而“在每个程函传播子中加同一个 $+\ii\epsilon$”（如由 Feynman 传播子直接取程函极限，或朴素的 $\delta$ 正规化）则不然。算符层次上带累积分母的正规子 $\ee^{-\delta\sigma}$
+及朴素 $\delta$ 正规化破坏指数化的事实见\cite[式~(5)--(6)]{Echevarria:2015byo}；阿贝尔恒等式本身是经典的。非阿贝尔情形中色矩阵按路径排序，对连接点求和不再因子化：
+两胶子时对称部分满足阿贝尔恒等式，反对称部分 $\frac12[T_b,T_a](E_{12}-E_{21})$ 是携带 $k_1+k_2$ 的单个伴随“web”（第~5~章\cref{prop:sudakov-webs}(b)）。
+
+\begin{remark}[半无限 Wilson 线的 Ward 恒等式]\label{rem:appB-ward}
+在 $W[0,-\infty n]$ 的 $m$ 胶子项中（色矩阵 $T_1,\dots,T_m$ 已含顶点因子，$T_1$ 最靠近 $-\infty$；记该项为 $Y$），把一个动量为 $q$、极化为 $q^\mu$、色为 $T_q$ 的标量极化胶子插入全部 $m+1$ 个位置并求和，得
+\begin{equation}\label{eq:appB-ward}
+\sum_{p=0}^{m}(\text{插在第 }p\text{ 个胶子之后})=-g\,T_q\,Y+g\sum_{p=0}^{m-1}Z_p\;T_m\cdots T_{p+2}\,[T_q,T_{p+1}]\,T_p\cdots T_1 ,
+% VF-WL-13
+\end{equation}
+其中 $Z_p$ 是第 $p+1$ 个胶子携带 $k_{p+1}+q$ 时 $m$ 胶子线的程函传播子之积。证明：内部插入用程函 Ward 恒等式
+$\frac{\ii}{n\cdot(\ell+q)}(\ii g\,n\cdot q)\frac{\ii}{n\cdot\ell}=g\big[\frac{\ii}{n\cdot(\ell+q)}-\frac{\ii}{n\cdot\ell}\big]$ 拆成两项，最靠近 $-\infty$ 的插入给出 $(\ii g\,n\cdot q)\frac{\ii}{n\cdot q}=-g$；
+相邻插入位置的项逐对相消（分部求和），只剩相邻色序之差 $T_m\cdots[T_q,T_{p+1}]\cdots T_1$ 与端点项。阿贝尔情形对易子为零，和为 $-gY$（指向未来的线为 $+gY$，$T_q$ 在最右）。
+端点项是有限端点处的无穷小规范转动；对易子项与该标量胶子经三胶子顶点连到其他胶子上的图相消（附录~F）。若标量胶子的极化也带同样的绝热移动（$n\cdot q\to n\cdot q+\ii\epsilon$），
+则 $Z_p$ 中第 $p+1$ 段以后的正规子为 $(j+1)\epsilon$，式~\eqref{eq:appB-ward} 在有限 $\epsilon$ 下严格成立（脚本 \texttt{s4\_wilson.py}，SU(3)，$m\le4$）。
+\uses{prop:appB-rules}
+\end{remark}
+
+\begin{proposition}[非阿贝尔指数化 \tagA]\label{prop:appB-webs}
+在一点相遇的 Wilson 线的真空关联函数（及其在背景场中的期望值）可以写成 web 之和的指数：$\langle W\rangle=\exp\big[\sum_w\tilde C(w)\,\mathcal F(w)\big]$，其中 $\mathcal F(w)$ 是 web 的运动学积分，
+$\tilde C(w)$ 是修正的色因子；对两条线，web 是交换胶子在两条线上的连接不能被分成两个独立子集的图，其修正色因子是“最大非阿贝尔”部分\cite{Gatheral1983,FrenkelTaylor1984}。
+\uses{prop:appB-rules,lem:appB-shuffle}
+\end{proposition}
+
+\begin{proofsketch}
+(1) 阿贝尔情形：由\cref{prop:appB-rules}，Wilson 线上 $m$ 个连接的全部次序之和中，彼此独立的连接组之间由洗牌积（\cref{lem:appB-shuffle}(i)）因子化，
+于是 $\langle W\rangle$ 的图之和是“连通”光子子图之和的指数。(2) 非阿贝尔情形：每个图的色因子不再是各连接色因子之积；把它按交换次序写成对称部分与对易子之和，
+对称部分用洗牌积重组，使不可约部分进入指数，对易子部分留下修正的色因子 $\tilde C(w)$，它对两条线由图的“最大非阿贝尔”色结构给出。(3) $O(g^2)$ 时这一陈述化为严格恒等式
+（第~5~章\cref{prop:sudakov-webs}(b)，指针）；两圈时交叉梯形图的修正色因子为 $-\frac12C_FC_A$。完整论证见\cite{Gatheral1983,FrenkelTaylor1984}。
+\end{proofsketch}
+
+\paragraph{地位与缺口}全阶的组合学论证（[A]），对两条线在文献中给出\cite{Gatheral1983,FrenkelTaylor1984}；在 $O(g^2)$ 是严格的代数恒等式（\cref{prop:sudakov-webs}(b)，[R, $R_{\mathrm{def}}$]）。
+多条线的 web 及其重整化本书不需要。所需的有限正规子必须是绝热型的（\cref{lem:appB-shuffle}(iii)）。

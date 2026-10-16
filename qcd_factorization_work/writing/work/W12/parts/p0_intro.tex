@@ -1,0 +1,30 @@
+% =====================================================================
+%  ch10_disall.tex —— DIS 的全阶动量空间证明、重夸克与核靶（作者 W12）
+%  所有不在 VERIFIED_FORMULAS_v2 中的公式与非平凡步骤均由
+%  writing/work/W12/ 下的脚本重新推导（日志见 writing/work/W12/logs/）。
+% =====================================================================
+\chapter{DIS 的全阶动量空间证明、重夸克与核靶}\label{ch:disall}
+
+深度非弹散射（deep inelastic scattering，DIS）是最简单的需要部分子分布的硬过程：初态只有一个强子，末态被完全求和。
+\cref{ch:dis}用算符乘积展开证明了结构函数\emph{矩}的因子化（\cref{thm:dis-moments}，以 OPE 为前提而严格），\cref{ch:pdf}把它翻译为 $x$ 空间中扭度 2 部分的因子化（\cref{thm:pdf-dis-xspace}，同一等级）；
+两者给出的都是矩或分布意义下的陈述，对固定 $x$ 的逐点余项不提供控制。本章用\cref{thm:method-template}（全阶论证，[A]）给出 DIS 共线因子化的动量空间证明，
+结论是固定 $0<x<1$ 处的逐点陈述（\cref{thm:disall-factorization}，\tagA）。此外推导 $\order{\as}$ 系数函数与 DIS 方案，并讨论重夸克质量与核靶；各陈述的等级与前提见下框，全阶论证的瓶颈逐一以假设的标签列出。
+
+\begin{tcolorbox}[enhanced,breakable,title=本章证明了什么／没有证明什么,fonttitle=\bfseries,
+  colback=gray!3!white,colframe=gray!55!black,boxrule=0.6pt,arc=2pt,
+  left=5pt,right=5pt,top=3pt,bottom=3pt,before skip=6pt,after skip=6pt]
+\textbf{证明了：}\cref{prop:disall-nlo,prop:disall-scale,prop:disall-dis-scheme}（\tagR，$R_{\mathrm{PT}}$）；\cref{cor:disall-consistency}（\tagR，$R_{\mathrm{OPE}}$）；
+\cref{prop:disall-two-routes}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-collins,asm:appN-contour,asm:appN-envelope,asm:appN-separation,asm:appN-cutsum}）；
+\cref{prop:disall-factorized-subtraction}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-ward-product,asm:appN-uv}）；
+\cref{thm:disall-renorm-compat}（\tagR，$R_{\mathrm{cond}}$，前提\cref{asm:appN-multren,asm:appN-ir-regulator,asm:appN-contour}，内容等级 [C]）。\par
+\textbf{给出全阶论证：}\cref{thm:disall-factorization}（\tagA；瓶颈\cref{asm:appN-collins,asm:appN-ward-product,asm:appN-cutsum}）；
+\cref{lem:disall-fsi,prop:disall-regions,prop:disall-h2,prop:disall-h3h4,prop:disall-h5,thm:disall-heavy,prop:disall-nuclear}（\tagA）。\par
+\textbf{没有证明：}$x\to1$ 处余项的一致性（阈值区）；非定域算符的 BRST 分类（具名缺口\cref{asm:appN-brst-nonlocal}，经由\cref{lem:method-ward-multi}进入）；
+积分范数形式的减除估计（\cref{asm:appN-collins}）；与重整化相容的部分子靶红外正规化（\cref{asm:appN-ir-regulator}）。
+\end{tcolorbox}
+
+\paragraph{本章的思路。}
+被证明因子化的首先是非物理区 $|\omega|<1$ 中的前向 Compton 振幅 $T^{\mu\nu}$（\cref{def:dis-compton}），结构函数则是它沿 $\omega\ge1$ 的不连续部分；
+余项在实线段上的估计不能延拓为不连续部分的估计，所以要区分“矩”与“$x$ 空间”两条途径（\cref{sec:disall-regions}），这是 DIS 证明的特殊之处。
+记号沿用\cref{ch:method}：区域 $R$、近似子 $T_R$、减除项 $C_R\Gamma$（\cref{def:method-subtraction}）、条件 (CS1)–(CS3)（\cref{def:method-collins-conditions}）、积分范数意义下的幂次压低 $\mathfrak S(U)$（\cref{def:method-power-suppressed}）；
+对部分子靶，$\lambda$ 是红外正规化参数与 $Q$ 之比（例如靶的离壳度 $m/Q$），$L\equiv\ln(1/\lambda)$。

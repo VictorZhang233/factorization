@@ -1,0 +1,39 @@
+%% ---------------------------------------------------------------------
+\section{OPE 基的重排与“实用 OPE”}\label{sec:power-ope-basis}
+
+OPE 中“系数是短距离部分、矩阵元是长距离部分”的划分在领头幂次之外并不唯一：算符基可以按量纲向下重排，系数随之改变，而展开连同余项不变。在无质量 QCD 的 $\MSbar$ 方案中，微扰论的每一阶不同量纲的算符都不混合；但 $\Lambda$（\cref{def:qcd-lambda}）与 $\mu$ 无关，$\Lambda^2/Q^2=\exp[-4\pi/(\beta_0\as(Q))]$（单圈）对 $\as$ 的任何幂次都是零，它带来的歧义在微扰论中看不见，在非微扰层次上却真实存在。
+
+\begin{proposition}[OPE 基的重排自由 \tagR]\label{prop:power-rearrangement}
+（$R_{\mathrm{def}}$：由算符定义直接推出。）（本命题是关于展开的代数陈述。）设 $\{O_i\}$ 是有限多个规范不变定域算符，量纲为 $d_i$，$\Lambda>0$ 是与 $\mu$ 无关的固定质量标度，$\langle\cdot\rangle$ 为某个固定态（真空或强子）中的矩阵元，且对 $|q|\ge q_0$ 有
+\begin{equation}\label{eq:power-ope-N}
+\tilde T(q)=\sum_{d_i\le N}\tilde C_i(q)\langle O_i\rangle+R_N(q),\quad
+|\tilde C_i(q)|\le K|q|^{2-d_i}\ln^k|q|,\quad |R_N(q)|\le K|q|^{2-N-\delta}\ln^k|q|
+\end{equation}
+（估计的形式与\cref{asm:intro-np-ope}(O1) 相同）。对任意常数 $\kappa_{ij}$（$d_j<d_i$）令
+\begin{equation}\label{eq:power-rearr}
+O'_i=O_i+\sum_{d_j<d_i}\kappa_{ij}\Lambda^{d_i-d_j}O_j,\qquad
+\tilde C'_j=\tilde C_j-\sum_{d_i>d_j}\tilde C'_i\,\kappa_{ij}\Lambda^{d_i-d_j}\quad(\text{自上而下求解}).
+\end{equation}
+(a) 恒等式 $\sum_{d_i\le N}\tilde C'_i\langle O'_i\rangle=\sum_{d_i\le N}\tilde C_i\langle O_i\rangle$ 成立，余项不变，且对 $|q|\ge\max(q_0,\Lambda)$ 有 $|\tilde C'_j|\le K'|q|^{2-d_j}\ln^k|q|$。因此若存在与 $O_j$ 量子数相同、量纲 $d_i>d_j$ 的算符，$O_j$ 的系数只在相对 $O((\Lambda/|q|)^{d_i-d_j}\ln^k|q|)$ 的精度内由展开确定；DIS 中扭度 2 的系数只在相对 $O(\frac{\Lambda^2}{Q^2}\ln^kQ)$ 内有意义，除非算符基以非微扰方式固定（例如高扭度算符的格点归一化，第~22~章）。
+(b) 若只重排扭度 $\ge4$ 的算符（$\kappa_{ij}$ 只连接同一自旋、扭度之差 $\ge2$ 的算符），扭度 2 系数的改变对每个 $K$ 都是 $o(\as(Q)^K)$；凡是只把扭度 2 系数确定为 $\as(Q)$ 的渐近级数的陈述（如\cref{thm:dis-moments-np}(i)）都不受影响。
+\uses{def:dis-twist,def:qcd-lambda}
+\end{proposition}
+
+\begin{proof}
+(a) 代入 $O'_i$，交换求和次序，再用 $\tilde C'_j$ 的定义：
+\begin{equation*}
+\sum_i\tilde C'_i\langle O'_i\rangle=\sum_j\Big[\tilde C'_j+\sum_{d_i>d_j}\tilde C'_i\kappa_{ij}\Lambda^{d_i-d_j}\Big]\langle O_j\rangle=\sum_j\tilde C_j\langle O_j\rangle .
+\end{equation*}
+$O'_i$ 只含量纲 $\le d_i$ 的算符，截断 $d_i\le N$ 不变，余项仍是 $R_N$。量纲最高的系数不变；对量纲向下归纳，若对 $d_i>d_j$ 已有 $|\tilde C'_i|\le K_i|q|^{2-d_i}\ln^k|q|$，则对 $|q|\ge\Lambda$，
+\begin{equation*}
+|\tilde C'_j-\tilde C_j|\le\sum_{d_i>d_j}K_i|\kappa_{ij}|\,|q|^{2-d_j}(\Lambda/|q|)^{d_i-d_j}\ln^k|q|\le K''|q|^{2-d_j}\ln^k|q| ,
+\end{equation*}
+故 $\tilde C'_j$ 满足同样的估计，且与 $\tilde C_j$ 只差相对 $O((\Lambda/|q|)^{d_i-d_j}\ln^k|q|)$ 的项。两组 $\{O_i,\tilde C_i\}$、$\{O'_i,\tilde C'_i\}$ 都满足\eqref{eq:power-ope-N}，展开本身无法区分它们——这就是“只在该精度内有意义”的含义。DIS 中自旋 $n$ 的扭度 4 算符比同自旋的扭度 2 算符量纲高 2（\cref{def:dis-twist}）。若高扭度算符的归一化由非微扰条件固定，$\kappa_{ij}$ 便不再任意。
+(b) 此时 $d_i-d_j\ge2$，由 (a)，扭度 2 系数的改变是相对 $O(\frac{\Lambda^2}{Q^2}\ln^kQ)$ 的；单圈下 $\Lambda^2=Q^2\ee^{-4\pi/(\beta_0\as(Q))}$，而 $\lim_{\as\to0^+}\as^{-K}\ee^{-4\pi/(\beta_0\as)}=0$ 对每个 $K$ 成立，乘上 $\ln^kQ\sim\as^{-k}$ 仍然如此。
+\end{proof}
+
+重排与算符重整化群相容：$\Lambda$ 与 $\mu$ 无关，若 $\{O_i\}$ 的混合是三角形的（\cref{asm:intro-composite}(C1)），$\{O'_i\}$ 亦然，混合矩阵只经历一个与 $\mu$ 无关的三角形相似变换。数值例子（胶子凝聚的定义与 $u=2$ 重整化子）见\cref{ex:power-renormalon-chain}(iii)。
+
+\begin{remark}[“实用 OPE”与重整化子吸收的两个猜想性成分]\label{rem:power-practical-ope}
+求和规则的实践引入归一化点 $\Lambda\ll\mu_F\ll Q$，把圈动量 $|k|>\mu_F$ 的部分算进系数、$|k|<\mu_F$ 的部分算进凝聚\cite{Novikov:1984rf}；这种“硬截断”分法中凝聚含有从 $\mu_F^4$ 开始的幂次依赖，与单位算符系数中相应的幂次项相消\cite[第~2.3~节]{Beneke1999}。这一划分作为定义并不成立：它依赖于圈动量的取法，对胶子动量的硬截断又破坏规范不变性，而所需的规范不变光滑截断并不存在。维数正规化中没有幂次混合，取而代之的是系数级数中的红外重整化子（\cref{sec:power-renormalons}），不同求和处方相差 $(\Lambda^2/Q^2)^p\as(Q)^{-\gamma}[1+O(\as)]$ 型的项。把它吸收进高维算符的重新定义（\cref{prop:power-rearrangement}）恰好需要两个猜想性成分：(1) Borel 变换沿正实轴（在奇点附近绕行）可解析延拓，使 Borel 积分作为求和处方有定义；(2) 重整化子留数可以因子化，其 $\as$ 依赖与高维算符系数的重整化群行为相匹配（\eqref{eq:power-rearr}中 $\kappa_{ij}$ 带来的 $Q$ 依赖 $\Lambda^{d_i-d_j}\tilde C'_i(Q)$ 须与歧义的 $Q$ 依赖一致）。二者在大 $\beta_0$ 极限的已算例子中成立：Adler 函数在 $u=2$ 处是单极点，与 $\as G^2$ 在该极限下没有反常维度一致（\cref{prop:power-adler-large-beta0}）；在味展开的领头阶，DIS 纵向结构函数非单态部分扭度 2 系数在 $u=1$ 的红外重整化子与扭度 4 矩阵元的紫外（幂次发散）贡献相匹配\cite[第~4.2.2~节]{Beneke1999}。一般情形是 Mueller 与 David 的猜想（\cref{conj:power-renormalon-ht}）。
+\end{remark}

@@ -1,0 +1,36 @@
+==============================================================================
+Closed forms used (alpha_s/2pi normalisation, S_k = S_k(N)):
+  C_2^q(N) = C_F[S1^2 - S2 + 3/2 S1 - S1/(N(N+1)) + 3/(2N) + 2/(N+1) + 1/N^2 - 9/2]
+  C_2^g(N) = T_F[-(N^2+N+2)/(N(N+1)(N+2)) S1 + 1/N^2 - 1/N + 6/((N+1)(N+2))]
+  C_L^q(N) = 2 C_F/(N+1),   C_L^g(N) = 4 T_F/((N+1)(N+2))
+  P_qq(N)  = C_F[3/2 + 1/(N(N+1)) - 2 S1],   P_qg(N) = T_F (N^2+N+2)/(N(N+1)(N+2))
+==============================================================================
+1. closed forms vs numerical Mellin transform of the x-space results of dis_nlo.py
+  [PASS] integer N = 1..10, all six functions  (max |diff| = 5.52e-30)
+  [PASS] non-integer N (analytic continuation, digamma)  (max |diff| = 1.58e-30)
+==============================================================================
+2. literature, N-space: hep-ph/0504242 eqs. (A.3),(A.4)  [a_s = alpha_s/(4pi), g_qq = N+ + N-,
+   g_qg = 2N+2 - 4N+ - N- + 3 (shift operators acting on the harmonic sums), first-order results of BBDM]
+  [PASS] c^(1)_{2,q}(N) [MVV A.3] = 2 C_2^q(N)        for N = 1..20 (exact rationals)
+  [PASS] c^(1)_{2,g}(N) [MVV A.4] = 4 n_f C_2^g(N)    for N = 1..20 (T_F = 1/2)
+   e.g. N=2:  C_2^q = C_F/6,  C_2^g = -T_F/4 ;  N=4: C_2^q = 91*C_F/40, C_2^g = -133*T_F/360
+==============================================================================
+3. literature, x-space: hep-ph/0504242 eqs. (4.3),(4.4),(B.3),(B.4); hep-ph/0411112 eq. (3)
+  [PASS] c^(1)_{2,ns}(x) [4.3] = 2 C_2^q(x)
+  [PASS] c^(1)_{2,q}(x)  [B.3] = 2 C_2^q(x)
+  [PASS] c^(1)_{2,g}(x)  [4.4] = 4 n_f C_2^g(x)
+  [PASS] c^(1)_{2,g}(x)  [B.4] = 4 n_f C_2^g(x)
+  [PASS] c^(1)_{L,ns} = 4 C_F x = 2 C_L^q ;  c^(1)_{L,g} = 8 n_f x(1-x) = 4 n_f C_L^g  [hep-ph/0411112 eq.(3)]
+   int_0^1 r(z) dz = pi**2/3 + 9/2
+  [PASS] whole-bracket plus form C_F[(1+z^2)/(1-z)(ln((1-z)/z)-3/4)+(9+5z)/4]_+ = C_2^q
+==============================================================================
+4. first moments (N = 1)
+  [PASS] Adler sum rule: C_2^q(N=1) = 0  (no O(as) correction)
+   C_1^q(N=1) = C_2^q(1) - C_L^q(1) = -C_F  -> 1 + (as/2pi)(-C_F) = 1 - (2/3) as/pi for C_F = 4/3
+  [PASS] Bjorken sum rule  int dx (F_1^nubar - F_1^nu) = 2[1 - (2/3) as/pi]  (BBDM/Muta 1978)
+  [PASS] Gluon: C_2^g(N=1) = T_F/3, C_L^g(N=1) = 2*T_F/3 (no constraint; quoted for completeness)
+==============================================================================
+5. x-space convolution with toy PDFs (numerical):  int x^(N-1) (C (x) f)(x) dx = C_N f_N
+  [PASS] C_2^q (x) f for N = 2,3,5  (max rel. diff = 1.44e-15)
+==============================================================================
+MOMENT CHECKS: ALL PASS

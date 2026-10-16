@@ -1,0 +1,109 @@
+%%% BEGIN fig:ee-oneloop
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  t2 lab/.style={font=\small},
+  t2 cutlab/.style={font=\scriptsize,text=red!65!black},
+  t2 cut0/.style={cut,draw=red!30},
+  t2 cutlab0/.style={font=\scriptsize,text=red!35}]
+  % ======================= row 1: amplitudes =======================
+  % (a) virtual vertex correction
+  \begin{scope}
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G1) at ($(V)!0.56!(E1)$); \coordinate (G2) at ($(V)!0.56!(E2)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (G1); \draw[quark] (G1) -- (E1);
+    \draw[quark] (E2) -- (G2); \draw[quark] (G2) -- (V);
+    \draw[gluon] (G1) -- (G2);
+    \foreach \p in {V,G1,G2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.6] (G1) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.6] (G2) -- (E2);
+    \node at (0.3,-1.75) {(a)\ $\mathcal M_V$};
+  \end{scope}
+  % (b) real emission off the quark
+  \begin{scope}[xshift=5.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E1)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (G); \draw[quark] (G) -- (E1);
+    \draw[quark] (E2) -- (V);
+    \draw[gluon] (G) -- (2.1,0.05);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.55] (G) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.7] (V) -- (E2);
+    \path[mom'={$k$},mom pos=0.6] (G) -- (2.1,0.05);
+    \node at (0.3,-1.75) {(b)\ $\mathcal M_q$};
+  \end{scope}
+  % (c) real emission off the antiquark
+  \begin{scope}[xshift=10.0cm]
+    \coordinate (V) at (0,0); \coordinate (E1) at (2.0,1.15); \coordinate (E2) at (2.0,-1.15);
+    \coordinate (G) at ($(V)!0.45!(E2)$);
+    \draw[photon] (-1.4,0) -- (V);
+    \draw[quark] (V) -- (E1);
+    \draw[quark] (E2) -- (G); \draw[quark] (G) -- (V);
+    \draw[gluon] (G) -- (2.1,-0.05);
+    \foreach \p in {V,G} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.4,0) -- (V);
+    \path[mom={$p_1$},mom pos=0.7] (V) -- (E1);
+    \path[mom'={$p_2$},mom pos=0.55] (G) -- (E2);
+    \path[mom={$k$},mom pos=0.6] (G) -- (2.1,-0.05);
+    \node at (0.3,-1.75) {(c)\ $\mathcal M_{\bar q}$};
+  \end{scope}
+  % ======================= row 2: two-loop vacuum polarization with cuts =======================
+  % loop: centre C=(0.3,0), radii 1.15 x 0.85; L=(-0.85,0), R=(1.45,0); fermion number flows L -> top -> R -> bottom -> L
+  \begin{scope}[yshift=-4.3cm]
+    % (d) vertex type
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (T) at ($(0.3,0)+(125:1.15 and 0.85)$); \coordinate (B) at ($(0.3,0)+(-55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.7] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.7] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (T) -- (B);
+    \foreach \p in {L,R,T,B} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[cut] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[cut] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab] {2};
+    \node at (0.3,-2.15) {(d)};
+  \end{scope}
+  \begin{scope}[xshift=5.0cm,yshift=-4.3cm]
+    % (e) self-energy on the quark line
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (T1) at ($(0.3,0)+(125:1.15 and 0.85)$); \coordinate (T2) at ($(0.3,0)+(55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.61] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.67] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (T1) .. controls ($(T1)+(0.05,0.75)$) and ($(T2)+(-0.05,0.75)$) .. (T2);
+    \foreach \p in {L,R,T1,T2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[t2 cut0] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab0] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[t2 cut0] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab0] {2};
+    \node at (0.3,-2.15) {(e)};
+  \end{scope}
+  \begin{scope}[xshift=10.0cm,yshift=-4.3cm]
+    % (f) self-energy on the antiquark line
+    \coordinate (L) at (-0.85,0); \coordinate (R) at (1.45,0);
+    \coordinate (B1) at ($(0.3,0)+(-125:1.15 and 0.85)$); \coordinate (B2) at ($(0.3,0)+(-55:1.15 and 0.85)$);
+    \draw[photon] (-1.75,0) -- (L); \draw[photon] (R) -- (2.35,0);
+    \draw[quark=0.33] (L) arc[start angle=180,end angle=0,x radius=1.15,y radius=0.85];
+    \draw[quark=0.39] (R) arc[start angle=0,end angle=-180,x radius=1.15,y radius=0.85];
+    \draw[gluon] (B2) .. controls ($(B2)+(-0.05,-0.75)$) and ($(B1)+(0.05,-0.75)$) .. (B1);
+    \foreach \p in {L,R,B1,B2} \node[vertex] at (\p) {};
+    \path[mom={$q$},mom sep=0.28cm] (-1.75,0) -- (L);
+    \draw[t2 cut0] (-0.62,-1.6) -- (-0.62,1.6) node[above,t2 cutlab0] {2};
+    \draw[cut] (0.3,-1.6) -- (0.3,1.6) node[above,t2 cutlab] {3};
+    \draw[t2 cut0] (1.22,-1.6) -- (1.22,1.6) node[above,t2 cutlab0] {2};
+    \node at (0.3,-2.15) {(f)};
+  \end{scope}
+\end{tikzpicture}
+\caption{$e^+e^-\to$ 强子总截面的 $\order{\as}$ 修正。上排：振幅层次的图——(a)~单圈顶点修正 $\mathcal M_V$，(b)、(c)~夸克或反夸克辐射一个实胶子 $\mathcal M_q$、$\mathcal M_{\bar q}$
+（无质量外线的自能修正在维数正规化中是无标度积分，为零，故未画出）。下排：电磁流关联函数 $\Pi$ 的三个两圈图及其全部切割（虚线上方的数字为被切粒子数）。
+(d)~两粒子切割给出 $2\Real(\mathcal M_0^*\mathcal M_V)$（$\mathcal M_0$ 为 Born 振幅），三粒子切割给出干涉项 $2\Real(\mathcal M_q\mathcal M_{\bar q}^*)$；
+(e)、(f)~三粒子切割给出 $|\mathcal M_q|^2$、$|\mathcal M_{\bar q}|^2$，两粒子切割（浅色）对应在壳无质量外线上的自能，在维数正规化中为零。
+由切割规则，所有切割之和等于 $2\Imag\Pi$ 在 $\order{\as}$ 的贡献：虚、实两部分各含 $1/\varepsilon^2$ 极点，其和有限，给出 $R=R_0\big(1+\tfrac34C_F\,\as/\pi\big)$。}
+\label{fig:ee-oneloop}
+\end{figure}
+%%% END fig:ee-oneloop

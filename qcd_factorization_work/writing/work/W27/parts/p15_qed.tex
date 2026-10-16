@@ -1,0 +1,70 @@
+% -----------------------------------------------------------------------------------------------------
+\section{QED 修正、光子与轻子 PDF、电弱因子化}\label{sec:front-qed}
+
+第十一章的\cref{prop:coll-luxqed}（[A]）陈述了质子的光子分布可由结构函数模型无关地确定；这里给出精确公式、它的点状极限检验，以及 QED 与电弱因子化的其他前沿结果。
+
+\begin{theorem}[由结构函数确定质子的光子 PDF（LUXqed） \tagA]\label{thm:front-luxqed}
+在 $\MSbar$ 方案中
+\begin{equation}\label{eq:front-luxqed}
+\begin{split}
+xf_{\gamma/p}(x,\mu^2)=\frac{1}{2\pi\alpha(\mu^2)}\int_x^1\frac{\dd z}{z}\Bigl\{&\int_{\frac{x^2m_p^2}{1-z}}^{\frac{\mu^2}{1-z}}\frac{\dd Q^2}{Q^2}\,\alpha^2(Q^2)\Bigl[\Bigl(zp_{\gamma q}(z)+\frac{2x^2m_p^2}{Q^2}\Bigr)F_2\Bigl(\frac xz,Q^2\Bigr)\\
+&\qquad\qquad-z^2F_L\Bigl(\frac xz,Q^2\Bigr)\Bigr]\\
+&-\alpha^2(\mu^2)\,z^2F_2\Bigl(\frac xz,\mu^2\Bigr)\Bigr\},\qquad zp_{\gamma q}(z)=1+(1-z)^2,
+\end{split}
+\end{equation}
+包含 $\alpha L(\alpha_sL)^n$、$\alpha(\alpha_sL)^n$ 与 $\alpha^2L^2(\alpha_sL)^n$ 量级的全部项（$L=\ln\mu^2/m_p^2$）；$F_{2,L}$ 含弹性部分 $F_2^{\rm el}=\frac{G_E^2+\tau G_M^2}{1+\tau}\delta(1-x)$、$F_L^{\rm el}=\frac{G_E^2}{\tau}\delta(1-x)$，$\tau=Q^2/4m_p^2$\cite[式~(6)]{Manohar:2016nzj}。非微扰地位：\cref{asm:intro-wightman}、\cref{asm:intro-composite}、\cref{asm:intro-bridge}（MA0、MA1+MA2）。
+% VF-FRO-11
+% errtype: E-S
+\uses{def:pdf-gluon, thm:disall-factorization}
+\end{theorem}
+
+\begin{proofsketch}
+考虑一个虚构的超出标准模型的过程 $l+p\to L+X$，经由跃迁磁矩 $(e/\Lambda)\bar L\sigma^{\mu\nu}F_{\mu\nu}l$。其截面 (i) 可以用 $F_2$、$F_L$ 精确表示（轻子流不被重整化），(ii) 也可以用 $\MSbar$ PDF 的共线因子化（\cref{thm:disall-factorization}）表示，其中光子 PDF 定义为\cref{def:pdf-gluon}的 QED 类比；在所述精度上令二者相等即定出 $f_\gamma$。后续工作\cite{Manohar:2017eqh}（据摘要）由算符定义直接推出该结果，给出对 QED 与 QCD 所有阶（含非微扰修正）用 $F_2$、$F_L$ 表示的精确表达式、高一阶的公式、极化与 TMD 光子分布，以及 $\order{\alpha\alpha_s}$、$\order{\alpha^2}$ 的 $P_{\gamma i}$。完整论证见\cite{Manohar:2016nzj,Manohar:2017eqh}。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[A]：依赖辅助过程的共线因子化（\cref{thm:disall-factorization}，[A]）；由算符定义的推导使它与过程无关。第十一章的光子结构讨论使用同一公式。
+
+\begin{example}[点状靶极限]\label{ex:front-luxqed-pointlike}
+对质量为 $m$ 的点状 Dirac 费米子靶（只有弹性部分，$G_E=G_M=1$）：$F_2(x',Q^2)=\delta(1-x')$，$F_L=\frac{4m^2}{Q^2}\delta(1-x')$。由 $\delta(1-x/z)=x\,\delta(z-x)$（弹性 $\delta$ 函数按惯例完整计入），$z$ 积分令 $z=x$，固定 $\alpha$ 时
+\begin{equation*}
+xf_\gamma=\frac{\alpha}{2\pi}\Bigl\{[1+(1-x)^2]\ln\frac{\mu^2}{x^2m^2}-2x^2m^2\Bigl(\frac{1-x}{x^2m^2}-\frac{1-x}{\mu^2}\Bigr)-x^2\Bigr\},
+\end{equation*}
+其中第二项来自 $\int\frac{\dd Q^2}{Q^2}\bigl(\frac{2x^2m^2}{Q^2}-x^2\frac{4m^2}{Q^2}\bigr)$，第三项是 $\MSbar$ 换算项。用 $-2(1-x)-x^2=-[1+(1-x)^2]$，
+\begin{equation}\label{eq:front-luxqed-point}
+xf_\gamma=\frac{\alpha}{2\pi}\bigl[1+(1-x)^2\bigr]\Bigl[\ln\frac{\mu^2}{m^2}-2\ln x-1\Bigr]+\frac{\alpha m^2x^2(1-x)}{\pi\mu^2},
+\end{equation}
+即\cite[式~(4.189)]{Frixione:2019lga}的 $\order{\alpha}$ $\MSbar$ 轻子中光子分布，外加一个幂次修正。去掉 $F_L$ 项会使常数项移动 $\frac{\alpha}{2\pi}4(1-x)$，去掉 $\MSbar$ 换算项会移动 $\frac{\alpha}{2\pi}x^2$：两者都是检验所必需的。
+% check: writing/work/W27/s_series.py (C1)-(C5); frontier check OTHERS s3
+\uses{thm:front-luxqed}
+\end{example}
+
+\begin{proposition}[轻子与电子的 PDF、QED 与混合演化核 \tagA]\label{prop:front-lepton-pdf}
+均据摘要：(a) 由同样的结构函数输入在 NLO 得到质子的轻子 PDF\cite{Buonocore:2020nai}；(b) QED 中电子的电子、正电子与光子 PDF 到 NLL，大 $z$ 全阶重求和并与 $\order{\alpha^3}$ 匹配（初始条件\cite{Frixione:2019lga}；\cite{Bertone:2019hks}连同勘误）；(c) Altarelli--Parisi 核的 QED 修正与 QCD$\times$QED 混合修正：$\order{\alpha\alpha_s}$\cite{deFlorian:2015ujt}与借“阿贝尔化”得到的 $\order{\alpha^2}$\cite{deFlorian:2016gvk}，均为所述阶的显式核。非微扰地位：\cref{asm:intro-bridge}（MA1+MA2；只对 (a)，(b)(c) 只涉及部分子层次的演化）。
+% errtype: E-S
+\uses{thm:front-luxqed, thm:pdf-dglap}
+\end{proposition}
+
+\begin{proofsketch}
+(a) 与\cref{thm:front-luxqed}同法，以带电轻子替代光子；(b) 求解 QED 的 DGLAP 方程并在大 $z$ 处重求和，初始条件由固定阶计算给出；(c) 由 QCD 核经色因子替换（阿贝尔化）得到 QED 与混合核。完整论证见所引文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[A]（只读到摘要层次）；(c) 是有限阶结果。
+
+\begin{proposition}[电弱 PDF 与 $Q\gg M_W$ 的电弱对数 \tagA]\label{prop:front-ew-pdf}
+均据摘要：在 $Q\gg M_W$ 时，电弱 PDF 及其演化重求和电弱对数\cite{Bauer:2017isx}（极化效应\cite{Bauer:2018arx}；由结构函数得到 $W$、$Z$ 的 PDF\cite{Fornal:2018znf}）；在 NLL 框架中，因子化定理中的对象不必是 $SU(2)\times U(1)$ 单态，DGLAP 型演化只对足够单举的测量（如不变质量）捕获全部电弱对数，而识别末态轻子需要碎裂函数与软交换\cite{Manohar:2018kfx}。非微扰地位：\cref{asm:intro-bridge}（MA1+MA2）。
+% errtype: E-S
+\uses{thm:pdf-dglap}
+\end{proposition}
+
+\begin{proofsketch}
+在破缺的电弱理论中把 $Q\gg M_W$ 的截面写成 SCET 因子化形式，规范玻色子与费米子都作为部分子，演化核由未破缺的 $SU(2)\times U(1)$ 给出、在 $M_W$ 处匹配。完整论证见所引文献。
+\end{proofsketch}
+
+\paragraph{地位与缺口。}[A]（只读到摘要层次）。
+
+\begin{proposition}[电弱 Bloch--Nordsieck 抵消的失效与测量弱荷的观测量 \tagV]\label{prop:front-ew-violation}
+(a) 对撞机初态带确定的非阿贝尔（弱同位旋）荷，因此电弱 Sudakov 双对数在 TeV 标度的单举截面中不相消：对非单态初态，Bloch--Nordsieck 抵消失效（\cite{Ciafaloni:2000df}，据该文摘要）。(b) 对强子对撞中测量末态弱荷的观测量，不因子化的电弱修正在领头幂次破坏部分子模型图像，从 $\order{\alpha_s^2\alpha_W^2\log^4(Q^2/M_W^2)}$ 开始，不能只靠 DGLAP 重求和（\cite{Baumgart:2018ntv}，据该文摘要）。
+\uses{def:ir-safe}
+\end{proposition}
+
+\paragraph{地位与缺口。}[V]，证据：显式的微扰计算（按这些文献的计算）。QCD 中的类比是\cref{prop:ir-bn-failure}（[V]）。开放问题：不因子化的电弱对数的重求和。

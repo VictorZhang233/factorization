@@ -1,0 +1,29 @@
+(1) N(l) = -2*n_minus*(l_plus - p_plus)  ; equals 2p.n - 2n.l + T(l): True
+    SIDIS: N(xp + lam n/2) = -n_minus*(lambda*n_plus + 2*p_plus*x - 2*p_plus)   claim 2(1-x)p.n - lam n^2/2: True
+    DY   : N(xp - lam n/2) = -n_minus*(-lambda*n_plus + 2*p_plus*x - 2*p_plus)   claim 2(1-x)p.n + lam n^2/2: True
+(2) Beta integrals:
+   int_0^inf t^(-1-e)(1+t)^(-1-e) = B(-e,1+2e)  (e=-0.3): numeric 5.11209124428649  analytic 5.11209124445735  ok
+   int_0^inf t^(-e)(1+t)^(-1-e)   = B(1-e,2e)  (e=0.3): numeric 2.15389087116132  analytic 2.15389087116132  ok
+   int_0^1 x^(-1-2e)(1-x)         = B(-2e,2)  (e=-0.3): numeric 1.04166666666667  analytic 1.04166666666667  ok
+   int_0^1 t^(-1-e)(1-t)^(-1-e)   = B(-e,-e)  (e=-0.3): numeric 6.00962368345356  analytic 6.00962368373101  ok
+   int_1^inf t^(-1-e)(t-1)^(-1-e) = B(1+2e,-e)  (e=-0.3): numeric 5.11209124428653  analytic 5.11209124445735  ok
+   int_1^inf t^(-e)(t-1)^(-1-e)   = B(2e,-e)    (e=0.2, continued at t=1): numeric -2.81260636675185  analytic -2.8126063667518  ok
+(3) V = (alpha_s C_F/4pi)(pi mu^2 |n^2|/(p.n)^2)^eps * c(eps)
+   eps= 0.17: time-like c_SIDIS=-43.9554546769 (closed form ok:True), Re c_DY - c_SIDIS = 22.779753 | space-like c_SIDIS=(-37.83430716 + 22.37514688j), c_DY=(-37.83430716 - 22.37514688j), c_SIDIS=conj(c_DY): True
+   eps=-0.23: time-like c_SIDIS=-23.8563591391 (closed form ok:True), Re c_DY - c_SIDIS = 20.866365 | space-like c_SIDIS=(-17.89491907 - 15.77649336j), c_DY=(-17.89491907 + 15.77649336j), c_SIDIS=conj(c_DY): True
+   eps= 0.41: time-like c_SIDIS=-27.6312705586 (closed form ok:True), Re c_DY - c_SIDIS = 50.961124 | space-like c_SIDIS=(-7.708878734 + 26.53413464j), c_DY=(-7.708878734 - 26.53413464j), c_SIDIS=conj(c_DY): True
+   eps=-0.07: time-like c_SIDIS=-203.729016768 (closed form ok:True), Re c_DY - c_SIDIS = 19.389491 | space-like c_SIDIS=(-198.8225624 - 44.44210808j), c_DY=(-198.8225624 + 44.44210808j), c_SIDIS=conj(c_DY): True
+   eps=1.0e-6: time-like  Re c_DY - c_SIDIS = 19.7392171477   (2 pi^2 = 19.7392088022)
+   eps=-1.0e-7: time-like  Re c_DY - c_SIDIS = 19.7392079676   (2 pi^2 = 19.7392088022)
+    => space-like lines: 2Re V identical for future/past pointing (PT invariance; path order = time order for space-like paths).
+       time-like lines: the past-pointing time-ordered line carries a Coulomb phase, Re V_DY - V_SIDIS -> 2 pi^2 (alpha_s C_F/4pi):
+       path ordering (= anti-time ordering) and the time ordering of Feynman rules differ for past-pointing time-like lines.
+       All of these are proportional to (|n^2|)^eps and vanish in the light-like limit taken first (Re eps > 0).
+(4) V_SIDIS/((alpha_s C_F/4pi) S_eps) = -ell**2/2 + ell - 5*pi**2/12 - 2 + (ell - 1)/epsilon - 1/epsilon**2
+    = -[1/eps^2 + (1-ell)/eps + 2 + 5pi^2/12 - ell + ell^2/2] : True
+    UV pole (large-l power counting, n-independent): +1/eps  =>  IR part: -[1/eps^2 + (2-ell)/eps + ...]
+    light-like limit y_B -> -inf (ell -> +inf) at fixed eps: |(mu^2/Lambda^2)^eps| -> 0 for Re eps > 0;
+    the eps-expanded form instead grows like ell^2/2: the limits do not commute (Collins 2011 Sec.10.8/10.11.1, per Collins-Rogers 2013).
+    eps=0.05 : |V| at ell = 10, 40, 160 -> ['251.295', '56.0715', '0.138987']
+    eps=0.10 : |V| at ell = 10, 40, 160 -> ['40.6076', '2.02173', '1.2422e-5']
+virtual vertex checks: PASS

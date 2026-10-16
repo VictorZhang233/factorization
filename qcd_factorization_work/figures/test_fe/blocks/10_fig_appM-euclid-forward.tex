@@ -1,0 +1,66 @@
+%%% BEGIN fig:appM-euclid-forward
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  fe big/.style={draw=blue!60!black,line width=1.1pt,-{Stealth[length=6.5pt,width=5pt]}},
+  fe ghostq/.style={draw=blue!45,line width=0.6pt,dash pattern=on 2pt off 1.5pt,-{Stealth[length=4.5pt,width=3.6pt]}},
+  fe small/.style={draw,line width=0.9pt,-{Stealth[length=5pt,width=4pt]}},
+  fe exc/.style={draw=red!60!black,line width=0.6pt,dash pattern=on 3pt off 2pt},
+  fe lab/.style={font=\footnotesize}]
+  % ======================= (a) Euclidean, non-exceptional =======================
+  \begin{scope}
+    % 2D projection of Euclidean momentum space
+    \draw[blue!55!black,line width=0.6pt,dash pattern=on 3pt off 2pt] (6:3.45) arc[start angle=6,end angle=54,radius=3.45];
+    \draw[fe ghostq] (0,0) -- (14:3.4);
+    \draw[fe ghostq] (0,0) -- (46:3.4);
+    \draw[fe big] (0,0) -- (30:3.4);
+    \node[anchor=south west,inner sep=1pt,text=blue!55!black] at (30:3.42) {$q=|q|\,\hat q$};
+    \node[fe lab,text=blue!50!black,anchor=north west,inner sep=2pt] at (6:3.45) {$\hat q$ 任意};
+    \draw[fe small] (0,0) -- (118:0.95) node[anchor=south east,inner sep=1pt] {$p_1$};
+    \draw[fe small] (0,0) -- (205:0.9) node[anchor=north east,inner sep=1pt] {$p_2$};
+    \node[circle,fill=black,inner sep=0pt,minimum size=3pt] at (0,0) {};
+    \node[fe lab,anchor=north east,inner sep=2pt] at (0.05,-0.08) {$0$};
+    \node[fe lab,align=center,anchor=north] at (1.35,-0.95) {余项 $O(|q|^{D-1-a}\ln^k|q|)$，对 $\hat q$ 一致};
+    % inset: configuration space of the external momenta (exceptional set = linear subspaces)
+    \begin{scope}[shift={(-0.7,2.35)}]
+      \fill[gray!7] (-1.3,-0.8) rectangle (1.3,0.8);
+      \begin{scope}
+        \clip (-1.3,-0.8) rectangle (1.3,0.8);
+        \foreach \t in {15,72,140} \draw[fe exc] (\t:-1.6) -- (\t:1.6);
+      \end{scope}
+      \fill[green!18,draw=green!45!black,line width=0.5pt] (43:0.78) ellipse[x radius=0.24,y radius=0.15];
+      \node[circle,fill=black,inner sep=0pt,minimum size=2.6pt] at (43:0.78) {};
+      \node[font=\scriptsize,anchor=west,inner sep=1.5pt] at ($(43:0.78)+(0.24,0)$) {$K$};
+      \node[circle,fill=red!60!black,inner sep=0pt,minimum size=2.4pt] at (0,0) {};
+      \node[font=\scriptsize,text=red!55!black,anchor=south west,inner sep=1pt] at (-1.3,-0.8) {例外集};
+      \node[font=\scriptsize,anchor=south,inner sep=2pt,align=center] at (0,0.8) {外动量构型空间（示意）};
+    \end{scope}
+    \node at (1.35,-2.0) {(a)\ 欧氏、非例外外动量};
+  \end{scope}
+  % ======================= (b) forward on-shell partonic kinematics =======================
+  \begin{scope}[xshift=8.4cm]
+    \coordinate (VA) at (-1.0,2.1); \coordinate (VB) at (1.0,2.1);
+    \coordinate (Pin) at (-1.75,0.0); \coordinate (Pout) at (1.75,0.0);
+    \draw[red!60!black,line width=0.8pt,dash pattern=on 3pt off 2pt,rounded corners=4pt] (-2.15,-0.25) rectangle (2.15,0.75);
+    \draw[photon] (-2.15,3.2) -- (VA);
+    \draw[photon] (VB) -- (2.15,3.2);
+    \draw[quark=0.62] (Pin) -- (VA);
+    \draw[quark=0.55] (VA) -- (VB);
+    \draw[quark=0.45] (VB) -- (Pout);
+    \node[vertex] at (VA) {}; \node[vertex] at (VB) {};
+    \path[mom'={$q$},mom sep=0.22cm] (-2.15,3.2) -- (VA);
+    \path[mom={$q$},mom sep=0.22cm] (VB) -- (2.15,3.2);
+    \path[mom={$p+q$},mom sep=0.2cm] (VA) -- (VB);
+    \path[mom={$p$},mom pos=0.6] (Pin) -- (VA);
+    \path[mom={$p$},mom pos=0.4] (VB) -- (Pout);
+    \node[fe lab,anchor=north,inner sep=2pt] at (0,0.62) {$p^2=0$};
+    \node[fe lab,text=red!55!black,anchor=north,align=center] at (0,-0.3) {两条外部部分子线：$p+(-p)=0$，例外动量};
+    \node[fe lab,anchor=north,align=center] at (0,-0.95) {余项估计：需\cref{asm:appM-forward}};
+    \node at (0,-2.0) {(b)\ 前向在壳部分子矩阵元};
+  \end{scope}
+\end{tikzpicture}
+\caption{欧氏非例外动量与前向在壳运动学：(a)~微扰 OPE 的定理形式（\cref{prop:dis-ope-euclid}）适用于欧氏、非例外的外动量——外动量取在避开例外集（某个真部分和为零；在构型空间中是过原点的线性子空间，图中虚线）的紧集 $K$ 内，$|q|\to\infty$ 时余项在方向 $\hat q$ 上一致；
+(b)~DIS 所需的前向在壳部分子矩阵元（入射与出射动量同为 $p$，$p^2=0$）是例外构型，欧氏定理不直接适用，其余项估计是编号假设（\cref{asm:appM-forward}；$O(\alpha_s)$ 已精确到 $\varepsilon$ 地检验至 $N\le8$，VF-DIS-13）。}
+\label{fig:appM-euclid-forward}
+\end{figure}
+%%% END fig:appM-euclid-forward

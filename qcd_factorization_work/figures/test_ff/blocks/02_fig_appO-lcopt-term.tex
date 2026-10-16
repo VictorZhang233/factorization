@@ -1,0 +1,82 @@
+%%% BEGIN fig:appO-lcopt-term
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[fd,
+  ff hadron/.style={draw=black!70,line width=2.2pt,postaction={decorate,decoration={markings,
+      mark=at position 0.55 with {\arrow[black!70]{Stealth[length=7pt,width=7.5pt]}}}}},
+  ff soft/.style={gluon,draw=green!45!black},
+  ff state/.style={draw=gray!60!black,line width=0.55pt,dash pattern=on 2.2pt off 1.6pt},
+  ff ax/.style={lcaxis,gray!60!black},
+  ff lab/.style={font=\footnotesize},
+  ff dlab/.style={font=\small,fill=white,inner sep=1.2pt},
+  ff note/.style={font=\footnotesize,text=black!70}]
+  % ---------------------------------------------------------------- light-cone times
+  \def\tA{-5.0}\def\tB{-2.4}\def\tC{2.2}\def\tD{4.3}\def\tcut{5.6}
+  % initial / final regions (light shading)
+  \fill[blue!4] (\tA,-1.2) rectangle (0,3.2);
+  \fill[orange!6] (0,-1.2) rectangle (\tcut,3.2);
+  \node[ff note,anchor=south] at ({(\tA)/2},3.2) {初态（$\tau<0$）};
+  \node[ff note,anchor=south] at ({(\tcut)/2},3.2) {末态（$\tau>0$，割线之前）};
+  % ---------------------------------------------------------------- lines of J_A (amplitude side)
+  % hadron A -> contact vertex (v1, v1') at tau_1; instantaneous quark line v1 -> v1'
+  \coordinate (v1) at (\tA,0);  \coordinate (v1p) at (\tA,1.3);
+  \coordinate (VH) at (0,1.3);
+  \coordinate (w2) at (\tB,0);  \coordinate (w3) at (\tC,0);
+  \coordinate (v4) at (\tD,2.35);
+  \draw[ff hadron] (-6.75,0) -- (v1);
+  \draw[quark=0.86] (v1) -- (v1p);
+  \draw[line width=0.9pt] ($(v1)!0.42!(v1p)+(-0.16,0)$) -- ++(0.32,0);   % bar: instantaneous part
+  \draw[quark] (v1p) -- (VH);                                          % active quark a' -> V_H
+  \draw[gluon] (v1p) to[out=22,in=185] (v4);                           % collinear gluon g
+  \draw[scalar] (v1) -- (w2) -- (w3) -- (\tcut+0.6,0);                 % scalar spectator s, s', s''
+  \draw[quark] (v4) -- (\tcut+0.6,2.85);                               % final-state splitting g -> q qbar
+  \draw[quark] (\tcut+0.6,1.85) -- (v4);
+  % soft injections k_1 (initial) and k_2 (final), oriented into J_A
+  \draw[ff soft] (\tB,-1.1) -- (w2);
+  \draw[ff soft] (\tC,-1.1) -- (w3);
+  \path[mom={$k_1$},mom sep=0.32cm] (\tB,-1.1) -- (w2);
+  \path[mom'={$k_2$},mom sep=0.32cm] (\tC,-1.1) -- (w3);
+  % vertices
+  \foreach \p in {v1,v1p,w2,w3,v4} \node[vertex] at (\p) {};
+  \filldraw[hard blob] (VH) circle[radius=0.2];
+  % labels of lines
+  \node[ff lab,anchor=north] at (-6.1,-0.12) {$P_A$};
+  \node[ff lab,anchor=east] at ($(v1)!0.42!(v1p)+(-0.22,0)$) {瞬时线};
+  \node[ff lab,anchor=north] at ($(v1p)!0.5!(VH)+(0,-0.06)$) {$a'$};
+  \node[ff lab,anchor=south] at (-4.0,2.05) {$g$};
+  \node[ff lab,anchor=south] at (-4.4,0.04) {$s$};
+  \node[ff lab,anchor=south] at (-0.6,0.04) {$s'$};
+  \node[ff lab,anchor=south] at (4.85,0.04) {$s''$};
+  \node[ff lab,anchor=west] at (\tcut+0.6,2.85) {$q$};
+  \node[ff lab,anchor=west] at (\tcut+0.6,1.85) {$\bar q$};
+  \node[ff lab,anchor=north west] at ($(VH)+(0.1,-0.14)$) {$V_H$};
+  % ---------------------------------------------------------------- intermediate states and the cut
+  \foreach \x/\d in {-3.7/1,-1.2/2,1.1/3,3.25/4} {
+    \draw[ff state] (\x,-1.15) -- (\x,2.75);
+    \node[ff dlab] at (\x,2.95) {$D_\d$};
+  }
+  \draw[cut] (\tcut,-1.15) -- (\tcut,3.2);
+  \node[font=\footnotesize,text=red!65!black,anchor=north west] at (\tcut+0.05,-0.2) {割线};
+  % ---------------------------------------------------------------- time axis
+  \draw[ff ax] (-6.75,-1.5) -- (6.7,-1.5) node[below left=1pt and -2pt,font=\footnotesize] {$\tau=x^+$};
+  \foreach \x/\t in {\tA/{\tau_1},\tB/{\tau_2},0/{0},\tC/{\tau_3},\tD/{\tau_4}} {
+    \draw[gray!60!black,line width=0.5pt] (\x,-1.5) -- ++(0,0.08);
+    \node[font=\footnotesize,below] at (\x,-1.5) {$\t$};
+  }
+  % ---------------------------------------------------------------- energy denominators
+  \node[anchor=north,font=\small,align=left] at (0,-2.1) {%
+    $\begin{array}{@{}l@{\qquad}l@{}}
+      D_1=P_A^--E_s-E_{a'}-E_g+\ii0, & D_3=\mathcal E-k_2^--E_{s'}-E_g+\ii0,\\[2pt]
+      D_2=P_A^-+k_1^--E_{s'}-E_{a'}-E_g+\ii0, & D_4=\mathcal E-E_{s''}-E_g+\ii0,\\[2pt]
+      \multicolumn{2}{@{}l@{}}{\text{割线：}2\pi\delta\big(\mathcal E-E_{s''}-E_q-E_{\bar q}\big),\qquad
+        E_l\equiv E(l)=\dfrac{\mathbf l_T^2+m_l^2-\ii0}{2l^+}.}
+    \end{array}$};
+\end{tikzpicture}
+\caption{一个光锥序微扰论项（$J_A$ 的振幅一侧，$\mathcal G_0$ 的旁观者模型：强子 $A$ 分裂为活动夸克与标量旁观者 $s$；共轭一侧镜像，未画出）。
+顶点按光锥时间 $\tau=x^+$ 排序，相邻顶点之间的每个中间态（灰色虚线）给出一个能量分母 $\ii/D_i$，$D_i$ 为注入的负分量 $l^-$ 减去该态各线的在壳能量 $E(l)$，再加 $+\ii0$（\cref{lem:appO-lcopt}）；
+带短横的竖线是 Feynman 规范中费米子传播子的瞬时部分 $\ii\gamma^+/(2l^+)$，它把两端顶点置于同一时刻（\cref{lem:appO-numerators}）；硬顶点 $V_H$（与 $H$、$J_B$ 相连，未画出）位于 $\tau=0$。
+软动量 $k_1$、$k_2$ 一律取为流入 $J_A$：$\tau<0$ 的初态分母形如 $A_D+k^-+\ii0$，零点在 ${\rm Im}\,k^-<0$；$\tau>0$ 的末态分母用末态总能量 $\mathcal E$ 写成 $A'_D-k^-+\ii0$，零点在 ${\rm Im}\,k^->0$（\cref{lem:appO-orientation}），
+故 $k_1$ 只出现在 $D_2$，$k_2$ 只出现在 $D_3$。}
+\label{fig:appO-lcopt-term}
+\end{figure}
+%%% END fig:appO-lcopt-term

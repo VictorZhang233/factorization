@@ -1,0 +1,70 @@
+% =====================================================================================
+% appI_gamma5.tex —— 附录 I　维数正规化中的 γ5（writer W03）
+% 约定：γ5 = iγ0γ1γ2γ3，ε^{0123}=+1，D = ∂ − igA（WRITER_SPEC_v2 §3 第 4、25 行）。
+% 核算脚本 writing/work/W03/s6_gamma5.py（迹、Larin 替换、D 维 Clifford 恒等式、一圈 Z5、反常的符号）。
+% =====================================================================================
+\chapter{维数正规化中的 $\gamma_5$}\label{app:appI}
+
+在 $D=4-2\varepsilon$ 维中，$\gamma_5$ 不可能既与全部 $\gamma^\mu$ 反对易、又满足四维的迹公式（\cref{def:prelim-gamma5}）。本附录给出本书采用的 HVBM 方案、Larin 对非单态轴矢流的有限重整化与单态轴矢流的反常；它们用于 Bjorken 求和规则（\cref{thm:dis-bjorken}）与 $g_1$ 的矩（\cref{thm:coll-g1-moments}、\cref{prop:coll-anomaly-scheme}）。
+
+% -------------------------------------------------------------------------------------
+\section{HVBM 方案}\label{sec:appI-hvbm}
+
+先说明问题所在。设 $\gamma_5$ 在 $D$ 维中与一切 $\gamma^\mu$ 反对易，且迹有循环性。由 $\Tr(\gamma_5\gamma^\lambda\gamma_\lambda)=D\Tr\gamma_5$ 与 $\Tr(\gamma_\lambda\gamma_5\gamma^\lambda)=-D\Tr\gamma_5$ 得 $\Tr\gamma_5=0$；同理，用 $\gamma_\lambda\gamma^\alpha\gamma^\beta\gamma^\lambda=4g^{\alpha\beta}-(4-D)\gamma^\alpha\gamma^\beta$ 得 $(2D-4)\Tr(\gamma_5\gamma^\alpha\gamma^\beta)=0$，故四个 $\gamma$ 的迹 $T^{\mu\nu\rho\sigma}\equiv\Tr(\gamma_5\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma)$ 全反对称。再用
+\[
+\gamma_\alpha\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma\gamma^\alpha=2\big[\gamma^\sigma\gamma^\mu\gamma^\nu\gamma^\rho+\gamma^\rho\gamma^\nu\gamma^\mu\gamma^\sigma\big]-(4-D)\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma ,
+\]
+$D\,T^{\mu\nu\rho\sigma}=\Tr(\gamma_5\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma\gamma^\alpha\gamma_\alpha)=-\Tr(\gamma_5\gamma_\alpha\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma\gamma^\alpha)=(8-D)\,T^{\mu\nu\rho\sigma}$，即 $(2D-8)T^{\mu\nu\rho\sigma}=0$：在 $D\ne4$ 时这个迹必须为零，与四维的 $-4\ii\epsilon^{\mu\nu\rho\sigma}$ 矛盾。（以上 $D$ 维 Clifford 恒等式已在 $D=6,8$ 的显式表示中核对。）出路是放弃 $\gamma_5$ 与"额外维" $\gamma$ 矩阵的反对易性。
+
+\begin{definition}[HVBM 方案]\label{def:appI-hvbm}
+$\gamma_5=\ii\gamma^0\gamma^1\gamma^2\gamma^3=-\frac{\ii}{4!}\epsilon^{\mu\nu\rho\sigma}\gamma_\mu\gamma_\nu\gamma_\rho\gamma_\sigma$，其中 $\epsilon^{0123}=+1$ 是四维的 Levi-Civita 张量，$\Tr(\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma\gamma_5)=-4\ii\epsilon^{\mu\nu\rho\sigma}$。% VF-CONV-10
+把 $D$ 维度规与 Dirac 矩阵分解为四维部分与 $(D-4)$ 维部分，$g^{\mu\nu}=\bar g^{\mu\nu}+\hat g^{\mu\nu}$，$\gamma^\mu=\bar\gamma^\mu+\hat\gamma^\mu$；则 $\gamma_5$ 与 $\bar\gamma^\mu$ 反对易、与 $\hat\gamma^\mu$ 对易，迹保持循环性（'t Hooft--Veltman~\cite{tHooftVeltman1972}，Breitenlohner--Maison~\cite{BreitenlohnerMaison1977a}；Collins~\cite[第~13.2~节]{Collins1984}）。
+\uses{def:prelim-gamma5}
+\end{definition}
+
+于是 $\{\gamma^\mu,\gamma_5\}=2\gamma_5\hat\gamma^\mu\ne0$：按四维方式推导的轴矢 Ward 恒等式多出与 $\hat\gamma^\mu$ 成比例的"消失项"。它们在 $\varepsilon\to0$ 时乘以紫外极点仍可留下有限的定域项。对没有反常的流（非单态流），这些有限项可以由有限抵消项除去（Collins~\cite[第~13.6~节]{Collins1984}）；Larin 方案就是这一步的标准实现。
+
+% -------------------------------------------------------------------------------------
+\section{Larin 方案与非单态轴矢流}\label{sec:appI-larin}
+
+\begin{proposition}[Larin 方案与非单态轴矢流的有限重整化 \tagR]\label{prop:appI-larin}
+（$R_{\mathrm{PT}}$：在重整化微扰论中对红外正规化的部分子态严格。）在维数正规化、HVBM 的 $\gamma_5$（\cref{def:appI-hvbm}）与 $\MSbar$ 下，把非单态轴矢流写成 Larin 形式
+\begin{equation}\label{eq:appI-larin-current}
+J_5^{\mu,a}=\bar q\,\Gamma^\mu_{\mathrm L}\,\frac{\lambda^a}2\,q,\qquad \Gamma^\mu_{\mathrm L}\equiv-\frac{\ii}{6}\,\epsilon^{\mu\nu\rho\sigma}\gamma_\nu\gamma_\rho\gamma_\sigma\quad(\text{四维中 }\Gamma^\mu_{\mathrm L}=\gamma^\mu\gamma_5), % VF-CONV-24
+\end{equation}
+$\lambda^a$ 为无迹的味矩阵。则存在有限的重整化常数
+\begin{equation}\label{eq:appI-Z5}
+Z_5^{\mathrm{ns}}=1-4C_F\frac{\as}{4\pi}+O(\as^2), % VF-POL-1
+\end{equation}
+使 $Z_5^{\mathrm{ns}}[J_5^{\mu,a}]_{\MSbar}$ 满足反对易 $\gamma_5$ 下的（非反常）轴矢 Ward 恒等式；特别地，它的反常维度为零，矩阵元的重整化与非单态矢量流相同。文献中的写法 $\gamma_\mu\gamma_5=\frac{\ii}6\epsilon_{\mu\nu\rho\sigma}\gamma^\nu\gamma^\rho\gamma^\sigma$ 以 $\epsilon_{0123}=+1$ 为前提，在本书约定下整体反号。（本命题只涉及部分子态与算符。）
+\uses{def:appI-hvbm,thm:prelim-composite-renorm,def:prelim-msbar}
+\end{proposition}
+
+\begin{proof}
+完整的证明在文献中：有限抵消项的存在性来自 HVBM 方案的作用原理与非单态流无反常（Breitenlohner--Maison~\cite{BreitenlohnerMaison1977a}，Collins~\cite[第~13.6~节]{Collins1984}），$Z_5^{\mathrm{ns}}$ 的计算见 Larin--Vermaseren~\cite{LarinVermaseren1991}与 Larin~\cite{Larin:1993tq}；流的乘法重整化本身由\cref{thm:prelim-composite-renorm}保证。这里核对两点。
+
+(i) 替换的符号：对 $\mu=0$，$\epsilon^{0\nu\rho\sigma}\gamma_\nu\gamma_\rho\gamma_\sigma=6\gamma_1\gamma_2\gamma_3=-6\gamma^1\gamma^2\gamma^3$（六个排列的符号与 $\epsilon$ 的符号相同），故 $\Gamma^0_{\mathrm L}=\ii\gamma^1\gamma^2\gamma^3=\gamma^0(\ii\gamma^0\gamma^1\gamma^2\gamma^3)=\gamma^0\gamma_5$；其余分量同理，全部指标已用显式矩阵核对。
+
+(ii) 一圈系数。考虑 $\bar q\Gamma q$ 在零动量转移、夸克离壳（$p^2<0$）时的单圈顶点修正（Feynman 规范）。紫外发散只来自分子中的 $\sla k\,\Gamma\,\sla k$，用 $k^\mu k^\nu\to g^{\mu\nu}k^2/D$ 得
+\[
+\Gamma^{(1)}=\frac{\as C_F}{4\pi}\,X_\Gamma\Big(\frac1\varepsilon+c\Big)+(\text{紫外有限部分}),\qquad X_\Gamma\equiv\frac{\gamma^\alpha\gamma^\rho\,\Gamma\,\gamma_\rho\gamma_\alpha}{D},
+\]
+$c$ 与 $\Gamma$ 无关，紫外有限部分可在四维计算，因而对 $\Gamma_{\mathrm L}$ 与 $\gamma^\mu\gamma_5$ 相同。由 $D$ 维恒等式 $\gamma^\rho\Gamma^{[n]}\gamma_\rho=(-1)^n(D-2n)\Gamma^{[n]}$（$\Gamma^{[n]}$ 为 $n$ 个 $\gamma$ 的全反对称积；对 HVBM 中只含 $\bar\gamma$ 的 $\Gamma^{[3]}$ 同样成立），矢量流（$n=1$）与反对易的 $\gamma^\mu\gamma_5$ 给出 $X=\frac{(D-2)^2}D=1-\frac32\varepsilon+O(\varepsilon^2)$，而 Larin 形式（$n=3$）给出 $X=\frac{(6-D)^2}D=1+\frac52\varepsilon+O(\varepsilon^2)$。二者之差 $4\varepsilon$ 乘以 $1/\varepsilon$ 留下有限差 $4C_F\frac{\as}{4\pi}\Gamma$：$\MSbar$ 减去相同的极点后，Larin 形式的流比反对易形式（满足 Ward 恒等式，且与矢量流同样重整化：极点 $\frac{\as C_F}{4\pi\varepsilon}$ 与 $Z_2=1-\frac{\as C_F}{4\pi\varepsilon}$ 相消）多出 $4C_F\frac{\as}{4\pi}$。乘以 $Z_5^{\mathrm{ns}}=1-4C_F\frac{\as}{4\pi}$ 正好消去它，与\cref{eq:appI-Z5}一致。
+\end{proof}
+
+经过 $Z_5^{\mathrm{ns}}$ 的有限重整化之后，非单态流的结果（例如 Bjorken 求和规则的系数，\cref{thm:dis-bjorken}）与 $\gamma_5$ 的处理方式无关。单态流则不同：它有轴矢反常（下节），夸克螺旋度 $\Delta\Sigma$ 与胶子贡献的分离依赖于方案（\cref{prop:coll-anomaly-scheme}）。
+
+% -------------------------------------------------------------------------------------
+\section{轴矢反常}\label{sec:appI-anomaly}
+
+\begin{remark}[轴矢反常]\label{rem:appI-anomaly}
+对 $n_f$ 个无质量味道，单态轴矢流 $J_5^\mu=\sum_q\bar q\gamma^\mu\gamma_5q$ 经典守恒（有质量时 $\partial_\mu(\bar q\gamma^\mu\gamma_5q)=2\ii m\,\bar q\gamma_5q$），但量子化后有 Adler--Bell--Jackiw 反常~\cite{Adler:1969gk,Bell:1969ts}。在本书约定（$\gamma_5=\ii\gamma^0\gamma^1\gamma^2\gamma^3$，$\epsilon^{0123}=+1$，$D_\mu=\partial_\mu-\ii gA_\mu$）下
+\begin{equation}\label{eq:appI-anomaly}
+\partial_\mu J_5^\mu=-n_f\,\frac{\as}{8\pi}\,\epsilon^{\mu\nu\rho\sigma}G^a_{\mu\nu}G^a_{\rho\sigma}=-n_f\,\frac{\as}{4\pi}\,G^a_{\mu\nu}\tilde G^{a\mu\nu},\qquad \tilde G^{a\mu\nu}\equiv\frac12\epsilon^{\mu\nu\rho\sigma}G^a_{\rho\sigma}.
+\end{equation}
+系数与耦合 $g$ 的符号约定无关；改用 $\epsilon^{0123}=-1$ 时右端变号。
+
+本书用 Pauli--Villars 正规子核对了\cref{eq:appI-anomaly}的归一化与符号：在正规化后的单圈三角图中，轴矢流的散度等于 $-\lim_{M\to\infty}\langle gg|2\ii M\bar\psi\gamma_5\psi|0\rangle$（$\psi$ 为质量 $M$ 的普通费米子），后者有限且可以精确计算；其双胶子矩阵元与 $\frac{g^2}{32\pi^2}\langle gg|\epsilon^{\mu\nu\rho\sigma}G^a_{\mu\nu}G^a_{\rho\sigma}|0\rangle$ 之比为 $-1$。同一套记账给出重夸克退耦的低能定理 $M\bar QQ\to-\frac{\as}{12\pi}G^a_{\mu\nu}G^{a\mu\nu}$~\cite{Shifman:1978zn}，作为符号与归一化的独立检验。
+
+两个后果：(i) 非单态流的反常正比于 $\Tr\lambda^a=0$，因此\cref{prop:appI-larin}的有限重整化足以恢复其 Ward 恒等式；(ii) 单态流的反常使 $g_1$ 第一阶矩中夸克螺旋度与胶子贡献的分离依赖于方案——$\gamma^*g$ 盒图的第一阶矩在 HVBM 与反对易 $\gamma_5$ 两种处理中不同（Altarelli--Ross~\cite{AltarelliRoss1988}，Carlitz--Collins--Mueller~\cite{CarlitzCollinsMueller1988}），一圈的明确数值见\cref{prop:coll-anomaly-scheme}。
+\end{remark}
